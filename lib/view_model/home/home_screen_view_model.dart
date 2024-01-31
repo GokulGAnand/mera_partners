@@ -18,7 +18,6 @@ class HomeScreenViewModel extends GetxController{
 
   @override
   void onInit() {
-    Get.put(LoginScreenViewModel());
     validateUserResponse = Get.find<LoginScreenViewModel>().validateUserResponse;
     super.onInit();
   }

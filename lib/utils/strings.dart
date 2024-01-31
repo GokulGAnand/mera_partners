@@ -58,5 +58,5 @@ class MyStrings {
   static const String noOfMonthsRemaining  = "Number of Months Remaining";
   static const String noOfKmsRemaining  = "Number of Kms Remaining";
   static const String empty = "";
-
+  static const String dashboard = "Dashboard";
 }
