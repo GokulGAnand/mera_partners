@@ -5,6 +5,7 @@ import 'package:evaluator_app/service/endpoints.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:evaluator_app/utils/globals.dart' as globals;
 
 class LoginScreenViewModel extends GetxController{
   TextEditingController userNameController = TextEditingController();
@@ -12,6 +13,15 @@ class LoginScreenViewModel extends GetxController{
   var formKey = GlobalKey<FormState>();
   var passwordVisibility = false.obs;
   ValidateUserResponse? validateUserResponse;
+
+  @override
+  void onInit() {
+    if (kDebugMode) {
+      userNameController.text = 'E8I07V';
+      passwordController.text = '12345';
+    }
+    super.onInit();
+  }
 
   void validateUser() async {
     try {
@@ -22,8 +32,14 @@ class LoginScreenViewModel extends GetxController{
           });
 
       if(response.statusCode == 200){
-        Get.toNamed(AppRoutes.homeScreen);
         validateUserResponse = ValidateUserResponse.fromJson(response.data);
+        globals.userName = validateUserResponse!.data!.first.fullname;
+        globals.contactNo = validateUserResponse!.data!.first.contactNo;
+        globals.city = validateUserResponse!.data!.first.city;
+        globals.email = validateUserResponse!.data!.first.email;
+        globals.token = validateUserResponse!.meta!.access;
+        globals.userId = validateUserResponse!.data!.first.userId;
+        Get.toNamed(AppRoutes.homeScreen);
       }
     } catch (e) {
       if (kDebugMode) {

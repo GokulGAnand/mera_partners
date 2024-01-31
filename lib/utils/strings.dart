@@ -19,6 +19,7 @@ class MyStrings {
   static const String userDetails = "User Details";
   static const String changePassword = "Change Password";
   static const String signOut = "Sign out";
+  static const String newEvaluation1 = "New Evaluation";
   static const String empty = "";
 
 }

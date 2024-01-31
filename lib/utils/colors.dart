@@ -15,6 +15,7 @@ class MyColors {
   static const Color transparent = Color(0xFFD9D9D9);
   static const Color transparent1 = Color(0xFFDADADA);
   static const Color greyLight = Color(0XFFB0B0B0);
+  static const Color appBarGrey = Color(0XFFF4F4F4);
 
 
   // Black

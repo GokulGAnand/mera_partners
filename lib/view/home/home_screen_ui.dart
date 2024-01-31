@@ -1,3 +1,4 @@
+import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/dimens.dart';
 import 'package:evaluator_app/utils/strings.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../utils/images.dart';
+import '../../utils/globals.dart' as globals;
 
 /// ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
@@ -61,8 +63,8 @@ class HomeScreen extends StatelessWidget {
                     MyImages.profile,
                   ),
                 ),
-                title: Text(viewModel.validateUserResponse != null ? viewModel.validateUserResponse!.data!.first.fullname ?? "":"",style: const TextStyle(color: MyColors.blueDark,fontSize: 24,fontWeight: FontWeight.w700,letterSpacing: 0.24),),
-                subtitle: Text(viewModel.validateUserResponse != null ? viewModel.validateUserResponse!.data!.first.city ?? "" : "",style: MyStyles.locationStyle),
+                title: Text(globals.userName != null?globals.userName ?? "":"",style: const TextStyle(color: MyColors.blueDark,fontSize: 24,fontWeight: FontWeight.w700,letterSpacing: 0.24),),
+                subtitle: Text(globals.city != null ? globals.city ?? "" : "",style: MyStyles.locationStyle),
               ),
             )
           ),
@@ -82,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                       MyImages.profile,
                     ),
                   ),
-                  title: Text(viewModel.validateUserResponse != null ? viewModel.validateUserResponse!.data!.first.fullname ?? "":"",style: const TextStyle(color: MyColors.blueDark,fontSize: 24,fontWeight: FontWeight.w700,letterSpacing: 0.24),),
+                  title: Text(globals.userName != null ? globals.userName ?? "":"",style: const TextStyle(color: MyColors.blueDark,fontSize: 24,fontWeight: FontWeight.w700,letterSpacing: 0.24),),
                 ),
               ),
               const Divider(),
@@ -105,11 +107,11 @@ class HomeScreen extends StatelessWidget {
                           iconColor: MyColors.grey,
                           title: const Text(MyStrings.userDetails,style: MyStyles.blackTitleStyle,),
                           children: <Widget>[
-                            ListTile(leading: SvgPicture.asset(MyImages.mobile,width: 16.25,height: 16.25,),title: Text(viewModel.validateUserResponse != null ? viewModel.validateUserResponse!.data!.first.contactNo.toString() :"",style: MyStyles.greyMediumStyle,),),
+                            ListTile(leading: SvgPicture.asset(MyImages.mobile,width: 16.25,height: 16.25,),title: Text(globals.contactNo != null ? globals.contactNo.toString() :"",style: MyStyles.greyMediumStyle,),),
                             const Divider(color: MyColors.transparent1,),
-                            ListTile(leading: SvgPicture.asset(MyImages.mail,width: 16.25,height: 16.25,),title: Text(viewModel.validateUserResponse != null ? viewModel.validateUserResponse!.data!.first.email ?? "":"",style: MyStyles.greyMediumStyle,),),
+                            ListTile(leading: SvgPicture.asset(MyImages.mail,width: 16.25,height: 16.25,),title: Text(globals.email != null ? globals.email ?? "":"",style: MyStyles.greyMediumStyle,),),
                             const Divider(color: MyColors.transparent1),
-                            ListTile(leading: SvgPicture.asset(MyImages.location,width: 16.25,height: 16.25,),title: Text(viewModel.validateUserResponse != null ? viewModel.validateUserResponse!.data!.first.city ?? "":"",style: MyStyles.greyMediumStyle,),),
+                            ListTile(leading: SvgPicture.asset(MyImages.location,width: 16.25,height: 16.25,),title: Text(globals.city != null ? globals.city ?? "":"",style: MyStyles.greyMediumStyle,),),
                             const Divider(color: MyColors.transparent1),
                           ],
                         ),
@@ -146,7 +148,11 @@ class HomeScreen extends StatelessWidget {
                     return CustomCard(
                       label: viewModel.homeList[index].label??"",
                       icon: viewModel.homeList[index].icon??"",
-                      onPressed: () {},);
+                      onPressed: () {
+                        if(index == 0){
+                          Get.toNamed(AppRoutes.newEvaluationScreen);
+                        }
+                      },);
                   },)
 
             ],
