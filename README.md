@@ -1,4 +1,4 @@
-# sample2_clone
+# evaluator_app
 
 A new Flutter project.
 

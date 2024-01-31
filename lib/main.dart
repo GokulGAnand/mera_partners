@@ -1,33 +1,36 @@
+import 'package:evaluator_app/routes/app_routes.dart';
+import 'package:evaluator_app/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:sample2_clone/ui/users/views/createscreen.dart';
-import 'package:sample2_clone/ui/users/views/loginscreen.dart';
-import 'package:sample2_clone/ui/users/views/profilescreen.dart';
-import 'package:sample2_clone/ui/users/views/s1.dart';
-import 'package:sample2_clone/ui/users/views/s2.dart';
-import 'package:sample2_clone/ui/users/views/s3.dart';
-import 'package:sample2_clone/ui/users/views/s4.dart';
-import 'package:sample2_clone/ui/users/views/thirdscreen.dart';
-import 'package:sample2_clone/ui/users/views/verificationscreen.dart';
-import 'package:sample2_clone/ui/users/views/welcomescreen.dart';
-
+import 'package:flutter/services.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 void main() {
+
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: MyColors.white, // status bar color
+    statusBarIconBrightness: Brightness.dark
+  ));
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
+      title: 'Evaluator App',
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       theme: ThemeData(
-
+        fontFamily: 'Inter',
+        colorScheme: ColorScheme.fromSeed(seedColor: MyColors.kPrimaryColor),
+        useMaterial3: true,
       ),
-      home:   verification(),
+      getPages: AppRoutes().pages,
+      initialRoute: AppRoutes.loginScreen,
     );
   }
 }
+
+

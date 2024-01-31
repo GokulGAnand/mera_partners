@@ -1,6 +1,6 @@
 {
-    "name": "sample2_clone",
-    "short_name": "sample2_clone",
+    "name": "evaluator_app",
+    "short_name": "evaluator_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
