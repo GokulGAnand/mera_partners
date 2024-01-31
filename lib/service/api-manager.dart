@@ -1,4 +1,4 @@
-
+/// ignore
 import 'package:dio/dio.dart';
 import 'package:evaluator_app/service/endpoints.dart';
 import 'package:flutter/foundation.dart';
