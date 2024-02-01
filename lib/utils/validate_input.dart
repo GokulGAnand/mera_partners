@@ -1,3 +1,5 @@
+import 'package:evaluator_app/utils/strings.dart';
+
 class ValidateInput {
 
   static String? validateName(String? value) {
@@ -54,7 +56,7 @@ class ValidateInput {
     if (value!.trim().isNotEmpty) {
       return null;
     } else {
-      return 'Required';
+      return MyStrings.required;
     }
   }
 

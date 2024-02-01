@@ -1,9 +1,5 @@
-import 'package:evaluator_app/view/new_evaluation/new_evaluation_page_one.dart';
-import 'package:evaluator_app/view/new_evaluation/new_evaluation_page_three.dart';
-import 'package:evaluator_app/view/new_evaluation/new_evaluation_page_two.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../view/new_evaluation/new_evaluation_page_four.dart';
 
 class NewEvaluationViewModel extends GetxController{
 
@@ -12,10 +8,18 @@ class NewEvaluationViewModel extends GetxController{
   // the index of the current page
   var activePage = 0.obs;
 
-  final List<Widget> pages = [
-    NewEvaluationPageOne(),
-    const NewEvaluationPageTwo(),
-    const NewEvaluationPageThree(),
-    const NewEvaluationPageFour(),
-  ].obs;
+  String dropdownValue = 'Dog';
+
+  Rx<TextEditingController> customerMobileNumController = TextEditingController().obs;
+  Rx<TextEditingController> manufacturingYearController = TextEditingController().obs;
+  Rx<TextEditingController> carMake = TextEditingController().obs;
+  Rx<TextEditingController> carModel = TextEditingController().obs;
+  Rx<TextEditingController> variant = TextEditingController().obs;
+  Rx<TextEditingController> vehicleRegistration = TextEditingController().obs;
+  Rx<TextEditingController> registrationNumber = TextEditingController().obs;
+  Rx<TextEditingController> registrationDate = TextEditingController().obs;
+  Rx<TextEditingController> rcOwnerName = TextEditingController().obs;
+  Rx<TextEditingController> ownershipNumber = TextEditingController().obs;
+  Rx<TextEditingController> transmission = TextEditingController().obs;
+
 }
