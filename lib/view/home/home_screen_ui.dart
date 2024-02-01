@@ -152,7 +152,7 @@ class HomeScreen extends StatelessWidget {
                         if(index == 0){
                           Get.toNamed(AppRoutes.newEvaluationScreen);
                         }
-                      },);
+                      }, cardColor: MyColors.blue,);
                   },)
 
             ],

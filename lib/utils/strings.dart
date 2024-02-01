@@ -59,4 +59,13 @@ class MyStrings {
   static const String noOfKmsRemaining  = "Number of Kms Remaining";
   static const String empty = "";
   static const String dashboard = "Dashboard";
+  static const String documents = "Documents";
+  static const String exterior = "Exterior";
+  static const String engine = "Engine";
+  static const String interior = "Interior &\nElectrical";
+  static const String test ="Test Drive";
+  static const String features ="Features";
+  static const String air="Air condition";
+  static const String comments="Comments";
+  static const String pendingEvaluation1 ="PendingEvaluation";
 }

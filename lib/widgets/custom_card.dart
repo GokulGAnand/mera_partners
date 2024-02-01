@@ -6,11 +6,13 @@ import '../utils/dimens.dart';
 
 class CustomCard extends StatelessWidget{
 
-  const CustomCard({super.key, required this.label,required this.icon, required this.onPressed});
+  const CustomCard({super.key, required this.label,required this.icon, required this.onPressed, required this.cardColor, this.labelStyle});
 
   final String label;
   final String icon;
+  final Color cardColor;
   final VoidCallback onPressed;
+  final TextStyle? labelStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class CustomCard extends StatelessWidget{
         width: MediaQuery.of(context).size.width * 0.2,
         height: MediaQuery.of(context).size.width * 0.2,
         decoration: BoxDecoration(
-            color: MyColors.blue,
+            color: cardColor,
           borderRadius: BorderRadius.circular(8)
         ),
         child: Padding(
@@ -38,7 +40,7 @@ class CustomCard extends StatelessWidget{
                 child: Center(child: SvgPicture.asset(icon)),
               ),
               const SizedBox(height: 17,),
-              Text(label,textAlign: TextAlign.center,style: MyStyles.cardTitleStyle,),
+              Text(label,textAlign: TextAlign.center,style: labelStyle ?? MyStyles.cardTitleStyle),
 
             ],
           ),

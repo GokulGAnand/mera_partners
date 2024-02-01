@@ -16,6 +16,15 @@ class MyImages {
   static const mobile = "${imageRoot}mobile.svg";
   static const logout = "${imageRoot}logout.svg";
   static const arrowRight = "${imageRoot}arrow_right.svg";
+  static const difference = "${imageRoot}difference.svg";
+  static const exterior = "${imageRoot}exterior.svg";
+  static const engine = "${imageRoot}engine.svg";
+  static const electric = "${imageRoot}electric_car.svg";
+  static const search ="${imageRoot}search_hands_free.svg";
+  static const settings ="${imageRoot}settings.svg";
+  static const heat ="${imageRoot}heat_pump.svg";
+  static const maps ="${imageRoot}maps.svg";
+
 
 
 
