@@ -63,9 +63,12 @@ class MyStrings {
   static const String exterior = "Exterior";
   static const String engine = "Engine";
   static const String interior = "Interior &\nElectrical";
-  static const String test ="Test Drive";
-  static const String features ="Features";
-  static const String air="Air condition";
-  static const String comments="Comments";
-  static const String pendingEvaluation1 ="PendingEvaluation";
+  static const String test = "Test Drive";
+  static const String features =" Features";
+  static const String air=" Air condition";
+  static const String comments= "Comments";
+  static const String pendingEvaluation1 = "Pending Evaluation";
+  static const String search = "Search";
+  static const String page1 = "Page 1";
+  static const String input = "Input";
 }

@@ -15,7 +15,7 @@ import '../../widgets/common_drawer.dart';
 
 /// ignore: must_be_immutable
 class DashBoardScreen extends StatelessWidget {
-  DashBoardScreen({Key? key}) : super(key: key);
+  DashBoardScreen({super.key});
   final GlobalKey<ScaffoldState> _key = GlobalKey();
 
   var viewModel = Get.isRegistered<DashBoardViewModel>()
