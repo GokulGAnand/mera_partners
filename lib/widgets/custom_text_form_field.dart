@@ -73,10 +73,10 @@ class CustomTextFormField extends StatefulWidget {
 
   final VoidCallback? onClick;
   @override
-  _CustomTextFormFieldState createState() => _CustomTextFormFieldState();
+  CustomTextFormFieldState createState() => CustomTextFormFieldState();
 }
 
-class _CustomTextFormFieldState extends State<CustomTextFormField> {
+class CustomTextFormFieldState extends State<CustomTextFormField> {
   FocusNode myFocusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
@@ -125,7 +125,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             filled: true,
             fillColor: widget.fillColor ?? MyColors.white,
             hintStyle: TextStyle(
-              color: widget.hintTextColor ?? MyColors.kPrimaryColor,
+              color: widget.hintTextColor ?? MyColors.greyMedium,
+              fontSize: 16,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w400
               // fontSize:10,
             ),
             border: const OutlineInputBorder(
@@ -148,9 +151,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             ),
             labelStyle: widget.labelStyle ?? TextStyle(
                 height: widget.labelHeight??0.5,
-                color: widget.labelColor ?? MyColors.kPrimaryColor,
+                color: widget.labelColor ?? MyColors.blue,
                 fontSize: 15,
-              fontWeight: FontWeight.w500
+              fontWeight: FontWeight.w500,
+              fontStyle: FontStyle.normal
             ),
             prefixIcon: widget.prefixIcon,
             suffixIcon: widget.suffixIcon,

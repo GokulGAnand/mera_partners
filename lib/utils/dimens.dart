@@ -6,9 +6,6 @@ class Dimens {
   static const double cardTitleFontSize = 15;
   static const double fontSize17 = 17;
 
-  ///Font Weight
-  static const FontWeight titleFontWeight = FontWeight.w600;
-
   ///padding
   static const EdgeInsets padding16 = EdgeInsets.all(16);
 

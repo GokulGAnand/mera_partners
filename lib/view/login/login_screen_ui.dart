@@ -1,6 +1,7 @@
 import 'package:evaluator_app/view_model/login/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../service/internet_check.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimens.dart';
 import '../../utils/images.dart';
@@ -89,7 +90,14 @@ class LoginScreen extends StatelessWidget {
                 child: CustomElevatedButton(
                   onPressed: () {
                     if(loginScreenViewModel.formKey.currentState!.validate()){
-                      loginScreenViewModel.validateUser();
+                      loginScreenViewModel.formKey.currentState!.save();
+                      Internet.checkInternet().then((value) {
+                        if (value) {
+                          loginScreenViewModel.validateUser();
+                        } else {
+                          //show toast
+                        }
+                      });
                     }
                   },
                   buttonText: MyStrings.login,

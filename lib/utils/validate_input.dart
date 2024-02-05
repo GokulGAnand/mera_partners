@@ -52,12 +52,22 @@ class ValidateInput {
     return null;
   }
 
-  static String? requiredFields(String? value) {
+  static String? validateRequiredFields(String? value) {
     if (value!.trim().isNotEmpty) {
       return null;
     } else {
       return MyStrings.required;
     }
+  }
+
+  static String? validatePhoneNumber(String? value){
+    if(value!.isEmpty){
+      return null;
+    }
+    else if(value.length < 10){
+      return MyStrings.vValidNumber;
+    }
+    return null;
   }
 
 }

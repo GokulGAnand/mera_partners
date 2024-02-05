@@ -14,10 +14,7 @@ import '../../utils/globals.dart' as globals;
 
 /// ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key})
-      : super(
-    key: key,
-  );
+  HomeScreen({super.key});
 
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   var viewModel = Get.isRegistered<HomeScreenViewModel>()?Get.find<HomeScreenViewModel>():Get.put(HomeScreenViewModel());

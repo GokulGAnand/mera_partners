@@ -23,7 +23,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget{
       leadingWidth: leadingWidth,
       leading: leading ,
       title: Padding(
-        padding: const EdgeInsets.only(left: 27.0),
+        padding: EdgeInsets.only(left: centerTitle == true ? 0 : 27.0),
         child: Text(title ?? "", style: MyStyles.titleTextStyle,textAlign: TextAlign.center,),
       ),
       actions: actions,
