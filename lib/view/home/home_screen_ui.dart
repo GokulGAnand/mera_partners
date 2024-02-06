@@ -145,12 +145,13 @@ class HomeScreen extends StatelessWidget {
                     return CustomCard(
                       label: viewModel.homeList[index].label??"",
                       icon: viewModel.homeList[index].icon??"",
+                      cardColor: MyColors.blue,
                       onPressed: () {
                         if(index == 0){
                           Get.toNamed(AppRoutes.newEvaluationScreen);
 
-                      }, cardColor: MyColors.blue,);
-                  },)
+                      }
+                  },);})
 
             ],
           ),
