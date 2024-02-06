@@ -16,12 +16,6 @@ class HomeScreenViewModel extends GetxController{
     MasterClass(tileColor: MyColors.kPrimaryColor,icon: MyImages.completed,label: MyStrings.completedEvaluation),
   ];
 
-  @override
-  void onInit() {
-    validateUserResponse = Get.find<LoginScreenViewModel>().validateUserResponse;
-    super.onInit();
-  }
-
 }
 
 class MasterClass{

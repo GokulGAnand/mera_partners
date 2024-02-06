@@ -148,7 +148,7 @@ class HomeScreen extends StatelessWidget {
                       onPressed: () {
                         if(index == 0){
                           Get.toNamed(AppRoutes.newEvaluationScreen);
-                        }
+
                       }, cardColor: MyColors.blue,);
                   },)
 
