@@ -224,6 +224,51 @@ class NewEvaluationScreen extends StatelessWidget {
                 SizedBox(
                   height: Dimens.standard_24,
                 ),
+                GestureDetector(
+                  onTap: () async {
+                    final selectedDate = await showDatePicker(
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1990),
+                      lastDate: DateTime.now(),
+                      context: Get.context!,
+                    );
+                    if (selectedDate != null) {
+                      viewModel.regDateController.value.text =
+                          DateFormat('dd/MM/yyyy')
+                              .format(selectedDate)
+                              .toString();
+                    }
+                  },
+                  child: CustomTextFormField(
+                    controller: viewModel.regDateController.value,
+                    labelText: "${MyStrings.registrationDate}*",
+                    helperText: "${MyStrings.registrationDate}*",
+                    validator: ValidateInput.validateRequiredFields,
+                    showCursor: false,
+                    isEnabled: false,
+                    suffixIcon: InkWell(
+                      onTap: () async {
+                        final selectedDate = await showDatePicker(
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1990),
+                          lastDate: DateTime.now(),
+                          context: Get.context!,
+                        );
+                        if (selectedDate != null) {
+                          viewModel.regDateController.value.text =
+                              DateFormat('dd/MM/yyyy')
+                                  .format(selectedDate)
+                                  .toString();
+                        }
+                      },
+                      child: const Icon(
+                        Icons.calendar_today_outlined,
+                        color: MyColors.grey,
+                        size: 22,
+                      ),
+                    ),
+                  ),
+                ),
                 SizedBox(
                   height: Dimens.standard_48,
                 ),
@@ -231,8 +276,7 @@ class NewEvaluationScreen extends StatelessWidget {
                   height: 70,
                   child: Center(
                     child: CustomElevatedButton(
-                      onPressed: viewModel
-                              .rcOwnerNameController.value.text.isNotEmpty
+                      onPressed: viewModel.rcOwnerNameController.value.text.isNotEmpty
                           ? () {
                               if (viewModel.page1Key.currentState!.validate()) {
                                 viewModel.page1Key.currentState!.save();
@@ -284,55 +328,6 @@ class NewEvaluationScreen extends StatelessWidget {
               children: [
                 const SizedBox(
                   height: 10,
-                ),
-
-                GestureDetector(
-                  onTap: () async {
-                    final selectedDate = await showDatePicker(
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1990),
-                      lastDate: DateTime.now(),
-                      context: Get.context!,
-                    );
-                    if (selectedDate != null) {
-                      viewModel.regDateController.value.text =
-                          DateFormat('dd/MM/yyyy')
-                              .format(selectedDate)
-                              .toString();
-                    }
-                  },
-                  child: CustomTextFormField(
-                    controller: viewModel.regDateController.value,
-                    labelText: "${MyStrings.registrationDate}*",
-                    helperText: "${MyStrings.registrationDate}*",
-                    validator: ValidateInput.validateRequiredFields,
-                    showCursor: false,
-                    isEnabled: false,
-                    suffixIcon: InkWell(
-                      onTap: () async {
-                        final selectedDate = await showDatePicker(
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1990),
-                          lastDate: DateTime.now(),
-                          context: Get.context!,
-                        );
-                        if (selectedDate != null) {
-                          viewModel.regDateController.value.text =
-                              DateFormat('dd/MM/yyyy')
-                                  .format(selectedDate)
-                                  .toString();
-                        }
-                      },
-                      child: const Icon(
-                        Icons.calendar_today_outlined,
-                        color: MyColors.grey,
-                        size: 22,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: Dimens.standard_24,
                 ),
 
                 GestureDetector(
@@ -569,6 +564,49 @@ class NewEvaluationScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
+                  height: Dimens.standard_24,
+                ),
+                Obx(
+                      () => CustomDropDown(
+                    hintText: "${MyStrings.engineCC}*",
+                    label: viewModel.selectedEngineCC.value.isEmpty
+                        ? null
+                        : "${MyStrings.engineCC}*",
+                    value: viewModel.selectedEngineCC.value.isEmpty
+                        ? null
+                        : viewModel.selectedEngineCC.value,
+                    items: viewModel.ccList
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: MyStyles.dropdownMenuStyle,
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      viewModel.selectedEngineCC.value = value;
+                    },
+                    validator: (value) {
+                      if (value == null) {
+                        return MyStrings.required;
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: Dimens.standard_24,
+                ),
+                CustomTextFormField(
+                  labelText: MyStrings.noOfCylinders,
+                  helperText: MyStrings.noOfCylinders,
+                  keyboardType: TextInputType.number,
+                  inputFormatter: [LengthLimitingTextInputFormatter(Constants.maxInputLength)],
+                  controller: viewModel.noOfCylindersController.value,
+                  validator: (p0) => null,),
+                SizedBox(
                   height: Dimens.standard_48,
                 ),
                 SizedBox(
@@ -626,49 +664,7 @@ class NewEvaluationScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                Obx(
-                      () => CustomDropDown(
-                    hintText: "${MyStrings.engineCC}*",
-                    label: viewModel.selectedEngineCC.value.isEmpty
-                        ? null
-                        : "${MyStrings.engineCC}*",
-                    value: viewModel.selectedEngineCC.value.isEmpty
-                        ? null
-                        : viewModel.selectedEngineCC.value,
-                    items: viewModel.ccList
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: MyStyles.dropdownMenuStyle,
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      viewModel.selectedEngineCC.value = value;
-                    },
-                    validator: (value) {
-                      if (value == null) {
-                        return MyStrings.required;
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                SizedBox(
-                  height: Dimens.standard_24,
-                ),
-                CustomTextFormField(
-                  labelText: MyStrings.noOfCylinders,
-                  helperText: MyStrings.noOfCylinders,
-                  keyboardType: TextInputType.number,
-                  inputFormatter: [LengthLimitingTextInputFormatter(Constants.maxInputLength)],
-                  controller: viewModel.noOfCylindersController.value,
-                  validator: (p0) => null,),
-                SizedBox(
-                  height: Dimens.standard_24,
-                ),
+
                 Obx(
                       () => CustomDropDown(
                     hintText: "${MyStrings.vehicleUsage}*",
@@ -793,27 +789,16 @@ class NewEvaluationScreen extends StatelessWidget {
                 SizedBox(
                   height: Dimens.standard_24,
                 ),
-                CustomTextFormField(
-                  controller: viewModel.colorController.value,
-                  labelText: "${MyStrings.color}*",
-                  helperText: "${MyStrings.color}*",
-                  validator: ValidateInput.validateRequiredFields,
-                ),
-
-
-                /*SizedBox(
-                  height: Dimens.standard_24,
-                ),
                 Obx(
                   () => CustomDropDown(
-                    hintText: "${MyStrings.length}*",
-                    label: viewModel.selectedLength.value.isEmpty
+                    hintText: "${MyStrings.color}*",
+                    label: viewModel.selectedColor.value.isEmpty
                         ? null
-                        : "${MyStrings.length}*",
-                    value: viewModel.selectedLength.value.isEmpty
+                        : "${MyStrings.color}*",
+                    value: viewModel.selectedColor.value.isEmpty
                         ? null
-                        : viewModel.selectedLength.value,
-                    items: viewModel.lengthList
+                        : viewModel.selectedColor.value,
+                    items: viewModel.colorList
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -824,53 +809,7 @@ class NewEvaluationScreen extends StatelessWidget {
                       );
                     }).toList(),
                     onChanged: (value) {
-                      viewModel.selectedLength.value = value;
-                    },
-                    validator: (value) {
-                      if (value == null) {
-                        return MyStrings.required;
-                      }
-                      return null;
-                    },
-                  ),
-                ),*/
-                SizedBox(
-                  height: Dimens.standard_24,
-                ),
-                CustomTextFormField(
-                  controller: viewModel.customerPriceController.value,
-                  labelText: "${MyStrings.customerPrice}*",
-                  helperText: "${MyStrings.customerPrice}*",
-                  validator: ValidateInput.validateRequiredFields,
-                  keyboardType: TextInputType.number,
-                  inputFormatter: [
-                    LengthLimitingTextInputFormatter(Constants.amountLength)
-                  ],
-                ),
-                SizedBox(
-                  height: Dimens.standard_24,
-                ),
-                Obx(
-                  () => CustomDropDown(
-                    hintText: "${MyStrings.ccClass}*",
-                    label: viewModel.selectedCCClass.value.isEmpty
-                        ? null
-                        : "${MyStrings.ccClass}*",
-                    value: viewModel.selectedCCClass.value.isEmpty
-                        ? null
-                        : viewModel.selectedCCClass.value,
-                    items: viewModel.ccClassList
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: MyStyles.dropdownMenuStyle,
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      viewModel.selectedCCClass.value = value;
+                      viewModel.selectedColor.value = value;
                     },
                     validator: (value) {
                       if (value == null) {
@@ -880,66 +819,8 @@ class NewEvaluationScreen extends StatelessWidget {
                     },
                   ),
                 ),
-
                 SizedBox(
-                  height: Dimens.standard_48,
-                ),
-                SizedBox(
-                  height: 70,
-                  child: Center(
-                    child: CustomElevatedButton(
-                      onPressed: () {
-                        if (viewModel.page3Key.currentState!.validate()) {
-                          viewModel.page3Key.currentState!.save();
-                          viewModel.pageController.value.animateToPage(
-                            3,
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.linear,
-                          );
-                        }
-                      },
-                      buttonText: MyStrings.next,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget pageFour() {
-    return Obx(
-      () => Scaffold(
-        /*bottomNavigationBar: SizedBox(
-          height: 70,
-          child: Center(
-            child: CustomElevatedButton(
-              onPressed: () {
-                if(viewModel.page4Key.currentState!.validate()) {
-                  viewModel.page4Key.currentState!.save();
-                  Internet.checkInternet().then((value) {
-                    if (value) {
-                      //proceed
-                    } else {
-                      //show toast
-                    }
-                  });
-                }
-              },
-              buttonText: MyStrings.submit,
-            ),
-          ),
-        ),*/
-        body: SingleChildScrollView(
-          child: Form(
-            key: viewModel.page4Key,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 10,
+                  height: Dimens.standard_24,
                 ),
                 Obx(
                       () => CustomDropDown(
@@ -1007,6 +888,161 @@ class NewEvaluationScreen extends StatelessWidget {
                 SizedBox(
                   height: Dimens.standard_24,
                 ),
+                Obx(
+                      () => CustomDropDown(
+                    hintText: '${MyStrings.duplicateKey}*',
+                    label: viewModel.selectedDupKey.value.isEmpty
+                        ? null
+                        : '${MyStrings.duplicateKey}*',
+                    value: viewModel.selectedDupKey.value.isEmpty
+                        ? null
+                        : viewModel.selectedDupKey.value,
+                    items: viewModel.duplicateKeyList
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: MyStyles.dropdownMenuStyle,
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      viewModel.selectedDupKey.value = value;
+                    },
+                    validator: (value) {
+                      if (value == null) {
+                        return MyStrings.required;
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                /*SizedBox(
+                  height: Dimens.standard_24,
+                ),
+                Obx(
+                  () => CustomDropDown(
+                    hintText: "${MyStrings.ccClass}*",
+                    label: viewModel.selectedCCClass.value.isEmpty
+                        ? null
+                        : "${MyStrings.ccClass}*",
+                    value: viewModel.selectedCCClass.value.isEmpty
+                        ? null
+                        : viewModel.selectedCCClass.value,
+                    items: viewModel.ccClassList
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: MyStyles.dropdownMenuStyle,
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      viewModel.selectedCCClass.value = value;
+                    },
+                    validator: (value) {
+                      if (value == null) {
+                        return MyStrings.required;
+                      }
+                      return null;
+                    },
+                  ),
+                ),*/
+
+                SizedBox(
+                  height: Dimens.standard_48,
+                ),
+                SizedBox(
+                  height: 70,
+                  child: Center(
+                    child: CustomElevatedButton(
+                      onPressed: () {
+                        if (viewModel.page3Key.currentState!.validate()) {
+                          viewModel.page3Key.currentState!.save();
+                          viewModel.pageController.value.animateToPage(
+                            3,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.linear,
+                          );
+                        }
+                      },
+                      buttonText: MyStrings.next,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget pageFour() {
+    return Obx(
+      () => Scaffold(
+        /*bottomNavigationBar: SizedBox(
+          height: 70,
+          child: Center(
+            child: CustomElevatedButton(
+              onPressed: () {
+                if(viewModel.page4Key.currentState!.validate()) {
+                  viewModel.page4Key.currentState!.save();
+                  Internet.checkInternet().then((value) {
+                    if (value) {
+                      //proceed
+                    } else {
+                      //show toast
+                    }
+                  });
+                }
+              },
+              buttonText: MyStrings.submit,
+            ),
+          ),
+        ),*/
+        body: SingleChildScrollView(
+          child: Form(
+            key: viewModel.page4Key,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                Obx(() => CustomDropDown(
+                  hintText: "${MyStrings.rcAvailability}*",
+                  label: viewModel.selectedRCAvailability.value.isEmpty
+                      ? null
+                      : "${MyStrings.rcAvailability}*",
+                  value: viewModel.selectedRCAvailability.value.isEmpty
+                      ? null
+                      : viewModel.selectedRCAvailability.value,
+                  items: viewModel.rcAvailabilityList
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: MyStyles.dropdownMenuStyle,
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    viewModel.selectedRCAvailability.value = value;
+                  },
+                  validator: (value) {
+                    if (value == null) {
+                      return MyStrings.required;
+                    }
+                    return null;
+                  },
+                )),
+                SizedBox(
+                  height: Dimens.standard_24,
+                ),
                 Obx(() => CustomDropDown(
                   hintText: "${MyStrings.transmission}*",
                   label: viewModel.selectedTransmission.value.isEmpty
@@ -1035,6 +1071,19 @@ class NewEvaluationScreen extends StatelessWidget {
                     return null;
                   },
                 )),
+                SizedBox(
+                  height: Dimens.standard_24,
+                ),
+                CustomTextFormField(
+                  controller: viewModel.customerPriceController.value,
+                  labelText: "${MyStrings.customerPrice}*",
+                  helperText: "${MyStrings.customerPrice}*",
+                  validator: ValidateInput.validateRequiredFields,
+                  keyboardType: TextInputType.number,
+                  inputFormatter: [
+                    LengthLimitingTextInputFormatter(Constants.amountLength)
+                  ],
+                ),
                 SizedBox(
                   height: Dimens.standard_24,
                 ),
@@ -1071,12 +1120,16 @@ class NewEvaluationScreen extends StatelessWidget {
                 SizedBox(
                   height: Dimens.standard_24,
                 ),
+                if(viewModel.selectedOdometerWorking.value == 'Yes')
                 CustomTextFormField(
                   controller: viewModel.odometerReadingController.value,
-                  labelText: MyStrings.odometerReading,
-                  helperText: MyStrings.odometerReading,
-                  validator: (p0) => null,
+                  labelText: '${MyStrings.odometerReading}*',
+                  helperText: '${MyStrings.odometerReading}*',
+                  validator: ValidateInput.validateRequiredFields,
+                  keyboardType: TextInputType.number,
+                  inputFormatter: [LengthLimitingTextInputFormatter(Constants.maxInputLength)],
                 ),
+                if(viewModel.selectedOdometerWorking.value == 'Yes')
                 SizedBox(
                   height: Dimens.standard_24,
                 ),
@@ -1115,10 +1168,10 @@ class NewEvaluationScreen extends StatelessWidget {
                 ),
                 Obx(
                   () => CustomDropDown(
-                    hintText: "${MyStrings.oEMWarrantyRemaining}*",
+                    hintText: MyStrings.oEMWarrantyRemaining,
                     label: viewModel.selectedOEMRemaining.value.isEmpty
                         ? null
-                        : "${MyStrings.oEMWarrantyRemaining}*",
+                        : MyStrings.oEMWarrantyRemaining,
                     value: viewModel.selectedOEMRemaining.value.isEmpty
                         ? null
                         : viewModel.selectedOEMRemaining.value,
@@ -1136,9 +1189,6 @@ class NewEvaluationScreen extends StatelessWidget {
                       viewModel.selectedOEMRemaining.value = value;
                     },
                     validator: (value) {
-                      if (value == null) {
-                        return MyStrings.required;
-                      }
                       return null;
                     },
                   ),

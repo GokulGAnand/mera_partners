@@ -37,9 +37,11 @@ class NewEvaluationViewModel extends GetxController{
   var selectedBodyType = "".obs;
   var selectedEngineCC = "".obs;
   var selectedVehicleUsage = "".obs;
-  var selectedLength = "".obs;
+  var selectedColor = "".obs;
   var selectedCCClass = "".obs;
+  var selectedDupKey = "".obs;
   ///page 4
+  var selectedRCAvailability = "".obs;
   var selectedSeats = "".obs;
   var selectedAccidental = "".obs;
   var selectedOEMRemaining = "".obs;
@@ -48,6 +50,8 @@ class NewEvaluationViewModel extends GetxController{
   List<String> yesNoList = Constants.yesNoList;
   List<String> registeredList = Constants.registeredList;
   List<String> seatList = Constants.seatList;
+  List<String> duplicateKeyList = Constants.yesNoList;
+  List<String> rcAvailabilityList = Constants.rcAvailabilityList;
   List<String> lengthList = Constants.lengthList;
   List<String> ownerShipList = Constants.ownerShipList;
   List<String> fuelTypeList = Constants.fuelTypeList;
@@ -56,6 +60,7 @@ class NewEvaluationViewModel extends GetxController{
   List<String> transmissionList = Constants.transmissionList;
   List<String> ccClassList = Constants.ccClassList;
   List<String> ccList = Constants.engineCCList;
+  List<String> colorList = Constants.carColors;
   List<String> indianStatesList = Constants.indianStates;
   List<String> keralaDistrictsList = Constants.keralaDistricts;
 
