@@ -70,7 +70,6 @@ class MyStrings {
   static const String taxValidity = "Tax Validity";
   static const String rto = "RTO";
   static const String noOfCylinders = "Number of Cylinders";
-  static const String empty = "";
   static const String dashboard = "Dashboard";
   static const String documents = "Documents";
   static const String exterior = "Exterior";
@@ -84,4 +83,7 @@ class MyStrings {
   static const String search = "Search";
   static const String page1 = "Page 1";
   static const String input = "Input";
+  static const String duplicateKey = "Duplicate Key";
+  static const String rcAvailability = "RC Availability";
+  static const String empty = "";
 }
