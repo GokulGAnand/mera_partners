@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:evaluator_app/model/response/login/validate_user_response.dart';

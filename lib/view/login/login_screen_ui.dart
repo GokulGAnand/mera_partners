@@ -1,4 +1,5 @@
 import 'package:evaluator_app/view_model/login/login_view_model.dart';
+import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../service/internet_check.dart';
@@ -95,7 +96,7 @@ class LoginScreen extends StatelessWidget {
                         if (value) {
                           loginScreenViewModel.validateUser();
                         } else {
-                          //show toast
+                          CustomToast.instance.showMsg(MyStrings.checkNetwork);
                         }
                       });
                     }

@@ -1,12 +1,13 @@
-class CarMakeListResponse {
+class CarModelVariantListResponse {
   String? status;
   String? message;
   List<Data>? data;
   Meta? meta;
 
-  CarMakeListResponse({this.status, this.message, this.data, this.meta});
+  CarModelVariantListResponse(
+      {this.status, this.message, this.data, this.meta});
 
-  CarMakeListResponse.fromJson(Map<String, dynamic> json) {
+  CarModelVariantListResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     if (json['data'] != null) {
@@ -73,7 +74,7 @@ class Meta {
   String? access;
   String? refresh;
 
-  Meta({access, refresh});
+  Meta({this.access, this.refresh});
 
   Meta.fromJson(Map<String, dynamic> json) {
     access = json['access'];

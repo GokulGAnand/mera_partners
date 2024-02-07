@@ -4,4 +4,5 @@ class EndPoints{
 
   static String login = 'auth/login';
   static String brand = 'brand';
+  static String evaluation = 'evaluation';
 }

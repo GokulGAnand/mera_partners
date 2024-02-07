@@ -36,7 +36,7 @@ class MyStrings {
   static const String required = "Required";
   static const String rcOwnerName = "RC Owner Name";
   static const String ownershipNumber = "Ownership Number";
-  static const String regState = "Reg State";
+  static const String regState = "Registration  State";
   static const String valuationState = "Valuation State";
   static const String regCity = "Reg City";
   static const String valuationCity = "Valuation City";
@@ -85,5 +85,7 @@ class MyStrings {
   static const String input = "Input";
   static const String duplicateKey = "Duplicate Key";
   static const String rcAvailability = "RC Availability";
+  static const String checkNetwork = "Check your network connection";
+  static const String vMandatory = "Fill all mandatory details";
   static const String empty = "";
 }

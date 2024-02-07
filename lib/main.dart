@@ -1,8 +1,5 @@
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/view/dashboard/dashboard_screen_ui.dart';
-import 'package:evaluator_app/view/home/home_screen_ui.dart';
-import 'package:evaluator_app/view/login/login_screen_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
