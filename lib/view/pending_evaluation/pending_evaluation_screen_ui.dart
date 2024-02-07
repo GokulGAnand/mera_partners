@@ -2,7 +2,6 @@ import 'package:evaluator_app/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import '../../utils/colors.dart';
 import '../../utils/images.dart';
 import '../../utils/strings.dart';
@@ -11,6 +10,7 @@ import '../../widgets/common_app_bar.dart';
 import '../../widgets/common_drawer.dart';
 import '../../widgets/custom_text_form_field.dart';
 
+/// ignore: must_be_immutable
 class PendingEvaluationScreen extends StatelessWidget {
   PendingEvaluationScreen({super.key});
 
@@ -67,7 +67,7 @@ class PendingEvaluationScreen extends StatelessWidget {
                         future: viewModel.fetchCarBasicsData(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState == ConnectionState.waiting) {
-                            return CircularProgressIndicator();
+                            return const CircularProgressIndicator();
                           } else if (snapshot.hasError) {
                             return Text('Error:${snapshot.error}');
                           } else {
