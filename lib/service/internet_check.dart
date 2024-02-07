@@ -9,5 +9,4 @@ class Internet {
       return true;
     }
   }
-
 }

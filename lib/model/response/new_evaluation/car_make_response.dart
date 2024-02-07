@@ -40,9 +40,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    document = json['document'] != null
-        ? Document.fromJson(json['document'])
-        : null;
+    document = json['document'] != null ? Document.fromJson(json['document']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -63,13 +61,7 @@ class Document {
   String? createdAt;
   String? updatedAt;
 
-  Document(
-      {this.sId,
-        this.make,
-        this.model,
-        this.variant,
-        this.createdAt,
-        this.updatedAt});
+  Document({this.sId, this.make, this.model, this.variant, this.createdAt, this.updatedAt});
 
   Document.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];

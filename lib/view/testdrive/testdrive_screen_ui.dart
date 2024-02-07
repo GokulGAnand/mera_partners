@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import '../../view_model/testdrive/testdrive_screen_view_model.dart';
 import '../../widgets/custom_dropdown.dart';
 
+/// ignore: must_be_immutable
 class TestDriveScreen extends StatelessWidget {
   TestDriveScreen({super.key});
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
@@ -69,9 +70,9 @@ class TestDriveScreen extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             CustomDropDown(
-              hintText: "${MyStrings.steering}",
+              hintText: MyStrings.steering,
               label: viewModel.selectedSteeringWheel.value.isEmpty
                   ? null
                   : "${MyStrings.steering}*",
@@ -100,7 +101,7 @@ class TestDriveScreen extends StatelessWidget {
               },
             ),
             CustomDropDown(
-              hintText: "${MyStrings.steering}",
+              hintText: MyStrings.steering,
               label: viewModel.selectedSteeringWheel.value.isEmpty
                   ? null
                   : "${MyStrings.steering}*",

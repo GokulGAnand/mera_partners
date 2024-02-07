@@ -19,7 +19,7 @@ class CommonDrawer extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(18.0,29,0,21),
+            padding: const EdgeInsets.fromLTRB(18.0, 29, 0, 21),
             child: ListTile(
               leading: SizedBox(
                 width: Dimens.standard_41,
@@ -28,19 +28,29 @@ class CommonDrawer extends StatelessWidget {
                   MyImages.profile,
                 ),
               ),
-              title: Text(globals.userName != null ? globals.userName ?? "":"",style: const TextStyle(color: MyColors.blueDark,fontSize: 24,fontWeight: FontWeight.w700,letterSpacing: 0.24),),
+              title: Text(
+                globals.userName != null ? globals.userName ?? "" : "",
+                style: const TextStyle(color: MyColors.blueDark, fontSize: 24, fontWeight: FontWeight.w700, letterSpacing: 0.24),
+              ),
             ),
           ),
           const Divider(),
           Padding(
-            padding: const EdgeInsets.fromLTRB(18,0,18,0),
+            padding: const EdgeInsets.fromLTRB(18, 0, 18, 0),
             child: Column(
               children: [
-                SizedBox(height: Dimens.standard_12,),
+                SizedBox(
+                  height: Dimens.standard_12,
+                ),
                 Row(
                   children: [
-                    const SizedBox(width: 18,),
-                    Text(MyStrings.accountSettings,style: MyStyles.greyStyle,),
+                    const SizedBox(
+                      width: 18,
+                    ),
+                    Text(
+                      MyStrings.accountSettings,
+                      style: MyStyles.greyStyle,
+                    ),
                   ],
                 ),
                 SizedBox(
@@ -49,22 +59,81 @@ class CommonDrawer extends StatelessWidget {
                     data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
                     child: ExpansionTile(
                       iconColor: MyColors.grey,
-                      title: const Text(MyStrings.userDetails,style: MyStyles.blackTitleStyle,),
+                      title: const Text(
+                        MyStrings.userDetails,
+                        style: MyStyles.blackTitleStyle,
+                      ),
                       children: <Widget>[
-                        ListTile(leading: SvgPicture.asset(MyImages.mobile,width: 16.25,height: 16.25,),title: Text(globals.contactNo != null ? globals.contactNo.toString() :"",style: MyStyles.greyMediumStyle,),),
-                        const Divider(color: MyColors.transparent1,),
-                        ListTile(leading: SvgPicture.asset(MyImages.mail,width: 16.25,height: 16.25,),title: Text(globals.email != null ? globals.email ?? "":"",style: MyStyles.greyMediumStyle,),),
+                        ListTile(
+                          leading: SvgPicture.asset(
+                            MyImages.mobile,
+                            width: 16.25,
+                            height: 16.25,
+                          ),
+                          title: Text(
+                            globals.contactNo != null ? globals.contactNo.toString() : "",
+                            style: MyStyles.greyMediumStyle,
+                          ),
+                        ),
+                        const Divider(
+                          color: MyColors.transparent1,
+                        ),
+                        ListTile(
+                          leading: SvgPicture.asset(
+                            MyImages.mail,
+                            width: 16.25,
+                            height: 16.25,
+                          ),
+                          title: Text(
+                            globals.email != null ? globals.email ?? "" : "",
+                            style: MyStyles.greyMediumStyle,
+                          ),
+                        ),
                         const Divider(color: MyColors.transparent1),
-                        ListTile(leading: SvgPicture.asset(MyImages.location,width: 16.25,height: 16.25,),title: Text(globals.city != null ? globals.city ?? "":"",style: MyStyles.greyMediumStyle,),),
+                        ListTile(
+                          leading: SvgPicture.asset(
+                            MyImages.location,
+                            width: 16.25,
+                            height: 16.25,
+                          ),
+                          title: Text(
+                            globals.city != null ? globals.city ?? "" : "",
+                            style: MyStyles.greyMediumStyle,
+                          ),
+                        ),
                         const Divider(color: MyColors.transparent1),
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(height: 20,),
-                ListTile(leading: const Text(MyStrings.changePassword,style: MyStyles.blackTitleStyle,),trailing:  SvgPicture.asset(MyImages.arrowRight,width: Dimens.standard_24,height: Dimens.standard_24,),),
-                const SizedBox(height: 20,),
-                ListTile(leading:  SvgPicture.asset(MyImages.logout,width: 19,height: 19,),title: const Text(MyStrings.signOut,style: MyStyles.blackTitleStyle,),),
+                const SizedBox(
+                  height: 20,
+                ),
+                ListTile(
+                  leading: const Text(
+                    MyStrings.changePassword,
+                    style: MyStyles.blackTitleStyle,
+                  ),
+                  trailing: SvgPicture.asset(
+                    MyImages.arrowRight,
+                    width: Dimens.standard_24,
+                    height: Dimens.standard_24,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ListTile(
+                  leading: SvgPicture.asset(
+                    MyImages.logout,
+                    width: 19,
+                    height: 19,
+                  ),
+                  title: const Text(
+                    MyStrings.signOut,
+                    style: MyStyles.blackTitleStyle,
+                  ),
+                ),
               ],
             ),
           )

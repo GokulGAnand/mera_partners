@@ -5,11 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 void main() {
-
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: MyColors.white, // status bar color
-    statusBarIconBrightness: Brightness.dark
-  ));
+      statusBarColor: MyColors.white, // status bar color
+      statusBarIconBrightness: Brightness.dark));
 
   runApp(const MyApp());
 }
@@ -27,11 +25,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: MyColors.kPrimaryColor),
         useMaterial3: true,
       ),
-
       getPages: AppRoutes().pages,
       initialRoute: AppRoutes.loginScreen,
     );
   }
 }
-
-

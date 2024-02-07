@@ -16,10 +16,8 @@ class CustomToast {
         snackPosition: SnackPosition.TOP,
         duration: const Duration(seconds: 3),
         borderRadius: 8,
-        margin: const EdgeInsets.only(top: 10,left: 5,right: 5),
+        margin: const EdgeInsets.only(top: 10, left: 5, right: 5),
       ),
     );
   }
-
-
 }

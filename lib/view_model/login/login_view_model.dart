@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:evaluator_app/utils/globals.dart' as globals;
 import 'package:http/http.dart' as http;
 
-class LoginScreenViewModel extends GetxController{
+class LoginScreenViewModel extends GetxController {
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
@@ -26,13 +26,9 @@ class LoginScreenViewModel extends GetxController{
 
   void validateUser() async {
     try {
-      var response = await http.post(Uri.parse(EndPoints.baseUrl+EndPoints.login),body: {
-            "role":"EVALUATOR",
-            "userId": userNameController.text,
-            "password": passwordController.text
-          });
+      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.login), body: {"role": "EVALUATOR", "userId": userNameController.text, "password": passwordController.text});
 
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         validateUserResponse = ValidateUserResponse.fromJson(json.decode(response.body));
         globals.userName = validateUserResponse!.data!.first.fullname;
         globals.contactNo = validateUserResponse!.data!.first.contactNo;
@@ -48,5 +44,4 @@ class LoginScreenViewModel extends GetxController{
       }
     }
   }
-
 }

@@ -17,9 +17,7 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
   final GlobalKey<ScaffoldState> _key = GlobalKey();
-  var viewModel = Get.isRegistered<HomeScreenViewModel>()
-      ? Get.find<HomeScreenViewModel>()
-      : Get.put(HomeScreenViewModel());
+  var viewModel = Get.isRegistered<HomeScreenViewModel>() ? Get.find<HomeScreenViewModel>() : Get.put(HomeScreenViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +49,7 @@ class HomeScreen extends StatelessWidget {
             )
           ],
           bottom: PreferredSize(
-              preferredSize: Size(MediaQuery.of(context).size.width,
-                  MediaQuery.of(context).size.height * .1),
+              preferredSize: Size(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height * .1),
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 25.0),
                 child: ListTile(
@@ -65,14 +62,9 @@ class HomeScreen extends StatelessWidget {
                   ),
                   title: Text(
                     globals.userName != null ? globals.userName ?? "" : "",
-                    style: const TextStyle(
-                        color: MyColors.blueDark,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 0.24),
+                    style: const TextStyle(color: MyColors.blueDark, fontSize: 24, fontWeight: FontWeight.w700, letterSpacing: 0.24),
                   ),
-                  subtitle: Text(globals.city != null ? globals.city ?? "" : "",
-                      style: MyStyles.locationStyle),
+                  subtitle: Text(globals.city != null ? globals.city ?? "" : "", style: MyStyles.locationStyle),
                 ),
               )),
         ),
@@ -93,11 +85,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   title: Text(
                     globals.userName != null ? globals.userName ?? "" : "",
-                    style: const TextStyle(
-                        color: MyColors.blueDark,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 0.24),
+                    style: const TextStyle(color: MyColors.blueDark, fontSize: 24, fontWeight: FontWeight.w700, letterSpacing: 0.24),
                   ),
                 ),
               ),
@@ -123,8 +111,7 @@ class HomeScreen extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: Theme(
-                        data: Theme.of(context)
-                            .copyWith(dividerColor: Colors.transparent),
+                        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
                         child: ExpansionTile(
                           iconColor: MyColors.grey,
                           title: const Text(
@@ -139,9 +126,7 @@ class HomeScreen extends StatelessWidget {
                                 height: 16.25,
                               ),
                               title: Text(
-                                globals.contactNo != null
-                                    ? globals.contactNo.toString()
-                                    : "",
+                                globals.contactNo != null ? globals.contactNo.toString() : "",
                                 style: MyStyles.greyMediumStyle,
                               ),
                             ),
@@ -155,9 +140,7 @@ class HomeScreen extends StatelessWidget {
                                 height: 16.25,
                               ),
                               title: Text(
-                                globals.email != null
-                                    ? globals.email ?? ""
-                                    : "",
+                                globals.email != null ? globals.email ?? "" : "",
                                 style: MyStyles.greyMediumStyle,
                               ),
                             ),
@@ -228,11 +211,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
               GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 29,
-                      mainAxisSpacing: 29,
-                      childAspectRatio: 3.5 / 3.8),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 29, mainAxisSpacing: 29, childAspectRatio: 3.5 / 3.8),
                   itemCount: viewModel.homeList.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
@@ -243,7 +222,7 @@ class HomeScreen extends StatelessWidget {
                       onPressed: () {
                         if (index == 0) {
                           Get.toNamed(AppRoutes.newEvaluationScreen);
-                          }else if(index == 1){
+                        } else if (index == 1) {
                           Get.toNamed(AppRoutes.pendingEvaluationScreen);
                         }
                       },

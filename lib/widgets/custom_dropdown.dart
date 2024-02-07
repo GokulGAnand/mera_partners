@@ -5,8 +5,8 @@ import '../utils/colors.dart';
 
 /// ignore: must_be_immutable
 class CustomDropDown extends StatelessWidget {
-  
-  CustomDropDown({super.key, 
+  CustomDropDown({
+    super.key,
     this.hintText,
     this.disabledHint,
     this.value,
@@ -32,30 +32,35 @@ class CustomDropDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return DropdownButtonFormField(
-      hint: Text(hintText!,overflow: TextOverflow.ellipsis,style: const TextStyle(color: MyColors.blue,overflow: TextOverflow.ellipsis,fontSize: 16,fontWeight: FontWeight.w400),),
+      hint: Text(
+        hintText!,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(color: MyColors.blue, overflow: TextOverflow.ellipsis, fontSize: 16, fontWeight: FontWeight.w400),
+      ),
       value: value,
       isExpanded: true,
       items: items,
       onChanged: onChanged,
       icon: Padding(
-        padding: const EdgeInsets.fromLTRB(0,8.0,17,8),
+        padding: const EdgeInsets.fromLTRB(0, 8.0, 17, 8),
         child: SvgPicture.asset(MyImages.arrowDown),
       ),
-      style: const TextStyle(fontSize: 16,fontFamily: 'Inter', color: MyColors.black,overflow: TextOverflow.ellipsis,fontWeight: FontWeight.w400),
+      style: const TextStyle(fontSize: 16, fontFamily: 'Inter', color: MyColors.black, overflow: TextOverflow.ellipsis, fontWeight: FontWeight.w400),
       validator: validator,
-      disabledHint: disabledHint == null ? null : Text(disabledHint!,overflow: TextOverflow.ellipsis),
+      disabledHint: disabledHint == null ? null : Text(disabledHint!, overflow: TextOverflow.ellipsis),
       decoration: InputDecoration(
-        focusedBorder: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(8.0)),
-          borderSide: BorderSide(color: MyColors.kPrimaryColor, width: 2),),
+        focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+          borderSide: BorderSide(color: MyColors.kPrimaryColor, width: 2),
+        ),
         isDense: true,
         contentPadding: const EdgeInsets.fromLTRB(20.0, 18.0, 0.0, 18.0),
-        label: label == null ? null:Text(label!,style: const TextStyle(color: MyColors.blue,overflow: TextOverflow.ellipsis,fontSize: 16,fontWeight: FontWeight.w400)),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0),),
+        label: label == null ? null : Text(label!, style: const TextStyle(color: MyColors.blue, overflow: TextOverflow.ellipsis, fontSize: 16, fontWeight: FontWeight.w400)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
       ),
     );
   }
 }
-
-

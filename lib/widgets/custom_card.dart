@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../utils/dimens.dart';
 
-class CustomCard extends StatelessWidget{
-
-  const CustomCard({super.key, required this.label,required this.icon, required this.onPressed, required this.cardColor, this.labelStyle});
+class CustomCard extends StatelessWidget {
+  const CustomCard({super.key, required this.label, required this.icon, required this.onPressed, required this.cardColor, this.labelStyle});
 
   final String label;
   final String icon;
@@ -21,10 +20,7 @@ class CustomCard extends StatelessWidget{
       child: Container(
         width: MediaQuery.of(context).size.width * 0.2,
         height: MediaQuery.of(context).size.width * 0.2,
-        decoration: BoxDecoration(
-            color: cardColor,
-          borderRadius: BorderRadius.circular(8)
-        ),
+        decoration: BoxDecoration(color: cardColor, borderRadius: BorderRadius.circular(8)),
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(
@@ -33,20 +29,17 @@ class CustomCard extends StatelessWidget{
               Container(
                 width: Dimens.standard_72,
                 height: Dimens.standard_72,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: MyColors.white
-                ),
+                decoration: const BoxDecoration(shape: BoxShape.circle, color: MyColors.white),
                 child: Center(child: SvgPicture.asset(icon)),
               ),
-              const SizedBox(height: 17,),
-              Text(label,textAlign: TextAlign.center,style: labelStyle ?? MyStyles.cardTitleStyle),
-
+              const SizedBox(
+                height: 17,
+              ),
+              Text(label, textAlign: TextAlign.center, style: labelStyle ?? MyStyles.cardTitleStyle),
             ],
           ),
         ),
       ),
     );
   }
-
 }

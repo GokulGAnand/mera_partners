@@ -1,6 +1,4 @@
-
 class MyStrings {
-
   ///Login Screen
   static const String welcome = "Welcome";
   static const String username = "Username";
@@ -12,18 +10,18 @@ class MyStrings {
   static const String vPassword = "Enter Password*";
   static const String keraCarsEvaluator = "Kera Cars Evaluator";
   static const String categories = "Categories";
-  static const String newEvaluation= "New\n Evaluation";
+  static const String newEvaluation = "New\n Evaluation";
   static const String pendingEvaluation = "Pending\n Evaluation";
   static const String completedEvaluation = "Completed Evaluation";
-  static const String accountSettings= "Account Settings";
+  static const String accountSettings = "Account Settings";
   static const String userDetails = "User Details";
   static const String changePassword = "Change Password";
   static const String signOut = "Sign out";
   static const String newEvaluation1 = "New Evaluation";
   static const String page = "Page ";
-  static const String customerMobileNumber  = "Customer Mobile Number";
-  static const String sellerPhoneNumber  = "Seller Phone Number";
-  static const String rcOwnerPhoneNumber  = "RC Owner Phone Number";
+  static const String customerMobileNumber = "Customer Mobile Number";
+  static const String sellerPhoneNumber = "Seller Phone Number";
+  static const String rcOwnerPhoneNumber = "RC Owner Phone Number";
   static const String manufacturingYear = "Manufacturing Year";
   static const String carMake = "Car Make (Brand)";
   static const String carModel = "Car Model";
@@ -59,8 +57,8 @@ class MyStrings {
   static const String remarks = "Remarks";
   static const String submit = "Submit";
   static const String oEMWarrantyRemaining = "OEM Warranty Remaining";
-  static const String noOfMonthsRemaining  = "Number of Months Remaining";
-  static const String noOfKmsRemaining  = "Number of Kms Remaining";
+  static const String noOfMonthsRemaining = "Number of Months Remaining";
+  static const String noOfKmsRemaining = "Number of Kms Remaining";
   static const String vValidNumber = "Enter valid mobile number";
   static const String ok = "Ok";
   static const String cancel = "Cancel";
@@ -76,9 +74,9 @@ class MyStrings {
   static const String engine = "Engine";
   static const String interior = "Interior &\nElectrical";
   static const String test = "Test Drive";
-  static const String features =" Features";
-  static const String air=" Air condition";
-  static const String comments= "Comments";
+  static const String features = "Features";
+  static const String air = "Air condition";
+  static const String comments = "Comments";
   static const String pendingEvaluation1 = "Pending Evaluation";
   static const String search = "Search";
   static const String page1 = "Page 1";
@@ -87,7 +85,7 @@ class MyStrings {
   static const String rcAvailability = "RC Availability";
   static const String checkNetwork = "Check your network connection";
   static const String vMandatory = "Fill all mandatory details";
-  static const String empty = "";
   static const String steering = "Steering System";
   static const String steeringWheel = "Steering Wheel";
+  static const String empty = "";
 }

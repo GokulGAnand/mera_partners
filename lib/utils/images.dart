@@ -24,9 +24,8 @@ class MyImages {
   static const settings = "${imageRoot}settings.svg";
   static const heat = "${imageRoot}heat_pump.svg";
   static const maps = "${imageRoot}maps.svg";
-  static const search1 =  "${imageRoot}search.svg";
+  static const search1 = "${imageRoot}search.svg";
   static const speedometer = "${imageRoot}speedometer.svg";
   static const calendar2 = "${imageRoot}calendar_month.png";
-  static const arrowDown ="${imageRoot}arrow_down.svg";
-
+  static const arrowDown = "${imageRoot}arrow_down.svg";
 }

@@ -47,20 +47,7 @@ class Data {
   String? state;
   int? contactNo;
 
-  Data(
-      {this.sId,
-        this.fullname,
-        this.userId,
-        this.isBlocked,
-        this.role,
-        this.email,
-        this.createdAt,
-        this.updatedAt,
-        this.evaluatedCarId,
-        this.city,
-        this.district,
-        this.state,
-        this.contactNo});
+  Data({this.sId, this.fullname, this.userId, this.isBlocked, this.role, this.email, this.createdAt, this.updatedAt, this.evaluatedCarId, this.city, this.district, this.state, this.contactNo});
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];

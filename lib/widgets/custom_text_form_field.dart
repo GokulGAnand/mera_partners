@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../utils/colors.dart';
 
 class CustomTextFormField extends StatefulWidget {
-  const CustomTextFormField({super.key,
+  const CustomTextFormField({
+    super.key,
     this.labelText,
     this.isPwdType = false,
     required this.controller,
@@ -34,7 +35,8 @@ class CustomTextFormField extends StatefulWidget {
     this.labelHeight,
     this.showCursor = true,
     this.focusNode,
-    this.labelStyle, this.topPadding,
+    this.labelStyle,
+    this.topPadding,
   });
 
   final String? labelText;
@@ -72,40 +74,42 @@ class CustomTextFormField extends StatefulWidget {
   final Key? formKey;
 
   final VoidCallback? onClick;
+
   @override
   CustomTextFormFieldState createState() => CustomTextFormFieldState();
 }
 
 class CustomTextFormFieldState extends State<CustomTextFormField> {
   FocusNode myFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         widget.showSuffix
             ? const Positioned(
-          bottom: 13,
-          right: 12,
-          child: SizedBox(
-            width: 24,
-            height: 24,
-            child: Icon(
-              Icons.search,
-              color: MyColors.grey,
-            ),
-          ),
-        )
+                bottom: 13,
+                right: 12,
+                child: SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: Icon(
+                    Icons.search,
+                    color: MyColors.grey,
+                  ),
+                ),
+              )
             : Container(),
         TextFormField(
-          key: widget.key ,
-          style:  const TextStyle(color: MyColors.black,fontSize: 16,fontWeight: FontWeight.w400),
+          key: widget.key,
+          style: const TextStyle(color: MyColors.black, fontSize: 16, fontWeight: FontWeight.w400),
           inputFormatters: widget.inputFormatter,
           controller: widget.controller,
           keyboardType: widget.keyboardType,
           cursorColor: widget.cursorColor,
           showCursor: widget.showCursor,
           obscureText: widget.isPwdType,
-          obscuringCharacter:'*',
+          obscuringCharacter: '*',
           enabled: widget.isEnabled,
           readOnly: widget.isReadonly,
           textCapitalization: widget.textCapitalization,
@@ -118,19 +122,15 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
           onSaved: widget.onSave,
           onTap: widget.onClick,
           decoration: InputDecoration(
-            helperStyle:  const TextStyle(color: MyColors.black),
+            helperStyle: const TextStyle(color: MyColors.black),
             contentPadding: EdgeInsets.fromLTRB(16.0, widget.topPadding ?? 18.0, 0.0, 18.0),
             hintText: widget.helperText,
             labelText: widget.labelText,
             filled: true,
             fillColor: widget.fillColor ?? MyColors.white,
-            hintStyle: TextStyle(
-              color: widget.hintTextColor ?? MyColors.greyMedium,
-              fontSize: 16,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w400
-              // fontSize:10,
-            ),
+            hintStyle: TextStyle(color: widget.hintTextColor ?? MyColors.greyMedium, fontSize: 16, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400
+                // fontSize:10,
+                ),
             border: const OutlineInputBorder(
               borderSide: BorderSide(color: MyColors.grey),
               borderRadius: BorderRadius.all(
@@ -140,22 +140,13 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
             focusColor: MyColors.red,
             focusedBorder: OutlineInputBorder(
               borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-              borderSide: BorderSide(
-                  color: widget.focusedBorderColor ?? MyColors.grey,
-                  width: 2),
+              borderSide: BorderSide(color: widget.focusedBorderColor ?? MyColors.grey, width: 2),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-              borderSide: BorderSide(
-                  color: widget.enabledBorderColor ?? MyColors.grey),
+              borderSide: BorderSide(color: widget.enabledBorderColor ?? MyColors.grey),
             ),
-            labelStyle: widget.labelStyle ?? TextStyle(
-                height: widget.labelHeight??0.5,
-                color: widget.labelColor ?? MyColors.blue,
-                fontSize: 15,
-              fontWeight: FontWeight.w500,
-              fontStyle: FontStyle.normal
-            ),
+            labelStyle: widget.labelStyle ?? TextStyle(height: widget.labelHeight ?? 0.5, color: widget.labelColor ?? MyColors.blue, fontSize: 15, fontWeight: FontWeight.w500, fontStyle: FontStyle.normal),
             prefixIcon: widget.prefixIcon,
             suffixIcon: widget.suffixIcon,
           ),

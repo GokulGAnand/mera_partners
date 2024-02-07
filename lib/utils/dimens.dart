@@ -9,7 +9,6 @@ class Dimens {
   ///padding
   static const EdgeInsets padding16 = EdgeInsets.all(16);
 
-
   static const double dp_5 = 5;
   static const double dp_8 = 8;
   static const double dp_10 = 10;
@@ -53,7 +52,6 @@ class Dimens {
   static const double letterSpacing_25 = 0.25;
   static const double letterSpacing_45 = 0.45;
   static const double letterSpacing_65 = 0.65;
-
 
   static double standard_0 = 0.0;
   static double standard_1 = 1.0;
@@ -257,6 +255,4 @@ class Dimens {
   static double standard_198 = 198.0;
   static double standard_199 = 199.0;
   static double standard_200 = 200.0;
-
-
 }

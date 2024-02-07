@@ -10,47 +10,26 @@ import '../view/pending_evaluation/pending_evaluation_screen_ui.dart';
 import '../view/testdrive/binding/testdrive_binding.dart';
 import '../view/testdrive/testdrive_screen_ui.dart';
 
-class AppRoutes{
-
+class AppRoutes {
   static const String loginScreen = '/login_screen_ui';
   static const String homeScreen = '/home_screen_ui';
   static const String newEvaluationScreen = '/new_evaluation_screen_ui';
-  static const String pendingEvaluationScreen ='/pending_evaluation_screen_ui';
-  static const String testDriveScreen= '/testdrive_screen_ui';
+  static const String pendingEvaluationScreen = '/pending_evaluation_screen_ui';
+  static const String testDriveScreen = '/testdrive_screen_ui';
 
   List<GetPage> pages = [
-    GetPage(name: loginScreen,
-        page: () => LoginScreen(),
-      bindings: [
-        LoginBinding(),
-      ]
-    ),
-    GetPage(name: homeScreen,
-        page: () => HomeScreen(),
-      bindings: [
-        HomeBinding(),
-      ]
-    ),
-    GetPage(name: newEvaluationScreen,
-        page: () => NewEvaluationScreen(),
-      bindings: [
-        NewEvaluationBinding(),
-      ]
-    ),
-    GetPage(name: pendingEvaluationScreen,
-        page:() => PendingEvaluationScreen(),
-      bindings: [
-        PendingEvaluationBinding(),
-      ]
-    ),
-    GetPage(name:  testDriveScreen,
-        page: () =>  TestDriveScreen(),
-    bindings: [
-      TestDriveBinding()
-    ])
-
+    GetPage(name: loginScreen, page: () => LoginScreen(), bindings: [
+      LoginBinding(),
+    ]),
+    GetPage(name: homeScreen, page: () => HomeScreen(), bindings: [
+      HomeBinding(),
+    ]),
+    GetPage(name: newEvaluationScreen, page: () => NewEvaluationScreen(), bindings: [
+      NewEvaluationBinding(),
+    ]),
+    GetPage(name: pendingEvaluationScreen, page: () => PendingEvaluationScreen(), bindings: [
+      PendingEvaluationBinding(),
+    ]),
+    GetPage(name: testDriveScreen, page: () => TestDriveScreen(), bindings: [TestDriveBinding()])
   ];
-
-
-
 }

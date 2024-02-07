@@ -20,7 +20,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(()=>  Scaffold(
+    return Obx(
+      () => Scaffold(
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(left: 16.0, right: 16),
@@ -29,20 +30,28 @@ class LoginScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(Dimens.dp_100,Dimens.dp_30,Dimens.dp_100,Dimens.dp_30),
+                      padding: const EdgeInsets.fromLTRB(Dimens.dp_100, Dimens.dp_30, Dimens.dp_100, Dimens.dp_30),
                       child: Image.asset(MyImages.appLogo),
                     ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(Dimens.standard_34,0,Dimens.standard_34,0),
+                      padding: EdgeInsets.fromLTRB(Dimens.standard_34, 0, Dimens.standard_34, 0),
                       child: Image.asset(MyImages.loginImage),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: Dimens.standard_39,bottom: Dimens.standard_7),
-                      child: Text(MyStrings.welcome,style: MyStyles.bold,textAlign: TextAlign.center,),
+                      padding: EdgeInsets.only(top: Dimens.standard_39, bottom: Dimens.standard_7),
+                      child: Text(
+                        MyStrings.welcome,
+                        style: MyStyles.bold,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: Dimens.standard_57),
-                      child: Text(MyStrings.loginDesc,style: MyStyles.regular,textAlign: TextAlign.center,),
+                      child: Text(
+                        MyStrings.loginDesc,
+                        style: MyStyles.regular,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                     CustomTextFormField(
                       controller: loginScreenViewModel.userNameController,
@@ -50,7 +59,9 @@ class LoginScreen extends StatelessWidget {
                       helperText: "${MyStrings.username}*",
                       validator: ValidateInput.validateName,
                     ),
-                    SizedBox(height: Dimens.standard_23,),
+                    SizedBox(
+                      height: Dimens.standard_23,
+                    ),
                     CustomTextFormField(
                       controller: loginScreenViewModel.passwordController,
                       labelText: "${MyStrings.password}*",
@@ -62,20 +73,24 @@ class LoginScreen extends StatelessWidget {
                           loginScreenViewModel.passwordVisibility.value = !loginScreenViewModel.passwordVisibility.value;
                         },
                         child: Icon(
-                          loginScreenViewModel.passwordVisibility.value
-                              ? Icons.visibility_outlined
-                              : Icons.visibility_off_outlined,
+                          loginScreenViewModel.passwordVisibility.value ? Icons.visibility_outlined : Icons.visibility_off_outlined,
                           color: MyColors.kPrimaryColor,
                           size: 22,
                         ),
                       ),
                     ),
-                    SizedBox(height: Dimens.standard_23,),
+                    SizedBox(
+                      height: Dimens.standard_23,
+                    ),
                     Row(
                       children: [
                         TextButton(
                             onPressed: () {},
-                            child: Text(MyStrings.forgotPassword,style: MyStyles.regular,textAlign: TextAlign.left,)),
+                            child: Text(
+                              MyStrings.forgotPassword,
+                              style: MyStyles.regular,
+                              textAlign: TextAlign.left,
+                            )),
                       ],
                     ),
                   ],
@@ -90,7 +105,7 @@ class LoginScreen extends StatelessWidget {
               child: Center(
                 child: CustomElevatedButton(
                   onPressed: () {
-                    if(loginScreenViewModel.formKey.currentState!.validate()){
+                    if (loginScreenViewModel.formKey.currentState!.validate()) {
                       loginScreenViewModel.formKey.currentState!.save();
                       Internet.checkInternet().then((value) {
                         if (value) {
@@ -105,11 +120,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
             ),
-          )
-      ),
+          )),
     );
   }
 }
-
-
-

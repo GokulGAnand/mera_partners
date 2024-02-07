@@ -1795,8 +1795,7 @@ class NewEvaluationScreen extends StatelessWidget {
                       onPageChanged: (int page) {
                         viewModel.activePage.value = page;
                       },
-                      itemCount:
-                      pages!.length,
+                      itemCount: pages!.length,
                       itemBuilder: (BuildContext context, int index) {
                         return pages![index % pages!.length];
                       },
@@ -1810,6 +1809,7 @@ class NewEvaluationScreen extends StatelessWidget {
   }
 }
 
+/// ignore: must_be_immutable
 class MonthYearPicker extends StatefulWidget {
   MonthYearPicker({required this.initialYear, required this.startYear, required this.endYear, this.currentYear, required this.month, super.key});
 
@@ -1825,7 +1825,7 @@ class MonthYearPicker extends StatefulWidget {
 
 class _MonthPickerState extends State<MonthYearPicker> {
   final List<String> _monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  List<String> _yearList = [];
+  final List<String> _yearList = [];
   late int selectedMonthIndex;
   late int selectedYearIndex;
   String selectedMonth = "";
@@ -1877,7 +1877,7 @@ class _MonthPickerState extends State<MonthYearPicker> {
                       onChanged: (val) {
                         setState(() {
                           selectedMonthIndex = _monthList.indexOf(val!);
-                          selectedMonth = val ?? "";
+                          selectedMonth = val;
                         });
                       },
                     ),

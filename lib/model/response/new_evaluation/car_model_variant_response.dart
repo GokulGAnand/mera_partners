@@ -4,8 +4,7 @@ class CarModelVariantListResponse {
   List<Data>? data;
   Meta? meta;
 
-  CarModelVariantListResponse(
-      {this.status, this.message, this.data, this.meta});
+  CarModelVariantListResponse({this.status, this.message, this.data, this.meta});
 
   CarModelVariantListResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -41,13 +40,7 @@ class Data {
   String? createdAt;
   String? updatedAt;
 
-  Data(
-      {this.sId,
-        this.make,
-        this.model,
-        this.variant,
-        this.createdAt,
-        this.updatedAt});
+  Data({this.sId, this.make, this.model, this.variant, this.createdAt, this.updatedAt});
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];

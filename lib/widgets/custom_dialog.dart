@@ -2,30 +2,20 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../utils/colors.dart';
 
+/// ignore: must_be_immutable
 class CustomAlertDialog extends StatefulWidget {
-  CustomAlertDialog({
-    super.key,
-    this.titleText,
-    this.content,
-    this.removeFun,
-    this.isOnlyOk = true,
-    this.visible = false,
-    required this.okText,
-    required this.cancelText,
-    required this.okFun,
-    required this.cancelFun,this.position
-  });
+  CustomAlertDialog({super.key, this.titleText, this.content, this.removeFun, this.isOnlyOk = true, this.visible = false, required this.okText, required this.cancelText, required this.okFun, required this.cancelFun, this.position});
 
   final String? titleText;
   final String? content;
   final String? okText;
   final String? cancelText;
-  final bool? isOnlyOk;  final bool? visible;
+  final bool? isOnlyOk;
+  final bool? visible;
   dynamic Function()? okFun;
   dynamic Function()? cancelFun;
   GestureTapCallback? removeFun;
   dynamic Function()? position;
-
 
   @override
   _CustomAlertDialogState createState() => _CustomAlertDialogState();
@@ -145,7 +135,8 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                       padding: const EdgeInsets.only(right: 10, left: 10, bottom: 10),
                       child: Center(child: Text(widget.content!)),
                     ),
-                    const SizedBox(height: 4.0),/*
+                    const SizedBox(height: 4.0),
+                    /*
                     InkWell(
                         child: Container(
                           padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
@@ -235,7 +226,8 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                   ],
                 ),
               ),
-              Visibility(visible: widget.visible!,
+              Visibility(
+                visible: widget.visible!,
                 child: Positioned(
                   right: 0.0,
                   child: GestureDetector(
@@ -270,7 +262,6 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
             ],
           ),
         );
-
       },
     );
   }
