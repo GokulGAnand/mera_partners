@@ -102,7 +102,7 @@ class TestDriveScreen extends StatelessWidget {
             ),
             CustomDropDown(
               hintText: MyStrings.steering,
-              label: viewModel.selectedSteeringWheel.value.isEmpty
+              label: viewModel.selectedSteeringWheel.value.isNotEmpty
                   ? null
                   : "${MyStrings.steering}*",
               value: viewModel.selectedSteeringWheel.value.isEmpty
