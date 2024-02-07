@@ -4,15 +4,17 @@ import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/widgets/common_app_bar.dart';
 import 'package:evaluator_app/widgets/common_drawer.dart';
-import 'package:evaluator_app/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import '../../view_model/testdrive/testdrive_screen_view_model.dart';
+import '../../widgets/custom_dropdown.dart';
 
 class TestDriveScreen extends StatelessWidget {
   TestDriveScreen({super.key});
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-  final TextEditingController _textEditingController = TextEditingController();
+  TestDriveViewModel viewModel = Get.find<TestDriveViewModel>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,101 @@ class TestDriveScreen extends StatelessWidget {
           ],
         ),
         drawer: const CommonDrawer(),
+        body: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      viewModel.pageController.value.animateToPage(
+                        1,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeIn,
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 50, 10, 10),
+                      child: Container(
+                        height: 5,
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: viewModel.activePage.value == 0
+                              ? MyColors.kPrimaryColor
+                              : MyColors.lightBlue,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 40),
+            CustomDropDown(
+              hintText: "${MyStrings.steering}",
+              label: viewModel.selectedSteeringWheel.value.isEmpty
+                  ? null
+                  : "${MyStrings.steering}*",
+              value: viewModel.selectedSteeringWheel.value.isEmpty
+                  ? null
+                  : viewModel.selectedSteeringWheel.value,
+              items: viewModel.steeringWheelList.map<DropdownMenuItem<String>>(
+                    (String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(
+                      value,
+                      style: MyStyles.dropdownMenuStyle,
+                    ),
+                  );
+                },
+              ).toList(),
+              onChanged: (value) {
+                viewModel.selectedSteeringWheel.value = value;
+              },
+              validator: (value) {
+                if (value == null) {
+                  return MyStrings.required;
+                }
+                return null;
+              },
+            ),
+            CustomDropDown(
+              hintText: "${MyStrings.steering}",
+              label: viewModel.selectedSteeringWheel.value.isEmpty
+                  ? null
+                  : "${MyStrings.steering}*",
+              value: viewModel.selectedSteeringWheel.value.isEmpty
+                  ? null
+                  : viewModel.selectedSteeringWheel.value,
+              items: viewModel.steeringWheelList.map<DropdownMenuItem<String>>(
+                    (String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(
+                      value,
+                      style: MyStyles.dropdownMenuStyle,
+                    ),
+                  );
+                },
+              ).toList(),
+              onChanged: (value) {
+                viewModel.selectedSteeringWheel.value = value;
+              },
+              validator: (value) {
+                if (value == null) {
+                  return MyStrings.required;
+                }
+                return null;
+              },
+            ),
+          ],
+        ),
+
+
+
 
       ),
     );

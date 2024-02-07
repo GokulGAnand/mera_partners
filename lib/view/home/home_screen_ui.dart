@@ -243,6 +243,8 @@ class HomeScreen extends StatelessWidget {
                       onPressed: () {
                         if (index == 0) {
                           Get.toNamed(AppRoutes.newEvaluationScreen);
+                          }else if(index == 1){
+                          Get.toNamed(AppRoutes.pendingEvaluationScreen);
                         }
                       },
                     );

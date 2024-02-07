@@ -1795,7 +1795,8 @@ class NewEvaluationScreen extends StatelessWidget {
                       onPageChanged: (int page) {
                         viewModel.activePage.value = page;
                       },
-                      itemCount: pages!.length,
+                      itemCount:
+                      pages!.length,
                       itemBuilder: (BuildContext context, int index) {
                         return pages![index % pages!.length];
                       },

@@ -88,4 +88,6 @@ class MyStrings {
   static const String checkNetwork = "Check your network connection";
   static const String vMandatory = "Fill all mandatory details";
   static const String empty = "";
+  static const String steering = "Steering System";
+  static const String steeringWheel = "Steering Wheel";
 }
