@@ -16,6 +16,16 @@ class Constants{
   static const List<String> ownerShipList = ['1st', '2nd','3rd','4th','5th','6th','Other'];
   static const List<String> seatList = ['2-Seater', '4-Seater', '5-Seater', '6-Seater', '7-Seater', '8-Seater', '9-Seater', '10-Seater', '12-Seater', '14-Seater', '15-Seater and above'];
   static const List<String> engineCCList = ['796cc', '999cc', '1000cc', '1086cc', '1197cc', '1198cc', '1199cc', '1248cc', '1341cc', '1396cc', '1462cc', '1493cc', '1497cc', '1498cc', '1582cc', '1591cc', '1598cc', '1797cc', '1956cc', '1995cc', '1997cc', '1998cc', '1999cc', '2143cc', '2179cc', '2199cc', '2487cc', '2494cc', '2498cc', '2755cc', '2993cc', '2995cc', '2996cc', '3198cc', '5461cc', 'Other'];
+  static const List<String> steeringWheelList = ['Good', 'Hard', 'Abnormal Noise', 'Electric Not Working', 'Hydraulic Not Working', 'Not Working', 'Other'];
+  static const List<String> steeringAdjustmentList = ['Tilt', 'Telescopic'];
+  static const List<String> steeringMountedAudioControlList = ['Not Applicable', 'Working', 'Not Working', 'Other'];
+  static const List<String> cruiseControlList = ['Working', 'Not Working'];
+  static const List<String> seatAdjustmentList = ['Not Available', 'Available', 'Height Adjustable'];
+  static const List<String> suspensionSystemList = ['Leaking', 'Good', 'Abnormal Noise', 'Damaged', 'Other'];
+  static const List<String> brakesList =  ['Weak', 'Noisy', 'Good', 'Other'];
+  static const List<String> clutchSystemList =  ['Slipping', 'Hard', 'Good', 'Other'];
+  static const List<String> transmissionAutomaticList =  ['Not Available', 'Abnormal Noise', 'Gear Not Engaged', 'Good', 'Other'];
+  static const List<String> vehicleHornList = ['Working', 'Modified', 'Not Working', 'Damaged', 'Good', 'Other'];
   static const List<String> carColors = [
     'Black',
     'White',

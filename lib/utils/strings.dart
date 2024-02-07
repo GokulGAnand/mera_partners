@@ -86,4 +86,6 @@ class MyStrings {
   static const String duplicateKey = "Duplicate Key";
   static const String rcAvailability = "RC Availability";
   static const String empty = "";
+  static const String steering = "Steering System";
+  static const String steeringWheel = "Steering Wheel";
 }
