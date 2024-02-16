@@ -28,4 +28,8 @@ class MyImages {
   static const speedometer = "${imageRoot}speedometer.svg";
   static const calendar2 = "${imageRoot}calendar_month.png";
   static const arrowDown = "${imageRoot}arrow_down.svg";
+  static const upload = "${imageRoot}upload.svg";
+  static const add = "${imageRoot}add.svg";
+  static const camera = "${imageRoot}camera.svg";
+  static const gallery = "${imageRoot}gallery.png";
 }

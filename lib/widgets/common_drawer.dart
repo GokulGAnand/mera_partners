@@ -1,6 +1,9 @@
+import 'package:evaluator_app/routes/app_routes.dart';
+import 'package:evaluator_app/widgets/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:evaluator_app/utils/globals.dart' as globals;
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 import '../utils/colors.dart';
 import '../utils/dimens.dart';
@@ -59,6 +62,7 @@ class CommonDrawer extends StatelessWidget {
                     data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
                     child: ExpansionTile(
                       iconColor: MyColors.grey,
+                      initiallyExpanded: true,
                       title: const Text(
                         MyStrings.userDetails,
                         style: MyStyles.blackTitleStyle,
@@ -124,6 +128,21 @@ class CommonDrawer extends StatelessWidget {
                   height: 20,
                 ),
                 ListTile(
+                  onTap: () {
+                    showDialog(context: context,
+                        builder: (context) {
+                          return CustomDialog(
+                            title: MyStrings.logoutConfirmMsg,
+                            okFun: () {
+                              Navigator.pop(context);
+                              Get.toNamed(AppRoutes.loginScreen);
+                            },
+                            cancelFun: () {
+                              Navigator.pop(context);
+                            },
+                          );
+                        },);
+                  },
                   leading: SvgPicture.asset(
                     MyImages.logout,
                     width: 19,

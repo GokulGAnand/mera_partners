@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:evaluator_app/model/response/login/validate_user_response.dart';
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/service/endpoints.dart';
@@ -7,6 +8,9 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:evaluator_app/utils/globals.dart' as globals;
 import 'package:http/http.dart' as http;
+
+import '../../service/exception_error_util.dart';
+import '../../widgets/custom_toast.dart';
 
 class LoginScreenViewModel extends GetxController {
   TextEditingController userNameController = TextEditingController();
@@ -39,9 +43,8 @@ class LoginScreenViewModel extends GetxController {
         Get.toNamed(AppRoutes.homeScreen);
       }
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      log(e.toString());
+      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
   }
 }

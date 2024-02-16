@@ -145,4 +145,8 @@ class Constants {
     'Thrissur',
     'Wayanad',
   ];
+  static const List<String> insuranceList = ['Comprehensive', 'Third Party', 'Zero Depreciation', 'Not Applicable'];
+  static const List<String> keyLessEntryList = ['Remote Lock', 'Central Lock', 'Not Available', 'Not Working', 'Other'];
+  static const List<String> stereoImageOptions = ['Not Available', 'Customer will take Stereo', 'Touch Stereo', 'Not Working', 'Good', 'Other'];
+  static const List<String> workingConditionOptions = ['Working', 'Not Working', 'Not Available'];
 }

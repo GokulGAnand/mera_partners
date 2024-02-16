@@ -41,8 +41,9 @@ dependencies:
   get: ^4.6.6
   flutter_svg: ^2.0.9
   connectivity_plus: ^5.0.2
-#  country_state_city: ^0.1.6
   intl:
+  image_picker: ^1.0.7
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:

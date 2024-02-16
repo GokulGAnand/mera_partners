@@ -28,7 +28,7 @@ class NewEvaluationScreen extends StatelessWidget {
   List<Widget>? pages;
   NewEvaluationViewModel viewModel = Get.find<NewEvaluationViewModel>();
 
-  selectYear(context) async {
+  /*selectYear(context) async {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -70,7 +70,7 @@ class NewEvaluationScreen extends StatelessWidget {
         );
       },
     );
-  }
+  }*/
 
   Widget pageOne() {
     return Obx(
@@ -873,7 +873,8 @@ class NewEvaluationScreen extends StatelessWidget {
                 SizedBox(
                   height: Dimens.standard_24,
                 ),
-                GestureDetector(
+                MonthYearPicker(initialYear: DateTime.now().year, startYear: 1992, endYear: DateTime.now().year, month: 1),
+                /*GestureDetector(
                   onTap: () {
                     selectYear(Get.context);
                   },
@@ -895,7 +896,7 @@ class NewEvaluationScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
+                ),*/
                 SizedBox(
                   height: Dimens.standard_24,
                 ),
@@ -1693,10 +1694,8 @@ class NewEvaluationScreen extends StatelessWidget {
     showDialog(
         barrierDismissible: false,
         context: context,
-        builder: (BuildContext context) => CustomAlertDialog(
-              content: MyStrings.required,
-              okText: MyStrings.ok,
-              cancelText: MyStrings.cancel,
+        builder: (BuildContext context) => CustomDialog(
+              title: MyStrings.required,
               okFun: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
@@ -1711,12 +1710,12 @@ class NewEvaluationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     pages = [pageOne(), pageTwo(), pageThree(), pageFour()];
     return Obx(() => PopScope(
-          onPopInvoked: (didPop) {
+          /*onPopInvoked: (didPop) {
             if (didPop == true || didPop == false) {
               showConfirmDialog(context);
             }
           },
-          canPop: false,
+          canPop: false,*/
           child: Scaffold(
             key: _key,
             appBar: CommonAppBar(
@@ -1849,60 +1848,65 @@ class _MonthPickerState extends State<MonthYearPicker> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                MyStrings.manufacturingYear,
-                style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 15),
-              )),
-          SizedBox(
-            width: 240,
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: DropdownButton<String>(
-                      underline: Container(),
-                      items: _monthList.map((e) {
-                        return DropdownMenuItem<String>(value: e, child: Text(e));
-                      }).toList(),
-                      value: selectedMonth,
-                      onChanged: (val) {
-                        setState(() {
-                          selectedMonthIndex = _monthList.indexOf(val!);
-                          selectedMonth = val;
-                        });
-                      },
-                    ),
-                  ),
-                  // const SizedBox(width: 20),
-                  Expanded(
-                    child: DropdownButton<String>(
-                      underline: Container(),
-                      items: _yearList.map((e) {
-                        return DropdownMenuItem<String>(value: e, child: Text(e));
-                      }).toList(),
-                      value: selectedYear,
-                      onChanged: (val) {
-                        setState(() {
-                          selectedYear = val ?? "";
-                        });
-                      },
-                    ),
-                  )
-                ],
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(bottom: 8.0),
+          child: Row(
+            children: [
+              Text(
+                '${MyStrings.monthAndYearOfManufacture}*',
+                style: TextStyle(height: 0.5, color: MyColors.blue, fontSize: 15, fontWeight: FontWeight.w500, fontStyle: FontStyle.normal),
               ),
+            ],
+          ),
+        ),
+        InputDecorator(
+          decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+          child: SizedBox(
+            height: 27,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: DropdownButton<String>(
+                    underline: const SizedBox(),
+                    items: _monthList.map((e) {
+                      return DropdownMenuItem<String>(value: e, child: Text(e));
+                    }).toList(),
+                    value: selectedMonth,
+                    onChanged: (val) {
+                      setState(() {
+                        selectedMonthIndex = _monthList.indexOf(val!);
+                        selectedMonth = val;
+                        Get.find<NewEvaluationViewModel>().selectedMonth.value = val;
+                      });
+                    },
+                  ),
+                ),
+                // const SizedBox(width: 20),
+                Expanded(
+                  child: DropdownButton<String>(
+                    underline: Container(),
+                    items: _yearList.map((e) {
+                      return DropdownMenuItem<String>(value: e, child: Text(e));
+                    }).toList(),
+                    value: selectedYear,
+                    onChanged: (val) {
+                      setState(() {
+                        selectedYear = val ?? "";
+                        Get.find<NewEvaluationViewModel>().selectedYear.value = val ?? "";
+                      });
+                    },
+                  ),
+                )
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

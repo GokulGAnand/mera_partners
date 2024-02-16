@@ -8,6 +8,7 @@ class Dimens {
 
   ///padding
   static const EdgeInsets padding16 = EdgeInsets.all(16);
+  static const EdgeInsets suffixPadding = EdgeInsets.fromLTRB(0, 8.0, 14, 8);
 
   static const double dp_5 = 5;
   static const double dp_8 = 8;

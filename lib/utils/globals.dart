@@ -6,3 +6,4 @@ String? email;
 String? city;
 int? contactNo;
 String? token;
+var headers = {'Authorization': 'Bearer $token'};

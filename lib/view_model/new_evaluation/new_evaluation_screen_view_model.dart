@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/service/endpoints.dart';
 import 'package:evaluator_app/utils/constants.dart';
+import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,7 @@ import 'package:evaluator_app/utils/globals.dart' as globals;
 import '../../model/request/new_evaluation/create_evaluation_request.dart';
 import '../../model/response/new_evaluation/car_make_response.dart' as make;
 import '../../model/response/new_evaluation/car_model_variant_response.dart';
+import '../../service/exception_error_util.dart';
 import '../../utils/colors.dart';
 
 class NewEvaluationViewModel extends GetxController {
@@ -47,6 +50,8 @@ class NewEvaluationViewModel extends GetxController {
   var selectedBodyType = "".obs;
   var selectedSeats = "".obs;
   var selectedDupKey = "".obs;
+  var selectedMonth = "".obs;
+  var selectedYear = "".obs;
 
   ///page 4
   var selectedRCAvailability = "".obs;
@@ -73,7 +78,6 @@ class NewEvaluationViewModel extends GetxController {
   List<String> indianStatesList = Constants.indianStates;
   List<String> keralaDistrictsList = Constants.keralaDistricts;
 
-  var selectedYear = DateTime.now().obs;
   var carMakeListResponse = make.CarMakeListResponse().obs;
   var carModelVariantListResponse = CarModelVariantListResponse().obs;
   var carMakeList = [].obs;
@@ -135,9 +139,8 @@ class NewEvaluationViewModel extends GetxController {
         }
       } else {}
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      log(e.toString());
+      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
   }
 
@@ -166,9 +169,8 @@ class NewEvaluationViewModel extends GetxController {
         }
       }
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      log(e.toString());
+      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
   }
 
@@ -185,7 +187,7 @@ class NewEvaluationViewModel extends GetxController {
       createEvaluationRequest.vehicleLocation = selectedVehicleLocation.value;
       createEvaluationRequest.engineCylinder = noOfCylindersController.value.text.isNotEmpty ? int.parse(noOfCylindersController.value.text) : null;
       createEvaluationRequest.fuelType = selectedFuelType.value;
-      createEvaluationRequest.monthAndYearOfManufacture = manufacturingYearController.value.text;
+      createEvaluationRequest.monthAndYearOfManufacture = '${selectedMonth.value} ${selectedYear.value}';
       createEvaluationRequest.ownershipNumber = selectedOwnerShip.value == 'Other' ? otherOwnershipController.value.text : selectedOwnerShip.value;
       createEvaluationRequest.regDate = regDateController.value.text;
       createEvaluationRequest.regValidity = regValidityController.value.text;
@@ -222,6 +224,7 @@ class NewEvaluationViewModel extends GetxController {
       final response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.evaluation), body: jsonEncode(createEvaluationRequest), headers: headers);
 
       if (response.statusCode == 200) {
+        CustomToast.instance.showMsg(MyStrings.success);
         Get.toNamed(AppRoutes.homeScreen);
       }
 
@@ -229,10 +232,8 @@ class NewEvaluationViewModel extends GetxController {
         print(response.body.toString());
       }
     } catch (e) {
-      CustomToast.instance.showMsg(e.toString());
-      if (kDebugMode) {
-        print(e);
-      }
+      log(e.toString());
+      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
   }
 

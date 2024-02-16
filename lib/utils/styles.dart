@@ -16,6 +16,14 @@ class MyStyles{
   static final greyMediumStyle = TextStyle(color: MyColors.greyMedium,fontWeight: FontWeight.w400,fontSize: Dimens.standard_14);
   static final locationStyle = TextStyle(color: MyColors.grey,fontWeight: FontWeight.w400,fontSize: Dimens.standard_14);
   static const dropdownMenuStyle = TextStyle(color: MyColors.black,fontSize: 16,fontWeight: FontWeight.w400,fontFamily: 'Inter',fontStyle: FontStyle.normal);
+  static const uploadImageTitleStyle = TextStyle(
+    color: Color(0xFF1D1B20),
+    fontSize: 23,
+    fontFamily: 'Inter',
+    fontWeight: FontWeight.w600,
+    height: 0,
+  );
+
 
 }
 
