@@ -128,7 +128,7 @@ class PendingEvaluationViewModel extends GetxController {
 
     } catch (error) {
       log(error.toString());
-      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
+      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(error).errorMessage ?? '');
 
     }
   }
