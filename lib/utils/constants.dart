@@ -57,6 +57,14 @@ class Constants {
   static const List<String> clutchSystemList = ['Slipping', 'Hard', 'Good', 'Other'];
   static const List<String> transmissionAutomaticList = ['Not Available', 'Abnormal Noise', 'Gear Not Engaged', 'Good', 'Other'];
   static const List<String> vehicleHornList = ['Working', 'Modified', 'Not Working', 'Damaged', 'Good', 'Other'];
+  static const List<String> acWorkingList = ['Yes', 'No'];
+  static const List<String> coolingList = ['Good', 'Cooling Low', 'Not Working', 'AC Gas Leaking','AC Gas Leaking Low','AC Gas Leaking Empty','AC Gas Okay','Other'];
+  static const List<String> heaterList = ['Not Available', 'Not Working', 'Good'];
+  static const List<String> climateControlList = ['Yes', 'No'];
+  static const List<String> acCondenserCompressorList =['Good', 'Weak Compression', 'Noisy', 'Not Working', 'Other'];
+  static const List<String> acFilterDamagedList = ['Yes', 'No'];
+  static const List<String> acBlowerGrillList = ['Good', 'Noisy', 'Fan not working'];
+  static const List<String> rearDefoggerList = ['Working', 'Not Working', 'Not Available'];
   static const List<String> carColors = [
     'Black',
     'White',

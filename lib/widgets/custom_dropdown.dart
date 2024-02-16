@@ -5,7 +5,7 @@ import '../utils/colors.dart';
 
 /// ignore: must_be_immutable
 class CustomDropDown extends StatelessWidget {
-  CustomDropDown({
+  CustomDropDown( {
     super.key,
     this.hintText,
     this.disabledHint,

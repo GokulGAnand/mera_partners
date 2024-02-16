@@ -10,6 +10,8 @@ import '../view/dashboard/documents/documents_screen_ui.dart';
 import '../view/dashboard/exterior/binding/exterior_screen_binding.dart';
 import '../view/dashboard/exterior/exterior_screen_ui.dart';
 import '../view/dashboard/features/features_screen_ui.dart';
+import '../view/airconditioning/airconditioning_screen_ui.dart';
+import '../view/airconditioning/binding/airconditioning_binding.dart';
 import '../view/home/binding/home_screen_binding.dart';
 import '../view/login/binding/login_binding.dart';
 import '../view/new_evaluation/binding/new_evaluation_binding.dart';
@@ -24,6 +26,7 @@ class AppRoutes {
   static const String newEvaluationScreen = '/new_evaluation_screen_ui';
   static const String pendingEvaluationScreen = '/pending_evaluation_screen_ui';
   static const String testDriveScreen = '/testdrive_screen_ui';
+  static const String airConditioningScreen = '/airconditioning_screen_ui';
   static const String documentScreen = '/documents_screen_ui';
   static const String exteriorScreen = '/exterior_screen_ui';
   static const String dashBoardScreen = '/dashboard_screen_ui';
@@ -47,5 +50,8 @@ class AppRoutes {
     GetPage(name: exteriorScreen, page: () => ExteriorScreen(), bindings: [ExteriorBinding()]),
     GetPage(name: dashBoardScreen, page: () => DashBoardScreen(), bindings: [DashBoardBinding()]),
     GetPage(name: featuresScreen, page: () => FeaturesScreen(), bindings: [FeatureBinding()]),
+    GetPage(name: testDriveScreen, page: () => TestDriveScreen(), bindings: [TestDriveBinding()]),
+    GetPage(name: airConditioningScreen, page: () => AirConditioningScreen(),bindings:[
+      AirConditioningBinding()] )
   ];
 }
