@@ -42,7 +42,7 @@ class DashBoardScreen extends StatelessWidget {
             ),
             actions: [IconButton(onPressed: () {}, icon: SvgPicture.asset(MyImages.notification))],
           ),
-          bottomNavigationBar: SizedBox(
+          /*bottomNavigationBar: SizedBox(
             height: 170,
             child: Padding(
               padding: const EdgeInsets.only(left: 17, right: 17, top: 50),
@@ -53,24 +53,39 @@ class DashBoardScreen extends StatelessWidget {
                 ),
               ),
             ),
-          ),
+          ),*/
           drawer: const CommonDrawer(),
-          body: Padding(
-            padding: EdgeInsets.only(left: Dimens.standard_16, right: Dimens.dp_16, top: Dimens.dp_30),
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 29, mainAxisSpacing: 29, childAspectRatio: 3.5 / 3.5),
-              itemCount: viewModel.dashboard.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return CustomCard(
-                  label: viewModel.dashboard[index].label ?? "",
-                  icon: viewModel.dashboard[index].icon ?? "",
-                  onPressed: () {},
-                  cardColor: viewModel.dashboard[index].isComplete! ?MyColors.blue:MyColors.lightBlue,
-                  labelStyle: MyStyles.cardTitleStyleBlue,
-                );
-              },
-            ),
+          body: Column(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: Dimens.standard_16, right: Dimens.dp_16, top: Dimens.dp_30),
+                  child: GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 29, mainAxisSpacing: 29, childAspectRatio: 3.5 / 3.5),
+                    itemCount: viewModel.dashboard.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return CustomCard(
+                        label: viewModel.dashboard[index].label ?? "",
+                        icon: viewModel.dashboard[index].icon ?? "",
+                        onPressed: () {},
+                        cardColor: viewModel.dashboard[index].isComplete! ?MyColors.blue:MyColors.lightBlue,
+                        labelStyle: MyStyles.cardTitleStyleBlue,
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 17, right: 17, top: 17,bottom: 30),
+                child: Center(
+                  child: CustomElevatedButton(
+                    onPressed: () {},
+                    buttonText: MyStrings.submit,
+                  ),
+                ),
+              ),
+            ],
           )),
     );
   }
