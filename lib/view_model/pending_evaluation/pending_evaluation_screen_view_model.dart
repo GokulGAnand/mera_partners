@@ -31,7 +31,7 @@ class PendingEvaluationViewModel extends GetxController {
   void fetchData() async {
     try {
       var headers = {'Authorization': 'Bearer ${globals.token}'};
-      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.pending+'?status=PENDING_EVALUATION'),headers: headers);
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=PENDING_EVALUATION'),headers: headers);
       if(response.statusCode == 200){
             carBasic.value = PendingEvaluationList.fromJson(json.decode(response.body));
           }
@@ -67,7 +67,7 @@ class PendingEvaluationViewModel extends GetxController {
       var headers = {'Authorization': 'Bearer ${globals.token ?? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWFmNGYzYmZjYmJiOWE4M2I1NzIwZDUiLCJyb2xlIjoiRVZBTFVBVE9SIiwiaWF0IjoxNzA2OTMyNTAwLCJleHAiOjE3MDk1MjQ1MDB9.y83Qn53yyOsWS8W2-9nt7pU6i7MOwCm8_8pIu4l90gg'}'};
       var query = "?status=PENDING_EVALUATION";
       // final response = await http.get(Uri.parse(EndPoints.baseUrl + EndPoints.pending+query), headers: headers);
-      var url = EndPoints.baseUrl + EndPoints.pending + query;
+      var url = EndPoints.baseUrl + EndPoints.carBasic + query;
       var response = await client.get(Uri.parse(url),headers: headers);
       if (kDebugMode) {
         print(response.body.toString());
@@ -106,7 +106,7 @@ class PendingEvaluationViewModel extends GetxController {
       var headers = {'Authorization': 'Bearer ${globals.token ?? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWFmNGYzYmZjYmJiOWE4M2I1NzIwZDUiLCJyb2xlIjoiRVZBTFVBVE9SIiwiaWF0IjoxNzA2OTMyNTAwLCJleHAiOjE3MDk1MjQ1MDB9.y83Qn53yyOsWS8W2-9nt7pU6i7MOwCm8_8pIu4l90gg'}'};
       var query = "?status=PENDING_EVALUATION";
       // final response = await http.get(Uri.parse(EndPoints.baseUrl + EndPoints.pending+query), headers: headers);
-      var url = EndPoints.baseUrl + EndPoints.pending + query;
+      var url = EndPoints.baseUrl + EndPoints.carBasic + query;
       var response = await clients.get(Uri.parse(url),headers: headers);
       if (kDebugMode) {
         print(response.body.toString());

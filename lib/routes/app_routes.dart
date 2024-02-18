@@ -1,4 +1,8 @@
+import 'package:evaluator_app/view/completed_evaluation/binding/completed_evaluation_binding.dart';
+import 'package:evaluator_app/view/completed_evaluation/completed_evaluation_screen_ui.dart';
 import 'package:evaluator_app/view/dashboard/dashboard_screen_ui.dart';
+import 'package:evaluator_app/view/dashboard/engine/binding/engine_binding.dart';
+import 'package:evaluator_app/view/dashboard/engine/engine_screen_ui.dart';
 import 'package:evaluator_app/view/dashboard/features/binding/features_screen_binding.dart';
 import 'package:evaluator_app/view/home/home_screen_ui.dart';
 import 'package:evaluator_app/view/login/login_screen_ui.dart';
@@ -31,6 +35,8 @@ class AppRoutes {
   static const String exteriorScreen = '/exterior_screen_ui';
   static const String dashBoardScreen = '/dashboard_screen_ui';
   static const String featuresScreen = '/features_screen_ui';
+  static const String engineScreen = '/engine_screen_ui';
+  static const String completedEvaluationScreen = '/completed_evaluation_screen_ui';
 
   List<GetPage> pages = [
     GetPage(name: loginScreen, page: () => LoginScreen(), bindings: [
@@ -45,8 +51,9 @@ class AppRoutes {
     GetPage(name: pendingEvaluationScreen, page: () => PendingEvaluationScreen(), bindings: [
       PendingEvaluationBinding(),
     ]),
-    GetPage(name: testDriveScreen, page: () => TestDriveScreen(), bindings: [TestDriveBinding()]),
     GetPage(name: documentScreen, page: () => DocumentScreen(), bindings: [DocumentBinding()]),
+    GetPage(name: completedEvaluationScreen, page: () => CompletedEvaluationListScreen(), bindings: [CompletedEvaluationBinding()]),
+    GetPage(name: engineScreen, page: () => EngineScreen(), bindings: [EngineBinding()]),
     GetPage(name: exteriorScreen, page: () => ExteriorScreen(), bindings: [ExteriorBinding()]),
     GetPage(name: dashBoardScreen, page: () => DashBoardScreen(), bindings: [DashBoardBinding()]),
     GetPage(name: featuresScreen, page: () => FeaturesScreen(), bindings: [FeatureBinding()]),

@@ -10,7 +10,6 @@ import '../../../service/exception_error_util.dart';
 import '../../../utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:evaluator_app/utils/globals.dart' as globals;
-
 import '../../../widgets/custom_toast.dart';
 
 class DocumentViewModel extends GetxController {
@@ -53,11 +52,37 @@ class DocumentViewModel extends GetxController {
   var isPage1Fill = false.obs;
   var isPage2Fill = false.obs;
 
+  @override
+  void onInit() {
+    getDocument();
+    super.onInit();
+  }
+
   void addDocuments() async {
     try {
-      //todo add missing fields
-      var request = http.MultipartRequest('PATCH', Uri.parse('${EndPoints.baseUrl}${EndPoints.document}/65bdb7fbd3a852d21be986bf'));
-      request.fields.addAll({'insurance': selectedInsurance.value, 'insuranceCompany': insuranceCompanyController.value.text, 'insuranceIDV': insuranceIDVController.value.text, 'insuranceValidity': insuranceValidityController.value.text, 'bankName': bankNameController.value.text, 'hypothicationClosed': selectedUnderHypothecation.value, 'noc': selectedLoanNoc.value,});
+      var request = http.MultipartRequest('PATCH', Uri.parse('${EndPoints.baseUrl}${EndPoints.document}/65cf2025b07b4acdec103563'));
+      request.fields.addAll({
+        'insurance': selectedInsurance.value,
+        'insuranceCompany': insuranceCompanyController.value.text,
+        'insuranceIDV': insuranceIDVController.value.text,
+        'insuranceValidity': insuranceValidityController.value.text,
+        'bankName': bankNameController.value.text,
+        'hypothecation': selectedUnderHypothecation.value,
+        'loanNoc': selectedLoanNoc.value,
+        'ncb': selectedNCB.value,
+        'loanStatus':selectedLoanClosed.value,
+        'interStateTransfer':selectedInterStateTransfer.value,
+        'form35':selectedForm35.value,
+        'rcMismatch':selectedRcMismatch.value,
+        'insuranceMismatch':selectedInsuranceMismatch.value,
+        'remarks':remarksController.value.text,
+        'rcFront_remarks':rcFrontUploadRemarksController.value.text,
+        'rcBack_remarks':rcBackUploadRemarksController.value.text,
+        'chassisImage_remarks':chassisRemarksController.value.text,
+        'form35Image_remarks':form35RemarksController.value.text,
+        'nocImage_remarks':nocRemarksController.value.text,
+        'evaluationStatusForDocument': 'COMPLETED'
+      });
       if (rcFrontImage.value != null) {
         request.files.add(http.MultipartFile.fromBytes('rcFront', rcFrontImage.value!.readAsBytesSync()));
       }
@@ -68,7 +93,7 @@ class DocumentViewModel extends GetxController {
         request.files.add(http.MultipartFile.fromBytes('nocImage', nocImage.value != null ? nocImage.value!.readAsBytesSync() : []));
       }
       if(form35Image.value != null) {
-        request.files.add(http.MultipartFile.fromBytes('form35', form35Image.value != null ? form35Image.value!.readAsBytesSync() : []));
+        request.files.add(http.MultipartFile.fromBytes('form35Image', form35Image.value != null ? form35Image.value!.readAsBytesSync() : []));
       }
       if(chassisImage.value != null) {
         request.files.add(http.MultipartFile.fromBytes('chassisImage', chassisImage.value != null ? chassisImage.value!.readAsBytesSync() : []));
@@ -93,13 +118,42 @@ class DocumentViewModel extends GetxController {
 
   void getDocument() async {
     try {
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.document}/65bdb7fbd3a852d21be986bf'));
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.document}/65cf2025b07b4acdec103563'),headers: globals.headers);
       if(response.statusCode == 200){
+        log(response.body.toString());
         documentResponse.value = DocumentResponse.fromJson(jsonDecode(response.body));
+        loadData();
+      }else{
+        log(response.reasonPhrase.toString());
       }
     } catch (e) {
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
+    }
+  }
+
+  void loadData(){
+    if (documentResponse.value.data != null) {
+      insuranceCompanyController.value.text = documentResponse.value.data?.insuranceCompany ?? '';
+      insuranceIDVController.value.text = documentResponse.value.data?.insuranceIDV ?? '';
+      insuranceValidityController.value.text = documentResponse.value.data?.insuranceValidity ?? '';
+      bankNameController.value.text = documentResponse.value.data?.bankName ?? '';
+      remarksController.value.text = documentResponse.value.data?.remarks ?? '';
+      rcFrontUploadRemarksController.value.text = documentResponse.value.data!.rcFront!.remarks ?? '';
+      rcBackUploadRemarksController.value.text = documentResponse.value.data!.rcBack!.remarks ?? '';
+      chassisRemarksController.value.text = documentResponse.value.data!.chassisImage!.remarks ?? '';
+      rcFrontImage.value = File(documentResponse.value.data!.rcFront!.url ?? '');
+      rcBackImage.value = File(documentResponse.value.data!.rcBack!.url ?? '');
+      chassisImage.value = File(documentResponse.value.data!.chassisImage!.url ?? '');
+      selectedInterStateTransfer.value = documentResponse.value.data!.interStateTransfer ?? '';
+      selectedInsurance.value = documentResponse.value.data!.insurance ?? '';
+      selectedNCB.value = documentResponse.value.data!.ncb ?? '';
+      selectedLoanClosed.value = documentResponse.value.data!.loanStatus ?? '';
+      selectedForm35.value = documentResponse.value.data!.form35 ?? '';
+      selectedRcMismatch.value = documentResponse.value.data!.rcMismatch ?? '';
+      selectedInsuranceMismatch.value = documentResponse.value.data!.insuranceMismatch ?? '';
+      // selectedLoanNoc.value = documentResponse.value.data!.
+      // selectedUnderHypothecation.value = documentResponse.value.data!.
     }
   }
 

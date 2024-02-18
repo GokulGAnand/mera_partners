@@ -58,10 +58,10 @@ class Constants {
   static const List<String> transmissionAutomaticList = ['Not Available', 'Abnormal Noise', 'Gear Not Engaged', 'Good', 'Other'];
   static const List<String> vehicleHornList = ['Working', 'Modified', 'Not Working', 'Damaged', 'Good', 'Other'];
   static const List<String> acWorkingList = ['Yes', 'No'];
-  static const List<String> coolingList = ['Good', 'Cooling Low', 'Not Working', 'AC Gas Leaking','AC Gas Leaking Low','AC Gas Leaking Empty','AC Gas Okay','Other'];
+  static const List<String> coolingList = ['Good', 'Cooling Low', 'Not Working', 'AC Gas Leaking', 'AC Gas Leaking Low', 'AC Gas Leaking Empty', 'AC Gas Okay', 'Other'];
   static const List<String> heaterList = ['Not Available', 'Not Working', 'Good'];
   static const List<String> climateControlList = ['Yes', 'No'];
-  static const List<String> acCondenserCompressorList =['Good', 'Weak Compression', 'Noisy', 'Not Working', 'Other'];
+  static const List<String> acCondenserCompressorList = ['Good', 'Weak Compression', 'Noisy', 'Not Working', 'Other'];
   static const List<String> acFilterDamagedList = ['Yes', 'No'];
   static const List<String> acBlowerGrillList = ['Good', 'Noisy', 'Fan not working'];
   static const List<String> rearDefoggerList = ['Working', 'Not Working', 'Not Available'];
@@ -158,4 +158,19 @@ class Constants {
   static const List<String> keyLessEntryList = ['Remote Lock', 'Central Lock', 'Not Available', 'Not Working', 'Other'];
   static const List<String> stereoImageOptions = ['Not Available', 'Customer will take Stereo', 'Touch Stereo', 'Not Working', 'Good', 'Other'];
   static const List<String> workingConditionOptions = ['Working', 'Not Working', 'Not Available'];
+  static const List<String> engineSoundList = ['Normal', 'Minor Sound', 'Major Sound', 'Critical Sound'];
+  static const List<String> smokeList = ['White', 'Black', 'Blue', 'Normal', 'Other'];
+  static const List<String> radiatorList = ['Damaged', 'Leak', 'Good', 'Other'];
+  static const List<String> batteryList = ['Weak', 'Terminal Corroded', 'Fluid Leakage', 'Jumpstart', 'Good'];
+  static const List<String> engineConditionList = ['Condition Ok', 'Repaired', 'Tappet Noise', 'Timing Noise', 'Silencer Noise', 'Turbo & Whistling Noise', 'Injector Leakage', 'Weak Compression', 'Air Filter Box Damaged', 'Other'];
+  static const List<String> startMotorList = ['Good', 'Damaged', 'Manifold', 'Not Working', 'Other'];
+  static const List<String> coolantList = ['Dirty', 'Good', 'Oil Mix', 'Leak', 'Other'];
+  static const List<String> blowByBackCompress = ['No Blowby', 'Blowby on Idle', 'Oil Spillage on Idle', 'Back Compression', 'Other'];
+  static const List<String> silencerConditionList = ['Noisy', 'Damaged', 'Good', 'Other'];
+  static const List<String> clutchOperationList = ['Slipping', 'Hard', 'Spongy', 'Good', 'Other'];
+  static const List<String> gearBoxList = ['Shift Hard', 'Not Engaging', 'Noisy', 'Jittering', 'Not Satisfactory', 'Good', 'Other'];
+  static const List<String> engineOilList = ['Leakage from Tappet Cover', 'Leakage from Side Cover', 'Low', 'Dirty', 'Good', 'Other'];
+  static const List<String> turboChargerList = ['Leakage', 'Working', 'Not Working', 'Noisy', 'Other'];
+  static const List<String> engineMountList = ['Jerking', 'Damaged', 'Good', 'Other'];
+  static const List<String> sumpList = ['Damaged', 'Leakage', 'Good', 'Other'];
 }

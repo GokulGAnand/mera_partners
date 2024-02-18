@@ -1,5 +1,8 @@
+import 'package:evaluator_app/routes/app_routes.dart';
+import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../utils/colors.dart';
 import '../utils/images.dart';
@@ -15,8 +18,9 @@ class EvaluationCard extends StatelessWidget {
   final String date;
   final String year;
   final String? kmDriven;
+  final String? id;
 
-  const EvaluationCard({super.key, required this.make, required this.variant, required this.regNumber, required this.leadId, required this.model, required this.transmission, required this.date, required this.year, this.kmDriven});
+  const EvaluationCard({super.key, required this.make, required this.variant, required this.regNumber, required this.leadId, required this.model, required this.transmission, required this.date, required this.year, this.kmDriven, this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +67,7 @@ class EvaluationCard extends StatelessWidget {
                   const SizedBox(
                     height: 15,
                   ),
-                  Container(
+                  /*Container(
                     height: 40,
                     width: 139,
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), color: MyColors.blue, border: Border.all(color: MyColors.blue)),
@@ -72,7 +76,15 @@ class EvaluationCard extends StatelessWidget {
                       MyStrings.resumeReport,
                       style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: MyColors.white),
                     )),
-                  ),
+                  ),*/
+                  CustomElevatedButton(
+                    buttonHeight: 40,
+                    buttonWidth: 139,
+                      textStyle:  const TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: MyColors.white),
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.dashBoardScreen,arguments: id);
+                      },
+                      buttonText: MyStrings.resumeReport)
                 ],
               ),
               const SizedBox(width: 10),

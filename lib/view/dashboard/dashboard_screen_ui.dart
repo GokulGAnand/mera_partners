@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/view_model/dashboard/dashboard_view_model.dart';
 import 'package:evaluator_app/widgets/common_app_bar.dart';
@@ -15,14 +17,15 @@ import '../../widgets/common_drawer.dart';
 
 /// ignore: must_be_immutable
 class DashBoardScreen extends StatelessWidget {
-  DashBoardScreen({super.key});
+  var id = Get.arguments;
+  DashBoardScreen({super.key,});
 
   final GlobalKey<ScaffoldState> _key = GlobalKey();
-
   var viewModel = Get.isRegistered<DashBoardViewModel>() ? Get.find<DashBoardViewModel>() : Get.put(DashBoardViewModel());
 
   @override
   Widget build(BuildContext context) {
+    log(id);
     return SafeArea(
       child: Scaffold(
           key: _key,
@@ -63,7 +66,7 @@ class DashBoardScreen extends StatelessWidget {
                   label: viewModel.dashboard[index].label ?? "",
                   icon: viewModel.dashboard[index].icon ?? "",
                   onPressed: () {},
-                  cardColor: MyColors.lightBlue,
+                  cardColor: viewModel.dashboard[index].isComplete! ?MyColors.blue:MyColors.lightBlue,
                   labelStyle: MyStyles.cardTitleStyleBlue,
                 );
               },

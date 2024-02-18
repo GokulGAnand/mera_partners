@@ -2,6 +2,7 @@ import 'package:evaluator_app/view_model/dashboard/features/feature_screen_view_
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+/// ignore: must_be_immutable
 class FeaturesScreen extends StatelessWidget {
   FeaturesScreen({super.key});
 

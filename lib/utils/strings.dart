@@ -205,5 +205,22 @@ class MyStrings {
   static const String logoutConfirmMsg = "Are you sure want to sign out?";
   static const String confirmDiscardChanges = "Are you sure want to discard changes?";
   static const String unableToConnect = "Unable to connect server";
+  static const String engineCompartmentImage = "Engine Compartment Image";
+  static const String engineSound = "Engine Sound";
+  static const String smoke = "Smoke";
+  static const String engineIdleStartVideo = "Engine Idle Start Video";
+  static const String battery = "Battery";
+  static const String radiator = "Radiator";
+  static const String startingMotor = "Starting Motor";
+  static const String coolant = "Coolant";
+  static const String blowByBackCompression = "Blowby Back Compression";
+  static const String silencer = "Silencer";
+  static const String clutchOperations = "Clutch Operations";
+  static const String gearbox = "Gearbox";
+  static const String engineOil = "Engine Oil";
+  static const String turboCharger = "Turbo Charger";
+  static const String gearboxLeakage = "Gearbox Leakage";
+  static const String engineMount = "Engine Mount";
+  static const String sump = "Sump";
   static const String empty = "";
 }

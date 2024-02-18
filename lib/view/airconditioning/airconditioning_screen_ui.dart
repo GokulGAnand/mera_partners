@@ -12,6 +12,7 @@ import '../../view_model/airconditioning/airconditioning_screen_view_model.dart'
 import '../../widgets/common_drawer.dart';
 import '../../widgets/custom_dropdown.dart';
 
+/// ignore: must_be_immutable
 class AirConditioningScreen extends StatelessWidget {
    AirConditioningScreen({super.key});
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
