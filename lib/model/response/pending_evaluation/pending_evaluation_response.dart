@@ -12,27 +12,28 @@ class PendingEvaluationList {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
-    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
+    meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    if (this.meta != null) {
-      data['meta'] = this.meta!.toJson();
+    if (meta != null) {
+      data['meta'] = meta!.toJson();
     }
     return data;
   }
 }
 
 class Data {
+  String? sId;
   int? uniqueId;
   String? make;
   String? model;
@@ -44,7 +45,8 @@ class Data {
   String? inspectionDate;
 
   Data(
-      {this.uniqueId,
+      {this.sId,
+        this.uniqueId,
         this.make,
         this.model,
         this.variant,
@@ -55,6 +57,7 @@ class Data {
         this.inspectionDate});
 
   Data.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
     uniqueId = json['uniqueId'];
     make = json['make'];
     model = json['model'];
@@ -67,16 +70,17 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['uniqueId'] = this.uniqueId;
-    data['make'] = this.make;
-    data['model'] = this.model;
-    data['variant'] = this.variant;
-    data['odometerReading'] = this.odometerReading;
-    data['transmission'] = this.transmission;
-    data['regNumber'] = this.regNumber;
-    data['monthAndYearOfManufacture'] = this.monthAndYearOfManufacture;
-    data['inspectionDate'] = this.inspectionDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['uniqueId'] = uniqueId;
+    data['make'] = make;
+    data['model'] = model;
+    data['variant'] = variant;
+    data['odometerReading'] = odometerReading;
+    data['transmission'] = transmission;
+    data['regNumber'] = regNumber;
+    data['monthAndYearOfManufacture'] = monthAndYearOfManufacture;
+    data['inspectionDate'] = inspectionDate;
     return data;
   }
 }
@@ -93,9 +97,9 @@ class Meta {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['access'] = this.access;
-    data['refresh'] = this.refresh;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['access'] = access;
+    data['refresh'] = refresh;
     return data;
   }
 }

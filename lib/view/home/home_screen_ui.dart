@@ -96,7 +96,7 @@ class HomeScreen extends StatelessWidget {
                       cardColor: MyColors.blue,
                       onPressed: () {
                         if (index == 0) {
-                          Get.toNamed(AppRoutes.engineScreen);
+                          Get.toNamed(AppRoutes.newEvaluationScreen);
                         } else if (index == 1) {
                           Get.toNamed(AppRoutes.pendingEvaluationScreen);
                         }else if(index == 2){

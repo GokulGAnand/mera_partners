@@ -1,15 +1,9 @@
 import 'dart:developer';
-
 import 'package:evaluator_app/utils/styles.dart';
-import 'package:evaluator_app/widgets/custom_button.dart';
-import 'package:evaluator_app/widgets/custom_card.dart';
 import 'package:evaluator_app/widgets/evaluation_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
-import 'package:intl/intl.dart';
 import '../../utils/colors.dart';
 import '../../utils/images.dart';
 import '../../utils/strings.dart';
@@ -45,7 +39,8 @@ class PendingEvaluationScreen extends StatelessWidget {
             actions: [IconButton(onPressed: () {}, icon: SvgPicture.asset(MyImages.notification))],
           ),
           drawer: const CommonDrawer(),
-          body: Obx(() => Padding(
+          body: Obx(
+            () => Padding(
               padding: const EdgeInsets.only(left: 16, right: 16),
               child: Column(
                 children: [
@@ -55,48 +50,59 @@ class PendingEvaluationScreen extends StatelessWidget {
                   SizedBox(
                     height: 40,
                     child: CustomTextFormField(
-                        topPadding: 0,
-                        labelStyle: MyStyles.greyStyle,
-                        controller: viewModel.pendingEvaluationController.value,
-                        labelText: MyStrings.search,
-                        onChange: (value) {
-                          print(value);
-                          viewModel.applySearch(value);
-                        },
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: SvgPicture.asset(
-                            MyImages.search1,
-                          ),
+                      topPadding: 0,
+                      labelStyle: MyStyles.greyStyle,
+                      controller: viewModel.pendingEvaluationController.value,
+                      labelText: MyStrings.search,
+                      onChange: (value) {
+                        log(value);
+                        viewModel.applySearch(value);
+                      },
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: SvgPicture.asset(
+                          MyImages.search1,
                         ),
-                        validator: (String? value) {
-                          return null;
-                        },
                       ),
+                      validator: (String? value) {
+                        return null;
+                      },
                     ),
+                  ),
                   // if(viewModel.carBasic.value.data != null),
                   Obx(() => viewModel.carBasic.value.data != null
                       ? Expanded(
-                        child: ListView.separated(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: viewModel.carBasic.value.data!.length,
-                        separatorBuilder: (context, index) => const SizedBox(height: 1),
-                        itemBuilder: (context, index) {
-                          return EvaluationCard(make: viewModel.carBasic.value.data![index].make ?? '',
-                                               variant: viewModel.carBasic.value.data![index].variant?? '',
-                                               regNumber: viewModel.carBasic.value.data![index].regNumber?? '',
-                                                kmDriven: viewModel.carBasic.value.data![index].odometerReading != null?viewModel.carBasic.value.data![index].odometerReading.toString():'-',
-                                                leadId: viewModel.carBasic.value.data![index].uniqueId.toString() ?? '',
-                                               model: viewModel.carBasic.value.data![index].model?? '',
-                                               transmission: viewModel.carBasic.value.data![index].transmission?? '',
-                                               date: viewModel.carBasic.value.data![index].inspectionDate?? '',
-                                                year:viewModel.carBasic.value.data![index].monthAndYearOfManufacture?? '' );
-                        }),
-                      )
-                      : Center(
-                    child: CircularProgressIndicator(),
-                  )),
+                          child: ListView.separated(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: viewModel.carBasic.value.data!.length,
+                              separatorBuilder: (context, index) => const SizedBox(height: 1),
+                              itemBuilder: (context, index) {
+                                return Expanded(
+                                  child: ListView.separated(
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      itemCount: viewModel.carBasic.value.data!.length,
+                                      separatorBuilder: (context, index) => const SizedBox(height: 1),
+                                      itemBuilder: (context, index) {
+                                        return EvaluationCard(
+                                          make: viewModel.carBasic.value.data![index].make ?? '',
+                                          variant: viewModel.carBasic.value.data![index].variant ?? '',
+                                          regNumber: viewModel.carBasic.value.data![index].regNumber ?? '',
+                                          leadId: viewModel.carBasic.value.data![index].uniqueId.toString(),
+                                          model: viewModel.carBasic.value.data![index].model ?? '',
+                                          transmission: viewModel.carBasic.value.data![index].transmission ?? '',
+                                          date: viewModel.carBasic.value.data![index].inspectionDate ?? '',
+                                          year: viewModel.carBasic.value.data![index].monthAndYearOfManufacture ?? '',
+                                          id: viewModel.carBasic.value.data![index].sId,
+                                        );
+                                      }),
+                                );
+                              }),
+                        )
+                      : const Center(
+                          child: CircularProgressIndicator(),
+                        )),
                 ],
               ),
             ),

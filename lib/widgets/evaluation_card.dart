@@ -3,7 +3,6 @@ import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import '../utils/colors.dart';
 import '../utils/images.dart';
 import '../utils/strings.dart';

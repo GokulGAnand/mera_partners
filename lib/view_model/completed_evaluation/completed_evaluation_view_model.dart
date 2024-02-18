@@ -12,18 +12,50 @@ import '../../widgets/custom_toast.dart';
 class CompletedEvaluationViewModel extends GetxController{
 
   Rx<TextEditingController> searchController = TextEditingController().obs;
-  var carBasic = PendingEvaluationList().obs;
-
-  void applyFilter(String? value){
-    var tempList = <Data>[];
-    for(int i=0; i<carBasic.value.data!.length; i++){
-      if(carBasic.value.data![i].createdAt!.toString().contains(value!)){
-        tempList.add(carBasic.value.data![i]);
-      }
-    }
-
-    carBasic.value.data = tempList;
+  @override
+  void onInit() {
+    fetchData();
+    super.onInit();
   }
+
+  var carBasic = PendingEvaluationList().obs;
+  var carBasicResponse = PendingEvaluationList().obs;
+
+
+  void fetchData() async {
+    try {
+      var headers = {'Authorization': 'Bearer ${globals.token}'};
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=PENDING_EVALUATION'),headers: headers);
+      if(response.statusCode == 200){
+        carBasicResponse.value = PendingEvaluationList.fromJson(json.decode(response.body));
+        carBasic.value = PendingEvaluationList.fromJson(json.decode(response.body));
+      }
+      log(carBasicResponse.toString());
+      log(response.body);
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  void applyFilter(String? value) {
+    var tempList = <Data>[];
+
+    if (value != null) {
+      for (int i = 0; i < carBasicResponse.value.data!.length; i++) {
+        if (carBasicResponse.value.data![i].make!.toString().contains(value)) {
+          tempList.add(carBasicResponse.value.data![i]);
+        }
+      }
+      carBasic.value = PendingEvaluationList();
+      carBasic.value.data = tempList;
+      update();
+      refresh();
+      notifyChildrens();
+    } else {
+      carBasic.value = carBasicResponse.value;
+    }
+  }
+
 
   void fetchEvaluatedList() async {
     try {

@@ -1,10 +1,5 @@
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/view/special_comments/special_comments_screen_ui.dart';
-import 'package:evaluator_app/view/special_comments/special_comments_screen_ui.dart';
-import 'package:evaluator_app/view/special_comments/special_comments_screen_ui.dart';
-import 'package:evaluator_app/view/special_comments/special_comments_screen_ui.dart';
-import 'package:evaluator_app/view/special_comments/special_comments_screen_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -32,7 +27,7 @@ class MyApp extends StatelessWidget {
       ),
 
       getPages: AppRoutes().pages,
-      initialRoute: AppRoutes.specialCommentsScreen,
+      initialRoute: AppRoutes.loginScreen,
     );
   }
 }
