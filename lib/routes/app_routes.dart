@@ -4,6 +4,8 @@ import 'package:evaluator_app/view/dashboard/dashboard_screen_ui.dart';
 import 'package:evaluator_app/view/dashboard/engine/binding/engine_binding.dart';
 import 'package:evaluator_app/view/dashboard/engine/engine_screen_ui.dart';
 import 'package:evaluator_app/view/dashboard/features/binding/features_screen_binding.dart';
+import 'package:evaluator_app/view/dashboard/interior/binding/interior_screen_binding.dart';
+import 'package:evaluator_app/view/dashboard/interior/interior_screen_ui.dart';
 import 'package:evaluator_app/view/home/home_screen_ui.dart';
 import 'package:evaluator_app/view/login/login_screen_ui.dart';
 import 'package:evaluator_app/view/new_evaluation/new_evaluation_screen_ui.dart';
@@ -21,6 +23,8 @@ import '../view/login/binding/login_binding.dart';
 import '../view/new_evaluation/binding/new_evaluation_binding.dart';
 import '../view/pending_evaluation/binding/pending_evaluation_binding.dart';
 import '../view/pending_evaluation/pending_evaluation_screen_ui.dart';
+import '../view/special_comments/binding/special_comments_binding.dart';
+import '../view/special_comments/special_comments_screen_ui.dart';
 import '../view/testdrive/binding/testdrive_binding.dart';
 import '../view/testdrive/testdrive_screen_ui.dart';
 
@@ -35,6 +39,8 @@ class AppRoutes {
   static const String exteriorScreen = '/exterior_screen_ui';
   static const String dashBoardScreen = '/dashboard_screen_ui';
   static const String featuresScreen = '/features_screen_ui';
+  static const String specialCommentsScreen = '/special_comments_screen_ui';
+  static const String interiorScreen = '/interior_screen_ui';
   static const String engineScreen = '/engine_screen_ui';
   static const String completedEvaluationScreen = '/completed_evaluation_screen_ui';
 
@@ -57,8 +63,10 @@ class AppRoutes {
     GetPage(name: exteriorScreen, page: () => ExteriorScreen(), bindings: [ExteriorBinding()]),
     GetPage(name: dashBoardScreen, page: () => DashBoardScreen(), bindings: [DashBoardBinding()]),
     GetPage(name: featuresScreen, page: () => FeaturesScreen(), bindings: [FeatureBinding()]),
+    GetPage(name: interiorScreen, page: () => InteriorScreen(), bindings: [InteriorBinding()]),
     GetPage(name: testDriveScreen, page: () => TestDriveScreen(), bindings: [TestDriveBinding()]),
     GetPage(name: airConditioningScreen, page: () => AirConditioningScreen(),bindings:[
-      AirConditioningBinding()] )
+      AirConditioningBinding()] ),
+    GetPage(name: specialCommentsScreen, page: () => SpecialCommentsScreen(),bindings: [SpecialCommentsBinding()])
   ];
 }

@@ -65,6 +65,7 @@ class Constants {
   static const List<String> acFilterDamagedList = ['Yes', 'No'];
   static const List<String> acBlowerGrillList = ['Good', 'Noisy', 'Fan not working'];
   static const List<String> rearDefoggerList = ['Working', 'Not Working', 'Not Available'];
+  static const List<String> specialCommentsList = ['Flood Affected','Total Loss','Apron Replaced','Apron Repaired','Roof Replaced','Car converted from commercial to private','Commercial Vehicle','Fitness Expired','Engine Replaced','Good'];
   static const List<String> carColors = [
     'Black',
     'White',
@@ -158,6 +159,23 @@ class Constants {
   static const List<String> keyLessEntryList = ['Remote Lock', 'Central Lock', 'Not Available', 'Not Working', 'Other'];
   static const List<String> stereoImageOptions = ['Not Available', 'Customer will take Stereo', 'Touch Stereo', 'Not Working', 'Good', 'Other'];
   static const List<String> workingConditionOptions = ['Working', 'Not Working', 'Not Available'];
+
+  ///interior
+  static const List<String> clusterPanel= ['Good', 'Speedometer Not Working', 'Warning Light', 'Speedometer Damaged', 'Damaged', 'Other'];
+  static const List<String> dashboardImage = ['Good', 'Faded', 'Broken', 'Rattling sound',  'Scratch', 'Other', 'AC Vent Grill Broken', 'Other'];
+  static const List<String> frontAndRearSeatImage = ['Good', 'Fabric', 'Leather', 'Fabric Damaged', 'Leather Damaged', 'Dirty', 'Other'];
+  static const List<String> insideRearViewMirror = ['Damaged', 'Scratched', 'Good'];
+  static const List<String> pushButtonOnOff = ['Functioning', 'Not Functioning', 'Not Applicable'];
+  static const List<String> dashboardSwitches = ['Good', 'Damaged', 'Other'];
+  static const List<String> powerWindowAndWindowLock = ['Front RH Power Window Not Working', 'Front RH Power Window Working', 'Front RH Power Window Stuck',
+  'Rear RH Power Window Not Working', 'Rear RH Power Window Working', 'Rear RH Power Window Stuck',
+  'Front LH Power Window Not Working', 'Front LH Power Window Working', 'Front LH Power Window Stuck',
+  'Rear LH Power Window Not Working', 'Rear LH  Power Window Working','Rear LH  Power Window Stuck','Not Applicable', 'All Windows Working'];
+  static const List<String> handBrake = ['Working', 'Not Working', 'Not Satisfactory', 'Other'];
+  static const List<String> carElectrical = ['ECM Malfunction', 'Fuel Pump Not Working', 'Wiring Damage', 'Rat damage Good,' 'Other'];
+  static const List<String> secondKey = ['Damaged', 'Not Available', 'Good'];
+  static const List<String> platform = ['Rusted', 'Good', 'Damaged', 'Replaced', 'Welded', 'Repainted', 'Other'];
+
   static const List<String> engineSoundList = ['Normal', 'Minor Sound', 'Major Sound', 'Critical Sound'];
   static const List<String> smokeList = ['White', 'Black', 'Blue', 'Normal', 'Other'];
   static const List<String> radiatorList = ['Damaged', 'Leak', 'Good', 'Other'];

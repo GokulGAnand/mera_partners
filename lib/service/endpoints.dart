@@ -7,4 +7,5 @@ class EndPoints {
   static String evaluation = 'evaluation';
   static String document = 'document';
   static String status = 'status/';
+  static String specialComment = 'specialcomment';
 }

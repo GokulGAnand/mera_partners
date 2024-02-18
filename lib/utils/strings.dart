@@ -72,7 +72,7 @@ class MyStrings {
   static const String documents = "Documents";
   static const String exterior = "Exterior";
   static const String engine = "Engine";
-  static const String interior = "Interior &\nElectrical";
+  static const String interiorAndElectrical = "Interior &\nElectrical";
   static const String test = "Test Drive";
   static const String features = "Features";
   static const String air = "Air condition";
@@ -108,6 +108,7 @@ class MyStrings {
   static const String resumeReport = "Resume Report";
   static const String delete = "Delete";
   static const String success = "Success";
+  static const String specialComments =  "Special Comments";
   static const String monthAndYearOfManufacture = "Month & Year of Manufacturing";
   static const String rc = "RC";
   static const String rcFrontUpload = "RC Front Upload";
@@ -135,6 +136,8 @@ class MyStrings {
   static const String chooseUploadType = "Choose Upload Type";
   static const String camera = "Camera";
   static const String gallery = "Gallery";
+  static const String carCondition = "Car Condition";
+
   ///Exterior page 1
   static const String frontImage = "Front Image";
   static const String frontLeftImage = "Front Left Image";
@@ -201,6 +204,27 @@ class MyStrings {
   static const String fullBodyRepaint = "Full Body Repaint";
   static const String lhRearViewMirror = "LH Rear View Mirror";
   static const String rhRearViewMirror = "RH Rear View Mirror";
+  ///Interior page 1
+  static const String interior = "Interior";
+  static const String clusterPanel = "Cluster panel";
+  static const String warningLight = "Warning light";
+  static const String warningDetails = "Warning Details";
+  static const String dashboardImage = "Dashboard image";
+  static const String frontSeatImage = "Front seat image";
+  static const String rearSeatImage = "Rear seat image";
+  static const String insideRearViewMirror = "Inside Rear View Mirror";
+  static const String interiorViewFromBootDashboard = "Interior View from Boot to Dashboard";
+  static const String powerWindowDriverImage = "Power Window-Driver Image";
+  static const String pushWindowDriverImage = "Push Window-Driver Image";
+  ///Interior page 2
+  static const String pushButtonOnOff = "Push Button(On/Off)";
+  static const String dashboardSwitches = "Dashboar Switches";
+  static const String powerWindowAndWindowLock = "Power Window & Window Lock";
+  static const String handBrake = "Hand Brake";
+  static const String carElectrical = "Car Electrical";
+  static const String cngLpgKitImage = "CNG/LPG Kit Image";
+  static const String secondKey = "Second Key";
+  static const String platform = "Platform";
   ///
   static const String logoutConfirmMsg = "Are you sure want to sign out?";
   static const String confirmDiscardChanges = "Are you sure want to discard changes?";
@@ -223,4 +247,5 @@ class MyStrings {
   static const String engineMount = "Engine Mount";
   static const String sump = "Sump";
   static const String empty = "";
+
 }
