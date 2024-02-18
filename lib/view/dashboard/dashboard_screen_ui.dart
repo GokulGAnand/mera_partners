@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/view_model/dashboard/dashboard_view_model.dart';
 import 'package:evaluator_app/widgets/common_app_bar.dart';
@@ -12,7 +11,6 @@ import '../../utils/colors.dart';
 import '../../utils/dimens.dart';
 import '../../utils/images.dart';
 import '../../utils/strings.dart';
-
 import '../../widgets/common_drawer.dart';
 
 /// ignore: must_be_immutable
