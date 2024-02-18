@@ -65,6 +65,7 @@ class Constants {
   static const List<String> acFilterDamagedList = ['Yes', 'No'];
   static const List<String> acBlowerGrillList = ['Good', 'Noisy', 'Fan not working'];
   static const List<String> rearDefoggerList = ['Working', 'Not Working', 'Not Available'];
+  static const List<String> specialCommentsList = ['Flood Affected','Total Loss','Apron Replaced','Apron Repaired','Roof Replaced','Car converted from commercial to private','Commercial Vehicle','Fitness Expired','Engine Replaced','Good'];
   static const List<String> carColors = [
     'Black',
     'White',

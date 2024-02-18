@@ -19,6 +19,8 @@ import '../view/login/binding/login_binding.dart';
 import '../view/new_evaluation/binding/new_evaluation_binding.dart';
 import '../view/pending_evaluation/binding/pending_evaluation_binding.dart';
 import '../view/pending_evaluation/pending_evaluation_screen_ui.dart';
+import '../view/special_comments/binding/special_comments_binding.dart';
+import '../view/special_comments/special_comments_screen_ui.dart';
 import '../view/testdrive/binding/testdrive_binding.dart';
 import '../view/testdrive/testdrive_screen_ui.dart';
 
@@ -33,6 +35,7 @@ class AppRoutes {
   static const String exteriorScreen = '/exterior_screen_ui';
   static const String dashBoardScreen = '/dashboard_screen_ui';
   static const String featuresScreen = '/features_screen_ui';
+  static const String specialCommentsScreen = '/special_comments_screen_ui';
   static const String interiorScreen = '/interior_screen_ui';
 
   List<GetPage> pages = [
@@ -56,6 +59,7 @@ class AppRoutes {
     GetPage(name: interiorScreen, page: () => InteriorScreen(), bindings: [InteriorBinding()]),
     GetPage(name: testDriveScreen, page: () => TestDriveScreen(), bindings: [TestDriveBinding()]),
     GetPage(name: airConditioningScreen, page: () => AirConditioningScreen(),bindings:[
-      AirConditioningBinding()] )
+      AirConditioningBinding()] ),
+    GetPage(name: specialCommentsScreen, page: () => SpecialCommentsScreen(),bindings: [SpecialCommentsBinding()])
   ];
 }

@@ -108,6 +108,7 @@ class MyStrings {
   static const String resumeReport = "Resume Report";
   static const String delete = "Delete";
   static const String success = "Success";
+  static const String specialComments =  "Special Comments";
   static const String monthAndYearOfManufacture = "Month & Year of Manufacturing";
   static const String rc = "RC";
   static const String rcFrontUpload = "RC Front Upload";
@@ -135,6 +136,8 @@ class MyStrings {
   static const String chooseUploadType = "Choose Upload Type";
   static const String camera = "Camera";
   static const String gallery = "Gallery";
+  static const String carCondition = "Car Condition";
+
   ///Exterior page 1
   static const String frontImage = "Front Image";
   static const String frontLeftImage = "Front Left Image";
@@ -227,4 +230,5 @@ class MyStrings {
   static const String confirmDiscardChanges = "Are you sure want to discard changes?";
   static const String unableToConnect = "Unable to connect server";
   static const String empty = "";
+
 }

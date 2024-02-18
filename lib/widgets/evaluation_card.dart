@@ -21,7 +21,7 @@ class EvaluationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 36, right: 10, left: 10),
+      padding: const EdgeInsets.only(top: 45, right: 10, left: 10),
       child: Container(
         clipBehavior: Clip.none,
         height: 202,
@@ -75,7 +75,7 @@ class EvaluationCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(width: 10),
+                const SizedBox(width: 15),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,7 +141,9 @@ class EvaluationCard extends StatelessWidget {
                       height: 1,
                     ),
                     Row(
-                      children: [Image.asset(MyImages.calendar2), const SizedBox(width: 5), const Text('INS.DATE', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.blue)), const SizedBox(width: 5), Text(DateFormat('dd-MM-yyyy').format(DateTime.parse(date)), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.black))],
+                      children: [Image.asset(MyImages.calendar2), const SizedBox(width: 5), const Text('INS.DATE', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.blue)),
+                        const SizedBox(width: 5), Text(date, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.black))
+                      ],
                     ),
                     const SizedBox(
                       height: 15,
