@@ -256,7 +256,7 @@ class NewEvaluationScreen extends StatelessWidget {
                     height: 70,
                     child: Center(
                       child: CustomElevatedButton(
-                        onPressed: viewModel.engineNumController.value.text.isNotEmpty && viewModel.rcOwnerNameController.value.text.isNotEmpty && viewModel.regDateController.value.text.isNotEmpty && (viewModel.registrationNumberController.value.text.isNotEmpty || viewModel.chassisNumberController.value.text.isNotEmpty)
+                        onPressed: viewModel.engineNumController.value.text.isNotEmpty && viewModel.rcOwnerNameController.value.text.isNotEmpty/* && viewModel.regDateController.value.text.isNotEmpty && (viewModel.registrationNumberController.value.text.isNotEmpty || viewModel.chassisNumberController.value.text.isNotEmpty)*/
                             ? () {
                                 if (viewModel.page1Key.currentState!.validate()) {
                                   viewModel.page1Key.currentState!.save();
@@ -1406,7 +1406,7 @@ class NewEvaluationScreen extends StatelessWidget {
                   height: 70,
                   child: Center(
                     child: CustomElevatedButton(
-                      onPressed: viewModel.selectedVehicleUsage.value.isNotEmpty && viewModel.manufacturingYearController.value.text.isNotEmpty && viewModel.selectedMake.value.isNotEmpty && viewModel.selectedVariant.value.isNotEmpty && viewModel.selectedColor.value.isNotEmpty && viewModel.selectedBodyType.value.isNotEmpty && viewModel.selectedDupKey.value.isNotEmpty
+                      onPressed: viewModel.selectedVehicleUsage.value.isNotEmpty /*&& viewModel.manufacturingYearController.value.text.isNotEmpty && viewModel.selectedMake.value.isNotEmpty && viewModel.selectedVariant.value.isNotEmpty && viewModel.selectedColor.value.isNotEmpty && viewModel.selectedBodyType.value.isNotEmpty && viewModel.selectedDupKey.value.isNotEmpty*/
                           ? () {
                               if (viewModel.page3Key.currentState!.validate()) {
                                 viewModel.isPage3Fill.value = true;

@@ -86,6 +86,8 @@ class CompletedEvaluationListScreen extends StatelessWidget {
                                   model: viewModel.carBasic.value.data![index].model?? '',
                                   transmission: viewModel.carBasic.value.data![index].transmission?? '',
                                   date: viewModel.carBasic.value.data![index].inspectionDate?? '',
+                                  isCompleted: true,
+                                  id: viewModel.carBasic.value.data![index].sId ?? '',
                                   year:viewModel.carBasic.value.data![index].monthAndYearOfManufacture?? '' );
                             }),
                       )

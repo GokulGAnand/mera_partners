@@ -24,7 +24,7 @@ class PendingEvaluationViewModel extends GetxController {
   void fetchData() async {
     try {
       var headers = {'Authorization': 'Bearer ${globals.token}'};
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=PENDING_EVALUATION'),headers: headers);
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.evaluation}?status=PENDING_EVALUATION'),headers: headers);
       if(response.statusCode == 200){
         carBasicResponse.value = PendingEvaluationList.fromJson(json.decode(response.body));
         carBasic.value = PendingEvaluationList.fromJson(json.decode(response.body));

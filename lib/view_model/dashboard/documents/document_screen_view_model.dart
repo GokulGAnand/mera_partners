@@ -18,6 +18,7 @@ class DocumentViewModel extends GetxController {
 
   final Rx<PageController> pageController = PageController(initialPage: 0).obs;
   var documentResponse = DocumentResponse().obs;
+  var id = Get.arguments ?? '';
 
   // the index of the current page
   var activePage = 0.obs;
@@ -60,7 +61,7 @@ class DocumentViewModel extends GetxController {
 
   void addDocuments() async {
     try {
-      var request = http.MultipartRequest('PATCH', Uri.parse('${EndPoints.baseUrl}${EndPoints.document}/65cf2025b07b4acdec103563'));
+      var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl+EndPoints.document+'/'+id));
       request.fields.addAll({
         'insurance': selectedInsurance.value,
         'insuranceCompany': insuranceCompanyController.value.text,
@@ -118,7 +119,7 @@ class DocumentViewModel extends GetxController {
 
   void getDocument() async {
     try {
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.document}/65cf2025b07b4acdec103563'),headers: globals.headers);
+      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.document+'/'+id),headers: globals.headers);
       if(response.statusCode == 200){
         log(response.body.toString());
         documentResponse.value = DocumentResponse.fromJson(jsonDecode(response.body));
@@ -128,7 +129,7 @@ class DocumentViewModel extends GetxController {
       }
     } catch (e) {
       log(e.toString());
-      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
+      // CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
   }
 

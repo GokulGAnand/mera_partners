@@ -246,6 +246,8 @@ class MyStrings {
   static const String gearboxLeakage = "Gearbox Leakage";
   static const String engineMount = "Engine Mount";
   static const String sump = "Sump";
+  static const String noDataFound = "No Data Found";
+  static const String viewReport = "View Report";
   static const String empty = "";
 
 }

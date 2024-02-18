@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/view_model/dashboard/dashboard_view_model.dart';
 import 'package:evaluator_app/widgets/common_app_bar.dart';
@@ -15,7 +16,7 @@ import '../../widgets/common_drawer.dart';
 
 /// ignore: must_be_immutable
 class DashBoardScreen extends StatelessWidget {
-  var id = Get.arguments;
+  var id = Get.arguments ?? '';
   DashBoardScreen({super.key,});
 
   final GlobalKey<ScaffoldState> _key = GlobalKey();
@@ -23,7 +24,7 @@ class DashBoardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log(id);
+    log(id ?? '');
     return SafeArea(
       child: Scaffold(
           key: _key,
@@ -66,7 +67,25 @@ class DashBoardScreen extends StatelessWidget {
                       return CustomCard(
                         label: viewModel.dashboard[index].label ?? "",
                         icon: viewModel.dashboard[index].icon ?? "",
-                        onPressed: () {},
+                        onPressed: () {
+                          if(index == 0){
+                            Get.toNamed(AppRoutes.documentScreen,arguments: id);
+                          }else if(index == 1){
+                            Get.toNamed(AppRoutes.exteriorScreen,arguments: id);
+                          }else if(index == 2){
+                            Get.toNamed(AppRoutes.engineScreen,arguments: id);
+                          }else if(index == 3){
+                            Get.toNamed(AppRoutes.interiorScreen,arguments: id);
+                          }else if(index == 4){
+                            Get.toNamed(AppRoutes.testDriveScreen,arguments: id);
+                          }else if(index == 5){
+                            Get.toNamed(AppRoutes.featuresScreen,arguments: id);
+                          }else if(index == 6){
+                            Get.toNamed(AppRoutes.airConditioningScreen,arguments: id);
+                          }else if(index == 7){
+                            Get.toNamed(AppRoutes.specialCommentsScreen,arguments: id);
+                          }
+                        },
                         cardColor: viewModel.dashboard[index].isComplete! ?MyColors.blue:MyColors.lightBlue,
                         labelStyle: MyStyles.cardTitleStyleBlue,
                       );

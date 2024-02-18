@@ -24,6 +24,7 @@ import '../../../widgets/image_picker_card.dart';
 
 /// ignore: must_be_immutable
 class DocumentScreen extends StatelessWidget {
+  var id = Get.arguments ?? '';
   DocumentScreen({super.key});
 
   final GlobalKey<ScaffoldState> _key = GlobalKey();
@@ -655,10 +656,10 @@ class DocumentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     pages = [pageOne(), pageTwo(),];
     return Obx(() => PopScope(
-      onPopInvoked: (didPop) {
-        showConfirmDialog(context);
-      },
-      canPop: false,
+      // onPopInvoked: (didPop) {
+      //   showConfirmDialog(context);
+      // },
+      // canPop: false,
       child: Scaffold(
         key: _key,
         appBar: CommonAppBar(

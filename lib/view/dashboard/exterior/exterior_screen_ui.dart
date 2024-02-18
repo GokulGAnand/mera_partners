@@ -1416,10 +1416,10 @@ class ExteriorScreen extends StatelessWidget {
     return Obx(() => PopScope(
       onPopInvoked: (didPop) {
         if (didPop == true || didPop == false) {
-          showConfirmDialog(context);
+          // showConfirmDialog(context);
         }
       },
-      canPop: false,
+      canPop: true,
       child: Scaffold(
         key: _key,
         appBar: CommonAppBar(

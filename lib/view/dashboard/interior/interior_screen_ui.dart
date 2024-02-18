@@ -629,10 +629,10 @@ class InteriorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     pages = [pageOne(context), pageTwo(context),];
     return Obx(() => PopScope(
-      onPopInvoked: (didPop) {
-        // showConfirmDialog(context);
-      },
-      canPop: false,
+      // onPopInvoked: (didPop) {
+      //   // showConfirmDialog(context);
+      // },
+      // canPop: false,
       child: Scaffold(
         key: _key,
         appBar: CommonAppBar(
