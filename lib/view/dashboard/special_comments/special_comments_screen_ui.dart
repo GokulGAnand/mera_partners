@@ -129,6 +129,7 @@ class SpecialCommentsScreen extends StatelessWidget {
                         Internet.checkInternet().then((value) {
                           if (value) {
                             viewModel.addComments();
+                            viewModel.getComments();
                           } else {
                             CustomToast.instance.showMsg(MyStrings.checkNetwork);
                           }

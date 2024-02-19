@@ -8,4 +8,5 @@ class EndPoints {
   static String document = 'document';
   static String status = 'status/';
   static String specialComment = 'specialcomment';
+  static String acInfo = 'acinfo';
 }
