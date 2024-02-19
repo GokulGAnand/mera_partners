@@ -8,7 +8,8 @@ import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import '../../utils/constants.dart';
+
+import '../../../utils/constants.dart';
 
 class SpecialCommentsViewModel extends GetxController{
   Rx<TextEditingController> specialCommentsController = TextEditingController().obs;

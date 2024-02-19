@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../utils/images.dart';
-import '../../utils/styles.dart';
-import '../../view_model/airconditioning/airconditioning_screen_view_model.dart';
-import '../../widgets/common_drawer.dart';
-import '../../widgets/custom_dropdown.dart';
+import '../../../utils/images.dart';
+import '../../../utils/styles.dart';
+import '../../../view_model/dashboard/airconditioning/airconditioning_screen_view_model.dart';
+import '../../../widgets/common_drawer.dart';
+import '../../../widgets/custom_dropdown.dart';
 
 /// ignore: must_be_immutable
 class AirConditioningScreen extends StatelessWidget {

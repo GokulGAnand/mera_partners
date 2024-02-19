@@ -8,8 +8,9 @@ import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import '../../view_model/testdrive/testdrive_screen_view_model.dart';
-import '../../widgets/custom_dropdown.dart';
+
+import '../../../view_model/dashboard/testdrive/testdrive_screen_view_model.dart';
+import '../../../widgets/custom_dropdown.dart';
 
 /// ignore: must_be_immutable
 class TestDriveScreen extends StatelessWidget {

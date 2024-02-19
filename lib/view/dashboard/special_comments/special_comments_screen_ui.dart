@@ -4,16 +4,17 @@ import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import '../../service/internet_check.dart';
-import '../../utils/colors.dart';
-import '../../utils/images.dart';
-import '../../utils/strings.dart';
-import '../../utils/styles.dart';
-import '../../view_model/special_comments/special_comments_view_model.dart';
-import '../../widgets/common_app_bar.dart';
-import '../../widgets/custom_dropdown.dart';
-import '../../widgets/custom_text_form_field.dart';
-import '../../widgets/custom_toast.dart';
+
+import '../../../service/internet_check.dart';
+import '../../../utils/colors.dart';
+import '../../../utils/images.dart';
+import '../../../utils/strings.dart';
+import '../../../utils/styles.dart';
+import '../../../view_model/dashboard/special_comments/special_comments_view_model.dart';
+import '../../../widgets/common_app_bar.dart';
+import '../../../widgets/custom_dropdown.dart';
+import '../../../widgets/custom_text_form_field.dart';
+import '../../../widgets/custom_toast.dart';
 
 class SpecialCommentsScreen extends StatelessWidget {
   SpecialCommentsScreen({super.key});
