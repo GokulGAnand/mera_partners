@@ -9,4 +9,5 @@ class EndPoints {
   static String interiorInfo = 'interiorinfo';
   static String status = 'status/';
   static String specialComment = 'specialcomment';
+  static String acInfo = 'acinfo';
 }

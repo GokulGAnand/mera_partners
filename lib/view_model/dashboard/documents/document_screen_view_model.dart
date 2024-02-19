@@ -16,6 +16,7 @@ class DocumentViewModel extends GetxController {
   final GlobalKey<FormState> page1Key = GlobalKey<FormState>();
   final GlobalKey<FormState> page2Key = GlobalKey<FormState>();
 
+
   final Rx<PageController> pageController = PageController(initialPage: 0).obs;
   var documentResponse = DocumentResponse().obs;
   var id = Get.arguments ?? '';

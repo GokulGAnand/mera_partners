@@ -98,7 +98,7 @@ class MyStrings {
   static const String transmissionAutomatic = "Transmission Automatic";
   static const String vehicleHorn ="Vehicle Horn";
   static const String acWorking ="AC Working ";
-  static const String cooling ="cooling";
+  static const String cooling ="Cooling";
   static const String heater = "Heater";
   static const String climateControl = "Climate Control";
   static const String acCondenserCompressor  = "AC Condenser Compressor";
