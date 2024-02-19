@@ -460,7 +460,7 @@ class InteriorScreen extends StatelessWidget {
                             title: MyStrings.handBrake,  
                             items: viewModel.handBrake, 
                             selectItem: viewModel.selectHandBrake,
-                            image: viewModel.handBrakeImage,
+                            image: viewModel.handBreakImage,
                             remarksController : viewModel.handBrakeRemarksController.value
                           );
                       },
@@ -551,7 +551,7 @@ class InteriorScreen extends StatelessWidget {
                   value: viewModel.selectSecondKey.value.isEmpty ? null : viewModel.selectSecondKey.value,
                   items: viewModel.secondKey.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
-                      value: value,
+                      value: value.toLowerCase(),
                       child: Text(
                         value,
                         style: MyStyles.dropdownMenuStyle,
@@ -611,6 +611,7 @@ class InteriorScreen extends StatelessWidget {
                         if (viewModel.page2Key.currentState!.validate()) {
                           viewModel.page2Key.currentState!.save();
                           viewModel.isPage2Fill.value = true;
+                          viewModel.addInteriorInfo();
                         }
                       },
                       buttonText: MyStrings.submit,

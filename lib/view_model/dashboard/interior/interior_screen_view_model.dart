@@ -1,8 +1,17 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:evaluator_app/model/response/interior/interior_info_response.dart';
+import 'package:evaluator_app/routes/app_routes.dart';
+import 'package:evaluator_app/service/endpoints.dart';
+import 'package:evaluator_app/service/exception_error_util.dart';
 import 'package:evaluator_app/utils/constants.dart';
+import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:evaluator_app/utils/globals.dart' as globals;
 
 class InteriorViewModel extends GetxController {
   final GlobalKey<FormState> page1Key = GlobalKey<FormState>();
@@ -61,7 +70,7 @@ class InteriorViewModel extends GetxController {
   Rx<File?> powerWindowDriverImage = Rx<File?>(null);
   Rx<File?> pushWindowDriverImage = Rx<File?>(null);
   Rx<File?> powerWindowAndWindowLockImage = Rx<File?>(null);
-  Rx<File?> handBrakeImage = Rx<File?>(null);
+  Rx<File?> handBreakImage = Rx<File?>(null);
   Rx<File?> carElectricalImage = Rx<File?>(null);
   Rx<File?> cngLpgKitImage = Rx<File?>(null);
   Rx<File?> platformImage = Rx<File?>(null);
@@ -84,4 +93,98 @@ class InteriorViewModel extends GetxController {
 
   var isPage1Fill = false.obs;
   var isPage2Fill = false.obs;
+
+  var interiorInfoResponse = InteriorInfoResponse().obs;
+  var id = Get.arguments ?? '';
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    getInteriorInfo();
+    super.onInit();
+  }
+
+  void addInteriorInfo() async {
+    try {
+      var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl+EndPoints.interiorInfo+'/'+id));
+      request.fields.addAll({
+        'odometerImage_remarks' : '',
+        'dashboardImage_remarks' : dashboardRemarksController.value.text,
+        'frontSeatImage_remarks' : frontSeatRemarksController.value.text,
+        'rearSeatImage_remarks' : rearSeatRemarksController.value.text,
+        'handbreakImage_remarks' : handBrakeRemarksController.value.text,
+        'powerWindowDriverImage_remarks' : powerWindowDriverRemarksController.value.text,
+        'pushWindowDriverImage_remarks' : pushWindowDriverRemarksController.value.text,
+        'pushButton' : selectPushButtonOnOff.value,
+        'powerWindowCentalLock' : powerWindowAndWindowLockController.value.text,
+        'combitionSwitch' : '',
+        'dashboardCondition' : '',
+        'handBreak' : handBrakeController.value.text,
+        'carElectrical' : carElectricalController.value.text,
+        'cngKitImage_remarks' : cngLpgKitImageRemarksController.value.text,
+        'key' : '',
+        'clusterPanel' : clusterPanelController.value.text,
+        'warningDetails' : warningDetailsController.value.text,
+        'rearViewMirror' : insideRearViewMirrorController.value.text,
+        'interiorView' : '',
+        'dashboardSwitch' : selectDashboardSwitches.value,
+        'secondKey' : selectSecondKey.value,
+        'platform' : platformController.value.text,
+        'interiorStar' : '',
+        'evaluationStatusForInterior': 'COMPLETED'
+      });
+      if (dashboardImage.value != null) {
+        request.files.add(http.MultipartFile.fromBytes('dashboardImage', dashboardImage.value!.readAsBytesSync()));
+      }
+      if (frontSeatImage.value != null) {
+        request.files.add(http.MultipartFile.fromBytes('frontSeatImage', frontSeatImage.value!.readAsBytesSync()));
+      }
+      if (rearSeatImage.value != null) {
+        request.files.add(http.MultipartFile.fromBytes('rearSeatImage', rearSeatImage.value!.readAsBytesSync()));
+      }
+      if (handBreakImage.value != null) {
+        request.files.add(http.MultipartFile.fromBytes('handbreakImage', handBreakImage.value!.readAsBytesSync()));
+      }
+      if (powerWindowDriverImage.value != null) {
+        request.files.add(http.MultipartFile.fromBytes('powerWindowDriverImage', powerWindowDriverImage.value!.readAsBytesSync()));
+      }
+      if (pushWindowDriverImage.value != null) {
+        request.files.add(http.MultipartFile.fromBytes('pushWindowDriverImage', pushWindowDriverImage.value!.readAsBytesSync()));
+      }
+      if (cngLpgKitImage.value != null) {
+        request.files.add(http.MultipartFile.fromBytes('cngKitImage', cngLpgKitImage.value!.readAsBytesSync()));
+      }
+      request.headers.addAll(globals.headers);
+
+      log(request.toString());
+
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+            log(await response.stream.bytesToString());
+            Get.toNamed(AppRoutes.dashBoardScreen);
+          } else {
+            log(response.reasonPhrase.toString());
+          }
+    } catch (e){
+      log(e.toString());
+      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
+    }
+  }
+
+  void getInteriorInfo() async {
+    try {
+      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.interiorInfo+'/'+id),
+      headers: globals.headers);
+      if(response.statusCode == 200){
+        log(response.body.toString());
+        interiorInfoResponse.value = InteriorInfoResponse.fromJson(jsonDecode(response.body));
+        // loadData();
+      }else{
+        log(response.reasonPhrase.toString());
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 }
