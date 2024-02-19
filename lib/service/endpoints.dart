@@ -10,4 +10,5 @@ class EndPoints {
   static String status = 'status/';
   static String specialComment = 'specialcomment';
   static String acInfo = 'acinfo';
+  static String report = 'report/';
 }

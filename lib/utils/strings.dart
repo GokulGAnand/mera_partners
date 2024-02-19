@@ -218,7 +218,7 @@ class MyStrings {
   static const String pushWindowDriverImage = "Push Window-Driver Image";
   ///Interior page 2
   static const String pushButtonOnOff = "Push Button(On/Off)";
-  static const String dashboardSwitches = "Dashboar Switches";
+  static const String dashboardSwitches = "Dashboard Switches";
   static const String powerWindowAndWindowLock = "Power Window & Window Lock";
   static const String handBrake = "Hand Brake";
   static const String carElectrical = "Car Electrical";
@@ -248,6 +248,27 @@ class MyStrings {
   static const String sump = "Sump";
   static const String noDataFound = "No Data Found";
   static const String viewReport = "View Report";
+  /// Report screen
+  static const String report = "Report";
+  static const String keraCarsReport = "KERACARS INSPECTION REPORT";
+  static const String summary = "SUMMARY";
+  static const String vehicleDetails = "VEHICLE DETAILS ";
+  static const String imageGallery = "IMAGE GALLERY";
+  static const String kilometer  = "Kilometer ";
+  ///Feature Screen
+  static const String keyLessEntry = "Keyless Entry";
+  static const String stereoImage = "Stereo Image";
+  static const String stereoBrand = "Stereo Brand";
+  static const String rearParkingSensor = "Rear Parking Sensor";
+  static const String fogLamp = "Fog Lamp";
+  static const String sunroof = "Sunroof";
+  static const String gpsNavigation = "GPS Navigation";
+  static const String alloyWheels = "Alloy Wheels";
+  static const String airBag = "Air Bag";
+  static const String seatBelt = "Seat Belt";
+  static const String absEbd = "ABS EBD\n(Anti-lock Braking System)";
+  static const String gloveBox = "Glove Box";
+  static const String interiorModifications = "Any Interior Modifications";
   static const String empty = "";
 
 }

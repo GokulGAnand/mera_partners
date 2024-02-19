@@ -18,6 +18,8 @@ class MyColors {
   static const Color transparent1 = Color(0xFFDADADA);
   static const Color greyLight = Color(0XFFB0B0B0);
   static const Color appBarGrey = Color(0XFFF4F4F4);
+  static const Color blue5001 = Color(0XFFDAEEFF);
+  static const Color grey20 = Color(0xFF1D1B20);
 
   // Black
   Color get black900 => const Color(0XFF000000);
@@ -25,7 +27,6 @@ class MyColors {
   // Blue
   Color get blue50 => const Color(0XFFE7F2FF);
 
-  Color get blue5001 => const Color(0XFFDAEEFF);
 
   // BlueGray
   Color get blueGray100 => const Color(0XFFD4CFCF);

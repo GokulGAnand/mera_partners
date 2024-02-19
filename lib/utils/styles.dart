@@ -23,6 +23,20 @@ class MyStyles{
     fontWeight: FontWeight.w600,
     height: 0,
   );
+  static const reportTitleStyle = TextStyle(
+    color: MyColors.white,
+    fontSize: 19,
+    fontFamily: 'Inter',
+    fontWeight: FontWeight.w700,
+    height: 0,
+  );
+  static const reportLabelStyle = TextStyle(
+  color: MyColors.grey20,
+  fontSize: 12,
+  fontFamily: 'Inter',
+  fontWeight: FontWeight.w600,
+  height: 0,
+  );
 
 
 }
