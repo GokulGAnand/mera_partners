@@ -327,6 +327,7 @@ class AirConditioningScreen extends StatelessWidget {
                     Internet.checkInternet().then((value){
                       if (value){
                         viewModel.addCondition();
+                        viewModel.getAcinfo();
                       }else{
                         CustomToast.instance.showMsg(MyStrings.checkNetwork);
                       }

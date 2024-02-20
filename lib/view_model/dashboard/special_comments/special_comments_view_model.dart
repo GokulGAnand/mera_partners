@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/service/exception_error_util.dart';
 import 'package:evaluator_app/utils/globals.dart' as globals;
@@ -66,7 +65,7 @@ class SpecialCommentsViewModel extends GetxController{
   }
 
   void loaddata(){
-    if(specialResponse .value.data!=null){
+    if(specialResponse.value.data!=null){
       specialCommentsController.value.text = specialResponse.value.data?[0].specialComments ?? '';
       selectedCarCondition.value = specialResponse.value.data?[0].carCondition ?? '';
     }

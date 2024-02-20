@@ -1,6 +1,6 @@
 
+import 'dart:convert';
 import 'dart:developer';
-
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/service/endpoints.dart';
 import 'package:evaluator_app/utils/constants.dart';
@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:evaluator_app/utils/globals.dart' as globals;
 
+import '../../../model/response/airconditioning/airconditioning_response.dart';
 import '../../../service/exception_error_util.dart';
 import '../../../widgets/custom_toast.dart';
 
@@ -43,6 +44,16 @@ class AirConditioningViewModel extends GetxController{
   var id = Get.arguments ?? '';
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  var airConditionResponse = airconditininglist().obs;
+
+
+  @override
+  void onInit() {
+    print(id);
+    getAcinfo();
+    super.onInit();
+  }
+
 
 
   void addCondition()async{
@@ -69,6 +80,27 @@ class AirConditioningViewModel extends GetxController{
   }
   }
 
+
+  void getAcinfo()async{
+    var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.acInfo+'/'+id),headers: globals.headers);
+    if(response.statusCode == 200){
+      airConditionResponse.value = airconditininglist.fromJson(json.decode(response.body));
+    }log(response.body);
+  }
+
+  void loadData(){
+    if(airConditionResponse.value.data!=null){
+      selectedCooling.value = airConditionResponse.value.data?[0].airCooling?? '';
+      selectedAcWorking.value = airConditionResponse.value.data?[0].acWorking?? '';
+      selectedHeater.value = airConditionResponse.value.data?[0].heater?? '';
+      selectedClimateControl.value = airConditionResponse.value.data?[0].climateControl?? '';
+      selectedAcCondenserCompressor.value = airConditionResponse.value.data?[0].acCondensor?? '';
+      selectedAcCFilterDamaged.value = airConditionResponse.value.data?[0].acFilterDamaged?? '';
+      selectedAcBlowerGrill.value = airConditionResponse.value.data?[0].acBlowerGrill?? '';
+      selectedRearDefogger.value = airConditionResponse.value.data?[0].rearDefogger?? '';
+
+    }
+  }
 
 
 
