@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:ui';
 import 'package:evaluator_app/model/response/dashboard/evaluation_status_response.dart';
+import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/service/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ import '../../utils/images.dart';
 import '../../utils/strings.dart';
 import '../../widgets/custom_toast.dart';
 import 'package:evaluator_app/utils/globals.dart' as globals;
+import '../report/report_screen_view_model.dart';
 
 class DashBoardViewModel extends GetxController {
   var evaluationStatusResponse = EvaluationStatusResponse().obs;
@@ -23,11 +25,11 @@ class DashBoardViewModel extends GetxController {
   var airComplete = false.obs;
   var commentsComplete = false.obs;
   List<DashBoardClass> dashboard = [];
-  var id;
+  var ratingList = <Item>[].obs;
+  var id = Get.arguments;
 
   @override
   void onInit() {
-    id = Get.arguments;
     dashboard = [
       DashBoardClass(icon: MyImages.difference, label: MyStrings.documents,isComplete: documentsComplete.value),
       DashBoardClass(icon: MyImages.exterior, label: MyStrings.exterior,isComplete: exteriorComplete.value),
@@ -37,6 +39,13 @@ class DashBoardViewModel extends GetxController {
       DashBoardClass(icon: MyImages.settings, label: MyStrings.features,isComplete:featuresComplete.value),
       DashBoardClass(icon: MyImages.heat, label: MyStrings.air,isComplete:airComplete.value),
       DashBoardClass(icon: MyImages.maps, label: MyStrings.comments,isComplete:commentsComplete.value),
+    ];
+    ratingList.value = [
+      Item(title: MyStrings.exterior, rating: 0),
+      Item(title: MyStrings.interior, rating: 0),
+      Item(title: MyStrings.engine, rating: 0),
+      Item(title: MyStrings.electrical, rating: 0),
+      Item(title: MyStrings.test, rating: 0),
     ];
     getEvaluationStatus();
     super.onInit();
@@ -64,6 +73,43 @@ class DashBoardViewModel extends GetxController {
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
   }
+
+  void addRating() async {
+    try {
+      var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.interiorInfo+'/'+id),headers: globals.headers,
+        body: {
+          "engineStar":ratingList[0].rating.toString(),
+          "exteriorStar":ratingList[1].rating.toString(),
+          "testDriveStar":ratingList[2].rating.toString(),
+          "interiorStar":ratingList[3].rating.toString(),
+          "electricalStar":ratingList[4].rating.toString(),
+        }
+      );
+      if( response.statusCode == 200){
+        updateEvaluationStatus();
+          }
+    } catch (e) {
+      log(e.toString());
+      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
+    }
+  }
+
+  void updateEvaluationStatus() async {
+    try {
+      var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.carBasic+id),headers: globals.headers,
+          body: {
+        "status":"EVALUATED"
+      });
+      if(response.statusCode == 200){
+        CustomToast.instance.showMsg(MyStrings.success);
+        Get.toNamed(AppRoutes.homeScreen);
+      }
+    } catch (e) {
+      log(e.toString());
+      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
+    }
+  }
+  
 }
 
 class DashBoardClass {

@@ -37,7 +37,13 @@ class MyStyles{
   fontWeight: FontWeight.w600,
   height: 0,
   );
-
+  static const ratingTitleStyle = TextStyle(
+    color: MyColors.white,
+    fontSize: 23,
+    fontFamily: 'Inter',
+    fontWeight: FontWeight.w500,
+    height: 0,
+  );
 
 }
 

@@ -255,7 +255,10 @@ class MyStrings {
   static const String summary = "SUMMARY";
   static const String vehicleDetails = "VEHICLE DETAILS ";
   static const String imageGallery = "IMAGE GALLERY";
-  static const String kilometer  = "Kilometer ";
+  static const String kilometer  = "Kilometer";
+  static const String allImages  = "All Images";
+  static const String damages  = "Damages";
+  static const String others  = "Others";
   ///Feature Screen
   static const String keyLessEntry = "Keyless Entry";
   static const String stereoImage = "Stereo Image";
@@ -270,6 +273,9 @@ class MyStrings {
   static const String absEbd = "ABS EBD\n(Anti-lock Braking System)";
   static const String gloveBox = "Glove Box";
   static const String interiorModifications = "Any Interior Modifications";
+  ///
+  static const String ratingTitle = "Provide a rating\nbased on Evaluation";
+  static const String electrical = "Electrical";
   static const String empty = "";
 
 }

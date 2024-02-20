@@ -7,7 +7,9 @@ import 'package:evaluator_app/utils/globals.dart' as globals;
 import '../../model/response/report/report_response.dart';
 import '../../service/endpoints.dart';
 import '../../service/exception_error_util.dart';
+import '../../utils/images.dart';
 import '../../widgets/custom_toast.dart';
+import '../dashboard/dashboard_view_model.dart';
 
 class ReportScreenViewModel extends GetxController{
 
@@ -24,10 +26,19 @@ class ReportScreenViewModel extends GetxController{
   var features = <Master>[].obs;
   var interiorAndElectrical = <Master>[].obs;
   var reportResponse = ReportResponse().obs;
+  List<DashBoardClass> dashboard = [];
 
 
   @override
   void onInit() {
+    dashboard = [
+      DashBoardClass(icon: MyImages.difference, label: MyStrings.allImages.toUpperCase(),),
+      DashBoardClass(icon: MyImages.exterior, label: MyStrings.exterior.toUpperCase(),),
+      DashBoardClass(icon: MyImages.electric, label: MyStrings.interior.toUpperCase(),),
+      DashBoardClass(icon: MyImages.search, label: MyStrings.others.toUpperCase(),),
+      DashBoardClass(icon: MyImages.engine, label: MyStrings.engine.toUpperCase(),),
+      DashBoardClass(icon: MyImages.settings, label: MyStrings.damages.toUpperCase(),),
+    ];
     getReport();
     super.onInit();
   }

@@ -20,6 +20,7 @@ class MyColors {
   static const Color appBarGrey = Color(0XFFF4F4F4);
   static const Color blue5001 = Color(0XFFDAEEFF);
   static const Color grey20 = Color(0xFF1D1B20);
+  static const Color yellow = Color(0xFFFFC403);
 
   // Black
   Color get black900 => const Color(0XFF000000);

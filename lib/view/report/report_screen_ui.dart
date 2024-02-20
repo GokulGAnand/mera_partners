@@ -4,9 +4,11 @@ import 'package:evaluator_app/view_model/report/report_screen_view_model.dart';
 import 'package:evaluator_app/widgets/common_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../utils/dimens.dart';
 import '../../utils/strings.dart';
+import '../../widgets/custom_card.dart';
 
 class ReportScreen extends StatelessWidget {
   ReportScreen({super.key});
@@ -16,9 +18,11 @@ class ReportScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CommonAppBar(
+      appBar: CommonAppBar(
         centerTitle: false,
-        leading: Icon(Icons.arrow_back_ios_new),
+        leading: IconButton(onPressed: () {
+          Get.back();
+        }, icon: const Icon(Icons.arrow_back_ios_new),),
         title: MyStrings.report,
       ),
       body: SingleChildScrollView(
@@ -182,42 +186,20 @@ class ReportScreen extends StatelessWidget {
                                               initialRating: viewModel.ratingList[index].rating,
                                               minRating: 1,
                                               direction: Axis.horizontal,
-                                              allowHalfRating: true,
                                               itemCount: 5,
                                               ignoreGestures: true,
                                               itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
                                               itemBuilder: (context, _) => const Icon(
                                                 Icons.star,
-                                                color: MyColors.blue,
+                                                color: MyColors.yellow,
                                               ),
-                                              onRatingUpdate: (rating) {
-                                              },
+                                              onRatingUpdate: (rating) {},
                                             ),
 
                                           ],
                                         ),
                                         const Divider()
                                       ],
-                                    ),
-                                  );
-                                    ListTile(
-                                    leading: Text(
-                                      viewModel.ratingList[index].title
-                                    ),
-                                    title: RatingBar.builder(
-                                      initialRating: viewModel.ratingList[index].rating,
-                                      minRating: 1,
-                                      direction: Axis.horizontal,
-                                      allowHalfRating: true,
-                                      itemCount: 5,
-                                      ignoreGestures: true,
-                                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                                      itemBuilder: (context, _) => const Icon(
-                                        Icons.star,
-                                        color: MyColors.blue,
-                                      ),
-                                      onRatingUpdate: (rating) {
-                                      },
                                     ),
                                   );
                                 },
@@ -533,8 +515,6 @@ class ReportScreen extends StatelessWidget {
                   ),
                   ExpansionPanel(
                       headerBuilder: (context, isExpanded){
-                        print(isExpanded);
-                        // viewModel.isExpanded.value = isExpanded;
                         return ListTile(
                           title: Text(MyStrings.imageGallery.toUpperCase()),
                           tileColor: MyColors.blue5001,
@@ -544,28 +524,38 @@ class ReportScreen extends StatelessWidget {
                       isExpanded: viewModel.isExpanded.value,
                       body: SizedBox(
                         height: 400,
-                        child: ListView.builder(
+                        child: GridView.builder(
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 29, mainAxisSpacing: 29, childAspectRatio: 3.5 / 3.5),
+                          itemCount: viewModel.dashboard.length,
+                          shrinkWrap: true,
                           itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
+                            return GestureDetector(
+                              onTap: () {
+                                if(index == 0){
+                                }else if(index == 1){
+                                }else if(index == 2){
+                                }else if(index == 3){
+                                }else if(index == 4){
+                                }else if(index == 5){
+                                }
+                              },
                               child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                          viewModel.vehicleDetails[index].title
-                                      ),
-                                      Text(viewModel.vehicleDetails[index].value)
-
-                                    ],
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * 0.2,
+                                    height: MediaQuery.of(context).size.width * 0.2,
+                                    decoration: BoxDecoration(color: MyColors.lightBlue, borderRadius: BorderRadius.circular(8)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: Center(child: SvgPicture.asset(viewModel.dashboard[index].icon ?? "")),
+                                    ),
                                   ),
-                                  const Divider()
+                                  Text(viewModel.dashboard[index].label ?? "", textAlign: TextAlign.center, style: MyStyles.cardTitleStyleBlue),
                                 ],
                               ),
                             );
                           },
-                          itemCount: viewModel.vehicleDetails.length,
                         ),
                       )
                   ),
