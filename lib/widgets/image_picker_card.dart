@@ -19,9 +19,11 @@ class ImagePickerCard extends StatelessWidget {
   final VoidCallback? onSubmit;
   final ImageSource? uploadType;
   final Rx<File?>? image;
+  final RxString? networkImage;
   final TextEditingController remarksController;
 
-  ImagePickerCard({super.key, this.onSubmit, this.uploadType, required this.remarksController, this.image});
+  ImagePickerCard({super.key, this.onSubmit, this.uploadType, required this.remarksController, this.image, 
+  this.networkImage});
 
   Future pickImage(ImageSource source) async {
     try {
@@ -114,7 +116,14 @@ class ImagePickerCard extends StatelessWidget {
                     },
                   );
                 },
-                child: image?.value == null
+                child: (networkImage != null)?
+                Image.network(
+                  networkImage!.value,
+                        width: 119,
+                        height: 119,
+                        fit: BoxFit.fill,
+                      )
+                :image?.value == null
                     ? Container(
                         width: 119,
                         height: 119,

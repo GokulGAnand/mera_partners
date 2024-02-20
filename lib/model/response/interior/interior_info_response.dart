@@ -44,6 +44,13 @@ class Data {
     final String? secondKey;
     final String? platform;
     final int? interiorStar;
+    final Image? dashboardImage;
+    final Image? frontSeatImage;
+    final Image? handbreakImage;
+    final Image? odometerImage;
+    final Image? powerWindowDriverImage;
+    final Image? pushWindowDriverImage;
+    final Image? rearSeatImage;
 
     Data({
         this.id,
@@ -63,6 +70,13 @@ class Data {
         this.secondKey,
         this.platform,
         this.interiorStar,
+        this.dashboardImage,
+        this.frontSeatImage,
+        this.handbreakImage,
+        this.odometerImage,
+        this.powerWindowDriverImage,
+        this.pushWindowDriverImage,
+        this.rearSeatImage,
     });
 
     factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -83,6 +97,13 @@ class Data {
         secondKey: json["secondKey"],
         platform: json["platform"],
         interiorStar: json["interiorStar"],
+        dashboardImage: json["dashboardImage"] == null ? null : Image.fromJson(json["dashboardImage"]),
+        frontSeatImage: json["frontSeatImage"] == null ? null : Image.fromJson(json["frontSeatImage"]),
+        handbreakImage: json["handbreakImage"] == null ? null : Image.fromJson(json["handbreakImage"]),
+        odometerImage: json["odometerImage"] == null ? null : Image.fromJson(json["odometerImage"]),
+        powerWindowDriverImage: json["powerWindowDriverImage"] == null ? null : Image.fromJson(json["powerWindowDriverImage"]),
+        pushWindowDriverImage: json["pushWindowDriverImage"] == null ? null : Image.fromJson(json["pushWindowDriverImage"]),
+        rearSeatImage: json["rearSeatImage"] == null ? null : Image.fromJson(json["rearSeatImage"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -103,6 +124,37 @@ class Data {
         "secondKey": secondKey,
         "platform": platform,
         "interiorStar": interiorStar,
+        "dashboardImage": dashboardImage?.toJson(),
+        "frontSeatImage": frontSeatImage?.toJson(),
+        "handbreakImage": handbreakImage?.toJson(),
+        "odometerImage": odometerImage?.toJson(),
+        "powerWindowDriverImage": powerWindowDriverImage?.toJson(),
+        "pushWindowDriverImage": pushWindowDriverImage?.toJson(),
+        "rearSeatImage": rearSeatImage?.toJson(),
+    };
+}
+
+class Image {
+    final String? name;
+    final String? url;
+    final String? remarks;
+
+    Image({
+        this.name,
+        this.url,
+        this.remarks,
+    });
+
+    factory Image.fromJson(Map<String, dynamic> json) => Image(
+        name: json["name"],
+        url: json["url"],
+        remarks: json["remarks"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "name": name,
+        "url": url,
+        "remarks": remarks,
     };
 }
 

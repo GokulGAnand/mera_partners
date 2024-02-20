@@ -19,15 +19,18 @@ class CustomCheckBoxDialog extends StatelessWidget {
     required this.title,
     required this.items,
     required this.image,
+    required this.networkImage,
     required this.selectItem,
     required this.remarksController,
+    required this.othersController,
     super.key});
   final String title; 
   final List<String> items; 
   final Rx<File?> image;
+  final RxString networkImage;
   final RxList<String> selectItem;
   final TextEditingController remarksController;
-  
+  final TextEditingController othersController;
 
   Future pickImage(ImageSource source) async {
     try {
@@ -89,6 +92,19 @@ class CustomCheckBoxDialog extends StatelessWidget {
                     ))
                     .toList(),
               ),
+              Obx(
+                ()=>
+                   (selectItem.value.contains("Other") )?Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16),
+                  child: CustomTextFormField(
+                    labelText: MyStrings.other,
+                    helperText: MyStrings.other,
+                    minLines: 1,
+                    maxLines: 1,
+                    controller: othersController,
+                    validator: (p0) => null,
+                  ), )                
+              :const SizedBox()),   
               dialogContent(context)
             ],
           ),
@@ -141,7 +157,14 @@ class CustomCheckBoxDialog extends StatelessWidget {
                     },
                   );
                 },
-                child: image.value == null
+                child: (networkImage.value.isNotEmpty)?
+                Image.network(
+                  networkImage.value,
+                        width: 119,
+                        height: 119,
+                        fit: BoxFit.fill,
+                      )
+                :image.value == null
                     ? Container(
                         width: 119,
                         height: 119,
@@ -200,6 +223,10 @@ class CustomCheckBoxDialog extends StatelessWidget {
               child: CustomElevatedButton(onPressed: () {
                 // image?.value = image?.value;
                 print(image.value.toString());
+                if(selectItem.contains(othersController.value.text) == false){
+                  selectItem.add(othersController.value.text);
+                }
+                selectItem.remove("Other");
                 Navigator.of(context).pop();
               }, buttonText: MyStrings.submit),
             ),

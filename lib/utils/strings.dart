@@ -55,6 +55,7 @@ class MyStrings {
   static const String length = "Length";
   static const String seats = "Seats";
   static const String remarks = "Remarks";
+  static const String other = "Other";
   static const String submit = "Submit";
   static const String oEMWarrantyRemaining = "OEM Warranty Remaining";
   static const String noOfMonthsRemaining = "Number of Months Remaining";

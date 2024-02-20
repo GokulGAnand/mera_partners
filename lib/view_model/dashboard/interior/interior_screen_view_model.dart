@@ -7,6 +7,7 @@ import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/service/endpoints.dart';
 import 'package:evaluator_app/service/exception_error_util.dart';
 import 'package:evaluator_app/utils/constants.dart';
+import 'package:evaluator_app/view/dashboard/interior/interior_screen_ui.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -47,6 +48,15 @@ class InteriorViewModel extends GetxController {
   Rx<TextEditingController> cngLpgKitImageRemarksController = TextEditingController().obs;
   Rx<TextEditingController> platformRemarksController = TextEditingController().obs;
 
+  Rx<TextEditingController> clusterPanelOtherController = TextEditingController().obs;
+  Rx<TextEditingController> dashboardOtherController = TextEditingController().obs;
+  Rx<TextEditingController> frontSeatOtherController = TextEditingController().obs;
+  Rx<TextEditingController> rearSeatOtherController = TextEditingController().obs;
+  Rx<TextEditingController> dashboardSwitchOtherController = TextEditingController().obs;
+  Rx<TextEditingController> handBrakeOtherController = TextEditingController().obs;
+  Rx<TextEditingController> carElectricalOtherController = TextEditingController().obs;
+  Rx<TextEditingController> platformOtherController = TextEditingController().obs;
+
   List<String> clusterPanel = Constants.clusterPanel;
   List<String> yesNoList = Constants.yesNoList;
   List<String> dashboardImageList = Constants.dashboardImage;
@@ -75,10 +85,8 @@ class InteriorViewModel extends GetxController {
   Rx<File?> cngLpgKitImage = Rx<File?>(null);
   Rx<File?> platformImage = Rx<File?>(null);
 
-  // var selectClusterPanel = ''.obs;
   RxList<String> selectClusterPanel = <String>[].obs;
   var selectWarningLight = ''.obs;
-  var warningDetails = ''.obs;
   RxList<String> selectDashboardImage = <String>[].obs;
   RxList<String> selectFrontSeatImage = <String>[].obs;
   RxList<String> selectRearSeatImage = <String>[].obs;
@@ -90,6 +98,20 @@ class InteriorViewModel extends GetxController {
   RxList<String> selectCarElectrical = <String>[].obs;
   var selectSecondKey = ''.obs;
   RxList<String> selectPlatform = <String>[].obs;
+
+  RxString clusterNetworkImage = ''.obs;
+  RxString dashboardNetworkImage = ''.obs;
+  RxString frontSeatNetworkImage = ''.obs;
+  RxString rearSeatNetworkImage = ''.obs;
+  RxString insideRearViewMirrorNetworkImage = ''.obs;
+  RxString interiorViewFromBootDashboardNetworkImage = ''.obs;
+  RxString powerWindowDriverNetworkImage = ''.obs;
+  RxString pushWindowDriverNetworkImage = ''.obs;
+  RxString powerWindowAndWindowLockNetworkImage = ''.obs;
+  RxString handBreakNetworkImage = ''.obs;
+  RxString carElectricalNetworkImage = ''.obs;
+  RxString cngLpgKitNetworkImage = ''.obs;
+  RxString platformNetworkImage = ''.obs;
 
   var isPage1Fill = false.obs;
   var isPage2Fill = false.obs;
@@ -178,13 +200,56 @@ class InteriorViewModel extends GetxController {
       headers: globals.headers);
       if(response.statusCode == 200){
         log(response.body.toString());
-        interiorInfoResponse.value = InteriorInfoResponse.fromJson(jsonDecode(response.body));
-        // loadData();
+        var data = await jsonDecode(response.body);
+        interiorInfoResponse.value = InteriorInfoResponse.fromJson(data);
+        loadData();
       }else{
         log(response.reasonPhrase.toString());
       }
     } catch (e) {
       log(e.toString());
+    }
+  }
+
+  void loadData(){
+    if(interiorInfoResponse.value.data != null){
+      clusterPanelController.value.text = interiorInfoResponse.value.data![0].clusterPanel.toString();
+      selectClusterPanel.value = clusterPanelController.value.text.split(",");
+      warningDetailsController.value.text = interiorInfoResponse.value.data![0].warningDetails!;
+      if(warningDetailsController.value.text.isNotEmpty){
+        selectWarningLight.value = 'yes';
+      }
+      dashboardNetworkImage.value = interiorInfoResponse.value.data![0].dashboardImage!.url ?? '';
+      dashboardRemarksController.value.text = interiorInfoResponse.value.data![0].dashboardImage!.remarks ?? '';
+      frontSeatNetworkImage.value = interiorInfoResponse.value.data![0].frontSeatImage!.url ?? '';
+      frontSeatRemarksController.value.text = interiorInfoResponse.value.data![0].frontSeatImage!.remarks ?? '';
+      rearSeatNetworkImage.value = interiorInfoResponse.value.data![0].rearSeatImage!.url ?? '';
+      rearSeatRemarksController.value.text = interiorInfoResponse.value.data![0].rearSeatImage!.remarks ?? '';
+
+      insideRearViewMirrorController.value.text = interiorInfoResponse.value.data![0].rearViewMirror!;
+      selectInsideRearViewMirror.value = insideRearViewMirrorController.value.text.split(",");
+
+      powerWindowDriverNetworkImage.value = interiorInfoResponse.value.data![0].powerWindowDriverImage!.url ?? '';
+      powerWindowDriverRemarksController.value.text = interiorInfoResponse.value.data![0].powerWindowDriverImage!.remarks ?? '';
+      pushWindowDriverNetworkImage.value = interiorInfoResponse.value.data![0].pushWindowDriverImage!.url ?? '';
+      pushWindowDriverRemarksController.value.text = interiorInfoResponse.value.data![0].pushWindowDriverImage!.remarks ?? '';
+      
+      selectPushButtonOnOff.value = interiorInfoResponse.value.data![0].pushButton ?? '';
+      selectDashboardSwitches.value = interiorInfoResponse.value.data![0].dashboardSwitch!;
+
+      powerWindowAndWindowLockController.value.text = interiorInfoResponse.value.data![0].powerWindowCentalLock ?? '';
+      selectPowerWindowAndWindowLock.value = powerWindowAndWindowLockController.value.text.split(",");
+      handBrakeController.value.text = interiorInfoResponse.value.data![0].handBreak!;
+      selectHandBrake.value = handBrakeController.value.text.split(",");
+      handBreakNetworkImage.value = interiorInfoResponse.value.data![0].handbreakImage!.url ?? '';
+      handBrakeRemarksController.value.text = interiorInfoResponse.value.data![0].handbreakImage!.remarks ?? '';
+      
+      carElectricalController.value.text = interiorInfoResponse.value.data![0].carElectrical ?? '';
+      selectCarElectrical.value = carElectricalController.value.text.split(",");
+      // selectSecondKey.value = interiorInfoResponse.value.data![0].secondKey ?? '';
+      
+      platformController.value.text = interiorInfoResponse.value.data![0].platform!;
+      selectPlatform.value = platformController.value.text.split(",");
     }
   }
 }
