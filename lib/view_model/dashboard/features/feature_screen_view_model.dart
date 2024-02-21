@@ -35,6 +35,7 @@ class FeatureViewModel extends GetxController{
   Rx<File?> sterioCompartmentImage = Rx<File?>(null);
   Rx<TextEditingController> sterioBrandController = TextEditingController().obs;
 
+
   /// page2
   var selectedAlloyWheel = ''.obs;
   var selectedFogLamps = ''.obs;

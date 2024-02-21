@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -12,6 +14,7 @@ class ExteriorViewModel extends GetxController{
   var isPage6Fill = false.obs;
 
   final Rx<PageController> pageController = PageController(initialPage: 0).obs;
+
   var activePage = 0.obs;
 
   final GlobalKey<FormState> page1Key = GlobalKey<FormState>();
@@ -28,5 +31,9 @@ class ExteriorViewModel extends GetxController{
   var selected = "".obs;
   ///page 6
   Rx<TextEditingController> missingPartsController = TextEditingController().obs;
+
+  ///page1
+  Rx<File?> exteriorCompartmentImage = Rx<File?>(null);
+  Rx<TextEditingController> frontImage = TextEditingController().obs;
 
 }
