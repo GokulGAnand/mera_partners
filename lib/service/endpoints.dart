@@ -11,4 +11,5 @@ class EndPoints {
   static String specialComment = 'specialcomment';
   static String acInfo = 'acinfo';
   static String report = 'report/';
+  static String testDriveInfo = 'testdriveinfo';
 }

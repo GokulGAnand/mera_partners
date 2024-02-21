@@ -1,5 +1,6 @@
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
+import 'package:evaluator_app/view/dashboard/features/features_screen_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -25,7 +26,6 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: MyColors.kPrimaryColor),
         useMaterial3: true,
       ),
-
       getPages: AppRoutes().pages,
       initialRoute: AppRoutes.loginScreen,
     );

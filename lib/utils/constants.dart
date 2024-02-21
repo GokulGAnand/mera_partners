@@ -159,7 +159,16 @@ class Constants {
   static const List<String> keyLessEntryList = ['Remote Lock', 'Central Lock', 'Not Available', 'Not Working', 'Other'];
   static const List<String> stereoImageOptions = ['Not Available', 'Customer will take Stereo', 'Touch Stereo', 'Not Working', 'Good', 'Other'];
   static const List<String> workingConditionOptions = ['Working', 'Not Working', 'Not Available'];
-
+  static const List<String> rearParkingSensorList = ['Working', 'Not Working', 'Not Available'];
+  static const List<String> fogLampList = ['Working', 'Not Working', 'Not Available'];
+  static const List<String> sunRoofList = ['Good', 'Not Available', 'Not Working', 'Working', 'Damaged', 'Replaced', 'Other'];
+  static const List<String> gpsNavigationList =  ['Not Available', 'Not Working', 'Available'];
+  static const List<String> alloyWheelsList = ['Yes', 'No', 'Scratch', 'Good', 'Drum Scratch', 'Alloy Wheel Missing', 'Other'];
+  static const List<String> fogLampsList = ['Not Applicable', 'Working', 'Needs Replacement'];
+  static const List<String> airBagList =  ['1', '2', '2+', 'Not Available', 'Damaged', 'Deployed', 'Other'];
+  static const List<String> seatBeltList =  ['Working', 'Not Working', 'Damaged'];
+  static const List<String> absEbdList = ['Functioning', 'Not Functioning', 'Not Available', 'ABS EBD Sensor Damaged', 'ABS EBD Module Damaged'];
+  static const List<String> gloveBoxList =['Cooled Glove Box Available', 'Damaged', 'Good', 'Door Damaged', 'Scratched', 'Other'];
   ///interior
   static const List<String> clusterPanel= ['Good', 'Speedometer Not Working', 'Warning Light', 'Speedometer Damaged', 'Damaged', 'Other'];
   static const List<String> dashboardImage = ['Good', 'Faded', 'Broken', 'Rattling sound',  'Scratch', 'Other', 'AC Vent Grill Broken', 'Other'];
@@ -191,4 +200,6 @@ class Constants {
   static const List<String> turboChargerList = ['Leakage', 'Working', 'Not Working', 'Noisy', 'Other'];
   static const List<String> engineMountList = ['Jerking', 'Damaged', 'Good', 'Other'];
   static const List<String> sumpList = ['Damaged', 'Leakage', 'Good', 'Other'];
+
+
 }

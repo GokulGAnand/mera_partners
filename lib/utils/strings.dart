@@ -261,12 +261,13 @@ class MyStrings {
   static const String stereoBrand = "Stereo Brand";
   static const String rearParkingSensor = "Rear Parking Sensor";
   static const String fogLamp = "Fog Lamp";
+  static const String fogLamps = "Fog Lamps";
   static const String sunroof = "Sunroof";
   static const String gpsNavigation = "GPS Navigation";
   static const String alloyWheels = "Alloy Wheels";
   static const String airBag = "Air Bag";
   static const String seatBelt = "Seat Belt";
-  static const String absEbd = "ABS EBD\n(Anti-lock Braking System)";
+  static const String absEbd = "ABS EBD (Anti-lock Braking System)";
   static const String gloveBox = "Glove Box";
   static const String interiorModifications = "Any Interior Modifications";
   static const String empty = "";
