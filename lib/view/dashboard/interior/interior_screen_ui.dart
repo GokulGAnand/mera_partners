@@ -47,7 +47,9 @@ class InteriorScreen extends StatelessWidget {
                             items: viewModel.clusterPanel, 
                             selectItem: viewModel.selectClusterPanel,
                             image: viewModel.clusterImage,
-                            remarksController : viewModel.clusterPanelRemarksController.value
+                            networkImage: viewModel.clusterNetworkImage,
+                            remarksController : viewModel.clusterPanelRemarksController.value,
+                            othersController: viewModel.clusterPanelOtherController.value,
                           );
                       },
                     );
@@ -75,7 +77,7 @@ class InteriorScreen extends StatelessWidget {
                   value: viewModel.selectWarningLight.value.isEmpty ? null : viewModel.selectWarningLight.value,
                   items: viewModel.yesNoList.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
-                      value: value,
+                      value: value.toLowerCase(),
                       child: Text(
                         value,
                         style: MyStyles.dropdownMenuStyle,
@@ -101,7 +103,7 @@ class InteriorScreen extends StatelessWidget {
                           controller: viewModel.warningDetailsController.value, 
                           labelText: "${MyStrings.warningDetails}*",
                           helperText: "${MyStrings.warningDetails}*",
-                          validator: viewModel.warningDetails.value.isEmpty ?ValidateInput.validateRequiredFields:null,),
+                          validator: viewModel.warningDetailsController.value.text.isEmpty ?ValidateInput.validateRequiredFields:null,),
                       );
                     } else {
                       return const SizedBox();
@@ -121,7 +123,9 @@ class InteriorScreen extends StatelessWidget {
                             items: viewModel.dashboardImageList, 
                             selectItem: viewModel.selectDashboardImage,
                             image: viewModel.dashboardImage,
-                            remarksController : viewModel.dashboardRemarksController.value
+                            networkImage: viewModel.dashboardNetworkImage,
+                            remarksController : viewModel.dashboardRemarksController.value,
+                            othersController: TextEditingController(),
                           );
                       },
                     );
@@ -134,7 +138,9 @@ class InteriorScreen extends StatelessWidget {
                     validator: ValidateInput.validateRequiredFields,
                     showCursor: false,
                     isEnabled: false,
-                    suffixIcon: viewModel.dashboardImage.value == null ?Padding(
+                    suffixIcon: (viewModel.dashboardNetworkImage.value.isNotEmpty)?
+                    const Icon(Icons.done_rounded,color: MyColors.green,)
+                    :(viewModel.dashboardImage.value == null) ?Padding(
                       padding: Dimens.suffixPadding,
                       child: SvgPicture.asset(MyImages.upload),
                     ):const Icon(Icons.done_rounded,color: MyColors.green,),
@@ -153,7 +159,9 @@ class InteriorScreen extends StatelessWidget {
                             items: viewModel.frontSeatImageList, 
                             selectItem: viewModel.selectFrontSeatImage,
                             image: viewModel.frontSeatImage,
-                            remarksController : viewModel.frontSeatRemarksController.value
+                            networkImage: viewModel.frontSeatNetworkImage,
+                            remarksController : viewModel.frontSeatRemarksController.value,
+                            othersController: TextEditingController(),
                           );
                       },
                     );
@@ -166,7 +174,9 @@ class InteriorScreen extends StatelessWidget {
                     validator: ValidateInput.validateRequiredFields,
                     showCursor: false,
                     isEnabled: false,
-                    suffixIcon: viewModel.frontSeatImage.value == null ?Padding(
+                    suffixIcon:  (viewModel.frontSeatNetworkImage.value.isNotEmpty)?
+                    const Icon(Icons.done_rounded,color: MyColors.green,)
+                    :viewModel.frontSeatImage.value == null ?Padding(
                       padding: Dimens.suffixPadding,
                       child: SvgPicture.asset(MyImages.upload),
                     ):const Icon(Icons.done_rounded,color: MyColors.green,),
@@ -185,7 +195,9 @@ class InteriorScreen extends StatelessWidget {
                             items: viewModel.rearSeatImageList, 
                             selectItem: viewModel.selectRearSeatImage,
                             image: viewModel.rearSeatImage,
-                            remarksController : viewModel.rearSeatRemarksController.value
+                            networkImage: viewModel.rearSeatNetworkImage,
+                            remarksController : viewModel.rearSeatRemarksController.value,
+                            othersController: TextEditingController(),
                           );
                       },
                     );
@@ -198,7 +210,9 @@ class InteriorScreen extends StatelessWidget {
                     validator: ValidateInput.validateRequiredFields,
                     showCursor: false,
                     isEnabled: false,
-                    suffixIcon: viewModel.rearSeatImage.value == null ?Padding(
+                    suffixIcon:  (viewModel.rearSeatNetworkImage.value.isNotEmpty)?
+                    const Icon(Icons.done_rounded,color: MyColors.green,)
+                    :viewModel.rearSeatImage.value == null ?Padding(
                       padding: Dimens.suffixPadding,
                       child: SvgPicture.asset(MyImages.upload),
                     ):const Icon(Icons.done_rounded,color: MyColors.green,),
@@ -217,7 +231,9 @@ class InteriorScreen extends StatelessWidget {
                             items: viewModel.insideRearViewMirror, 
                             selectItem: viewModel.selectInsideRearViewMirror,
                             image: viewModel.insideRearViewMirrorImage,
-                            remarksController : viewModel.insideRearViewMirrorRemarksController.value
+                            networkImage: viewModel.insideRearViewMirrorNetworkImage,
+                            remarksController : viewModel.insideRearViewMirrorRemarksController.value,
+                            othersController: TextEditingController(),
                           );
                       },
                     );
@@ -260,7 +276,9 @@ class InteriorScreen extends StatelessWidget {
                     validator: viewModel.interiorViewFromBootDashboardImage.value == null ?ValidateInput.validateRequiredFields:null,
                     showCursor: false,
                     isEnabled: false,
-                    suffixIcon: viewModel.interiorViewFromBootDashboardImage.value == null ?Padding(
+                    suffixIcon: (viewModel.interiorViewFromBootDashboardNetworkImage.value.isNotEmpty)?
+                    const Icon(Icons.done_rounded,color: MyColors.green,)
+                    :viewModel.interiorViewFromBootDashboardImage.value == null ?Padding(
                       padding: Dimens.suffixPadding,
                       child: SvgPicture.asset(MyImages.upload),
                     ):const Icon(Icons.done_rounded,color: MyColors.green,),
@@ -277,6 +295,7 @@ class InteriorScreen extends StatelessWidget {
                         ImagePickerCard(
                           remarksController: viewModel.powerWindowDriverRemarksController.value,
                           image:  viewModel.powerWindowDriverImage,
+                          networkImage:  viewModel.powerWindowDriverNetworkImage,
                           onSubmit: (){
                             Navigator.of(context).pop();
                            log( viewModel.powerWindowDriverImage.value.toString());
@@ -290,7 +309,9 @@ class InteriorScreen extends StatelessWidget {
                     validator: viewModel.powerWindowDriverImage.value == null ?ValidateInput.validateRequiredFields:null,
                     showCursor: false,
                     isEnabled: false,
-                    suffixIcon: viewModel.powerWindowDriverImage.value == null ?Padding(
+                    suffixIcon: (viewModel.powerWindowDriverNetworkImage.value.isNotEmpty)?
+                    const Icon(Icons.done_rounded,color: MyColors.green,)
+                    :viewModel.powerWindowDriverImage.value == null ?Padding(
                       padding: Dimens.suffixPadding,
                       child: SvgPicture.asset(MyImages.upload),
                     ):const Icon(Icons.done_rounded,color: MyColors.green,),
@@ -307,6 +328,7 @@ class InteriorScreen extends StatelessWidget {
                         ImagePickerCard(
                           remarksController: viewModel.pushWindowDriverRemarksController.value,
                           image:  viewModel.pushWindowDriverImage,
+                          networkImage: viewModel.pushWindowDriverNetworkImage,
                           onSubmit: (){
                             Navigator.of(context).pop();
                            log( viewModel.pushWindowDriverImage.value.toString());
@@ -320,7 +342,9 @@ class InteriorScreen extends StatelessWidget {
                     validator: viewModel.pushWindowDriverImage.value == null ?ValidateInput.validateRequiredFields:null,
                     showCursor: false,
                     isEnabled: false,
-                    suffixIcon: viewModel.pushWindowDriverImage.value == null ?Padding(
+                    suffixIcon: (viewModel.pushWindowDriverNetworkImage.value.isNotEmpty)?
+                    const Icon(Icons.done_rounded,color: MyColors.green,)
+                    :viewModel.pushWindowDriverImage.value == null ?Padding(
                       padding: Dimens.suffixPadding,
                       child: SvgPicture.asset(MyImages.upload),
                     ):const Icon(Icons.done_rounded,color: MyColors.green,),
@@ -373,7 +397,7 @@ class InteriorScreen extends StatelessWidget {
                   value: viewModel.selectPushButtonOnOff.value.isEmpty ? null : viewModel.selectPushButtonOnOff.value,
                   items: viewModel.pushButtonOnOff.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
-                      value: value,
+                      value: value.toLowerCase(),
                       child: Text(
                         value,
                         style: MyStyles.dropdownMenuStyle,
@@ -399,7 +423,7 @@ class InteriorScreen extends StatelessWidget {
                   value: viewModel.selectDashboardSwitches.value.isEmpty ? null : viewModel.selectDashboardSwitches.value,
                   items: viewModel.dashboardSwitches.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
-                      value: value,
+                      value: value.toLowerCase(),
                       child: Text(
                         value,
                         style: MyStyles.dropdownMenuStyle,
@@ -429,7 +453,9 @@ class InteriorScreen extends StatelessWidget {
                             items: viewModel.powerWindowAndWindowLock, 
                             selectItem: viewModel.selectPowerWindowAndWindowLock,
                             image: viewModel.powerWindowAndWindowLockImage,
-                            remarksController : viewModel.powerWindowAndWindowLockRemarksController.value
+                            networkImage: viewModel.powerWindowAndWindowLockNetworkImage,
+                            remarksController : viewModel.powerWindowAndWindowLockRemarksController.value,
+                            othersController: TextEditingController(),
                           );
                       },
                     );
@@ -461,7 +487,9 @@ class InteriorScreen extends StatelessWidget {
                             items: viewModel.handBrake, 
                             selectItem: viewModel.selectHandBrake,
                             image: viewModel.handBreakImage,
-                            remarksController : viewModel.handBrakeRemarksController.value
+                            networkImage: viewModel.handBreakNetworkImage,
+                            remarksController : viewModel.handBrakeRemarksController.value,
+                            othersController: TextEditingController(),
                           );
                       },
                     );
@@ -493,7 +521,9 @@ class InteriorScreen extends StatelessWidget {
                             items: viewModel.carElectrical, 
                             selectItem: viewModel.selectCarElectrical,
                             image: viewModel.carElectricalImage,
-                            remarksController : viewModel.carElectricalRemarksController.value
+                            networkImage: viewModel.carElectricalNetworkImage,
+                            remarksController : viewModel.carElectricalRemarksController.value,
+                            othersController: TextEditingController(),
                           );
                       },
                     );
@@ -536,7 +566,9 @@ class InteriorScreen extends StatelessWidget {
                     validator: viewModel.cngLpgKitImage.value == null ?ValidateInput.validateRequiredFields:null,
                     showCursor: false,
                     isEnabled: false,
-                    suffixIcon: viewModel.cngLpgKitImage.value == null ?Padding(
+                    suffixIcon: (viewModel.cngLpgKitNetworkImage.value.isNotEmpty)?
+                    const Icon(Icons.done_rounded,color: MyColors.green,)
+                    :viewModel.cngLpgKitImage.value == null ?Padding(
                       padding: Dimens.suffixPadding,
                       child: SvgPicture.asset(MyImages.upload),
                     ):const Icon(Icons.done_rounded,color: MyColors.green,),
@@ -581,7 +613,9 @@ class InteriorScreen extends StatelessWidget {
                             items: viewModel.platform, 
                             selectItem: viewModel.selectPlatform,
                             image: viewModel.platformImage,
-                            remarksController : viewModel.platformRemarksController.value
+                            networkImage: viewModel.platformNetworkImage,
+                            remarksController : viewModel.platformRemarksController.value,
+                            othersController: TextEditingController(),
                           );
                       },
                     );

@@ -181,7 +181,7 @@ class Constants {
   'Front LH Power Window Not Working', 'Front LH Power Window Working', 'Front LH Power Window Stuck',
   'Rear LH Power Window Not Working', 'Rear LH  Power Window Working','Rear LH  Power Window Stuck','Not Applicable', 'All Windows Working'];
   static const List<String> handBrake = ['Working', 'Not Working', 'Not Satisfactory', 'Other'];
-  static const List<String> carElectrical = ['ECM Malfunction', 'Fuel Pump Not Working', 'Wiring Damage', 'Rat damage Good,' 'Other'];
+  static const List<String> carElectrical = ['ECM Malfunction', 'Fuel Pump Not Working', 'Wiring Damage', 'Rat damage', 'Good', 'Other'];
   static const List<String> secondKey = ['Damaged', 'Not Available', 'Good'];
   static const List<String> platform = ['Rusted', 'Good', 'Damaged', 'Replaced', 'Welded', 'Repainted', 'Other'];
 

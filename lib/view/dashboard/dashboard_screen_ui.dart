@@ -6,6 +6,7 @@ import 'package:evaluator_app/widgets/common_app_bar.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:evaluator_app/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../utils/colors.dart';
@@ -97,7 +98,89 @@ class DashBoardScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 17, right: 17, top: 17,bottom: 30),
                 child: Center(
                   child: CustomElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Container(
+                                padding: const EdgeInsets.only(top: 10,bottom: 10),
+                                color: MyColors.blue,
+                                child: const Center(child: Text(
+                                  MyStrings.ratingTitle
+                                )),
+                              ),
+                              backgroundColor: Colors.white,
+                              elevation: 0,
+                              shadowColor: Colors.white,
+                              contentPadding: EdgeInsets.zero,
+                              insetPadding: EdgeInsets.zero,
+                              titleTextStyle: MyStyles.ratingTitleStyle,
+                              titlePadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                              shape: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(0),
+                                  borderSide: BorderSide.none
+                              ),
+                              content: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.85,
+                                height: MediaQuery.of(context).size.height * 0.6,
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      ListView.builder(
+                                        shrinkWrap:true,
+                                        itemBuilder: (context, index) {
+                                          return Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                        viewModel.ratingList[index].title
+                                                    ),
+                                                    RatingBar.builder(
+                                                      initialRating: viewModel.ratingList[index].rating,
+                                                      minRating: 1,
+                                                      direction: Axis.horizontal,
+                                                      allowHalfRating: true,
+                                                      itemCount: 5,
+                                                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                                      itemBuilder: (context, _) => const Icon(
+                                                        Icons.star,
+                                                        color: MyColors.yellow,
+                                                      ),
+                                                      onRatingUpdate: (rating) {
+                                                        viewModel.ratingList[index].rating = rating;
+                                                      },
+                                                    ),
+
+                                                  ],
+                                                ),
+                                                const Divider()
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                        itemCount: viewModel.ratingList.length,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: CustomElevatedButton(
+                                          buttonWidth: MediaQuery.of(context).size.width * 0.8,
+                                          onPressed: () {
+                                          viewModel.addRating();
+                                        }, buttonText: MyStrings.submit,),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                      );
+                    },
                     buttonText: MyStrings.submit,
                   ),
                 ),

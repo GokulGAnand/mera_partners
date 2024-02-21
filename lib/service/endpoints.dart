@@ -3,7 +3,7 @@ class EndPoints {
 
   static String login = 'auth/login';
   static String brand = 'brand';
-  static String carBasic = 'car-basic';
+  static String carBasic = 'car-basic/';
   static String evaluation = 'evaluation';
   static String document = 'document';
   static String interiorInfo = 'interiorinfo';

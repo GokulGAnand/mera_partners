@@ -32,4 +32,11 @@ class MyImages {
   static const add = "${imageRoot}add.svg";
   static const camera = "${imageRoot}camera.svg";
   static const gallery = "${imageRoot}gallery.png";
+  ///Report
+  static const all = "${imageRoot}border_all.svg";
+  static const others = "${imageRoot}others.svg";
+  static const damages = "${imageRoot}damages_black.svg";
+  static const engineOutLined = "${imageRoot}engine_black.svg";
+  static const exteriorOutLined = "${imageRoot}exterior_black.svg";
+  static const interiorOutLined = "${imageRoot}interior_black.svg";
 }

@@ -55,6 +55,7 @@ class MyStrings {
   static const String length = "Length";
   static const String seats = "Seats";
   static const String remarks = "Remarks";
+  static const String other = "Other";
   static const String submit = "Submit";
   static const String oEMWarrantyRemaining = "OEM Warranty Remaining";
   static const String noOfMonthsRemaining = "Number of Months Remaining";
@@ -254,7 +255,11 @@ class MyStrings {
   static const String summary = "SUMMARY";
   static const String vehicleDetails = "VEHICLE DETAILS ";
   static const String imageGallery = "IMAGE GALLERY";
-  static const String kilometer  = "Kilometer ";
+  static const String kilometer  = "Kilometer";
+  static const String allImages  = "All Images";
+  static const String viewAllImages  = "View All Images";
+  static const String damages  = "Damages";
+  static const String others  = "Others";
   ///Feature Screen
   static const String keyLessEntry = "Keyless Entry";
   static const String stereoImage = "Stereo Image";
@@ -270,6 +275,9 @@ class MyStrings {
   static const String absEbd = "ABS EBD (Anti-lock Braking System)";
   static const String gloveBox = "Glove Box";
   static const String interiorModifications = "Any Interior Modifications";
+  ///
+  static const String ratingTitle = "Provide a rating\nbased on Evaluation";
+  static const String electrical = "Electrical";
   static const String empty = "";
 
 }

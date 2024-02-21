@@ -7,7 +7,9 @@ import 'package:evaluator_app/utils/globals.dart' as globals;
 import '../../model/response/report/report_response.dart';
 import '../../service/endpoints.dart';
 import '../../service/exception_error_util.dart';
+import '../../utils/images.dart';
 import '../../widgets/custom_toast.dart';
+import '../dashboard/dashboard_view_model.dart';
 
 class ReportScreenViewModel extends GetxController{
 
@@ -18,23 +20,35 @@ class ReportScreenViewModel extends GetxController{
   var vehicleDetails = <Master>[].obs;
   var documents = <Master>[].obs;
   var exterior = <Master>[].obs;
+  var exteriorImages = <Master>[].obs;
+  var interiorImages = <Master>[].obs;
   var airCondition = <Master>[].obs;
   var engine = <Master>[].obs;
+  var engineImages = <Master>[].obs;
   var testDrive = <Master>[].obs;
   var features = <Master>[].obs;
   var interiorAndElectrical = <Master>[].obs;
   var reportResponse = ReportResponse().obs;
+  List<DashBoardClass> dashboard = [];
 
 
   @override
   void onInit() {
+    dashboard = [
+      DashBoardClass(icon: MyImages.all, label: MyStrings.allImages.toUpperCase(),),
+      DashBoardClass(icon: MyImages.exteriorOutLined, label: MyStrings.exterior.toUpperCase(),),
+      DashBoardClass(icon: MyImages.interiorOutLined, label: MyStrings.interior.toUpperCase(),),
+      DashBoardClass(icon: MyImages.others, label: MyStrings.others.toUpperCase(),),
+      DashBoardClass(icon: MyImages.engineOutLined, label: MyStrings.engine.toUpperCase(),),
+      DashBoardClass(icon: MyImages.damages, label: MyStrings.damages.toUpperCase(),),
+    ];
     getReport();
     super.onInit();
   }
 
 void getReport() async {
   try {
-    var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.evaluation+'/'+EndPoints.report+id),headers: globals.headers);
+    var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.evaluation+'/'+EndPoints.report+'65cf2025b07b4acdec103563'),headers: globals.headers);
     if(response.statusCode == 200){
       reportResponse.value = ReportResponse.fromJson(jsonDecode(response.body));
       if (reportResponse.value.data != null) {
