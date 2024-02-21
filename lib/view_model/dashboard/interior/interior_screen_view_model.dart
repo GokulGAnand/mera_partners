@@ -99,20 +99,6 @@ class InteriorViewModel extends GetxController {
   var selectSecondKey = ''.obs;
   RxList<String> selectPlatform = <String>[].obs;
 
-  RxString clusterNetworkImage = ''.obs;
-  RxString dashboardNetworkImage = ''.obs;
-  RxString frontSeatNetworkImage = ''.obs;
-  RxString rearSeatNetworkImage = ''.obs;
-  RxString insideRearViewMirrorNetworkImage = ''.obs;
-  RxString interiorViewFromBootDashboardNetworkImage = ''.obs;
-  RxString powerWindowDriverNetworkImage = ''.obs;
-  RxString pushWindowDriverNetworkImage = ''.obs;
-  RxString powerWindowAndWindowLockNetworkImage = ''.obs;
-  RxString handBreakNetworkImage = ''.obs;
-  RxString carElectricalNetworkImage = ''.obs;
-  RxString cngLpgKitNetworkImage = ''.obs;
-  RxString platformNetworkImage = ''.obs;
-
   var isPage1Fill = false.obs;
   var isPage2Fill = false.obs;
 
@@ -219,19 +205,19 @@ class InteriorViewModel extends GetxController {
       if(warningDetailsController.value.text.isNotEmpty){
         selectWarningLight.value = 'yes';
       }
-      dashboardNetworkImage.value = interiorInfoResponse.value.data![0].dashboardImage!.url ?? '';
+      dashboardImage.value = File(interiorInfoResponse.value.data![0].dashboardImage!.url ?? '');
       dashboardRemarksController.value.text = interiorInfoResponse.value.data![0].dashboardImage!.remarks ?? '';
-      frontSeatNetworkImage.value = interiorInfoResponse.value.data![0].frontSeatImage!.url ?? '';
+      frontSeatImage.value = File(interiorInfoResponse.value.data![0].frontSeatImage!.url ?? '');
       frontSeatRemarksController.value.text = interiorInfoResponse.value.data![0].frontSeatImage!.remarks ?? '';
-      rearSeatNetworkImage.value = interiorInfoResponse.value.data![0].rearSeatImage!.url ?? '';
+      rearSeatImage.value = File(interiorInfoResponse.value.data![0].rearSeatImage!.url ?? '');
       rearSeatRemarksController.value.text = interiorInfoResponse.value.data![0].rearSeatImage!.remarks ?? '';
 
       insideRearViewMirrorController.value.text = interiorInfoResponse.value.data![0].rearViewMirror!;
       selectInsideRearViewMirror.value = insideRearViewMirrorController.value.text.split(",");
 
-      powerWindowDriverNetworkImage.value = interiorInfoResponse.value.data![0].powerWindowDriverImage!.url ?? '';
+      powerWindowDriverImage.value = File(interiorInfoResponse.value.data![0].powerWindowDriverImage!.url ?? '');
       powerWindowDriverRemarksController.value.text = interiorInfoResponse.value.data![0].powerWindowDriverImage!.remarks ?? '';
-      pushWindowDriverNetworkImage.value = interiorInfoResponse.value.data![0].pushWindowDriverImage!.url ?? '';
+      pushWindowDriverImage.value = File(interiorInfoResponse.value.data![0].pushWindowDriverImage!.url ?? '');
       pushWindowDriverRemarksController.value.text = interiorInfoResponse.value.data![0].pushWindowDriverImage!.remarks ?? '';
       
       selectPushButtonOnOff.value = interiorInfoResponse.value.data![0].pushButton ?? '';
@@ -241,7 +227,7 @@ class InteriorViewModel extends GetxController {
       selectPowerWindowAndWindowLock.value = powerWindowAndWindowLockController.value.text.split(",");
       handBrakeController.value.text = interiorInfoResponse.value.data![0].handBreak!;
       selectHandBrake.value = handBrakeController.value.text.split(",");
-      handBreakNetworkImage.value = interiorInfoResponse.value.data![0].handbreakImage!.url ?? '';
+      handBreakImage.value = File(interiorInfoResponse.value.data![0].handbreakImage!.url ?? '');
       handBrakeRemarksController.value.text = interiorInfoResponse.value.data![0].handbreakImage!.remarks ?? '';
       
       carElectricalController.value.text = interiorInfoResponse.value.data![0].carElectrical ?? '';
@@ -250,6 +236,7 @@ class InteriorViewModel extends GetxController {
       
       platformController.value.text = interiorInfoResponse.value.data![0].platform!;
       selectPlatform.value = platformController.value.text.split(",");
+      print(dashboardImage);
     }
   }
 }

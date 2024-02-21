@@ -19,7 +19,6 @@ class CustomCheckBoxDialog extends StatelessWidget {
     required this.title,
     required this.items,
     required this.image,
-    required this.networkImage,
     required this.selectItem,
     required this.remarksController,
     required this.othersController,
@@ -27,7 +26,6 @@ class CustomCheckBoxDialog extends StatelessWidget {
   final String title; 
   final List<String> items; 
   final Rx<File?> image;
-  final RxString networkImage;
   final RxList<String> selectItem;
   final TextEditingController remarksController;
   final TextEditingController othersController;
@@ -157,14 +155,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
                     },
                   );
                 },
-                child: (networkImage.value.isNotEmpty)?
-                Image.network(
-                  networkImage != null && networkImage.isNotEmpty ? networkImage.value : image.value!.path,
-                        width: 119,
-                        height: 119,
-                        fit: BoxFit.fill,
-                      )
-                :image.value == null
+                child: image.value == null
                     ? Container(
                         width: 119,
                         height: 119,
@@ -198,7 +189,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
                       )
                     : (image.value != null && (image.value!.path.startsWith('http') || image.value!.path.startsWith('https')))?
                 Image.network(
-                  networkImage.value != null && networkImage.isNotEmpty ? networkImage.value : image.value!.path,
+                  image.value!.path,
                   width: 119,
                   height: 119,
                   fit: BoxFit.fill,
