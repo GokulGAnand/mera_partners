@@ -30,10 +30,13 @@ class LoginScreenViewModel extends GetxController {
 
   void validateUser() async {
     try {
-      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.login), body: {"role": "EVALUATOR", "userId": userNameController.text, "password": passwordController.text});
+      print(userNameController.text);
+      print(passwordController.text);
+      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.login),
+          body: {"userId": userNameController.text, "password": passwordController.text});
 
       if (response.statusCode == 200) {
-        validateUserResponse = ValidateUserResponse.fromJson(json.decode(response.body));
+        validateUserResponse = ValidateUserResponse.fromJson(jsonDecode(response.body));
         globals.userName = validateUserResponse!.data!.first.fullname;
         globals.contactNo = validateUserResponse!.data!.first.contactNo;
         globals.city = validateUserResponse!.data!.first.city;
@@ -41,8 +44,11 @@ class LoginScreenViewModel extends GetxController {
         globals.token = validateUserResponse!.meta!.access;
         globals.userId = validateUserResponse!.data!.first.userId;
         Get.toNamed(AppRoutes.homeScreen);
+      }else{
+        CustomToast.instance.showMsg(response.reasonPhrase ?? '');
       }
     } catch (e) {
+      print(e);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }

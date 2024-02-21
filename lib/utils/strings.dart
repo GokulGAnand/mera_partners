@@ -260,6 +260,7 @@ class MyStrings {
   static const String viewAllImages  = "View All Images";
   static const String damages  = "Damages";
   static const String others  = "Others";
+  static const String reportId  = "Report ID";
   ///Feature Screen
   static const String keyLessEntry = "Keyless Entry";
   static const String stereoImage = "Stereo Image";
