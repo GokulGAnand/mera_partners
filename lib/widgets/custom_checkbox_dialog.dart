@@ -157,7 +157,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
                     },
                   );
                 },
-                child: (networkImage.value.isNotEmpty) || (image != null && (image!.value!.path.startsWith('http') || image!.value!.path.startsWith('https')))?
+                child: (networkImage.value.isNotEmpty)?
                 Image.network(
                   networkImage != null && networkImage.isNotEmpty ? networkImage.value : image.value!.path,
                         width: 119,
@@ -196,7 +196,14 @@ class CustomCheckBoxDialog extends StatelessWidget {
                           ],
                         ),
                       )
-                    : Image.file(
+                    : (image.value != null && (image.value!.path.startsWith('http') || image.value!.path.startsWith('https')))?
+                Image.network(
+                  networkImage.value != null && networkImage.isNotEmpty ? networkImage.value : image.value!.path,
+                  width: 119,
+                  height: 119,
+                  fit: BoxFit.fill,
+                ):
+                Image.file(
                   image.value!,
                         width: 119,
                         height: 119,

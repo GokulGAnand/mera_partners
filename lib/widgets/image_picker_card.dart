@@ -116,7 +116,7 @@ class ImagePickerCard extends StatelessWidget {
                     },
                   );
                 },
-                child: (networkImage != null) || (image != null && (image!.value!.path.startsWith('http') || image!.value!.path.startsWith('https')))?
+                child: (networkImage != null)?
                 Image.network(
                   networkImage != null ? networkImage!.value : image!.value!.path,
                         width: 119,
@@ -155,7 +155,14 @@ class ImagePickerCard extends StatelessWidget {
                           ],
                         ),
                       )
-                    : Image.file(
+                    : (image?.value != null && (image!.value!.path.startsWith('http') || image!.value!.path.startsWith('https')))?
+                Image.network(
+                  networkImage != null ? networkImage!.value : image!.value!.path,
+                  width: 119,
+                  height: 119,
+                  fit: BoxFit.fill,
+                ):
+                Image.file(
                   image!.value!,
                         width: 119,
                         height: 119,
