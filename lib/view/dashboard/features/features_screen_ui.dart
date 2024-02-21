@@ -351,7 +351,9 @@ class FeaturesScreen extends StatelessWidget {
                             items: viewModel.absEbdList,
                             selectItem: viewModel.selectAbsEbd,
                             image: viewModel.clusterImage,
-                            remarksController : viewModel.absEbdRemarksController.value
+                            remarksController : viewModel.absEbdRemarksController.value,
+                          networkImage: ''.obs,
+                          othersController: TextEditingController(),
                         );
                       },
                     );
