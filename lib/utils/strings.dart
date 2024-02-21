@@ -257,6 +257,7 @@ class MyStrings {
   static const String imageGallery = "IMAGE GALLERY";
   static const String kilometer  = "Kilometer";
   static const String allImages  = "All Images";
+  static const String viewAllImages  = "View All Images";
   static const String damages  = "Damages";
   static const String others  = "Others";
   ///Feature Screen

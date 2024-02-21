@@ -116,9 +116,9 @@ class ImagePickerCard extends StatelessWidget {
                     },
                   );
                 },
-                child: (networkImage != null)?
+                child: (networkImage != null) || (image != null && (image!.value!.path.startsWith('http') || image!.value!.path.startsWith('https')))?
                 Image.network(
-                  networkImage!.value,
+                  networkImage != null ? networkImage!.value : image!.value!.path,
                         width: 119,
                         height: 119,
                         fit: BoxFit.fill,
