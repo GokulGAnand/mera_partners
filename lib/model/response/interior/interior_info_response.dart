@@ -32,7 +32,7 @@ class Data {
     final List<String>? carElectrical;
     final List<String>? clusterPanel;
     final String? pushButton;
-    final String? powerWindowCentalLock;
+    final List<String>? powerWindowCentalLock;
     final String? combitionSwitch;
     final String? dashboardCondition;
     final List<String>? handBreak;
@@ -87,7 +87,7 @@ class Data {
         carElectrical: json["carElectrical"] == null ? [] : List<String>.from(json["carElectrical"]!.map((x) => x)),
         clusterPanel: json["clusterPanel"] == null ? [] : List<String>.from(json["clusterPanel"]!.map((x) => x)),
         pushButton: json["pushButton"],
-        powerWindowCentalLock: json["powerWindowCentalLock"],
+        powerWindowCentalLock: json["powerWindowCentalLock"] == null ? [] : List<String>.from(json["powerWindowCentalLock"]!.map((x) => x)),
         combitionSwitch: json["combitionSwitch"],
         dashboardCondition: json["dashboardCondition"],
         handBreak: json["handBreak"] == null ? [] : List<String>.from(json["handBreak"]!.map((x) => x)),
@@ -115,7 +115,7 @@ class Data {
         "carElectrical": carElectrical == null ? [] : List<dynamic>.from(carElectrical!.map((x) => x)),
         "clusterPanel": clusterPanel == null ? [] : List<dynamic>.from(clusterPanel!.map((x) => x)),
         "pushButton": pushButton,
-        "powerWindowCentalLock": powerWindowCentalLock,
+        "powerWindowCentalLock": powerWindowCentalLock == null ? [] : List<dynamic>.from(powerWindowCentalLock!.map((x) => x)),
         "combitionSwitch": combitionSwitch,
         "dashboardCondition": dashboardCondition,
         "handBreak": handBreak == null ? [] : List<dynamic>.from(handBreak!.map((x) => x)),

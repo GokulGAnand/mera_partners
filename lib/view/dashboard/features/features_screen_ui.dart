@@ -367,7 +367,7 @@ class FeaturesScreen extends StatelessWidget {
                     );
                   }).toList(),
                   onChanged: (value) {
-                    viewModel.selectedFogLamps.value = value;
+                    viewModel.selectedSeatBelt.value = value;
                   },
                   validator: (value) {
                     if (value == null) {

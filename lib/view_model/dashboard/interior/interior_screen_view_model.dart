@@ -170,7 +170,7 @@ class InteriorViewModel extends GetxController {
       log(response.statusCode.toString());
       if (response.statusCode == 200) {
             log(await response.stream.bytesToString());
-            Get.toNamed(AppRoutes.dashBoardScreen);
+            Get.back();
           } else {
             log(response.reasonPhrase.toString());
           }
@@ -231,7 +231,7 @@ class InteriorViewModel extends GetxController {
       selectPushButtonOnOff.value = interiorInfoResponse.value.data![0].pushButton ?? '';
       selectDashboardSwitches.value = interiorInfoResponse.value.data![0].dashboardSwitch!;
 
-      powerWindowAndWindowLockController.value.text = interiorInfoResponse.value.data![0].powerWindowCentalLock ?? '';
+      powerWindowAndWindowLockController.value.text = interiorInfoResponse.value.data![0].powerWindowCentalLock!.join(",");
       selectPowerWindowAndWindowLock.value = powerWindowAndWindowLockController.value.text.split(",");
       handBrakeController.value.text = interiorInfoResponse.value.data![0].handBreak!.join(",");
       selectHandBrake.value = handBrakeController.value.text.split(",");

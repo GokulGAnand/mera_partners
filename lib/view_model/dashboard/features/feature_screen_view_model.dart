@@ -1,7 +1,7 @@
 
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
-import 'dart:math';
 import 'package:evaluator_app/service/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'package:evaluator_app/utils/constants.dart';
@@ -22,7 +22,6 @@ class FeatureViewModel extends GetxController{
 
   var isPage1Fill = false.obs;
   var isPage2Fill = false.obs;
-  var id = Get.arguments ?? '';
   final GlobalKey<FormState> page1Key = GlobalKey<FormState>();
   final GlobalKey<FormState> page2Key = GlobalKey<FormState>();
 
@@ -97,6 +96,16 @@ class FeatureViewModel extends GetxController{
   Rx<File?> clusterImage = Rx<File?>(null);
   var featuresResponse = featuresList().obs;
 
+  var featureInfoResponse = featuresList().obs;
+  var id = Get.arguments ?? '';
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    getFeatureInfo();
+    super.onInit();
+  }
+
   void addFeatureInfo()async{
    try{
      var request = http.MultipartRequest('PATCH',Uri.parse(EndPoints.baseUrl+EndPoints.featureInfo+'/'+id));
@@ -131,32 +140,84 @@ class FeatureViewModel extends GetxController{
        'anyInteriorModifications': anyInteriorModificationController.value.text ,
        'evaluationStatusForFeature': 'COMPLETED'
      });
-     if (stereoImage.value!=null) {
+     if (stereoImage.value!=null && (stereoImage.value!.path.startsWith('http') == false || stereoImage.value!.path.startsWith('https') == false)) {
        request.files.add( http.MultipartFile.fromBytes('stereoImage', stereoImage.value!.readAsBytesSync()));
-     }
+     } 
      request.headers.addAll(globals.headers);
 
      http.StreamedResponse response = await request.send();
 
      if (response.statusCode == 200) {
-       print(await response.stream.bytesToString());
+       log(await response.stream.bytesToString());
        CustomToast.instance.showMsg(MyStrings.success);
-       Get.toNamed(AppRoutes.dashBoardScreen);
+       Navigator.of(Get.overlayContext!, rootNavigator: true).pop();
      }
      else {
-       print(response.reasonPhrase);
+       log(response.reasonPhrase.toString());
      }
    }catch (e){
-     print('work: ${e}');
+     log('work: ${e}');
      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
    }
   }
 
-  void getFeatureInfo()async{
-    var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.featureInfo+'/'+id),headers: globals.headers);
-    if(response.statusCode==200){
-     featuresResponse.value =  featuresList.fromJson(json.decode(response.body));
-    }print(response.body);
+  void getFeatureInfo() async {
+    try {
+      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.featureInfo+'/'+id),
+      headers: globals.headers);
+      if(response.statusCode == 200){
+        log(response.body.toString());
+        var data = await jsonDecode(response.body);
+        featureInfoResponse.value = featuresList.fromJson(data);
+        loadData();
+      }else{
+        log(response.reasonPhrase.toString());
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  void loadData(){
+    if(featureInfoResponse.value.data != null){
+      /// page 1
+      keylessEntryController.value.text = featureInfoResponse.value.data![0].keylessEntry!.join(",");
+      selectedKeylessEntry.value = keylessEntryController.value.text.split(",");
+      
+      stereoImageController.value.text = featureInfoResponse.value.data![0].stereoImage!.condition!.join(",");
+      selectedStereoImage.value = stereoImageController.value.text.split(",");
+      stereoImage.value = File(featureInfoResponse.value.data![0].stereoImage!.url ?? '');
+      stereoImageRemarksController.value.text = featureInfoResponse.value.data![0].stereoImage!.remarks ?? '';
+      
+      sterioBrandController.value.text = featureInfoResponse.value.data![0].stereoBrand ?? '';
+
+      selectedRearParkingSensor.value = featureInfoResponse.value.data![0].rearParkingSensor ?? '';
+      selectedFogLamp.value = featureInfoResponse.value.data![0].fogLamps ?? '';
+
+      sunroofController.value.text = featureInfoResponse.value.data![0].sunroof!.join(",");
+      selectedSunRoof.value = sunroofController.value.text.split(",");
+
+      selectedGpsNavigation.value = featureInfoResponse.value.data![0].gpsNavigation ?? '';
+      selectedRearDefogger.value = featureInfoResponse.value.data![0].rearDefogger ?? '';
+
+      /// page 2
+      alloyWheelsController.value.text = featureInfoResponse.value.data![0].alloyWheels!.join(",");
+      selectedAlloyWheel.value = alloyWheelsController.value.text.split(",");
+      
+      airBagsController.value.text = featureInfoResponse.value.data![0].airbag!.join(",");
+      selectedAirBag.value = airBagsController.value.text.split(",");
+      
+      selectedSeatBelt.value = featureInfoResponse.value.data![0].seatBelt ?? '';
+
+      absEbdController.value.text = featureInfoResponse.value.data![0].absEbd!.join(",");
+      selectAbsEbd.value = absEbdController.value.text.split(",");
+      
+      gloveBoxController.value.text = featureInfoResponse.value.data![0].gloveBox!.join(",");
+      selectedGloveBox.value = gloveBoxController.value.text.split(",");
+      
+      anyInteriorModificationController.value.text = featureInfoResponse.value.data![0].anyInteriorModifications ?? '';
+
+    }
   }
 
 }
