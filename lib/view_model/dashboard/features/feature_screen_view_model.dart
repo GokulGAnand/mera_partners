@@ -10,6 +10,10 @@ import 'package:get/get.dart';
 import 'package:evaluator_app/utils/globals.dart' as globals;
 
 import '../../../model/response/features/faetures_response.dart';
+import '../../../routes/app_routes.dart';
+import '../../../service/exception_error_util.dart';
+import '../../../utils/strings.dart';
+import '../../../widgets/custom_toast.dart';
 
 class FeatureViewModel extends GetxController{
   final Rx<PageController> pageController = PageController(initialPage: 0).obs;
@@ -94,9 +98,58 @@ class FeatureViewModel extends GetxController{
   var featuresResponse = featuresList().obs;
 
   void addFeatureInfo()async{
-    var request = http.MultipartRequest('PATCH',Uri.parse(EndPoints.baseUrl+EndPoints.featureInfo+'/'+id));
-    // for(int i=0; i<selectedKeylessEntry.l)
+   try{
+     var request = http.MultipartRequest('PATCH',Uri.parse(EndPoints.baseUrl+EndPoints.featureInfo+'/'+id));
+     for(int i=0; i<selectedStereoImage.length; i++){
+       request.fields['stereoImage_condition[$i]'] = selectedStereoImage[i];
+     }
+     for(int i=0; i<selectedSunRoof.length; i++){
+       request.fields['sunroof[$i]'] = selectedSunRoof[i];
+     }
+     for (int i=0; i<selectedAlloyWheel.length; i++){
+       request.fields['alloyWheels[$i]'] =selectedAlloyWheel[i];
+     }
+     for (int i=0; i<selectedAirBag.length; i++){
+       request.fields['airbag[$i]'] = selectedAirBag[i];
+     }
+     for (int i=0; i<selectedKeylessEntry.length; i++){
+       request.fields['keylessEntry[$i]'] =selectedKeylessEntry[i];
+     }
+     for (int i=0; i<selectAbsEbd.length; i++){
+       request.fields['absEbd[$i]'] = selectAbsEbd[i];
+     }
+     for (int i=0; i<selectedGloveBox.length; i++){
+       request.fields['gloveBox[$i]'] = selectedGloveBox[i];
+     }
+     request.fields.addAll({
+       'rearParkingSensor': selectedRearParkingSensor.value,
+       'gpsNavigation': selectedGpsNavigation.value,
+       'rearDefogger': selectedRearDefogger.value,
+       'fogLamps': selectedFogLamps.value,
+       'stereoBrand': sterioBrandController.value.text,
+       'seatBelt': selectedSeatBelt.value,
+       'anyInteriorModifications': anyInteriorModificationController.value.text ,
+       'evaluationStatusForFeature': 'COMPLETED'
+     });
+     if (stereoImage.value!=null) {
+       request.files.add( http.MultipartFile.fromBytes('stereoImage', stereoImage.value!.readAsBytesSync()));
+     }
+     request.headers.addAll(globals.headers);
 
+     http.StreamedResponse response = await request.send();
+
+     if (response.statusCode == 200) {
+       print(await response.stream.bytesToString());
+       CustomToast.instance.showMsg(MyStrings.success);
+       Get.toNamed(AppRoutes.dashBoardScreen);
+     }
+     else {
+       print(response.reasonPhrase);
+     }
+   }catch (e){
+     print('work: ${e}');
+     CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
+   }
   }
 
   void getFeatureInfo()async{

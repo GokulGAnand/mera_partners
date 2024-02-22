@@ -1,9 +1,11 @@
 import 'dart:developer';
 
+import 'package:evaluator_app/service/internet_check.dart';
 import 'package:evaluator_app/view_model/dashboard/features/feature_screen_view_model.dart';
 import 'package:evaluator_app/widgets/common_app_bar.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:evaluator_app/widgets/custom_checkbox_dialog.dart';
+import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -237,6 +239,15 @@ class FeaturesScreen extends StatelessWidget {
                     ),
                     SizedBox(height: Dimens.standard_60),
                     CustomElevatedButton(onPressed: (){
+                      if (viewModel.page1Key.currentState!.validate()) {
+                        viewModel.page1Key.currentState!.save();
+                        viewModel.isPage1Fill.value = true;
+                        viewModel.pageController.value.animateToPage(
+                          1,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.linear,
+                        );
+                      }
                     }, buttonText: MyStrings.next)
 
                   ],
@@ -443,7 +454,24 @@ class FeaturesScreen extends StatelessWidget {
                 ),
                 SizedBox(height: Dimens.standard_24),
                 SizedBox(height: Dimens.standard_50),
-                CustomElevatedButton(onPressed: (){}, buttonText: MyStrings.submit)
+                CustomElevatedButton(onPressed: (){
+                  if(viewModel.page2Key.currentState!.validate()){
+                    viewModel.page2Key.currentState!.save();
+                    viewModel.isPage2Fill.value = true;
+                    if (viewModel.isPage1Fill.value && viewModel.isPage2Fill.value){
+                      Internet.checkInternet().then((value){
+                        if(value){
+                          viewModel.addFeatureInfo();
+                        }else{
+                          CustomToast.instance.showMsg(MyStrings.checkNetwork);
+                        }
+                      });
+                    }else{
+                      CustomToast.instance.showMsg(MyStrings.vMandatory);
+                    }
+                  }
+                  // viewModel.addFeatureInfo();
+                }, buttonText: MyStrings.submit)
               ],
             ),
           ),
