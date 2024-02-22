@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:evaluator_app/service/internet_check.dart';
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
@@ -9,7 +7,6 @@ import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
 import '../../../utils/images.dart';
 import '../../../utils/styles.dart';
 import '../../../view_model/dashboard/airconditioning/airconditioning_screen_view_model.dart';

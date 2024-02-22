@@ -62,7 +62,7 @@ class ReportScreenViewModel extends GetxController{
 
 void getReport() async {
   try {
-    var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.evaluation+'/'+EndPoints.report+'65cf2025b07b4acdec103563'),headers: globals.headers);
+    var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.evaluation+'/'+EndPoints.report+id),headers: globals.headers);
     if(response.statusCode == 200){
       reportResponse.value = ReportResponse.fromJson(jsonDecode(response.body));
       if (reportResponse.value.data != null) {

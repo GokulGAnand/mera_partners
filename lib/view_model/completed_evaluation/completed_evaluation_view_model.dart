@@ -6,8 +6,6 @@ import 'package:evaluator_app/utils/globals.dart' as globals;
 import 'package:http/http.dart' as http;
 import '../../model/response/pending_evaluation/pending_evaluation_response.dart';
 import '../../service/endpoints.dart';
-import '../../utils/strings.dart';
-import '../../widgets/custom_toast.dart';
 
 class CompletedEvaluationViewModel extends GetxController{
 
@@ -45,7 +43,7 @@ class CompletedEvaluationViewModel extends GetxController{
 
   void fetchEvaluatedList() async {
     try {
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.evaluation}?status=PENDING_EVALUATION'),headers: globals.headers);
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.evaluation}?status=COMPLETED_EVALUATION'),headers: globals.headers);
       if(response.statusCode == 200){
         carBasicResponse.value = PendingEvaluationList.fromJson(json.decode(response.body));
         carBasic.value = carBasicResponse.value;

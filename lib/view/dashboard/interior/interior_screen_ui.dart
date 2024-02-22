@@ -1,6 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
-
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/dimens.dart';
 import 'package:evaluator_app/utils/images.dart';

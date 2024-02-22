@@ -200,6 +200,32 @@ class Constants {
   static const List<String> turboChargerList = ['Leakage', 'Working', 'Not Working', 'Noisy', 'Other'];
   static const List<String> engineMountList = ['Jerking', 'Damaged', 'Good', 'Other'];
   static const List<String> sumpList = ['Damaged', 'Leakage', 'Good', 'Other'];
+  ///Exterior
+  static const List<String> carCondition =
+  ['Good', 'Scratch', 'Fade', 'Colour Mismatch', 'Dent', 'Damaged',
+    'Repaired', 'Missing', 'Rusted', 'Repainted', 'Cracked', 'Other'];
+  static const List<String> rearCondition = ['Good', 'Scratch', 'Dent', 'Damaged', 'Repaired', 'Missing', 'Rusted', 'Repainted', 'Other'];
+  static const List<String> roofCondition = ['Good', 'Scratch', 'Welded', 'Replaced', 'Dent', 'Damaged', 'Repaired', 'Missing', 'Fade', 'Rusted', 'Repainted', 'Cracked', 'Other'];
+  static const List<String> windShieldCondition = ['Good', 'Scratch', 'Damaged', 'Not Available', 'Rusted', 'Replaced', 'Chipped', 'Faded', 'Other'];
+  static const List<String> doorGlassCondition = ['Good', 'Scratch', 'Damaged', 'Replaced', 'Repainted', 'Cracked', 'Chipped', 'Other'];
+  static const List<String> lightCondition = ['Good', 'Scratch', 'Damaged', 'Replaced', 'Faded', 'Foggy', 'Non-Functional', 'Other'];
+  static const List<String> headLightSupport =  ['Good', 'Welded', 'Clamped', 'Repaired', 'Other'];
+  static const List<String> bumper =  ['Good', 'Scratched', 'Dent', 'Damaged', 'Repaired', 'Replaced', 'Rusted', 'Repainted', 'Other'];
+  static const List<String> frontGrill = ['Good', 'Scratched', 'Dent', 'Damaged', 'Faded', 'Other'];
+  static const List<String> bonnetPatti = ['Good', 'Scratched', 'Dent', 'Damaged', 'Repaired', 'Replaced', 'Rusted', 'Repainted', 'Other'];
+  static const List<String> crossMember = ['Good', 'Damaged', 'Repaired', 'Replaced', 'Rusted', 'Repainted', 'Welded', 'Other'];
+  static const List<String> apron = ['Good', 'Replaced', 'Repaired', 'Damaged', 'Rusted', 'Repainted', 'Other'];
+  static const List<String> cowlTop = ['Damaged', 'Repainted', 'Repaired', 'Rusted', 'Other'];
+  static const List<String> chassisExtension =  ['Welded', 'Replaced', 'Repaired', 'Damaged', 'Rusted', 'Other'];
+  static const List<String> tyreWheelsCondition = ['0-5%', '5-25%', '25-50%', '50-75%', '75%-100%', 'Damaged', 'Other'];
+  static const List<String> rhCondition = ['Good', 'Replaced', 'Repainted', 'Rusted', 'Scratched', 'Dented', 'Faded', 'Colour Mismatched', 'Other'];
+  static const List<String> lhCondition = ['Good', 'Scratch', 'Dent', 'Damaged', 'Repaired', 'Missing', 'Rusted', 'Repainted', 'Other'];
+  static const List<String> pillarsBoardsCondition = ['Good', 'Replaced', 'Repainted', 'Rusted', 'Scratched', 'Dented', 'Faded', 'Colour Mismatched', 'Welded', 'Other'];
+  static const List<String> wiper = ['Good', 'Damaged', 'Not Available', 'Replaced', 'Other'];
+  static const List<String> mirror = ['Good', 'Scratch', 'Damaged', 'Repaired', 'Missing', 'Non-Functional', 'Other'];
+  static const List<String> fuelLid =  ['Good', 'Damaged', 'Rusted', 'Other'];
+  static const List<String> bootList =  ['Good', 'Damaged', 'Repaired', 'Rusted', 'Welded', 'Water Inside', 'Sealant', 'Broken', 'Other'];
+  static const List<String> fireWall =  ['Good', 'Damaged', 'Repaired', 'Rusted', 'Repainted', 'Other'];
 
 
 
