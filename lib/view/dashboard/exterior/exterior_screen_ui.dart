@@ -958,6 +958,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 SizedBox(
                   height: Dimens.standard_24,
+
                 ),
                 GestureDetector(
                   onTap: () async {
