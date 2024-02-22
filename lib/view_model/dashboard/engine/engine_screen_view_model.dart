@@ -110,7 +110,7 @@ class EngineViewModel extends GetxController {
   Rx<TextEditingController> otherEngineMountController = TextEditingController().obs;
   Rx<TextEditingController> otherSumpController = TextEditingController().obs;
 
-  void updateEngine() async {
+  void  updateEngine() async {
     try {
       var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl+EndPoints.engineInfo+id));
       for(int i = 0; i < selectedEngine.length; i++){

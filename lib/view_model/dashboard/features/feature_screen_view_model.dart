@@ -1,9 +1,15 @@
 
+import 'dart:convert';
 import 'dart:io';
-
+import 'dart:math';
+import 'package:evaluator_app/service/endpoints.dart';
+import 'package:http/http.dart' as http;
 import 'package:evaluator_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:evaluator_app/utils/globals.dart' as globals;
+
+import '../../../model/response/features/faetures_response.dart';
 
 class FeatureViewModel extends GetxController{
   final Rx<PageController> pageController = PageController(initialPage: 0).obs;
@@ -12,7 +18,7 @@ class FeatureViewModel extends GetxController{
 
   var isPage1Fill = false.obs;
   var isPage2Fill = false.obs;
-
+  var id = Get.arguments ?? '';
   final GlobalKey<FormState> page1Key = GlobalKey<FormState>();
   final GlobalKey<FormState> page2Key = GlobalKey<FormState>();
 
@@ -57,5 +63,19 @@ class FeatureViewModel extends GetxController{
   // var abs = ''.obs;
   RxList<String> selectAbsEbd = <String>[].obs;
   Rx<File?> clusterImage = Rx<File?>(null);
+  var featuresResponse = featuresList().obs;
+
+  void addFeatureInfo()async{
+    var request = http.MultipartRequest('PATCH',Uri.parse(EndPoints.baseUrl+EndPoints.featureInfo+'/'+id));
+    // for(int i=0; i<selectedKeylessEntry.l)
+
+  }
+
+  void getFeatureInfo()async{
+    var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.featureInfo+'/'+id),headers: globals.headers);
+    if(response.statusCode==200){
+     featuresResponse.value =  featuresList.fromJson(json.decode(response.body));
+    }print(response.body);
+  }
 
 }
