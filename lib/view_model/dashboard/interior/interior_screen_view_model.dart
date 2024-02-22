@@ -134,32 +134,32 @@ class InteriorViewModel extends GetxController {
         'clusterPanel' : clusterPanelController.value.text,
         'warningDetails' : warningDetailsController.value.text,
         'rearViewMirror' : insideRearViewMirrorController.value.text,
-        'interiorView' : '',
+        // 'interiorView' : '',
         'dashboardSwitch' : selectDashboardSwitches.value,
         'secondKey' : selectSecondKey.value,
         'platform' : platformController.value.text,
         'interiorStar' : '',
         'evaluationStatusForInterior': 'COMPLETED'
       });
-      if (dashboardImage.value != null) {
+      if (dashboardImage.value != null && (dashboardImage.value!.path.startsWith('http') == false || dashboardImage.value!.path.startsWith('https') == false)) {
         request.files.add(http.MultipartFile.fromBytes('dashboardImage', dashboardImage.value!.readAsBytesSync()));
       }
-      if (frontSeatImage.value != null) {
+      if (frontSeatImage.value != null && (frontSeatImage.value!.path.startsWith('http') == false || frontSeatImage.value!.path.startsWith('https') == false)) {
         request.files.add(http.MultipartFile.fromBytes('frontSeatImage', frontSeatImage.value!.readAsBytesSync()));
       }
-      if (rearSeatImage.value != null) {
+      if (rearSeatImage.value != null && (rearSeatImage.value!.path.startsWith('http') == false || rearSeatImage.value!.path.startsWith('https') == false)) {
         request.files.add(http.MultipartFile.fromBytes('rearSeatImage', rearSeatImage.value!.readAsBytesSync()));
       }
-      if (handBreakImage.value != null) {
+      if (handBreakImage.value != null && (handBreakImage.value!.path.startsWith('http') == false || handBreakImage.value!.path.startsWith('https') == false)) {
         request.files.add(http.MultipartFile.fromBytes('handbreakImage', handBreakImage.value!.readAsBytesSync()));
       }
-      if (powerWindowDriverImage.value != null) {
+      if (powerWindowDriverImage.value != null && (powerWindowDriverImage.value!.path.startsWith('http') == false || powerWindowDriverImage.value!.path.startsWith('https') == false)) {
         request.files.add(http.MultipartFile.fromBytes('powerWindowDriverImage', powerWindowDriverImage.value!.readAsBytesSync()));
       }
-      if (pushWindowDriverImage.value != null) {
+      if (pushWindowDriverImage.value != null && (pushWindowDriverImage.value!.path.startsWith('http') == false || pushWindowDriverImage.value!.path.startsWith('https') == false)) {
         request.files.add(http.MultipartFile.fromBytes('pushWindowDriverImage', pushWindowDriverImage.value!.readAsBytesSync()));
       }
-      if (cngLpgKitImage.value != null) {
+      if (cngLpgKitImage.value != null && (cngLpgKitImage.value!.path.startsWith('http') == false || cngLpgKitImage.value!.path.startsWith('https') == false)) {
         request.files.add(http.MultipartFile.fromBytes('cngKitImage', cngLpgKitImage.value!.readAsBytesSync()));
       }
       request.headers.addAll(globals.headers);
@@ -167,7 +167,7 @@ class InteriorViewModel extends GetxController {
       log(request.toString());
 
       var response = await request.send();
-
+      log(response.statusCode.toString());
       if (response.statusCode == 200) {
             log(await response.stream.bytesToString());
             Get.toNamed(AppRoutes.dashBoardScreen);
@@ -199,21 +199,29 @@ class InteriorViewModel extends GetxController {
 
   void loadData(){
     if(interiorInfoResponse.value.data != null){
-      clusterPanelController.value.text = interiorInfoResponse.value.data![0].clusterPanel.toString();
+      clusterPanelController.value.text = interiorInfoResponse.value.data![0].clusterPanel!.join(",");
       selectClusterPanel.value = clusterPanelController.value.text.split(",");
       warningDetailsController.value.text = interiorInfoResponse.value.data![0].warningDetails!;
       if(warningDetailsController.value.text.isNotEmpty){
         selectWarningLight.value = 'yes';
       }
+      dashboardImageController.value.text = interiorInfoResponse.value.data![0].dashboardImage!.condition!.join(",");
+      selectDashboardImage.value = dashboardImageController.value.text.split(",");
       dashboardImage.value = File(interiorInfoResponse.value.data![0].dashboardImage!.url ?? '');
       dashboardRemarksController.value.text = interiorInfoResponse.value.data![0].dashboardImage!.remarks ?? '';
+
+      frontSeatImageController.value.text = interiorInfoResponse.value.data![0].frontSeatImage!.condition!.join(",");
+      selectFrontSeatImage.value = frontSeatImageController.value.text.split(",");
       frontSeatImage.value = File(interiorInfoResponse.value.data![0].frontSeatImage!.url ?? '');
       frontSeatRemarksController.value.text = interiorInfoResponse.value.data![0].frontSeatImage!.remarks ?? '';
+      rearSeatImageController.value.text = interiorInfoResponse.value.data![0].rearSeatImage!.condition!.join(",");
+      selectRearSeatImage.value = rearSeatImageController.value.text.split(",");
       rearSeatImage.value = File(interiorInfoResponse.value.data![0].rearSeatImage!.url ?? '');
       rearSeatRemarksController.value.text = interiorInfoResponse.value.data![0].rearSeatImage!.remarks ?? '';
-
-      insideRearViewMirrorController.value.text = interiorInfoResponse.value.data![0].rearViewMirror!;
+      insideRearViewMirrorController.value.text = interiorInfoResponse.value.data![0].rearViewMirror!.join(",");
       selectInsideRearViewMirror.value = insideRearViewMirrorController.value.text.split(",");
+      interiorViewFromBootDashboardRemarksController.value.text = interiorInfoResponse.value.data![0].interiorView!.remarks ?? '';
+      interiorViewFromBootDashboardImage.value = File(interiorInfoResponse.value.data![0].interiorView!.url ?? '');
 
       powerWindowDriverImage.value = File(interiorInfoResponse.value.data![0].powerWindowDriverImage!.url ?? '');
       powerWindowDriverRemarksController.value.text = interiorInfoResponse.value.data![0].powerWindowDriverImage!.remarks ?? '';
@@ -225,18 +233,19 @@ class InteriorViewModel extends GetxController {
 
       powerWindowAndWindowLockController.value.text = interiorInfoResponse.value.data![0].powerWindowCentalLock ?? '';
       selectPowerWindowAndWindowLock.value = powerWindowAndWindowLockController.value.text.split(",");
-      handBrakeController.value.text = interiorInfoResponse.value.data![0].handBreak!;
+      handBrakeController.value.text = interiorInfoResponse.value.data![0].handBreak!.join(",");
       selectHandBrake.value = handBrakeController.value.text.split(",");
       handBreakImage.value = File(interiorInfoResponse.value.data![0].handbreakImage!.url ?? '');
       handBrakeRemarksController.value.text = interiorInfoResponse.value.data![0].handbreakImage!.remarks ?? '';
       
-      carElectricalController.value.text = interiorInfoResponse.value.data![0].carElectrical ?? '';
+      carElectricalController.value.text = interiorInfoResponse.value.data![0].carElectrical!.join(",");
       selectCarElectrical.value = carElectricalController.value.text.split(",");
-      // selectSecondKey.value = interiorInfoResponse.value.data![0].secondKey ?? '';
+      cngLpgKitImage.value = File(interiorInfoResponse.value.data![0].cngKitImage!.url ?? '');
+      cngLpgKitImageRemarksController.value.text = interiorInfoResponse.value.data![0].cngKitImage!.remarks ?? '';
+      selectSecondKey.value = interiorInfoResponse.value.data![0].secondKey ?? '';
       
-      platformController.value.text = interiorInfoResponse.value.data![0].platform!;
+      platformController.value.text = interiorInfoResponse.value.data![0].platform!.join(",");
       selectPlatform.value = platformController.value.text.split(",");
-      print(dashboardImage);
     }
   }
 }

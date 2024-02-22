@@ -51,7 +51,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
       elevation: 0,
       shadowColor: Colors.white,
       contentPadding: EdgeInsets.zero,
-      insetPadding: EdgeInsets.zero,
+      insetPadding: EdgeInsets.all(20.0),
       title: Text(title,
       style: MyStyles.uploadImageTitleStyle,),
       titlePadding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
@@ -60,7 +60,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
         borderSide: BorderSide.none
       ),
       content: Container(
-        width: MediaQuery.of(context).size.width * 0.85,
+        // width: MediaQuery.of(context).size.width * 0.85,
         height: MediaQuery.of(context).size.height * 0.7,
         child: SingleChildScrollView(
           child: Column(
