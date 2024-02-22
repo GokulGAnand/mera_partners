@@ -110,6 +110,12 @@ class EngineViewModel extends GetxController {
   Rx<TextEditingController> otherEngineMountController = TextEditingController().obs;
   Rx<TextEditingController> otherSumpController = TextEditingController().obs;
 
+  @override
+  void onInit() {
+    getEngineData();
+    super.onInit();
+  }
+
   void  updateEngine() async {
     try {
       var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl+EndPoints.engineInfo+id));
@@ -117,28 +123,28 @@ class EngineViewModel extends GetxController {
         request.fields['engineCondition[$i]'] = selectedEngine[i];
       }
       for(int i = 0; i < selectedBattery.length; i++){
-        request.fields['battery[$i]'] = selectedBattery[i];
+        request.fields['battery_condition[$i]'] = selectedBattery[i];
       }
       for(int i = 0; i < selectedBlowBy.length; i++){
-        request.fields['blowBy[$i]'] = selectedBlowBy[i];
+        request.fields['blowBy_condition[$i]'] = selectedBlowBy[i];
       }
       for(int i = 0; i < selectedClutchOperations.length; i++){
-        request.fields['clutch[$i]'] = selectedClutchOperations[i];
+        request.fields['clutch_condition[$i]'] = selectedClutchOperations[i];
       }
       for(int i = 0; i < selectedGearBox.length; i++){
-        request.fields['gearBox[$i]'] = selectedGearBox[i];
+        request.fields['gearBox_condition[$i]'] = selectedGearBox[i];
       }
       for(int i = 0; i < selectedEngineOil.length; i++){
-        request.fields['engineOil[$i]'] = selectedEngineOil[i];
+        request.fields['engineOil_condition[$i]'] = selectedEngineOil[i];
       }
       for(int i = 0; i < selectedTurboCharger.length; i++){
-        request.fields['turboCharger[$i]'] = selectedTurboCharger[i];
+        request.fields['turboCharger_condition[$i]'] = selectedTurboCharger[i];
       }
       for(int i = 0; i < selectedEngineMount.length; i++){
-        request.fields['mount[$i]'] = selectedEngineMount[i];
+        request.fields['mount_condition[$i]'] = selectedEngineMount[i];
       }
       for(int i = 0; i < selectedSump.length; i++){
-        request.fields['sump[$i]'] = selectedSump[i];
+        request.fields['sump_condition[$i]'] = selectedSump[i];
       }
       request.fields.addAll({
         'engineSound': selectedEngineSound.value,
@@ -148,19 +154,45 @@ class EngineViewModel extends GetxController {
         'engineComment': remarksController.value.text,
         'startingMotor': selectedStartingMotor.value,
         'coolant': selectedCoolant.value,
-        'compression': 'good',
         'gearBoxLeakage': selectedGearBoxLeak.value,
-        'summary': 'best engine condition ',
         'evaluationStatusForEngine': 'COMPLETED',
         'engineCompartment_remarks': engineCompartmentImageRemarks.value.text,
         'startVideo_remarks': engineIdleStartVideoRemarksController.value.text,
-        // 'engineCompartment_condition[0]': 'good',
-        // 'engineCompartment_condition[1]': 'bad',
-        // 'startVideo_condition[0]': 'good',
-        // 'startVideo_condition[1]': 'noisy'
+        'front_remarks': engineIdleStartVideoRemarksController.value.text,
       });
-      request.files.add(http.MultipartFile.fromBytes('engineCompartment', engineCompartmentImage.value!.readAsBytesSync()));
-      request.files.add(http.MultipartFile.fromBytes('startVideo', engineIdleStartVideo.value!.readAsBytesSync()));
+      if (engineCompartmentImage.value != null) {
+        request.files.add(http.MultipartFile.fromBytes('engineCompartment', engineCompartmentImage.value!.readAsBytesSync()));
+      }
+      if (engineIdleStartVideo.value != null) {
+        request.files.add(http.MultipartFile.fromBytes('startVideo', engineIdleStartVideo.value!.readAsBytesSync()));
+      }
+      if (engineImage.value != null) {
+        request.files.add(http.MultipartFile.fromBytes('engine', engineImage.value!.readAsBytesSync()));
+      }
+      if (batteryImage.value != null) {
+        request.files.add(http.MultipartFile.fromBytes('battery', batteryImage.value!.readAsBytesSync()));
+      }
+      if (blowByBackCompressionImage.value != null) {
+        request.files.add(http.MultipartFile.fromBytes('blowBy', blowByBackCompressionImage.value!.readAsBytesSync()));
+      }
+      if (clutchOperationsImage.value != null) {
+        request.files.add(http.MultipartFile.fromBytes('clutch', clutchOperationsImage.value!.readAsBytesSync()));
+      }
+      if (clutchOperationsImage.value != null) {
+        request.files.add(http.MultipartFile.fromBytes('gearBox', clutchOperationsImage.value!.readAsBytesSync()));
+      }
+      if (engineOilImage.value != null) {
+        request.files.add(http.MultipartFile.fromBytes('engineOil', engineOilImage.value!.readAsBytesSync()));
+      }
+      if (turboChargerImage.value != null) {
+        request.files.add(http.MultipartFile.fromBytes('turboCharger', turboChargerImage.value!.readAsBytesSync()));
+      }
+      if (engineMountImage.value != null) {
+        request.files.add(http.MultipartFile.fromBytes('mount', engineMountImage.value!.readAsBytesSync()));
+      }
+      if (sumpImage.value != null) {
+        request.files.add(http.MultipartFile.fromBytes('sump', sumpImage.value!.readAsBytesSync()));
+      }
       request.headers.addAll(globals.headers);
 
       http.StreamedResponse response = await request.send();
@@ -182,22 +214,85 @@ class EngineViewModel extends GetxController {
 
 
   void loadData(){
-    if(engineResponse.value.data != null){
+    /*if(engineResponse.value.data != null){
       engineCompartmentImageRemarks.value.text = engineResponse.value.data?[0].engineCompartment?.remarks ?? '';
       engineIdleStartVideoRemarksController.value.text = engineResponse.value.data?[0].startVideo?.remarks ?? '';
-      // batteryRemarksController.value.text = engineResponse.value.data?[0].battery?.remarks ?? '';
-      // engineRemarksController.value.text = engineResponse.value.data?[0].en?.remarks ?? '';
-      // blowByRemarksController.value.text = engineResponse.value.data?[0].startVideo?.remarks ?? '';
-      // startingMotorRemarksController.value.text = engineResponse.value.data?[0].startingMotor?.remarks ?? '';
-      // radiatorRemarksController.value.text = engineResponse.value.data?[0].radiator?.remarks ?? '';
-    }
+      // otherEngineConditionController. value = engineResponse.value.data?[0];
+      // otherRadiatorController. value = engineResponse.value.data?[0];
+      // otherSmokeController. value = engineResponse.value.data?[0];
+      // otherCoolantController. value = engineResponse.value.data?[0];
+      // otherBlowbyController. value = engineResponse.value.data?[0];
+      // otherBatteryController. value = engineResponse.value.data?[0];
+      // otherStartingMotorController. value = engineResponse.value.data?[0];
+      engineIdleStartVideoRemarksController. value = engineResponse.value.data?[0].startVideo?.remarks ?? '';
+      radiatorRemarksController. value = engineResponse.value.data?[0];
+      startingMotorRemarksController. value = engineResponse.value.data?[0].startingMotor;
+      blowByRemarksController. value = engineResponse.value.data?[0].blowBy?.remarks ?? '';
+      engineRemarksController. value = engineResponse.value.data?[0].engine?.remarks ?? '';
+      batteryRemarksController.value = engineResponse.value.data?[0].battery?.remarks ?? '';
+      engineController.value.text = engineResponse.value.data?[0].engine?.condition?.join(',') ?? '';
+      batteryController.value.text = engineResponse.value.data?[0].battery?.condition?.join(',') ?? '';
+      blowByBackCompressionController.value.text = engineResponse.value.data?[0].blowBy?.condition?.join(',') ?? '';
+      engineCompartmentImage.value = File(engineResponse.value.data?[0].engineCompartment?.url ?? '');
+      engineIdleStartVideo.value = File(engineResponse.value.data?[0].startVideo?.path ?? '');
+      blowByBackCompressionImage.value = File(engineResponse.value.data?[0].blowBy?.url ?? '');
+      engineImage.value = File(engineResponse.value.data?[0].engine?.url ?? '');
+      batteryImage.value = File(engineResponse.value.data?[0].battery?.url ?? '');
+      selectedEn gine.value = engineResponse.value.data?[0].engine?.condition ?? [];
+      selectedBattery.value = engineResponse.value.data?[0].battery?.condition ?? [];
+      selectedBlowBy.value = engineResponse.value.data?[0].blowBy?.condition ?? [];
+      selectedEngineSound.value = engineResponse.value.data?[0].engineSound ?? '';
+      selectedSmoke.value = engineResponse.value.data?[0].exhaustSmoke ?? '';
+      selectedRadiator.value = engineResponse.value.data?[0].radiator ?? '';
+      selectedStartingMotor.value = engineResponse.value.data?[0].startingMotor ?? '';
+      selectedCoolant.value = engineResponse.value.data?[0].coolant ?? '';
+      selectedSilencer.value = engineResponse.value.data?[0].silencer ?? '';
+      selectedGearBoxLeak.value = engineResponse.value.data?[0].gearBoxLeakage ?? '';
+      clutchOperationsImage.value = File(engineResponse.value.data?[0].clutch?.url ?? '');
+      // gearBoxImage.value = File(engineResponse.value.data?[0].gearBox?.url ?? '');
+      engineOilImage.value = File(engineResponse.value.data?[0].engineOil?.url ?? '');
+      turboChargerImage.value = File(engineResponse.value.data?[0].turboCharger?.url ?? '');
+      // engineMountImage.value = File(engineResponse.value.data?[0].mount?.url ?? '');
+      // sumpImage.value = engineResponse.value.data?[0].sump?.url ?? '';
+      selectedClutchOperations.value = engineResponse.value.data?[0].clutch?.condition ?? [];
+      selectedGearBox.value = engineResponse.value.data?[0].gearBox?.condition ?? [];
+      selectedEngineOil.value = engineResponse.value.data?[0].engineOil?.condition ?? [];
+      selectedTurboCharger.value = engineResponse.value.data?[0].turboCharger?.condition ?? [];
+      selectedEngineMount.value = engineResponse.value.data?[0].mount?.condition ?? [];
+      selectedSump.value = engineResponse.value.data?[0].sump?.condition ?? [];
+      // clutchOperationsRemarksController.value = engineResponse.value.data?[0].clutch?.remarks ?? '';
+      // gearBoxImageRemarksController.value = engineResponse.value.data?[0].gearBox?.remarks ?? '';
+      // engineOilRemarksController.value = engineResponse.value.data?[0].engineOil?.remarks ?? '';
+      // turboChargerRemarksController.value = engineResponse.value.data?[0].turboCharger?.remarks ?? '';
+      // engineMountRemarksController.value = engineResponse.value.data?[0].mount?.remarks ?? '';
+      // sumpRemarksController.value = engineResponse.value.data?[0].sump?.remarks ?? '';
+      sumpController.value.text = engineResponse.value.data?[0].sump?.condition?.join(',') ?? '';
+      remarksController.value.text = engineResponse.value.data?[0].engineComment ?? '';
+      engineMountController.value.text = engineResponse.value.data?[0].mount?.condition?.join(',') ?? '';
+      gearboxController.value.text = engineResponse.value.data?[0].gearBox?.condition?.join(',') ?? '';
+      turboChargerController.value.text = engineResponse.value.data?[0].turboCharger?.condition?.join(',') ?? '';
+      engineOilController.value.text = engineResponse.value.data?[0].engineOil?.condition?.join(',') ?? '';
+      clutchOperationsController.value.text = engineResponse.value.data?[0].clutch?.condition?.join(',') ?? '';
+      // otherSilencerController.value.text = engineResponse.value.data?[0];
+      // otherClutchOperationController.value.text = engineResponse.value.data?[0];
+      // otherGearBoxController.value.text = engineResponse.value.data?[0];
+      // otherEngineOilController.value.text = engineResponse.value.data?[0];
+      // otherTurboChargerController.value.text = engineResponse.value.data?[0];
+      // otherEngineMountController.value.text = engineResponse.value.data?[0];
+      // otherSumpController.value.text = engineResponse.value.data?[0];
+    }*/
   }
 
   void getEngineData()async {
     try {
       var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.engineInfo+id),headers: globals.headers);
-      engineResponse.value = EngineResponse.fromJson(jsonDecode(response.body));
-      loadData();
+      if (response.statusCode == 200) {
+        engineResponse.value = EngineResponse.fromJson(jsonDecode(response.body));
+        print(response.body);
+        loadData();
+      }else{
+        print(response.reasonPhrase);
+      }
     } catch (e) {
       print(e);
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');

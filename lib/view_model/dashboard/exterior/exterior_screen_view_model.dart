@@ -1,9 +1,15 @@
+import 'dart:convert';
 import 'dart:io';
-
+import 'package:evaluator_app/routes/app_routes.dart';
+import 'package:evaluator_app/service/endpoints.dart';
+import 'package:evaluator_app/utils/globals.dart' as globals;
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-
+import 'package:http/http.dart' as http;
+import '../../../model/response/exterior/exterior_response.dart';
 import '../../../utils/constants.dart';
+import '../../../utils/strings.dart';
+import '../../../widgets/custom_toast.dart';
 
 class ExteriorViewModel extends GetxController{
 
@@ -17,6 +23,7 @@ class ExteriorViewModel extends GetxController{
   final Rx<PageController> pageController = PageController(initialPage: 0).obs;
 
   var activePage = 0.obs;
+  var id = Get.arguments;
 
   final GlobalKey<FormState> page1Key = GlobalKey<FormState>();
   final GlobalKey<FormState> page2Key = GlobalKey<FormState>();
@@ -328,5 +335,301 @@ class ExteriorViewModel extends GetxController{
   Rx<TextEditingController> firewallController = TextEditingController().obs;
   Rx<TextEditingController> otherFirewallController = TextEditingController().obs;
   Rx<TextEditingController> firewallRemarks = TextEditingController().obs;
+
+  @override
+  void onInit() {
+    getExteriorData();
+    super.onInit();
+  }
+  
+  void updateExterior()async{
+    try{
+      var request = http.MultipartRequest('PATCH', Uri.parse('http://43.205.61.101:8080/api/v1/exterior/65cf2025b07b4acdec103563'));
+      request.fields.addAll({
+        'front_remarks': frontImageRemarks.value.text, 
+        'front_condition[0]': 'bad',
+        'front_condition[1]': '',
+        'frontLeft_remarks': frontLeftImageRemarks.value.text,
+        'frontLeft-condition[0]': 'bad',
+        'frontLeft-condition[1]': 'bad',
+        'frontRight_remarks': frontRightImageRemarks.value.text,
+        'frontRight_condition[0]': 'bad',
+        'frontRight_condition[1]': 'bad',
+        'rearLeft_remarks': rearLeftImageRemarks.value.text,
+        'rearLeft_condition[0]': 'bad',
+        'rearLeft_condition[1]': 'bad',
+        'rearRight_remarks': rearRightRemarks.value.text,
+        'rearRight_condition[0]': 'bad',
+        'rearRight_condition[1]': 'bad',
+        'rear_remarks': rearImageRemarks.value.text,
+        'rear_condition[0]': 'bad',
+        'rear_condition[1]': 'bad',
+        'frontWithHoodOpen_remarks': '',
+        'frontWithHoodOpen_condition[0]': 'bad',
+        'frontWithHoodOpen_condition[1]': 'bad',
+        'rearBootOpen_remarks': '',
+        'rearBootOpen_condition[0]': 'bad',
+        'rearBootOpen_condition[1]': 'bad',
+        'frontWindShield_remarks': frontWindShieldWiperRemarks.value.text,
+        'frontWindShield_condition[0]': 'bad',
+        'frontWindShield_condition[1]': 'bad',
+        'rearWindShield_remarks': rearWindShieldRemarks.value.text,
+        'rearWindShield_condition[0]': 'bad',
+        'rearWindShield_condition[1]': 'bad',
+        'roof_remarks': roofImageRemarks.value.text,
+        'roof_condition[0]': 'bad',
+        'roof_condition[1]': 'bad',
+        'doorGlassLeft_remarks': doorGlassLHRemarks.value.text,
+        'doorGlassLeft_condition[0]': 'bad',
+        'doorGlassLeft_condition[1]': 'bad',
+        'doorGlassRight_remarks': doorGlassRHRemarks.value.text,
+        'doorGlassRight_condition[0]': 'bad',
+        'doorGlassRight_condition[1]': 'bad',
+        'quarterGlass_remarks': quarterGlassRemarks.value.text,
+        'quarterGlass_condition[0]': 'bad',
+        'quarterGlass_condition[1]': 'bad',
+        'headLightRight_remarks': headlightsRHRemarks.value.text,
+        'headLightRight_condition[0]': 'bad',
+        'headLightRight_condition[1]': 'bad',
+        'headLightLeft_remarks': headlightsLHRemarks.value.text,
+        'headLightLeft_condition[0]': 'bad',
+        'headLightLeft_condition[1]': 'bad',
+        'headLightSupport_remarks': headlightSupportRemarks.value.text,
+        'headLightSupport_condition[0]': 'bad',
+        'headLightSupport_condition[1]': 'bad',
+        'bumperFront_remarks': frontBumperRemarks.value.text,
+        'bumperFront_condition[0]': 'bad',
+        'bumperFront_condition[1]': 'bad',
+        'bumperRear_remarks': rearBumperRemarks.value.text,
+        'bumperRear_condition[0]': 'bad',
+        'bumperRear_condition[1]': 'bad',
+        'bonnetPatti_remarks': bonnetPattiRemarks.value.text,
+        'bonnetPatti_condition[0]': 'bad',
+        'bonnetPatti_condition[1]': 'bad',
+        'grill_remarks': frontGrillRemarks.value.text,
+        'grill_condition[0]': 'bad',
+        'grill_condition[1]': 'bad',
+        'lowerCrossMember_remarks': lowerCrossMemberRemarks.value.text,
+        'lowerCrossMember_condition[0]': 'bad',
+        'lowerCrossMember_condition[1]': 'bad',
+        'upperCrossMember_remarks': upperCrossMemberRemarks.value.text,
+        'upperCrossMember_condition[0]': 'bad',
+        'upperCrossMember_condition[1]': 'bad',
+        'apronLeft_remarks': apronLHRemarks.value.text,
+        'apronLeft_condition[0]': 'bad',
+        'apronLeft_condition[1]': 'bad',
+        'apronRight_remarks': apronRHRemarks.value.text,
+        'apronRight_condition[0]': 'bad',
+        'apronRight_condition[1]': 'bad',
+        'chassisExtension_remarks': chassisExtensionRemarks.value.text,
+        'chassisExtension_condition[0]': 'bad',
+        'chassisExtension_condition[1]': 'bad',
+        'frontTyreRight_remarks': '',
+        'frontTyreRight_condition[0]': 'bad',
+        'frontTyreRight_condition[1]': 'bad',
+        'frontTyreLeft_remarks': '',
+        'frontTyreLeft_condition[0]': 'bad',
+        'frontTyreLeft_condition[1]': 'bad',
+        'rearTyreRight_remarks': '',
+        'rearTyreRight_condition[0]': 'bad',
+        'rearTyreRight_condition[1]': 'bad',
+        'rearTyreLeft_remarks': '',
+        'rearTyreLeft_condition[0]': 'bad',
+        'rearTyreLeft_condition[1]': 'bad',
+        'fenderLeft_remarks': lhFenderRemarks.value.text,
+        'fenderLeft_condition[0]': 'bad',
+        'fenderLeft_condition[1]': 'bad',
+        'fenderRight_remarks': rhFenderRemarks.value.text,
+        'fenderRight_condition[0]': 'bad',
+        'fenderRight_condition[1]': 'bad',
+        'quarterPanelRight_remarks': rhQuarterPanelRemarks.value.text,
+        'quarterPanelRight_condition[0]': 'bad',
+        'quarterPanelRight_condition[1]': 'bad',
+        'quarterPanelLeft_remarks': lhQuarterPanelRemarks.value.text,
+        'quarterPanelLeft_condition[0]': 'bad',
+        'quarterPanelLeft_condition[1]': 'bad',
+        'doorFrontRight_remarks': frontRHDoorRemarks.value.text,
+        'doorFrontRight_condition[0]': 'bad',
+        'doorFrontRight_condition[1]': 'bad',
+        'doorFrontLeft_remarks': frontLHDoorRemarks.value.text,
+        'doorFrontLeft_condition[0]': 'bad',
+        'doorFrontLeft_condition[1]': 'bad',
+        'doorRearRight_remarks': rearRHDoorRemarks.value.text,
+        'doorRearRight_condition[0]': 'bad',
+        'doorRearRight_condition[1]': 'bad',
+        'doorRearLeft_remarks': rearLHDoorRemarks.value.text,
+        'doorRearLeft_condition[0]': 'bad',
+        'doorRearLeft_condition[1]': 'bad',
+        'leftApillar_remarks':lhaPillarRemarks.value.text ,
+        'leftApillar_condition[0]': 'bad',
+        'leftApillar_condition[1]': 'bad',
+        'rightApillar_remarks': rhaPillarRemarks.value.text,
+        'rightApillar_condition[0]': 'bad',
+        'rightApillar_condition[1]': 'bad',
+        'leftBpillar_remarks': lhbPillarRemarks.value.text,
+        'leftBpillar_condition[0]': 'bad',
+        'leftBpillar_condition[1]': 'bad',
+        'rightBpillar_remarks': rhbPillarRemarks.value.text,
+        'rightBpillar_condition[0]': 'bad',
+        'rightBpillar_condition[1]': 'bad',
+        'leftCpillar_remarks': lhcPillarRemarks.value.text,
+        'leftCpillar_condition[0]': 'bad',
+        'leftCpillar_condition[1]': 'bad',
+        'rightCpillar_remarks': rhcPillarRemarks.value.text,
+        'rightCpillar_condition[0]': 'bad',
+        'rightCpillar_condition[1]': 'bad',
+        'runnningBorderRight_remarks': rhRunBoardRemarks.value.text,
+        'runnningBorderRight_condition[0]': 'bad',
+        'runnningBorderRight_condition[1]': 'bad',
+        'runnningBorderLeft_remarks': lhRunBoardRemarks.value.text,
+        'runnningBorderLeft_condition[0]': 'bad',
+        'runnningBorderLeft_condition[1]': 'bad',
+        'tailLightRight_remarks': tailLightRhRemarks.value.text,
+        'tailLightRight_condition[0]': 'bad',
+        'tailLightRight_condition[1]': 'bad',
+        'tailLightLeft_remarks': tailLightLhRemarks.value.text,
+        'tailLightLeft_condition[0]': 'bad',
+        'tailLightLeft_condition[1]': 'bad',
+        'rearWiper_remarks': rearWiperRemarks.value.text,
+        'rearWiper_condition[0]': 'bad',
+        'rearWiper_condition[1]': 'bad',
+        'dickyDoor_remarks': dickyDoorRemarks.value.text,
+        'dickyDoor_condition[0]': 'bad',
+        'dickyDoor_condition[1]': 'bad',
+        'boot_remarks': bootRemarks.value.text,
+        'boot_condition[0]': 'bad',
+        'boot_condition[1]': 'good',
+        'firewall_remarks': firewallRemarks.value.text,
+        'firewall_condition[0]': 'bad',
+        'firewall_condition[1]': 'bad',
+        'spareWheel_remarks': spareWheelRemarks.value.text,
+        'spareWheel_condition[0]': 'bad',
+        'spareWheel_condition[1]': 'bad',
+        'rearViewMirrorLeft_remarks': lhRearViewMirrorRemarks.value.text,
+        'rearViewMirrorLeft_condition[0]': 'bad',
+        'rearViewMirrorLeft_condition[1]': 'bad',
+        'rearViewMirrorRight_remarks': rhRearViewMirrorRemarks.value.text,
+        'rearViewMirrorRight_condition[0]': 'bad',
+        'rearViewMirrorRight_condition[1]': 'bad',
+        'fuelLid_remarks': fuelLidRemarks.value.text,
+        'fuelLid_condition[0]': 'bad',
+        'fuelLid_condition[1]': 'bad',
+        'fogLightRight_remarks': '',
+        'fogLightRight_condition[0]': 'bad',
+        'fogLightRight_condition[1]': 'bad',
+        'fogLightLeft_remarks': '',
+        'fogLightLeft_condition[0]': 'bad',
+        'fogLightLeft_condition[1]': 'bad',
+        'jackAndTool': selectedJackAndTool.value,
+        'fullBodyRepaint': selectedFullBodyRepaint.value,
+        'missingParts': missingPartsController.value.text,
+        'cowlTop_remarks': cowlTopRemarks.value.text,
+        'cowlTop_condition[0]': 'bad',
+        'cowlTop_condition[1]': 'bad'
+      });
+      request.files.add( http.MultipartFile.fromBytes('front',frontImage.value!.readAsBytesSync() ));
+      request.files.add( http.MultipartFile.fromBytes('frontLeft',frontLeftImage.value!.readAsBytesSync() ));
+      request.files.add( http.MultipartFile.fromBytes('frontRight', frontRightImage.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('rearLeft', rearLeftImage.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('rearRight', rearRightImage.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('rear', rearImage.value!.readAsBytesSync()));
+      // request.files.add( http.MultipartFile.fromBytes('frontWithHoodOpen', ));
+      // request.files.add( http.MultipartFile.fromBytes('rearBootOpen', ));
+      request.files.add( http.MultipartFile.fromBytes('leftImage', leftImage.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('rightImage', rightImage.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('frontWindShield', frontWindShieldWiperImage.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('rearWindShield', rearWindShield.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('roof', roofImage.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('doorGlassLeft', doorGlassLH.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('doorGlassRight', doorGlassRH.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('quarterGlass', quarterGlass.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('headLightRight', headlightSupport.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('headLightLeft', headlightsLH.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('headLightSupport', headlightSupport.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('bumperFront', frontBumper.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('bumperRear', rearBumper.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('bonnetPatti', bonnetPattiImage.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('grill', frontGrill.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('lowerCrossMember', lowerCrossMember.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('upperCrossMember',upperCrossMember.value!.readAsBytesSync() ));
+      request.files.add( http.MultipartFile.fromBytes('apronLeft', apronLH.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('apronRight',apronRH.value!.readAsBytesSync() ));
+      request.files.add( http.MultipartFile.fromBytes('chassisExtension',chassisExtension.value!.readAsBytesSync() ));
+      // request.files.add( http.MultipartFile.fromBytes('frontTyreRight', ));
+      // request.files.add( http.MultipartFile.fromBytes('frontTyreLeft', ));
+      // request.files.add( http.MultipartFile.fromBytes('rearTyreRight', ));
+      // request.files.add( http.MultipartFile.fromBytes('rearTyreLeft', ));
+      request.files.add( http.MultipartFile.fromBytes('fenderLeft', lhFender.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('fenderRight', rhFender.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('quarterPanelRight', rhQuarterPanel.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('quarterPanelLeft', lhQuarterPanel.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('doorFrontRight', frontRHDoor.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('doorFrontLeft', frontLHDoor.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('doorRearRight', rearRHDoor.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('doorRearLeft', rearLHDoor.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('leftApillar', lhaPillar.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('rightApillar', rhaPillar.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('leftBpillar', lhbPillar.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('rightBpillar', rhbPillar.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('leftCpillar', lhcPillar.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('rightCpillar', rhcPillar.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('runnningBorderRight', rhRunBoard.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('runnningBorderLeft', lhRunBoard.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('tailLightRight', tailLightRh.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('tailLightLeft', tailLightLh.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('rearWiper', rearWiper.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('dickyDoor', dickyDoorImage.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('boot', bootImage.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('firewall', firewall.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('spareWheel', spareWheel.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('rearViewMirrorLeft', lhRearViewMirror.value!.readAsBytesSync()));
+      request.files.add( http.MultipartFile.fromBytes('rearViewMirrorRight',rhRearViewMirror.value!.readAsBytesSync() ));
+      request.files.add( http.MultipartFile.fromBytes('fuelLid', fuelLid.value!.readAsBytesSync()));
+      // request.files.add( http.MultipartFile.fromBytes('fogLightRight', ));
+      // request.files.add( http.MultipartFile.fromBytes('fogLightLeft', ));
+      request.files.add( http.MultipartFile.fromBytes('cowlTop', cowlTop.value!.readAsBytesSync()));
+      request.headers.addAll(globals.headers);
+
+      http.StreamedResponse response =  await request.send();
+
+      if (response.statusCode == 200) {
+        print( response.stream.bytesToString());
+        CustomToast.instance.showMsg(MyStrings.success);
+        Get.toNamed(AppRoutes.dashBoardScreen);
+      }
+      else {
+        print(response.reasonPhrase);
+      }
+
+    }catch(e){
+      print(e);
+    }
+  }
+  var exteriorResponse = ExteriorResponse().obs;
+
+  void loadData(){
+    // frontImage.value = exteriorResponse.value.data[0]
+    // frontLeftImage.value = exteriorResponse.value.data
+    // frontRightImage.value = exteriorResponse.value.data
+    // leftImage.value = exteriorResponse.value.data
+    // rightImage.value = exteriorResponse.value.data
+    // rearLeftImage.value = exteriorResponse.value.data
+    // rearImage.value = exteriorResponse.value.data
+    // rearRightImage.value = exteriorResponse.value.data
+    // roofImage.value = exteriorResponse.value.data
+    // frontWindShieldWiperImage.value = exteriorResponse.value.data
+  }
+  
+  void getExteriorData()async{
+    try{
+      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.exterior+id),headers: globals.headers);
+      if(response.statusCode == 200){
+        exteriorResponse.value = ExteriorResponse.fromJson(jsonDecode(response.body));
+        print(response.body);
+      }
+    }catch(e){
+      print(e);
+    }
+  }
 
 }
