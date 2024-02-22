@@ -15,6 +15,7 @@ import '../../../utils/validate_input.dart';
 import '../../../widgets/common_app_bar.dart';
 import '../../../widgets/common_drawer.dart';
 import '../../../widgets/custom_button.dart';
+import '../../../widgets/custom_checkbox_dialog.dart';
 import '../../../widgets/custom_dialog.dart';
 import '../../../widgets/custom_dropdown.dart';
 import '../../../widgets/custom_text_form_field.dart';
@@ -29,7 +30,7 @@ class EngineScreen extends StatelessWidget {
   List<Widget>? pages;
   EngineViewModel viewModel = Get.find<EngineViewModel>();
 
-  Widget pageOne() {
+  Widget pageOne(BuildContext context) {
     return Obx(
       () => Scaffold(
         body: SingleChildScrollView(
@@ -103,30 +104,31 @@ class EngineScreen extends StatelessWidget {
                 SizedBox(
                   height: Dimens.standard_24,
                 ),
-                //todo
                 GestureDetector(
                   onTap: () async {
-                    showDialog(
-                      barrierDismissible: false,
-                      context: Get.context!,
-                      builder: (context) => ImagePickerCard(
-                        remarksController: viewModel.otherEngineConditionController.value,
-                        image: viewModel.engineCompartmentImage,
-                        onSubmit: () {
-                          Navigator.of(context).pop();
-                          log(viewModel.engineCompartmentImage.value.toString());
-                        },
-                      ),
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomCheckBoxDialog(
+                          title: MyStrings.engine,
+                          items: viewModel.engineConditionList,
+                          selectItem: viewModel.selectedEngine,
+                          image: viewModel.engineImage,
+                          remarksController : viewModel.engineRemarksController.value,
+                          othersController: viewModel.otherEngineConditionController.value,
+                        );
+                      },
                     );
+                    viewModel.engineController.value.text = viewModel.selectedEngine.join(",");
                   },
                   child: CustomTextFormField(
-                    controller: TextEditingController(),
+                    controller: viewModel.engineController.value,
                     labelText: "${MyStrings.engine}*",
                     helperText: "${MyStrings.engine}*",
-                    validator: viewModel.engineCompartmentImage.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: viewModel.engineImage.value == null ? ValidateInput.validateRequiredFields : null,
                     showCursor: false,
                     isEnabled: false,
-                    suffixIcon: viewModel.engineCompartmentImage.value == null
+                    suffixIcon: viewModel.engineImage.value == null
                         ? Padding(
                       padding: Dimens.suffixPadding,
                       child: SvgPicture.asset(MyImages.upload),
@@ -175,10 +177,10 @@ class EngineScreen extends StatelessWidget {
                       context: Get.context!,
                       builder: (context) => ImagePickerCard(
                         remarksController: viewModel.otherEngineConditionController.value,
-                        image: viewModel.engineCompartmentImage,
+                        image: viewModel.engineIdleStartVideo,
                         onSubmit: () {
                           Navigator.of(context).pop();
-                          log(viewModel.engineCompartmentImage.value.toString());
+                          log(viewModel.engineIdleStartVideo.value.toString());
                         },
                       ),
                     );
@@ -187,10 +189,10 @@ class EngineScreen extends StatelessWidget {
                     controller: TextEditingController(),
                     labelText: "${MyStrings.engineIdleStartVideo}*",
                     helperText: "${MyStrings.engineIdleStartVideo}*",
-                    validator: viewModel.engineCompartmentImage.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: viewModel.engineIdleStartVideo.value == null ? ValidateInput.validateRequiredFields : null,
                     showCursor: false,
                     isEnabled: false,
-                    suffixIcon: viewModel.engineCompartmentImage.value == null
+                    suffixIcon: viewModel.engineIdleStartVideo.value == null
                         ? Padding(
                       padding: Dimens.suffixPadding,
                       child: SvgPicture.asset(MyImages.upload),
@@ -206,27 +208,29 @@ class EngineScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    showDialog(
-                      barrierDismissible: false,
-                      context: Get.context!,
-                      builder: (context) => ImagePickerCard(
-                        remarksController: viewModel.otherEngineConditionController.value,
-                        image: viewModel.engineCompartmentImage,
-                        onSubmit: () {
-                          Navigator.of(context).pop();
-                          log(viewModel.engineCompartmentImage.value.toString());
-                        },
-                      ),
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomCheckBoxDialog(
+                          title: MyStrings.battery,
+                          items: viewModel.batteryList,
+                          selectItem: viewModel.selectedBattery,
+                          image: viewModel.batteryImage,
+                          remarksController : viewModel.batteryRemarksController.value,
+                          othersController: viewModel.otherBatteryController.value,
+                        );
+                      },
                     );
+                    viewModel.batteryController.value.text = viewModel.selectedBattery.join(",");
                   },
                   child: CustomTextFormField(
-                    controller: TextEditingController(),
+                    controller: viewModel.batteryController.value,
                     labelText: "${MyStrings.battery}*",
                     helperText: "${MyStrings.battery}*",
-                    validator: viewModel.engineCompartmentImage.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: viewModel.batteryImage.value == null ? ValidateInput.validateRequiredFields : null,
                     showCursor: false,
                     isEnabled: false,
-                    suffixIcon: viewModel.engineCompartmentImage.value == null
+                    suffixIcon: viewModel.batteryImage.value == null
                         ? Padding(
                       padding: Dimens.suffixPadding,
                       child: SvgPicture.asset(MyImages.upload),
@@ -245,7 +249,7 @@ class EngineScreen extends StatelessWidget {
                     hintText: "${MyStrings.radiator}*",
                     label: viewModel.selectedRadiator.value.isEmpty ? null : "${MyStrings.radiator}*",
                     value: viewModel.selectedRadiator.value.isEmpty ? null : viewModel.selectedRadiator.value,
-                    items: viewModel.smokeList.map<DropdownMenuItem<String>>((String value) {
+                    items: viewModel.radiatorList.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(
@@ -326,27 +330,29 @@ class EngineScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    showDialog(
-                      barrierDismissible: false,
-                      context: Get.context!,
-                      builder: (context) => ImagePickerCard(
-                        remarksController: viewModel.otherEngineConditionController.value,
-                        image: viewModel.blowByBackCompressionImage,
-                        onSubmit: () {
-                          Navigator.of(context).pop();
-                          log(viewModel.blowByBackCompressionImage.value.toString());
-                        },
-                      ),
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomCheckBoxDialog(
+                          title: MyStrings.blowByBackCompression,
+                          items: viewModel.blowByBackCompress,
+                          selectItem: viewModel.selectedBlowBy,
+                          image: viewModel.blowByBackCompressionImage,
+                          remarksController : viewModel.blowByRemarksController.value,
+                          othersController: viewModel.otherBlowbyController.value,
+                        );
+                      },
                     );
+                    viewModel.blowByBackCompressionController.value.text = viewModel.selectedBlowBy.join(",");
                   },
                   child: CustomTextFormField(
-                    controller: TextEditingController(),
+                    controller: viewModel.blowByBackCompressionController.value,
                     labelText: "${MyStrings.blowByBackCompression}*",
                     helperText: "${MyStrings.blowByBackCompression}*",
-                    validator: viewModel.engineCompartmentImage.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: viewModel.blowByBackCompressionImage.value == null ? ValidateInput.validateRequiredFields : null,
                     showCursor: false,
                     isEnabled: false,
-                    suffixIcon: viewModel.engineCompartmentImage.value == null
+                    suffixIcon: viewModel.blowByBackCompressionImage.value == null
                         ? Padding(
                       padding: Dimens.suffixPadding,
                       child: SvgPicture.asset(MyImages.upload),
@@ -387,7 +393,7 @@ class EngineScreen extends StatelessWidget {
     );
   }
 
-  Widget pageTwo() {
+  Widget pageTwo(BuildContext context) {
     return Obx(
       () => Scaffold(
         body: SingleChildScrollView(
@@ -426,21 +432,23 @@ class EngineScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    showDialog(
-                      barrierDismissible: false,
-                      context: Get.context!,
-                      builder: (context) => ImagePickerCard(
-                        remarksController: viewModel.otherEngineConditionController.value,
-                        image: viewModel.clutchOperationsImage,
-                        onSubmit: () {
-                          Navigator.of(context).pop();
-                          log(viewModel.clutchOperationsImage.value.toString());
-                        },
-                      ),
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomCheckBoxDialog(
+                          title: MyStrings.clutchOperations,
+                          items: viewModel.clutchOperationList,
+                          selectItem: viewModel.selectedClutchOperations,
+                          image: viewModel.clutchOperationsImage,
+                          remarksController : viewModel.clutchOperationsRemarksController.value,
+                          othersController: viewModel.otherClutchOperationController.value,
+                        );
+                      },
                     );
+                    viewModel.clutchOperationsController.value.text = viewModel.selectedClutchOperations.join(",");
                   },
                   child: CustomTextFormField(
-                    controller: TextEditingController(),
+                    controller: viewModel.clutchOperationsController.value,
                     labelText: "${MyStrings.clutchOperations}*",
                     helperText: "${MyStrings.clutchOperations}*",
                     validator: viewModel.clutchOperationsImage.value == null ? ValidateInput.validateRequiredFields : null,
@@ -462,20 +470,23 @@ class EngineScreen extends StatelessWidget {
                   ),
                 GestureDetector(
                   onTap: () async {
-                    showDialog(
-                      barrierDismissible: false,
-                      context: Get.context!,
-                      builder: (context) => ImagePickerCard(
-                        remarksController: viewModel.gearBoxImageRemarksController.value,
-                        image: viewModel.gearBoxImage,
-                        onSubmit: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomCheckBoxDialog(
+                          title: MyStrings.gearbox,
+                          items: viewModel.gearBoxList,
+                          selectItem: viewModel.selectedGearBox,
+                          image: viewModel.gearBoxImage,
+                          remarksController : viewModel.gearBoxImageRemarksController.value,
+                          othersController: viewModel.otherGearBoxController.value,
+                        );
+                      },
                     );
+                    viewModel.gearboxController.value.text = viewModel.selectedGearBox.join(",");
                   },
                   child: CustomTextFormField(
-                    controller: TextEditingController(),
+                    controller: viewModel.gearboxController.value,
                     labelText: "${MyStrings.gearbox}*",
                     helperText: "${MyStrings.gearbox}*",
                     validator: viewModel.gearBoxImage.value == null ? ValidateInput.validateRequiredFields : null,
@@ -497,20 +508,23 @@ class EngineScreen extends StatelessWidget {
                   ),
                 GestureDetector(
                   onTap: () async {
-                    showDialog(
-                      barrierDismissible: false,
-                      context: Get.context!,
-                      builder: (context) => ImagePickerCard(
-                        remarksController: viewModel.engineOilRemarksController.value,
-                        image: viewModel.engineOilImage,
-                        onSubmit: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomCheckBoxDialog(
+                          title: MyStrings.engineOil,
+                          items: viewModel.engineOilList,
+                          selectItem: viewModel.selectedEngineOil,
+                          image: viewModel.engineOilImage,
+                          remarksController : viewModel.engineOilRemarksController.value,
+                          othersController: viewModel.otherEngineOilController.value,
+                        );
+                      },
                     );
+                    viewModel.engineOilController.value.text = viewModel.selectedEngineOil.join(",");
                   },
                   child: CustomTextFormField(
-                    controller: TextEditingController(),
+                    controller: viewModel.engineOilController.value,
                     labelText: "${MyStrings.engineOil}*",
                     helperText: "${MyStrings.engineOil}*",
                     validator: viewModel.engineOilImage.value == null ? ValidateInput.validateRequiredFields : null,
@@ -533,23 +547,26 @@ class EngineScreen extends StatelessWidget {
 
                 GestureDetector(
                   onTap: () async {
-                    showDialog(
-                      barrierDismissible: false,
-                      context: Get.context!,
-                      builder: (context) => ImagePickerCard(
-                        remarksController: viewModel.turboChargerRemarksController.value,
-                        image: viewModel.turboChargerImage,
-                        onSubmit: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomCheckBoxDialog(
+                          title: MyStrings.turboCharger,
+                          items: viewModel.turboChargerList,
+                          selectItem: viewModel.selectedTurboCharger,
+                          image: viewModel.turboChargerImage,
+                          remarksController : viewModel.turboChargerRemarksController.value,
+                          othersController: viewModel.otherTurboChargerController.value,
+                        );
+                      },
                     );
+                    viewModel.turboChargerController.value.text = viewModel.selectedTurboCharger.join(",");
                   },
                   child: CustomTextFormField(
-                    controller: TextEditingController(),
+                    controller: viewModel.turboChargerController.value,
                     labelText: MyStrings.turboCharger,
                     helperText: MyStrings.turboCharger,
-                    validator: viewModel.turboChargerImage.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: /*viewModel.turboChargerImage.value == null ? ValidateInput.validateRequiredFields :*/ null,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.turboChargerImage.value == null
@@ -596,23 +613,26 @@ class EngineScreen extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      showDialog(
-                        barrierDismissible: false,
-                        context: Get.context!,
-                        builder: (context) => ImagePickerCard(
-                          remarksController: viewModel.engineMountRemarksController.value,
-                          image: viewModel.engineMountImage,
-                          onSubmit: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
+                      await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CustomCheckBoxDialog(
+                            title: MyStrings.engineMount,
+                            items: viewModel.engineMountList,
+                            selectItem: viewModel.selectedEngineMount,
+                            image: viewModel.engineMountImage,
+                            remarksController : viewModel.engineMountRemarksController.value,
+                            othersController: viewModel.otherEngineMountController.value,
+                          );
+                        },
                       );
+                      viewModel.engineMountController.value.text = viewModel.selectedEngineMount.join(",");
                     },
                     child: CustomTextFormField(
-                      controller: TextEditingController(),
+                      controller: viewModel.engineMountController.value,
                       labelText: MyStrings.engineMount,
                       helperText: MyStrings.engineMount,
-                      validator: viewModel.engineMountImage.value == null ? ValidateInput.validateRequiredFields : null,
+                      validator: /*viewModel.engineMountImage.value == null ? ValidateInput.validateRequiredFields :*/ null,
                       showCursor: false,
                       isEnabled: false,
                       suffixIcon: viewModel.engineMountImage.value == null
@@ -631,20 +651,23 @@ class EngineScreen extends StatelessWidget {
                   ),
                 GestureDetector(
                   onTap: () async {
-                    showDialog(
-                      barrierDismissible: false,
-                      context: Get.context!,
-                      builder: (context) => ImagePickerCard(
-                        remarksController: viewModel.sumpRemarksController.value,
-                        image: viewModel.sumpImage,
-                        onSubmit: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomCheckBoxDialog(
+                          title: MyStrings.sump,
+                          items: viewModel.sumpList,
+                          selectItem: viewModel.selectedSump,
+                          image: viewModel.sumpImage,
+                          remarksController : viewModel.sumpRemarksController.value,
+                          othersController: viewModel.otherSumpController.value,
+                        );
+                      },
                     );
+                    viewModel.sumpController.value.text = viewModel.selectedSump.join(",");
                   },
                   child: CustomTextFormField(
-                    controller: TextEditingController(),
+                    controller: viewModel.sumpController.value,
                     labelText: "${MyStrings.sump}*",
                     helperText: "${MyStrings.sump}*",
                     validator: viewModel.sumpImage.value == null ? ValidateInput.validateRequiredFields : null,
@@ -730,8 +753,8 @@ class EngineScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     pages = [
-      pageOne(),
-      pageTwo(),
+      pageOne(context),
+      pageTwo(context),
     ];
     return Obx(() => PopScope(
           // onPopInvoked: (didPop) {

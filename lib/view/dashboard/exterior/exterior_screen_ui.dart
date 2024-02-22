@@ -1,4 +1,4 @@
-import 'dart:developer';
+ import 'dart:developer';
 
 import 'package:evaluator_app/view_model/dashboard/exterior/exterior_screen_view_model.dart';
 import 'package:evaluator_app/view_model/new_evaluation/new_evaluation_screen_view_model.dart';
@@ -766,7 +766,7 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown,width: 2,height: 2),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -828,7 +828,7 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown,width: 2,height: 2),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -858,8 +858,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding:  const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown,width: 2,height: 2),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -890,7 +890,7 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown,height: 2,width: 2),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -921,7 +921,7 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown,height: 2,width: 2),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1103,8 +1103,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1122,8 +1122,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1141,8 +1141,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1160,8 +1160,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1179,8 +1179,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1198,8 +1198,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1217,8 +1217,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1267,8 +1267,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1286,8 +1286,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1344,8 +1344,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1363,8 +1363,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1382,8 +1382,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1401,8 +1401,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1420,8 +1420,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1439,8 +1439,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1458,8 +1458,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1508,8 +1508,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1527,8 +1527,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1585,8 +1585,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1604,8 +1604,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1623,8 +1623,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1642,8 +1642,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1661,8 +1661,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1680,8 +1680,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1699,8 +1699,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1718,8 +1718,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1746,8 +1746,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1807,11 +1807,11 @@ class ExteriorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     pages = [pageOne(), pageTwo(), pageThree(), pageFour(), pageFive(), pageSix()];
     return Obx(() => PopScope(
-      onPopInvoked: (didPop) {
-        if (didPop == true || didPop == false) {
-          // showConfirmDialog(context);
-        }
-      },
+      // onPopInvoked: (didPop) {
+      //   if (didPop == true || didPop == false) {
+      //     // showConfirmDialog(context);
+      //   }
+      // },
       canPop: true,
       child: Scaffold(
         key: _key,

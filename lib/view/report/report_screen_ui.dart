@@ -83,14 +83,14 @@ class ReportScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start  ,
                       children: [
                         Text(
-                          viewModel.reportResponse.value.data?.make ?? '',
+                          viewModel.reportResponse.value.data?.allCarInfo?.make ?? '',
                           style: MyStyles.reportTitle
                         ),
                         const SizedBox(
                           height: Dimens.standard_8,
                         ),
                         Text(
-                          viewModel.reportResponse.value.data?.model ?? '',
+                          viewModel.reportResponse.value.data?.allCarInfo?.model ?? '',
                           style: MyStyles.greyMedium
                         ),
                         const SizedBox(
@@ -107,7 +107,7 @@ class ReportScreen extends StatelessWidget {
                               style: MyStyles.regular12
                             ),
                             Text(
-                              viewModel.reportResponse.value.data?.vehicleLocation ?? '',
+                              viewModel.reportResponse.value.data?.allCarInfo?.vehicleLocation ?? '',
                               style: MyStyles.greyMedium
                             ),
                           ],
