@@ -34,7 +34,7 @@ class MyImages {
   static const gallery = "${imageRoot}gallery.png";
   ///Report
   static const all = "${imageRoot}border_all.svg";
-  static const others = "${imageRoot}others.svg";
+  static const others = "${imageRoot}others_black.svg";
   static const damages = "${imageRoot}damages_black.svg";
   static const engineOutLined = "${imageRoot}engine_black.svg";
   static const exteriorOutLined = "${imageRoot}exterior_black.svg";

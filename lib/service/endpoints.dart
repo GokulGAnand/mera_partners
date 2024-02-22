@@ -5,6 +5,7 @@ class EndPoints {
   static String brand = 'brand';
   static String carBasic = 'car-basic/';
   static String evaluation = 'evaluation';
+  static String engineInfo = 'engineinfo/';
   static String document = 'document';
   static String interiorInfo = 'interiorinfo';
   static String status = 'status/';

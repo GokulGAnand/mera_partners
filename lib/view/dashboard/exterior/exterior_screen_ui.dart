@@ -1,3 +1,5 @@
+ import 'dart:developer';
+
 import 'package:evaluator_app/view_model/dashboard/exterior/exterior_screen_view_model.dart';
 import 'package:evaluator_app/view_model/new_evaluation/new_evaluation_screen_view_model.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
@@ -16,6 +18,7 @@ import '../../../widgets/common_drawer.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_dialog.dart';
 import '../../../widgets/custom_text_form_field.dart';
+import '../../../widgets/image_picker_card.dart';
 
 /// ignore: must_be_immutable
 class ExteriorScreen extends StatelessWidget {
@@ -39,6 +42,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -58,17 +73,34 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
                     labelText: "${MyStrings.frontLeftImage}*",
                     helperText: "${MyStrings.frontLeftImage}*",
-                    validator: ValidateInput.validateRequiredFields,
+                    validator: viewModel.exteriorCompartmentImage.value == null ? ValidateInput.validateRequiredFields : null,
                     showCursor: false,
                     isEnabled: false,
-                    suffixIcon: Padding(
+                    suffixIcon: viewModel.exteriorCompartmentImage.value == null
+                        ? Padding(
                       padding: Dimens.suffixPadding,
                       child: SvgPicture.asset(MyImages.upload),
+                    )
+                        : const Icon(
+                      Icons.done_rounded,
+                      color: MyColors.green,
                     ),
                   ),
                 ),
@@ -77,6 +109,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -96,6 +140,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -115,6 +171,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -134,6 +202,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -153,6 +233,18 @@ class ExteriorScreen extends StatelessWidget {
                   ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -172,6 +264,18 @@ class ExteriorScreen extends StatelessWidget {
                   ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -191,6 +295,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -210,6 +326,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -268,6 +396,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -287,6 +427,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -306,6 +458,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -325,6 +489,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -344,6 +520,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -363,6 +551,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -382,6 +582,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -401,6 +613,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -420,6 +644,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -439,6 +675,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -496,6 +744,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -505,8 +765,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -515,6 +775,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -524,8 +796,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown,width: 2,height: 2),
                     ),
                   ),
                 ),
@@ -534,6 +806,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -543,8 +827,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -553,6 +837,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -562,8 +858,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -572,6 +868,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -581,8 +889,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -591,6 +899,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -600,8 +920,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -610,6 +930,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -626,9 +958,23 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 SizedBox(
                   height: Dimens.standard_24,
+
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
+
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -648,6 +994,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -667,6 +1025,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -734,8 +1104,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -753,8 +1123,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -772,8 +1142,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -791,8 +1161,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -810,8 +1180,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -829,8 +1199,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -848,8 +1218,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -858,6 +1228,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -886,8 +1268,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -905,8 +1287,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -963,8 +1345,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -982,8 +1364,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1001,8 +1383,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1020,8 +1402,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1039,8 +1421,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1058,8 +1440,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1077,8 +1459,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1087,6 +1469,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: Get.context!,
+                      builder: (context) => ImagePickerCard(
+                        remarksController: viewModel.frontImage.value,
+                        image: viewModel.exteriorCompartmentImage,
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                          log(viewModel.exteriorCompartmentImage.value.toString());
+                        },
+                      ),
+                    );
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
@@ -1115,8 +1509,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1134,8 +1528,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1192,8 +1586,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1211,8 +1605,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1230,8 +1624,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1249,8 +1643,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1268,8 +1662,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1287,8 +1681,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1306,8 +1700,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1325,8 +1719,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1353,8 +1747,8 @@ class ExteriorScreen extends StatelessWidget {
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.arrowDown),
+                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
                     ),
                   ),
                 ),
@@ -1414,11 +1808,11 @@ class ExteriorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     pages = [pageOne(), pageTwo(), pageThree(), pageFour(), pageFive(), pageSix()];
     return Obx(() => PopScope(
-      onPopInvoked: (didPop) {
-        if (didPop == true || didPop == false) {
-          // showConfirmDialog(context);
-        }
-      },
+      // onPopInvoked: (didPop) {
+      //   if (didPop == true || didPop == false) {
+      //     // showConfirmDialog(context);
+      //   }
+      // },
       canPop: true,
       child: Scaffold(
         key: _key,

@@ -120,12 +120,12 @@ class EvaluationCard extends StatelessWidget {
                                 child: Center(child: Text(year, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: MyColors.black))),
                               ),
                             ),
-                            const SizedBox(width: 6),
+                            const SizedBox(width: 2),
                             Container(
                               height: 18,
                               decoration: BoxDecoration(borderRadius: BorderRadius.circular(9), color: MyColors.lightBlue),
                               child: Padding(
-                                padding: const EdgeInsets.only(left: 5.0, right: 5),
+                                padding: const EdgeInsets.only(left: 2.0, right: 2),
                                 child: Center(child: Text(transmission, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: MyColors.black))),
                               ),
                             )
@@ -136,16 +136,18 @@ class EvaluationCard extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 5),
-                              child: SvgPicture.asset(MyImages.speedometer),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: SvgPicture.asset(MyImages.speedometer),
+                              ),
                             ),
                             const SizedBox(width: 2),
                             const Padding(
                               padding: EdgeInsets.only(top: 5),
                               child: Text('KMS DRIVEN', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.blue)),
                             ),
-                            const SizedBox(width: 6),
+                            const SizedBox(width: 4),
                             Padding(
                               padding: const EdgeInsets.only(top: 5),
                               child: Text(kmDriven ?? '', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.black)),
@@ -156,8 +158,9 @@ class EvaluationCard extends StatelessWidget {
                           height: 1,
                         ),
                         Row(
-                          children: [Image.asset(MyImages.calendar2), const SizedBox(width: 5), const Text('INS.DATE', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.blue)),
-                            const SizedBox(width: 5), Text(date, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.black))
+                          children: [
+                            Expanded(child: Image.asset(MyImages.calendar2)), const SizedBox(width: 5), const Text('DATE', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.blue)),
+                            const Expanded(child: SizedBox(width: 5)), Text(date, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.black))
                           ],
                         ),
                         const SizedBox(

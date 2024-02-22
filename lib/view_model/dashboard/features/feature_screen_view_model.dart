@@ -50,6 +50,7 @@ class FeatureViewModel extends GetxController{
   Rx<File?> stereoImage = Rx<File?>(null);
   Rx<File?> sunroofImage = Rx<File?>(null);
 
+
   /// page2
 
   var alloyWheelsList = Constants.alloyWheelsList;
