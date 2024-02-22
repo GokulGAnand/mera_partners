@@ -25,30 +25,39 @@ class FeatureViewModel extends GetxController{
 
  /// page1
   var keyLessEntryList = Constants.keyLessEntryList;
+  var stereoImageList = Constants.stereoImageOptions;
   var rearParkingSensorList = Constants.rearParkingSensorList;
   var fogLampList = Constants.fogLampList;
   var sunRoofList = Constants.sunRoofList;
   var gpsNavigationList =Constants.gpsNavigationList;
   var rearDefoggerList = Constants.rearDefoggerList;
 
-  var selectedKeylessEntry = ''.obs;
+  // Rx<TextEditingController> sterioImageRemarks = TextEditingController().obs;
+  // Rx<File?> sterioCompartmentImage = Rx<File?>(null);
+
+  Rx<TextEditingController> keylessEntryController = TextEditingController().obs;
+  Rx<TextEditingController> stereoImageController = TextEditingController().obs;
+  Rx<TextEditingController> sterioBrandController = TextEditingController().obs;
+  Rx<TextEditingController> sunroofController = TextEditingController().obs;
+
+  Rx<TextEditingController> keylessEntryRemarksController = TextEditingController().obs;
+  Rx<TextEditingController> stereoImageRemarksController = TextEditingController().obs;
+  Rx<TextEditingController> sunroofRemarksController = TextEditingController().obs;
+
+  RxList<String> selectedKeylessEntry = <String>[].obs;
+  RxList<String> selectedStereoImage = <String>[].obs;
   var selectedRearParkingSensor = ''.obs;
   var selectedFogLamp = ''.obs;
-  var selectedSunRoof = ''.obs;
+  RxList<String> selectedSunRoof = <String>[].obs;
   var selectedGpsNavigation =''.obs;
   var selectedRearDefogger = ''.obs;
-  Rx<TextEditingController> sterioImageRemarks = TextEditingController().obs;
-  Rx<File?> sterioCompartmentImage = Rx<File?>(null);
-  Rx<TextEditingController> sterioBrandController = TextEditingController().obs;
+
+  Rx<File?> keyLessEntryImage = Rx<File?>(null);
+  Rx<File?> stereoImage = Rx<File?>(null);
+  Rx<File?> sunroofImage = Rx<File?>(null);
 
 
   /// page2
-  var selectedAlloyWheel = ''.obs;
-  var selectedFogLamps = ''.obs;
-  var selectedAirBag = ''.obs;
-  var selectedSeatBelt = ''.obs;
-  var selectedAbsEbd = ''.obs;
-  var selectedGloveBox = ''.obs;
 
 
   var alloyWheelsList = Constants.alloyWheelsList;
@@ -57,11 +66,30 @@ class FeatureViewModel extends GetxController{
   var seatBeltList = Constants.seatBeltList;
   var absEbdList = Constants.absEbdList;
   var gloveBoxList = Constants.gloveBoxList;
-  Rx<TextEditingController> anyInteriorModificationController = TextEditingController().obs;
+
+  Rx<TextEditingController> alloyWheelsController = TextEditingController().obs;
+  Rx<TextEditingController> airBagsController = TextEditingController().obs;
   Rx<TextEditingController> absEbdController = TextEditingController().obs;
+  Rx<TextEditingController> gloveBoxController = TextEditingController().obs;
+  Rx<TextEditingController> anyInteriorModificationController = TextEditingController().obs;
+
+  Rx<TextEditingController> alloyWheelsRemarksController = TextEditingController().obs;
+  Rx<TextEditingController> airBagsRemarksController = TextEditingController().obs;
   Rx<TextEditingController> absEbdRemarksController = TextEditingController().obs;
+  Rx<TextEditingController> gloveBoxRemarksController = TextEditingController().obs;
   // var abs = ''.obs;
+
+  RxList<String> selectedAlloyWheel = <String>[].obs;
+  var selectedFogLamps = ''.obs;
+  RxList<String> selectedAirBag = <String>[].obs;
+  var selectedSeatBelt = ''.obs;
   RxList<String> selectAbsEbd = <String>[].obs;
+  RxList<String> selectedGloveBox = <String>[].obs;
+
+  Rx<File?> alloyWheelImage = Rx<File?>(null);
+  Rx<File?> airBagImage = Rx<File?>(null);
+  Rx<File?> absEbdImage = Rx<File?>(null);
+  Rx<File?> gloveBoxImage = Rx<File?>(null);
   Rx<File?> clusterImage = Rx<File?>(null);
   var featuresResponse = featuresList().obs;
 

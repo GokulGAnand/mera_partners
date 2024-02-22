@@ -28,7 +28,7 @@ class FeaturesScreen extends StatelessWidget {
   FeatureViewModel viewModel = Get.find<FeatureViewModel>();
 
 
-  Widget pageOne() {
+  Widget pageOne(BuildContext context) {
     return Obx(
           () => Scaffold(
             body: SingleChildScrollView(
@@ -37,61 +37,65 @@ class FeaturesScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(height: Dimens.standard_3),
-                    CustomDropDown(
-                      hintText: "${MyStrings.keyLessEntry} *",
-                      label: viewModel.selectedKeylessEntry.value.isEmpty ? null : "${MyStrings.keyLessEntry}*",
-                      value: viewModel.selectedKeylessEntry.value.isEmpty ? null : viewModel.selectedKeylessEntry.value,
-                      items: viewModel.keyLessEntryList.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: MyStyles.dropdownMenuStyle,
-                          ),
+                    GestureDetector(
+                      onTap: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CustomCheckBoxDialog(
+                                title: MyStrings.keyLessEntry, 
+                                items: viewModel.keyLessEntryList, 
+                                selectItem: viewModel.selectedKeylessEntry,
+                                image: viewModel.keyLessEntryImage,
+                                remarksController : viewModel.keylessEntryRemarksController.value,
+                                othersController: TextEditingController(),
+                              );
+                          },
                         );
-                      }).toList(),
-                      onChanged: (value) {
-                        viewModel.selectedKeylessEntry.value = value;
+                        viewModel.keylessEntryController.value.text = viewModel.selectedKeylessEntry.join(",");
                       },
-                      validator: (value) {
-                        if (value == null) {
-                          return MyStrings.required;
-                        }
-                        return null;
-                      },
+                      child: CustomTextFormField(
+                        controller: viewModel.keylessEntryController.value,
+                        labelText: "${MyStrings.keyLessEntry}*",
+                        helperText: "${MyStrings.keyLessEntry}*",
+                        validator: ValidateInput.validateRequiredFields,
+                        showCursor: false,
+                        isEnabled: false,
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                          child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                        ),
+                      ),
                     ),
                     SizedBox(height: Dimens.standard_24),
                     GestureDetector(
                       onTap: () async {
-                        showDialog(
-                          barrierDismissible: false,
-                          context: Get.context!,
-                          builder: (context) => ImagePickerCard(
-                            remarksController: viewModel.sterioImageRemarks.value,
-                            image: viewModel.sterioCompartmentImage,
-                            onSubmit: () {
-                              Navigator.of(context).pop();
-                              log(viewModel.sterioCompartmentImage.value.toString());
-                            },
-                          ),
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CustomCheckBoxDialog(
+                                title: MyStrings.stereoImage, 
+                                items: viewModel.stereoImageList, 
+                                selectItem: viewModel.selectedStereoImage,
+                                image: viewModel.stereoImage,
+                                remarksController : viewModel.stereoImageRemarksController.value,
+                                othersController: TextEditingController(),
+                              );
+                          },
                         );
+                        viewModel.stereoImageController.value.text = viewModel.selectedStereoImage.join(",");
                       },
                       child: CustomTextFormField(
-                        controller: TextEditingController(),
-                        labelText:  "${MyStrings.stereoImage} *",
+                        controller: viewModel.stereoImageController.value,
+                        labelText: "${MyStrings.stereoImage}*",
                         helperText: "${MyStrings.stereoImage}*",
-                        validator: viewModel.sterioCompartmentImage.value == null ? ValidateInput.validateRequiredFields : null,
+                        validator: ValidateInput.validateRequiredFields,
                         showCursor: false,
                         isEnabled: false,
-                        suffixIcon: viewModel.sterioCompartmentImage.value == null
-                            ? Padding(
+                        suffixIcon: (viewModel.stereoImage.value == null) ?Padding(
                           padding: Dimens.suffixPadding,
                           child: SvgPicture.asset(MyImages.upload),
-                        )
-                            : const Icon(
-                          Icons.done_rounded,
-                          color: MyColors.green,
-                        ),
+                        ):const Icon(Icons.done_rounded,color: MyColors.green,),
                       ),
                     ),
                     SizedBox(height: Dimens.standard_24),
@@ -153,28 +157,35 @@ class FeaturesScreen extends StatelessWidget {
                       },
                     ),
                     SizedBox(height: Dimens.standard_24),
-                    CustomDropDown(
-                      hintText: "${MyStrings.sunroof} *",
-                      label: viewModel.selectedSunRoof.value.isEmpty ? null : "${MyStrings.sunroof}*",
-                      value: viewModel.selectedSunRoof.value.isEmpty ? null : viewModel.selectedSunRoof.value,
-                      items: viewModel.sunRoofList.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: MyStyles.dropdownMenuStyle,
-                          ),
+                    GestureDetector(
+                      onTap: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CustomCheckBoxDialog(
+                                title: MyStrings.sunroof, 
+                                items: viewModel.sunRoofList, 
+                                selectItem: viewModel.selectedSunRoof,
+                                image: viewModel.sunroofImage,
+                                remarksController : viewModel.sunroofRemarksController.value,
+                                othersController: TextEditingController(),
+                              );
+                          },
                         );
-                      }).toList(),
-                      onChanged: (value) {
-                        viewModel.selectedSunRoof.value = value;
+                        viewModel.sunroofController.value.text = viewModel.selectedSunRoof.join(",");
                       },
-                      validator: (value) {
-                        if (value == null) {
-                          return MyStrings.required;
-                        }
-                        return null;
-                      },
+                      child: CustomTextFormField(
+                        controller: viewModel.sunroofController.value,
+                        labelText: "${MyStrings.sunroof}*",
+                        helperText: "${MyStrings.sunroof}*",
+                        validator: ValidateInput.validateRequiredFields,
+                        showCursor: false,
+                        isEnabled: false,
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                          child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                        ),
+                      ),
                     ),
                     SizedBox(height: Dimens.standard_24),
                     CustomDropDown(
@@ -245,29 +256,36 @@ class FeaturesScreen extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: Dimens.standard_3),
-                CustomDropDown(
-                  hintText: "${MyStrings.alloyWheels} *",
-                  label: viewModel.selectedAlloyWheel.value.isEmpty ? null : "${MyStrings.alloyWheels}*",
-                  value: viewModel.selectedAlloyWheel.value.isEmpty ? null : viewModel.selectedAlloyWheel.value,
-                  items: viewModel.alloyWheelsList.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        style: MyStyles.dropdownMenuStyle,
+                GestureDetector(
+                      onTap: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CustomCheckBoxDialog(
+                                title: MyStrings.alloyWheels, 
+                                items: viewModel.alloyWheelsList, 
+                                selectItem: viewModel.selectedAlloyWheel,
+                                image: viewModel.alloyWheelImage,
+                                remarksController : viewModel.alloyWheelsRemarksController.value,
+                                othersController: TextEditingController(),
+                              );
+                          },
+                        );
+                        viewModel.alloyWheelsController.value.text = viewModel.selectedAlloyWheel.join(",");
+                      },
+                      child: CustomTextFormField(
+                        controller: viewModel.alloyWheelsController.value,
+                        labelText: "${MyStrings.alloyWheels}*",
+                        helperText: "${MyStrings.alloyWheels}*",
+                        validator: ValidateInput.validateRequiredFields,
+                        showCursor: false,
+                        isEnabled: false,
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                          child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                        ),
                       ),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    viewModel.selectedAlloyWheel.value = value;
-                  },
-                  validator: (value) {
-                    if (value == null) {
-                      return MyStrings.required;
-                    }
-                    return null;
-                  },
-                ),
+                    ),
                 SizedBox(height: Dimens.standard_24),
                 CustomDropDown(
                   hintText: MyStrings.fogLamps,
@@ -293,29 +311,36 @@ class FeaturesScreen extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: Dimens.standard_24),
-                CustomDropDown(
-                  hintText: "${MyStrings.airBag}*",
-                  label: viewModel.selectedAirBag.value.isEmpty ? null : "${MyStrings.airBag}*",
-                  value: viewModel.selectedAirBag.value.isEmpty ? null : viewModel.selectedAirBag.value,
-                  items: viewModel.airBagList.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        style: MyStyles.dropdownMenuStyle,
+                GestureDetector(
+                      onTap: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CustomCheckBoxDialog(
+                                title: MyStrings.airBag, 
+                                items: viewModel.airBagList, 
+                                selectItem: viewModel.selectedAirBag,
+                                image: viewModel.airBagImage,
+                                remarksController : viewModel.airBagsRemarksController.value,
+                                othersController: TextEditingController(),
+                              );
+                          },
+                        );
+                        viewModel.airBagsController.value.text = viewModel.selectedAirBag.join(",");
+                      },
+                      child: CustomTextFormField(
+                        controller: viewModel.airBagsController.value,
+                        labelText: "${MyStrings.airBag}*",
+                        helperText: "${MyStrings.airBag}*",
+                        validator: ValidateInput.validateRequiredFields,
+                        showCursor: false,
+                        isEnabled: false,
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                          child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                        ),
                       ),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    viewModel.selectedAirBag.value = value;
-                  },
-                  validator: (value) {
-                    if (value == null) {
-                      return MyStrings.required;
-                    }
-                    return null;
-                  },
-                ),
+                    ),
                 SizedBox(height: Dimens.standard_24),
                 CustomDropDown(
                   hintText: "${MyStrings.seatBelt} *",
@@ -342,59 +367,66 @@ class FeaturesScreen extends StatelessWidget {
                 ),
                 SizedBox(height: Dimens.standard_24),
                 GestureDetector(
-                  onTap: () async {
-                    await showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return CustomCheckBoxDialog(
-                            title: MyStrings.absEbd,
-                            items: viewModel.absEbdList,
-                            selectItem: viewModel.selectAbsEbd,
-                            image: viewModel.clusterImage,
-                            remarksController : viewModel.absEbdRemarksController.value,
-                          othersController: TextEditingController(),
+                      onTap: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CustomCheckBoxDialog(
+                                title: MyStrings.absEbd, 
+                                items: viewModel.absEbdList, 
+                                selectItem: viewModel.selectAbsEbd,
+                                image: viewModel.absEbdImage,
+                                remarksController : viewModel.absEbdRemarksController.value,
+                                othersController: TextEditingController(),
+                              );
+                          },
                         );
+                        viewModel.absEbdController.value.text = viewModel.selectAbsEbd.join(",");
                       },
-                    );
-                    viewModel.absEbdController.value.text = viewModel.selectAbsEbd.join(",");
-                  },
-                  child: CustomTextFormField(
-                    controller: viewModel.absEbdController.value,
-                    labelText: "${MyStrings.absEbd}*",
-                    helperText: "${MyStrings.absEbd}*",
-                    validator: ValidateInput.validateRequiredFields,
-                    showCursor: false,
-                    isEnabled: false,
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
-                    ),
-                  ),
-                ),
-                SizedBox(height: Dimens.standard_24),
-                CustomDropDown(
-                  hintText:  "${MyStrings.gloveBox} *",
-                  label: viewModel.selectedGloveBox.value.isEmpty ? null : "${MyStrings.gloveBox}*",
-                  value: viewModel.selectedGloveBox.value.isEmpty ? null : viewModel.selectedGloveBox.value,
-                  items: viewModel.gloveBoxList.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        style: MyStyles.dropdownMenuStyle,
+                      child: CustomTextFormField(
+                        controller: viewModel.absEbdController.value,
+                        labelText: "${MyStrings.absEbd}*",
+                        helperText: "${MyStrings.absEbd}*",
+                        validator: ValidateInput.validateRequiredFields,
+                        showCursor: false,
+                        isEnabled: false,
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                          child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                        ),
                       ),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    viewModel.selectedGloveBox.value = value;
-                  },
-                  validator: (value) {
-                    if (value == null) {
-                      return MyStrings.required;
-                    }
-                    return null;
-                  },
-                ),
+                    ),
+                SizedBox(height: Dimens.standard_24),
+                GestureDetector(
+                      onTap: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CustomCheckBoxDialog(
+                                title: MyStrings.gloveBox, 
+                                items: viewModel.gloveBoxList, 
+                                selectItem: viewModel.selectedGloveBox,
+                                image: viewModel.gloveBoxImage,
+                                remarksController : viewModel.gloveBoxRemarksController.value,
+                                othersController: TextEditingController(),
+                              );
+                          },
+                        );
+                        viewModel.gloveBoxController.value.text = viewModel.selectedGloveBox.join(",");
+                      },
+                      child: CustomTextFormField(
+                        controller: viewModel.gloveBoxController.value,
+                        labelText: "${MyStrings.gloveBox}*",
+                        helperText: "${MyStrings.gloveBox}*",
+                        validator: ValidateInput.validateRequiredFields,
+                        showCursor: false,
+                        isEnabled: false,
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                          child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                        ),
+                      ),
+                    ),
                 SizedBox(height: Dimens.standard_24),
                 CustomTextFormField(
                   minLines: 5,
@@ -423,7 +455,7 @@ class FeaturesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     pages = [
-      pageOne(),
+      pageOne(context),
       pageTwo(context),
     ];
     return Obx(() => PopScope( child: Scaffold(
