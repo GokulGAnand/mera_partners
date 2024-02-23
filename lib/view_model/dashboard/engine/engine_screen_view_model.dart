@@ -120,7 +120,7 @@ class EngineViewModel extends GetxController {
     try {
       var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl+EndPoints.engineInfo+id));
       for(int i = 0; i < selectedEngine.length; i++){
-        request.fields['engineCondition[$i]'] = selectedEngine[i];
+        request.fields['engine_condition[$i]'] = selectedEngine[i];
       }
       for(int i = 0; i < selectedBattery.length; i++){
         request.fields['battery_condition[$i]'] = selectedBattery[i];
@@ -159,6 +159,15 @@ class EngineViewModel extends GetxController {
         'engineCompartment_remarks': engineCompartmentImageRemarks.value.text,
         'startVideo_remarks': engineIdleStartVideoRemarksController.value.text,
         'front_remarks': engineIdleStartVideoRemarksController.value.text,
+        'engine_remarks':engineRemarksController.value.text,
+        'battery_remarks':batteryRemarksController.value.text,
+        'blowBy_remarks':blowByRemarksController.value.text,
+        'clutch_remarks':clutchOperationsRemarksController.value.text,
+        'gearBox_remarks':gearBoxImageRemarksController.value.text,
+        'engineOil_remarks':engineOilRemarksController.value.text,
+        'turboCharger_remarks':turboChargerRemarksController.value.text,
+        'mount_remarks':engineMountRemarksController.value.text,
+        'sump_remarks':sumpRemarksController.value.text,
       });
       if (engineCompartmentImage.value != null) {
         request.files.add(http.MultipartFile.fromBytes('engineCompartment', engineCompartmentImage.value!.readAsBytesSync()));

@@ -39,28 +39,24 @@ class Data {
   String? evaluationStatusForEngine;
   String? createdAt;
   String? updatedAt;
-  List<String>? battery;
-  List<String>? blowBy;
-  List<String>? clutch;
-  String? engineComment;
-  EngineCompartment? engineCompartment;
-  List<String>? engineCondition;
-  List<String>? engineOil;
-  String? engineSound;
-  EngineCompartment? engineTappetVideo;
-  String? exhaustSmoke;
-  List<String>? gearBox;
-  String? radiator;
-  String? silencer;
+  Battery? battery;
+  Battery? blowBy;
+  Battery? clutch;
   String? compression;
   String? coolant;
+  String? engineComment;
+  Battery? engineOil;
+  String? engineSound;
+  String? exhaustSmoke;
+  Battery? gearBox;
   String? gearBoxLeakage;
-  List<String>? mount;
-  EngineCompartment? startVideo;
+  Battery? mount;
+  String? radiator;
+  String? silencer;
   String? startingMotor;
   String? summary;
-  List<String>? sump;
-  List<String>? turboCharger;
+  Battery? sump;
+  Battery? turboCharger;
 
   Data(
       {this.sId,
@@ -72,21 +68,17 @@ class Data {
         this.battery,
         this.blowBy,
         this.clutch,
-        this.engineComment,
-        this.engineCompartment,
-        this.engineCondition,
-        this.engineOil,
-        this.engineSound,
-        this.engineTappetVideo,
-        this.exhaustSmoke,
-        this.gearBox,
-        this.radiator,
-        this.silencer,
         this.compression,
         this.coolant,
+        this.engineComment,
+        this.engineOil,
+        this.engineSound,
+        this.exhaustSmoke,
+        this.gearBox,
         this.gearBoxLeakage,
         this.mount,
-        this.startVideo,
+        this.radiator,
+        this.silencer,
         this.startingMotor,
         this.summary,
         this.sump,
@@ -99,34 +91,32 @@ class Data {
     evaluationStatusForEngine = json['evaluationStatusForEngine'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    battery = json['battery'].cast<String>();
-    blowBy = json['blowBy'].cast<String>();
-    clutch = json['clutch'].cast<String>();
-    engineComment = json['engineComment'];
-    engineCompartment = json['engineCompartment'] != null
-        ? new EngineCompartment.fromJson(json['engineCompartment'])
-        : null;
-    engineCondition = json['engineCondition'].cast<String>();
-    engineOil = json['engineOil'].cast<String>();
-    engineSound = json['engineSound'];
-    engineTappetVideo = json['engineTappetVideo'] != null
-        ? new EngineCompartment.fromJson(json['engineTappetVideo'])
-        : null;
-    exhaustSmoke = json['exhaustSmoke'];
-    gearBox = json['gearBox'].cast<String>();
-    radiator = json['radiator'];
-    silencer = json['silencer'];
+    battery =
+    json['battery'] != null ? new Battery.fromJson(json['battery']) : null;
+    blowBy =
+    json['blowBy'] != null ? new Battery.fromJson(json['blowBy']) : null;
+    clutch =
+    json['clutch'] != null ? new Battery.fromJson(json['clutch']) : null;
     compression = json['compression'];
     coolant = json['coolant'];
-    gearBoxLeakage = json['gearBoxLeakage'];
-    mount = json['mount'].cast<String>();
-    startVideo = json['startVideo'] != null
-        ? new EngineCompartment.fromJson(json['startVideo'])
+    engineComment = json['engineComment'];
+    engineOil = json['engineOil'] != null
+        ? new Battery.fromJson(json['engineOil'])
         : null;
+    engineSound = json['engineSound'];
+    exhaustSmoke = json['exhaustSmoke'];
+    gearBox =
+    json['gearBox'] != null ? new Battery.fromJson(json['gearBox']) : null;
+    gearBoxLeakage = json['gearBoxLeakage'];
+    mount = json['mount'] != null ? new Battery.fromJson(json['mount']) : null;
+    radiator = json['radiator'];
+    silencer = json['silencer'];
     startingMotor = json['startingMotor'];
     summary = json['summary'];
-    sump = json['sump'].cast<String>();
-    turboCharger = json['turboCharger'].cast<String>();
+    sump = json['sump'] != null ? new Battery.fromJson(json['sump']) : null;
+    turboCharger = json['turboCharger'] != null
+        ? new Battery.fromJson(json['turboCharger'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -137,59 +127,56 @@ class Data {
     data['evaluationStatusForEngine'] = this.evaluationStatusForEngine;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
-    data['battery'] = this.battery;
-    data['blowBy'] = this.blowBy;
-    data['clutch'] = this.clutch;
-    data['engineComment'] = this.engineComment;
-    if (this.engineCompartment != null) {
-      data['engineCompartment'] = this.engineCompartment!.toJson();
+    if (this.battery != null) {
+      data['battery'] = this.battery!.toJson();
     }
-    data['engineCondition'] = this.engineCondition;
-    data['engineOil'] = this.engineOil;
-    data['engineSound'] = this.engineSound;
-    if (this.engineTappetVideo != null) {
-      data['engineTappetVideo'] = this.engineTappetVideo!.toJson();
+    if (this.blowBy != null) {
+      data['blowBy'] = this.blowBy!.toJson();
     }
-    data['exhaustSmoke'] = this.exhaustSmoke;
-    data['gearBox'] = this.gearBox;
-    data['radiator'] = this.radiator;
-    data['silencer'] = this.silencer;
+    if (this.clutch != null) {
+      data['clutch'] = this.clutch!.toJson();
+    }
     data['compression'] = this.compression;
     data['coolant'] = this.coolant;
-    data['gearBoxLeakage'] = this.gearBoxLeakage;
-    data['mount'] = this.mount;
-    if (this.startVideo != null) {
-      data['startVideo'] = this.startVideo!.toJson();
+    data['engineComment'] = this.engineComment;
+    if (this.engineOil != null) {
+      data['engineOil'] = this.engineOil!.toJson();
     }
+    data['engineSound'] = this.engineSound;
+    data['exhaustSmoke'] = this.exhaustSmoke;
+    if (this.gearBox != null) {
+      data['gearBox'] = this.gearBox!.toJson();
+    }
+    data['gearBoxLeakage'] = this.gearBoxLeakage;
+    if (this.mount != null) {
+      data['mount'] = this.mount!.toJson();
+    }
+    data['radiator'] = this.radiator;
+    data['silencer'] = this.silencer;
     data['startingMotor'] = this.startingMotor;
     data['summary'] = this.summary;
-    data['sump'] = this.sump;
-    data['turboCharger'] = this.turboCharger;
+    if (this.sump != null) {
+      data['sump'] = this.sump!.toJson();
+    }
+    if (this.turboCharger != null) {
+      data['turboCharger'] = this.turboCharger!.toJson();
+    }
     return data;
   }
 }
 
-class EngineCompartment {
-  String? name;
-  String? url;
+class Battery {
   List<String>? condition;
-  String? remarks;
 
-  EngineCompartment({this.name, this.url, this.condition, this.remarks});
+  Battery({this.condition});
 
-  EngineCompartment.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    url = json['url'];
+  Battery.fromJson(Map<String, dynamic> json) {
     condition = json['condition'].cast<String>();
-    remarks = json['remarks'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['url'] = this.url;
     data['condition'] = this.condition;
-    data['remarks'] = this.remarks;
     return data;
   }
 }
