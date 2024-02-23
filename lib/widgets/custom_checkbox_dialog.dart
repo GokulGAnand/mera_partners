@@ -73,14 +73,14 @@ class CustomCheckBoxDialog extends StatelessWidget {
                           children: [
                             Divider(height: 5,),
                             CheckboxListTile(
-                                  value: selectItem.contains(item),
+                                  value: selectItem.contains(item.toLowerCase()),
                                   title: Text(item,
                                   style: MyStyles.blackW500F15Style,),
                                   onChanged: (isSelected){
                                      if (isSelected!) {
-                                      selectItem.add(item);
+                                      selectItem.add(item.toLowerCase());
                                     } else {
-                                      selectItem.remove(item);
+                                      selectItem.remove(item.toLowerCase());
                                     }
                                   },
                                 ),
@@ -92,7 +92,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
               ),
               Obx(
                 ()=>
-                   (selectItem.value.contains("Other") )?Padding(
+                   (selectItem.value.contains("other") )?Padding(
                   padding: const EdgeInsets.only(left: 16.0, right: 16),
                   child: CustomTextFormField(
                     labelText: MyStrings.other,
