@@ -41,7 +41,11 @@ class PendingEvaluationViewModel extends GetxController {
 
     if (value != null) {
       for (int i = 0; i < carBasicResponse.value.data!.length; i++) {
-        if (carBasicResponse.value.data![i].make!.toString().contains(value)) {
+        if(carBasicResponse.value.data![i].make != null){
+          if (carBasicResponse.value.data![i].make!.toString().toLowerCase().contains(value.toLowerCase())) {
+            tempList.add(carBasicResponse.value.data![i]);
+          }
+        } else {
           tempList.add(carBasicResponse.value.data![i]);
         }
       }

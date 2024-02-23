@@ -2346,7 +2346,12 @@ class ExteriorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     pages = [pageOne(context), pageTwo(context), pageThree(context), pageFour(context), pageFive(context), pageSix(context)];
-    return Obx(() => SafeArea(
+    // ignore: deprecated_member_use
+    return Obx(() => WillPopScope(
+      onWillPop: () async{
+        Get.back();
+        return true;
+      },
       child: Scaffold(
         key: _key,
         appBar: CommonAppBar(
