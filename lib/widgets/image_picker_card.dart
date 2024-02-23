@@ -17,11 +17,11 @@ import 'package:image_picker/image_picker.dart';
 
 class ImagePickerCard extends StatelessWidget {
   final VoidCallback? onSubmit;
-  final ImageSource? uploadType;
+  final bool? isVideo;
   final Rx<File?>? image;
   final TextEditingController remarksController;
 
-  ImagePickerCard({super.key, this.onSubmit, this.uploadType, required this.remarksController, this.image});
+  ImagePickerCard({super.key, this.onSubmit, this.isVideo = false, required this.remarksController, this.image});
 
   Future pickImage(ImageSource source) async {
     try {
@@ -31,6 +31,21 @@ class ImagePickerCard extends StatelessWidget {
       final imageTemp = File(image.path);
       log(imageTemp.toString());
       this.image?.value = imageTemp;
+    } on PlatformException catch (e) {
+      if (kDebugMode) {
+        print('Failed to pick image: $e');
+      }
+    }
+  }
+
+  Future pickVideo(ImageSource source) async {
+    try {
+      final video = await ImagePicker().pickVideo(source: source,maxDuration: const Duration(seconds: 60));
+      log(video.toString());
+      if (video == null) return;
+      final videoTemp = File(video.path);
+      log(videoTemp.toString());
+      image?.value = videoTemp;
     } on PlatformException catch (e) {
       if (kDebugMode) {
         print('Failed to pick image: $e');
@@ -92,9 +107,9 @@ class ImagePickerCard extends StatelessWidget {
                 ),
               ),
             ),
-            const Padding(
+            Padding(
               padding: Dimens.padding16,
-              child: Text(MyStrings.uploadImage, style: MyStyles.uploadImageTitleStyle),
+              child: Text(isVideo == true?MyStrings.uploadVideo:MyStrings.uploadImage, style: MyStyles.uploadImageTitleStyle),
             ),
             const Divider(
               color: MyColors.transparent1,
@@ -131,9 +146,9 @@ class ImagePickerCard extends StatelessWidget {
                               padding: const EdgeInsets.only(left: 47.0, right: 47, bottom: 27, top: 35),
                               child: SizedBox(height: 25, width: 25, child: SvgPicture.asset(MyImages.add)),
                             ),
-                            const Text(
-                              MyStrings.addImage,
-                              style: TextStyle(
+                            Text(
+                              isVideo == true?MyStrings.uploadVideo:MyStrings.addImage,
+                              style: const TextStyle(
                                 color: Color(0xFF736B6B),
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
@@ -146,19 +161,19 @@ class ImagePickerCard extends StatelessWidget {
                           ],
                         ),
                       )
-                    : (image?.value != null && (image!.value!.path.startsWith('http') || image!.value!.path.startsWith('https')))?
+                    : (isVideo == false && image?.value != null && (image!.value!.path.startsWith('http') || image!.value!.path.startsWith('https')))?
                 Image.network(
                   image!.value!.path,
                   width: 119,
                   height: 119,
                   fit: BoxFit.fill,
-                ):
+                ):isVideo == false?
                 Image.file(
                   image!.value!,
                         width: 119,
                         height: 119,
                         fit: BoxFit.fill,
-                      ),
+                      ):Text(image?.value?.path ?? ''),
               ),
             ),
             const SizedBox(
@@ -253,7 +268,11 @@ class ImagePickerCard extends StatelessWidget {
                   children: [
                     GestureDetector(
                         onTap: () {
-                          pickImage(ImageSource.camera);
+                          if(isVideo != null && isVideo == true){
+                            pickVideo(ImageSource.camera);
+                          }else{
+                            pickImage(ImageSource.camera);
+                          }
                           Navigator.of(context).pop();
                         },
                         child: SizedBox(width: 90, height: 95, child: SvgPicture.asset(MyImages.camera))),
@@ -276,7 +295,11 @@ class ImagePickerCard extends StatelessWidget {
                   children: [
                     GestureDetector(
                         onTap: () {
-                          pickImage(ImageSource.gallery);
+                          if(isVideo != null && isVideo == true){
+                            pickVideo(ImageSource.gallery);
+                          }else{
+                            pickImage(ImageSource.gallery);
+                          }
                           Navigator.of(context).pop();
                         },
                         child: SizedBox(width: 90, height: 90, child: Image.asset(MyImages.gallery))),

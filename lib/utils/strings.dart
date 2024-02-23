@@ -133,6 +133,7 @@ class MyStrings {
   static const String rcMismatch = "RC Mismatch";
   static const String insuranceMismatch = "Insurance Mismatch";
   static const String uploadImage = "Upload Image";
+  static const String uploadVideo = "Upload Video";
   static const String addImage = "Add image";
   static const String chooseUploadType = "Choose Upload Type";
   static const String camera = "Camera";

@@ -115,29 +115,53 @@ class InteriorViewModel extends GetxController {
   void addInteriorInfo() async {
     try {
       var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl+EndPoints.interiorInfo+'/'+id));
+
+      for(int i=0; i<selectPowerWindowAndWindowLock.length; i++){
+       request.fields['powerWindowCentalLock[$i]'] = selectPowerWindowAndWindowLock[i];
+      }
+      for(int i=0; i<selectHandBrake.length; i++){
+       request.fields['handBreak[$i]'] = selectHandBrake[i];
+      }
+      for(int i=0; i<selectCarElectrical.length; i++){
+       request.fields['carElectrical[$i]'] = selectCarElectrical[i];
+      }
+      for(int i=0; i<selectClusterPanel.length; i++){
+       request.fields['clusterPanel[$i]'] = selectClusterPanel[i];
+      }
+      for(int i=0; i<selectInsideRearViewMirror.length; i++){
+       request.fields['rearViewMirror[$i]'] = selectInsideRearViewMirror[i];
+      }
+      for(int i=0; i<selectPlatform.length; i++){
+       request.fields['platformImage_condition[$i]'] = selectPlatform[i];
+      }
+      for(int i=0; i<selectDashboardImage.length; i++){
+       request.fields['dashboardImage_condition[$i]'] = selectDashboardImage[i];
+      }
+      for(int i=0; i<selectFrontSeatImage.length; i++){
+       request.fields['frontSeatImage_condition[$i]'] = selectFrontSeatImage[i];
+      }
+      for(int i=0; i<selectRearSeatImage.length; i++){
+       request.fields['rearSeatImage_condition[$i]'] = selectRearSeatImage[i];
+      }
       request.fields.addAll({
-        'odometerImage_remarks' : '',
+        // 'odometerImage_remarks' : '',
         'dashboardImage_remarks' : dashboardRemarksController.value.text,
         'frontSeatImage_remarks' : frontSeatRemarksController.value.text,
         'rearSeatImage_remarks' : rearSeatRemarksController.value.text,
         'handbreakImage_remarks' : handBrakeRemarksController.value.text,
         'powerWindowDriverImage_remarks' : powerWindowDriverRemarksController.value.text,
         'pushWindowDriverImage_remarks' : pushWindowDriverRemarksController.value.text,
-        'pushButton' : selectPushButtonOnOff.value,
-        'powerWindowCentalLock' : powerWindowAndWindowLockController.value.text,
+        'pushButton' : selectPushButtonOnOff.value,  
         'combitionSwitch' : '',
-        'dashboardCondition' : '',
-        'handBreak' : handBrakeController.value.text,
-        'carElectrical' : carElectricalController.value.text,
+        'dashboardCondition' : '',     
         'cngKitImage_remarks' : cngLpgKitImageRemarksController.value.text,
-        'key' : '',
-        'clusterPanel' : clusterPanelController.value.text,
-        'warningDetails' : warningDetailsController.value.text,
-        'rearViewMirror' : insideRearViewMirrorController.value.text,
+        'key' : '',      
+        'warningDetails' : warningDetailsController.value.text,      
         // 'interiorView' : '',
         'dashboardSwitch' : selectDashboardSwitches.value,
         'secondKey' : selectSecondKey.value,
-        'platform' : platformController.value.text,
+        'platformImage_remarks' : platformRemarksController.value.text,
+        'interiorView_remarks' : interiorViewFromBootDashboardRemarksController.value.text,
         'interiorStar' : '',
         'evaluationStatusForInterior': 'COMPLETED'
       });
@@ -161,6 +185,12 @@ class InteriorViewModel extends GetxController {
       }
       if (cngLpgKitImage.value != null && (cngLpgKitImage.value!.path.startsWith('http') == false || cngLpgKitImage.value!.path.startsWith('https') == false)) {
         request.files.add(http.MultipartFile.fromBytes('cngKitImage', cngLpgKitImage.value!.readAsBytesSync()));
+      }
+      if (platformImage.value != null && (platformImage.value!.path.startsWith('http') == false || platformImage.value!.path.startsWith('https') == false)) {
+        request.files.add(http.MultipartFile.fromBytes('platformImage', platformImage.value!.readAsBytesSync()));
+      }
+      if (interiorViewFromBootDashboardImage.value != null && (interiorViewFromBootDashboardImage.value!.path.startsWith('http') == false || interiorViewFromBootDashboardImage.value!.path.startsWith('https') == false)) {
+        request.files.add(http.MultipartFile.fromBytes('interiorView', interiorViewFromBootDashboardImage.value!.readAsBytesSync()));
       }
       request.headers.addAll(globals.headers);
 

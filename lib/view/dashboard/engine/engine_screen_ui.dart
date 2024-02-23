@@ -176,7 +176,8 @@ class EngineScreen extends StatelessWidget {
                       barrierDismissible: false,
                       context: Get.context!,
                       builder: (context) => ImagePickerCard(
-                        remarksController: viewModel.otherEngineConditionController.value,
+                        remarksController: viewModel.engineIdleStartVideoRemarksController.value,
+                        isVideo: true,
                         image: viewModel.engineIdleStartVideo,
                         onSubmit: () {
                           Navigator.of(context).pop();

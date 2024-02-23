@@ -12,21 +12,21 @@ class ValidateUserResponse {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(new Data.fromJson(v));
       });
     }
-    meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
+    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    if (meta != null) {
-      data['meta'] = meta!.toJson();
+    if (this.meta != null) {
+      data['meta'] = this.meta!.toJson();
     }
     return data;
   }
@@ -41,13 +41,24 @@ class Data {
   String? email;
   String? createdAt;
   String? updatedAt;
-  List<String>? evaluatedCarId;
   String? city;
   String? district;
   String? state;
   int? contactNo;
 
-  Data({this.sId, this.fullname, this.userId, this.isBlocked, this.role, this.email, this.createdAt, this.updatedAt, this.evaluatedCarId, this.city, this.district, this.state, this.contactNo});
+  Data(
+      {this.sId,
+        this.fullname,
+        this.userId,
+        this.isBlocked,
+        this.role,
+        this.email,
+        this.createdAt,
+        this.updatedAt,
+        this.city,
+        this.district,
+        this.state,
+        this.contactNo});
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -58,7 +69,6 @@ class Data {
     email = json['email'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    evaluatedCarId = json['evaluatedCarId'].cast<String>();
     city = json['city'];
     district = json['district'];
     state = json['state'];
@@ -66,20 +76,19 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    data['fullname'] = fullname;
-    data['userId'] = userId;
-    data['isBlocked'] = isBlocked;
-    data['role'] = role;
-    data['email'] = email;
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
-    data['evaluatedCarId'] = evaluatedCarId;
-    data['city'] = city;
-    data['district'] = district;
-    data['state'] = state;
-    data['contactNo'] = contactNo;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['fullname'] = this.fullname;
+    data['userId'] = this.userId;
+    data['isBlocked'] = this.isBlocked;
+    data['role'] = this.role;
+    data['email'] = this.email;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    data['city'] = this.city;
+    data['district'] = this.district;
+    data['state'] = this.state;
+    data['contactNo'] = this.contactNo;
     return data;
   }
 }
@@ -96,9 +105,9 @@ class Meta {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['access'] = access;
-    data['refresh'] = refresh;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['access'] = this.access;
+    data['refresh'] = this.refresh;
     return data;
   }
 }

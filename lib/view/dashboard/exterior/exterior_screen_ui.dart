@@ -1013,7 +1013,7 @@ class ExteriorScreen extends StatelessWidget {
                   height: Dimens.standard_24,
 
                 ),
-                CustomDropDown(
+                /*CustomDropDown(
                   hintText: "${MyStrings.tyreFrontRHS}*",
                   label: viewModel.selectedTyreFrontRHS.value.isEmpty ? null : "${MyStrings.tyreFrontRHS}*",
                   value: viewModel.selectedTyreFrontRHS.value.isEmpty ? null : viewModel.selectedTyreFrontRHS.value,
@@ -1035,11 +1035,81 @@ class ExteriorScreen extends StatelessWidget {
                     }
                     return null;
                   },
+                ),*/
+                GestureDetector(
+                  onTap: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomCheckBoxDialog(
+                          title: MyStrings.tyreFrontRHS,
+                          items: viewModel.tyreWheelsCondition,
+                          selectItem: viewModel.selectedTyreFrontRHSList,
+                          image: viewModel.tyreFrontRHS,
+                          remarksController : viewModel.tyreFrontRHSRemarks.value,
+                          othersController: viewModel.otherTyreFrontRHSController.value,
+                        );
+                      },
+                    );
+                    viewModel.tyreFrontRHSController.value.text = viewModel.selectedTyreFrontRHSList.join(",");
+                  },
+                  child: CustomTextFormField(
+                    controller: viewModel.tyreFrontRHSController.value,
+                    labelText: "${MyStrings.tyreFrontRHS}*",
+                    helperText: "${MyStrings.tyreFrontRHS}*",
+                    validator: viewModel.tyreFrontRHS.value == null ? ValidateInput.validateRequiredFields : null,
+                    showCursor: false,
+                    isEnabled: false,
+                    suffixIcon: viewModel.tyreFrontRHS.value == null
+                        ? Padding(
+                      padding: Dimens.suffixPadding,
+                      child: SvgPicture.asset(MyImages.upload),
+                    )
+                        : const Icon(
+                      Icons.done_rounded,
+                      color: MyColors.green,
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: Dimens.standard_24,
                 ),
-                CustomDropDown(
+                GestureDetector(
+                  onTap: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomCheckBoxDialog(
+                          title: MyStrings.tyreFrontLHS,
+                          items: viewModel.tyreWheelsCondition,
+                          selectItem: viewModel.selectedTyreFrontLHSList,
+                          image: viewModel.tyreFrontLHS,
+                          remarksController : viewModel.tyreFrontLHSRemarks.value,
+                          othersController: viewModel.otherTyreFrontLHSController.value,
+                        );
+                      },
+                    );
+                    viewModel.tyreFrontLHSController.value.text = viewModel.selectedTyreFrontLHSList.join(",");
+                  },
+                  child: CustomTextFormField(
+                    controller: viewModel.tyreFrontLHSController.value,
+                    labelText: "${MyStrings.tyreFrontLHS}*",
+                    helperText: "${MyStrings.tyreFrontLHS}*",
+                    validator: viewModel.tyreFrontLHS.value == null ? ValidateInput.validateRequiredFields : null,
+                    showCursor: false,
+                    isEnabled: false,
+                    suffixIcon: viewModel.tyreFrontLHS.value == null
+                        ? Padding(
+                      padding: Dimens.suffixPadding,
+                      child: SvgPicture.asset(MyImages.upload),
+                    )
+                        : const Icon(
+                      Icons.done_rounded,
+                      color: MyColors.green,
+                    ),
+                  ),
+                ),
+                /*CustomDropDown(
                   hintText: "${MyStrings.tyreFrontLHS}*",
                   label: viewModel.selectedTyreFrontLHS.value.isEmpty ? null : "${MyStrings.tyreFrontLHS}*",
                   value: viewModel.selectedTyreFrontLHS.value.isEmpty ? null : viewModel.selectedTyreFrontLHS.value,
@@ -1061,11 +1131,46 @@ class ExteriorScreen extends StatelessWidget {
                     }
                     return null;
                   },
-                ),
+                ),*/
                 SizedBox(
                   height: Dimens.standard_24,
                 ),
-                CustomDropDown(
+                GestureDetector(
+                  onTap: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomCheckBoxDialog(
+                          title: MyStrings.tyreRearRHS,
+                          items: viewModel.tyreWheelsCondition,
+                          selectItem: viewModel.selectedTyreRearRHSList,
+                          image: viewModel.tyreRearRHS,
+                          remarksController : viewModel.tyreRearRHSRemarks.value,
+                          othersController: viewModel.otherTyreRearRHSController.value,
+                        );
+                      },
+                    );
+                    viewModel.tyreRearRHSController.value.text = viewModel.selectedTyreRearRHSList.join(",");
+                  },
+                  child: CustomTextFormField(
+                    controller: viewModel.tyreRearRHSController.value,
+                    labelText: "${MyStrings.tyreRearRHS}*",
+                    helperText: "${MyStrings.tyreRearRHS}*",
+                    validator: viewModel.tyreRearRHS.value == null ? ValidateInput.validateRequiredFields : null,
+                    showCursor: false,
+                    isEnabled: false,
+                    suffixIcon: viewModel.tyreRearRHS.value == null
+                        ? Padding(
+                      padding: Dimens.suffixPadding,
+                      child: SvgPicture.asset(MyImages.upload),
+                    )
+                        : const Icon(
+                      Icons.done_rounded,
+                      color: MyColors.green,
+                    ),
+                  ),
+                ),
+                /*CustomDropDown(
                   hintText: "${MyStrings.tyreRearRHS}*",
                   label: viewModel.selectedTyreRearRHS.value.isEmpty ? null : "${MyStrings.tyreRearRHS}*",
                   value: viewModel.selectedTyreRearRHS.value.isEmpty ? null : viewModel.selectedTyreRearRHS.value,
@@ -1087,7 +1192,7 @@ class ExteriorScreen extends StatelessWidget {
                     }
                     return null;
                   },
-                ),
+                ),*/
                 SizedBox(
                   height: Dimens.standard_48,
                 ),
@@ -1130,7 +1235,42 @@ class ExteriorScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                CustomDropDown(
+                GestureDetector(
+                  onTap: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomCheckBoxDialog(
+                          title: MyStrings.tyreRearLHS,
+                          items: viewModel.tyreWheelsCondition,
+                          selectItem: viewModel.selectedTyreRearLHSList,
+                          image: viewModel.tyreRearLHS,
+                          remarksController : viewModel.tyreRearLHSRemarks.value,
+                          othersController: viewModel.otherTyreRearLHSController.value,
+                        );
+                      },
+                    );
+                    viewModel.tyreRearLHSController.value.text = viewModel.selectedTyreRearLHSList.join(",");
+                  },
+                  child: CustomTextFormField(
+                    controller: viewModel.tyreRearLHSController.value,
+                    labelText: "${MyStrings.tyreRearLHS}*",
+                    helperText: "${MyStrings.tyreRearLHS}*",
+                    validator: viewModel.tyreRearLHS.value == null ? ValidateInput.validateRequiredFields : null,
+                    showCursor: false,
+                    isEnabled: false,
+                    suffixIcon: viewModel.tyreRearLHS.value == null
+                        ? Padding(
+                      padding: Dimens.suffixPadding,
+                      child: SvgPicture.asset(MyImages.upload),
+                    )
+                        : const Icon(
+                      Icons.done_rounded,
+                      color: MyColors.green,
+                    ),
+                  ),
+                ),
+                /*CustomDropDown(
                   hintText: "${MyStrings.tyreRearLHS}*",
                   label: viewModel.selectedTyreRearLHS.value.isEmpty ? null : "${MyStrings.tyreRearLHS}*",
                   value: viewModel.selectedTyreRearLHS.value.isEmpty ? null : viewModel.selectedTyreRearLHS.value,
@@ -1152,7 +1292,7 @@ class ExteriorScreen extends StatelessWidget {
                     }
                     return null;
                   },
-                ),
+                ),*/
                 SizedBox(
                   height: Dimens.standard_24,
                 ),
@@ -2164,7 +2304,8 @@ class ExteriorScreen extends StatelessWidget {
                           if (viewModel.isPage1Fill.value && viewModel.isPage2Fill.value && viewModel.isPage3Fill.value && viewModel.isPage4Fill.value && viewModel.isPage5Fill.value && viewModel.isPage6Fill.value) {
                             Internet.checkInternet().then((value) {
                               if (value) {
-                                // viewModel.add();
+                                viewModel.updateExterior();
+                                print('ranjitha');
                               } else {
                                 CustomToast.instance.showMsg(MyStrings.checkNetwork);
                               }
