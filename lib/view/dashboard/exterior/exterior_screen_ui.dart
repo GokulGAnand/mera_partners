@@ -2304,7 +2304,8 @@ class ExteriorScreen extends StatelessWidget {
                           if (viewModel.isPage1Fill.value && viewModel.isPage2Fill.value && viewModel.isPage3Fill.value && viewModel.isPage4Fill.value && viewModel.isPage5Fill.value && viewModel.isPage6Fill.value) {
                             Internet.checkInternet().then((value) {
                               if (value) {
-                                // viewModel.add();
+                                viewModel.updateExterior();
+                                print('ranjitha');
                               } else {
                                 CustomToast.instance.showMsg(MyStrings.checkNetwork);
                               }

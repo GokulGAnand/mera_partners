@@ -1,790 +1,611 @@
 class ExteriorResponse {
-  ExteriorResponse({
-     this.status,
-     this.message,
-     this.data,
-     this.meta,
-  });
+  String? status;
+  String? message;
+  List<Data>? data;
+  Meta? meta;
 
-  final String? status;
-  final String? message;
-  final List<List<Datum>>? data;
-  final Meta? meta;
+  ExteriorResponse({this.status, this.message, this.data, this.meta});
 
-  factory ExteriorResponse.fromJson(Map<String, dynamic> json){
-    return ExteriorResponse(
-      status: json["status"] ?? "",
-      message: json["message"] ?? "",
-      data: json["data"] == null ? [] : List<List<Datum>>.from(json["data"]!.map((x) => x == null ? [] : List<Datum>.from(x!.map((x) => Datum.fromJson(x))))),
-      meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
-    );
+  ExteriorResponse.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    message = json['message'];
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
+      });
+    }
+    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
   }
 
-  Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message,
-    "data": data?.map((x) => x.map((x) => x?.toJson()).toList()).toList(),
-    "meta": meta?.toJson(),
-  };
-
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    if (this.meta != null) {
+      data['meta'] = this.meta!.toJson();
+    }
+    return data;
+  }
 }
 
-class Datum {
-  Datum({
-    required this.id,
-    required this.carId,
-    required this.apronLeft,
-    required this.apronRight,
-    required this.bonnetPatti,
-    required this.boot,
-    required this.bumperFront,
-    required this.bumperRear,
-    required this.chassisExtension,
-    required this.dickyDoor,
-    required this.doorFrontLeft,
-    required this.doorFrontRight,
-    required this.doorGlassLeft,
-    required this.doorGlassRight,
-    required this.doorRearLeft,
-    required this.doorRearRight,
-    required this.fenderLeft,
-    required this.fenderRight,
-    required this.firewall,
-    required this.fogLightLeft,
-    required this.fogLightRight,
-    required this.frontTyreLeft,
-    required this.frontTyreRight,
-    required this.frontWindShield,
-    required this.fuelLid,
-    required this.fullBodyRepaint,
-    required this.grill,
-    required this.headLightLeft,
-    required this.headLightRight,
-    required this.headLightSupport,
-    required this.jackAndTool,
-    required this.leftApillar,
-    required this.leftBpillar,
-    required this.leftCpillar,
-    required this.leftImage,
-    required this.lowerCrossMember,
-    required this.missingParts,
-    required this.quarterGlass,
-    required this.quarterPanelLeft,
-    required this.quarterPanelRight,
-    required this.rearTyreLeft,
-    required this.rearTyreRight,
-    required this.rearViewMirrorLeft,
-    required this.rearViewMirrorRight,
-    required this.rearWindShield,
-    required this.rearWiper,
-    required this.rightApillar,
-    required this.rightBpillar,
-    required this.rightCpillar,
-    required this.rightImage,
-    required this.roof,
-    required this.runnningBorderLeft,
-    required this.runnningBorderRight,
-    required this.spareWheel,
-    required this.tailLightLeft,
-    required this.tailLightRight,
-    required this.upperCrossMember,
-    required this.cowlTop,
-    required this.front,
-    required this.frontLeft,
-    required this.frontRight,
-    required this.rearLeft,
-    required this.rearRight,
-    required this.rear,
-    required this.frontWithHoodOpen,
-    required this.rearBootOpen,
-  });
+class Data {
+  String? sId;
+  String? carId;
+  ApronLeft? apronLeft;
+  ApronLeft? apronRight;
+  ApronLeft? bonnetPatti;
+  ApronLeft? boot;
+  ApronLeft? bumperFront;
+  ApronLeft? bumperRear;
+  ApronLeft? chassisExtension;
+  ApronLeft? dickyDoor;
+  ApronLeft? doorFrontLeft;
+  ApronLeft? doorFrontRight;
+  ApronLeft? doorGlassLeft;
+  ApronLeft? doorGlassRight;
+  ApronLeft? doorRearLeft;
+  ApronLeft? doorRearRight;
+  ApronLeft? fenderLeft;
+  ApronLeft? fenderRight;
+  ApronLeft? firewall;
+  ApronLeft? fogLightLeft;
+  ApronLeft? fogLightRight;
+  ApronLeft? frontTyreLeft;
+  ApronLeft? frontTyreRight;
+  ApronLeft? frontWindShield;
+  ApronLeft? fuelLid;
+  String? fullBodyRepaint;
+  ApronLeft? grill;
+  ApronLeft? headLightLeft;
+  ApronLeft? headLightRight;
+  ApronLeft? headLightSupport;
+  String? jackAndTool;
+  ApronLeft? leftApillar;
+  ApronLeft? leftBpillar;
+  ApronLeft? leftCpillar;
+  ApronLeft? leftImage;
+  ApronLeft? lowerCrossMember;
+  String? missingParts;
+  ApronLeft? quarterGlass;
+  ApronLeft? quarterPanelLeft;
+  ApronLeft? quarterPanelRight;
+  ApronLeft? rearTyreLeft;
+  ApronLeft? rearTyreRight;
+  ApronLeft? rearViewMirrorLeft;
+  ApronLeft? rearViewMirrorRight;
+  ApronLeft? rearWindShield;
+  ApronLeft? rearWiper;
+  ApronLeft? rightApillar;
+  ApronLeft? rightBpillar;
+  ApronLeft? rightCpillar;
+  ApronLeft? rightImage;
+  ApronLeft? roof;
+  ApronLeft? runnningBorderLeft;
+  ApronLeft? runnningBorderRight;
+  ApronLeft? spareWheel;
+  ApronLeft? tailLightLeft;
+  ApronLeft? tailLightRight;
+  ApronLeft? upperCrossMember;
+  CowlTop? cowlTop;
+  ApronLeft? front;
+  ApronLeft? frontLeft;
+  ApronLeft? frontRight;
+  ApronLeft? rearLeft;
+  ApronLeft? rearRight;
+  ApronLeft? rear;
+  ApronLeft? frontWithHoodOpen;
+  ApronLeft? rearBootOpen;
 
-  final String id;
-  final String carId;
-  final ApronLeft? apronLeft;
-  final ApronLeft? apronRight;
-  final ApronLeft? bonnetPatti;
-  final ApronLeft? boot;
-  final ApronLeft? bumperFront;
-  final ApronLeft? bumperRear;
-  final ApronLeft? chassisExtension;
-  final ApronLeft? dickyDoor;
-  final ApronLeft? doorFrontLeft;
-  final ApronLeft? doorFrontRight;
-  final ApronLeft? doorGlassLeft;
-  final ApronLeft? doorGlassRight;
-  final ApronLeft? doorRearLeft;
-  final ApronLeft? doorRearRight;
-  final ApronLeft? fenderLeft;
-  final ApronLeft? fenderRight;
-  final ApronLeft? firewall;
-  final ApronLeft? fogLightLeft;
-  final ApronLeft? fogLightRight;
-  final ApronLeft? frontTyreLeft;
-  final ApronLeft? frontTyreRight;
-  final ApronLeft? frontWindShield;
-  final ApronLeft? fuelLid;
-  final String fullBodyRepaint;
-  final ApronLeft? grill;
-  final ApronLeft? headLightLeft;
-  final ApronLeft? headLightRight;
-  final ApronLeft? headLightSupport;
-  final String jackAndTool;
-  final ApronLeft? leftApillar;
-  final ApronLeft? leftBpillar;
-  final ApronLeft? leftCpillar;
-  final Front? leftImage;
-  final ApronLeft? lowerCrossMember;
-  final String missingParts;
-  final ApronLeft? quarterGlass;
-  final ApronLeft? quarterPanelLeft;
-  final ApronLeft? quarterPanelRight;
-  final ApronLeft? rearTyreLeft;
-  final ApronLeft? rearTyreRight;
-  final ApronLeft? rearViewMirrorLeft;
-  final ApronLeft? rearViewMirrorRight;
-  final ApronLeft? rearWindShield;
-  final ApronLeft? rearWiper;
-  final ApronLeft? rightApillar;
-  final ApronLeft? rightBpillar;
-  final ApronLeft? rightCpillar;
-  final Front? rightImage;
-  final ApronLeft? roof;
-  final ApronLeft? runnningBorderLeft;
-  final ApronLeft? runnningBorderRight;
-  final ApronLeft? spareWheel;
-  final ApronLeft? tailLightLeft;
-  final ApronLeft? tailLightRight;
-  final ApronLeft? upperCrossMember;
-  final ApronLeft? cowlTop;
-  final Front? front;
-  final Front? frontLeft;
-  final Front? frontRight;
-  final Front? rearLeft;
-  final Front? rearRight;
-  final Front? rear;
-  final Front? frontWithHoodOpen;
-  final Front? rearBootOpen;
+  Data(
+      {this.sId,
+        this.carId,
+        this.apronLeft,
+        this.apronRight,
+        this.bonnetPatti,
+        this.boot,
+        this.bumperFront,
+        this.bumperRear,
+        this.chassisExtension,
+        this.dickyDoor,
+        this.doorFrontLeft,
+        this.doorFrontRight,
+        this.doorGlassLeft,
+        this.doorGlassRight,
+        this.doorRearLeft,
+        this.doorRearRight,
+        this.fenderLeft,
+        this.fenderRight,
+        this.firewall,
+        this.fogLightLeft,
+        this.fogLightRight,
+        this.frontTyreLeft,
+        this.frontTyreRight,
+        this.frontWindShield,
+        this.fuelLid,
+        this.fullBodyRepaint,
+        this.grill,
+        this.headLightLeft,
+        this.headLightRight,
+        this.headLightSupport,
+        this.jackAndTool,
+        this.leftApillar,
+        this.leftBpillar,
+        this.leftCpillar,
+        this.leftImage,
+        this.lowerCrossMember,
+        this.missingParts,
+        this.quarterGlass,
+        this.quarterPanelLeft,
+        this.quarterPanelRight,
+        this.rearTyreLeft,
+        this.rearTyreRight,
+        this.rearViewMirrorLeft,
+        this.rearViewMirrorRight,
+        this.rearWindShield,
+        this.rearWiper,
+        this.rightApillar,
+        this.rightBpillar,
+        this.rightCpillar,
+        this.rightImage,
+        this.roof,
+        this.runnningBorderLeft,
+        this.runnningBorderRight,
+        this.spareWheel,
+        this.tailLightLeft,
+        this.tailLightRight,
+        this.upperCrossMember,
+        this.cowlTop,
+        this.front,
+        this.frontLeft,
+        this.frontRight,
+        this.rearLeft,
+        this.rearRight,
+        this.rear,
+        this.frontWithHoodOpen,
+        this.rearBootOpen});
 
-  factory Datum.fromJson(Map<String, dynamic> json){
-    return Datum(
-      id: json["_id"] ?? "",
-      carId: json["carId"] ?? "",
-      apronLeft: json["apronLeft"] == null ? null : ApronLeft.fromJson(json["apronLeft"]),
-      apronRight: json["apronRight"] == null ? null : ApronLeft.fromJson(json["apronRight"]),
-      bonnetPatti: json["bonnetPatti"] == null ? null : ApronLeft.fromJson(json["bonnetPatti"]),
-      boot: json["boot"] == null ? null : ApronLeft.fromJson(json["boot"]),
-      bumperFront: json["bumperFront"] == null ? null : ApronLeft.fromJson(json["bumperFront"]),
-      bumperRear: json["bumperRear"] == null ? null : ApronLeft.fromJson(json["bumperRear"]),
-      chassisExtension: json["chassisExtension"] == null ? null : ApronLeft.fromJson(json["chassisExtension"]),
-      dickyDoor: json["dickyDoor"] == null ? null : ApronLeft.fromJson(json["dickyDoor"]),
-      doorFrontLeft: json["doorFrontLeft"] == null ? null : ApronLeft.fromJson(json["doorFrontLeft"]),
-      doorFrontRight: json["doorFrontRight"] == null ? null : ApronLeft.fromJson(json["doorFrontRight"]),
-      doorGlassLeft: json["doorGlassLeft"] == null ? null : ApronLeft.fromJson(json["doorGlassLeft"]),
-      doorGlassRight: json["doorGlassRight"] == null ? null : ApronLeft.fromJson(json["doorGlassRight"]),
-      doorRearLeft: json["doorRearLeft"] == null ? null : ApronLeft.fromJson(json["doorRearLeft"]),
-      doorRearRight: json["doorRearRight"] == null ? null : ApronLeft.fromJson(json["doorRearRight"]),
-      fenderLeft: json["fenderLeft"] == null ? null : ApronLeft.fromJson(json["fenderLeft"]),
-      fenderRight: json["fenderRight"] == null ? null : ApronLeft.fromJson(json["fenderRight"]),
-      firewall: json["firewall"] == null ? null : ApronLeft.fromJson(json["firewall"]),
-      fogLightLeft: json["fogLightLeft"] == null ? null : ApronLeft.fromJson(json["fogLightLeft"]),
-      fogLightRight: json["fogLightRight"] == null ? null : ApronLeft.fromJson(json["fogLightRight"]),
-      frontTyreLeft: json["frontTyreLeft"] == null ? null : ApronLeft.fromJson(json["frontTyreLeft"]),
-      frontTyreRight: json["frontTyreRight"] == null ? null : ApronLeft.fromJson(json["frontTyreRight"]),
-      frontWindShield: json["frontWindShield"] == null ? null : ApronLeft.fromJson(json["frontWindShield"]),
-      fuelLid: json["fuelLid"] == null ? null : ApronLeft.fromJson(json["fuelLid"]),
-      fullBodyRepaint: json["fullBodyRepaint"] ?? "",
-      grill: json["grill"] == null ? null : ApronLeft.fromJson(json["grill"]),
-      headLightLeft: json["headLightLeft"] == null ? null : ApronLeft.fromJson(json["headLightLeft"]),
-      headLightRight: json["headLightRight"] == null ? null : ApronLeft.fromJson(json["headLightRight"]),
-      headLightSupport: json["headLightSupport"] == null ? null : ApronLeft.fromJson(json["headLightSupport"]),
-      jackAndTool: json["jackAndTool"] ?? "",
-      leftApillar: json["leftApillar"] == null ? null : ApronLeft.fromJson(json["leftApillar"]),
-      leftBpillar: json["leftBpillar"] == null ? null : ApronLeft.fromJson(json["leftBpillar"]),
-      leftCpillar: json["leftCpillar"] == null ? null : ApronLeft.fromJson(json["leftCpillar"]),
-      leftImage: json["leftImage"] == null ? null : Front.fromJson(json["leftImage"]),
-      lowerCrossMember: json["lowerCrossMember"] == null ? null : ApronLeft.fromJson(json["lowerCrossMember"]),
-      missingParts: json["missingParts"] ?? "",
-      quarterGlass: json["quarterGlass"] == null ? null : ApronLeft.fromJson(json["quarterGlass"]),
-      quarterPanelLeft: json["quarterPanelLeft"] == null ? null : ApronLeft.fromJson(json["quarterPanelLeft"]),
-      quarterPanelRight: json["quarterPanelRight"] == null ? null : ApronLeft.fromJson(json["quarterPanelRight"]),
-      rearTyreLeft: json["rearTyreLeft"] == null ? null : ApronLeft.fromJson(json["rearTyreLeft"]),
-      rearTyreRight: json["rearTyreRight"] == null ? null : ApronLeft.fromJson(json["rearTyreRight"]),
-      rearViewMirrorLeft: json["rearViewMirrorLeft"] == null ? null : ApronLeft.fromJson(json["rearViewMirrorLeft"]),
-      rearViewMirrorRight: json["rearViewMirrorRight"] == null ? null : ApronLeft.fromJson(json["rearViewMirrorRight"]),
-      rearWindShield: json["rearWindShield"] == null ? null : ApronLeft.fromJson(json["rearWindShield"]),
-      rearWiper: json["rearWiper"] == null ? null : ApronLeft.fromJson(json["rearWiper"]),
-      rightApillar: json["rightApillar"] == null ? null : ApronLeft.fromJson(json["rightApillar"]),
-      rightBpillar: json["rightBpillar"] == null ? null : ApronLeft.fromJson(json["rightBpillar"]),
-      rightCpillar: json["rightCpillar"] == null ? null : ApronLeft.fromJson(json["rightCpillar"]),
-      rightImage: json["rightImage"] == null ? null : Front.fromJson(json["rightImage"]),
-      roof: json["roof"] == null ? null : ApronLeft.fromJson(json["roof"]),
-      runnningBorderLeft: json["runnningBorderLeft"] == null ? null : ApronLeft.fromJson(json["runnningBorderLeft"]),
-      runnningBorderRight: json["runnningBorderRight"] == null ? null : ApronLeft.fromJson(json["runnningBorderRight"]),
-      spareWheel: json["spareWheel"] == null ? null : ApronLeft.fromJson(json["spareWheel"]),
-      tailLightLeft: json["tailLightLeft"] == null ? null : ApronLeft.fromJson(json["tailLightLeft"]),
-      tailLightRight: json["tailLightRight"] == null ? null : ApronLeft.fromJson(json["tailLightRight"]),
-      upperCrossMember: json["upperCrossMember"] == null ? null : ApronLeft.fromJson(json["upperCrossMember"]),
-      cowlTop: json["cowlTop"] == null ? null : ApronLeft.fromJson(json["cowlTop"]),
-      front: json["front"] == null ? null : Front.fromJson(json["front"]),
-      frontLeft: json["frontLeft"] == null ? null : Front.fromJson(json["frontLeft"]),
-      frontRight: json["frontRight"] == null ? null : Front.fromJson(json["frontRight"]),
-      rearLeft: json["rearLeft"] == null ? null : Front.fromJson(json["rearLeft"]),
-      rearRight: json["rearRight"] == null ? null : Front.fromJson(json["rearRight"]),
-      rear: json["rear"] == null ? null : Front.fromJson(json["rear"]),
-      frontWithHoodOpen: json["frontWithHoodOpen"] == null ? null : Front.fromJson(json["frontWithHoodOpen"]),
-      rearBootOpen: json["rearBootOpen"] == null ? null : Front.fromJson(json["rearBootOpen"]),
-    );
+  Data.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    carId = json['carId'];
+    apronLeft = json['apronLeft'] != null
+        ? new ApronLeft.fromJson(json['apronLeft'])
+        : null;
+    apronRight = json['apronRight'] != null
+        ? new ApronLeft.fromJson(json['apronRight'])
+        : null;
+    bonnetPatti = json['bonnetPatti'] != null
+        ? new ApronLeft.fromJson(json['bonnetPatti'])
+        : null;
+    boot = json['boot'] != null ? new ApronLeft.fromJson(json['boot']) : null;
+    bumperFront = json['bumperFront'] != null
+        ? new ApronLeft.fromJson(json['bumperFront'])
+        : null;
+    bumperRear = json['bumperRear'] != null
+        ? new ApronLeft.fromJson(json['bumperRear'])
+        : null;
+    chassisExtension = json['chassisExtension'] != null
+        ? new ApronLeft.fromJson(json['chassisExtension'])
+        : null;
+    dickyDoor = json['dickyDoor'] != null
+        ? new ApronLeft.fromJson(json['dickyDoor'])
+        : null;
+    doorFrontLeft = json['doorFrontLeft'] != null
+        ? new ApronLeft.fromJson(json['doorFrontLeft'])
+        : null;
+    doorFrontRight = json['doorFrontRight'] != null
+        ? new ApronLeft.fromJson(json['doorFrontRight'])
+        : null;
+    doorGlassLeft = json['doorGlassLeft'] != null
+        ? new ApronLeft.fromJson(json['doorGlassLeft'])
+        : null;
+    doorGlassRight = json['doorGlassRight'] != null
+        ? new ApronLeft.fromJson(json['doorGlassRight'])
+        : null;
+    doorRearLeft = json['doorRearLeft'] != null
+        ? new ApronLeft.fromJson(json['doorRearLeft'])
+        : null;
+    doorRearRight = json['doorRearRight'] != null
+        ? new ApronLeft.fromJson(json['doorRearRight'])
+        : null;
+    fenderLeft = json['fenderLeft'] != null
+        ? new ApronLeft.fromJson(json['fenderLeft'])
+        : null;
+    fenderRight = json['fenderRight'] != null
+        ? new ApronLeft.fromJson(json['fenderRight'])
+        : null;
+    firewall = json['firewall'] != null
+        ? new ApronLeft.fromJson(json['firewall'])
+        : null;
+    fogLightLeft = json['fogLightLeft'] != null
+        ? new ApronLeft.fromJson(json['fogLightLeft'])
+        : null;
+    fogLightRight = json['fogLightRight'] != null
+        ? new ApronLeft.fromJson(json['fogLightRight'])
+        : null;
+    frontTyreLeft = json['frontTyreLeft'] != null
+        ? new ApronLeft.fromJson(json['frontTyreLeft'])
+        : null;
+    frontTyreRight = json['frontTyreRight'] != null
+        ? new ApronLeft.fromJson(json['frontTyreRight'])
+        : null;
+    frontWindShield = json['frontWindShield'] != null
+        ? new ApronLeft.fromJson(json['frontWindShield'])
+        : null;
+    fuelLid = json['fuelLid'] != null
+        ? new ApronLeft.fromJson(json['fuelLid'])
+        : null;
+    fullBodyRepaint = json['fullBodyRepaint'];
+    grill =
+    json['grill'] != null ? new ApronLeft.fromJson(json['grill']) : null;
+    headLightLeft = json['headLightLeft'] != null
+        ? new ApronLeft.fromJson(json['headLightLeft'])
+        : null;
+    headLightRight = json['headLightRight'] != null
+        ? new ApronLeft.fromJson(json['headLightRight'])
+        : null;
+    headLightSupport = json['headLightSupport'] != null
+        ? new ApronLeft.fromJson(json['headLightSupport'])
+        : null;
+    jackAndTool = json['jackAndTool'];
+    leftApillar = json['leftApillar'] != null
+        ? new ApronLeft.fromJson(json['leftApillar'])
+        : null;
+    leftBpillar = json['leftBpillar'] != null
+        ? new ApronLeft.fromJson(json['leftBpillar'])
+        : null;
+    leftCpillar = json['leftCpillar'] != null
+        ? new ApronLeft.fromJson(json['leftCpillar'])
+        : null;
+    leftImage = json['leftImage'] != null
+        ? new ApronLeft.fromJson(json['leftImage'])
+        : null;
+    lowerCrossMember = json['lowerCrossMember'] != null
+        ? new ApronLeft.fromJson(json['lowerCrossMember'])
+        : null;
+    missingParts = json['missingParts'];
+    quarterGlass = json['quarterGlass'] != null
+        ? new ApronLeft.fromJson(json['quarterGlass'])
+        : null;
+    quarterPanelLeft = json['quarterPanelLeft'] != null
+        ? new ApronLeft.fromJson(json['quarterPanelLeft'])
+        : null;
+    quarterPanelRight = json['quarterPanelRight'] != null
+        ? new ApronLeft.fromJson(json['quarterPanelRight'])
+        : null;
+    rearTyreLeft = json['rearTyreLeft'] != null
+        ? new ApronLeft.fromJson(json['rearTyreLeft'])
+        : null;
+    rearTyreRight = json['rearTyreRight'] != null
+        ? new ApronLeft.fromJson(json['rearTyreRight'])
+        : null;
+    rearViewMirrorLeft = json['rearViewMirrorLeft'] != null
+        ? new ApronLeft.fromJson(json['rearViewMirrorLeft'])
+        : null;
+    rearViewMirrorRight = json['rearViewMirrorRight'] != null
+        ? new ApronLeft.fromJson(json['rearViewMirrorRight'])
+        : null;
+    rearWindShield = json['rearWindShield'] != null
+        ? new ApronLeft.fromJson(json['rearWindShield'])
+        : null;
+    rearWiper = json['rearWiper'] != null
+        ? new ApronLeft.fromJson(json['rearWiper'])
+        : null;
+    rightApillar = json['rightApillar'] != null
+        ? new ApronLeft.fromJson(json['rightApillar'])
+        : null;
+    rightBpillar = json['rightBpillar'] != null
+        ? new ApronLeft.fromJson(json['rightBpillar'])
+        : null;
+    rightCpillar = json['rightCpillar'] != null
+        ? new ApronLeft.fromJson(json['rightCpillar'])
+        : null;
+    rightImage = json['rightImage'] != null
+        ? new ApronLeft.fromJson(json['rightImage'])
+        : null;
+    roof = json['roof'] != null ? new ApronLeft.fromJson(json['roof']) : null;
+    runnningBorderLeft = json['runnningBorderLeft'] != null
+        ? new ApronLeft.fromJson(json['runnningBorderLeft'])
+        : null;
+    runnningBorderRight = json['runnningBorderRight'] != null
+        ? new ApronLeft.fromJson(json['runnningBorderRight'])
+        : null;
+    spareWheel = json['spareWheel'] != null
+        ? new ApronLeft.fromJson(json['spareWheel'])
+        : null;
+    tailLightLeft = json['tailLightLeft'] != null
+        ? new ApronLeft.fromJson(json['tailLightLeft'])
+        : null;
+    tailLightRight = json['tailLightRight'] != null
+        ? new ApronLeft.fromJson(json['tailLightRight'])
+        : null;
+    upperCrossMember = json['upperCrossMember'] != null
+        ? new ApronLeft.fromJson(json['upperCrossMember'])
+        : null;
+    cowlTop =
+    json['cowlTop'] != null ? new CowlTop.fromJson(json['cowlTop']) : null;
+    front =
+    json['front'] != null ? new ApronLeft.fromJson(json['front']) : null;
+    frontLeft = json['frontLeft'] != null
+        ? new ApronLeft.fromJson(json['frontLeft'])
+        : null;
+    frontRight = json['frontRight'] != null
+        ? new ApronLeft.fromJson(json['frontRight'])
+        : null;
+    rearLeft = json['rearLeft'] != null
+        ? new ApronLeft.fromJson(json['rearLeft'])
+        : null;
+    rearRight = json['rearRight'] != null
+        ? new ApronLeft.fromJson(json['rearRight'])
+        : null;
+    rear = json['rear'] != null ? new ApronLeft.fromJson(json['rear']) : null;
+    frontWithHoodOpen = json['frontWithHoodOpen'] != null
+        ? new ApronLeft.fromJson(json['frontWithHoodOpen'])
+        : null;
+    rearBootOpen = json['rearBootOpen'] != null
+        ? new ApronLeft.fromJson(json['rearBootOpen'])
+        : null;
   }
 
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "carId": carId,
-    "apronLeft": apronLeft?.toJson(),
-    "apronRight": apronRight?.toJson(),
-    "bonnetPatti": bonnetPatti?.toJson(),
-    "boot": boot?.toJson(),
-    "bumperFront": bumperFront?.toJson(),
-    "bumperRear": bumperRear?.toJson(),
-    "chassisExtension": chassisExtension?.toJson(),
-    "dickyDoor": dickyDoor?.toJson(),
-    "doorFrontLeft": doorFrontLeft?.toJson(),
-    "doorFrontRight": doorFrontRight?.toJson(),
-    "doorGlassLeft": doorGlassLeft?.toJson(),
-    "doorGlassRight": doorGlassRight?.toJson(),
-    "doorRearLeft": doorRearLeft?.toJson(),
-    "doorRearRight": doorRearRight?.toJson(),
-    "fenderLeft": fenderLeft?.toJson(),
-    "fenderRight": fenderRight?.toJson(),
-    "firewall": firewall?.toJson(),
-    "fogLightLeft": fogLightLeft?.toJson(),
-    "fogLightRight": fogLightRight?.toJson(),
-    "frontTyreLeft": frontTyreLeft?.toJson(),
-    "frontTyreRight": frontTyreRight?.toJson(),
-    "frontWindShield": frontWindShield?.toJson(),
-    "fuelLid": fuelLid?.toJson(),
-    "fullBodyRepaint": fullBodyRepaint,
-    "grill": grill?.toJson(),
-    "headLightLeft": headLightLeft?.toJson(),
-    "headLightRight": headLightRight?.toJson(),
-    "headLightSupport": headLightSupport?.toJson(),
-    "jackAndTool": jackAndTool,
-    "leftApillar": leftApillar?.toJson(),
-    "leftBpillar": leftBpillar?.toJson(),
-    "leftCpillar": leftCpillar?.toJson(),
-    "leftImage": leftImage?.toJson(),
-    "lowerCrossMember": lowerCrossMember?.toJson(),
-    "missingParts": missingParts,
-    "quarterGlass": quarterGlass?.toJson(),
-    "quarterPanelLeft": quarterPanelLeft?.toJson(),
-    "quarterPanelRight": quarterPanelRight?.toJson(),
-    "rearTyreLeft": rearTyreLeft?.toJson(),
-    "rearTyreRight": rearTyreRight?.toJson(),
-    "rearViewMirrorLeft": rearViewMirrorLeft?.toJson(),
-    "rearViewMirrorRight": rearViewMirrorRight?.toJson(),
-    "rearWindShield": rearWindShield?.toJson(),
-    "rearWiper": rearWiper?.toJson(),
-    "rightApillar": rightApillar?.toJson(),
-    "rightBpillar": rightBpillar?.toJson(),
-    "rightCpillar": rightCpillar?.toJson(),
-    "rightImage": rightImage?.toJson(),
-    "roof": roof?.toJson(),
-    "runnningBorderLeft": runnningBorderLeft?.toJson(),
-    "runnningBorderRight": runnningBorderRight?.toJson(),
-    "spareWheel": spareWheel?.toJson(),
-    "tailLightLeft": tailLightLeft?.toJson(),
-    "tailLightRight": tailLightRight?.toJson(),
-    "upperCrossMember": upperCrossMember?.toJson(),
-    "cowlTop": cowlTop?.toJson(),
-    "front": front?.toJson(),
-    "frontLeft": frontLeft?.toJson(),
-    "frontRight": frontRight?.toJson(),
-    "rearLeft": rearLeft?.toJson(),
-    "rearRight": rearRight?.toJson(),
-    "rear": rear?.toJson(),
-    "frontWithHoodOpen": frontWithHoodOpen?.toJson(),
-    "rearBootOpen": rearBootOpen?.toJson(),
-  };
-
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['carId'] = this.carId;
+    if (this.apronLeft != null) {
+      data['apronLeft'] = this.apronLeft!.toJson();
+    }
+    if (this.apronRight != null) {
+      data['apronRight'] = this.apronRight!.toJson();
+    }
+    if (this.bonnetPatti != null) {
+      data['bonnetPatti'] = this.bonnetPatti!.toJson();
+    }
+    if (this.boot != null) {
+      data['boot'] = this.boot!.toJson();
+    }
+    if (this.bumperFront != null) {
+      data['bumperFront'] = this.bumperFront!.toJson();
+    }
+    if (this.bumperRear != null) {
+      data['bumperRear'] = this.bumperRear!.toJson();
+    }
+    if (this.chassisExtension != null) {
+      data['chassisExtension'] = this.chassisExtension!.toJson();
+    }
+    if (this.dickyDoor != null) {
+      data['dickyDoor'] = this.dickyDoor!.toJson();
+    }
+    if (this.doorFrontLeft != null) {
+      data['doorFrontLeft'] = this.doorFrontLeft!.toJson();
+    }
+    if (this.doorFrontRight != null) {
+      data['doorFrontRight'] = this.doorFrontRight!.toJson();
+    }
+    if (this.doorGlassLeft != null) {
+      data['doorGlassLeft'] = this.doorGlassLeft!.toJson();
+    }
+    if (this.doorGlassRight != null) {
+      data['doorGlassRight'] = this.doorGlassRight!.toJson();
+    }
+    if (this.doorRearLeft != null) {
+      data['doorRearLeft'] = this.doorRearLeft!.toJson();
+    }
+    if (this.doorRearRight != null) {
+      data['doorRearRight'] = this.doorRearRight!.toJson();
+    }
+    if (this.fenderLeft != null) {
+      data['fenderLeft'] = this.fenderLeft!.toJson();
+    }
+    if (this.fenderRight != null) {
+      data['fenderRight'] = this.fenderRight!.toJson();
+    }
+    if (this.firewall != null) {
+      data['firewall'] = this.firewall!.toJson();
+    }
+    if (this.fogLightLeft != null) {
+      data['fogLightLeft'] = this.fogLightLeft!.toJson();
+    }
+    if (this.fogLightRight != null) {
+      data['fogLightRight'] = this.fogLightRight!.toJson();
+    }
+    if (this.frontTyreLeft != null) {
+      data['frontTyreLeft'] = this.frontTyreLeft!.toJson();
+    }
+    if (this.frontTyreRight != null) {
+      data['frontTyreRight'] = this.frontTyreRight!.toJson();
+    }
+    if (this.frontWindShield != null) {
+      data['frontWindShield'] = this.frontWindShield!.toJson();
+    }
+    if (this.fuelLid != null) {
+      data['fuelLid'] = this.fuelLid!.toJson();
+    }
+    data['fullBodyRepaint'] = this.fullBodyRepaint;
+    if (this.grill != null) {
+      data['grill'] = this.grill!.toJson();
+    }
+    if (this.headLightLeft != null) {
+      data['headLightLeft'] = this.headLightLeft!.toJson();
+    }
+    if (this.headLightRight != null) {
+      data['headLightRight'] = this.headLightRight!.toJson();
+    }
+    if (this.headLightSupport != null) {
+      data['headLightSupport'] = this.headLightSupport!.toJson();
+    }
+    data['jackAndTool'] = this.jackAndTool;
+    if (this.leftApillar != null) {
+      data['leftApillar'] = this.leftApillar!.toJson();
+    }
+    if (this.leftBpillar != null) {
+      data['leftBpillar'] = this.leftBpillar!.toJson();
+    }
+    if (this.leftCpillar != null) {
+      data['leftCpillar'] = this.leftCpillar!.toJson();
+    }
+    if (this.leftImage != null) {
+      data['leftImage'] = this.leftImage!.toJson();
+    }
+    if (this.lowerCrossMember != null) {
+      data['lowerCrossMember'] = this.lowerCrossMember!.toJson();
+    }
+    data['missingParts'] = this.missingParts;
+    if (this.quarterGlass != null) {
+      data['quarterGlass'] = this.quarterGlass!.toJson();
+    }
+    if (this.quarterPanelLeft != null) {
+      data['quarterPanelLeft'] = this.quarterPanelLeft!.toJson();
+    }
+    if (this.quarterPanelRight != null) {
+      data['quarterPanelRight'] = this.quarterPanelRight!.toJson();
+    }
+    if (this.rearTyreLeft != null) {
+      data['rearTyreLeft'] = this.rearTyreLeft!.toJson();
+    }
+    if (this.rearTyreRight != null) {
+      data['rearTyreRight'] = this.rearTyreRight!.toJson();
+    }
+    if (this.rearViewMirrorLeft != null) {
+      data['rearViewMirrorLeft'] = this.rearViewMirrorLeft!.toJson();
+    }
+    if (this.rearViewMirrorRight != null) {
+      data['rearViewMirrorRight'] = this.rearViewMirrorRight!.toJson();
+    }
+    if (this.rearWindShield != null) {
+      data['rearWindShield'] = this.rearWindShield!.toJson();
+    }
+    if (this.rearWiper != null) {
+      data['rearWiper'] = this.rearWiper!.toJson();
+    }
+    if (this.rightApillar != null) {
+      data['rightApillar'] = this.rightApillar!.toJson();
+    }
+    if (this.rightBpillar != null) {
+      data['rightBpillar'] = this.rightBpillar!.toJson();
+    }
+    if (this.rightCpillar != null) {
+      data['rightCpillar'] = this.rightCpillar!.toJson();
+    }
+    if (this.rightImage != null) {
+      data['rightImage'] = this.rightImage!.toJson();
+    }
+    if (this.roof != null) {
+      data['roof'] = this.roof!.toJson();
+    }
+    if (this.runnningBorderLeft != null) {
+      data['runnningBorderLeft'] = this.runnningBorderLeft!.toJson();
+    }
+    if (this.runnningBorderRight != null) {
+      data['runnningBorderRight'] = this.runnningBorderRight!.toJson();
+    }
+    if (this.spareWheel != null) {
+      data['spareWheel'] = this.spareWheel!.toJson();
+    }
+    if (this.tailLightLeft != null) {
+      data['tailLightLeft'] = this.tailLightLeft!.toJson();
+    }
+    if (this.tailLightRight != null) {
+      data['tailLightRight'] = this.tailLightRight!.toJson();
+    }
+    if (this.upperCrossMember != null) {
+      data['upperCrossMember'] = this.upperCrossMember!.toJson();
+    }
+    if (this.cowlTop != null) {
+      data['cowlTop'] = this.cowlTop!.toJson();
+    }
+    if (this.front != null) {
+      data['front'] = this.front!.toJson();
+    }
+    if (this.frontLeft != null) {
+      data['frontLeft'] = this.frontLeft!.toJson();
+    }
+    if (this.frontRight != null) {
+      data['frontRight'] = this.frontRight!.toJson();
+    }
+    if (this.rearLeft != null) {
+      data['rearLeft'] = this.rearLeft!.toJson();
+    }
+    if (this.rearRight != null) {
+      data['rearRight'] = this.rearRight!.toJson();
+    }
+    if (this.rear != null) {
+      data['rear'] = this.rear!.toJson();
+    }
+    if (this.frontWithHoodOpen != null) {
+      data['frontWithHoodOpen'] = this.frontWithHoodOpen!.toJson();
+    }
+    if (this.rearBootOpen != null) {
+      data['rearBootOpen'] = this.rearBootOpen!.toJson();
+    }
+    return data;
+  }
 }
 
 class ApronLeft {
-  ApronLeft({
-    required this.condition,
-  });
+  String? name;
+  String? url;
+  List<String>? condition;
+  String? remarks;
 
-  final List<String> condition;
+  ApronLeft({this.name, this.url, this.condition, this.remarks});
 
-  factory ApronLeft.fromJson(Map<String, dynamic> json){
-    return ApronLeft(
-      condition: json["condition"] == null ? [] : List<String>.from(json["condition"]!.map((x) => x)),
-    );
+  ApronLeft.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    url = json['url'];
+    condition = json['condition'].cast<String>();
+    remarks = json['remarks'];
   }
 
-  Map<String, dynamic> toJson() => {
-    "condition": condition.map((x) => x).toList(),
-  };
-
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['url'] = this.url;
+    data['condition'] = this.condition;
+    data['remarks'] = this.remarks;
+    return data;
+  }
 }
 
-class Front {
-  Front({
-    required this.name,
-    required this.url,
-    required this.condition,
-    required this.remarks,
-  });
+class CowlTop {
+  String? name;
+  String? url;
+  List<String>? condition;
+  String? remarks;
 
-  final String name;
-  final String url;
-  final List<String> condition;
-  final String remarks;
+  CowlTop({this.name, this.url, this.condition, this.remarks});
 
-  factory Front.fromJson(Map<String, dynamic> json){
-    return Front(
-      name: json["name"] ?? "",
-      url: json["url"] ?? "",
-      condition: json["condition"] == null ? [] : List<String>.from(json["condition"]!.map((x) => x)),
-      remarks: json["remarks"] ?? "",
-    );
+  CowlTop.fromJson(Map<String, dynamic> json) {
+    condition = json['condition'].cast<String>();
   }
 
-  Map<String, dynamic> toJson() => {
-    "name": name,
-    "url": url,
-    "condition": condition.map((x) => x).toList(),
-    "remarks": remarks,
-  };
-
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['url'] = this.url;
+    data['condition'] = this.condition;
+    data['remarks'] = this.remarks;
+    return data;
+  }
 }
 
 class Meta {
-  Meta({
-    required this.access,
-    required this.refresh,
-  });
+  String? access;
+  String? refresh;
 
-  final String access;
-  final String refresh;
+  Meta({this.access, this.refresh});
 
-  factory Meta.fromJson(Map<String, dynamic> json){
-    return Meta(
-      access: json["access"] ?? "",
-      refresh: json["refresh"] ?? "",
-    );
+  Meta.fromJson(Map<String, dynamic> json) {
+    access = json['access'];
+    refresh = json['refresh'];
   }
 
-  Map<String, dynamic> toJson() => {
-    "access": access,
-    "refresh": refresh,
-  };
-
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['access'] = this.access;
+    data['refresh'] = this.refresh;
+    return data;
+  }
 }
-
-/*
-{
-	"status": "success",
-	"message": "Car Exterior info fetched successfully!",
-	"data": [
-		[
-			{
-				"_id": "65cf2025b07b4acdec103567",
-				"carId": "65cf2025b07b4acdec103563",
-				"apronLeft": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"apronRight": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"bonnetPatti": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"boot": {
-					"condition": [
-						"bad",
-						"good"
-					]
-				},
-				"bumperFront": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"bumperRear": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"chassisExtension": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"dickyDoor": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"doorFrontLeft": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"doorFrontRight": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"doorGlassLeft": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"doorGlassRight": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"doorRearLeft": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"doorRearRight": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"fenderLeft": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"fenderRight": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"firewall": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"fogLightLeft": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"fogLightRight": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"frontTyreLeft": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"frontTyreRight": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"frontWindShield": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"fuelLid": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"fullBodyRepaint": "Yes",
-				"grill": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"headLightLeft": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"headLightRight": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"headLightSupport": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"jackAndTool": "good",
-				"leftApillar": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"leftBpillar": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"leftCpillar": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"leftImage": {
-					"name": "leftImage-1708515728081-IMG_5882 (1).jpg",
-					"url": "https://bucketkeracars.s3.ap-south-1.amazonaws.com/leftImage-1708515728081-IMG_5882 (1).jpg",
-					"condition": [],
-					"remarks": ""
-				},
-				"lowerCrossMember": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"missingParts": "car missing",
-				"quarterGlass": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"quarterPanelLeft": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"quarterPanelRight": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"rearTyreLeft": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"rearTyreRight": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"rearViewMirrorLeft": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"rearViewMirrorRight": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"rearWindShield": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"rearWiper": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"rightApillar": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"rightBpillar": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"rightCpillar": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"rightImage": {
-					"name": "rightImage-1708515728095-IMG_5882 (2).jpg",
-					"url": "https://bucketkeracars.s3.ap-south-1.amazonaws.com/rightImage-1708515728095-IMG_5882 (2).jpg",
-					"condition": [],
-					"remarks": ""
-				},
-				"roof": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"runnningBorderLeft": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"runnningBorderRight": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"spareWheel": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"tailLightLeft": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"tailLightRight": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"upperCrossMember": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"cowlTop": {
-					"condition": [
-						"bad",
-						"bad"
-					]
-				},
-				"front": {
-					"name": "front-1708515727028-IMG_5882 (1).jpg",
-					"url": "https://bucketkeracars.s3.ap-south-1.amazonaws.com/front-1708515727028-IMG_5882 (1).jpg",
-					"condition": [
-						"bad",
-						"bad"
-					],
-					"remarks": "dummy"
-				},
-				"frontLeft": {
-					"name": "frontLeft-1708515727001-IMG_5882 (1).jpg",
-					"url": "https://bucketkeracars.s3.ap-south-1.amazonaws.com/frontLeft-1708515727001-IMG_5882 (1).jpg",
-					"condition": [],
-					"remarks": "dummy"
-				},
-				"frontRight": {
-					"name": "frontRight-1708515726956-IMG_5882 (1).jpg",
-					"url": "https://bucketkeracars.s3.ap-south-1.amazonaws.com/frontRight-1708515726956-IMG_5882 (1).jpg",
-					"condition": [
-						"bad",
-						"bad"
-					],
-					"remarks": "dummy"
-				},
-				"rearLeft": {
-					"name": "rearLeft-1708515726990-IMG_5882 (1).jpg",
-					"url": "https://bucketkeracars.s3.ap-south-1.amazonaws.com/rearLeft-1708515726990-IMG_5882 (1).jpg",
-					"condition": [
-						"bad",
-						"bad"
-					],
-					"remarks": "dummy"
-				},
-				"rearRight": {
-					"name": "rearRight-1708515727518-IMG_5882 (1).jpg",
-					"url": "https://bucketkeracars.s3.ap-south-1.amazonaws.com/rearRight-1708515727518-IMG_5882 (1).jpg",
-					"condition": [
-						"bad",
-						"bad"
-					],
-					"remarks": "dummy"
-				},
-				"rear": {
-					"name": "rear-1708515727553-IMG_5882 (1).jpg",
-					"url": "https://bucketkeracars.s3.ap-south-1.amazonaws.com/rear-1708515727553-IMG_5882 (1).jpg",
-					"condition": [
-						"bad",
-						"bad"
-					],
-					"remarks": "dummy"
-				},
-				"frontWithHoodOpen": {
-					"name": "frontWithHoodOpen-1708515727535-IMG_5882 (1).jpg",
-					"url": "https://bucketkeracars.s3.ap-south-1.amazonaws.com/frontWithHoodOpen-1708515727535-IMG_5882 (1).jpg",
-					"condition": [
-						"bad",
-						"bad"
-					],
-					"remarks": "dummy"
-				},
-				"rearBootOpen": {
-					"name": "rearBootOpen-1708515727572-IMG_5882 (1).jpg",
-					"url": "https://bucketkeracars.s3.ap-south-1.amazonaws.com/rearBootOpen-1708515727572-IMG_5882 (1).jpg",
-					"condition": [
-						"bad",
-						"bad"
-					],
-					"remarks": "dummy"
-				}
-			}
-		]
-	],
-	"meta": {
-		"access": "",
-		"refresh": ""
-	}
-}*/
