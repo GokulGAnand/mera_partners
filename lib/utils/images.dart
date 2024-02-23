@@ -27,6 +27,7 @@ class MyImages {
   static const search1 = "${imageRoot}search.svg";
   static const speedometer = "${imageRoot}speedometer.svg";
   static const calendar2 = "${imageRoot}calendar_month.png";
+  static const calendar3 ="${imageRoot}calender3.svg";
   static const arrowDown = "${imageRoot}arrow_down.svg";
   static const upload = "${imageRoot}upload.svg";
   static const add = "${imageRoot}add.svg";

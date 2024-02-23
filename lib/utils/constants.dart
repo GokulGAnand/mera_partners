@@ -160,11 +160,10 @@ class Constants {
   static const List<String> stereoImageOptions = ['Not Available', 'Customer will take Stereo', 'Touch Stereo', 'Not Working', 'Good', 'Other'];
   static const List<String> workingConditionOptions = ['Working', 'Not Working', 'Not Available'];
   static const List<String> rearParkingSensorList = ['Working', 'Not Working', 'Not Available'];
-  static const List<String> fogLampList = ['Working', 'Not Working', 'Not Available'];
+  static const List<String> fogLampList = ['Working', 'Not Working', 'Not Available','Not Applicable','Needs Replacement'];
   static const List<String> sunRoofList = ['Good', 'Not Available', 'Not Working', 'Working', 'Damaged', 'Replaced', 'Other'];
   static const List<String> gpsNavigationList =  ['Not Available', 'Not Working', 'Available'];
   static const List<String> alloyWheelsList = ['Yes', 'No', 'Scratch', 'Good', 'Drum Scratch', 'Alloy Wheel Missing', 'Other'];
-  static const List<String> fogLampsList = ['Not Applicable', 'Working', 'Needs Replacement'];
   static const List<String> airBagList =  ['1', '2', '2+', 'Not Available', 'Damaged', 'Deployed', 'Other'];
   static const List<String> seatBeltList =  ['Working', 'Not Working', 'Damaged'];
   static const List<String> absEbdList = ['Functioning', 'Not Functioning', 'Not Available', 'ABS EBD Sensor Damaged', 'ABS EBD Module Damaged'];

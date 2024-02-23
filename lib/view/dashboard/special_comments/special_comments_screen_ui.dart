@@ -21,7 +21,6 @@ class SpecialCommentsScreen extends StatelessWidget {
 
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   SpecialCommentsViewModel viewModel = Get.find<SpecialCommentsViewModel>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -105,6 +105,7 @@ class FeaturesScreen extends StatelessWidget {
                       labelStyle: MyStyles.dropdownMenuStyle,
                       controller: viewModel.sterioBrandController.value,
                       labelText: "${MyStrings.stereoBrand} *",
+                      helperText: MyStrings.stereoBrand,
                       onChange: (value) {},
                       validator: (String? value) {
                         return null;
@@ -298,30 +299,29 @@ class FeaturesScreen extends StatelessWidget {
                       ),
                     ),
                 SizedBox(height: Dimens.standard_24),
-                CustomDropDown(
-                  hintText: MyStrings.fogLamps,
-                  label: viewModel.selectedAlloyWheel.value.isEmpty ? null : "${MyStrings.fogLamps}*",
-                  value: viewModel.selectedFogLamps.value.isEmpty ? null : viewModel.selectedFogLamps.value,
-                  items: viewModel.fogLampsList.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        style: MyStyles.dropdownMenuStyle,
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    viewModel.selectedFogLamps.value = value;
-                  },
-                  validator: (value) {
-                    if (value == null) {
-                      return MyStrings.required;
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: Dimens.standard_24),
+                // CustomDropDown(
+                //   hintText: MyStrings.fogLamps,
+                //   label: viewModel.selectedAlloyWheel.value.isEmpty ? null : "${MyStrings.fogLamps}*",
+                //   value: viewModel.selectedFogLamps.value.isEmpty ? null : viewModel.selectedFogLamps.value,
+                //   items: viewModel.fogLampsList.map<DropdownMenuItem<String>>((String value) {
+                //     return DropdownMenuItem<String>(
+                //       value: value,
+                //       child: Text(
+                //         value,
+                //         style: MyStyles.dropdownMenuStyle,
+                //       ),
+                //     );
+                //   }).toList(),
+                //   onChanged: (value) {
+                //     viewModel.selectedFogLamps.value = value;
+                //   },
+                //   validator: (value) {
+                //     if (value == null) {
+                //       return MyStrings.required;
+                //     }
+                //     return null;
+                //   },
+                // ),
                 GestureDetector(
                       onTap: () async {
                         await showDialog(

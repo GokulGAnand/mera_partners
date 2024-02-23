@@ -64,7 +64,7 @@ class FeatureViewModel extends GetxController{
 
 
   var alloyWheelsList = Constants.alloyWheelsList;
-  var fogLampsList = Constants.fogLampsList;
+  // var fogLampsList = Constants.fogLampsList;
   var airBagList = Constants.airBagList;
   var seatBeltList = Constants.seatBeltList;
   var absEbdList = Constants.absEbdList;
