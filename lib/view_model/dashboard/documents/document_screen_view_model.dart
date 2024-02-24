@@ -85,19 +85,19 @@ class DocumentViewModel extends GetxController {
         'nocImage_remarks':nocRemarksController.value.text,
         'evaluationStatusForDocument': 'COMPLETED'
       });
-      if (rcFrontImage.value != null) {
+      if (rcFrontImage.value != null && !rcFrontImage.value!.path.startsWith('http') && !rcFrontImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('rcFront', rcFrontImage.value!.readAsBytesSync()));
       }
-      if (rcBackImage.value != null) {
+      if (rcBackImage.value != null && !rcBackImage.value!.path.startsWith('http') && !rcBackImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('rcBack', rcBackImage.value!.readAsBytesSync()));
       }
-      if(nocImage.value != null) {
+      if(nocImage.value != null && !nocImage.value!.path.startsWith('http') && !nocImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('nocImage', nocImage.value != null ? nocImage.value!.readAsBytesSync() : []));
       }
-      if(form35Image.value != null) {
+      if(form35Image.value != null && !form35Image.value!.path.startsWith('http') && !form35Image.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('form35Image', form35Image.value != null ? form35Image.value!.readAsBytesSync() : []));
       }
-      if(chassisImage.value != null) {
+      if(chassisImage.value != null && !form35Image.value!.path.startsWith('http') && !form35Image.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('chassisImage', chassisImage.value != null ? chassisImage.value!.readAsBytesSync() : []));
       }
       request.headers.addAll(globals.headers);

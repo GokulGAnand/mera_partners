@@ -256,8 +256,8 @@ class NewEvaluationScreen extends StatelessWidget {
                     height: 70,
                     child: Center(
                       child: CustomElevatedButton(
-                        onPressed: viewModel.engineNumController.value.text.isNotEmpty && viewModel.rcOwnerNameController.value.text.isNotEmpty/* && viewModel.regDateController.value.text.isNotEmpty && (viewModel.registrationNumberController.value.text.isNotEmpty || viewModel.chassisNumberController.value.text.isNotEmpty)*/
-                            ? () {
+                        onPressed: /*viewModel.engineNumController.value.text.isNotEmpty && viewModel.rcOwnerNameController.value.text.isNotEmpty*//* && viewModel.regDateController.value.text.isNotEmpty && (viewModel.registrationNumberController.value.text.isNotEmpty || viewModel.chassisNumberController.value.text.isNotEmpty)*//*
+                            ?*/ () {
                                 if (viewModel.page1Key.currentState!.validate()) {
                                   viewModel.page1Key.currentState!.save();
                                   viewModel.isPage1Fill.value = true;
@@ -268,7 +268,7 @@ class NewEvaluationScreen extends StatelessWidget {
                                   );
                                 }
                               }
-                            : null,
+                            /*: null*/,
                         buttonText: MyStrings.next,
                       ),
                     ),
@@ -285,24 +285,6 @@ class NewEvaluationScreen extends StatelessWidget {
   Widget pageTwo() {
     return Obx(
       () => Scaffold(
-        /*bottomNavigationBar: SizedBox(
-          height: 70,
-          child: Center(
-            child: CustomElevatedButton(
-              onPressed: () {
-                if(!viewModel.page2Key.currentState!.validate()) {
-                  viewModel.page2Key.currentState!.save();
-                  viewModel.pageController.value.animateToPage(
-                    2,
-                    duration: Duration(milliseconds: 300),
-                    curve: Curves.linear,
-                  );
-                }
-              },
-              buttonText: MyStrings.next,
-            ),
-          ),
-        ),*/
         body: SingleChildScrollView(
           child: Form(
             key: viewModel.page2Key,
@@ -790,8 +772,8 @@ class NewEvaluationScreen extends StatelessWidget {
                   height: 70,
                   child: Center(
                     child: CustomElevatedButton(
-                      onPressed: viewModel.regValidityController.value.text.isNotEmpty && viewModel.taxValidityController.value.text.isNotEmpty && viewModel.selectedFuelType.value.isNotEmpty && viewModel.selectedOwnerShip.value.isNotEmpty && viewModel.selectedRegState.value.isNotEmpty && viewModel.rtoController.value.text.isNotEmpty && viewModel.selectedVehicleLocation.value.isNotEmpty && viewModel.selectedEngineCC.value.isNotEmpty
-                          ? () {
+                      onPressed: /*viewModel.regValidityController.value.text.isNotEmpty && viewModel.taxValidityController.value.text.isNotEmpty && viewModel.selectedFuelType.value.isNotEmpty && viewModel.selectedOwnerShip.value.isNotEmpty && viewModel.selectedRegState.value.isNotEmpty && viewModel.rtoController.value.text.isNotEmpty && viewModel.selectedVehicleLocation.value.isNotEmpty && viewModel.selectedEngineCC.value.isNotEmpty
+                          ?*/ () {
                               if (viewModel.page2Key.currentState!.validate()) {
                                 viewModel.isPage2Fill.value = true;
                                 viewModel.page2Key.currentState!.save();
@@ -802,7 +784,7 @@ class NewEvaluationScreen extends StatelessWidget {
                                 );
                               }
                             }
-                          : null,
+                          /*: null*/,
                       buttonText: MyStrings.next,
                     ),
                   ),
@@ -818,24 +800,6 @@ class NewEvaluationScreen extends StatelessWidget {
   Widget pageThree() {
     return Obx(
       () => Scaffold(
-        /*bottomNavigationBar: SizedBox(
-          height: 70,
-          child: Center(
-            child: CustomElevatedButton(
-              onPressed: () {
-                if(!viewModel.page3Key.currentState!.validate()) {
-                  viewModel.page3Key.currentState!.save();
-                  viewModel.pageController.value.animateToPage(
-                    3,
-                    duration: Duration(milliseconds: 300),
-                    curve: Curves.linear,
-                  );
-                }
-              },
-              buttonText: MyStrings.next,
-            ),
-          ),
-        ),*/
         body: SingleChildScrollView(
           child: Form(
             key: viewModel.page3Key,
@@ -1406,8 +1370,8 @@ class NewEvaluationScreen extends StatelessWidget {
                   height: 70,
                   child: Center(
                     child: CustomElevatedButton(
-                      onPressed: viewModel.selectedVehicleUsage.value.isNotEmpty /*&& viewModel.manufacturingYearController.value.text.isNotEmpty && viewModel.selectedMake.value.isNotEmpty && viewModel.selectedVariant.value.isNotEmpty && viewModel.selectedColor.value.isNotEmpty && viewModel.selectedBodyType.value.isNotEmpty && viewModel.selectedDupKey.value.isNotEmpty*/
-                          ? () {
+                      onPressed: /*viewModel.selectedVehicleUsage.value.isNotEmpty *//*&& viewModel.manufacturingYearController.value.text.isNotEmpty && viewModel.selectedMake.value.isNotEmpty && viewModel.selectedVariant.value.isNotEmpty && viewModel.selectedColor.value.isNotEmpty && viewModel.selectedBodyType.value.isNotEmpty && viewModel.selectedDupKey.value.isNotEmpty*//*
+                          ?*/ () {
                               if (viewModel.page3Key.currentState!.validate()) {
                                 viewModel.isPage3Fill.value = true;
                                 viewModel.page3Key.currentState!.save();
@@ -1418,7 +1382,7 @@ class NewEvaluationScreen extends StatelessWidget {
                                 );
                               }
                             }
-                          : null,
+                          /*: null*/,
                       buttonText: MyStrings.next,
                     ),
                   ),
@@ -1434,26 +1398,6 @@ class NewEvaluationScreen extends StatelessWidget {
   Widget pageFour() {
     return Obx(
       () => Scaffold(
-        /*bottomNavigationBar: SizedBox(
-          height: 70,
-          child: Center(
-            child: CustomElevatedButton(
-              onPressed: () {
-                if(viewModel.page4Key.currentState!.validate()) {
-                  viewModel.page4Key.currentState!.save();
-                  Internet.checkInternet().then((value) {
-                    if (value) {
-                      //proceed
-                    } else {
-                      //show toast
-                    }
-                  });
-                }
-              },
-              buttonText: MyStrings.submit,
-            ),
-          ),
-        ),*/
         body: SingleChildScrollView(
           child: Form(
             key: viewModel.page4Key,
@@ -1659,8 +1603,8 @@ class NewEvaluationScreen extends StatelessWidget {
                   height: 70,
                   child: Center(
                     child: CustomElevatedButton(
-                      onPressed: viewModel.selectedRCAvailability.value.isNotEmpty && viewModel.selectedTransmission.value.isNotEmpty && viewModel.customerPriceController.value.text.isNotEmpty && viewModel.selectedOdometerWorking.value.isNotEmpty && viewModel.selectedAccidental.value.isNotEmpty
-                          ? () {
+                      onPressed: /*viewModel.selectedRCAvailability.value.isNotEmpty && viewModel.selectedTransmission.value.isNotEmpty && viewModel.customerPriceController.value.text.isNotEmpty && viewModel.selectedOdometerWorking.value.isNotEmpty && viewModel.selectedAccidental.value.isNotEmpty
+                          ? */() {
                               if (viewModel.page4Key.currentState!.validate()) {
                                 viewModel.page4Key.currentState!.save();
                                 viewModel.isPage4Fill.value = true;
@@ -1677,7 +1621,7 @@ class NewEvaluationScreen extends StatelessWidget {
                                 }
                               }
                             }
-                          : null,
+                          /*: null*/,
                       buttonText: MyStrings.submit,
                     ),
                   ),

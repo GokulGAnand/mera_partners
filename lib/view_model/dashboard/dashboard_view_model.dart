@@ -24,6 +24,7 @@ class DashBoardViewModel extends GetxController {
   var featuresComplete = false.obs;
   var airComplete = false.obs;
   var commentsComplete = false.obs;
+  var isEvaluated = false.obs;
   List<DashBoardClass> dashboard = [];
   var ratingList = <Item>[].obs;
   var id = Get.arguments;
@@ -41,11 +42,12 @@ class DashBoardViewModel extends GetxController {
       DashBoardClass(icon: MyImages.maps, label: MyStrings.comments,isComplete:commentsComplete.value),
     ];
     ratingList.value = [
-      Item(title: MyStrings.exterior, rating: 0),
-      Item(title: MyStrings.interior, rating: 0),
       Item(title: MyStrings.engine, rating: 0),
-      Item(title: MyStrings.electrical, rating: 0),
+      Item(title: MyStrings.exterior, rating: 0),
+      // Item(title: MyStrings.electrical, rating: 0),
       Item(title: MyStrings.test, rating: 0),
+      Item(title: MyStrings.interiorAndElectrical, rating: 0),
+
     ];
     getEvaluationStatus();
     super.onInit();
@@ -63,8 +65,14 @@ class DashBoardViewModel extends GetxController {
             testComplete.value =evaluationStatusResponse.value.data?.evaluationStatusForTestDrive == 'COMPLETED'?true:false;
             featuresComplete.value =evaluationStatusResponse.value.data?.evaluationStatusForFeature == 'COMPLETED'?true:false;
             airComplete.value =evaluationStatusResponse.value.data?.evaluationStatusForAc == 'COMPLETED'?true:false;
-            commentsComplete.value = false;
-            log(response.body.toString());
+            commentsComplete.value = true;
+            update();
+            refresh();
+            notifyChildrens();
+        if (documentsComplete.value && exteriorComplete.value && engineComplete.value && interiorComplete.value && testComplete.value && featuresComplete.value && airComplete.value && commentsComplete.value) {
+          isEvaluated.value = true;
+        }
+        log(response.body.toString());
       } else {
         CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);
       }
@@ -81,8 +89,8 @@ class DashBoardViewModel extends GetxController {
           "engineStar":ratingList[0].rating.toString(),
           "exteriorStar":ratingList[1].rating.toString(),
           "testDriveStar":ratingList[2].rating.toString(),
-          "interiorStar":ratingList[3].rating.toString(),
-          "electricalStar":ratingList[4].rating.toString(),
+          "interiorAndElectricalStar":ratingList[3].rating.toString(),
+          // "electricalStar":ratingList[4].rating.toString(),
         }
       );
       if( response.statusCode == 200){

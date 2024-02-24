@@ -169,37 +169,37 @@ class EngineViewModel extends GetxController {
         'mount_remarks':engineMountRemarksController.value.text,
         'sump_remarks':sumpRemarksController.value.text,
       });
-      if (engineCompartmentImage.value != null) {
+      if (engineCompartmentImage.value  != null && !engineCompartmentImage.value!.path.startsWith('http') && !engineCompartmentImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('engineCompartment', engineCompartmentImage.value!.readAsBytesSync()));
       }
-      if (engineIdleStartVideo.value != null) {
+      if (engineIdleStartVideo.value  != null && !engineIdleStartVideo.value!.path.startsWith('http') && !engineIdleStartVideo.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('startVideo', engineIdleStartVideo.value!.readAsBytesSync()));
       }
-      if (engineImage.value != null) {
+      if (engineImage.value  != null && !engineImage.value!.path.startsWith('http') && !engineImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('engine', engineImage.value!.readAsBytesSync()));
       }
-      if (batteryImage.value != null) {
+      if (batteryImage.value  != null && !batteryImage.value!.path.startsWith('http') && !batteryImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('battery', batteryImage.value!.readAsBytesSync()));
       }
-      if (blowByBackCompressionImage.value != null) {
+      if (blowByBackCompressionImage.value  != null && !blowByBackCompressionImage.value!.path.startsWith('http') && !blowByBackCompressionImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('blowBy', blowByBackCompressionImage.value!.readAsBytesSync()));
       }
-      if (clutchOperationsImage.value != null) {
+      if (clutchOperationsImage.value  != null && !clutchOperationsImage.value!.path.startsWith('http') && !clutchOperationsImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('clutch', clutchOperationsImage.value!.readAsBytesSync()));
       }
-      if (clutchOperationsImage.value != null) {
-        request.files.add(http.MultipartFile.fromBytes('gearBox', clutchOperationsImage.value!.readAsBytesSync()));
+      if (clutchOperationsImage.value  != null && !gearBoxImage.value!.path.startsWith('http') && !gearBoxImage.value!.path.startsWith('https')) {
+        request.files.add(http.MultipartFile.fromBytes('gearBox', gearBoxImage.value!.readAsBytesSync()));
       }
-      if (engineOilImage.value != null) {
+      if (engineOilImage.value  != null && !engineOilImage.value!.path.startsWith('http') && !engineOilImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('engineOil', engineOilImage.value!.readAsBytesSync()));
       }
-      if (turboChargerImage.value != null) {
+      if (turboChargerImage.value  != null && !turboChargerImage.value!.path.startsWith('http') && !turboChargerImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('turboCharger', turboChargerImage.value!.readAsBytesSync()));
       }
-      if (engineMountImage.value != null) {
+      if (engineMountImage.value  != null && !engineMountImage.value!.path.startsWith('http') && !engineMountImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('mount', engineMountImage.value!.readAsBytesSync()));
       }
-      if (sumpImage.value != null) {
+      if (sumpImage.value  != null && !sumpImage.value!.path.startsWith('http') && !sumpImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('sump', sumpImage.value!.readAsBytesSync()));
       }
       request.headers.addAll(globals.headers);
@@ -223,7 +223,7 @@ class EngineViewModel extends GetxController {
 
 
   void loadData(){
-    /*if(engineResponse.value.data != null){
+    /*if(engineResponse.value.data  != null && !.value!.path.startsWith('http') && !.value!.path.startsWith('https')){
       engineCompartmentImageRemarks.value.text = engineResponse.value.data?[0].engineCompartment?.remarks ?? '';
       engineIdleStartVideoRemarksController.value.text = engineResponse.value.data?[0].startVideo?.remarks ?? '';
       // otherEngineConditionController. value = engineResponse.value.data?[0];

@@ -606,179 +606,179 @@ class ExteriorViewModel extends GetxController {
         'missingParts': missingPartsController.value.text,
         'cowlTop_remarks': cowlTopRemarks.value.text,
       });
-      if (frontImage.value != null) {
+      if (frontImage.value != null && !frontImage.value!.path.startsWith('http') && !frontImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('front', frontImage.value!.readAsBytesSync()));
       }
-      if (frontLeftImage.value != null) {
+      if (frontLeftImage.value != null && !frontLeftImage.value!.path.startsWith('http') && !frontLeftImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('frontLeft', frontLeftImage.value!.readAsBytesSync()));
       }
-      if (frontRightImage.value != null) {
+      if (frontRightImage.value != null && !frontRightImage.value!.path.startsWith('http') && !frontRightImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('frontRight', frontRightImage.value!.readAsBytesSync()));
       }
-      if (rearLeftImage.value != null) {
+      if (rearLeftImage.value != null && !rearLeftImage.value!.path.startsWith('http') && !rearLeftImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('rearLeft', rearLeftImage.value!.readAsBytesSync()));
       }
-      if (rearRightImage.value != null) {
+      if (rearRightImage.value != null && !rearRightImage.value!.path.startsWith('http') && !rearRightImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('rearRight', rearRightImage.value!.readAsBytesSync()));
       }
-      if (rearImage.value != null) {
+      if (rearImage.value != null && !rearImage.value!.path.startsWith('http') && !rearImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('rear', rearImage.value!.readAsBytesSync()));
       }
       // request.files.add( http.MultipartFile.fromBytes('frontWithHoodOpen', ));
       // request.files.add( http.MultipartFile.fromBytes('rearBootOpen', ));
-      if (leftImage.value != null) {
+      if (leftImage.value != null && !leftImage.value!.path.startsWith('http') && !leftImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('leftImage', leftImage.value!.readAsBytesSync()));
       }
-      if (leftImage.value != null) {
+      if (leftImage.value  != null && !rightImage.value!.path.startsWith('http') && !rightImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('rightImage', rightImage.value!.readAsBytesSync()));
       }
-      if (frontWindShieldWiperImage.value != null) {
+      if (frontWindShieldWiperImage.value  != null && !frontWindShieldWiperImage.value!.path.startsWith('http') && !frontWindShieldWiperImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('frontWindShield', frontWindShieldWiperImage.value!.readAsBytesSync()));
       }
-      if (rearWindShield.value != null) {
+      if (rearWindShield.value  != null && !rearWindShield.value!.path.startsWith('http') && !rearWindShield.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('rearWindShield', rearWindShield.value!.readAsBytesSync()));
       }
-      if (roofImage.value != null) {
+      if (roofImage.value  != null && !roofImage.value!.path.startsWith('http') && !roofImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('roof', roofImage.value!.readAsBytesSync()));
       }
-      if (doorGlassLH.value != null) {
+      if (doorGlassLH.value  != null && !doorGlassLH.value!.path.startsWith('http') && !doorGlassLH.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('doorGlassLeft', doorGlassLH.value!.readAsBytesSync()));
       }
-      if (doorGlassRH.value != null) {
+      if (doorGlassRH.value  != null && !doorGlassRH.value!.path.startsWith('http') && !doorGlassRH.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('doorGlassRight', doorGlassRH.value!.readAsBytesSync()));
       }
-      if (quarterGlass.value != null) {
+      if (quarterGlass.value  != null && !quarterGlass.value!.path.startsWith('http') && !quarterGlass.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('quarterGlass', quarterGlass.value!.readAsBytesSync()));
       }
-      if (headlightSupport.value != null) {
+      if (headlightSupport.value  != null && !headlightSupport.value!.path.startsWith('http') && !headlightSupport.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('headLightRight', headlightSupport.value!.readAsBytesSync()));
       }
-      if (headlightsLH.value != null) {
+      if (headlightsLH.value  != null && !headlightsLH.value!.path.startsWith('http') && !headlightsLH.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('headLightLeft', headlightsLH.value!.readAsBytesSync()));
       }
-      if (headlightSupport.value != null) {
+      if (headlightSupport.value  != null && !headlightSupport.value!.path.startsWith('http') && !headlightSupport.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('headLightSupport', headlightSupport.value!.readAsBytesSync()));
       }
-      if (frontBumper.value != null) {
+      if (frontBumper.value  != null && !frontBumper.value!.path.startsWith('http') && !frontBumper.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('bumperFront', frontBumper.value!.readAsBytesSync()));
       }
-      if (rearBumper.value != null) {
+      if (rearBumper.value  != null && !rearBumper.value!.path.startsWith('http') && !rearBumper.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('bumperRear', rearBumper.value!.readAsBytesSync()));
       }
-      if (bonnetPattiImage.value != null) {
+      if (bonnetPattiImage.value  != null && !bonnetPattiImage.value!.path.startsWith('http') && !bonnetPattiImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('bonnetPatti', bonnetPattiImage.value!.readAsBytesSync()));
       }
-      if (frontGrill.value != null) {
+      if (frontGrill.value  != null && !frontGrill.value!.path.startsWith('http') && !frontGrill.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('grill', frontGrill.value!.readAsBytesSync()));
       }
-      if (lowerCrossMember.value != null) {
+      if (lowerCrossMember.value  != null && !lowerCrossMember.value!.path.startsWith('http') && !lowerCrossMember.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('lowerCrossMember', lowerCrossMember.value!.readAsBytesSync()));
       }
-      if (upperCrossMember.value != null) {
+      if (upperCrossMember.value  != null && !upperCrossMember.value!.path.startsWith('http') && !upperCrossMember.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('upperCrossMember', upperCrossMember.value!.readAsBytesSync()));
       }
-      if (apronLH.value != null) {
+      if (apronLH.value  != null && !apronLH.value!.path.startsWith('http') && !apronLH.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('apronLeft', apronLH.value!.readAsBytesSync()));
       }
-      if (apronRH.value != null) {
+      if (apronRH.value  != null && !apronRH.value!.path.startsWith('http') && !apronRH.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('apronRight', apronRH.value!.readAsBytesSync()));
       }
-      if (chassisExtension.value != null) {
+      if (chassisExtension.value  != null && !chassisExtension.value!.path.startsWith('http') && !chassisExtension.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('chassisExtension', chassisExtension.value!.readAsBytesSync()));
       }
-      if (tyreFrontRHS.value!=null) {
+      if (tyreFrontRHS.value != null && !tyreFrontRHS.value!.path.startsWith('http') && !tyreFrontRHS.value!.path.startsWith('https')) {
         request.files.add( http.MultipartFile.fromBytes('frontTyreRight', tyreFrontRHS.value!.readAsBytesSync()));
       }
-      if (tyreFrontLHS.value!=null) {
+      if (tyreFrontLHS.value != null && !tyreFrontLHS.value!.path.startsWith('http') && !tyreFrontLHS.value!.path.startsWith('https')) {
         request.files.add( http.MultipartFile.fromBytes('frontTyreLeft', tyreFrontLHS.value!.readAsBytesSync()));
       }
-      if (tyreRearRHS.value!=null) {
+      if (tyreRearRHS.value != null && !tyreRearRHS.value!.path.startsWith('http') && !tyreRearRHS.value!.path.startsWith('https')) {
         request.files.add( http.MultipartFile.fromBytes('rearTyreRight', tyreRearRHS.value!.readAsBytesSync()));
       }
-      if (tyreRearLHS.value!=null) {
+      if (tyreRearLHS.value != null && !tyreRearLHS.value!.path.startsWith('http') && !tyreRearLHS.value!.path.startsWith('https')) {
         request.files.add( http.MultipartFile.fromBytes('rearTyreLeft', tyreRearLHS.value!.readAsBytesSync()));
       }
-      if (lhFender.value != null) {
+      if (lhFender.value  != null && !lhFender.value!.path.startsWith('http') && !lhFender.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('fenderLeft', lhFender.value!.readAsBytesSync()));
       }
-      if (rhFender.value != null) {
+      if (rhFender.value  != null && !rhFender.value!.path.startsWith('http') && !rhFender.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('fenderRight', rhFender.value!.readAsBytesSync()));
       }
-      if (rhQuarterPanel.value != null) {
+      if (rhQuarterPanel.value  != null && !rhQuarterPanel.value!.path.startsWith('http') && !rhQuarterPanel.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('quarterPanelRight', rhQuarterPanel.value!.readAsBytesSync()));
       }
-      if (lhQuarterPanel.value != null) {
+      if (lhQuarterPanel.value  != null && !lhQuarterPanel.value!.path.startsWith('http') && !lhQuarterPanel.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('quarterPanelLeft', lhQuarterPanel.value!.readAsBytesSync()));
       }
-      if (frontRHDoor.value != null) {
+      if (frontRHDoor.value  != null && !frontRHDoor.value!.path.startsWith('http') && !frontRHDoor.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('doorFrontRight', frontRHDoor.value!.readAsBytesSync()));
       }
-      if (frontLHDoor.value != null) {
+      if (frontLHDoor.value  != null && !frontLHDoor.value!.path.startsWith('http') && !frontLHDoor.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('doorFrontLeft', frontLHDoor.value!.readAsBytesSync()));
       }
-      if (rearRHDoor.value != null) {
+      if (rearRHDoor.value  != null && !rearRHDoor.value!.path.startsWith('http') && !rearRHDoor.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('doorRearRight', rearRHDoor.value!.readAsBytesSync()));
       }
-      if (rearLHDoor.value != null) {
+      if (rearLHDoor.value  != null && !rearLHDoor.value!.path.startsWith('http') && !rearLHDoor.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('doorRearLeft', rearLHDoor.value!.readAsBytesSync()));
       }
-      if (lhaPillar.value != null) {
+      if (lhaPillar.value  != null && !lhaPillar.value!.path.startsWith('http') && !lhaPillar.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('leftApillar', lhaPillar.value!.readAsBytesSync()));
       }
-      if (rhaPillar.value != null) {
+      if (rhaPillar.value  != null && !rhaPillar.value!.path.startsWith('http') && !rhaPillar.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('rightApillar', rhaPillar.value!.readAsBytesSync()));
       }
-      if (lhbPillar.value != null) {
+      if (lhbPillar.value  != null && !lhbPillar.value!.path.startsWith('http') && !lhbPillar.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('leftBpillar', lhbPillar.value!.readAsBytesSync()));
       }
-      if (rhbPillar.value != null) {
+      if (rhbPillar.value  != null && !rhbPillar.value!.path.startsWith('http') && !rhbPillar.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('rightBpillar', rhbPillar.value!.readAsBytesSync()));
       }
-      if (lhcPillar.value != null) {
+      if (lhcPillar.value  != null && !lhcPillar.value!.path.startsWith('http') && !lhcPillar.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('leftCpillar', lhcPillar.value!.readAsBytesSync()));
       }
-      if (rhcPillar.value != null) {
+      if (rhcPillar.value  != null && !rhcPillar.value!.path.startsWith('http') && !rhcPillar.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('rightCpillar', rhcPillar.value!.readAsBytesSync()));
       }
-      if (rhRunBoard.value != null) {
+      if (rhRunBoard.value  != null && !rhRunBoard.value!.path.startsWith('http') && !rhRunBoard.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('runnningBorderRight', rhRunBoard.value!.readAsBytesSync()));
       }
-      if (lhRunBoard.value != null) {
+      if (lhRunBoard.value  != null && !lhRunBoard.value!.path.startsWith('http') && !lhRunBoard.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('runnningBorderLeft', lhRunBoard.value!.readAsBytesSync()));
       }
-      if (tailLightRh.value != null) {
+      if (tailLightRh.value  != null && !tailLightRh.value!.path.startsWith('http') && !tailLightRh.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('tailLightRight', tailLightRh.value!.readAsBytesSync()));
       }
-      if (tailLightLh.value != null) {
+      if (tailLightLh.value  != null && !tailLightLh.value!.path.startsWith('http') && !tailLightLh.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('tailLightLeft', tailLightLh.value!.readAsBytesSync()));
       }
-      if (rearWiper.value != null) {
+      if (rearWiper.value  != null && !rearWiper.value!.path.startsWith('http') && !rearWiper.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('rearWiper', rearWiper.value!.readAsBytesSync()));
       }
-      if (dickyDoorImage.value != null) {
+      if (dickyDoorImage.value  != null && !dickyDoorImage.value!.path.startsWith('http') && !dickyDoorImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('dickyDoor', dickyDoorImage.value!.readAsBytesSync()));
       }
-      if (bootImage.value != null) {
+      if (bootImage.value  != null && !bootImage.value!.path.startsWith('http') && !bootImage.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('boot', bootImage.value!.readAsBytesSync()));
       }
-      if (firewall.value != null) {
+      if (firewall.value  != null && !firewall.value!.path.startsWith('http') && !firewall.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('firewall', firewall.value!.readAsBytesSync()));
       }
-      if (spareWheel.value != null) {
+      if (spareWheel.value  != null && !spareWheel.value!.path.startsWith('http') && !spareWheel.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('spareWheel', spareWheel.value!.readAsBytesSync()));
       }
-      if (lhRearViewMirror.value != null) {
+      if (lhRearViewMirror.value  != null && !lhRearViewMirror.value!.path.startsWith('http') && !lhRearViewMirror.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('rearViewMirrorLeft', lhRearViewMirror.value!.readAsBytesSync()));
       }
-      if (rhRearViewMirror.value != null) {
+      if (rhRearViewMirror.value  != null && !rhRearViewMirror.value!.path.startsWith('http') && !rhRearViewMirror.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('rearViewMirrorRight', rhRearViewMirror.value!.readAsBytesSync()));
       }
-      if (fuelLid.value != null) {
+      if (fuelLid.value  != null && !fuelLid.value!.path.startsWith('http') && !fuelLid.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('fuelLid', fuelLid.value!.readAsBytesSync()));
       }
       // request.files.add( http.MultipartFile.fromBytes('fogLightRight', ));
       // request.files.add( http.MultipartFile.fromBytes('fogLightLeft', ));
-      if (cowlTop.value != null) {
+      if (cowlTop.value  != null && !cowlTop.value!.path.startsWith('http') && !cowlTop.value!.path.startsWith('https')) {
         request.files.add(http.MultipartFile.fromBytes('cowlTop', cowlTop.value!.readAsBytesSync()));
       }
       request.headers.addAll(globals.headers);
