@@ -176,7 +176,7 @@ class NewEvaluationViewModel extends GetxController {
 
   void addNewEvaluation() async {
     try {
-      var headers = {'Authorization': 'Bearer ${globals.token}'};
+      var headers = {'Authorization': 'Bearer ${globals.token}','Content-Type': 'application/json',};
 
       CreateEvaluationRequest createEvaluationRequest = CreateEvaluationRequest();
 
@@ -221,7 +221,7 @@ class NewEvaluationViewModel extends GetxController {
       if (kDebugMode) {
         print(jsonEncode(createEvaluationRequest));
       }
-      final response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.evaluation), body: jsonEncode(createEvaluationRequest), headers: headers);
+      final response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.evaluation), body: json.encode(createEvaluationRequest), headers: headers);
 
       if (response.statusCode == 200) {
         CustomToast.instance.showMsg(MyStrings.success);

@@ -251,8 +251,8 @@ class NewEvaluationScreen extends StatelessWidget {
                 SizedBox(
                   height: Dimens.standard_48,
                 ),
-                Obx(
-                  () => SizedBox(
+                // Obx(() =>
+                    SizedBox(
                     height: 70,
                     child: Center(
                       child: CustomElevatedButton(
@@ -273,7 +273,7 @@ class NewEvaluationScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
+                // ),
               ],
             ),
           ),
@@ -340,7 +340,7 @@ class NewEvaluationScreen extends StatelessWidget {
                     final selectedDate = await showDatePicker(
                       initialDate: DateTime.now(),
                       firstDate: DateTime(1990),
-                      lastDate: DateTime.now(),
+                      lastDate: DateTime(DateTime.now().year+25),
                       context: Get.context!,
                     );
                     if (selectedDate != null) {
@@ -798,8 +798,7 @@ class NewEvaluationScreen extends StatelessWidget {
   }
 
   Widget pageThree() {
-    return Obx(
-      () => Scaffold(
+    return Scaffold(
         body: SingleChildScrollView(
           child: Form(
             key: viewModel.page3Key,
@@ -1391,7 +1390,7 @@ class NewEvaluationScreen extends StatelessWidget {
             ),
           ),
         ),
-      ),
+
     );
   }
 

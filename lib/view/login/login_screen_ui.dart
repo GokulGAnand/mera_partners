@@ -30,7 +30,7 @@ class LoginScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(Dimens.dp_100, Dimens.dp_30, Dimens.dp_100, Dimens.dp_30),
+                      padding: const EdgeInsets.fromLTRB(Dimens.dp_100, Dimens.dp_60, Dimens.dp_100, Dimens.dp_30),
                       child: Image.asset(MyImages.appLogo),
                     ),
                     Padding(

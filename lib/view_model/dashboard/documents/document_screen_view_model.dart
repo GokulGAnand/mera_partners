@@ -5,6 +5,7 @@ import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/service/endpoints.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http_parser/http_parser.dart';
 import '../../../model/response/document/document_response.dart';
 import '../../../service/exception_error_util.dart';
 import '../../../utils/constants.dart';
@@ -85,20 +86,20 @@ class DocumentViewModel extends GetxController {
         'nocImage_remarks':nocRemarksController.value.text,
         'evaluationStatusForDocument': 'COMPLETED'
       });
-      if (rcFrontImage.value != null && !rcFrontImage.value!.path.startsWith('http') && !rcFrontImage.value!.path.startsWith('https')) {
-        request.files.add(http.MultipartFile.fromBytes('rcFront', rcFrontImage.value!.readAsBytesSync()));
+      if (rcFrontImage.value != null /*&& !rcFrontImage.value!.path.startsWith('http') && !rcFrontImage.value!.path.startsWith('https')*/) {
+        request.files.add(await http.MultipartFile.fromPath('rcFront', rcFrontImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (rcBackImage.value != null && !rcBackImage.value!.path.startsWith('http') && !rcBackImage.value!.path.startsWith('https')) {
-        request.files.add(http.MultipartFile.fromBytes('rcBack', rcBackImage.value!.readAsBytesSync()));
+      if (rcBackImage.value != null/* && !rcBackImage.value!.path.startsWith('http') && !rcBackImage.value!.path.startsWith('https')*/) {
+        request.files.add(await http.MultipartFile.fromPath('rcBack', rcBackImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if(nocImage.value != null && !nocImage.value!.path.startsWith('http') && !nocImage.value!.path.startsWith('https')) {
-        request.files.add(http.MultipartFile.fromBytes('nocImage', nocImage.value != null ? nocImage.value!.readAsBytesSync() : []));
+      if(nocImage.value != null /*&& !nocImage.value!.path.startsWith('http') && !nocImage.value!.path.startsWith('https')*/) {
+        request.files.add(await http.MultipartFile.fromPath('nocImage', nocImage.value!.path,contentType: MediaType('image', 'jpg')));
       }
-      if(form35Image.value != null && !form35Image.value!.path.startsWith('http') && !form35Image.value!.path.startsWith('https')) {
-        request.files.add(http.MultipartFile.fromBytes('form35Image', form35Image.value != null ? form35Image.value!.readAsBytesSync() : []));
+      if(form35Image.value != null /*&& !form35Image.value!.path.startsWith('http') && !form35Image.value!.path.startsWith('https')*/) {
+        request.files.add(await http.MultipartFile.fromPath('form35Image', form35Image.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if(chassisImage.value != null && !form35Image.value!.path.startsWith('http') && !form35Image.value!.path.startsWith('https')) {
-        request.files.add(http.MultipartFile.fromBytes('chassisImage', chassisImage.value != null ? chassisImage.value!.readAsBytesSync() : []));
+      if(chassisImage.value != null /*&& !form35Image.value!.path.startsWith('http') && !form35Image.value!.path.startsWith('https')*/) {
+        request.files.add(await http.MultipartFile.fromPath('chassisImage', chassisImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       request.headers.addAll(globals.headers);
 
@@ -141,19 +142,24 @@ class DocumentViewModel extends GetxController {
       insuranceValidityController.value.text = documentResponse.value.data?.insuranceValidity ?? '';
       bankNameController.value.text = documentResponse.value.data?.bankName ?? '';
       remarksController.value.text = documentResponse.value.data?.remarks ?? '';
-      rcFrontUploadRemarksController.value.text = documentResponse.value.data!.rcFront!.remarks ?? '';
-      rcBackUploadRemarksController.value.text = documentResponse.value.data!.rcBack!.remarks ?? '';
-      chassisRemarksController.value.text = documentResponse.value.data!.chassisImage!.remarks ?? '';
-      rcFrontImage.value = File(documentResponse.value.data!.rcFront!.url ?? '');
-      rcBackImage.value = File(documentResponse.value.data!.rcBack!.url ?? '');
-      chassisImage.value = File(documentResponse.value.data!.chassisImage!.url ?? '');
-      selectedInterStateTransfer.value = documentResponse.value.data!.interStateTransfer ?? '';
-      selectedInsurance.value = documentResponse.value.data!.insurance ?? '';
-      selectedNCB.value = documentResponse.value.data!.ncb ?? '';
-      selectedLoanClosed.value = documentResponse.value.data!.loanStatus ?? '';
-      selectedForm35.value = documentResponse.value.data!.form35 ?? '';
-      selectedRcMismatch.value = documentResponse.value.data!.rcMismatch ?? '';
-      selectedInsuranceMismatch.value = documentResponse.value.data!.insuranceMismatch ?? '';
+      rcFrontUploadRemarksController.value.text = documentResponse.value.data?.rcFront?.remarks ?? '';
+      rcBackUploadRemarksController.value.text = documentResponse.value.data?.rcBack?.remarks ?? '';
+      chassisRemarksController.value.text = documentResponse.value.data?.chassisImage?.remarks ?? '';
+      nocRemarksController.value.text = documentResponse.value.data?.nocImage?.remarks ?? '';
+      form35RemarksController.value.text = documentResponse.value.data?.form35Image?.remarks ?? '';
+      rcFrontImage.value = File(documentResponse.value.data?.rcFront?.url ?? '');
+      rcBackImage.value = File(documentResponse.value.data?.rcBack?.url ?? '');
+      chassisImage.value = File(documentResponse.value.data?.chassisImage?.url ?? '');
+      nocImage.value = File(documentResponse.value.data?.nocImage?.url ?? '');
+      form35Image.value = File(documentResponse.value.data?.form35Image?.url ?? '');
+      selectedInterStateTransfer.value = documentResponse.value.data?.interStateTransfer ?? '';
+      selectedInsurance.value = documentResponse.value.data?.insurance ?? '';
+      selectedNCB.value = documentResponse.value.data?.ncb ?? '';
+      selectedLoanClosed.value = documentResponse.value.data?.loanStatus ?? '';
+      selectedForm35.value = documentResponse.value.data?.form35 ?? '';
+      selectedRcMismatch.value = documentResponse.value.data?.rcMismatch ?? '';
+      selectedInsuranceMismatch.value = documentResponse.value.data?.insuranceMismatch ?? '';
+      selectedRc.value = documentResponse.value.data?.rcAvailability ?? '';
       // selectedLoanNoc.value = documentResponse.value.data!.
       // selectedUnderHypothecation.value = documentResponse.value.data!.
     }

@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:evaluator_app/utils/globals.dart' as globals;
+import 'package:http_parser/http_parser.dart';
 
 class InteriorViewModel extends GetxController {
   final GlobalKey<FormState> page1Key = GlobalKey<FormState>();
@@ -166,31 +167,31 @@ class InteriorViewModel extends GetxController {
         'evaluationStatusForInterior': 'COMPLETED'
       });
       if (dashboardImage.value != null && (dashboardImage.value!.path.startsWith('http') == false || dashboardImage.value!.path.startsWith('https') == false)) {
-        request.files.add(http.MultipartFile.fromBytes('dashboardImage', dashboardImage.value!.readAsBytesSync()));
+        request.files.add(await http.MultipartFile.fromPath('dashboardImage', dashboardImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (frontSeatImage.value != null && (frontSeatImage.value!.path.startsWith('http') == false || frontSeatImage.value!.path.startsWith('https') == false)) {
-        request.files.add(http.MultipartFile.fromBytes('frontSeatImage', frontSeatImage.value!.readAsBytesSync()));
+        request.files.add(await http.MultipartFile.fromPath('frontSeatImage', frontSeatImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (rearSeatImage.value != null && (rearSeatImage.value!.path.startsWith('http') == false || rearSeatImage.value!.path.startsWith('https') == false)) {
-        request.files.add(http.MultipartFile.fromBytes('rearSeatImage', rearSeatImage.value!.readAsBytesSync()));
+        request.files.add(await http.MultipartFile.fromPath('rearSeatImage', rearSeatImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (handBreakImage.value != null && (handBreakImage.value!.path.startsWith('http') == false || handBreakImage.value!.path.startsWith('https') == false)) {
-        request.files.add(http.MultipartFile.fromBytes('handbreakImage', handBreakImage.value!.readAsBytesSync()));
+        request.files.add(await http.MultipartFile.fromPath('handbreakImage', handBreakImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (powerWindowDriverImage.value != null && (powerWindowDriverImage.value!.path.startsWith('http') == false || powerWindowDriverImage.value!.path.startsWith('https') == false)) {
-        request.files.add(http.MultipartFile.fromBytes('powerWindowDriverImage', powerWindowDriverImage.value!.readAsBytesSync()));
+        request.files.add(await http.MultipartFile.fromPath('powerWindowDriverImage', powerWindowDriverImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (pushWindowDriverImage.value != null && (pushWindowDriverImage.value!.path.startsWith('http') == false || pushWindowDriverImage.value!.path.startsWith('https') == false)) {
-        request.files.add(http.MultipartFile.fromBytes('pushWindowDriverImage', pushWindowDriverImage.value!.readAsBytesSync()));
+        request.files.add(await http.MultipartFile.fromPath('pushWindowDriverImage', pushWindowDriverImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (cngLpgKitImage.value != null && (cngLpgKitImage.value!.path.startsWith('http') == false || cngLpgKitImage.value!.path.startsWith('https') == false)) {
-        request.files.add(http.MultipartFile.fromBytes('cngKitImage', cngLpgKitImage.value!.readAsBytesSync()));
+        request.files.add(await http.MultipartFile.fromPath('cngKitImage', cngLpgKitImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (platformImage.value != null && (platformImage.value!.path.startsWith('http') == false || platformImage.value!.path.startsWith('https') == false)) {
-        request.files.add(http.MultipartFile.fromBytes('platformImage', platformImage.value!.readAsBytesSync()));
+        request.files.add(await http.MultipartFile.fromPath('platformImage', platformImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (interiorViewFromBootDashboardImage.value != null && (interiorViewFromBootDashboardImage.value!.path.startsWith('http') == false || interiorViewFromBootDashboardImage.value!.path.startsWith('https') == false)) {
-        request.files.add(http.MultipartFile.fromBytes('interiorView', interiorViewFromBootDashboardImage.value!.readAsBytesSync()));
+        request.files.add(await http.MultipartFile.fromPath('interiorView', interiorViewFromBootDashboardImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       request.headers.addAll(globals.headers);
 

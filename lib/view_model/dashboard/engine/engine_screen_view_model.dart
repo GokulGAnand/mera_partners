@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:evaluator_app/utils/globals.dart' as globals;
+import 'package:http_parser/http_parser.dart';
 import '../../../model/response/engine/engine_details_response.dart';
 import '../../../service/exception_error_util.dart';
 import '../../../utils/strings.dart';
@@ -170,41 +171,42 @@ class EngineViewModel extends GetxController {
         'sump_remarks':sumpRemarksController.value.text,
       });
       if (engineCompartmentImage.value  != null && !engineCompartmentImage.value!.path.startsWith('http') && !engineCompartmentImage.value!.path.startsWith('https')) {
-        request.files.add(http.MultipartFile.fromBytes('engineCompartment', engineCompartmentImage.value!.readAsBytesSync()));
+        request.files.add(await http.MultipartFile.fromPath('engineCompartment', engineCompartmentImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (engineIdleStartVideo.value  != null && !engineIdleStartVideo.value!.path.startsWith('http') && !engineIdleStartVideo.value!.path.startsWith('https')) {
-        request.files.add(http.MultipartFile.fromBytes('startVideo', engineIdleStartVideo.value!.readAsBytesSync()));
+        var type = engineIdleStartVideo.value!.path.split('.').last;
+        request.files.add(await http.MultipartFile.fromPath('startVideo', engineIdleStartVideo.value!.path,contentType: MediaType('image', type),));
       }
       if (engineImage.value  != null && !engineImage.value!.path.startsWith('http') && !engineImage.value!.path.startsWith('https')) {
-        request.files.add(http.MultipartFile.fromBytes('engine', engineImage.value!.readAsBytesSync()));
+        request.files.add(await http.MultipartFile.fromPath('engine', engineImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (batteryImage.value  != null && !batteryImage.value!.path.startsWith('http') && !batteryImage.value!.path.startsWith('https')) {
-        request.files.add(http.MultipartFile.fromBytes('battery', batteryImage.value!.readAsBytesSync()));
+        request.files.add(await http.MultipartFile.fromPath('battery', batteryImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (blowByBackCompressionImage.value  != null && !blowByBackCompressionImage.value!.path.startsWith('http') && !blowByBackCompressionImage.value!.path.startsWith('https')) {
-        request.files.add(http.MultipartFile.fromBytes('blowBy', blowByBackCompressionImage.value!.readAsBytesSync()));
+        request.files.add(await http.MultipartFile.fromPath('blowBy', blowByBackCompressionImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (clutchOperationsImage.value  != null && !clutchOperationsImage.value!.path.startsWith('http') && !clutchOperationsImage.value!.path.startsWith('https')) {
-        request.files.add(http.MultipartFile.fromBytes('clutch', clutchOperationsImage.value!.readAsBytesSync()));
+        request.files.add(await http.MultipartFile.fromPath('clutch', clutchOperationsImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (clutchOperationsImage.value  != null && !gearBoxImage.value!.path.startsWith('http') && !gearBoxImage.value!.path.startsWith('https')) {
-        request.files.add(http.MultipartFile.fromBytes('gearBox', gearBoxImage.value!.readAsBytesSync()));
+        request.files.add(await http.MultipartFile.fromPath('gearBox', gearBoxImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (engineOilImage.value  != null && !engineOilImage.value!.path.startsWith('http') && !engineOilImage.value!.path.startsWith('https')) {
-        request.files.add(http.MultipartFile.fromBytes('engineOil', engineOilImage.value!.readAsBytesSync()));
+        request.files.add(await http.MultipartFile.fromPath('engineOil', engineOilImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (turboChargerImage.value  != null && !turboChargerImage.value!.path.startsWith('http') && !turboChargerImage.value!.path.startsWith('https')) {
-        request.files.add(http.MultipartFile.fromBytes('turboCharger', turboChargerImage.value!.readAsBytesSync()));
+        request.files.add(await http.MultipartFile.fromPath('turboCharger', turboChargerImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (engineMountImage.value  != null && !engineMountImage.value!.path.startsWith('http') && !engineMountImage.value!.path.startsWith('https')) {
-        request.files.add(http.MultipartFile.fromBytes('mount', engineMountImage.value!.readAsBytesSync()));
+        request.files.add(await http.MultipartFile.fromPath('mount', engineMountImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (sumpImage.value  != null && !sumpImage.value!.path.startsWith('http') && !sumpImage.value!.path.startsWith('https')) {
-        request.files.add(http.MultipartFile.fromBytes('sump', sumpImage.value!.readAsBytesSync()));
+        request.files.add(await http.MultipartFile.fromPath('sump', sumpImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       request.headers.addAll(globals.headers);
 
-      http.StreamedResponse response = await request.send();
+      var response = await request.send();
 
       if (response.statusCode == 200) {
         print(await response.stream.bytesToString());
@@ -223,31 +225,31 @@ class EngineViewModel extends GetxController {
 
 
   void loadData(){
-    /*if(engineResponse.value.data  != null && !.value!.path.startsWith('http') && !.value!.path.startsWith('https')){
+    if(engineResponse.value.data  != null /*&& !.value!.path.startsWith('http') && !.value!.path.startsWith('https')*/){
       engineCompartmentImageRemarks.value.text = engineResponse.value.data?[0].engineCompartment?.remarks ?? '';
       engineIdleStartVideoRemarksController.value.text = engineResponse.value.data?[0].startVideo?.remarks ?? '';
-      // otherEngineConditionController. value = engineResponse.value.data?[0];
-      // otherRadiatorController. value = engineResponse.value.data?[0];
-      // otherSmokeController. value = engineResponse.value.data?[0];
-      // otherCoolantController. value = engineResponse.value.data?[0];
-      // otherBlowbyController. value = engineResponse.value.data?[0];
-      // otherBatteryController. value = engineResponse.value.data?[0];
-      // otherStartingMotorController. value = engineResponse.value.data?[0];
-      engineIdleStartVideoRemarksController. value = engineResponse.value.data?[0].startVideo?.remarks ?? '';
-      radiatorRemarksController. value = engineResponse.value.data?[0];
-      startingMotorRemarksController. value = engineResponse.value.data?[0].startingMotor;
-      blowByRemarksController. value = engineResponse.value.data?[0].blowBy?.remarks ?? '';
-      engineRemarksController. value = engineResponse.value.data?[0].engine?.remarks ?? '';
-      batteryRemarksController.value = engineResponse.value.data?[0].battery?.remarks ?? '';
+      // otherEngineConditionController.value = engineResponse.value.data?[0];
+      // otherRadiatorController.value.text = engineResponse.value.data?[0];
+      // otherSmokeController.value.text = engineResponse.value.data?[0];
+      // otherCoolantController.value.text = engineResponse.value.data?[0];
+      // otherBlowbyController.value.text = engineResponse.value.data?[0];
+      // otherBatteryController.value.text = engineResponse.value.data?[0];
+      // otherStartingMotorController.value.text = engineResponse.value.data?[0];
+      engineIdleStartVideoRemarksController. value.text = engineResponse.value.data?[0].startVideo?.remarks ?? '';
+      radiatorRemarksController.value.text = engineResponse.value.data?[0].radiator ?? '';
+      startingMotorRemarksController.value.text = engineResponse.value.data?[0].startingMotor ?? '';
+      blowByRemarksController.value.text = engineResponse.value.data?[0].blowBy?.remarks ?? '';
+      engineRemarksController.value.text = engineResponse.value.data?[0].engine?.remarks ?? '';
+      batteryRemarksController.value.text = engineResponse.value.data?[0].battery?.remarks ?? '';
       engineController.value.text = engineResponse.value.data?[0].engine?.condition?.join(',') ?? '';
       batteryController.value.text = engineResponse.value.data?[0].battery?.condition?.join(',') ?? '';
       blowByBackCompressionController.value.text = engineResponse.value.data?[0].blowBy?.condition?.join(',') ?? '';
       engineCompartmentImage.value = File(engineResponse.value.data?[0].engineCompartment?.url ?? '');
-      engineIdleStartVideo.value = File(engineResponse.value.data?[0].startVideo?.path ?? '');
+      engineIdleStartVideo.value = File(engineResponse.value.data?[0].startVideo?.url ?? '');
       blowByBackCompressionImage.value = File(engineResponse.value.data?[0].blowBy?.url ?? '');
       engineImage.value = File(engineResponse.value.data?[0].engine?.url ?? '');
       batteryImage.value = File(engineResponse.value.data?[0].battery?.url ?? '');
-      selectedEn gine.value = engineResponse.value.data?[0].engine?.condition ?? [];
+      selectedEngine.value = engineResponse.value.data?[0].engine?.condition ?? [];
       selectedBattery.value = engineResponse.value.data?[0].battery?.condition ?? [];
       selectedBlowBy.value = engineResponse.value.data?[0].blowBy?.condition ?? [];
       selectedEngineSound.value = engineResponse.value.data?[0].engineSound ?? '';
@@ -258,23 +260,23 @@ class EngineViewModel extends GetxController {
       selectedSilencer.value = engineResponse.value.data?[0].silencer ?? '';
       selectedGearBoxLeak.value = engineResponse.value.data?[0].gearBoxLeakage ?? '';
       clutchOperationsImage.value = File(engineResponse.value.data?[0].clutch?.url ?? '');
-      // gearBoxImage.value = File(engineResponse.value.data?[0].gearBox?.url ?? '');
+      gearBoxImage.value = File(engineResponse.value.data?[0].gearBox?.url ?? '');
       engineOilImage.value = File(engineResponse.value.data?[0].engineOil?.url ?? '');
       turboChargerImage.value = File(engineResponse.value.data?[0].turboCharger?.url ?? '');
-      // engineMountImage.value = File(engineResponse.value.data?[0].mount?.url ?? '');
-      // sumpImage.value = engineResponse.value.data?[0].sump?.url ?? '';
+      engineMountImage.value = File(engineResponse.value.data?[0].mount?.url ?? '');
+      sumpImage.value = File(engineResponse.value.data?[0].sump?.url ?? '');
       selectedClutchOperations.value = engineResponse.value.data?[0].clutch?.condition ?? [];
       selectedGearBox.value = engineResponse.value.data?[0].gearBox?.condition ?? [];
       selectedEngineOil.value = engineResponse.value.data?[0].engineOil?.condition ?? [];
       selectedTurboCharger.value = engineResponse.value.data?[0].turboCharger?.condition ?? [];
       selectedEngineMount.value = engineResponse.value.data?[0].mount?.condition ?? [];
       selectedSump.value = engineResponse.value.data?[0].sump?.condition ?? [];
-      // clutchOperationsRemarksController.value = engineResponse.value.data?[0].clutch?.remarks ?? '';
-      // gearBoxImageRemarksController.value = engineResponse.value.data?[0].gearBox?.remarks ?? '';
-      // engineOilRemarksController.value = engineResponse.value.data?[0].engineOil?.remarks ?? '';
-      // turboChargerRemarksController.value = engineResponse.value.data?[0].turboCharger?.remarks ?? '';
-      // engineMountRemarksController.value = engineResponse.value.data?[0].mount?.remarks ?? '';
-      // sumpRemarksController.value = engineResponse.value.data?[0].sump?.remarks ?? '';
+      clutchOperationsRemarksController.value.text = engineResponse.value.data?[0].clutch?.remarks ?? '';
+      gearBoxImageRemarksController.value.text = engineResponse.value.data?[0].gearBox?.remarks ?? '';
+      engineOilRemarksController.value.text = engineResponse.value.data?[0].engineOil?.remarks ?? '';
+      turboChargerRemarksController.value.text = engineResponse.value.data?[0].turboCharger?.remarks ?? '';
+      engineMountRemarksController.value.text = engineResponse.value.data?[0].mount?.remarks ?? '';
+      sumpRemarksController.value.text = engineResponse.value.data?[0].sump?.remarks ?? '';
       sumpController.value.text = engineResponse.value.data?[0].sump?.condition?.join(',') ?? '';
       remarksController.value.text = engineResponse.value.data?[0].engineComment ?? '';
       engineMountController.value.text = engineResponse.value.data?[0].mount?.condition?.join(',') ?? '';
@@ -289,7 +291,7 @@ class EngineViewModel extends GetxController {
       // otherTurboChargerController.value.text = engineResponse.value.data?[0];
       // otherEngineMountController.value.text = engineResponse.value.data?[0];
       // otherSumpController.value.text = engineResponse.value.data?[0];
-    }*/
+    }
   }
 
   void getEngineData()async {

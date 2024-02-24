@@ -8,6 +8,7 @@ import 'package:evaluator_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:evaluator_app/utils/globals.dart' as globals;
+import 'package:http_parser/http_parser.dart';
 
 import '../../../model/response/features/faetures_response.dart';
 import '../../../routes/app_routes.dart';
@@ -141,7 +142,7 @@ class FeatureViewModel extends GetxController{
        'evaluationStatusForFeature': 'COMPLETED'
      });
      if (stereoImage.value!=null && (stereoImage.value!.path.startsWith('http') == false || stereoImage.value!.path.startsWith('https') == false)) {
-       request.files.add( http.MultipartFile.fromBytes('stereoImage', stereoImage.value!.readAsBytesSync()));
+       request.files.add( await http.MultipartFile.fromPath('stereoImage', stereoImage.value!.path,contentType: MediaType('image', 'jpg'),));
      } 
      request.headers.addAll(globals.headers);
 
