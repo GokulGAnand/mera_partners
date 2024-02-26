@@ -2,6 +2,7 @@ import 'package:evaluator_app/view_model/login/login_view_model.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../service/internet_check.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimens.dart';
@@ -13,10 +14,34 @@ import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_form_field.dart';
 
 /// ignore: must_be_immutable
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   LoginScreenViewModel loginScreenViewModel = Get.put(LoginScreenViewModel());
+
+  @override
+  void initState() {
+    super.initState();
+    getPermission();
+  }
+
+  Future<void> getPermission() async {
+    var cameraStatus = await Permission.camera.status;
+    if (!cameraStatus.isGranted) {
+      final result = await Permission.camera.request();
+      print("camera access: " + result.isGranted.toString());
+    } 
+    var galleryStatus = await Permission.storage.status;
+    if (!galleryStatus.isGranted) {
+      final result = await Permission.storage.request();
+      print("gallery access: " + result.isGranted.toString());
+    } 
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -42,7 +42,7 @@ class EvaluationCard extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.all(12),
           child: Column(
             children: [
               Row(
@@ -90,7 +90,7 @@ class EvaluationCard extends StatelessWidget {
                           buttonText: MyStrings.resumeReport)
                     ],
                   ),
-                    const SizedBox(width: 15),
+                    const SizedBox(width: 10),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,7 +111,6 @@ class EvaluationCard extends StatelessWidget {
                                 child: Center(child: Text(variant, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: MyColors.black))),
                               ),
                             ),
-                            const SizedBox(width: 6),
                             Container(
                               height: 18,
                               decoration: BoxDecoration(borderRadius: BorderRadius.circular(9), color: MyColors.lightBlue),
@@ -120,7 +119,6 @@ class EvaluationCard extends StatelessWidget {
                                 child: Center(child: Text(year, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: MyColors.black))),
                               ),
                             ),
-                            const SizedBox(width: 2),
                             Container(
                               height: 18,
                               decoration: BoxDecoration(borderRadius: BorderRadius.circular(9), color: MyColors.lightBlue),
@@ -140,15 +138,16 @@ class EvaluationCard extends StatelessWidget {
                               padding: const EdgeInsets.only(top: 5),
                               child: SvgPicture.asset(MyImages.speedometer, width: 22,),
                             ),
-                            const SizedBox(width: 5),
                             const Padding(
                               padding: EdgeInsets.only(top: 5),
                               child: Text('KMS DRIVEN', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.blue)),
                             ),
-                            const Spacer(),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 5),
-                              child: Text(kmDriven ?? '', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.black)),
+                            const SizedBox(width: 2,),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Text(kmDriven ?? '', textAlign: TextAlign.right,style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.black, overflow: TextOverflow.ellipsis)),
+                              ),
                             )
                           ],
                         ),
@@ -158,10 +157,9 @@ class EvaluationCard extends StatelessWidget {
                         Row(
                           children: [
                             Image.asset(MyImages.calendar2, width: 22,), 
-                            const SizedBox(width: 5), 
                             const Text('DATE', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.blue)),
-                            const Spacer(),
-                            Text(date, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.black))
+                            const SizedBox(width: 2,),
+                            Expanded(child: Text(date, textAlign: TextAlign.right, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.black, overflow: TextOverflow.ellipsis)))
                           ],
                         ),
                         const SizedBox(
