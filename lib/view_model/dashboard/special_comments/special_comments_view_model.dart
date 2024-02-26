@@ -48,7 +48,8 @@ class SpecialCommentsViewModel extends GetxController{
             headers: globals.headers
           );
       if(response.statusCode== 200){
-            Get.toNamed(AppRoutes.dashBoardScreen);
+        Get.back();
+            // Get.toNamed(AppRoutes.dashBoardScreen);
           }
     } catch (e) {
       log(e.toString());

@@ -136,18 +136,16 @@ class EvaluationCard extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 5),
-                                child: SvgPicture.asset(MyImages.speedometer),
-                              ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 5),
+                              child: SvgPicture.asset(MyImages.speedometer, width: 22,),
                             ),
-                            const SizedBox(width: 2),
+                            const SizedBox(width: 5),
                             const Padding(
                               padding: EdgeInsets.only(top: 5),
                               child: Text('KMS DRIVEN', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.blue)),
                             ),
-                            const SizedBox(width: 4),
+                            const Spacer(),
                             Padding(
                               padding: const EdgeInsets.only(top: 5),
                               child: Text(kmDriven ?? '', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.black)),
@@ -159,8 +157,11 @@ class EvaluationCard extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Expanded(child: Image.asset(MyImages.calendar2)), const SizedBox(width: 5), const Text('DATE', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.blue)),
-                            const Expanded(child: SizedBox(width: 5)), Text(date, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.black))
+                            Image.asset(MyImages.calendar2, width: 22,), 
+                            const SizedBox(width: 5), 
+                            const Text('DATE', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.blue)),
+                            const Spacer(),
+                            Text(date, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.black))
                           ],
                         ),
                         const SizedBox(

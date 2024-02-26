@@ -32,14 +32,14 @@ class DashBoardViewModel extends GetxController {
   @override
   void onInit() {
     dashboard = [
-      DashBoardClass(icon: MyImages.difference, label: MyStrings.documents,isComplete: documentsComplete.value),
-      DashBoardClass(icon: MyImages.exterior, label: MyStrings.exterior,isComplete: exteriorComplete.value),
-      DashBoardClass(icon: MyImages.engine, label: MyStrings.engine,isComplete:engineComplete.value),
-      DashBoardClass(icon: MyImages.electric, label: MyStrings.interior,isComplete:interiorComplete.value),
-      DashBoardClass(icon: MyImages.search, label: MyStrings.test,isComplete:testComplete.value),
-      DashBoardClass(icon: MyImages.settings, label: MyStrings.features,isComplete:featuresComplete.value),
-      DashBoardClass(icon: MyImages.heat, label: MyStrings.air,isComplete:airComplete.value),
-      DashBoardClass(icon: MyImages.maps, label: MyStrings.comments,isComplete:commentsComplete.value),
+      DashBoardClass(icon: MyImages.difference, label: MyStrings.documents,isComplete: documentsComplete),
+      DashBoardClass(icon: MyImages.exterior, label: MyStrings.exterior,isComplete: exteriorComplete),
+      DashBoardClass(icon: MyImages.engine, label: MyStrings.engine,isComplete:engineComplete),
+      DashBoardClass(icon: MyImages.electric, label: MyStrings.interior,isComplete:interiorComplete),
+      DashBoardClass(icon: MyImages.search, label: MyStrings.test,isComplete:testComplete),
+      DashBoardClass(icon: MyImages.settings, label: MyStrings.features,isComplete:featuresComplete),
+      DashBoardClass(icon: MyImages.heat, label: MyStrings.air,isComplete:airComplete),
+      DashBoardClass(icon: MyImages.maps, label: MyStrings.comments,isComplete:commentsComplete),
     ];
     ratingList.value = [
       Item(title: MyStrings.engine, rating: 0),
@@ -68,7 +68,7 @@ class DashBoardViewModel extends GetxController {
             commentsComplete.value = true;
             update();
             refresh();
-            notifyChildrens();
+            notifyChildrens();  
         if (documentsComplete.value && exteriorComplete.value && engineComplete.value && interiorComplete.value && testComplete.value && featuresComplete.value && airComplete.value && commentsComplete.value) {
           isEvaluated.value = true;
         }
@@ -126,6 +126,6 @@ class DashBoardClass {
   Color? tileColor;
   String? icon;
   String? label;
-  bool? isComplete;
+  RxBool? isComplete;
   VoidCallback? onPressed;
 }
