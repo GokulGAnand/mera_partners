@@ -9,6 +9,7 @@ import '../../../service/internet_check.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/dimens.dart';
 import '../../../utils/images.dart';
+import '../../../utils/methods.dart';
 import '../../../utils/strings.dart';
 import '../../../utils/styles.dart';
 import '../../../utils/validate_input.dart';
@@ -41,7 +42,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -74,7 +75,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -112,7 +113,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -145,7 +146,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -178,7 +179,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -211,7 +212,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -244,7 +245,7 @@ class ExteriorScreen extends StatelessWidget {
                   ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -277,7 +278,7 @@ class ExteriorScreen extends StatelessWidget {
                   ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -310,7 +311,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -343,7 +344,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -415,7 +416,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -448,7 +449,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -481,7 +482,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -514,7 +515,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -547,7 +548,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -580,7 +581,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -613,7 +614,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -646,7 +647,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -679,7 +680,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -712,7 +713,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -783,7 +784,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -816,7 +817,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -849,7 +850,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -882,7 +883,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -915,7 +916,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -948,7 +949,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -981,7 +982,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1038,7 +1039,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),*/
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1076,7 +1077,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1137,7 +1138,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1237,7 +1238,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1298,7 +1299,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1331,7 +1332,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1364,7 +1365,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1397,7 +1398,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1430,7 +1431,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1463,7 +1464,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1496,7 +1497,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1529,7 +1530,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1562,7 +1563,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1634,7 +1635,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1667,7 +1668,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1700,7 +1701,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1733,7 +1734,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1766,7 +1767,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1799,7 +1800,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1832,7 +1833,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1865,7 +1866,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1898,7 +1899,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -1931,7 +1932,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -2003,7 +2004,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -2036,7 +2037,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -2069,7 +2070,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -2128,7 +2129,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -2161,7 +2162,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -2194,7 +2195,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -2227,7 +2228,7 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(
+                    await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -2346,11 +2347,10 @@ class ExteriorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     pages = [pageOne(context), pageTwo(context), pageThree(context), pageFour(context), pageFive(context), pageSix(context)];
-    // ignore: deprecated_member_use
-    return Obx(() => WillPopScope(
-      onWillPop: () async{
-        Get.back();
-        return true;
+    return Obx(() => PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        Methods.showConfirmDialog(context);
       },
       child: Scaffold(
         key: _key,

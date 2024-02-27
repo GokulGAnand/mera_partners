@@ -252,16 +252,17 @@ class CustomCheckBoxDialog extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
               child: CustomElevatedButton(onPressed: () {
                 if (formKey.currentState!.validate()) {
-                  if(!selectItem.contains("Good") && image.value == null){
-                                    CustomToast.instance.showMsg(MyStrings.vMandatory);
-                  }else if(selectItem.isNotEmpty || image.value != null){
+                  if((selectItem.isNotEmpty && !selectItem.contains("Good") && image.value != null) || (selectItem.isNotEmpty && selectItem.contains("good") && image.value == null)){
                     if(selectItem.contains(othersController.value.text) == false){
                       selectItem.add(othersController.value.text);
                     }
                     selectItem.remove("Other");
                     Navigator.of(context).pop();
+                  }else if ((selectItem.isNotEmpty && !selectItem.contains("Good")) && image.value == null && selectItem.value[0].isNotEmpty){
+                    CustomToast.instance.showMsg(MyStrings.vUploadImage);
+                  }else{
+                    Navigator.of(context).pop();
                   }
-
                 }
               }, buttonText: MyStrings.submit),
             ),

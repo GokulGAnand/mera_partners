@@ -10,6 +10,7 @@ import '../../service/internet_check.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimens.dart';
 import '../../utils/images.dart';
+import '../../utils/methods.dart';
 import '../../utils/strings.dart';
 import '../../utils/styles.dart';
 import '../../utils/validate_input.dart';
@@ -1653,12 +1654,10 @@ class NewEvaluationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     pages = [pageOne(), pageTwo(), pageThree(), pageFour()];
     return Obx(() => PopScope(
-          /*onPopInvoked: (didPop) {
-            if (didPop == true || didPop == false) {
-              showConfirmDialog(context);
-            }
-          },
-          canPop: false,*/
+      // canPop: false,
+      // onPopInvoked: (didPop) {
+      //   Methods.showConfirmDialog(context);
+      // },
           child: Scaffold(
             key: _key,
             appBar: CommonAppBar(
@@ -1819,7 +1818,7 @@ class _MonthPickerState extends State<MonthYearPicker> {
                     items: _monthList.map((e) {
                       return DropdownMenuItem<String>(value: e, child: Text(e));
                     }).toList(),
-                    value: selectedMonth,
+                    value: selectedMonth.isNotEmpty ? selectedMonth : null,
                     onChanged: (val) {
                       setState(() {
                         selectedMonthIndex = _monthList.indexOf(val!);
@@ -1836,7 +1835,7 @@ class _MonthPickerState extends State<MonthYearPicker> {
                     items: _yearList.map((e) {
                       return DropdownMenuItem<String>(value: e, child: Text(e));
                     }).toList(),
-                    value: selectedYear,
+                    value: selectedYear.isNotEmpty ? selectedYear : null,
                     onChanged: (val) {
                       setState(() {
                         selectedYear = val ?? "";

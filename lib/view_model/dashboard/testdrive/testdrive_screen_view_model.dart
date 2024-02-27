@@ -53,7 +53,7 @@ class TestDriveViewModel extends GetxController {
   
   void addTestDrive()async{
     try{
-      var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.testDriveInfo+'/'+id),
+      var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.testDriveInfo+'/'+globals.carId.toString()),
           body: {
             "steeringWheel": selectedSteeringWheel.value,
             "suspension": selectedSuspensionSystem.value,
@@ -88,7 +88,7 @@ class TestDriveViewModel extends GetxController {
  var testDriveResponse = testdrivelist().obs;
 
   void GetTestDriveInfo()async{
-    var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.testDriveInfo+'/'+id),headers: globals.headers);
+    var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.testDriveInfo+'/'+globals.carId.toString()),headers: globals.headers);
     if (response.statusCode ==200){
       testDriveResponse.value = testdrivelist.fromJson(json.decode(response.body));
     }

@@ -109,7 +109,7 @@ class FeatureViewModel extends GetxController{
 
   void addFeatureInfo()async{
    try{
-     var request = http.MultipartRequest('PATCH',Uri.parse(EndPoints.baseUrl+EndPoints.featureInfo+'/'+id));
+     var request = http.MultipartRequest('PATCH',Uri.parse(EndPoints.baseUrl+EndPoints.featureInfo+'/'+globals.carId.toString()));
      for(int i=0; i<selectedStereoImage.length; i++){
        request.fields['stereoImage_condition[$i]'] = selectedStereoImage[i];
      }
@@ -164,7 +164,7 @@ class FeatureViewModel extends GetxController{
 
   void getFeatureInfo() async {
     try {
-      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.featureInfo+'/'+id),
+      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.featureInfo+'/'+globals.carId.toString()),
       headers: globals.headers);
       if(response.statusCode == 200){
         log(response.body.toString());
@@ -187,7 +187,7 @@ class FeatureViewModel extends GetxController{
       
       stereoImageController.value.text = featureInfoResponse.value.data![0].stereoImage!.condition!.join(",");
       selectedStereoImage.value = stereoImageController.value.text.split(",");
-      stereoImage.value = File(featureInfoResponse.value.data![0].stereoImage!.url ?? '');
+      stereoImage.value = featureInfoResponse.value.data![0].stereoImage != null ? File(featureInfoResponse.value.data![0].stereoImage!.url ?? '') : null;
       stereoImageRemarksController.value.text = featureInfoResponse.value.data![0].stereoImage!.remarks ?? '';
       
       sterioBrandController.value.text = featureInfoResponse.value.data![0].stereoBrand ?? '';

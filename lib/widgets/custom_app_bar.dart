@@ -1,3 +1,4 @@
+import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:flutter/material.dart';
 import '../utils/dimens.dart';
@@ -58,4 +59,74 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => bottom != null ? Size.fromHeight(Dimens.standard_200) : const Size.fromHeight(kToolbarHeight);
+}
+
+class CustomAppBar1 extends StatelessWidget implements PreferredSizeWidget {
+  CustomAppBar1({
+    Key? key,
+    this.height,
+    this.styleType,
+    this.leadingWidth,
+    this.leading,
+    this.title,
+    this.centerTitle,
+    this.actions,
+  }) : super(
+    key: key,
+  );
+
+  final double? height;
+
+  final Style? styleType;
+
+  final double? leadingWidth;
+
+  final Widget? leading;
+
+  final Widget? title;
+
+  final bool? centerTitle;
+
+  final List<Widget>? actions;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      elevation: 0,
+      toolbarHeight: height ?? 46,
+      automaticallyImplyLeading: false,
+      backgroundColor: Colors.transparent,
+      flexibleSpace: _getStyle(),
+      leadingWidth: leadingWidth ?? 0,
+      leading: leading,
+      title: title,
+      titleSpacing: 0,
+      centerTitle: centerTitle ?? false,
+      actions: actions,
+    );
+  }
+
+  @override
+  Size get preferredSize => Size(
+    double.maxFinite,
+    height ?? 46,
+  );
+  _getStyle() {
+    switch (styleType) {
+      case Style.bgFill:
+        return Container(
+          height: 46,
+          width: double.maxFinite,
+          decoration: BoxDecoration(
+            color: MyColors.appBarGrey.withOpacity(0.62),
+          ),
+        );
+      default:
+        return null;
+    }
+  }
+}
+
+enum Style {
+  bgFill,
 }

@@ -9,6 +9,7 @@ import '../../../utils/colors.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/dimens.dart';
 import '../../../utils/images.dart';
+import '../../../utils/methods.dart';
 import '../../../utils/strings.dart';
 import '../../../utils/styles.dart';
 import '../../../utils/validate_input.dart';
@@ -623,6 +624,7 @@ class EngineScreen extends StatelessWidget {
                     onTap: () async {
                       await showDialog(
                         context: context,
+                        barrierDismissible: false,
                         builder: (BuildContext context) {
                           return CustomCheckBoxDialog(
                             title: MyStrings.engineMount,
@@ -766,10 +768,10 @@ class EngineScreen extends StatelessWidget {
       pageTwo(context),
     ];
     return Obx(() => PopScope(
-          // onPopInvoked: (didPop) {
-          //   showConfirmDialog(context);
-          // },
-          // canPop: false,
+      canPop: false,
+      onPopInvoked: (didPop) {
+        Methods.showConfirmDialog(context);
+      },
           child: Scaffold(
             key: _key,
             appBar: CommonAppBar(

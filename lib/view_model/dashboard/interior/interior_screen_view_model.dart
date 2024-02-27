@@ -115,7 +115,7 @@ class InteriorViewModel extends GetxController {
 
   void addInteriorInfo() async {
     try {
-      var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl+EndPoints.interiorInfo+'/'+id));
+      var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl+EndPoints.interiorInfo+'/'+globals.carId.toString()));
 
       for(int i=0; i<selectPowerWindowAndWindowLock.length; i++){
        request.fields['powerWindowCentalLock[$i]'] = selectPowerWindowAndWindowLock[i];
@@ -213,7 +213,7 @@ class InteriorViewModel extends GetxController {
 
   void getInteriorInfo() async {
     try {
-      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.interiorInfo+'/'+id),
+      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.interiorInfo+'/'+globals.carId.toString()),
       headers: globals.headers);
       if(response.statusCode == 200){
         log(response.body.toString());
@@ -238,25 +238,25 @@ class InteriorViewModel extends GetxController {
       }
       dashboardImageController.value.text = interiorInfoResponse.value.data![0].dashboardImage!.condition!.join(",");
       selectDashboardImage.value = dashboardImageController.value.text.split(",");
-      dashboardImage.value = File(interiorInfoResponse.value.data![0].dashboardImage!.url ?? '');
+      dashboardImage.value = interiorInfoResponse.value.data?[0].dashboardImage != null ? File(interiorInfoResponse.value.data![0].dashboardImage!.url ?? '') : null;
       dashboardRemarksController.value.text = interiorInfoResponse.value.data![0].dashboardImage!.remarks ?? '';
 
       frontSeatImageController.value.text = interiorInfoResponse.value.data![0].frontSeatImage!.condition!.join(",");
       selectFrontSeatImage.value = frontSeatImageController.value.text.split(",");
-      frontSeatImage.value = File(interiorInfoResponse.value.data![0].frontSeatImage!.url ?? '');
+      frontSeatImage.value = interiorInfoResponse.value.data?[0].frontSeatImage != null ? File(interiorInfoResponse.value.data![0].frontSeatImage!.url ?? '') : null;
       frontSeatRemarksController.value.text = interiorInfoResponse.value.data![0].frontSeatImage!.remarks ?? '';
       rearSeatImageController.value.text = interiorInfoResponse.value.data![0].rearSeatImage!.condition!.join(",");
       selectRearSeatImage.value = rearSeatImageController.value.text.split(",");
-      rearSeatImage.value = File(interiorInfoResponse.value.data![0].rearSeatImage!.url ?? '');
+      rearSeatImage.value = interiorInfoResponse.value.data?[0].rearSeatImage != null ? File(interiorInfoResponse.value.data![0].rearSeatImage!.url ?? '') : null;
       rearSeatRemarksController.value.text = interiorInfoResponse.value.data![0].rearSeatImage!.remarks ?? '';
       insideRearViewMirrorController.value.text = interiorInfoResponse.value.data![0].rearViewMirror!.join(",");
       selectInsideRearViewMirror.value = insideRearViewMirrorController.value.text.split(",");
       interiorViewFromBootDashboardRemarksController.value.text = interiorInfoResponse.value.data![0].interiorView!.remarks ?? '';
-      interiorViewFromBootDashboardImage.value = File(interiorInfoResponse.value.data![0].interiorView!.url ?? '');
+      interiorViewFromBootDashboardImage.value = interiorInfoResponse.value.data?[0].interiorView != null ? File(interiorInfoResponse.value.data![0].interiorView!.url ?? '') : null;
 
-      powerWindowDriverImage.value = File(interiorInfoResponse.value.data![0].powerWindowDriverImage!.url ?? '');
+      powerWindowDriverImage.value = interiorInfoResponse.value.data?[0].powerWindowDriverImage != null ? File(interiorInfoResponse.value.data![0].powerWindowDriverImage!.url ?? '') : null;
       powerWindowDriverRemarksController.value.text = interiorInfoResponse.value.data![0].powerWindowDriverImage!.remarks ?? '';
-      pushWindowDriverImage.value = File(interiorInfoResponse.value.data![0].pushWindowDriverImage!.url ?? '');
+      pushWindowDriverImage.value = interiorInfoResponse.value.data?[0].pushWindowDriverImage != null ? File(interiorInfoResponse.value.data![0].pushWindowDriverImage!.url ?? '') : null;
       pushWindowDriverRemarksController.value.text = interiorInfoResponse.value.data![0].pushWindowDriverImage!.remarks ?? '';
       
       selectPushButtonOnOff.value = interiorInfoResponse.value.data![0].pushButton ?? '';
@@ -266,12 +266,12 @@ class InteriorViewModel extends GetxController {
       selectPowerWindowAndWindowLock.value = powerWindowAndWindowLockController.value.text.split(",");
       handBrakeController.value.text = interiorInfoResponse.value.data![0].handBreak!.join(",");
       selectHandBrake.value = handBrakeController.value.text.split(",");
-      handBreakImage.value = File(interiorInfoResponse.value.data![0].handbreakImage!.url ?? '');
+      handBreakImage.value = interiorInfoResponse.value.data?[0].handbreakImage != null ? File(interiorInfoResponse.value.data![0].handbreakImage!.url ?? '') : null;
       handBrakeRemarksController.value.text = interiorInfoResponse.value.data![0].handbreakImage!.remarks ?? '';
       
       carElectricalController.value.text = interiorInfoResponse.value.data![0].carElectrical!.join(",");
       selectCarElectrical.value = carElectricalController.value.text.split(",");
-      cngLpgKitImage.value = File(interiorInfoResponse.value.data![0].cngKitImage!.url ?? '');
+      cngLpgKitImage.value = interiorInfoResponse.value.data?[0].cngKitImage != null ? File(interiorInfoResponse.value.data![0].cngKitImage!.url ?? '') : null;
       cngLpgKitImageRemarksController.value.text = interiorInfoResponse.value.data![0].cngKitImage!.remarks ?? '';
       selectSecondKey.value = interiorInfoResponse.value.data![0].secondKey ?? '';
       

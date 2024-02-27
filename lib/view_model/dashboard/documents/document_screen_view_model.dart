@@ -63,7 +63,7 @@ class DocumentViewModel extends GetxController {
 
   void addDocuments() async {
     try {
-      var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl+EndPoints.document+'/'+id));
+      var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl+EndPoints.document+'/'+globals.carId.toString()));
       request.fields.addAll({
         'insurance': selectedInsurance.value,
         'insuranceCompany': insuranceCompanyController.value.text,
@@ -109,7 +109,7 @@ class DocumentViewModel extends GetxController {
 
       if (response.statusCode == 200) {
             log(await response.stream.bytesToString());
-            Get.toNamed(AppRoutes.dashBoardScreen);
+            Get.offNamed(AppRoutes.dashBoardScreen);
           } else {
             log(response.reasonPhrase.toString());
           }
@@ -121,7 +121,7 @@ class DocumentViewModel extends GetxController {
 
   void getDocument() async {
     try {
-      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.document+'/'+id),headers: globals.headers);
+      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.document+'/'+globals.carId.toString()),headers: globals.headers);
       if(response.statusCode == 200){
         log(response.body.toString());
         documentResponse.value = DocumentResponse.fromJson(jsonDecode(response.body));
@@ -136,7 +136,7 @@ class DocumentViewModel extends GetxController {
   }
 
   void loadData(){
-    if (documentResponse.value.data != null) {
+    if (documentResponse.value.data != null && documentResponse.value.data?.rcFront != null && documentResponse.value.data?.rcBack != null) {
       insuranceCompanyController.value.text = documentResponse.value.data?.insuranceCompany ?? '';
       insuranceIDVController.value.text = documentResponse.value.data?.insuranceIDV ?? '';
       insuranceValidityController.value.text = documentResponse.value.data?.insuranceValidity ?? '';
@@ -147,11 +147,11 @@ class DocumentViewModel extends GetxController {
       chassisRemarksController.value.text = documentResponse.value.data?.chassisImage?.remarks ?? '';
       nocRemarksController.value.text = documentResponse.value.data?.nocImage?.remarks ?? '';
       form35RemarksController.value.text = documentResponse.value.data?.form35Image?.remarks ?? '';
-      rcFrontImage.value = File(documentResponse.value.data?.rcFront?.url ?? '');
-      rcBackImage.value = File(documentResponse.value.data?.rcBack?.url ?? '');
-      chassisImage.value = File(documentResponse.value.data?.chassisImage?.url ?? '');
-      nocImage.value = File(documentResponse.value.data?.nocImage?.url ?? '');
-      form35Image.value = File(documentResponse.value.data?.form35Image?.url ?? '');
+      rcFrontImage.value = documentResponse.value.data?.rcFront != null ?File(documentResponse.value.data?.rcFront?.url ?? ''):null;
+      rcBackImage.value = documentResponse.value.data?.rcBack != null ?File(documentResponse.value.data?.rcBack?.url ?? ''):null;
+      chassisImage.value = documentResponse.value.data?.chassisImage != null ?File(documentResponse.value.data?.chassisImage?.url ?? ''):null;
+      nocImage.value = documentResponse.value.data?.nocImage != null ?File(documentResponse.value.data?.nocImage?.url ?? ''):null;
+      form35Image.value = documentResponse.value.data?.form35Image != null ?File(documentResponse.value.data?.form35Image?.url ?? ''):null;
       selectedInterStateTransfer.value = documentResponse.value.data?.interStateTransfer ?? '';
       selectedInsurance.value = documentResponse.value.data?.insurance ?? '';
       selectedNCB.value = documentResponse.value.data?.ncb ?? '';

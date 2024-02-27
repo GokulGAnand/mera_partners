@@ -134,8 +134,7 @@ class CommonDrawer extends StatelessWidget {
                           return CustomDialog(
                             title: MyStrings.logoutConfirmMsg,
                             okFun: () {
-                              Navigator.pop(context);
-                              Get.toNamed(AppRoutes.loginScreen);
+                              Get.offAllNamed(AppRoutes.loginScreen);
                             },
                             cancelFun: () {
                               Navigator.pop(context);

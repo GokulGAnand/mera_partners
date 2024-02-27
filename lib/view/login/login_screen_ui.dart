@@ -27,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    getPermission();
+    // getPermission();
   }
 
   Future<void> getPermission() async {
