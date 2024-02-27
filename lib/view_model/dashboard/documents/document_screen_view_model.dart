@@ -160,8 +160,8 @@ class DocumentViewModel extends GetxController {
       selectedRcMismatch.value = documentResponse.value.data?.rcMismatch ?? '';
       selectedInsuranceMismatch.value = documentResponse.value.data?.insuranceMismatch ?? '';
       selectedRc.value = documentResponse.value.data?.rcAvailability ?? '';
-      // selectedLoanNoc.value = documentResponse.value.data!.
-      // selectedUnderHypothecation.value = documentResponse.value.data!.
+      selectedLoanNoc.value = documentResponse.value.data!.loanNoc ?? '';
+      selectedUnderHypothecation.value = documentResponse.value.data!.hypothecation ?? '';
     }
   }
 

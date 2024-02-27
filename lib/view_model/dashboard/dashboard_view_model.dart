@@ -84,6 +84,7 @@ class DashBoardViewModel extends GetxController {
 
   void addRating() async {
     try {
+      print(Uri.parse(EndPoints.baseUrl+EndPoints.interiorInfo+'/'+id));
       var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.interiorInfo+'/'+id),headers: globals.headers,
         body: {
           "engineStar":ratingList[0].rating.toString(),
@@ -94,6 +95,7 @@ class DashBoardViewModel extends GetxController {
         }
       );
       if( response.statusCode == 200){
+        print(response.body.toString());
         updateEvaluationStatus();
           }
     } catch (e) {
@@ -104,11 +106,13 @@ class DashBoardViewModel extends GetxController {
 
   void updateEvaluationStatus() async {
     try {
+      print(Uri.parse(EndPoints.baseUrl+EndPoints.carBasic+id));
       var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.carBasic+id),headers: globals.headers,
           body: {
         "status":"EVALUATED"
       });
       if(response.statusCode == 200){
+        print(response.body.toString());
         CustomToast.instance.showMsg(MyStrings.success);
         Get.toNamed(AppRoutes.homeScreen);
       }

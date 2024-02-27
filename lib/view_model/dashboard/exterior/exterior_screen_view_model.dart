@@ -606,6 +606,7 @@ class ExteriorViewModel extends GetxController {
         'fullBodyRepaint': selectedFullBodyRepaint.value,
         'missingParts': missingPartsController.value.text,
         'cowlTop_remarks': cowlTopRemarks.value.text,
+        'evaluationStatusForExterior':'COMPLETED'
       });
       if (frontImage.value != null /*&& !frontImage.value!.path.startsWith('http') && !frontImage.value!.path.startsWith('https')*/) {
         request.files.add(await http.MultipartFile.fromPath('front', frontImage.value!.path,contentType: MediaType('image', 'jpg'),));
