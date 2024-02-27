@@ -13,6 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class CustomCheckBoxDialog extends StatelessWidget {
   CustomCheckBoxDialog({
@@ -32,6 +33,16 @@ class CustomCheckBoxDialog extends StatelessWidget {
 
   Future pickImage(ImageSource source) async {
     try {
+      if(source == ImageSource.camera){
+        var cameraStatus = await Permission.camera.status;
+        if (!cameraStatus.isGranted) {
+          final result = await Permission.camera.request();
+          if(!result.isGranted){
+            openAppSettings();
+          }
+          print("camera access: " + result.isGranted.toString());
+        } 
+      }
       final image = await ImagePicker().pickImage(source: source);
       log(image.toString());
       if (image == null) return;

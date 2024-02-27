@@ -26,21 +26,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    super.initState();
     getPermission();
+    super.initState();
   }
 
-  Future<void> getPermission() async {
-    var cameraStatus = await Permission.camera.status;
-    if (!cameraStatus.isGranted) {
-      final result = await Permission.camera.request();
-      print("camera access: " + result.isGranted.toString());
-    } 
-    var galleryStatus = await Permission.storage.status;
-    if (!galleryStatus.isGranted) {
-      final result = await Permission.storage.request();
-      print("gallery access: " + result.isGranted.toString());
-    } 
+  Future getPermission() async {
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.camera,
+      Permission.storage,
+    ].request();
+    print("camera access: " + statuses[Permission.camera].toString());
+    print("storage access: " + statuses[Permission.storage].toString());
   }
 
   @override
@@ -129,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.only(left: 18.0, right: 18),
               child: Center(
                 child: CustomElevatedButton(
-                  onPressed: () {
+                  onPressed: () async{
                     if (loginScreenViewModel.formKey.currentState!.validate()) {
                       loginScreenViewModel.formKey.currentState!.save();
                       Internet.checkInternet().then((value) {

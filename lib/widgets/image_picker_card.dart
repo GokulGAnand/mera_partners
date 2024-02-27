@@ -14,6 +14,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ImagePickerCard extends StatelessWidget {
   final VoidCallback? onSubmit;
@@ -25,6 +26,16 @@ class ImagePickerCard extends StatelessWidget {
 
   Future pickImage(ImageSource source) async {
     try {
+      if(source == ImageSource.camera){
+        var cameraStatus = await Permission.camera.status;
+        if (!cameraStatus.isGranted) {
+          final result = await Permission.camera.request();
+          if(!result.isGranted){
+            openAppSettings();
+          }
+          print("camera access: " + result.isGranted.toString());
+        } 
+      }
       final image = await ImagePicker().pickImage(source: source);
       log(image.toString());
       if (image == null) return;

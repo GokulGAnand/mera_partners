@@ -225,7 +225,8 @@ class NewEvaluationViewModel extends GetxController {
 
       if (response.statusCode == 200) {
         CustomToast.instance.showMsg(MyStrings.success);
-        Get.toNamed(AppRoutes.homeScreen);
+        // Get.toNamed(AppRoutes.homeScreen);
+        Get.back();
       }
 
       if (kDebugMode) {

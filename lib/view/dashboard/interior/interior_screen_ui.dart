@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:evaluator_app/service/internet_check.dart';
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/dimens.dart';
 import 'package:evaluator_app/utils/images.dart';
@@ -12,6 +13,7 @@ import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:evaluator_app/widgets/custom_checkbox_dialog.dart';
 import 'package:evaluator_app/widgets/custom_dropdown.dart';
 import 'package:evaluator_app/widgets/custom_text_form_field.dart';
+import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:evaluator_app/widgets/image_picker_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -618,7 +620,17 @@ class InteriorScreen extends StatelessWidget {
                         if (viewModel.page2Key.currentState!.validate()) {
                           viewModel.page2Key.currentState!.save();
                           viewModel.isPage2Fill.value = true;
-                          viewModel.addInteriorInfo();
+                          if (viewModel.isPage1Fill.value && viewModel.isPage2Fill.value){
+                          Internet.checkInternet().then((value){
+                            if(value){
+                              viewModel.addInteriorInfo();
+                            }else{
+                              CustomToast.instance.showMsg(MyStrings.checkNetwork);
+                            }
+                          });
+                        }else{
+                          CustomToast.instance.showMsg(MyStrings.vMandatory);
+                        }
                         }
                       },
                       buttonText: MyStrings.submit,
