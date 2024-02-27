@@ -606,6 +606,7 @@ class ExteriorViewModel extends GetxController {
         'fullBodyRepaint': selectedFullBodyRepaint.value,
         'missingParts': missingPartsController.value.text,
         'cowlTop_remarks': cowlTopRemarks.value.text,
+        'evaluationStatusForExterior':'COMPLETED'
       });
       if (frontImage.value != null /*&& !frontImage.value!.path.startsWith('http') && !frontImage.value!.path.startsWith('https')*/) {
         request.files.add(await http.MultipartFile.fromPath('front', frontImage.value!.path,contentType: MediaType('image', 'jpg'),));
@@ -801,16 +802,16 @@ class ExteriorViewModel extends GetxController {
   var exteriorResponse = ExteriorResponse().obs;
 
   void loadData() {
-    frontImage.value = File(exteriorResponse.value.data?[0].front?.url ?? '');
-    frontLeftImage.value = File(exteriorResponse.value.data?[0].frontLeft?.url ?? '');
-    frontRightImage.value = File(exteriorResponse.value.data?[0].frontRight?.url ?? '');
-    leftImage.value = File(exteriorResponse.value.data?[0].leftImage?.url ?? '');
-    rightImage.value = File(exteriorResponse.value.data?[0].rightImage?.url ?? '');
-    rearLeftImage.value = File(exteriorResponse.value.data?[0].rearLeft?.url ?? '');
-    rearImage.value = File(exteriorResponse.value.data?[0].rear?.url ?? '');
-    rearRightImage.value = File(exteriorResponse.value.data?[0].rearRight?.url ?? '');
-    roofImage.value = File(exteriorResponse.value.data?[0].roof?.url ?? '');
-    frontWindShieldWiperImage.value = File(exteriorResponse.value.data?[0].frontWindShield?.url ?? '');
+    frontImage.value = exteriorResponse.value.data?[0].front != null ? File(exteriorResponse.value.data?[0].front?.url ?? ''):null;
+    frontLeftImage.value = exteriorResponse.value.data?[0].frontLeft != null ? File(exteriorResponse.value.data?[0].frontLeft?.url ?? ''):null;
+    frontRightImage.value = exteriorResponse.value.data?[0].frontRight != null ? File(exteriorResponse.value.data?[0].frontRight?.url ?? ''):null;
+    leftImage.value = exteriorResponse.value.data?[0].leftImage != null ? File(exteriorResponse.value.data?[0].leftImage?.url ?? ''):null;
+    rightImage.value = exteriorResponse.value.data?[0].rightImage != null ? File(exteriorResponse.value.data?[0].rightImage?.url ?? ''):null;
+    rearLeftImage.value = exteriorResponse.value.data?[0].rearLeft != null ? File(exteriorResponse.value.data?[0].rearLeft?.url ?? ''):null;
+    rearImage.value = exteriorResponse.value.data?[0].rear != null ? File(exteriorResponse.value.data?[0].rear?.url ?? ''):null;
+    rearRightImage.value = exteriorResponse.value.data?[0].rearRight != null ? File(exteriorResponse.value.data?[0].rearRight?.url ?? ''):null;
+    roofImage.value = exteriorResponse.value.data?[0].roof != null ? File(exteriorResponse.value.data?[0].roof?.url ?? ''):null;
+    frontWindShieldWiperImage.value = exteriorResponse.value.data?[0].frontWindShield != null ? File(exteriorResponse.value.data?[0].frontWindShield?.url ?? ''):null;
     selectedFrontImageList.value = exteriorResponse.value.data?[0].front?.condition ?? [];
     selectedFrontLeftImageList.value = exteriorResponse.value.data?[0].frontLeft?.condition ?? [];
     selectedFrontRightImageList.value = exteriorResponse.value.data?[0].frontRight?.condition ?? [];
@@ -852,16 +853,16 @@ class ExteriorViewModel extends GetxController {
     // otherFrontWindShieldWiperController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
     frontWindShieldWiperRemarks.value.text = exteriorResponse.value.data?[0].frontWindShield?.remarks ?? '';
     ///page two
-    rearWindShield.value = File(exteriorResponse.value.data?[0].rearWindShield?.url ?? '');
-    doorGlassLH.value = File(exteriorResponse.value.data?[0].doorGlassLeft?.url ?? '');
-    doorGlassRH.value = File(exteriorResponse.value.data?[0].doorGlassRight?.url ?? '');
-    quarterGlass.value = File(exteriorResponse.value.data?[0].quarterGlass?.url ?? '');
-    headlightsLH.value = File(exteriorResponse.value.data?[0].headLightLeft?.url ?? '');
-    headlightsRH.value = File(exteriorResponse.value.data?[0].headLightRight?.url ?? '');
-    headlightSupport.value = File(exteriorResponse.value.data?[0].headLightSupport?.url ?? '');
-    frontBumper.value = File(exteriorResponse.value.data?[0].bumperFront?.url ?? '');
-    rearBumper.value = File(exteriorResponse.value.data?[0].bumperRear?.url ?? '');
-    frontGrill.value = File(exteriorResponse.value.data?[0].grill?.url ?? '');
+    rearWindShield.value = exteriorResponse.value.data?[0].rearWindShield != null ? File(exteriorResponse.value.data?[0].rearWindShield?.url ?? ''):null;
+    doorGlassLH.value = exteriorResponse.value.data?[0].doorGlassLeft != null ? File(exteriorResponse.value.data?[0].doorGlassLeft?.url ?? ''):null;
+    doorGlassRH.value = exteriorResponse.value.data?[0].doorGlassRight != null ? File(exteriorResponse.value.data?[0].doorGlassRight?.url ?? ''):null;
+    quarterGlass.value = exteriorResponse.value.data?[0].quarterGlass != null ? File(exteriorResponse.value.data?[0].quarterGlass?.url ?? ''):null;
+    headlightsLH.value = exteriorResponse.value.data?[0].headLightLeft != null ? File(exteriorResponse.value.data?[0].headLightLeft?.url ?? ''):null;
+    headlightsRH.value = exteriorResponse.value.data?[0].headLightRight != null ? File(exteriorResponse.value.data?[0].headLightRight?.url ?? ''):null;
+    headlightSupport.value = exteriorResponse.value.data?[0].headLightSupport != null ? File(exteriorResponse.value.data?[0].headLightSupport?.url ?? ''):null;
+    frontBumper.value = exteriorResponse.value.data?[0].bumperFront != null ? File(exteriorResponse.value.data?[0].bumperFront?.url ?? ''):null;
+    rearBumper.value = exteriorResponse.value.data?[0].bumperRear != null ? File(exteriorResponse.value.data?[0].bumperRear?.url ?? ''):null;
+    frontGrill.value = exteriorResponse.value.data?[0].grill != null ? File(exteriorResponse.value.data?[0].grill?.url ?? ''):null;
     selectedRearWindShieldList.value = exteriorResponse.value.data?[0].rearWindShield?.condition ?? [];
     selectedDoorGlassLHList.value = exteriorResponse.value.data?[0].doorGlassLeft?.condition ?? [];
     selectedDoorGlassRHList.value = exteriorResponse.value.data?[0].doorGlassRight?.condition ?? [];
@@ -907,17 +908,17 @@ class ExteriorViewModel extends GetxController {
     // selectedTyreRearRHS.value = exteriorResponse.value.data
     // selectedTyreRearLHS.value = exteriorResponse.value.data
     // selectedTyreFrontLHS.value = exteriorResponse.value.data
-    bonnetPattiImage.value = File(exteriorResponse.value.data?[0].bonnetPatti?.url ?? '');
-    upperCrossMember.value = File(exteriorResponse.value.data?[0].upperCrossMember?.url ?? '');
-    lowerCrossMember.value = File(exteriorResponse.value.data?[0].lowerCrossMember?.url ?? '');
-    apronLH.value = File(exteriorResponse.value.data?[0].apronLeft?.url ?? '');
-    apronRH.value = File(exteriorResponse.value.data?[0].apronRight?.url ?? '');
-    cowlTop.value = File(exteriorResponse.value.data?[0].cowlTop?.url ?? '');
-    tyreFrontRHS.value = File(exteriorResponse.value.data?[0].frontTyreRight?.url ?? '');
-    tyreFrontLHS.value = File(exteriorResponse.value.data?[0].frontTyreLeft?.url ?? '');
-    tyreRearRHS.value = File(exteriorResponse.value.data?[0].rearTyreRight?.url ?? '');
-    tyreRearLHS.value = File(exteriorResponse.value.data?[0].rearTyreLeft?.url ?? '');
-    chassisExtension.value = File(exteriorResponse.value.data?[0].chassisExtension?.url ?? '');
+    bonnetPattiImage.value = exteriorResponse.value.data?[0].bonnetPatti != null ? File(exteriorResponse.value.data?[0].bonnetPatti?.url ?? ''):null;
+    upperCrossMember.value = exteriorResponse.value.data?[0].upperCrossMember != null ? File(exteriorResponse.value.data?[0].upperCrossMember?.url ?? ''):null;
+    lowerCrossMember.value = exteriorResponse.value.data?[0].lowerCrossMember != null ? File(exteriorResponse.value.data?[0].lowerCrossMember?.url ?? ''):null;
+    apronLH.value = exteriorResponse.value.data?[0].apronLeft != null ? File(exteriorResponse.value.data?[0].apronLeft?.url ?? ''):null;
+    apronRH.value = exteriorResponse.value.data?[0].apronRight != null ? File(exteriorResponse.value.data?[0].apronRight?.url ?? ''):null;
+    cowlTop.value = exteriorResponse.value.data?[0].cowlTop != null ? File(exteriorResponse.value.data?[0].cowlTop?.url ?? ''):null;
+    tyreFrontRHS.value = exteriorResponse.value.data?[0].frontTyreRight != null ? File(exteriorResponse.value.data?[0].frontTyreRight?.url ?? ''):null;
+    tyreFrontLHS.value = exteriorResponse.value.data?[0].frontTyreLeft != null ? File(exteriorResponse.value.data?[0].frontTyreLeft?.url ?? ''):null;
+    tyreRearRHS.value = exteriorResponse.value.data?[0].rearTyreRight != null ? File(exteriorResponse.value.data?[0].rearTyreRight?.url ?? ''):null;
+    tyreRearLHS.value = exteriorResponse.value.data?[0].rearTyreLeft != null ? File(exteriorResponse.value.data?[0].rearTyreLeft?.url ?? ''):null;
+    chassisExtension.value = exteriorResponse.value.data?[0].chassisExtension != null ? File(exteriorResponse.value.data?[0].chassisExtension?.url ?? ''):null;
     selectedBonnetPattiList.value = exteriorResponse.value.data?[0].bonnetPatti?.condition ?? [];
     selectedUpperCrossMemberList.value = exteriorResponse.value.data?[0].upperCrossMember?.condition ?? [];
     selectedLowerCrossMemberList.value = exteriorResponse.value.data?[0].lowerCrossMember?.condition ?? [];
@@ -947,15 +948,15 @@ class ExteriorViewModel extends GetxController {
     // otherChassisExtensionController.value.text = exteriorResponse.value.data
     chassisExtensionRemarks.value.text = exteriorResponse.value.data?[0].chassisExtension?.remarks ?? '';
     ///page four
-    lhFender.value = File(exteriorResponse.value.data?[0].fenderLeft?.url ?? '');
-    rhFender.value = File(exteriorResponse.value.data?[0].fenderRight?.url ?? '');
-    lhQuarterPanel.value = File(exteriorResponse.value.data?[0].quarterPanelLeft?.url ?? '');
-    rhQuarterPanel.value = File(exteriorResponse.value.data?[0].quarterPanelRight?.url ?? '');
-    frontLHDoor.value = File(exteriorResponse.value.data?[0].doorFrontLeft?.url ?? '');
-    frontRHDoor.value = File(exteriorResponse.value.data?[0].doorFrontRight?.url ?? '');
-    rearLHDoor.value = File(exteriorResponse.value.data?[0].doorRearLeft?.url ?? '');
-    rearRHDoor.value = File(exteriorResponse.value.data?[0].doorRearRight?.url ?? '');
-    lhaPillar.value = File(exteriorResponse.value.data?[0].leftApillar?.url ?? '');
+    lhFender.value = exteriorResponse.value.data?[0].fenderLeft != null ? File(exteriorResponse.value.data?[0].fenderLeft?.url ?? ''):null;
+    rhFender.value = exteriorResponse.value.data?[0].fenderRight != null ? File(exteriorResponse.value.data?[0].fenderRight?.url ?? ''):null;
+    lhQuarterPanel.value = exteriorResponse.value.data?[0].quarterPanelLeft != null ? File(exteriorResponse.value.data?[0].quarterPanelLeft?.url ?? ''):null;
+    rhQuarterPanel.value = exteriorResponse.value.data?[0].quarterPanelRight != null ? File(exteriorResponse.value.data?[0].quarterPanelRight?.url ?? ''):null;
+    frontLHDoor.value = exteriorResponse.value.data?[0].doorFrontLeft != null ? File(exteriorResponse.value.data?[0].doorFrontLeft?.url ?? ''):null;
+    frontRHDoor.value = exteriorResponse.value.data?[0].doorFrontRight != null ? File(exteriorResponse.value.data?[0].doorFrontRight?.url ?? ''):null;
+    rearLHDoor.value = exteriorResponse.value.data?[0].doorRearLeft != null ? File(exteriorResponse.value.data?[0].doorRearLeft?.url ?? ''):null;
+    rearRHDoor.value = exteriorResponse.value.data?[0].doorRearRight != null ? File(exteriorResponse.value.data?[0].doorRearRight?.url ?? ''):null;
+    lhaPillar.value = exteriorResponse.value.data?[0].leftApillar != null ? File(exteriorResponse.value.data?[0].leftApillar?.url ?? ''):null;
     selectedLhFenderList.value = exteriorResponse.value.data?[0].fenderLeft?.condition ?? [];
     selectedRhFenderList.value = exteriorResponse.value.data?[0].fenderRight?.condition ?? [];
     selectedLhQuarterPanelList.value = exteriorResponse.value.data?[0].quarterPanelLeft?.condition ?? [];
@@ -993,16 +994,16 @@ class ExteriorViewModel extends GetxController {
     // otherLhaPillarController.value.text = exteriorResponse.value.data
     lhaPillarRemarks.value.text = exteriorResponse.value.data?[0].leftApillar?.remarks ?? '';
     ///page five
-    rhaPillar.value = File(exteriorResponse.value.data?[0].rightApillar?.url ?? '');
-    lhbPillar.value = File(exteriorResponse.value.data?[0].leftBpillar?.url ?? '');
-    lhcPillar.value = File(exteriorResponse.value.data?[0].leftCpillar?.url ?? '');
-    rhbPillar.value = File(exteriorResponse.value.data?[0].rightBpillar?.url ?? '');
-    rhcPillar.value = File(exteriorResponse.value.data?[0].rightCpillar?.url ?? '');
-    rhRunBoard.value = File(exteriorResponse.value.data?[0].runnningBorderRight?.url ?? '');
-    lhRunBoard.value = File(exteriorResponse.value.data?[0].runnningBorderLeft?.url ?? '');
-    tailLightLh.value = File(exteriorResponse.value.data?[0].tailLightLeft?.url ?? '');
-    tailLightRh.value = File(exteriorResponse.value.data?[0].tailLightRight?.url ?? '');
-    rearWiper.value = File(exteriorResponse.value.data?[0].rearWiper?.url ?? '');
+    rhaPillar.value = exteriorResponse.value.data?[0].rightApillar != null ? File(exteriorResponse.value.data?[0].rightApillar?.url ?? ''):null;
+    lhbPillar.value = exteriorResponse.value.data?[0].leftBpillar != null ? File(exteriorResponse.value.data?[0].leftBpillar?.url ?? ''):null;
+    lhcPillar.value = exteriorResponse.value.data?[0].leftCpillar != null ? File(exteriorResponse.value.data?[0].leftCpillar?.url ?? ''):null;
+    rhbPillar.value = exteriorResponse.value.data?[0].rightBpillar != null ? File(exteriorResponse.value.data?[0].rightBpillar?.url ?? ''):null;
+    rhcPillar.value = exteriorResponse.value.data?[0].rightCpillar != null ? File(exteriorResponse.value.data?[0].rightCpillar?.url ?? ''):null;
+    rhRunBoard.value = exteriorResponse.value.data?[0].runnningBorderRight != null ? File(exteriorResponse.value.data?[0].runnningBorderRight?.url ?? ''):null;
+    lhRunBoard.value = exteriorResponse.value.data?[0].runnningBorderLeft != null ? File(exteriorResponse.value.data?[0].runnningBorderLeft?.url ?? ''):null;
+    tailLightLh.value = exteriorResponse.value.data?[0].tailLightLeft != null ? File(exteriorResponse.value.data?[0].tailLightLeft?.url ?? ''):null;
+    tailLightRh.value = exteriorResponse.value.data?[0].tailLightRight != null ? File(exteriorResponse.value.data?[0].tailLightRight?.url ?? ''):null;
+    rearWiper.value = exteriorResponse.value.data?[0].rearWiper != null ? File(exteriorResponse.value.data?[0].rearWiper?.url ?? ''):null;
     selectedRhaPillarList.value = exteriorResponse.value.data?[0].rightApillar?.condition ?? [];
     selectedLhbPillarList.value = exteriorResponse.value.data?[0].leftBpillar?.condition ?? [];
     selectedRhbPillarList.value = exteriorResponse.value.data?[0].rightBpillar?.condition ?? [];
@@ -1046,13 +1047,13 @@ class ExteriorViewModel extends GetxController {
     ///page six
     selectedJackAndTool.value = exteriorResponse.value.data?[0].jackAndTool ?? '';
     selectedFullBodyRepaint.value = exteriorResponse.value.data?[0].fullBodyRepaint ?? '';
-    bootImage.value = File(exteriorResponse.value.data?[0].boot?.url ?? '');
-    dickyDoorImage.value = File(exteriorResponse.value.data?[0].dickyDoor?.url ?? '');
-    spareWheel.value = File(exteriorResponse.value.data?[0].spareWheel?.url ?? '');
-    fuelLid.value = File(exteriorResponse.value.data?[0].fuelLid?.url ?? '');
-    lhRearViewMirror.value = File(exteriorResponse.value.data?[0].rearViewMirrorLeft?.url ?? '');
-    rhRearViewMirror.value = File(exteriorResponse.value.data?[0].rearViewMirrorRight?.url ?? '');
-    firewall.value = File(exteriorResponse.value.data?[0].firewall?.url ?? '');
+    bootImage.value = exteriorResponse.value.data?[0].boot != null ? File(exteriorResponse.value.data?[0].boot?.url ?? ''):null;
+    dickyDoorImage.value = exteriorResponse.value.data?[0].dickyDoor != null ? File(exteriorResponse.value.data?[0].dickyDoor?.url ?? ''):null;
+    spareWheel.value = exteriorResponse.value.data?[0].spareWheel != null ? File(exteriorResponse.value.data?[0].spareWheel?.url ?? ''):null;
+    fuelLid.value = exteriorResponse.value.data?[0].fuelLid != null ? File(exteriorResponse.value.data?[0].fuelLid?.url ?? ''):null;
+    lhRearViewMirror.value = exteriorResponse.value.data?[0].rearViewMirrorLeft != null ? File(exteriorResponse.value.data?[0].rearViewMirrorLeft?.url ?? ''):null;
+    rhRearViewMirror.value = exteriorResponse.value.data?[0].rearViewMirrorRight != null ? File(exteriorResponse.value.data?[0].rearViewMirrorRight?.url ?? ''):null;
+    firewall.value = exteriorResponse.value.data?[0].firewall != null ? File(exteriorResponse.value.data?[0].firewall?.url ?? ''):null;
     selectedBootList.value = exteriorResponse.value.data?[0].boot?.condition ?? [];
     selectedDickyDoorList.value = exteriorResponse.value.data?[0].dickyDoor?.condition ?? [];
     selectedSpareWheelList.value = exteriorResponse.value.data?[0].spareWheel?.condition ?? [];

@@ -9,6 +9,7 @@ import '../../../utils/colors.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/dimens.dart';
 import '../../../utils/images.dart';
+import '../../../utils/methods.dart';
 import '../../../utils/strings.dart';
 import '../../../utils/styles.dart';
 import '../../../utils/validate_input.dart';
@@ -108,6 +109,7 @@ class EngineScreen extends StatelessWidget {
                   onTap: () async {
                     await showDialog(
                       context: context,
+                      barrierDismissible: false,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
                           title: MyStrings.engine,
@@ -211,6 +213,7 @@ class EngineScreen extends StatelessWidget {
                   onTap: () async {
                     await showDialog(
                       context: context,
+                      barrierDismissible: false,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
                           title: MyStrings.battery,
@@ -333,6 +336,7 @@ class EngineScreen extends StatelessWidget {
                   onTap: () async {
                     await showDialog(
                       context: context,
+                      barrierDismissible: false,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
                           title: MyStrings.blowByBackCompression,
@@ -435,6 +439,7 @@ class EngineScreen extends StatelessWidget {
                   onTap: () async {
                     await showDialog(
                       context: context,
+                      barrierDismissible: false,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
                           title: MyStrings.clutchOperations,
@@ -473,6 +478,7 @@ class EngineScreen extends StatelessWidget {
                   onTap: () async {
                     await showDialog(
                       context: context,
+                      barrierDismissible: false,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
                           title: MyStrings.gearbox,
@@ -511,6 +517,7 @@ class EngineScreen extends StatelessWidget {
                   onTap: () async {
                     await showDialog(
                       context: context,
+                      barrierDismissible: false,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
                           title: MyStrings.engineOil,
@@ -550,6 +557,7 @@ class EngineScreen extends StatelessWidget {
                   onTap: () async {
                     await showDialog(
                       context: context,
+                      barrierDismissible: false,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
                           title: MyStrings.turboCharger,
@@ -616,6 +624,7 @@ class EngineScreen extends StatelessWidget {
                     onTap: () async {
                       await showDialog(
                         context: context,
+                        barrierDismissible: false,
                         builder: (BuildContext context) {
                           return CustomCheckBoxDialog(
                             title: MyStrings.engineMount,
@@ -654,6 +663,7 @@ class EngineScreen extends StatelessWidget {
                   onTap: () async {
                     await showDialog(
                       context: context,
+                      barrierDismissible: false,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
                           title: MyStrings.sump,
@@ -690,11 +700,11 @@ class EngineScreen extends StatelessWidget {
                 ),
                 CustomTextFormField(
                   controller: viewModel.remarksController.value,
-                  labelText: MyStrings.remarks,
-                  helperText: MyStrings.remarks,
+                  labelText: '${MyStrings.engineComments}*',
+                  helperText: '${MyStrings.remarks}*',
                   minLines: 3,
                   maxLines: 3,
-                  validator: (p0) => null,
+                  validator: ValidateInput.validateRequiredFields,
                   inputFormatter: [
                     LengthLimitingTextInputFormatter(Constants.maxTextLength),
                   ],
@@ -758,10 +768,10 @@ class EngineScreen extends StatelessWidget {
       pageTwo(context),
     ];
     return Obx(() => PopScope(
-          // onPopInvoked: (didPop) {
-          //   showConfirmDialog(context);
-          // },
-          // canPop: false,
+      canPop: false,
+      onPopInvoked: (didPop) {
+        Methods.showConfirmDialog(context);
+      },
           child: Scaffold(
             key: _key,
             appBar: CommonAppBar(

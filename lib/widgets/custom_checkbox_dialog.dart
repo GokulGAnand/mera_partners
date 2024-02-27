@@ -5,8 +5,10 @@ import 'package:evaluator_app/utils/dimens.dart';
 import 'package:evaluator_app/utils/images.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
+import 'package:evaluator_app/utils/validate_input.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:evaluator_app/widgets/custom_text_form_field.dart';
+import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,6 +32,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
   final RxList<String> selectItem;
   final TextEditingController remarksController;
   final TextEditingController othersController;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   Future pickImage(ImageSource source) async {
     try {
@@ -56,69 +59,98 @@ class CustomCheckBoxDialog extends StatelessWidget {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      backgroundColor: Colors.white,
-      elevation: 0,
-      shadowColor: Colors.white,
-      contentPadding: EdgeInsets.zero,
-      insetPadding: EdgeInsets.all(20.0),
-      title: Text(title,
-      style: MyStyles.uploadImageTitleStyle,),
-      titlePadding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-      shape: OutlineInputBorder(
-        borderRadius: BorderRadius.zero,
-        borderSide: BorderSide.none
-      ),
-      content: Container(
-        // width: MediaQuery.of(context).size.width * 0.85,
-        height: MediaQuery.of(context).size.height * 0.7,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              ListBody(
-                children: items
-                    .map((item) => Obx(
-                      () {
-                        return Column(
-                          children: [
-                            Divider(height: 5,),
-                            CheckboxListTile(
-                                  value: selectItem.contains(item.toLowerCase()),
-                                  title: Text(item,
-                                  style: MyStyles.blackW500F15Style,),
-                                  onChanged: (isSelected){
-                                     if (isSelected!) {
-                                      selectItem.add(item.toLowerCase());
-                                    } else {
-                                      selectItem.remove(item.toLowerCase());
-                                    }
-                                  },
-                                ),
-                          ],
-                        );
-                      }
-                    ))
-                    .toList(),
+    return Stack(
+      children: [
+        AlertDialog(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          shadowColor: Colors.white,
+          contentPadding: EdgeInsets.zero,
+          insetPadding: const EdgeInsets.all(20.0),
+          title: Text(title,
+          style: MyStyles.uploadImageTitleStyle,),
+          titlePadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          shape: const OutlineInputBorder(
+            borderRadius: BorderRadius.zero,
+            borderSide: BorderSide.none
+          ),
+          content: Form(
+            key: formKey,
+            child: SizedBox(
+              // width: MediaQuery.of(context).size.width * 0.85,
+              height: MediaQuery.of(context).size.height * 0.7,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ListBody(
+                      children: items
+                          .map((item) => Obx(
+                            () {
+                              return Column(
+                                children: [
+                                  const Divider(height: 5,),
+                                  CheckboxListTile(
+                                        value: selectItem.contains(item.toLowerCase()),
+                                        title: Text(item,
+                                        style: MyStyles.blackW500F15Style,),
+                                        onChanged: (isSelected){
+                                           if (isSelected!) {
+                                            selectItem.add(item.toLowerCase());
+                                          } else {
+                                            selectItem.remove(item.toLowerCase());
+                                          }
+                                        },
+                                      ),
+                                ],
+                              );
+                            }
+                          ))
+                          .toList(),
+                    ),
+                    Obx(
+                      ()=>
+                         (selectItem.contains("other") )?Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16),
+                        child: CustomTextFormField(
+                          labelText: MyStrings.other,
+                          helperText: MyStrings.other,
+                          minLines: 1,
+                          maxLines: 1,
+                          controller: othersController,
+                          validator: ValidateInput.validateRequiredFields,
+                        ), )
+                    :const SizedBox()),
+                    dialogContent(context)
+                  ],
+                ),
               ),
-              Obx(
-                ()=>
-                   (selectItem.value.contains("other") )?Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16),
-                  child: CustomTextFormField(
-                    labelText: MyStrings.other,
-                    helperText: MyStrings.other,
-                    minLines: 1,
-                    maxLines: 1,
-                    controller: othersController,
-                    validator: (p0) => null,
-                  ), )                
-              :const SizedBox()),   
-              dialogContent(context)
-            ],
+            ),
           ),
         ),
-      ),
+        Positioned(
+          right: 8.0,
+          top: 42,
+          child: Align(
+            alignment: Alignment.topRight,
+            child: CircleAvatar(
+              radius: 14.0,
+              backgroundColor: MyColors.red,
+              child: IconButton(
+                padding: const EdgeInsets.all(0),
+                color: MyColors.white,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(
+                  Icons.close,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -230,13 +262,19 @@ class CustomCheckBoxDialog extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
               child: CustomElevatedButton(onPressed: () {
-                // image?.value = image?.value;
-                print(image.value.toString());
-                if(selectItem.contains(othersController.value.text) == false){
-                  selectItem.add(othersController.value.text);
+                if (formKey.currentState!.validate()) {
+                  if((selectItem.isNotEmpty && !selectItem.contains("Good") && image.value != null) || (selectItem.isNotEmpty && selectItem.contains("good") && image.value == null)){
+                    if(selectItem.contains(othersController.value.text) == false){
+                      selectItem.add(othersController.value.text);
+                    }
+                    selectItem.remove("Other");
+                    Navigator.of(context).pop();
+                  }else if ((selectItem.isNotEmpty && !selectItem.contains("Good")) && image.value == null && selectItem.value[0].isNotEmpty){
+                    CustomToast.instance.showMsg(MyStrings.vUploadImage);
+                  }else{
+                    Navigator.of(context).pop();
+                  }
                 }
-                selectItem.remove("Other");
-                Navigator.of(context).pop();
               }, buttonText: MyStrings.submit),
             ),
           ],

@@ -13,6 +13,7 @@ import 'package:get/get.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/dimens.dart';
 import '../../../utils/images.dart';
+import '../../../utils/methods.dart';
 import '../../../utils/strings.dart';
 import '../../../utils/styles.dart';
 import '../../../utils/validate_input.dart';
@@ -41,7 +42,7 @@ class FeaturesScreen extends StatelessWidget {
                     SizedBox(height: Dimens.standard_3),
                     GestureDetector(
                       onTap: () async {
-                        await showDialog(
+                        await showDialog(barrierDismissible: false,
                           context: context,
                           builder: (BuildContext context) {
                             return CustomCheckBoxDialog(
@@ -72,7 +73,7 @@ class FeaturesScreen extends StatelessWidget {
                     SizedBox(height: Dimens.standard_24),
                     GestureDetector(
                       onTap: () async {
-                        await showDialog(
+                        await showDialog(barrierDismissible: false,
                           context: context,
                           builder: (BuildContext context) {
                             return CustomCheckBoxDialog(
@@ -162,7 +163,7 @@ class FeaturesScreen extends StatelessWidget {
                     SizedBox(height: Dimens.standard_24),
                     GestureDetector(
                       onTap: () async {
-                        await showDialog(
+                        await showDialog(barrierDismissible: false,
                           context: context,
                           builder: (BuildContext context) {
                             return CustomCheckBoxDialog(
@@ -270,7 +271,7 @@ class FeaturesScreen extends StatelessWidget {
                 SizedBox(height: Dimens.standard_3),
                 GestureDetector(
                       onTap: () async {
-                        await showDialog(
+                        await showDialog(barrierDismissible: false,
                           context: context,
                           builder: (BuildContext context) {
                             return CustomCheckBoxDialog(
@@ -324,7 +325,7 @@ class FeaturesScreen extends StatelessWidget {
                 // ),
                 GestureDetector(
                       onTap: () async {
-                        await showDialog(
+                        await showDialog(barrierDismissible: false,
                           context: context,
                           builder: (BuildContext context) {
                             return CustomCheckBoxDialog(
@@ -379,7 +380,7 @@ class FeaturesScreen extends StatelessWidget {
                 SizedBox(height: Dimens.standard_24),
                 GestureDetector(
                       onTap: () async {
-                        await showDialog(
+                        await showDialog(barrierDismissible: false,
                           context: context,
                           builder: (BuildContext context) {
                             return CustomCheckBoxDialog(
@@ -410,7 +411,7 @@ class FeaturesScreen extends StatelessWidget {
                 SizedBox(height: Dimens.standard_24),
                 GestureDetector(
                       onTap: () async {
-                        await showDialog(
+                        await showDialog(barrierDismissible: false,
                           context: context,
                           builder: (BuildContext context) {
                             return CustomCheckBoxDialog(
@@ -486,7 +487,12 @@ class FeaturesScreen extends StatelessWidget {
       pageOne(context),
       pageTwo(context),
     ];
-    return Obx(() => PopScope( child: Scaffold(
+    return Obx(() => PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        Methods.showConfirmDialog(context);
+      },
+      child: Scaffold(
       key: _key,
       appBar: CommonAppBar(
         centerTitle: false,

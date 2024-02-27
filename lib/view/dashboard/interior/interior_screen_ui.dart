@@ -19,6 +19,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../../utils/methods.dart';
+
 class InteriorScreen extends StatelessWidget {
   InteriorScreen({super.key});
 
@@ -39,7 +41,7 @@ class InteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                     await showDialog(
+                     await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -114,7 +116,7 @@ class InteriorScreen extends StatelessWidget {
                 ),
                GestureDetector(
                   onTap: () async {
-                     await showDialog(
+                     await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -147,7 +149,7 @@ class InteriorScreen extends StatelessWidget {
                 ),
                GestureDetector(
                   onTap: () async {
-                     await showDialog(
+                     await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -180,7 +182,7 @@ class InteriorScreen extends StatelessWidget {
                 ),
                GestureDetector(
                   onTap: () async {
-                     await showDialog(
+                     await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -213,7 +215,7 @@ class InteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                     await showDialog(
+                     await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -426,7 +428,7 @@ class InteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                     await showDialog(
+                     await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -459,7 +461,7 @@ class InteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                     await showDialog(
+                     await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -492,7 +494,7 @@ class InteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                     await showDialog(
+                     await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -581,7 +583,7 @@ class InteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                     await showDialog(
+                     await showDialog(barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
@@ -649,10 +651,10 @@ class InteriorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     pages = [pageOne(context), pageTwo(context),];
     return Obx(() => PopScope(
-      // onPopInvoked: (didPop) {
-      //   // showConfirmDialog(context);
-      // },
-      // canPop: false,
+      canPop: false,
+      onPopInvoked: (didPop) {
+        Methods.showConfirmDialog(context);
+      },
       child: Scaffold(
         key: _key,
         appBar: CommonAppBar(

@@ -31,6 +31,7 @@ class DashBoardViewModel extends GetxController {
 
   @override
   void onInit() {
+    globals.carId = id;
     dashboard = [
       DashBoardClass(icon: MyImages.difference, label: MyStrings.documents,isComplete: documentsComplete),
       DashBoardClass(icon: MyImages.exterior, label: MyStrings.exterior,isComplete: exteriorComplete),
@@ -55,7 +56,7 @@ class DashBoardViewModel extends GetxController {
 
   void getEvaluationStatus() async {
     try {
-      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.evaluation+'/'+EndPoints.status+id),headers: globals.headers);
+      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.evaluation+'/'+EndPoints.status+globals.carId.toString()),headers: globals.headers);
       if (response.statusCode == 200) {
         evaluationStatusResponse.value = EvaluationStatusResponse.fromJson(jsonDecode(response.body));
         documentsComplete.value = evaluationStatusResponse.value.data?.evaluationStatusForDocument == 'COMPLETED'?true:false;
@@ -84,6 +85,7 @@ class DashBoardViewModel extends GetxController {
 
   void addRating() async {
     try {
+      print(Uri.parse(EndPoints.baseUrl+EndPoints.interiorInfo+'/'+globals.carId.toString()));
       var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.interiorInfo+'/'+id),headers: globals.headers,
         body: {
           "engineStar":ratingList[0].rating.toString(),
@@ -94,6 +96,7 @@ class DashBoardViewModel extends GetxController {
         }
       );
       if( response.statusCode == 200){
+        print(response.body.toString());
         updateEvaluationStatus();
           }
     } catch (e) {
@@ -104,11 +107,13 @@ class DashBoardViewModel extends GetxController {
 
   void updateEvaluationStatus() async {
     try {
+      print(Uri.parse(EndPoints.baseUrl+EndPoints.carBasic+globals.carId.toString()));
       var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.carBasic+id),headers: globals.headers,
           body: {
         "status":"EVALUATED"
       });
       if(response.statusCode == 200){
+        print(response.body.toString());
         CustomToast.instance.showMsg(MyStrings.success);
         Get.toNamed(AppRoutes.homeScreen);
       }

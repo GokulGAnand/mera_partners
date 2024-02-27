@@ -119,7 +119,7 @@ class EngineViewModel extends GetxController {
 
   void  updateEngine() async {
     try {
-      var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl+EndPoints.engineInfo+id));
+      var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl+EndPoints.engineInfo+globals.carId.toString()));
       for(int i = 0; i < selectedEngine.length; i++){
         request.fields['engine_condition[$i]'] = selectedEngine[i];
       }
@@ -244,11 +244,11 @@ class EngineViewModel extends GetxController {
       engineController.value.text = engineResponse.value.data?[0].engine?.condition?.join(',') ?? '';
       batteryController.value.text = engineResponse.value.data?[0].battery?.condition?.join(',') ?? '';
       blowByBackCompressionController.value.text = engineResponse.value.data?[0].blowBy?.condition?.join(',') ?? '';
-      engineCompartmentImage.value = File(engineResponse.value.data?[0].engineCompartment?.url ?? '');
-      engineIdleStartVideo.value = File(engineResponse.value.data?[0].startVideo?.url ?? '');
-      blowByBackCompressionImage.value = File(engineResponse.value.data?[0].blowBy?.url ?? '');
-      engineImage.value = File(engineResponse.value.data?[0].engine?.url ?? '');
-      batteryImage.value = File(engineResponse.value.data?[0].battery?.url ?? '');
+      engineCompartmentImage.value = engineResponse.value.data?[0].engineCompartment != null ? File(engineResponse.value.data?[0].engineCompartment?.url ?? '') : null;
+      engineIdleStartVideo.value = engineResponse.value.data?[0].startVideo != null ? File(engineResponse.value.data?[0].startVideo?.url ?? '') : null;
+      blowByBackCompressionImage.value = engineResponse.value.data?[0].blowBy != null ? File(engineResponse.value.data?[0].blowBy?.url ?? '') : null;
+      engineImage.value = engineResponse.value.data?[0].engine != null ? File(engineResponse.value.data?[0].engine?.url ?? '') : null;
+      batteryImage.value = engineResponse.value.data?[0].battery != null ? File(engineResponse.value.data?[0].battery?.url ?? '') : null;
       selectedEngine.value = engineResponse.value.data?[0].engine?.condition ?? [];
       selectedBattery.value = engineResponse.value.data?[0].battery?.condition ?? [];
       selectedBlowBy.value = engineResponse.value.data?[0].blowBy?.condition ?? [];
@@ -259,12 +259,12 @@ class EngineViewModel extends GetxController {
       selectedCoolant.value = engineResponse.value.data?[0].coolant ?? '';
       selectedSilencer.value = engineResponse.value.data?[0].silencer ?? '';
       selectedGearBoxLeak.value = engineResponse.value.data?[0].gearBoxLeakage ?? '';
-      clutchOperationsImage.value = File(engineResponse.value.data?[0].clutch?.url ?? '');
-      gearBoxImage.value = File(engineResponse.value.data?[0].gearBox?.url ?? '');
-      engineOilImage.value = File(engineResponse.value.data?[0].engineOil?.url ?? '');
-      turboChargerImage.value = File(engineResponse.value.data?[0].turboCharger?.url ?? '');
-      engineMountImage.value = File(engineResponse.value.data?[0].mount?.url ?? '');
-      sumpImage.value = File(engineResponse.value.data?[0].sump?.url ?? '');
+      clutchOperationsImage.value = engineResponse.value.data?[0].clutch != null ? File(engineResponse.value.data?[0].clutch?.url ?? '') : null;
+      gearBoxImage.value = engineResponse.value.data?[0].gearBox != null ? File(engineResponse.value.data?[0].gearBox?.url ?? '') : null;
+      engineOilImage.value = engineResponse.value.data?[0].engineOil != null ? File(engineResponse.value.data?[0].engineOil?.url ?? '') : null;
+      turboChargerImage.value = engineResponse.value.data?[0].turboCharger != null ? File(engineResponse.value.data?[0].turboCharger?.url ?? '') : null;
+      engineMountImage.value = engineResponse.value.data?[0].mount != null ? File(engineResponse.value.data?[0].mount?.url ?? '') : null;
+      sumpImage.value = engineResponse.value.data?[0].sump != null ? File(engineResponse.value.data?[0].sump?.url ?? '') : null;
       selectedClutchOperations.value = engineResponse.value.data?[0].clutch?.condition ?? [];
       selectedGearBox.value = engineResponse.value.data?[0].gearBox?.condition ?? [];
       selectedEngineOil.value = engineResponse.value.data?[0].engineOil?.condition ?? [];
@@ -296,7 +296,7 @@ class EngineViewModel extends GetxController {
 
   void getEngineData()async {
     try {
-      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.engineInfo+id),headers: globals.headers);
+      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.engineInfo+globals.carId.toString()),headers: globals.headers);
       if (response.statusCode == 200) {
         engineResponse.value = EngineResponse.fromJson(jsonDecode(response.body));
         print(response.body);

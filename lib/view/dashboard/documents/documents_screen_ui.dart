@@ -10,6 +10,7 @@ import '../../../service/internet_check.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/dimens.dart';
 import '../../../utils/images.dart';
+import '../../../utils/methods.dart';
 import '../../../utils/strings.dart';
 import '../../../utils/styles.dart';
 import '../../../utils/validate_input.dart';
@@ -656,10 +657,10 @@ class DocumentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     pages = [pageOne(), pageTwo(),];
     return Obx(() => PopScope(
-      // onPopInvoked: (didPop) {
-      //   showConfirmDialog(context);
-      // },
       // canPop: false,
+      // onPopInvoked: (didPop) {
+      //   Methods.showConfirmDialog(context);
+      // },
       child: Scaffold(
         key: _key,
         appBar: CommonAppBar(

@@ -280,6 +280,8 @@ class MyStrings {
   ///
   static const String ratingTitle = "Provide a rating\nbased on Evaluation";
   static const String electrical = "Electrical";
+  static const String engineComments = "Engine Comments";
+  static const String vUploadImage = "To continue, upload an image";
   static const String empty = "";
 
 }

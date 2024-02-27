@@ -39,8 +39,8 @@ class SpecialCommentsViewModel extends GetxController{
   void addComments() async {
     //todo
     try {
-      print(EndPoints.baseUrl+EndPoints.specialComment+'/'+id);
-      var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.specialComment+'/'+id),
+      print(EndPoints.baseUrl+EndPoints.specialComment+'/'+globals.carId.toString());
+      var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.specialComment+'/'+globals.carId.toString()),
             body: {
               "carCondition":selectedCarCondition.value,
               "specialComments":specialCommentsController.value.text
@@ -58,7 +58,7 @@ class SpecialCommentsViewModel extends GetxController{
   }
   
   void getComments()async{
-     var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.specialComment+'/'+id),headers: globals.headers);
+     var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.specialComment+'/'+globals.carId.toString()),headers: globals.headers);
      if(response.statusCode ==200){
        specialResponse.value = specialcommentlist.fromJson(json.decode(response.body));
        loaddata();

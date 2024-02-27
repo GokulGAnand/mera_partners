@@ -58,7 +58,7 @@ class AirConditioningViewModel extends GetxController{
 
   void addCondition()async{
     try{
-      var response =  await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.acInfo+'/'+id),
+      var response =  await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.acInfo+'/'+globals.carId.toString()),
           body: {
             "airCooling":selectedCooling.value,
             "heater":selectedHeater.value,
@@ -82,7 +82,7 @@ class AirConditioningViewModel extends GetxController{
 
 
   void getAcinfo()async{
-    var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.acInfo+'/'+id),headers: globals.headers);
+    var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.acInfo+'/'+globals.carId.toString()),headers: globals.headers);
     if(response.statusCode == 200){
       airConditionResponse.value = airconditininglist.fromJson(json.decode(response.body));
     }log(response.body);
