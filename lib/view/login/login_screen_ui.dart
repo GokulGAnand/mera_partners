@@ -1,3 +1,4 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:evaluator_app/view_model/login/login_view_model.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
@@ -31,12 +32,19 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future getPermission() async {
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.camera,
-      Permission.storage,
-    ].request();
-    print("camera access: " + statuses[Permission.camera].toString());
-    print("storage access: " + statuses[Permission.storage].toString());
+    PermissionStatus cameraStatus = await Permission.camera.status;
+    if (!cameraStatus.isGranted) {
+      cameraStatus = await Permission.camera.request();
+    }
+    print("camera access: " + cameraStatus.isGranted.toString());
+    final deviceInfo =await DeviceInfoPlugin().androidInfo;
+    PermissionStatus? storageStatus;
+    if(deviceInfo.version.sdkInt>32){
+        storageStatus = await Permission.photos.request();
+    }else{
+        storageStatus = await Permission.storage.request();
+    }
+    print("storage access: " + storageStatus.isGranted.toString());
   }
 
   @override
