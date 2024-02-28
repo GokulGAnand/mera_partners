@@ -190,8 +190,11 @@ class InteriorViewModel extends GetxController {
       if (interiorViewFromBootDashboardImage.value != null && (interiorViewFromBootDashboardImage.value!.path.startsWith('http') == false || interiorViewFromBootDashboardImage.value!.path.startsWith('https') == false)) {
         request.files.add(await http.MultipartFile.fromPath('interiorView', interiorViewFromBootDashboardImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      request.headers.addAll(globals.headers);
-
+      // request.headers.addAll(globals.headers);
+      request.headers.addAll({
+            'Content-Type': 'application/json',
+            'Authorization': '${globals.headers["Authorization"]}'
+          });
       log(request.toString());
 
       var response = await request.send();

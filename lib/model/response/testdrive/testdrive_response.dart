@@ -1,125 +1,125 @@
+import 'dart:convert';
+
+testdrivelist testdrivelistFromJson(String str) => testdrivelist.fromJson(json.decode(str));
+
+String testdrivelistToJson(testdrivelist data) => json.encode(data.toJson());
+
 class testdrivelist {
-  String? status;
-  String? message;
-  List<Data>? data;
-  Meta? meta;
+    final String? status;
+    final String? message;
+    final List<Data>? data;
+    final Meta? meta;
 
-  testdrivelist({this.status, this.message, this.data, this.meta});
+    testdrivelist({
+        this.status,
+        this.message,
+        this.data,
+        this.meta,
+    });
 
-  testdrivelist.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
-      });
-    }
-    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
-  }
+    factory testdrivelist.fromJson(Map<String, dynamic> json) => testdrivelist(
+        status: json["status"],
+        message: json["message"],
+        data: json["data"] == null ? [] : List<Data>.from(json["data"]!.map((x) => Data.fromJson(x))),
+        meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    if (this.meta != null) {
-      data['meta'] = this.meta!.toJson();
-    }
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "status": status,
+        "message": message,
+        "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "meta": meta?.toJson(),
+    };
 }
 
 class Data {
-  String? sId;
-  String? carId;
-  String? brakes;
-  String? clutchSystem;
-  String? cruiseControl;
-  String? seatAdjustment;
-  String? shocker;
-  String? steeringAdjustment;
-  String? steeringMountedAudioControl;
-  String? steeringSystem;
-  String? steeringWheel;
-  String? suspension;
-  String? transmissionAutomatic;
-  String? transmissionManual;
-  String? vehicleHorn;
+    final String? id;
+    final String? carId;
+    final List<String>? steeringWheel;
+    final List<String>? suspension;
+    final String? shocker;
+    final String? steeringSystem;
+    final String? steeringAdjustment;
+    final String? steeringMountedAudioControl;
+    final String? cruiseControl;
+    final String? seatAdjustment;
+    final String? brakes;
+    final String? clutchSystem;
+    final List<String>? vehicleHorn;
+    final List<String>? transmissionAutomatic;
+    final String? transmissionManual;
 
-  Data(
-      {this.sId,
+    Data({
+        this.id,
         this.carId,
-        this.brakes,
-        this.clutchSystem,
-        this.cruiseControl,
-        this.seatAdjustment,
-        this.shocker,
-        this.steeringAdjustment,
-        this.steeringMountedAudioControl,
-        this.steeringSystem,
         this.steeringWheel,
         this.suspension,
+        this.shocker,
+        this.steeringSystem,
+        this.steeringAdjustment,
+        this.steeringMountedAudioControl,
+        this.cruiseControl,
+        this.seatAdjustment,
+        this.brakes,
+        this.clutchSystem,
+        this.vehicleHorn,
         this.transmissionAutomatic,
         this.transmissionManual,
-        this.vehicleHorn});
+    });
 
-  Data.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    carId = json['carId'];
-    brakes = json['brakes'];
-    clutchSystem = json['clutchSystem'];
-    cruiseControl = json['cruiseControl'];
-    seatAdjustment = json['seatAdjustment'];
-    shocker = json['shocker'];
-    steeringAdjustment = json['steeringAdjustment'];
-    steeringMountedAudioControl = json['steeringMountedAudioControl'];
-    steeringSystem = json['steeringSystem'];
-    steeringWheel = json['steeringWheel'];
-    suspension = json['suspension'];
-    transmissionAutomatic = json['transmissionAutomatic'];
-    transmissionManual = json['transmissionManual'];
-    vehicleHorn = json['vehicleHorn'];
-  }
+    factory Data.fromJson(Map<String, dynamic> json) => Data(
+        id: json["id"],
+        carId: json["carId"],
+        steeringWheel: json["steeringWheel"] == null ? [] : List<String>.from(json["steeringWheel"]!.map((x) => x)),
+        suspension: json["suspension"] == null ? [] : List<String>.from(json["suspension"]!.map((x) => x)),
+        shocker: json["shocker"],
+        steeringSystem: json["steeringSystem"],
+        steeringAdjustment: json["steeringAdjustment"],
+        steeringMountedAudioControl: json["steeringMountedAudioControl"],
+        cruiseControl: json["cruiseControl"],
+        seatAdjustment: json["seatAdjustment"],
+        brakes: json["brakes"],
+        clutchSystem: json["clutchSystem"],
+        vehicleHorn: json["vehicleHorn"] == null ? [] : List<String>.from(json["vehicleHorn"]!.map((x) => x)),
+        transmissionAutomatic: json["transmissionAutomatic"] == null ? [] : List<String>.from(json["transmissionAutomatic"]!.map((x) => x)),
+        transmissionManual: json["transmissionManual"],
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['carId'] = this.carId;
-    data['brakes'] = this.brakes;
-    data['clutchSystem'] = this.clutchSystem;
-    data['cruiseControl'] = this.cruiseControl;
-    data['seatAdjustment'] = this.seatAdjustment;
-    data['shocker'] = this.shocker;
-    data['steeringAdjustment'] = this.steeringAdjustment;
-    data['steeringMountedAudioControl'] = this.steeringMountedAudioControl;
-    data['steeringSystem'] = this.steeringSystem;
-    data['steeringWheel'] = this.steeringWheel;
-    data['suspension'] = this.suspension;
-    data['transmissionAutomatic'] = this.transmissionAutomatic;
-    data['transmissionManual'] = this.transmissionManual;
-    data['vehicleHorn'] = this.vehicleHorn;
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "carId": carId,
+        "steeringWheel": steeringWheel == null ? [] : List<dynamic>.from(steeringWheel!.map((x) => x)),
+        "suspension": suspension == null ? [] : List<dynamic>.from(suspension!.map((x) => x)),
+        "shocker": shocker,
+        "steeringSystem": steeringSystem,
+        "steeringAdjustment": steeringAdjustment,
+        "steeringMountedAudioControl": steeringMountedAudioControl,
+        "cruiseControl": cruiseControl,
+        "seatAdjustment": seatAdjustment,
+        "brakes": brakes,
+        "clutchSystem": clutchSystem,
+        "vehicleHorn": vehicleHorn == null ? [] : List<dynamic>.from(vehicleHorn!.map((x) => x)),
+        "transmissionAutomatic": transmissionAutomatic == null ? [] : List<dynamic>.from(transmissionAutomatic!.map((x) => x)),
+        "transmissionManual": transmissionManual,
+    };
 }
 
 class Meta {
-  String? access;
-  String? refresh;
+    final String? access;
+    final String? refresh;
 
-  Meta({this.access, this.refresh});
+    Meta({
+        this.access,
+        this.refresh,
+    });
 
-  Meta.fromJson(Map<String, dynamic> json) {
-    access = json['access'];
-    refresh = json['refresh'];
-  }
+    factory Meta.fromJson(Map<String, dynamic> json) => Meta(
+        access: json["access"],
+        refresh: json["refresh"],
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['access'] = this.access;
-    data['refresh'] = this.refresh;
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "access": access,
+        "refresh": refresh,
+    };
 }

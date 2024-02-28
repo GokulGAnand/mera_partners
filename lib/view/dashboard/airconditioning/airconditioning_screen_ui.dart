@@ -1,8 +1,11 @@
 import 'package:evaluator_app/service/internet_check.dart';
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
+import 'package:evaluator_app/utils/validate_input.dart';
 import 'package:evaluator_app/widgets/common_app_bar.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
+import 'package:evaluator_app/widgets/custom_checkbox_dialog.dart';
+import 'package:evaluator_app/widgets/custom_text_form_field.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -102,35 +105,38 @@ class AirConditioningScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Obx(
-                    () => Padding(
-                  padding: const EdgeInsets.fromLTRB(16,0,16,0),
-                  child: CustomDropDown(
-                    hintText: MyStrings.cooling,
-                    label: viewModel. selectedCooling.value.isEmpty ? null : "${MyStrings.cooling}*",
-                    value: viewModel. selectedCooling.value.isEmpty ? null : viewModel.selectedCooling.value,
-                    items: viewModel.coolingList.map<DropdownMenuItem<String>>(
-                          (String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: MyStyles.dropdownMenuStyle,
-                          ),
+                  ()=>Padding(
+                    padding: const EdgeInsets.fromLTRB(16,0,16,0),
+                    child: GestureDetector(
+                      onTap: () async {
+                         await showDialog(barrierDismissible: false,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CustomCheckBoxDialog(
+                                title: MyStrings.cooling, 
+                                items: viewModel.coolingList, 
+                                selectItem: viewModel.selectedCooling,
+                                othersController: TextEditingController(),
+                              );
+                          },
                         );
+                        viewModel.coolingController.value.text = viewModel.selectedCooling.join(",");
                       },
-                    ).toList(),
-                    onChanged: (value) {
-                      viewModel.selectedCooling.value = value;
-                    },
-                    validator: (value) {
-                      if (value == null) {
-                        return MyStrings.required;
-                      }
-                      return null;
-                    },
+                      child: CustomTextFormField(
+                        controller: viewModel.coolingController.value,
+                        labelText: "${MyStrings.cooling}*",
+                        helperText: "${MyStrings.cooling}*",
+                        validator: (value)=>ValidateInput.validateRequiredFields(value),
+                        showCursor: false,
+                        isEnabled: false,
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                          child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
               const SizedBox(height: 20),
               Obx(
                     () => Padding(
@@ -195,35 +201,38 @@ class AirConditioningScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Obx(
-                    () => Padding(
-                  padding: const EdgeInsets.fromLTRB(16,0,16,0),
-                  child: CustomDropDown(
-                    hintText: MyStrings.acCondenserCompressor,
-                    label: viewModel. selectedAcCondenserCompressor.value.isEmpty ? null : "${MyStrings.acCondenserCompressor}*",
-                    value: viewModel. selectedAcCondenserCompressor.value.isEmpty ? null : viewModel.selectedAcCondenserCompressor.value,
-                    items: viewModel.acCondenserCompressorList.map<DropdownMenuItem<String>>(
-                          (String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: MyStyles.dropdownMenuStyle,
-                          ),
+                  ()=>Padding(
+                    padding: const EdgeInsets.fromLTRB(16,0,16,0),
+                    child: GestureDetector(
+                      onTap: () async {
+                         await showDialog(barrierDismissible: false,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CustomCheckBoxDialog(
+                                title: MyStrings.acCondenserCompressor, 
+                                items: viewModel.acCondenserCompressorList, 
+                                selectItem: viewModel.selectedAcCondenserCompressor,
+                                othersController: TextEditingController(),
+                              );
+                          },
                         );
+                        viewModel.acCondenserCompressorController.value.text = viewModel.selectedAcCondenserCompressor.join(",");
                       },
-                    ).toList(),
-                    onChanged: (value) {
-                      viewModel.selectedAcCondenserCompressor.value = value;
-                    },
-                    validator: (value) {
-                      if (value == null) {
-                        return MyStrings.required;
-                      }
-                      return null;
-                    },
+                      child: CustomTextFormField(
+                        controller: viewModel.acCondenserCompressorController.value,
+                        labelText: "${MyStrings.acCondenserCompressor}*",
+                        helperText: "${MyStrings.acCondenserCompressor}*",
+                        validator: (value)=>ValidateInput.validateRequiredFields(value),
+                        showCursor: false,
+                        isEnabled: false,
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
+                          child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
               const SizedBox(height: 20),
               Obx
                 (() => Padding(
@@ -324,7 +333,7 @@ class AirConditioningScreen extends StatelessWidget {
                     Internet.checkInternet().then((value){
                       if (value){
                         viewModel.addCondition();
-                        viewModel.getAcinfo();
+                        // viewModel.getAcinfo();
                       }else{
                         CustomToast.instance.showMsg(MyStrings.checkNetwork);
                       }

@@ -16,11 +16,16 @@ import '../../../widgets/custom_toast.dart';
 
 class AirConditioningViewModel extends GetxController{
 
+  Rx<TextEditingController> coolingController = TextEditingController().obs;
+  Rx<TextEditingController> acCondenserCompressorController = TextEditingController().obs;
+
   var selectedAcWorking = "".obs;
-  var selectedCooling = "".obs;
+  // var selectedCooling = "".obs;
+  RxList<String> selectedCooling = <String>[].obs;
   var selectedHeater = "".obs;
   var selectedClimateControl = "".obs;
-  var selectedAcCondenserCompressor= "".obs;
+  // var selectedAcCondenserCompressor= "".obs;
+  RxList<String> selectedAcCondenserCompressor = <String>[].obs;
   var selectedAcCFilterDamaged= "".obs;
   var selectedAcBlowerGrill= "".obs;
   var selectedRearDefogger= "".obs;
@@ -59,21 +64,25 @@ class AirConditioningViewModel extends GetxController{
   void addCondition()async{
     try{
       var response =  await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.acInfo+'/'+globals.carId.toString()),
-          body: {
-            "airCooling":selectedCooling.value,
+          body: json.encode({
+            "airCooling":selectedCooling,
             "heater":selectedHeater.value,
             "climateControl":selectedClimateControl.value,
-            "acCondensor":selectedAcCondenserCompressor.value,
+            "acCondensor":selectedAcCondenserCompressor,
             "acWorking": selectedAcWorking.value,
             "acFilterDamaged": selectedAcCFilterDamaged.value,
             "acBlowerGrill": selectedAcBlowerGrill.value,
             "rearDefogger": selectedRearDefogger.value,
-          },
-          headers: globals.headers
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': '${globals.headers["Authorization"]}'
+          }
       );
       if (response.statusCode ==200){
+        log(response.body.toString());
         Get.offNamed(AppRoutes.dashBoardScreen);
-      }
+      } 
     }catch(e) {
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
@@ -85,16 +94,20 @@ class AirConditioningViewModel extends GetxController{
     var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.acInfo+'/'+globals.carId.toString()),headers: globals.headers);
     if(response.statusCode == 200){
       airConditionResponse.value = airconditininglist.fromJson(json.decode(response.body));
-    }log(response.body);
+      log(response.body);
+      loadData();
+    }
   }
 
   void loadData(){
     if(airConditionResponse.value.data!=null){
-      selectedCooling.value = airConditionResponse.value.data?[0].airCooling?? '';
+      selectedCooling.value = airConditionResponse.value.data?[0].airCooling as List<String>;
+      coolingController.value.text = selectedCooling.join(",");
       selectedAcWorking.value = airConditionResponse.value.data?[0].acWorking?? '';
       selectedHeater.value = airConditionResponse.value.data?[0].heater?? '';
       selectedClimateControl.value = airConditionResponse.value.data?[0].climateControl?? '';
-      selectedAcCondenserCompressor.value = airConditionResponse.value.data?[0].acCondensor?? '';
+      selectedAcCondenserCompressor.value = airConditionResponse.value.data?[0].acCondensor as List<String>;
+      acCondenserCompressorController.value.text = selectedAcCondenserCompressor.join(",");
       selectedAcCFilterDamaged.value = airConditionResponse.value.data?[0].acFilterDamaged?? '';
       selectedAcBlowerGrill.value = airConditionResponse.value.data?[0].acBlowerGrill?? '';
       selectedRearDefogger.value = airConditionResponse.value.data?[0].rearDefogger?? '';

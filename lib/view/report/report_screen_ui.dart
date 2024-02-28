@@ -573,7 +573,7 @@ class ReportScreen extends StatelessWidget {
                                             decoration: BoxDecoration(color: MyColors.lightBlue, borderRadius: BorderRadius.circular(8)),
                                             child: Padding(
                                               padding: const EdgeInsets.all(5.0),
-                                              child: Center(child: SvgPicture.asset(viewModel.dashboard[index].icon ?? "")),
+                                              child: Center(child: SvgPicture.asset(viewModel.dashboard[index].icon ?? "",)),
                                             ),
                                           ),
                                           Text(viewModel.dashboard[index].label ?? "", textAlign: TextAlign.center, style: MyStyles.cardTitleStyleBlue),
@@ -619,7 +619,7 @@ class ReportScreen extends StatelessWidget {
                               },),
                               Row(
                                 children: [
-                                  Text(MyStrings.reportId+': '+viewModel.reportResponse.value.data!.sId!,
+                                  Text(MyStrings.reportId+': '+viewModel.reportResponse.value.data!.id!,
                                     style: MyStyles.greyMedium,
                                   ),
                                 ],

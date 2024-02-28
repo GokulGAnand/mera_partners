@@ -21,16 +21,16 @@ class CustomCheckBoxDialog extends StatelessWidget {
   CustomCheckBoxDialog({
     required this.title,
     required this.items,
-    required this.image,
+    this.image,
     required this.selectItem,
-    required this.remarksController,
+    this.remarksController,
     required this.othersController,
     super.key});
   final String title; 
   final List<String> items; 
-  final Rx<File?> image;
+  final Rx<File?>? image;
   final RxList<String> selectItem;
-  final TextEditingController remarksController;
+  final TextEditingController? remarksController;
   final TextEditingController othersController;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -51,7 +51,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
       if (image == null) return;
       final imageTemp = File(image.path);
       log(imageTemp.toString());
-      this.image.value = imageTemp;
+      this.image!.value = imageTemp;
     } on PlatformException catch (e) {
       if (kDebugMode) {
         print('Failed to pick image: $e');
@@ -61,6 +61,11 @@ class CustomCheckBoxDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    for(int i=0; i<selectItem.length; i++){
+      if(selectItem[i].isEmpty){
+        selectItem.removeAt(i);
+      }
+    }
     return Stack(
       children: [
         AlertDialog(
@@ -155,27 +160,26 @@ class CustomCheckBoxDialog extends StatelessWidget {
   }
 
   Widget dialogContent(BuildContext context) {
-    return Obx(
-      () => Container(
+    return Container(
         width: 340,
         // height: MediaQuery.of(context).size.height * 0.69,
         decoration: ShapeDecoration(
           color: Colors.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-          shadows: const [
-            BoxShadow(
-              color: Color(0x30000000),
-              blurRadius: 6,
-              offset: Offset(0, 7),
-              spreadRadius: 0,
-            ),
-            BoxShadow(
-              color: Color(0x00000000),
-              blurRadius: 59,
-              offset: Offset(0, 212),
-              spreadRadius: 0,
-            )
-          ],
+          // shadows: const [
+          //   BoxShadow(
+          //     color: Color(0x30000000),
+          //     blurRadius: 6,
+          //     offset: Offset(0, 7),
+          //     spreadRadius: 0,
+          //   ),
+          //   BoxShadow(
+          //     color: Color(0x00000000),
+          //     blurRadius: 59,
+          //     offset: Offset(0, 212),
+          //     spreadRadius: 0,
+          //   )
+          // ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,168 +190,178 @@ class CustomCheckBoxDialog extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16),
-              child: GestureDetector(
-                onTap: () {
-                  showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (context) {
-                      return uploadTypeCard(context);
-                    },
-                  );
-                },
-                child: image.value == null
-                    ? Container(
-                        width: 119,
-                        height: 119,
-                        decoration: ShapeDecoration(
-                          color: MyColors.transparent,
-                          shape: RoundedRectangleBorder(
-                            side: const BorderSide(width: 1),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                        ),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 47.0, right: 47, bottom: 27, top: 35),
-                              child: SizedBox(height: 25, width: 25, child: SvgPicture.asset(MyImages.add)),
-                            ),
-                            const Text(
-                              MyStrings.addImage,
-                              style: TextStyle(
-                                color: Color(0xFF736B6B),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                height: 0.19,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 23,
-                            )
-                          ],
-                        ),
-                      )
-                    : (image.value != null && (image.value!.path.startsWith('http') || image.value!.path.startsWith('https')))?
-                Stack(
-                  children: [
-                    /*Image.network(
-                      image.value!.path,
-                      width: 119,
-                      height: 119,
-                      fit: BoxFit.fill,
-                    ),*/
-                    Image.network(
-                        image.value!.path,
-                        width: 119,
-                        height: 119,
-                        fit: BoxFit.fill,
-                    frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                      return child;
-                    },
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      } else {
-                        return const Center(
-                          child: CircularProgressIndicator(),
+            (image==null)?const SizedBox() 
+            :Obx(
+              ()=>Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16),
+                    child: GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) {
+                            return uploadTypeCard(context);
+                          },
                         );
-                      }}),
-                    Positioned(
-                      child: Container(
-                        width: 20,
-                        height: 25,
-                        decoration: ShapeDecoration(
-                          shape: const CircleBorder(),
-                          color: MyColors.red,
-                          shadows: [
-                            BoxShadow(
-                              color: Colors.grey
-                                  .withOpacity(0.5),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        child: IconButton(
-                          padding: EdgeInsets.only(right: 4),
-                          onPressed: (){
-                            image.value = null;
-                          },icon:const Icon( Icons.remove_sharp),
-                          color: MyColors.white,
-                          iconSize: 10,
-                        ),
-                      ),
-                    ),
-                  ],
-                ):
-                Stack(
-                  children: [
-                    Image.file(
-                      image.value!,
+                      },
+                      child: image!.value == null
+                          ? Container(
+                              width: 119,
+                              height: 119,
+                              decoration: ShapeDecoration(
+                                color: MyColors.transparent,
+                                shape: RoundedRectangleBorder(
+                                  side: const BorderSide(width: 1),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              ),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 47.0, right: 47, bottom: 27, top: 35),
+                                    child: SizedBox(height: 25, width: 25, child: SvgPicture.asset(MyImages.add)),
+                                  ),
+                                  const Text(
+                                    MyStrings.addImage,
+                                    style: TextStyle(
+                                      color: Color(0xFF736B6B),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      height: 0.19,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 23,
+                                  )
+                                ],
+                              ),
+                            )
+                          : (image!.value != null && (image!.value!.path.startsWith('http') || image!.value!.path.startsWith('https')))?
+                      Stack(
+                        children: [
+                          /*Image.network(
+                            image.value!.path,
                             width: 119,
                             height: 119,
                             fit: BoxFit.fill,
-                          ),
-                    Positioned(
-                      child: Container(
-                        width: 20,
-                        height: 25,
-                        decoration: ShapeDecoration(
-                          shape: const CircleBorder(),
-                          color: MyColors.red,
-                          shadows: [
-                            BoxShadow(
-                              color: Colors.grey
-                                  .withOpacity(0.5),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3), // changes position of shadow
+                          ),*/
+                          Image.network(
+                              image!.value!.path,
+                              width: 119,
+                              height: 119,
+                              fit: BoxFit.fill,
+                          frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                            return child;
+                          },
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            } else {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }}),
+                          Positioned(
+                            child: Container(
+                              width: 20,
+                              height: 25,
+                              decoration: ShapeDecoration(
+                                shape: const CircleBorder(),
+                                color: MyColors.red,
+                                shadows: [
+                                  BoxShadow(
+                                    color: Colors.grey
+                                        .withOpacity(0.5),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.only(right: 4),
+                                onPressed: (){
+                                  image!.value = null;
+                                },icon:const Icon( Icons.remove_sharp),
+                                color: MyColors.white,
+                                iconSize: 10,
+                              ),
                             ),
-                          ],
-                        ),
-                        child: IconButton(
-                          padding: EdgeInsets.only(right: 4),
-                          onPressed: (){
-                            image.value = null;
-                          },icon:const Icon( Icons.remove_sharp),
-                          color: MyColors.white,
-                          iconSize: 10,
-                        ),
+                          ),
+                        ],
+                      ):
+                      Stack(
+                        children: [
+                          Image.file(
+                            image!.value!,
+                                  width: 119,
+                                  height: 119,
+                                  fit: BoxFit.fill,
+                                ),
+                          Positioned(
+                            child: Container(
+                              width: 20,
+                              height: 25,
+                              decoration: ShapeDecoration(
+                                shape: const CircleBorder(),
+                                color: MyColors.red,
+                                shadows: [
+                                  BoxShadow(
+                                    color: Colors.grey
+                                        .withOpacity(0.5),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.only(right: 4),
+                                onPressed: (){
+                                  image!.value = null;
+                                },icon:const Icon( Icons.remove_sharp),
+                                color: MyColors.white,
+                                iconSize: 10,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
+                  ),
+                  const SizedBox(
+                height: 30,
+              ),
+              (remarksController == null)?
+              const SizedBox()
+              :Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16),
+                child: CustomTextFormField(
+                  labelText: MyStrings.remarks,
+                  helperText: MyStrings.remarks,
+                  minLines: 2,
+                  maxLines: 2,
+                  controller: remarksController!,
+                  validator: (p0) => null,
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16),
-              child: CustomTextFormField(
-                labelText: MyStrings.remarks,
-                helperText: MyStrings.remarks,
-                minLines: 2,
-                maxLines: 2,
-                controller: remarksController,
-                validator: (p0) => null,
+                ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
               child: CustomElevatedButton(onPressed: () {
                 if (formKey.currentState!.validate()) {
-                  if((selectItem.isNotEmpty && !selectItem.contains("Good") && image.value != null) || (selectItem.isNotEmpty && selectItem.contains("good") && image.value == null)){
+                  if((selectItem.isNotEmpty && !selectItem.contains("Good") && image != null && image!.value != null) || (selectItem.isNotEmpty && selectItem.contains("good") && image != null && image!.value == null)){
                     if(selectItem.contains(othersController.value.text) == false){
                       selectItem.add(othersController.value.text);
                     }
                     selectItem.remove("Other");
                     Navigator.of(context).pop();
-                  }else if ((selectItem.isNotEmpty && !selectItem.contains("Good")) && image.value == null && selectItem.value[0].isNotEmpty){
+                  }else if ((selectItem.isNotEmpty && !selectItem.contains("Good")) && image != null && image!.value == null && selectItem.value[0].isNotEmpty){
                     CustomToast.instance.showMsg(MyStrings.vUploadImage);
                   }else{
                     Navigator.of(context).pop();
@@ -357,8 +371,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 
   Widget uploadTypeCard(BuildContext context) {

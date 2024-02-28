@@ -1,49 +1,58 @@
+// To parse this JSON data, do
+//
+//     final reportResponse = reportResponseFromJson(jsonString);
+
+import 'dart:convert';
+
+ReportResponse reportResponseFromJson(String str) => ReportResponse.fromJson(json.decode(str));
+
+String reportResponseToJson(ReportResponse data) => json.encode(data.toJson());
+
 class ReportResponse {
-  String? status;
-  String? message;
-  Data? data;
-  Meta? meta;
+    final String? status;
+    final String? message;
+    final Data? data;
+    final Meta? meta;
 
-  ReportResponse({this.status, this.message, this.data, this.meta});
+    ReportResponse({
+        this.status,
+        this.message,
+        this.data,
+        this.meta,
+    });
 
-  ReportResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
-  }
+    factory ReportResponse.fromJson(Map<String, dynamic> json) => ReportResponse(
+        status: json["status"],
+        message: json["message"],
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+        meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    if (this.meta != null) {
-      data['meta'] = this.meta!.toJson();
-    }
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "status": status,
+        "message": message,
+        "data": data?.toJson(),
+        "meta": meta?.toJson(),
+    };
 }
 
 class Data {
-  String? sId;
-  AllCarInfo? allCarInfo;
-  String? chasisNumber;
-  String? monthAndYearOfManufacture;
-  String? regDate;
-  String? bodyType;
-  String? color;
-  int? odometerReading;
-  String? rcAvailability;
-  String? insurance;
-  String? form35;
-  String? regNumber;
-  String? customerPrice;
+    final String? id;
+    final AllCarInfo? allCarInfo;
+    final String? chasisNumber;
+    final String? monthAndYearOfManufacture;
+    final String? regDate;
+    final String? bodyType;
+    final String? color;
+    final int? odometerReading;
+    final String? rcAvailability;
+    final String? insurance;
+    final String? form35;
+    final String? regNumber;
+    final String? customerPrice;
 
-  Data(
-      {this.sId,
+    Data({
+        this.id,
         this.allCarInfo,
         this.chasisNumber,
         this.monthAndYearOfManufacture,
@@ -55,226 +64,223 @@ class Data {
         this.insurance,
         this.form35,
         this.regNumber,
-        this.customerPrice});
+        this.customerPrice,
+    });
 
-  Data.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    allCarInfo = json['allCarInfo'] != null
-        ? new AllCarInfo.fromJson(json['allCarInfo'])
-        : null;
-    chasisNumber = json['chasisNumber'];
-    monthAndYearOfManufacture = json['monthAndYearOfManufacture'];
-    regDate = json['regDate'];
-    bodyType = json['bodyType'];
-    color = json['color'];
-    odometerReading = json['odometerReading'];
-    rcAvailability = json['rcAvailability'];
-    insurance = json['insurance'];
-    form35 = json['form35'];
-    regNumber = json['regNumber'];
-    customerPrice = json['customerPrice'];
-  }
+    factory Data.fromJson(Map<String, dynamic> json) => Data(
+        id: json["_id"],
+        allCarInfo: json["allCarInfo"] == null ? null : AllCarInfo.fromJson(json["allCarInfo"]),
+        chasisNumber: json["chasisNumber"],
+        monthAndYearOfManufacture: json["monthAndYearOfManufacture"],
+        regDate: json["regDate"],
+        bodyType: json["bodyType"],
+        color: json["color"],
+        odometerReading: json["odometerReading"],
+        rcAvailability: json["rcAvailability"],
+        insurance: json["insurance"],
+        form35: json["form35"],
+        regNumber: json["regNumber"],
+        customerPrice: json["customerPrice"],
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    if (this.allCarInfo != null) {
-      data['allCarInfo'] = this.allCarInfo!.toJson();
-    }
-    data['chasisNumber'] = this.chasisNumber;
-    data['monthAndYearOfManufacture'] = this.monthAndYearOfManufacture;
-    data['regDate'] = this.regDate;
-    data['bodyType'] = this.bodyType;
-    data['color'] = this.color;
-    data['odometerReading'] = this.odometerReading;
-    data['rcAvailability'] = this.rcAvailability;
-    data['insurance'] = this.insurance;
-    data['form35'] = this.form35;
-    data['regNumber'] = this.regNumber;
-    data['customerPrice'] = this.customerPrice;
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "_id": id,
+        "allCarInfo": allCarInfo?.toJson(),
+        "chasisNumber": chasisNumber,
+        "monthAndYearOfManufacture": monthAndYearOfManufacture,
+        "regDate": regDate,
+        "bodyType": bodyType,
+        "color": color,
+        "odometerReading": odometerReading,
+        "rcAvailability": rcAvailability,
+        "insurance": insurance,
+        "form35": form35,
+        "regNumber": regNumber,
+        "customerPrice": customerPrice,
+    };
 }
 
 class AllCarInfo {
-  int? engineCylinder;
-  String? evaluationStatusForEngine;
-  String? createdAt;
-  String? updatedAt;
-  List<String>? battery;
-  List<String>? blowBy;
-  List<String>? clutch;
-  String? engineComment;
-  EngineCompartment? engineCompartment;
-  List<String>? engineCondition;
-  List<String>? engineOil;
-  String? engineSound;
-  EngineTappetVideo? engineTappetVideo;
-  String? exhaustSmoke;
-  List<String>? gearBox;
-  String? radiator;
-  String? silencer;
-  String? compression;
-  String? coolant;
-  String? gearBoxLeakage;
-  List<String>? mount;
-  EngineCompartment? startVideo;
-  String? startingMotor;
-  String? summary;
-  List<String>? sump;
-  List<String>? turboCharger;
-  String? evaluationStatusForExterior;
-  EngineCompartment? apronLeft;
-  EngineCompartment? apronRight;
-  EngineCompartment? bonnetPatti;
-  EngineCompartment? boot;
-  EngineCompartment? bumperFront;
-  EngineCompartment? bumperRear;
-  EngineCompartment? chassisExtension;
-  EngineCompartment? dickyDoor;
-  EngineCompartment? doorFrontLeft;
-  EngineCompartment? doorFrontRight;
-  EngineCompartment? doorGlassLeft;
-  EngineCompartment? doorGlassRight;
-  EngineCompartment? doorRearLeft;
-  EngineCompartment? doorRearRight;
-  EngineCompartment? fenderLeft;
-  EngineCompartment? fenderRight;
-  EngineCompartment? firewall;
-  EngineCompartment? fogLightLeft;
-  EngineCompartment? fogLightRight;
-  EngineCompartment? frontTyreLeft;
-  EngineCompartment? frontTyreRight;
-  EngineCompartment? frontWindShield;
-  EngineCompartment? fuelLid;
-  String? fullBodyRepaint;
-  EngineCompartment? grill;
-  EngineCompartment? headLightLeft;
-  EngineCompartment? headLightRight;
-  EngineCompartment? headLightSupport;
-  String? jackAndTool;
-  EngineCompartment? leftApillar;
-  EngineCompartment? leftBpillar;
-  EngineCompartment? leftCpillar;
-  EngineCompartment? leftImage;
-  EngineCompartment? lowerCrossMember;
-  String? missingParts;
-  EngineCompartment? quarterGlass;
-  EngineCompartment? quarterPanelLeft;
-  EngineCompartment? quarterPanelRight;
-  EngineCompartment? rearTyreLeft;
-  EngineCompartment? rearTyreRight;
-  EngineCompartment? rearViewMirrorLeft;
-  EngineCompartment? rearViewMirrorRight;
-  EngineCompartment? rearWindShield;
-  EngineCompartment? rearWiper;
-  EngineCompartment? rightApillar;
-  EngineCompartment? rightBpillar;
-  EngineCompartment? rightCpillar;
-  EngineCompartment? rightImage;
-  EngineCompartment? roof;
-  EngineCompartment? runnningBorderLeft;
-  EngineCompartment? runnningBorderRight;
-  EngineCompartment? spareWheel;
-  EngineCompartment? tailLightLeft;
-  EngineCompartment? tailLightRight;
-  EngineCompartment? upperCrossMember;
-  EngineCompartment? cowlTop;
-  String? evaluationStatusForInterior;
-  String? transmission;
-  String? evaluationStatusForTestDrive;
-  String? evaluationStatusForFeature;
-  String? evaluationStatusForAc;
-  String? carCondition;
-  String? specialComments;
-  List<String>? carElectrical;
-  List<String>? clusterPanel;
-  String? combitionSwitch;
-  String? dashboardCondition;
-  String? dashboardSwitch;
-  List<String>? handBreak;
-  double? interiorStar;
-  EngineCompartment? interiorView;
-  String? key;
-  List<String>? platform;
-  List<String>? powerWindowCentalLock;
-  String? pushButton;
-  List<String>? rearViewMirror;
-  String? secondKey;
-  String? warningDetails;
-  String? brakes;
-  String? clutchSystem;
-  String? cruiseControl;
-  String? seatAdjustment;
-  String? shocker;
-  String? steeringAdjustment;
-  String? steeringMountedAudioControl;
-  String? steeringSystem;
-  List<String>? steeringWheel;
-  List<String>? suspension;
-  List<String>? transmissionAutomatic;
-  String? transmissionManual;
-  List<String>? vehicleHorn;
-  List<String>? absEbd;
-  List<String>? airbag;
-  List<String>? alloyWheels;
-  String? anyInteriorModifications;
-  String? fogLamps;
-  List<String>? gloveBox;
-  String? gpsNavigation;
-  List<String>? keylessEntry;
-  String? rearDefogger;
-  String? rearParkingSensor;
-  String? remoteCentalLock;
-  String? seatBelt;
-  String? stereoBrand;
-  List<String>? sunroof;
-  String? toolKit;
-  String? acBlowerGrill;
-  String? acCompressor;
-  List<String>? acCondensor;
-  String? acFilterDamaged;
-  String? acWorking;
-  List<String>? airCooling;
-  String? climateControl;
-  String? heater;
-  int? engineStar;
-  int? exteriorStar;
-  int? testDriveStar;
-  EngineCompartment? dashboardImage;
-  EngineCompartment? frontSeatImage;
-  EngineTappetVideo? handbreakImage;
-  EngineTappetVideo? odometerImage;
-  EngineCompartment? powerWindowDriverImage;
-  EngineCompartment? pushWindowDriverImage;
-  EngineCompartment? rearSeatImage;
-  double? electricalStar;
-  EngineCompartment? cngKitImage;
-  EngineCompartment? stereoImage;
-  double? interiorAndElectricalStar;
-  int? uniqueId;
-  String? make;
-  String? model;
-  String? variant;
-  String? maskedRegNumber;
-  String? vehicleLocation;
-  String? ownershipNumber;
-  String? fuelType;
-  String? qcStatus;
-  int? highestBid;
-  int? totalBidder;
-  String? status;
-  EngineCompartment? front;
-  EngineCompartment? frontLeft;
-  EngineCompartment? frontRight;
-  EngineCompartment? frontWithHoodOpen;
-  EngineCompartment? rear;
-  EngineCompartment? rearBootOpen;
-  EngineCompartment? rearLeft;
-  EngineCompartment? rearRight;
+    final int? engineCylinder;
+    final String? evaluationStatusForEngine;
+    final DateTime? createdAt;
+    final DateTime? updatedAt;
+    final ApronLeft? battery;
+    final ApronLeft? blowBy;
+    final ApronLeft? clutch;
+    final String? engineComment;
+    final ApronLeft? engineCompartment;
+    final List<String>? engineCondition;
+    final ApronLeft? engineOil;
+    final String? engineSound;
+    final CngKitImage? engineTappetVideo;
+    final String? exhaustSmoke;
+    final ApronLeft? gearBox;
+    final String? radiator;
+    final String? silencer;
+    final String? compression;
+    final String? coolant;
+    final String? gearBoxLeakage;
+    final ApronLeft? mount;
+    final ApronLeft? startVideo;
+    final String? startingMotor;
+    final String? summary;
+    final ApronLeft? sump;
+    final ApronLeft? turboCharger;
+    final ApronLeft? engine;
+    final String? evaluationStatusForExterior;
+    final ApronLeft? apronLeft;
+    final ApronLeft? apronRight;
+    final ApronLeft? bonnetPatti;
+    final ApronLeft? boot;
+    final ApronLeft? bumperFront;
+    final ApronLeft? bumperRear;
+    final ApronLeft? chassisExtension;
+    final ApronLeft? dickyDoor;
+    final ApronLeft? doorFrontLeft;
+    final ApronLeft? doorFrontRight;
+    final ApronLeft? doorGlassLeft;
+    final ApronLeft? doorGlassRight;
+    final ApronLeft? doorRearLeft;
+    final ApronLeft? doorRearRight;
+    final ApronLeft? fenderLeft;
+    final ApronLeft? fenderRight;
+    final ApronLeft? firewall;
+    final ApronLeft? fogLightLeft;
+    final ApronLeft? fogLightRight;
+    final FrontTyreLeft? frontTyreLeft;
+    final FrontTyreLeft? frontTyreRight;
+    final ApronLeft? frontWindShield;
+    final ApronLeft? fuelLid;
+    final String? fullBodyRepaint;
+    final ApronLeft? grill;
+    final ApronLeft? headLightLeft;
+    final ApronLeft? headLightRight;
+    final ApronLeft? headLightSupport;
+    final String? jackAndTool;
+    final ApronLeft? leftApillar;
+    final ApronLeft? leftBpillar;
+    final ApronLeft? leftCpillar;
+    final CngKitImage? leftImage;
+    final ApronLeft? lowerCrossMember;
+    final String? missingParts;
+    final ApronLeft? quarterGlass;
+    final ApronLeft? quarterPanelLeft;
+    final ApronLeft? quarterPanelRight;
+    final FrontTyreLeft? rearTyreLeft;
+    final FrontTyreLeft? rearTyreRight;
+    final ApronLeft? rearViewMirrorLeft;
+    final ApronLeft? rearViewMirrorRight;
+    final ApronLeft? rearWindShield;
+    final ApronLeft? rearWiper;
+    final ApronLeft? rightApillar;
+    final ApronLeft? rightBpillar;
+    final ApronLeft? rightCpillar;
+    final CngKitImage? rightImage;
+    final ApronLeft? roof;
+    final ApronLeft? runnningBorderLeft;
+    final ApronLeft? runnningBorderRight;
+    final ApronLeft? spareWheel;
+    final ApronLeft? tailLightLeft;
+    final ApronLeft? tailLightRight;
+    final ApronLeft? upperCrossMember;
+    final ApronLeft? cowlTop;
+    final String? evaluationStatusForInterior;
+    final String? transmission;
+    final String? evaluationStatusForTestDrive;
+    final String? evaluationStatusForFeature;
+    final String? evaluationStatusForAc;
+    final String? carCondition;
+    final String? specialComments;
+    final List<String>? carElectrical;
+    final List<String>? clusterPanel;
+    final String? combitionSwitch;
+    final String? dashboardCondition;
+    final String? dashboardSwitch;
+    final List<String>? handBreak;
+    final double? interiorStar;
+    final CngKitImage? interiorView;
+    final String? key;
+    final List<String>? platform;
+    final List<String>? powerWindowCentalLock;
+    final String? pushButton;
+    final List<String>? rearViewMirror;
+    final String? secondKey;
+    final String? warningDetails;
+    final String? brakes;
+    final String? clutchSystem;
+    final String? cruiseControl;
+    final String? seatAdjustment;
+    final String? shocker;
+    final String? steeringAdjustment;
+    final String? steeringMountedAudioControl;
+    final String? steeringSystem;
+    final List<String>? steeringWheel;
+    final List<String>? suspension;
+    final List<String>? transmissionAutomatic;
+    final String? transmissionManual;
+    final List<String>? vehicleHorn;
+    final List<String>? absEbd;
+    final List<String>? airbag;
+    final List<String>? alloyWheels;
+    final String? anyInteriorModifications;
+    final String? fogLamps;
+    final List<String>? gloveBox;
+    final String? gpsNavigation;
+    final List<String>? keylessEntry;
+    final String? rearDefogger;
+    final String? rearParkingSensor;
+    final String? remoteCentalLock;
+    final String? seatBelt;
+    final String? stereoBrand;
+    final List<String>? sunroof;
+    final String? toolKit;
+    final String? acBlowerGrill;
+    final String? acCompressor;
+    final List<String>? acCondensor;
+    final String? acFilterDamaged;
+    final String? acWorking;
+    final List<String>? airCooling;
+    final String? climateControl;
+    final String? heater;
+    final int? engineStar;
+    final int? exteriorStar;
+    final int? testDriveStar;
+    final ApronLeft? dashboardImage;
+    final ApronLeft? frontSeatImage;
+    final CngKitImage? handbreakImage;
+    final CngKitImage? odometerImage;
+    final CngKitImage? powerWindowDriverImage;
+    final CngKitImage? pushWindowDriverImage;
+    final ApronLeft? rearSeatImage;
+    final double? electricalStar;
+    final CngKitImage? cngKitImage;
+    final CngKitImage? stereoImage;
+    final double? interiorAndElectricalStar;
+    final ApronLeft? platformImage;
+    final int? uniqueId;
+    final String? make;
+    final String? model;
+    final String? variant;
+    final String? maskedRegNumber;
+    final String? vehicleLocation;
+    final String? ownershipNumber;
+    final String? fuelType;
+    final String? qcStatus;
+    final int? highestBid;
+    final int? totalBidder;
+    final String? status;
+    final CngKitImage? front;
+    final CngKitImage? frontLeft;
+    final CngKitImage? frontRight;
+    final CngKitImage? frontWithHoodOpen;
+    final CngKitImage? rear;
+    final CngKitImage? rearBootOpen;
+    final CngKitImage? rearLeft;
+    final CngKitImage? rearRight;
 
-  AllCarInfo(
-      {this.engineCylinder,
+    AllCarInfo({
+        this.engineCylinder,
         this.evaluationStatusForEngine,
         this.createdAt,
         this.updatedAt,
@@ -300,6 +306,7 @@ class AllCarInfo {
         this.summary,
         this.sump,
         this.turboCharger,
+        this.engine,
         this.evaluationStatusForExterior,
         this.apronLeft,
         this.apronRight,
@@ -429,6 +436,7 @@ class AllCarInfo {
         this.cngKitImage,
         this.stereoImage,
         this.interiorAndElectricalStar,
+        this.platformImage,
         this.uniqueId,
         this.make,
         this.model,
@@ -448,725 +456,453 @@ class AllCarInfo {
         this.rear,
         this.rearBootOpen,
         this.rearLeft,
-        this.rearRight});
+        this.rearRight,
+    });
 
-  AllCarInfo.fromJson(Map<String, dynamic> json) {
-    engineCylinder = json['engineCylinder'];
-    evaluationStatusForEngine = json['evaluationStatusForEngine'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    battery = json['battery'].cast<String>();
-    blowBy = json['blowBy'].cast<String>();
-    clutch = json['clutch'].cast<String>();
-    engineComment = json['engineComment'];
-    engineCompartment = json['engineCompartment'] != null
-        ? new EngineCompartment.fromJson(json['engineCompartment'])
-        : null;
-    engineCondition = json['engineCondition'].cast<String>();
-    engineOil = json['engineOil'].cast<String>();
-    engineSound = json['engineSound'];
-    engineTappetVideo = json['engineTappetVideo'] != null
-        ? new EngineTappetVideo.fromJson(json['engineTappetVideo'])
-        : null;
-    exhaustSmoke = json['exhaustSmoke'];
-    gearBox = json['gearBox'].cast<String>();
-    radiator = json['radiator'];
-    silencer = json['silencer'];
-    compression = json['compression'];
-    coolant = json['coolant'];
-    gearBoxLeakage = json['gearBoxLeakage'];
-    mount = json['mount'].cast<String>();
-    startVideo = json['startVideo'] != null
-        ? new EngineCompartment.fromJson(json['startVideo'])
-        : null;
-    startingMotor = json['startingMotor'];
-    summary = json['summary'];
-    sump = json['sump'].cast<String>();
-    turboCharger = json['turboCharger'].cast<String>();
-    evaluationStatusForExterior = json['evaluationStatusForExterior'];
-    apronLeft = json['apronLeft'] != null
-        ? new EngineCompartment.fromJson(json['apronLeft'])
-        : null;
-    apronRight = json['apronRight'] != null
-        ? new EngineCompartment.fromJson(json['apronRight'])
-        : null;
-    bonnetPatti = json['bonnetPatti'] != null
-        ? new EngineCompartment.fromJson(json['bonnetPatti'])
-        : null;
-    boot = json['boot'] != null
-        ? new EngineCompartment.fromJson(json['boot'])
-        : null;
-    bumperFront = json['bumperFront'] != null
-        ? new EngineCompartment.fromJson(json['bumperFront'])
-        : null;
-    bumperRear = json['bumperRear'] != null
-        ? new EngineCompartment.fromJson(json['bumperRear'])
-        : null;
-    chassisExtension = json['chassisExtension'] != null
-        ? new EngineCompartment.fromJson(json['chassisExtension'])
-        : null;
-    dickyDoor = json['dickyDoor'] != null
-        ? new EngineCompartment.fromJson(json['dickyDoor'])
-        : null;
-    doorFrontLeft = json['doorFrontLeft'] != null
-        ? new EngineCompartment.fromJson(json['doorFrontLeft'])
-        : null;
-    doorFrontRight = json['doorFrontRight'] != null
-        ? new EngineCompartment.fromJson(json['doorFrontRight'])
-        : null;
-    doorGlassLeft = json['doorGlassLeft'] != null
-        ? new EngineCompartment.fromJson(json['doorGlassLeft'])
-        : null;
-    doorGlassRight = json['doorGlassRight'] != null
-        ? new EngineCompartment.fromJson(json['doorGlassRight'])
-        : null;
-    doorRearLeft = json['doorRearLeft'] != null
-        ? new EngineCompartment.fromJson(json['doorRearLeft'])
-        : null;
-    doorRearRight = json['doorRearRight'] != null
-        ? new EngineCompartment.fromJson(json['doorRearRight'])
-        : null;
-    fenderLeft = json['fenderLeft'] != null
-        ? new EngineCompartment.fromJson(json['fenderLeft'])
-        : null;
-    fenderRight = json['fenderRight'] != null
-        ? new EngineCompartment.fromJson(json['fenderRight'])
-        : null;
-    firewall = json['firewall'] != null
-        ? new EngineCompartment.fromJson(json['firewall'])
-        : null;
-    fogLightLeft = json['fogLightLeft'] != null
-        ? new EngineCompartment.fromJson(json['fogLightLeft'])
-        : null;
-    fogLightRight = json['fogLightRight'] != null
-        ? new EngineCompartment.fromJson(json['fogLightRight'])
-        : null;
-    frontTyreLeft = json['frontTyreLeft'] != null
-        ? new EngineCompartment.fromJson(json['frontTyreLeft'])
-        : null;
-    frontTyreRight = json['frontTyreRight'] != null
-        ? new EngineCompartment.fromJson(json['frontTyreRight'])
-        : null;
-    frontWindShield = json['frontWindShield'] != null
-        ? new EngineCompartment.fromJson(json['frontWindShield'])
-        : null;
-    fuelLid = json['fuelLid'] != null
-        ? new EngineCompartment.fromJson(json['fuelLid'])
-        : null;
-    fullBodyRepaint = json['fullBodyRepaint'];
-    grill = json['grill'] != null
-        ? new EngineCompartment.fromJson(json['grill'])
-        : null;
-    headLightLeft = json['headLightLeft'] != null
-        ? new EngineCompartment.fromJson(json['headLightLeft'])
-        : null;
-    headLightRight = json['headLightRight'] != null
-        ? new EngineCompartment.fromJson(json['headLightRight'])
-        : null;
-    headLightSupport = json['headLightSupport'] != null
-        ? new EngineCompartment.fromJson(json['headLightSupport'])
-        : null;
-    jackAndTool = json['jackAndTool'];
-    leftApillar = json['leftApillar'] != null
-        ? new EngineCompartment.fromJson(json['leftApillar'])
-        : null;
-    leftBpillar = json['leftBpillar'] != null
-        ? new EngineCompartment.fromJson(json['leftBpillar'])
-        : null;
-    leftCpillar = json['leftCpillar'] != null
-        ? new EngineCompartment.fromJson(json['leftCpillar'])
-        : null;
-    leftImage = json['leftImage'] != null
-        ? new EngineCompartment.fromJson(json['leftImage'])
-        : null;
-    lowerCrossMember = json['lowerCrossMember'] != null
-        ? new EngineCompartment.fromJson(json['lowerCrossMember'])
-        : null;
-    missingParts = json['missingParts'];
-    quarterGlass = json['quarterGlass'] != null
-        ? new EngineCompartment.fromJson(json['quarterGlass'])
-        : null;
-    quarterPanelLeft = json['quarterPanelLeft'] != null
-        ? new EngineCompartment.fromJson(json['quarterPanelLeft'])
-        : null;
-    quarterPanelRight = json['quarterPanelRight'] != null
-        ? new EngineCompartment.fromJson(json['quarterPanelRight'])
-        : null;
-    rearTyreLeft = json['rearTyreLeft'] != null
-        ? new EngineCompartment.fromJson(json['rearTyreLeft'])
-        : null;
-    rearTyreRight = json['rearTyreRight'] != null
-        ? new EngineCompartment.fromJson(json['rearTyreRight'])
-        : null;
-    rearViewMirrorLeft = json['rearViewMirrorLeft'] != null
-        ? new EngineCompartment.fromJson(json['rearViewMirrorLeft'])
-        : null;
-    rearViewMirrorRight = json['rearViewMirrorRight'] != null
-        ? new EngineCompartment.fromJson(json['rearViewMirrorRight'])
-        : null;
-    rearWindShield = json['rearWindShield'] != null
-        ? new EngineCompartment.fromJson(json['rearWindShield'])
-        : null;
-    rearWiper = json['rearWiper'] != null
-        ? new EngineCompartment.fromJson(json['rearWiper'])
-        : null;
-    rightApillar = json['rightApillar'] != null
-        ? new EngineCompartment.fromJson(json['rightApillar'])
-        : null;
-    rightBpillar = json['rightBpillar'] != null
-        ? new EngineCompartment.fromJson(json['rightBpillar'])
-        : null;
-    rightCpillar = json['rightCpillar'] != null
-        ? new EngineCompartment.fromJson(json['rightCpillar'])
-        : null;
-    rightImage = json['rightImage'] != null
-        ? new EngineCompartment.fromJson(json['rightImage'])
-        : null;
-    roof = json['roof'] != null
-        ? new EngineCompartment.fromJson(json['roof'])
-        : null;
-    runnningBorderLeft = json['runnningBorderLeft'] != null
-        ? new EngineCompartment.fromJson(json['runnningBorderLeft'])
-        : null;
-    runnningBorderRight = json['runnningBorderRight'] != null
-        ? new EngineCompartment.fromJson(json['runnningBorderRight'])
-        : null;
-    spareWheel = json['spareWheel'] != null
-        ? new EngineCompartment.fromJson(json['spareWheel'])
-        : null;
-    tailLightLeft = json['tailLightLeft'] != null
-        ? new EngineCompartment.fromJson(json['tailLightLeft'])
-        : null;
-    tailLightRight = json['tailLightRight'] != null
-        ? new EngineCompartment.fromJson(json['tailLightRight'])
-        : null;
-    upperCrossMember = json['upperCrossMember'] != null
-        ? new EngineCompartment.fromJson(json['upperCrossMember'])
-        : null;
-    cowlTop = json['cowlTop'] != null
-        ? new EngineCompartment.fromJson(json['cowlTop'])
-        : null;
-    evaluationStatusForInterior = json['evaluationStatusForInterior'];
-    transmission = json['transmission'];
-    evaluationStatusForTestDrive = json['evaluationStatusForTestDrive'];
-    evaluationStatusForFeature = json['evaluationStatusForFeature'];
-    evaluationStatusForAc = json['evaluationStatusForAc'];
-    carCondition = json['carCondition'];
-    specialComments = json['specialComments'];
-    carElectrical = json['carElectrical'].cast<String>();
-    clusterPanel = json['clusterPanel'].cast<String>();
-    combitionSwitch = json['combitionSwitch'];
-    dashboardCondition = json['dashboardCondition'];
-    dashboardSwitch = json['dashboardSwitch'];
-    handBreak = json['handBreak'].cast<String>();
-    interiorStar = json['interiorStar'];
-    interiorView = json['interiorView'] != null
-        ? new EngineCompartment.fromJson(json['interiorView'])
-        : null;
-    key = json['key'];
-    platform = json['platform'].cast<String>();
-    powerWindowCentalLock = json['powerWindowCentalLock'].cast<String>();
-    pushButton = json['pushButton'];
-    rearViewMirror = json['rearViewMirror'].cast<String>();
-    secondKey = json['secondKey'];
-    warningDetails = json['warningDetails'];
-    brakes = json['brakes'];
-    clutchSystem = json['clutchSystem'];
-    cruiseControl = json['cruiseControl'];
-    seatAdjustment = json['seatAdjustment'];
-    shocker = json['shocker'];
-    steeringAdjustment = json['steeringAdjustment'];
-    steeringMountedAudioControl = json['steeringMountedAudioControl'];
-    steeringSystem = json['steeringSystem'];
-    steeringWheel = json['steeringWheel'].cast<String>();
-    suspension = json['suspension'].cast<String>();
-    transmissionAutomatic = json['transmissionAutomatic'].cast<String>();
-    transmissionManual = json['transmissionManual'];
-    vehicleHorn = json['vehicleHorn'].cast<String>();
-    absEbd = json['absEbd'].cast<String>();
-    airbag = json['airbag'].cast<String>();
-    alloyWheels = json['alloyWheels'].cast<String>();
-    anyInteriorModifications = json['anyInteriorModifications'];
-    fogLamps = json['fogLamps'];
-    gloveBox = json['gloveBox'].cast<String>();
-    gpsNavigation = json['gpsNavigation'];
-    keylessEntry = json['keylessEntry'].cast<String>();
-    rearDefogger = json['rearDefogger'];
-    rearParkingSensor = json['rearParkingSensor'];
-    remoteCentalLock = json['remoteCentalLock'];
-    seatBelt = json['seatBelt'];
-    stereoBrand = json['stereoBrand'];
-    sunroof = json['sunroof'].cast<String>();
-    toolKit = json['toolKit'];
-    acBlowerGrill = json['acBlowerGrill'];
-    acCompressor = json['acCompressor'];
-    acCondensor = json['acCondensor'].cast<String>();
-    acFilterDamaged = json['acFilterDamaged'];
-    acWorking = json['acWorking'];
-    airCooling = json['airCooling'].cast<String>();
-    climateControl = json['climateControl'];
-    heater = json['heater'];
-    engineStar = json['engineStar'];
-    exteriorStar = json['exteriorStar'];
-    testDriveStar = json['testDriveStar'];
-    dashboardImage = json['dashboardImage'] != null
-        ? new EngineCompartment.fromJson(json['dashboardImage'])
-        : null;
-    frontSeatImage = json['frontSeatImage'] != null
-        ? new EngineCompartment.fromJson(json['frontSeatImage'])
-        : null;
-    handbreakImage = json['handbreakImage'] != null
-        ? new EngineTappetVideo.fromJson(json['handbreakImage'])
-        : null;
-    odometerImage = json['odometerImage'] != null
-        ? new EngineTappetVideo.fromJson(json['odometerImage'])
-        : null;
-    powerWindowDriverImage = json['powerWindowDriverImage'] != null
-        ? new EngineCompartment.fromJson(json['powerWindowDriverImage'])
-        : null;
-    pushWindowDriverImage = json['pushWindowDriverImage'] != null
-        ? new EngineCompartment.fromJson(json['pushWindowDriverImage'])
-        : null;
-    rearSeatImage = json['rearSeatImage'] != null
-        ? new EngineCompartment.fromJson(json['rearSeatImage'])
-        : null;
-    electricalStar = json['electricalStar'];
-    cngKitImage = json['cngKitImage'] != null
-        ? new EngineCompartment.fromJson(json['cngKitImage'])
-        : null;
-    stereoImage = json['stereoImage'] != null
-        ? new EngineCompartment.fromJson(json['stereoImage'])
-        : null;
-    interiorAndElectricalStar = json['interiorAndElectricalStar'];
-    uniqueId = json['uniqueId'];
-    make = json['make'];
-    model = json['model'];
-    variant = json['variant'];
-    maskedRegNumber = json['maskedRegNumber'];
-    vehicleLocation = json['vehicleLocation'];
-    ownershipNumber = json['ownershipNumber'];
-    fuelType = json['fuelType'];
-    qcStatus = json['qcStatus'];
-    highestBid = json['highestBid'];
-    totalBidder = json['totalBidder'];
-    status = json['status'];
-    front = json['front'] != null
-        ? new EngineCompartment.fromJson(json['front'])
-        : null;
-    frontLeft = json['frontLeft'] != null
-        ? new EngineCompartment.fromJson(json['frontLeft'])
-        : null;
-    frontRight = json['frontRight'] != null
-        ? new EngineCompartment.fromJson(json['frontRight'])
-        : null;
-    frontWithHoodOpen = json['frontWithHoodOpen'] != null
-        ? new EngineCompartment.fromJson(json['frontWithHoodOpen'])
-        : null;
-    rear = json['rear'] != null
-        ? new EngineCompartment.fromJson(json['rear'])
-        : null;
-    rearBootOpen = json['rearBootOpen'] != null
-        ? new EngineCompartment.fromJson(json['rearBootOpen'])
-        : null;
-    rearLeft = json['rearLeft'] != null
-        ? new EngineCompartment.fromJson(json['rearLeft'])
-        : null;
-    rearRight = json['rearRight'] != null
-        ? new EngineCompartment.fromJson(json['rearRight'])
-        : null;
-  }
+    factory AllCarInfo.fromJson(Map<String, dynamic> json) => AllCarInfo(
+        engineCylinder: json["engineCylinder"],
+        evaluationStatusForEngine: json["evaluationStatusForEngine"],
+        createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+        battery: json["battery"] == null ? null : ApronLeft.fromJson(json["battery"]),
+        blowBy: json["blowBy"] == null ? null : ApronLeft.fromJson(json["blowBy"]),
+        clutch: json["clutch"] == null ? null : ApronLeft.fromJson(json["clutch"]),
+        engineComment: json["engineComment"],
+        engineCompartment: json["engineCompartment"] == null ? null : ApronLeft.fromJson(json["engineCompartment"]),
+        engineCondition: json["engineCondition"] == null ? [] : List<String>.from(json["engineCondition"]!.map((x) => x)),
+        engineOil: json["engineOil"] == null ? null : ApronLeft.fromJson(json["engineOil"]),
+        engineSound: json["engineSound"],
+        engineTappetVideo: json["engineTappetVideo"] == null ? null : CngKitImage.fromJson(json["engineTappetVideo"]),
+        exhaustSmoke: json["exhaustSmoke"],
+        gearBox: json["gearBox"] == null ? null : ApronLeft.fromJson(json["gearBox"]),
+        radiator: json["radiator"],
+        silencer: json["silencer"],
+        compression: json["compression"],
+        coolant: json["coolant"],
+        gearBoxLeakage: json["gearBoxLeakage"],
+        mount: json["mount"] == null ? null : ApronLeft.fromJson(json["mount"]),
+        startVideo: json["startVideo"] == null ? null : ApronLeft.fromJson(json["startVideo"]),
+        startingMotor: json["startingMotor"],
+        summary: json["summary"],
+        sump: json["sump"] == null ? null : ApronLeft.fromJson(json["sump"]),
+        turboCharger: json["turboCharger"] == null ? null : ApronLeft.fromJson(json["turboCharger"]),
+        engine: json["engine"] == null ? null : ApronLeft.fromJson(json["engine"]),
+        evaluationStatusForExterior: json["evaluationStatusForExterior"],
+        apronLeft: json["apronLeft"] == null ? null : ApronLeft.fromJson(json["apronLeft"]),
+        apronRight: json["apronRight"] == null ? null : ApronLeft.fromJson(json["apronRight"]),
+        bonnetPatti: json["bonnetPatti"] == null ? null : ApronLeft.fromJson(json["bonnetPatti"]),
+        boot: json["boot"] == null ? null : ApronLeft.fromJson(json["boot"]),
+        bumperFront: json["bumperFront"] == null ? null : ApronLeft.fromJson(json["bumperFront"]),
+        bumperRear: json["bumperRear"] == null ? null : ApronLeft.fromJson(json["bumperRear"]),
+        chassisExtension: json["chassisExtension"] == null ? null : ApronLeft.fromJson(json["chassisExtension"]),
+        dickyDoor: json["dickyDoor"] == null ? null : ApronLeft.fromJson(json["dickyDoor"]),
+        doorFrontLeft: json["doorFrontLeft"] == null ? null : ApronLeft.fromJson(json["doorFrontLeft"]),
+        doorFrontRight: json["doorFrontRight"] == null ? null : ApronLeft.fromJson(json["doorFrontRight"]),
+        doorGlassLeft: json["doorGlassLeft"] == null ? null : ApronLeft.fromJson(json["doorGlassLeft"]),
+        doorGlassRight: json["doorGlassRight"] == null ? null : ApronLeft.fromJson(json["doorGlassRight"]),
+        doorRearLeft: json["doorRearLeft"] == null ? null : ApronLeft.fromJson(json["doorRearLeft"]),
+        doorRearRight: json["doorRearRight"] == null ? null : ApronLeft.fromJson(json["doorRearRight"]),
+        fenderLeft: json["fenderLeft"] == null ? null : ApronLeft.fromJson(json["fenderLeft"]),
+        fenderRight: json["fenderRight"] == null ? null : ApronLeft.fromJson(json["fenderRight"]),
+        firewall: json["firewall"] == null ? null : ApronLeft.fromJson(json["firewall"]),
+        fogLightLeft: json["fogLightLeft"] == null ? null : ApronLeft.fromJson(json["fogLightLeft"]),
+        fogLightRight: json["fogLightRight"] == null ? null : ApronLeft.fromJson(json["fogLightRight"]),
+        frontTyreLeft: json["frontTyreLeft"] == null ? null : FrontTyreLeft.fromJson(json["frontTyreLeft"]),
+        frontTyreRight: json["frontTyreRight"] == null ? null : FrontTyreLeft.fromJson(json["frontTyreRight"]),
+        frontWindShield: json["frontWindShield"] == null ? null : ApronLeft.fromJson(json["frontWindShield"]),
+        fuelLid: json["fuelLid"] == null ? null : ApronLeft.fromJson(json["fuelLid"]),
+        fullBodyRepaint: json["fullBodyRepaint"],
+        grill: json["grill"] == null ? null : ApronLeft.fromJson(json["grill"]),
+        headLightLeft: json["headLightLeft"] == null ? null : ApronLeft.fromJson(json["headLightLeft"]),
+        headLightRight: json["headLightRight"] == null ? null : ApronLeft.fromJson(json["headLightRight"]),
+        headLightSupport: json["headLightSupport"] == null ? null : ApronLeft.fromJson(json["headLightSupport"]),
+        jackAndTool: json["jackAndTool"],
+        leftApillar: json["leftApillar"] == null ? null : ApronLeft.fromJson(json["leftApillar"]),
+        leftBpillar: json["leftBpillar"] == null ? null : ApronLeft.fromJson(json["leftBpillar"]),
+        leftCpillar: json["leftCpillar"] == null ? null : ApronLeft.fromJson(json["leftCpillar"]),
+        leftImage: json["leftImage"] == null ? null : CngKitImage.fromJson(json["leftImage"]),
+        lowerCrossMember: json["lowerCrossMember"] == null ? null : ApronLeft.fromJson(json["lowerCrossMember"]),
+        missingParts: json["missingParts"],
+        quarterGlass: json["quarterGlass"] == null ? null : ApronLeft.fromJson(json["quarterGlass"]),
+        quarterPanelLeft: json["quarterPanelLeft"] == null ? null : ApronLeft.fromJson(json["quarterPanelLeft"]),
+        quarterPanelRight: json["quarterPanelRight"] == null ? null : ApronLeft.fromJson(json["quarterPanelRight"]),
+        rearTyreLeft: json["rearTyreLeft"] == null ? null : FrontTyreLeft.fromJson(json["rearTyreLeft"]),
+        rearTyreRight: json["rearTyreRight"] == null ? null : FrontTyreLeft.fromJson(json["rearTyreRight"]),
+        rearViewMirrorLeft: json["rearViewMirrorLeft"] == null ? null : ApronLeft.fromJson(json["rearViewMirrorLeft"]),
+        rearViewMirrorRight: json["rearViewMirrorRight"] == null ? null : ApronLeft.fromJson(json["rearViewMirrorRight"]),
+        rearWindShield: json["rearWindShield"] == null ? null : ApronLeft.fromJson(json["rearWindShield"]),
+        rearWiper: json["rearWiper"] == null ? null : ApronLeft.fromJson(json["rearWiper"]),
+        rightApillar: json["rightApillar"] == null ? null : ApronLeft.fromJson(json["rightApillar"]),
+        rightBpillar: json["rightBpillar"] == null ? null : ApronLeft.fromJson(json["rightBpillar"]),
+        rightCpillar: json["rightCpillar"] == null ? null : ApronLeft.fromJson(json["rightCpillar"]),
+        rightImage: json["rightImage"] == null ? null : CngKitImage.fromJson(json["rightImage"]),
+        roof: json["roof"] == null ? null : ApronLeft.fromJson(json["roof"]),
+        runnningBorderLeft: json["runnningBorderLeft"] == null ? null : ApronLeft.fromJson(json["runnningBorderLeft"]),
+        runnningBorderRight: json["runnningBorderRight"] == null ? null : ApronLeft.fromJson(json["runnningBorderRight"]),
+        spareWheel: json["spareWheel"] == null ? null : ApronLeft.fromJson(json["spareWheel"]),
+        tailLightLeft: json["tailLightLeft"] == null ? null : ApronLeft.fromJson(json["tailLightLeft"]),
+        tailLightRight: json["tailLightRight"] == null ? null : ApronLeft.fromJson(json["tailLightRight"]),
+        upperCrossMember: json["upperCrossMember"] == null ? null : ApronLeft.fromJson(json["upperCrossMember"]),
+        cowlTop: json["cowlTop"] == null ? null : ApronLeft.fromJson(json["cowlTop"]),
+        evaluationStatusForInterior: json["evaluationStatusForInterior"],
+        transmission: json["transmission"],
+        evaluationStatusForTestDrive: json["evaluationStatusForTestDrive"],
+        evaluationStatusForFeature: json["evaluationStatusForFeature"],
+        evaluationStatusForAc: json["evaluationStatusForAc"],
+        carCondition: json["carCondition"],
+        specialComments: json["specialComments"],
+        carElectrical: json["carElectrical"] == null ? [] : List<String>.from(json["carElectrical"]!.map((x) => x)),
+        clusterPanel: json["clusterPanel"] == null ? [] : List<String>.from(json["clusterPanel"]!.map((x) => x)),
+        combitionSwitch: json["combitionSwitch"],
+        dashboardCondition: json["dashboardCondition"],
+        dashboardSwitch: json["dashboardSwitch"],
+        handBreak: json["handBreak"] == null ? [] : List<String>.from(json["handBreak"]!.map((x) => x)),
+        interiorStar: json["interiorStar"]?.toDouble(),
+        interiorView: json["interiorView"] == null ? null : CngKitImage.fromJson(json["interiorView"]),
+        key: json["key"],
+        platform: json["platform"] == null ? [] : List<String>.from(json["platform"]!.map((x) => x)),
+        powerWindowCentalLock: json["powerWindowCentalLock"] == null ? [] : List<String>.from(json["powerWindowCentalLock"]!.map((x) => x)),
+        pushButton: json["pushButton"],
+        rearViewMirror: json["rearViewMirror"] == null ? [] : List<String>.from(json["rearViewMirror"]!.map((x) => x)),
+        secondKey: json["secondKey"],
+        warningDetails: json["warningDetails"],
+        brakes: json["brakes"],
+        clutchSystem: json["clutchSystem"],
+        cruiseControl: json["cruiseControl"],
+        seatAdjustment: json["seatAdjustment"],
+        shocker: json["shocker"],
+        steeringAdjustment: json["steeringAdjustment"],
+        steeringMountedAudioControl: json["steeringMountedAudioControl"],
+        steeringSystem: json["steeringSystem"],
+        steeringWheel: json["steeringWheel"] == null ? [] : List<String>.from(json["steeringWheel"]!.map((x) => x)),
+        suspension: json["suspension"] == null ? [] : List<String>.from(json["suspension"]!.map((x) => x)),
+        transmissionAutomatic: json["transmissionAutomatic"] == null ? [] : List<String>.from(json["transmissionAutomatic"]!.map((x) => x)),
+        transmissionManual: json["transmissionManual"],
+        vehicleHorn: json["vehicleHorn"] == null ? [] : List<String>.from(json["vehicleHorn"]!.map((x) => x)),
+        absEbd: json["absEbd"] == null ? [] : List<String>.from(json["absEbd"]!.map((x) => x)),
+        airbag: json["airbag"] == null ? [] : List<String>.from(json["airbag"]!.map((x) => x)),
+        alloyWheels: json["alloyWheels"] == null ? [] : List<String>.from(json["alloyWheels"]!.map((x) => x)),
+        anyInteriorModifications: json["anyInteriorModifications"],
+        fogLamps: json["fogLamps"],
+        gloveBox: json["gloveBox"] == null ? [] : List<String>.from(json["gloveBox"]!.map((x) => x)),
+        gpsNavigation: json["gpsNavigation"],
+        keylessEntry: json["keylessEntry"] == null ? [] : List<String>.from(json["keylessEntry"]!.map((x) => x)),
+        rearDefogger: json["rearDefogger"],
+        rearParkingSensor: json["rearParkingSensor"],
+        remoteCentalLock: json["remoteCentalLock"],
+        seatBelt: json["seatBelt"],
+        stereoBrand: json["stereoBrand"],
+        sunroof: json["sunroof"] == null ? [] : List<String>.from(json["sunroof"]!.map((x) => x)),
+        toolKit: json["toolKit"],
+        acBlowerGrill: json["acBlowerGrill"],
+        acCompressor: json["acCompressor"],
+        acCondensor: json["acCondensor"] == null ? [] : List<String>.from(json["acCondensor"]!.map((x) => x)),
+        acFilterDamaged: json["acFilterDamaged"],
+        acWorking: json["acWorking"],
+        airCooling: json["airCooling"] == null ? [] : List<String>.from(json["airCooling"]!.map((x) => x)),
+        climateControl: json["climateControl"],
+        heater: json["heater"],
+        engineStar: json["engineStar"],
+        exteriorStar: json["exteriorStar"],
+        testDriveStar: json["testDriveStar"],
+        dashboardImage: json["dashboardImage"] == null ? null : ApronLeft.fromJson(json["dashboardImage"]),
+        frontSeatImage: json["frontSeatImage"] == null ? null : ApronLeft.fromJson(json["frontSeatImage"]),
+        handbreakImage: json["handbreakImage"] == null ? null : CngKitImage.fromJson(json["handbreakImage"]),
+        odometerImage: json["odometerImage"] == null ? null : CngKitImage.fromJson(json["odometerImage"]),
+        powerWindowDriverImage: json["powerWindowDriverImage"] == null ? null : CngKitImage.fromJson(json["powerWindowDriverImage"]),
+        pushWindowDriverImage: json["pushWindowDriverImage"] == null ? null : CngKitImage.fromJson(json["pushWindowDriverImage"]),
+        rearSeatImage: json["rearSeatImage"] == null ? null : ApronLeft.fromJson(json["rearSeatImage"]),
+        electricalStar: json["electricalStar"]?.toDouble(),
+        cngKitImage: json["cngKitImage"] == null ? null : CngKitImage.fromJson(json["cngKitImage"]),
+        stereoImage: json["stereoImage"] == null ? null : CngKitImage.fromJson(json["stereoImage"]),
+        interiorAndElectricalStar: json["interiorAndElectricalStar"]?.toDouble(),
+        platformImage: json["platformImage"] == null ? null : ApronLeft.fromJson(json["platformImage"]),
+        uniqueId: json["uniqueId"],
+        make: json["make"],
+        model: json["model"],
+        variant: json["variant"],
+        maskedRegNumber: json["maskedRegNumber"],
+        vehicleLocation: json["vehicleLocation"],
+        ownershipNumber: json["ownershipNumber"],
+        fuelType: json["fuelType"],
+        qcStatus: json["qcStatus"],
+        highestBid: json["highestBid"],
+        totalBidder: json["totalBidder"],
+        status: json["status"],
+        front: json["front"] == null ? null : CngKitImage.fromJson(json["front"]),
+        frontLeft: json["frontLeft"] == null ? null : CngKitImage.fromJson(json["frontLeft"]),
+        frontRight: json["frontRight"] == null ? null : CngKitImage.fromJson(json["frontRight"]),
+        frontWithHoodOpen: json["frontWithHoodOpen"] == null ? null : CngKitImage.fromJson(json["frontWithHoodOpen"]),
+        rear: json["rear"] == null ? null : CngKitImage.fromJson(json["rear"]),
+        rearBootOpen: json["rearBootOpen"] == null ? null : CngKitImage.fromJson(json["rearBootOpen"]),
+        rearLeft: json["rearLeft"] == null ? null : CngKitImage.fromJson(json["rearLeft"]),
+        rearRight: json["rearRight"] == null ? null : CngKitImage.fromJson(json["rearRight"]),
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['engineCylinder'] = this.engineCylinder;
-    data['evaluationStatusForEngine'] = this.evaluationStatusForEngine;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['battery'] = this.battery;
-    data['blowBy'] = this.blowBy;
-    data['clutch'] = this.clutch;
-    data['engineComment'] = this.engineComment;
-    if (this.engineCompartment != null) {
-      data['engineCompartment'] = this.engineCompartment!.toJson();
-    }
-    data['engineCondition'] = this.engineCondition;
-    data['engineOil'] = this.engineOil;
-    data['engineSound'] = this.engineSound;
-    if (this.engineTappetVideo != null) {
-      data['engineTappetVideo'] = this.engineTappetVideo!.toJson();
-    }
-    data['exhaustSmoke'] = this.exhaustSmoke;
-    data['gearBox'] = this.gearBox;
-    data['radiator'] = this.radiator;
-    data['silencer'] = this.silencer;
-    data['compression'] = this.compression;
-    data['coolant'] = this.coolant;
-    data['gearBoxLeakage'] = this.gearBoxLeakage;
-    data['mount'] = this.mount;
-    if (this.startVideo != null) {
-      data['startVideo'] = this.startVideo!.toJson();
-    }
-    data['startingMotor'] = this.startingMotor;
-    data['summary'] = this.summary;
-    data['sump'] = this.sump;
-    data['turboCharger'] = this.turboCharger;
-    data['evaluationStatusForExterior'] = this.evaluationStatusForExterior;
-    if (this.apronLeft != null) {
-      data['apronLeft'] = this.apronLeft!.toJson();
-    }
-    if (this.apronRight != null) {
-      data['apronRight'] = this.apronRight!.toJson();
-    }
-    if (this.bonnetPatti != null) {
-      data['bonnetPatti'] = this.bonnetPatti!.toJson();
-    }
-    if (this.boot != null) {
-      data['boot'] = this.boot!.toJson();
-    }
-    if (this.bumperFront != null) {
-      data['bumperFront'] = this.bumperFront!.toJson();
-    }
-    if (this.bumperRear != null) {
-      data['bumperRear'] = this.bumperRear!.toJson();
-    }
-    if (this.chassisExtension != null) {
-      data['chassisExtension'] = this.chassisExtension!.toJson();
-    }
-    if (this.dickyDoor != null) {
-      data['dickyDoor'] = this.dickyDoor!.toJson();
-    }
-    if (this.doorFrontLeft != null) {
-      data['doorFrontLeft'] = this.doorFrontLeft!.toJson();
-    }
-    if (this.doorFrontRight != null) {
-      data['doorFrontRight'] = this.doorFrontRight!.toJson();
-    }
-    if (this.doorGlassLeft != null) {
-      data['doorGlassLeft'] = this.doorGlassLeft!.toJson();
-    }
-    if (this.doorGlassRight != null) {
-      data['doorGlassRight'] = this.doorGlassRight!.toJson();
-    }
-    if (this.doorRearLeft != null) {
-      data['doorRearLeft'] = this.doorRearLeft!.toJson();
-    }
-    if (this.doorRearRight != null) {
-      data['doorRearRight'] = this.doorRearRight!.toJson();
-    }
-    if (this.fenderLeft != null) {
-      data['fenderLeft'] = this.fenderLeft!.toJson();
-    }
-    if (this.fenderRight != null) {
-      data['fenderRight'] = this.fenderRight!.toJson();
-    }
-    if (this.firewall != null) {
-      data['firewall'] = this.firewall!.toJson();
-    }
-    if (this.fogLightLeft != null) {
-      data['fogLightLeft'] = this.fogLightLeft!.toJson();
-    }
-    if (this.fogLightRight != null) {
-      data['fogLightRight'] = this.fogLightRight!.toJson();
-    }
-    if (this.frontTyreLeft != null) {
-      data['frontTyreLeft'] = this.frontTyreLeft!.toJson();
-    }
-    if (this.frontTyreRight != null) {
-      data['frontTyreRight'] = this.frontTyreRight!.toJson();
-    }
-    if (this.frontWindShield != null) {
-      data['frontWindShield'] = this.frontWindShield!.toJson();
-    }
-    if (this.fuelLid != null) {
-      data['fuelLid'] = this.fuelLid!.toJson();
-    }
-    data['fullBodyRepaint'] = this.fullBodyRepaint;
-    if (this.grill != null) {
-      data['grill'] = this.grill!.toJson();
-    }
-    if (this.headLightLeft != null) {
-      data['headLightLeft'] = this.headLightLeft!.toJson();
-    }
-    if (this.headLightRight != null) {
-      data['headLightRight'] = this.headLightRight!.toJson();
-    }
-    if (this.headLightSupport != null) {
-      data['headLightSupport'] = this.headLightSupport!.toJson();
-    }
-    data['jackAndTool'] = this.jackAndTool;
-    if (this.leftApillar != null) {
-      data['leftApillar'] = this.leftApillar!.toJson();
-    }
-    if (this.leftBpillar != null) {
-      data['leftBpillar'] = this.leftBpillar!.toJson();
-    }
-    if (this.leftCpillar != null) {
-      data['leftCpillar'] = this.leftCpillar!.toJson();
-    }
-    if (this.leftImage != null) {
-      data['leftImage'] = this.leftImage!.toJson();
-    }
-    if (this.lowerCrossMember != null) {
-      data['lowerCrossMember'] = this.lowerCrossMember!.toJson();
-    }
-    data['missingParts'] = this.missingParts;
-    if (this.quarterGlass != null) {
-      data['quarterGlass'] = this.quarterGlass!.toJson();
-    }
-    if (this.quarterPanelLeft != null) {
-      data['quarterPanelLeft'] = this.quarterPanelLeft!.toJson();
-    }
-    if (this.quarterPanelRight != null) {
-      data['quarterPanelRight'] = this.quarterPanelRight!.toJson();
-    }
-    if (this.rearTyreLeft != null) {
-      data['rearTyreLeft'] = this.rearTyreLeft!.toJson();
-    }
-    if (this.rearTyreRight != null) {
-      data['rearTyreRight'] = this.rearTyreRight!.toJson();
-    }
-    if (this.rearViewMirrorLeft != null) {
-      data['rearViewMirrorLeft'] = this.rearViewMirrorLeft!.toJson();
-    }
-    if (this.rearViewMirrorRight != null) {
-      data['rearViewMirrorRight'] = this.rearViewMirrorRight!.toJson();
-    }
-    if (this.rearWindShield != null) {
-      data['rearWindShield'] = this.rearWindShield!.toJson();
-    }
-    if (this.rearWiper != null) {
-      data['rearWiper'] = this.rearWiper!.toJson();
-    }
-    if (this.rightApillar != null) {
-      data['rightApillar'] = this.rightApillar!.toJson();
-    }
-    if (this.rightBpillar != null) {
-      data['rightBpillar'] = this.rightBpillar!.toJson();
-    }
-    if (this.rightCpillar != null) {
-      data['rightCpillar'] = this.rightCpillar!.toJson();
-    }
-    if (this.rightImage != null) {
-      data['rightImage'] = this.rightImage!.toJson();
-    }
-    if (this.roof != null) {
-      data['roof'] = this.roof!.toJson();
-    }
-    if (this.runnningBorderLeft != null) {
-      data['runnningBorderLeft'] = this.runnningBorderLeft!.toJson();
-    }
-    if (this.runnningBorderRight != null) {
-      data['runnningBorderRight'] = this.runnningBorderRight!.toJson();
-    }
-    if (this.spareWheel != null) {
-      data['spareWheel'] = this.spareWheel!.toJson();
-    }
-    if (this.tailLightLeft != null) {
-      data['tailLightLeft'] = this.tailLightLeft!.toJson();
-    }
-    if (this.tailLightRight != null) {
-      data['tailLightRight'] = this.tailLightRight!.toJson();
-    }
-    if (this.upperCrossMember != null) {
-      data['upperCrossMember'] = this.upperCrossMember!.toJson();
-    }
-    if (this.cowlTop != null) {
-      data['cowlTop'] = this.cowlTop!.toJson();
-    }
-    data['evaluationStatusForInterior'] = this.evaluationStatusForInterior;
-    data['transmission'] = this.transmission;
-    data['evaluationStatusForTestDrive'] = this.evaluationStatusForTestDrive;
-    data['evaluationStatusForFeature'] = this.evaluationStatusForFeature;
-    data['evaluationStatusForAc'] = this.evaluationStatusForAc;
-    data['carCondition'] = this.carCondition;
-    data['specialComments'] = this.specialComments;
-    data['carElectrical'] = this.carElectrical;
-    data['clusterPanel'] = this.clusterPanel;
-    data['combitionSwitch'] = this.combitionSwitch;
-    data['dashboardCondition'] = this.dashboardCondition;
-    data['dashboardSwitch'] = this.dashboardSwitch;
-    data['handBreak'] = this.handBreak;
-    data['interiorStar'] = this.interiorStar;
-    if (this.interiorView != null) {
-      data['interiorView'] = this.interiorView!.toJson();
-    }
-    data['key'] = this.key;
-    data['platform'] = this.platform;
-    data['powerWindowCentalLock'] = this.powerWindowCentalLock;
-    data['pushButton'] = this.pushButton;
-    data['rearViewMirror'] = this.rearViewMirror;
-    data['secondKey'] = this.secondKey;
-    data['warningDetails'] = this.warningDetails;
-    data['brakes'] = this.brakes;
-    data['clutchSystem'] = this.clutchSystem;
-    data['cruiseControl'] = this.cruiseControl;
-    data['seatAdjustment'] = this.seatAdjustment;
-    data['shocker'] = this.shocker;
-    data['steeringAdjustment'] = this.steeringAdjustment;
-    data['steeringMountedAudioControl'] = this.steeringMountedAudioControl;
-    data['steeringSystem'] = this.steeringSystem;
-    data['steeringWheel'] = this.steeringWheel;
-    data['suspension'] = this.suspension;
-    data['transmissionAutomatic'] = this.transmissionAutomatic;
-    data['transmissionManual'] = this.transmissionManual;
-    data['vehicleHorn'] = this.vehicleHorn;
-    data['absEbd'] = this.absEbd;
-    data['airbag'] = this.airbag;
-    data['alloyWheels'] = this.alloyWheels;
-    data['anyInteriorModifications'] = this.anyInteriorModifications;
-    data['fogLamps'] = this.fogLamps;
-    data['gloveBox'] = this.gloveBox;
-    data['gpsNavigation'] = this.gpsNavigation;
-    data['keylessEntry'] = this.keylessEntry;
-    data['rearDefogger'] = this.rearDefogger;
-    data['rearParkingSensor'] = this.rearParkingSensor;
-    data['remoteCentalLock'] = this.remoteCentalLock;
-    data['seatBelt'] = this.seatBelt;
-    data['stereoBrand'] = this.stereoBrand;
-    data['sunroof'] = this.sunroof;
-    data['toolKit'] = this.toolKit;
-    data['acBlowerGrill'] = this.acBlowerGrill;
-    data['acCompressor'] = this.acCompressor;
-    data['acCondensor'] = this.acCondensor;
-    data['acFilterDamaged'] = this.acFilterDamaged;
-    data['acWorking'] = this.acWorking;
-    data['airCooling'] = this.airCooling;
-    data['climateControl'] = this.climateControl;
-    data['heater'] = this.heater;
-    data['engineStar'] = this.engineStar;
-    data['exteriorStar'] = this.exteriorStar;
-    data['testDriveStar'] = this.testDriveStar;
-    if (this.dashboardImage != null) {
-      data['dashboardImage'] = this.dashboardImage!.toJson();
-    }
-    if (this.frontSeatImage != null) {
-      data['frontSeatImage'] = this.frontSeatImage!.toJson();
-    }
-    if (this.handbreakImage != null) {
-      data['handbreakImage'] = this.handbreakImage!.toJson();
-    }
-    if (this.odometerImage != null) {
-      data['odometerImage'] = this.odometerImage!.toJson();
-    }
-    if (this.powerWindowDriverImage != null) {
-      data['powerWindowDriverImage'] = this.powerWindowDriverImage!.toJson();
-    }
-    if (this.pushWindowDriverImage != null) {
-      data['pushWindowDriverImage'] = this.pushWindowDriverImage!.toJson();
-    }
-    if (this.rearSeatImage != null) {
-      data['rearSeatImage'] = this.rearSeatImage!.toJson();
-    }
-    data['electricalStar'] = this.electricalStar;
-    if (this.cngKitImage != null) {
-      data['cngKitImage'] = this.cngKitImage!.toJson();
-    }
-    if (this.stereoImage != null) {
-      data['stereoImage'] = this.stereoImage!.toJson();
-    }
-    data['interiorAndElectricalStar'] = this.interiorAndElectricalStar;
-    data['uniqueId'] = this.uniqueId;
-    data['make'] = this.make;
-    data['model'] = this.model;
-    data['variant'] = this.variant;
-    data['maskedRegNumber'] = this.maskedRegNumber;
-    data['vehicleLocation'] = this.vehicleLocation;
-    data['ownershipNumber'] = this.ownershipNumber;
-    data['fuelType'] = this.fuelType;
-    data['qcStatus'] = this.qcStatus;
-    data['highestBid'] = this.highestBid;
-    data['totalBidder'] = this.totalBidder;
-    data['status'] = this.status;
-    if (this.front != null) {
-      data['front'] = this.front!.toJson();
-    }
-    if (this.frontLeft != null) {
-      data['frontLeft'] = this.frontLeft!.toJson();
-    }
-    if (this.frontRight != null) {
-      data['frontRight'] = this.frontRight!.toJson();
-    }
-    if (this.frontWithHoodOpen != null) {
-      data['frontWithHoodOpen'] = this.frontWithHoodOpen!.toJson();
-    }
-    if (this.rear != null) {
-      data['rear'] = this.rear!.toJson();
-    }
-    if (this.rearBootOpen != null) {
-      data['rearBootOpen'] = this.rearBootOpen!.toJson();
-    }
-    if (this.rearLeft != null) {
-      data['rearLeft'] = this.rearLeft!.toJson();
-    }
-    if (this.rearRight != null) {
-      data['rearRight'] = this.rearRight!.toJson();
-    }
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "engineCylinder": engineCylinder,
+        "evaluationStatusForEngine": evaluationStatusForEngine,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+        "battery": battery?.toJson(),
+        "blowBy": blowBy?.toJson(),
+        "clutch": clutch?.toJson(),
+        "engineComment": engineComment,
+        "engineCompartment": engineCompartment?.toJson(),
+        "engineCondition": engineCondition == null ? [] : List<dynamic>.from(engineCondition!.map((x) => x)),
+        "engineOil": engineOil?.toJson(),
+        "engineSound": engineSound,
+        "engineTappetVideo": engineTappetVideo?.toJson(),
+        "exhaustSmoke": exhaustSmoke,
+        "gearBox": gearBox?.toJson(),
+        "radiator": radiator,
+        "silencer": silencer,
+        "compression": compression,
+        "coolant": coolant,
+        "gearBoxLeakage": gearBoxLeakage,
+        "mount": mount?.toJson(),
+        "startVideo": startVideo?.toJson(),
+        "startingMotor": startingMotor,
+        "summary": summary,
+        "sump": sump?.toJson(),
+        "turboCharger": turboCharger?.toJson(),
+        "engine": engine?.toJson(),
+        "evaluationStatusForExterior": evaluationStatusForExterior,
+        "apronLeft": apronLeft?.toJson(),
+        "apronRight": apronRight?.toJson(),
+        "bonnetPatti": bonnetPatti?.toJson(),
+        "boot": boot?.toJson(),
+        "bumperFront": bumperFront?.toJson(),
+        "bumperRear": bumperRear?.toJson(),
+        "chassisExtension": chassisExtension?.toJson(),
+        "dickyDoor": dickyDoor?.toJson(),
+        "doorFrontLeft": doorFrontLeft?.toJson(),
+        "doorFrontRight": doorFrontRight?.toJson(),
+        "doorGlassLeft": doorGlassLeft?.toJson(),
+        "doorGlassRight": doorGlassRight?.toJson(),
+        "doorRearLeft": doorRearLeft?.toJson(),
+        "doorRearRight": doorRearRight?.toJson(),
+        "fenderLeft": fenderLeft?.toJson(),
+        "fenderRight": fenderRight?.toJson(),
+        "firewall": firewall?.toJson(),
+        "fogLightLeft": fogLightLeft?.toJson(),
+        "fogLightRight": fogLightRight?.toJson(),
+        "frontTyreLeft": frontTyreLeft?.toJson(),
+        "frontTyreRight": frontTyreRight?.toJson(),
+        "frontWindShield": frontWindShield?.toJson(),
+        "fuelLid": fuelLid?.toJson(),
+        "fullBodyRepaint": fullBodyRepaint,
+        "grill": grill?.toJson(),
+        "headLightLeft": headLightLeft?.toJson(),
+        "headLightRight": headLightRight?.toJson(),
+        "headLightSupport": headLightSupport?.toJson(),
+        "jackAndTool": jackAndTool,
+        "leftApillar": leftApillar?.toJson(),
+        "leftBpillar": leftBpillar?.toJson(),
+        "leftCpillar": leftCpillar?.toJson(),
+        "leftImage": leftImage?.toJson(),
+        "lowerCrossMember": lowerCrossMember?.toJson(),
+        "missingParts": missingParts,
+        "quarterGlass": quarterGlass?.toJson(),
+        "quarterPanelLeft": quarterPanelLeft?.toJson(),
+        "quarterPanelRight": quarterPanelRight?.toJson(),
+        "rearTyreLeft": rearTyreLeft?.toJson(),
+        "rearTyreRight": rearTyreRight?.toJson(),
+        "rearViewMirrorLeft": rearViewMirrorLeft?.toJson(),
+        "rearViewMirrorRight": rearViewMirrorRight?.toJson(),
+        "rearWindShield": rearWindShield?.toJson(),
+        "rearWiper": rearWiper?.toJson(),
+        "rightApillar": rightApillar?.toJson(),
+        "rightBpillar": rightBpillar?.toJson(),
+        "rightCpillar": rightCpillar?.toJson(),
+        "rightImage": rightImage?.toJson(),
+        "roof": roof?.toJson(),
+        "runnningBorderLeft": runnningBorderLeft?.toJson(),
+        "runnningBorderRight": runnningBorderRight?.toJson(),
+        "spareWheel": spareWheel?.toJson(),
+        "tailLightLeft": tailLightLeft?.toJson(),
+        "tailLightRight": tailLightRight?.toJson(),
+        "upperCrossMember": upperCrossMember?.toJson(),
+        "cowlTop": cowlTop?.toJson(),
+        "evaluationStatusForInterior": evaluationStatusForInterior,
+        "transmission": transmission,
+        "evaluationStatusForTestDrive": evaluationStatusForTestDrive,
+        "evaluationStatusForFeature": evaluationStatusForFeature,
+        "evaluationStatusForAc": evaluationStatusForAc,
+        "carCondition": carCondition,
+        "specialComments": specialComments,
+        "carElectrical": carElectrical == null ? [] : List<dynamic>.from(carElectrical!.map((x) => x)),
+        "clusterPanel": clusterPanel == null ? [] : List<dynamic>.from(clusterPanel!.map((x) => x)),
+        "combitionSwitch": combitionSwitch,
+        "dashboardCondition": dashboardCondition,
+        "dashboardSwitch": dashboardSwitch,
+        "handBreak": handBreak == null ? [] : List<dynamic>.from(handBreak!.map((x) => x)),
+        "interiorStar": interiorStar,
+        "interiorView": interiorView?.toJson(),
+        "key": key,
+        "platform": platform == null ? [] : List<dynamic>.from(platform!.map((x) => x)),
+        "powerWindowCentalLock": powerWindowCentalLock == null ? [] : List<dynamic>.from(powerWindowCentalLock!.map((x) => x)),
+        "pushButton": pushButton,
+        "rearViewMirror": rearViewMirror == null ? [] : List<dynamic>.from(rearViewMirror!.map((x) => x)),
+        "secondKey": secondKey,
+        "warningDetails": warningDetails,
+        "brakes": brakes,
+        "clutchSystem": clutchSystem,
+        "cruiseControl": cruiseControl,
+        "seatAdjustment": seatAdjustment,
+        "shocker": shocker,
+        "steeringAdjustment": steeringAdjustment,
+        "steeringMountedAudioControl": steeringMountedAudioControl,
+        "steeringSystem": steeringSystem,
+        "steeringWheel": steeringWheel == null ? [] : List<dynamic>.from(steeringWheel!.map((x) => x)),
+        "suspension": suspension == null ? [] : List<dynamic>.from(suspension!.map((x) => x)),
+        "transmissionAutomatic": transmissionAutomatic == null ? [] : List<dynamic>.from(transmissionAutomatic!.map((x) => x)),
+        "transmissionManual": transmissionManual,
+        "vehicleHorn": vehicleHorn == null ? [] : List<dynamic>.from(vehicleHorn!.map((x) => x)),
+        "absEbd": absEbd == null ? [] : List<dynamic>.from(absEbd!.map((x) => x)),
+        "airbag": airbag == null ? [] : List<dynamic>.from(airbag!.map((x) => x)),
+        "alloyWheels": alloyWheels == null ? [] : List<dynamic>.from(alloyWheels!.map((x) => x)),
+        "anyInteriorModifications": anyInteriorModifications,
+        "fogLamps": fogLamps,
+        "gloveBox": gloveBox == null ? [] : List<dynamic>.from(gloveBox!.map((x) => x)),
+        "gpsNavigation": gpsNavigation,
+        "keylessEntry": keylessEntry == null ? [] : List<dynamic>.from(keylessEntry!.map((x) => x)),
+        "rearDefogger": rearDefogger,
+        "rearParkingSensor": rearParkingSensor,
+        "remoteCentalLock": remoteCentalLock,
+        "seatBelt": seatBelt,
+        "stereoBrand": stereoBrand,
+        "sunroof": sunroof == null ? [] : List<dynamic>.from(sunroof!.map((x) => x)),
+        "toolKit": toolKit,
+        "acBlowerGrill": acBlowerGrill,
+        "acCompressor": acCompressor,
+        "acCondensor": acCondensor == null ? [] : List<dynamic>.from(acCondensor!.map((x) => x)),
+        "acFilterDamaged": acFilterDamaged,
+        "acWorking": acWorking,
+        "airCooling": airCooling == null ? [] : List<dynamic>.from(airCooling!.map((x) => x)),
+        "climateControl": climateControl,
+        "heater": heater,
+        "engineStar": engineStar,
+        "exteriorStar": exteriorStar,
+        "testDriveStar": testDriveStar,
+        "dashboardImage": dashboardImage?.toJson(),
+        "frontSeatImage": frontSeatImage?.toJson(),
+        "handbreakImage": handbreakImage?.toJson(),
+        "odometerImage": odometerImage?.toJson(),
+        "powerWindowDriverImage": powerWindowDriverImage?.toJson(),
+        "pushWindowDriverImage": pushWindowDriverImage?.toJson(),
+        "rearSeatImage": rearSeatImage?.toJson(),
+        "electricalStar": electricalStar,
+        "cngKitImage": cngKitImage?.toJson(),
+        "stereoImage": stereoImage?.toJson(),
+        "interiorAndElectricalStar": interiorAndElectricalStar,
+        "platformImage": platformImage?.toJson(),
+        "uniqueId": uniqueId,
+        "make": make,
+        "model": model,
+        "variant": variant,
+        "maskedRegNumber": maskedRegNumber,
+        "vehicleLocation": vehicleLocation,
+        "ownershipNumber": ownershipNumber,
+        "fuelType": fuelType,
+        "qcStatus": qcStatus,
+        "highestBid": highestBid,
+        "totalBidder": totalBidder,
+        "status": status,
+        "front": front?.toJson(),
+        "frontLeft": frontLeft?.toJson(),
+        "frontRight": frontRight?.toJson(),
+        "frontWithHoodOpen": frontWithHoodOpen?.toJson(),
+        "rear": rear?.toJson(),
+        "rearBootOpen": rearBootOpen?.toJson(),
+        "rearLeft": rearLeft?.toJson(),
+        "rearRight": rearRight?.toJson(),
+    };
 }
 
-class EngineCompartment {
-  String? name;
-  String? url;
-  List<String>? condition;
-  String? remarks;
+class ApronLeft {
+    final List<String>? condition;
+    final String? remarks;
+    ApronLeft({
+        this.condition,
+        this.remarks
+    });
 
-  EngineCompartment({this.name, this.url, this.condition, this.remarks});
+    factory ApronLeft.fromJson(Map<String, dynamic> json) => ApronLeft(
+        condition: json["condition"] == null ? [] : List<String>.from(json["condition"]!.map((x) => x)),
+        remarks: json["remarks"],
+    );
 
-  EngineCompartment.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    url = json['url'];
-    condition = json['condition'].cast<String>();
-    remarks = json['remarks'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['url'] = this.url;
-    data['condition'] = this.condition;
-    data['remarks'] = this.remarks;
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "condition": condition == null ? [] : List<dynamic>.from(condition!.map((x) => x)),
+        "remarks": remarks,
+    };
 }
 
-class EngineTappetVideo {
-  String? name;
-  String? url;
-  String? remarks;
+class CngKitImage {
+    final String? name;
+    final String? url;
+    final List<String>? condition;
+    final String? remarks;
 
-  EngineTappetVideo({this.name, this.url, this.remarks});
+    CngKitImage({
+        this.name,
+        this.url,
+        this.condition,
+        this.remarks,
+    });
 
-  EngineTappetVideo.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    url = json['url'];
-    remarks = json['remarks'];
-  }
+    factory CngKitImage.fromJson(Map<String, dynamic> json) => CngKitImage(
+        name: json["name"],
+        url: json["url"],
+        condition: json["condition"] == null ? [] : List<String>.from(json["condition"]!.map((x) => x)),
+        remarks: json["remarks"],
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['url'] = this.url;
-    data['remarks'] = this.remarks;
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "name": name,
+        "url": url,
+        "condition": condition == null ? [] : List<dynamic>.from(condition!.map((x) => x)),
+        "remarks": remarks,
+    };
+}
+
+class FrontTyreLeft {
+    final String? condition;
+    final String? remarks;
+
+    FrontTyreLeft({
+        this.condition,
+        this.remarks
+    });
+
+    factory FrontTyreLeft.fromJson(Map<String, dynamic> json) => FrontTyreLeft(
+        condition: json["condition"],
+        remarks: json["remarks"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "condition": condition,
+        "remarks": remarks,
+    };
 }
 
 class Meta {
-  String? access;
-  String? refresh;
+    final String? access;
+    final String? refresh;
 
-  Meta({this.access, this.refresh});
+    Meta({
+        this.access,
+        this.refresh,
+    });
 
-  Meta.fromJson(Map<String, dynamic> json) {
-    access = json['access'];
-    refresh = json['refresh'];
-  }
+    factory Meta.fromJson(Map<String, dynamic> json) => Meta(
+        access: json["access"],
+        refresh: json["refresh"],
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['access'] = this.access;
-    data['refresh'] = this.refresh;
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "access": access,
+        "refresh": refresh,
+    };
 }

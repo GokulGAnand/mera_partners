@@ -1,109 +1,109 @@
+import 'dart:convert';
+
+airconditininglist airconditininglistFromJson(String str) => airconditininglist.fromJson(json.decode(str));
+
+String airconditininglistToJson(airconditininglist data) => json.encode(data.toJson());
+
 class airconditininglist {
-  String? status;
-  String? message;
-  List<Data>? data;
-  Meta? meta;
+    final String? status;
+    final String? message;
+    final List<Data>? data;
+    final Meta? meta;
 
-  airconditininglist({this.status, this.message, this.data, this.meta});
+    airconditininglist({
+        this.status,
+        this.message,
+        this.data,
+        this.meta,
+    });
 
-  airconditininglist.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
-      });
-    }
-    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
-  }
+    factory airconditininglist.fromJson(Map<String, dynamic> json) => airconditininglist(
+        status: json["status"],
+        message: json["message"],
+        data: json["data"] == null ? [] : List<Data>.from(json["data"]!.map((x) => Data.fromJson(x))),
+        meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    if (this.meta != null) {
-      data['meta'] = this.meta!.toJson();
-    }
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "status": status,
+        "message": message,
+        "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "meta": meta?.toJson(),
+    };
 }
 
 class Data {
-  String? sId;
-  String? carId;
-  String? rearDefogger;
-  String? acBlowerGrill;
-  String? acCompressor;
-  String? acCondensor;
-  String? acFilterDamaged;
-  String? acWorking;
-  String? airCooling;
-  String? climateControl;
-  String? heater;
+    final String? id;
+    final String? carId;
+    final List<String>? airCooling;
+    final String? heater;
+    final String? climateControl;
+    final List<String>? acCondensor;
+    final String? acCompressor;
+    final String? acWorking;
+    final String? acFilterDamaged;
+    final String? acBlowerGrill;
+    final String? rearDefogger;
 
-  Data(
-      {this.sId,
+    Data({
+        this.id,
         this.carId,
-        this.rearDefogger,
-        this.acBlowerGrill,
-        this.acCompressor,
-        this.acCondensor,
-        this.acFilterDamaged,
-        this.acWorking,
         this.airCooling,
+        this.heater,
         this.climateControl,
-        this.heater});
+        this.acCondensor,
+        this.acCompressor,
+        this.acWorking,
+        this.acFilterDamaged,
+        this.acBlowerGrill,
+        this.rearDefogger,
+    });
 
-  Data.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    carId = json['carId'];
-    rearDefogger = json['rearDefogger'];
-    acBlowerGrill = json['acBlowerGrill'];
-    acCompressor = json['acCompressor'];
-    acCondensor = json['acCondensor'];
-    acFilterDamaged = json['acFilterDamaged'];
-    acWorking = json['acWorking'];
-    airCooling = json['airCooling'];
-    climateControl = json['climateControl'];
-    heater = json['heater'];
-  }
+    factory Data.fromJson(Map<String, dynamic> json) => Data(
+        id: json["id"],
+        carId: json["carId"],
+        airCooling: json["airCooling"] == null ? [] : List<String>.from(json["airCooling"]!.map((x) => x)),
+        heater: json["heater"],
+        climateControl: json["climateControl"],
+        acCondensor: json["acCondensor"] == null ? [] : List<String>.from(json["acCondensor"]!.map((x) => x)),
+        acCompressor: json["acCompressor"],
+        acWorking: json["acWorking"],
+        acFilterDamaged: json["acFilterDamaged"],
+        acBlowerGrill: json["acBlowerGrill"],
+        rearDefogger: json["rearDefogger"],
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['carId'] = this.carId;
-    data['rearDefogger'] = this.rearDefogger;
-    data['acBlowerGrill'] = this.acBlowerGrill;
-    data['acCompressor'] = this.acCompressor;
-    data['acCondensor'] = this.acCondensor;
-    data['acFilterDamaged'] = this.acFilterDamaged;
-    data['acWorking'] = this.acWorking;
-    data['airCooling'] = this.airCooling;
-    data['climateControl'] = this.climateControl;
-    data['heater'] = this.heater;
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "carId": carId,
+        "airCooling": airCooling == null ? [] : List<dynamic>.from(airCooling!.map((x) => x)),
+        "heater": heater,
+        "climateControl": climateControl,
+        "acCondensor": acCondensor == null ? [] : List<dynamic>.from(acCondensor!.map((x) => x)),
+        "acCompressor": acCompressor,
+        "acWorking": acWorking,
+        "acFilterDamaged": acFilterDamaged,
+        "acBlowerGrill": acBlowerGrill,
+        "rearDefogger": rearDefogger,
+    };
 }
 
 class Meta {
-  String? access;
-  String? refresh;
+    final String? access;
+    final String? refresh;
 
-  Meta({this.access, this.refresh});
+    Meta({
+        this.access,
+        this.refresh,
+    });
 
-  Meta.fromJson(Map<String, dynamic> json) {
-    access = json['access'];
-    refresh = json['refresh'];
-  }
+    factory Meta.fromJson(Map<String, dynamic> json) => Meta(
+        access: json["access"],
+        refresh: json["refresh"],
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['access'] = this.access;
-    data['refresh'] = this.refresh;
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "access": access,
+        "refresh": refresh,
+    };
 }
