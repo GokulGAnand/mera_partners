@@ -119,7 +119,7 @@ class SpecialCommentsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 300),
+              const SizedBox(height: 270),
               Padding(
                 padding: const EdgeInsets.fromLTRB(17, 0, 17, 25),
                 child: CustomElevatedButton(

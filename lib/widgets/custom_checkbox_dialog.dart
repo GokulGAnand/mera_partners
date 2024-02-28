@@ -231,18 +231,96 @@ class CustomCheckBoxDialog extends StatelessWidget {
                         ),
                       )
                     : (image.value != null && (image.value!.path.startsWith('http') || image.value!.path.startsWith('https')))?
-                Image.network(
-                  image.value!.path,
-                  width: 119,
-                  height: 119,
-                  fit: BoxFit.fill,
-                ):
-                Image.file(
-                  image.value!,
+                Stack(
+                  children: [
+                    /*Image.network(
+                      image.value!.path,
+                      width: 119,
+                      height: 119,
+                      fit: BoxFit.fill,
+                    ),*/
+                    Image.network(
+                        image.value!.path,
                         width: 119,
                         height: 119,
                         fit: BoxFit.fill,
+                    frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                      return child;
+                    },
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }}),
+                    Positioned(
+                      child: Container(
+                        width: 20,
+                        height: 25,
+                        decoration: ShapeDecoration(
+                          shape: const CircleBorder(),
+                          color: MyColors.red,
+                          shadows: [
+                            BoxShadow(
+                              color: Colors.grey
+                                  .withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: IconButton(
+                          padding: EdgeInsets.only(right: 4),
+                          onPressed: (){
+                            image.value = null;
+                          },icon:const Icon( Icons.remove_sharp),
+                          color: MyColors.white,
+                          iconSize: 10,
+                        ),
                       ),
+                    ),
+                  ],
+                ):
+                Stack(
+                  children: [
+                    Image.file(
+                      image.value!,
+                            width: 119,
+                            height: 119,
+                            fit: BoxFit.fill,
+                          ),
+                    Positioned(
+                      child: Container(
+                        width: 20,
+                        height: 25,
+                        decoration: ShapeDecoration(
+                          shape: const CircleBorder(),
+                          color: MyColors.red,
+                          shadows: [
+                            BoxShadow(
+                              color: Colors.grey
+                                  .withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: IconButton(
+                          padding: EdgeInsets.only(right: 4),
+                          onPressed: (){
+                            image.value = null;
+                          },icon:const Icon( Icons.remove_sharp),
+                          color: MyColors.white,
+                          iconSize: 10,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(

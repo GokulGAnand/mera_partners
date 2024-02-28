@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:evaluator_app/utils/strings.dart';
 
 class ValidateInput {
@@ -54,6 +56,14 @@ class ValidateInput {
     if (value!.trim().isNotEmpty) {
       return null;
     } else {
+      return MyStrings.required;
+    }
+  }
+
+  static String? validateRequiredFieldsImage(String? value, File? file) {
+    if (value!.trim().isNotEmpty && file != null) {
+      return null;
+    }else{
       return MyStrings.required;
     }
   }

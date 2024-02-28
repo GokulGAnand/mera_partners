@@ -61,7 +61,9 @@ class EngineScreen extends StatelessWidget {
                     controller: TextEditingController(),
                     labelText: "${MyStrings.engineCompartmentImage}*",
                     helperText: "${MyStrings.engineCompartmentImage}*",
-                    validator: viewModel.engineCompartmentImage.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.engineCompartmentImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.engineCompartmentImage.value == null
@@ -127,7 +129,9 @@ class EngineScreen extends StatelessWidget {
                     controller: viewModel.engineController.value,
                     labelText: "${MyStrings.engine}*",
                     helperText: "${MyStrings.engine}*",
-                    validator: viewModel.engineImage.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.engineImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.engineImage.value == null
@@ -192,7 +196,9 @@ class EngineScreen extends StatelessWidget {
                     controller: TextEditingController(),
                     labelText: "${MyStrings.engineIdleStartVideo}*",
                     helperText: "${MyStrings.engineIdleStartVideo}*",
-                    validator: viewModel.engineIdleStartVideo.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.engineIdleStartVideo.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.engineIdleStartVideo.value == null
@@ -231,7 +237,9 @@ class EngineScreen extends StatelessWidget {
                     controller: viewModel.batteryController.value,
                     labelText: "${MyStrings.battery}*",
                     helperText: "${MyStrings.battery}*",
-                    validator: viewModel.batteryImage.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.batteryImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.batteryImage.value == null
@@ -354,7 +362,9 @@ class EngineScreen extends StatelessWidget {
                     controller: viewModel.blowByBackCompressionController.value,
                     labelText: "${MyStrings.blowByBackCompression}*",
                     helperText: "${MyStrings.blowByBackCompression}*",
-                    validator: viewModel.blowByBackCompressionImage.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.blowByBackCompressionImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.blowByBackCompressionImage.value == null
@@ -457,7 +467,9 @@ class EngineScreen extends StatelessWidget {
                     controller: viewModel.clutchOperationsController.value,
                     labelText: "${MyStrings.clutchOperations}*",
                     helperText: "${MyStrings.clutchOperations}*",
-                    validator: viewModel.clutchOperationsImage.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.clutchOperationsImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.clutchOperationsImage.value == null
@@ -496,7 +508,9 @@ class EngineScreen extends StatelessWidget {
                     controller: viewModel.gearboxController.value,
                     labelText: "${MyStrings.gearbox}*",
                     helperText: "${MyStrings.gearbox}*",
-                    validator: viewModel.gearBoxImage.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.gearBoxImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.gearBoxImage.value == null
@@ -535,7 +549,9 @@ class EngineScreen extends StatelessWidget {
                     controller: viewModel.engineOilController.value,
                     labelText: "${MyStrings.engineOil}*",
                     helperText: "${MyStrings.engineOil}*",
-                    validator: viewModel.engineOilImage.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.engineOilImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.engineOilImage.value == null
@@ -681,7 +697,9 @@ class EngineScreen extends StatelessWidget {
                     controller: viewModel.sumpController.value,
                     labelText: "${MyStrings.sump}*",
                     helperText: "${MyStrings.sump}*",
-                    validator: viewModel.sumpImage.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.sumpImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.sumpImage.value == null

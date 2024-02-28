@@ -19,10 +19,10 @@ import 'package:permission_handler/permission_handler.dart';
 class ImagePickerCard extends StatelessWidget {
   final VoidCallback? onSubmit;
   final bool? isVideo;
-  final Rx<File?>? image;
+  final Rx<File?> image;
   final TextEditingController remarksController;
 
-  ImagePickerCard({super.key, this.onSubmit, this.isVideo = false, required this.remarksController, this.image});
+  ImagePickerCard({super.key, this.onSubmit, this.isVideo = false, required this.remarksController, required this.image});
 
   Future pickImage(ImageSource source) async {
     try {
@@ -41,7 +41,7 @@ class ImagePickerCard extends StatelessWidget {
       if (image == null) return;
       final imageTemp = File(image.path);
       log(imageTemp.toString());
-      this.image?.value = imageTemp;
+      this.image.value = imageTemp;
     } on PlatformException catch (e) {
       if (kDebugMode) {
         print('Failed to pick image: $e');
@@ -56,7 +56,7 @@ class ImagePickerCard extends StatelessWidget {
       if (video == null) return;
       final videoTemp = File(video.path);
       log(videoTemp.toString());
-      image?.value = videoTemp;
+      image.value = videoTemp;
     } on PlatformException catch (e) {
       if (kDebugMode) {
         print('Failed to pick image: $e');
@@ -140,7 +140,7 @@ class ImagePickerCard extends StatelessWidget {
                     },
                   );
                 },
-                child: image?.value == null
+                child: image.value == null
                     ? Container(
                         width: 119,
                         height: 119,
@@ -172,19 +172,97 @@ class ImagePickerCard extends StatelessWidget {
                           ],
                         ),
                       )
-                    : (isVideo == false && image?.value != null && (image!.value!.path.startsWith('http') || image!.value!.path.startsWith('https')))?
-                Image.network(
-                  image!.value!.path,
-                  width: 119,
-                  height: 119,
-                  fit: BoxFit.fill,
-                ):isVideo == false?
-                Image.file(
-                  image!.value!,
+                    : (isVideo == false && image.value != null && (image.value!.path.startsWith('http') || image.value!.path.startsWith('https')))?
+                Stack(
+                  children: [
+                    /*Image.network(
+                      image.value!.path,
+                      width: 119,
+                      height: 119,
+                      fit: BoxFit.fill,
+                    ),*/
+                    Image.network(
+                        image.value!.path,
                         width: 119,
                         height: 119,
                         fit: BoxFit.fill,
-                      ):Text(image?.value?.path ?? ''),
+                        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                          return child;
+                        },
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }}),
+                    Positioned(
+                      child: Container(
+                        width: 20,
+                        height: 25,
+                        decoration: ShapeDecoration(
+                          shape: const CircleBorder(),
+                          color: MyColors.red,
+                          shadows: [
+                            BoxShadow(
+                              color: Colors.grey
+                                  .withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: IconButton(
+                          padding: const EdgeInsets.only(right: 4),
+                          onPressed: (){
+                            image.value = null;
+                          },icon:const Icon( Icons.remove_sharp),
+                          color: MyColors.white,
+                          iconSize: 10,
+                        ),
+                      ),
+                    ),
+                  ],
+                ):isVideo == false?
+                Stack(
+                  children: [
+                    Image.file(
+                      image.value!,
+                            width: 119,
+                            height: 119,
+                            fit: BoxFit.fill,
+                          ),
+                    Positioned(
+                      child: Container(
+                        width: 20,
+                        height: 25,
+                        decoration: ShapeDecoration(
+                          shape: const CircleBorder(),
+                          color: MyColors.red,
+                          shadows: [
+                            BoxShadow(
+                              color: Colors.grey
+                                  .withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: IconButton(
+                          padding: const EdgeInsets.only(right: 4),
+                          onPressed: (){
+                            image.value = null;
+                          },icon:const Icon( Icons.remove_sharp),
+                          color: MyColors.white,
+                          iconSize: 10,
+                        ),
+                      ),
+                    ),
+                  ],
+                ):Text(image.value?.path ?? ''),
               ),
             ),
             const SizedBox(
@@ -208,7 +286,7 @@ class ImagePickerCard extends StatelessWidget {
               padding: const EdgeInsets.only(left: 16.0, right: 16),
               child: CustomElevatedButton(onPressed: () {
                 // image?.value = image?.value;
-                print(image?.value.toString());
+                print(image.value.toString());
                 Navigator.of(context).pop();
               }, buttonText: MyStrings.submit),
             ),

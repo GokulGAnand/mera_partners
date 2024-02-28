@@ -61,7 +61,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.frontImageController.value,
                     labelText: "${MyStrings.frontImage}*",
                     helperText: "${MyStrings.frontImage}*",
-                    validator: ValidateInput.validateRequiredFields,
+                    validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.frontImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -94,7 +96,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.frontLeftImageController.value,
                     labelText: "${MyStrings.frontLeftImage}*",
                     helperText: "${MyStrings.frontLeftImage}*",
-                    validator: viewModel.frontLeftImage.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.frontLeftImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.frontLeftImage.value == null
@@ -132,7 +136,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.frontRightImageController.value,
                     labelText: "${MyStrings.frontRightImage}*",
                     helperText: "${MyStrings.frontRightImage}*",
-                    validator: ValidateInput.validateRequiredFields,
+                    validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.frontRightImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -165,7 +171,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.leftImageController.value,
                     labelText: "${MyStrings.leftImage}*",
                     helperText: "${MyStrings.leftImage}*",
-                    validator: ValidateInput.validateRequiredFields,
+                    validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.leftImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -198,7 +206,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rightImageController.value,
                     labelText: "${MyStrings.rightImage}*",
                     helperText: "${MyStrings.rightImage}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.rightImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -231,7 +241,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rearLeftImageController.value,
                     labelText: "${MyStrings.rearLeftImage}*",
                     helperText: "${MyStrings.rearLeftImage}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.rearLeftImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -264,7 +276,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rearImageController.value,
                     labelText: "${MyStrings.rearImage}*",
                     helperText: "${MyStrings.rearImage}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.rearImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -297,7 +311,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rearRightController.value,
                     labelText: "${MyStrings.rearRight}*",
                     helperText: "${MyStrings.rearRight}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.rearRightImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -330,7 +346,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.roofImageController.value,
                     labelText: "${MyStrings.roofImage}*",
                     helperText: "${MyStrings.roofImage}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.roofImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -363,7 +381,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.frontWindShieldWiperController.value,
                     labelText: "${MyStrings.frontWindShieldWiper}*",
                     helperText: "${MyStrings.frontWindShieldWiper}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.frontWindShieldWiperImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -435,7 +455,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rearWindShieldController.value,
                     labelText: "${MyStrings.rearWindShield}*",
                     helperText: "${MyStrings.rearWindShield}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.rearWindShield.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -468,7 +490,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.doorGlassLHController.value,
                     labelText: "${MyStrings.doorGlassLH}*",
                     helperText: "${MyStrings.doorGlassLH}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.doorGlassLH.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -501,7 +525,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.doorGlassRHController.value,
                     labelText: "${MyStrings.doorGlassRH}*",
                     helperText: "${MyStrings.doorGlassRH}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.doorGlassRH.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -534,7 +560,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.quarterGlassController.value,
                     labelText: "${MyStrings.quarterGlass}*",
                     helperText: "${MyStrings.quarterGlass}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.quarterGlass.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -567,7 +595,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.headlightsLHController.value,
                     labelText: "${MyStrings.headlightsLH}*",
                     helperText: "${MyStrings.headlightsLH}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.headlightsLH.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -600,7 +630,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.headlightsRHController.value,
                     labelText: "${MyStrings.headlightsRH}*",
                     helperText: "${MyStrings.headlightsRH}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.headlightsRH.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -666,7 +698,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.frontBumperController.value,
                     labelText: "${MyStrings.frontBumper}*",
                     helperText: "${MyStrings.frontBumper}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.frontBumper.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -699,7 +733,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rearBumperController.value,
                     labelText: "${MyStrings.rearBumper}*",
                     helperText: "${MyStrings.rearBumper}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.rearBumper.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -732,7 +768,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.frontGrillController.value,
                     labelText: "${MyStrings.frontGrill}*",
                     helperText: "${MyStrings.frontGrill}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.frontGrill.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -836,7 +874,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.upperCrossMemberController.value,
                     labelText: "${MyStrings.upperCrossMember}*",
                     helperText: "${MyStrings.upperCrossMember}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.upperCrossMember.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -869,7 +909,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.lowerCrossMemberController.value,
                     labelText: "${MyStrings.lowerCrossMember}*",
                     helperText: "${MyStrings.lowerCrossMember}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.lowerCrossMember.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -1058,7 +1100,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.tyreFrontRHSController.value,
                     labelText: "${MyStrings.tyreFrontRHS}*",
                     helperText: "${MyStrings.tyreFrontRHS}*",
-                    validator: viewModel.tyreFrontRHS.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.tyreFrontRHS.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.tyreFrontRHS.value == null
@@ -1096,7 +1140,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.tyreFrontLHSController.value,
                     labelText: "${MyStrings.tyreFrontLHS}*",
                     helperText: "${MyStrings.tyreFrontLHS}*",
-                    validator: viewModel.tyreFrontLHS.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.tyreFrontLHS.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.tyreFrontLHS.value == null
@@ -1157,7 +1203,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.tyreRearRHSController.value,
                     labelText: "${MyStrings.tyreRearRHS}*",
                     helperText: "${MyStrings.tyreRearRHS}*",
-                    validator: viewModel.tyreRearRHS.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.tyreRearRHS.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.tyreRearRHS.value == null
@@ -1257,7 +1305,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.tyreRearLHSController.value,
                     labelText: "${MyStrings.tyreRearLHS}*",
                     helperText: "${MyStrings.tyreRearLHS}*",
-                    validator: viewModel.tyreRearLHS.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.tyreRearLHS .value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.tyreRearLHS.value == null
@@ -1318,7 +1368,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.lhFenderController.value,
                     labelText: "${MyStrings.lhFender}*",
                     helperText: "${MyStrings.lhFender}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.lhFender.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -1351,7 +1403,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rhFenderController.value,
                     labelText: "${MyStrings.rhFender}*",
                     helperText: "${MyStrings.rhFender}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.rhFender.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -1384,7 +1438,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.lhQuarterPanelController.value,
                     labelText: "${MyStrings.lhQuarterPanel}*",
                     helperText: "${MyStrings.lhQuarterPanel}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.lhQuarterPanel.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -1417,7 +1473,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rhQuarterPanelController.value,
                     labelText: "${MyStrings.rhQuarterPanel}*",
                     helperText: "${MyStrings.rhQuarterPanel}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.rhQuarterPanel.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -1450,7 +1508,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.frontLHDoorController.value,
                     labelText: "${MyStrings.frontLHDoor}*",
                     helperText: "${MyStrings.frontLHDoor}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.frontLHDoor.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -1483,7 +1543,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rearLHDoorController.value,
                     labelText: "${MyStrings.rearLHDoor}*",
                     helperText: "${MyStrings.rearLHDoor}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.rearLHDoor.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -1516,7 +1578,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.frontRHDoorController.value,
                     labelText: "${MyStrings.frontRHDoor}*",
                     helperText: "${MyStrings.frontRHDoor}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.frontRHDoor.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -1549,7 +1613,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rearRHDoorController.value,
                     labelText: "${MyStrings.rearRHDoor}*",
                     helperText: "${MyStrings.rearRHDoor}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.rearRHDoor.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -1582,7 +1648,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.lhaPillarController.value,
                     labelText: "${MyStrings.lhaPillar}*",
                     helperText: "${MyStrings.lhaPillar}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.lhaPillar.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -1654,7 +1722,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rhaPillarController.value,
                     labelText: "${MyStrings.rhaPillar}*",
                     helperText: "${MyStrings.rhaPillar}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.rhaPillar.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -1687,7 +1757,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.lhbPillarController.value,
                     labelText: "${MyStrings.lhbPillar}*",
                     helperText: "${MyStrings.lhbPillar}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.lhbPillar.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -1720,7 +1792,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rhbPillarController.value,
                     labelText: "${MyStrings.rhbPillar}*",
                     helperText: "${MyStrings.rhbPillar}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.rhbPillar.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -1753,7 +1827,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.lhcPillarController.value,
                     labelText: "${MyStrings.lhcPillar}*",
                     helperText: "${MyStrings.lhcPillar}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.lhcPillar.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -1786,7 +1862,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rhcPillarController.value,
                     labelText: "${MyStrings.rhcPillar}*",
                     helperText: "${MyStrings.rhcPillar}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.rhcPillar.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -1819,7 +1897,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.lhRunBoardController.value,
                     labelText: "${MyStrings.lhRunBoard}*",
                     helperText: "${MyStrings.lhRunBoard}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.lhRunBoard.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -1852,7 +1932,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rhRunBoardController.value,
                     labelText: "${MyStrings.rhRunBoard}*",
                     helperText: "${MyStrings.rhRunBoard}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.rhRunBoard.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -1885,7 +1967,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.tailLightLhController.value,
                     labelText: "${MyStrings.tailLightLh}*",
                     helperText: "${MyStrings.tailLightLh}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.tailLightLh.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -1918,7 +2002,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.tailLightRhController.value,
                     labelText: "${MyStrings.tailLightRh}*",
                     helperText: "${MyStrings.tailLightRh}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.tailLightRh.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -1951,7 +2037,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rearWiperController.value,
                     labelText: "${MyStrings.rearWiper}*",
                     helperText: "${MyStrings.rearWiper}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.rearWiper.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -2023,7 +2111,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.bootController.value,
                     labelText: "${MyStrings.boot}*",
                     helperText: "${MyStrings.boot}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.bootImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -2056,7 +2146,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.dickyDoorController.value,
                     labelText: "${MyStrings.dickyDoor}*",
                     helperText: "${MyStrings.dickyDoor}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.dickyDoorImage.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -2089,7 +2181,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.spareWheelController.value,
                     labelText: "${MyStrings.spareWheel}*",
                     helperText: "${MyStrings.spareWheel}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.spareWheel.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -2148,7 +2242,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.lhRearViewMirrorController.value,
                     labelText: "${MyStrings.lhRearViewMirror}*",
                     helperText: "${MyStrings.lhRearViewMirror}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.lhRearViewMirror.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -2181,7 +2277,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rhRearViewMirrorController.value,
                     labelText: "${MyStrings.rhRearViewMirror}*",
                     helperText: "${MyStrings.rhRearViewMirror}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.rhRearViewMirror.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -2214,7 +2312,9 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.fuelLidController.value,
                     labelText: "${MyStrings.fuelLid}*",
                     helperText: "${MyStrings.fuelLid}*",
-                    validator: ValidateInput.validateRequiredFields,
+                     validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.fuelLid.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(

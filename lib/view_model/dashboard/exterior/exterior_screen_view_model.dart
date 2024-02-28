@@ -369,12 +369,19 @@ class ExteriorViewModel extends GetxController {
 
   void updateExterior() async {
     try {
-      var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl + EndPoints.exterior + '65da31e7b3e80a24a02fe514'));
+      print(Uri.parse(EndPoints.baseUrl + EndPoints.exterior +globals.carId.toString()));
+      var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl + EndPoints.exterior +globals.carId.toString()));
       for (int i = 0; i < selectedFrontImageList.length; i++) {
         request.fields['front_condition[$i]'] = selectedFrontImageList[i];
       }
+      for (int i = 0; i < selectedLeftImageList.length; i++) {
+        request.fields['left_condition[$i]'] = selectedLeftImageList[i];
+      }
+      for (int i = 0; i < selectedRightImageList.length; i++) {
+        request.fields['right_condition[$i]'] = selectedRightImageList[i];
+      }
       for (int i = 0; i < selectedFrontLeftImageList.length; i++) {
-        request.fields['frontLeft-condition[$i]'] = selectedFrontLeftImageList[i];
+        request.fields['frontLeft_condition[$i]'] = selectedFrontLeftImageList[i];
       }
       for (int i = 0; i < selectedFrontRightImageList.length; i++) {
         request.fields['frontRight_condition[$i]'] = selectedFrontRightImageList[i];
@@ -535,6 +542,18 @@ class ExteriorViewModel extends GetxController {
       for (int i = 0; i < selectedHeadlightsLHList.length; i++) {
         request.fields['headLightLeft_condition[$i]'] = selectedHeadlightsLHList[i];
       }
+      for (int i = 0; i < selectedTyreFrontLHSList.length; i++) {
+        request.fields['frontTyreLeft_condition[$i]'] = selectedTyreFrontLHSList[i];
+      }
+      for (int i = 0; i < selectedTyreFrontRHSList.length; i++) {
+        request.fields['frontTyreRight_condition[$i]'] = selectedTyreFrontRHSList[i];
+      }
+      for (int i = 0; i < selectedTyreRearRHSList.length; i++) {
+        request.fields['rearTyreRight_condition[$i]'] = selectedTyreRearRHSList[i];
+      }
+      for (int i = 0; i < selectedTyreRearLHSList.length; i++) {
+        request.fields['rearTyreLeft_condition[$i]'] = selectedTyreRearLHSList[i];
+      }
       request.fields.addAll({
         'front_remarks': frontImageRemarks.value.text,
         'frontLeft_remarks': frontLeftImageRemarks.value.text,
@@ -608,189 +627,210 @@ class ExteriorViewModel extends GetxController {
         'cowlTop_remarks': cowlTopRemarks.value.text,
         'evaluationStatusForExterior':'COMPLETED'
       });
-      if (frontImage.value != null /*&& !frontImage.value!.path.startsWith('http') && !frontImage.value!.path.startsWith('https')*/) {
+      if (frontImage.value != null && !frontImage.value!.path.startsWith('http') && !frontImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('front', frontImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (frontLeftImage.value != null /*&& !frontLeftImage.value!.path.startsWith('http') && !frontLeftImage.value!.path.startsWith('https')*/) {
+      /*if (leftImage.value != null && !leftImage.value!.path.startsWith('http') && !leftImage.value!.path.startsWith('https')) {
+        request.files.add(await http.MultipartFile.fromPath('left', leftImage.value!.path,contentType: MediaType('image', 'jpg'),));
+      }*/
+      /*if (rightImage.value != null && !rightImage.value!.path.startsWith('http') && !rightImage.value!.path.startsWith('https')) {
+        request.files.add(await http.MultipartFile.fromPath('right', rightImage.value!.path,contentType: MediaType('image', 'jpg'),));
+      }*/
+      if (frontLeftImage.value != null && !frontLeftImage.value!.path.startsWith('http') && !frontLeftImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('frontLeft', frontLeftImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (frontRightImage.value != null /*&& !frontRightImage.value!.path.startsWith('http') && !frontRightImage.value!.path.startsWith('https')*/) {
+      if (frontRightImage.value != null && !frontRightImage.value!.path.startsWith('http') && !frontRightImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('frontRight', frontRightImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (rearLeftImage.value != null /*&& !rearLeftImage.value!.path.startsWith('http') && !rearLeftImage.value!.path.startsWith('https')*/) {
+      if (rearLeftImage.value != null && !rearLeftImage.value!.path.startsWith('http') && !rearLeftImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('rearLeft', rearLeftImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (rearRightImage.value != null /*&& !rearRightImage.value!.path.startsWith('http') && !rearRightImage.value!.path.startsWith('https')*/) {
+      if (rearRightImage.value != null && !rearRightImage.value!.path.startsWith('http') && !rearRightImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('rearRight', rearRightImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (rearImage.value != null/* && !rearImage.value!.path.startsWith('http') && !rearImage.value!.path.startsWith('https')*/) {
+      if (rearImage.value != null && !rearImage.value!.path.startsWith('http') && !rearImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('rear', rearImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       // request.files.add( await http.MultipartFile.fromPath('frontWithHoodOpen', ));
       // request.files.add( await http.MultipartFile.fromPath('rearBootOpen', ));
-      if (leftImage.value != null /*&& !leftImage.value!.path.startsWith('http') && !leftImage.value!.path.startsWith('https')*/) {
+      if (leftImage.value != null && !leftImage.value!.path.startsWith('http') && !leftImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('leftImage', leftImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (leftImage.value  != null /*&& !rightImage.value!.path.startsWith('http') && !rightImage.value!.path.startsWith('https')*/) {
+      if (rightImage.value  != null && !rightImage.value!.path.startsWith('http') && !rightImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('rightImage', rightImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (frontWindShieldWiperImage.value  != null /*&& !frontWindShieldWiperImage.value!.path.startsWith('http') && !frontWindShieldWiperImage.value!.path.startsWith('https')*/) {
+      if (frontWindShieldWiperImage.value  != null && !frontWindShieldWiperImage.value!.path.startsWith('http') && !frontWindShieldWiperImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('frontWindShield', frontWindShieldWiperImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (rearWindShield.value  != null /*&& !rearWindShield.value!.path.startsWith('http') && !rearWindShield.value!.path.startsWith('https')*/) {
+      if (rearWindShield.value  != null && !rearWindShield.value!.path.startsWith('http') && !rearWindShield.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('rearWindShield', rearWindShield.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (roofImage.value  != null /*&& !roofImage.value!.path.startsWith('http') && !roofImage.value!.path.startsWith('https')*/) {
+      if (roofImage.value  != null && !roofImage.value!.path.startsWith('http') && !roofImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('roof', roofImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (doorGlassLH.value  != null /*&& !doorGlassLH.value!.path.startsWith('http') && !doorGlassLH.value!.path.startsWith('https')*/) {
+      if (doorGlassLH.value  != null && !doorGlassLH.value!.path.startsWith('http') && !doorGlassLH.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('doorGlassLeft', doorGlassLH.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (doorGlassRH.value  != null /*&& !doorGlassRH.value!.path.startsWith('http') && !doorGlassRH.value!.path.startsWith('https')*/) {
+      if (doorGlassRH.value  != null && !doorGlassRH.value!.path.startsWith('http') && !doorGlassRH.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('doorGlassRight', doorGlassRH.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (quarterGlass.value  != null /*&& !quarterGlass.value!.path.startsWith('http') && !quarterGlass.value!.path.startsWith('https')*/) {
+      if (quarterGlass.value  != null && !quarterGlass.value!.path.startsWith('http') && !quarterGlass.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('quarterGlass', quarterGlass.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (headlightSupport.value  != null/* && !headlightSupport.value!.path.startsWith('http') && !headlightSupport.value!.path.startsWith('https')*/) {
+      if (headlightSupport.value  != null && !headlightSupport.value!.path.startsWith('http') && !headlightSupport.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('headLightRight', headlightSupport.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (headlightsLH.value  != null /*&& !headlightsLH.value!.path.startsWith('http') && !headlightsLH.value!.path.startsWith('https')*/) {
+      if (headlightsLH.value  != null && !headlightsLH.value!.path.startsWith('http') && !headlightsLH.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('headLightLeft', headlightsLH.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (headlightSupport.value  != null /*&& !headlightSupport.value!.path.startsWith('http') && !headlightSupport.value!.path.startsWith('https')*/) {
-        request.files.add(await http.MultipartFile.fromPath('headLightSupport', headlightSupport.value!.path,contentType: MediaType('image', 'jpg'),));
+        if (!headlightSupport.value!.path.startsWith('http') && !headlightSupport.value!.path.startsWith('https')) {
+          request.files.add(await http.MultipartFile.fromPath('headLightSupport', headlightSupport.value!.path,contentType: MediaType('image', 'jpg'),));
+        }
       }
-      if (frontBumper.value  != null /*&& !frontBumper.value!.path.startsWith('http') && !frontBumper.value!.path.startsWith('https')*/) {
+      if (frontBumper.value  != null && !frontBumper.value!.path.startsWith('http') && !frontBumper.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('bumperFront', frontBumper.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (rearBumper.value  != null /*&& !rearBumper.value!.path.startsWith('http') && !rearBumper.value!.path.startsWith('https')*/) {
+      if (rearBumper.value  != null && !rearBumper.value!.path.startsWith('http') && !rearBumper.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('bumperRear', rearBumper.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (bonnetPattiImage.value  != null /*&& !bonnetPattiImage.value!.path.startsWith('http') && !bonnetPattiImage.value!.path.startsWith('https')*/) {
-        request.files.add(await http.MultipartFile.fromPath('bonnetPatti', bonnetPattiImage.value!.path,contentType: MediaType('image', 'jpg'),));
+        if (!bonnetPattiImage.value!.path.startsWith('http') && !bonnetPattiImage.value!.path.startsWith('https')) {
+          request.files.add(await http.MultipartFile.fromPath('bonnetPatti', bonnetPattiImage.value!.path,contentType: MediaType('image', 'jpg'),));
+        }
       }
-      if (frontGrill.value  != null /*&& !frontGrill.value!.path.startsWith('http') && !frontGrill.value!.path.startsWith('https')*/) {
+      if (frontGrill.value  != null && !frontGrill.value!.path.startsWith('http') && !frontGrill.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('grill', frontGrill.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (lowerCrossMember.value  != null /*&& !lowerCrossMember.value!.path.startsWith('http') && !lowerCrossMember.value!.path.startsWith('https')*/) {
+      if (lowerCrossMember.value  != null && !lowerCrossMember.value!.path.startsWith('http') && !lowerCrossMember.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('lowerCrossMember', lowerCrossMember.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (upperCrossMember.value  != null /*&& !upperCrossMember.value!.path.startsWith('http') && !upperCrossMember.value!.path.startsWith('https')*/) {
+      if (upperCrossMember.value  != null && !upperCrossMember.value!.path.startsWith('http') && !upperCrossMember.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('upperCrossMember', upperCrossMember.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (apronLH.value  != null /*&& !apronLH.value!.path.startsWith('http') && !apronLH.value!.path.startsWith('https')*/) {
-        request.files.add(await http.MultipartFile.fromPath('apronLeft', apronLH.value!.path,contentType: MediaType('image', 'jpg'),));
+        if (!apronLH.value!.path.startsWith('http') && !apronLH.value!.path.startsWith('https')) {
+          request.files.add(await http.MultipartFile.fromPath('apronLeft', apronLH.value!.path,contentType: MediaType('image', 'jpg'),));
+        }
       }
       if (apronRH.value  != null /*&& !apronRH.value!.path.startsWith('http') && !apronRH.value!.path.startsWith('https')*/) {
-        request.files.add(await http.MultipartFile.fromPath('apronRight', apronRH.value!.path,contentType: MediaType('image', 'jpg'),));
+        if (!apronRH.value!.path.startsWith('http') && !apronRH.value!.path.startsWith('https')) {
+          request.files.add(await http.MultipartFile.fromPath('apronRight', apronRH.value!.path,contentType: MediaType('image', 'jpg'),));
+        }
       }
       if (chassisExtension.value  != null /*&& !chassisExtension.value!.path.startsWith('http') && !chassisExtension.value!.path.startsWith('https')*/) {
-        request.files.add(await http.MultipartFile.fromPath('chassisExtension', chassisExtension.value!.path,contentType: MediaType('image', 'jpg'),));
+        if (!chassisExtension.value!.path.startsWith('http') && !chassisExtension.value!.path.startsWith('https')) {
+          request.files.add(await http.MultipartFile.fromPath('chassisExtension', chassisExtension.value!.path,contentType: MediaType('image', 'jpg'),));
+        }
       }
-      if (tyreFrontRHS.value != null /*&& !tyreFrontRHS.value!.path.startsWith('http') && !tyreFrontRHS.value!.path.startsWith('https')*/) {
+      if (tyreFrontRHS.value != null && !tyreFrontRHS.value!.path.startsWith('http') && !tyreFrontRHS.value!.path.startsWith('https')) {
         request.files.add( await http.MultipartFile.fromPath('frontTyreRight', tyreFrontRHS.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (tyreFrontLHS.value != null /*&& !tyreFrontLHS.value!.path.startsWith('http') && !tyreFrontLHS.value!.path.startsWith('https')*/) {
+      if (tyreFrontLHS.value != null && !tyreFrontLHS.value!.path.startsWith('http') && !tyreFrontLHS.value!.path.startsWith('https')) {
         request.files.add( await http.MultipartFile.fromPath('frontTyreLeft', tyreFrontLHS.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (tyreRearRHS.value != null /*&& !tyreRearRHS.value!.path.startsWith('http') && !tyreRearRHS.value!.path.startsWith('https')*/) {
+      if (tyreRearRHS.value != null && !tyreRearRHS.value!.path.startsWith('http') && !tyreRearRHS.value!.path.startsWith('https')) {
         request.files.add( await http.MultipartFile.fromPath('rearTyreRight', tyreRearRHS.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (tyreRearLHS.value != null /*&& !tyreRearLHS.value!.path.startsWith('http') && !tyreRearLHS.value!.path.startsWith('https')*/) {
+      if (tyreRearLHS.value != null && !tyreRearLHS.value!.path.startsWith('http') && !tyreRearLHS.value!.path.startsWith('https')) {
         request.files.add( await http.MultipartFile.fromPath('rearTyreLeft', tyreRearLHS.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (lhFender.value  != null /*&& !lhFender.value!.path.startsWith('http') && !lhFender.value!.path.startsWith('https')*/) {
+      if (lhFender.value  != null && !lhFender.value!.path.startsWith('http') && !lhFender.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('fenderLeft', lhFender.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (rhFender.value  != null /*&& !rhFender.value!.path.startsWith('http') && !rhFender.value!.path.startsWith('https')*/) {
+      if (rhFender.value  != null && !rhFender.value!.path.startsWith('http') && !rhFender.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('fenderRight', rhFender.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (rhQuarterPanel.value  != null /*&& !rhQuarterPanel.value!.path.startsWith('http') && !rhQuarterPanel.value!.path.startsWith('https')*/) {
+      if (rhQuarterPanel.value  != null && !rhQuarterPanel.value!.path.startsWith('http') && !rhQuarterPanel.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('quarterPanelRight', rhQuarterPanel.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (lhQuarterPanel.value  != null /*&& !lhQuarterPanel.value!.path.startsWith('http') && !lhQuarterPanel.value!.path.startsWith('https')*/) {
+      if (lhQuarterPanel.value  != null && !lhQuarterPanel.value!.path.startsWith('http') && !lhQuarterPanel.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('quarterPanelLeft', lhQuarterPanel.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (frontRHDoor.value  != null /*&& !frontRHDoor.value!.path.startsWith('http') && !frontRHDoor.value!.path.startsWith('https')*/) {
+      if (frontRHDoor.value  != null && !frontRHDoor.value!.path.startsWith('http') && !frontRHDoor.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('doorFrontRight', frontRHDoor.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (frontLHDoor.value  != null /*&& !frontLHDoor.value!.path.startsWith('http') && !frontLHDoor.value!.path.startsWith('https')*/) {
+      if (frontLHDoor.value  != null && !frontLHDoor.value!.path.startsWith('http') && !frontLHDoor.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('doorFrontLeft', frontLHDoor.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (rearRHDoor.value  != null /*&& !rearRHDoor.value!.path.startsWith('http') && !rearRHDoor.value!.path.startsWith('https')*/) {
+      if (rearRHDoor.value  != null && !rearRHDoor.value!.path.startsWith('http') && !rearRHDoor.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('doorRearRight', rearRHDoor.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (rearLHDoor.value  != null /*&& !rearLHDoor.value!.path.startsWith('http') && !rearLHDoor.value!.path.startsWith('https')*/) {
+      if (rearLHDoor.value  != null && !rearLHDoor.value!.path.startsWith('http') && !rearLHDoor.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('doorRearLeft', rearLHDoor.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (lhaPillar.value  != null /*&& !lhaPillar.value!.path.startsWith('http') && !lhaPillar.value!.path.startsWith('https')*/) {
+      if (lhaPillar.value  != null && !lhaPillar.value!.path.startsWith('http') && !lhaPillar.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('leftApillar', lhaPillar.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (rhaPillar.value  != null /*&& !rhaPillar.value!.path.startsWith('http') && !rhaPillar.value!.path.startsWith('https')*/) {
+      if (rhaPillar.value  != null && !rhaPillar.value!.path.startsWith('http') && !rhaPillar.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('rightApillar', rhaPillar.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (lhbPillar.value  != null /*&& !lhbPillar.value!.path.startsWith('http') && !lhbPillar.value!.path.startsWith('https')*/) {
+      if (lhbPillar.value  != null && !lhbPillar.value!.path.startsWith('http') && !lhbPillar.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('leftBpillar', lhbPillar.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (rhbPillar.value  != null /*&& !rhbPillar.value!.path.startsWith('http') && !rhbPillar.value!.path.startsWith('https')*/) {
+      if (rhbPillar.value  != null && !rhbPillar.value!.path.startsWith('http') && !rhbPillar.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('rightBpillar', rhbPillar.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (lhcPillar.value  != null/* && !lhcPillar.value!.path.startsWith('http') && !lhcPillar.value!.path.startsWith('https')*/) {
+      if (lhcPillar.value  != null && !lhcPillar.value!.path.startsWith('http') && !lhcPillar.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('leftCpillar', lhcPillar.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (rhcPillar.value  != null/* && !rhcPillar.value!.path.startsWith('http') && !rhcPillar.value!.path.startsWith('https')*/) {
+      if (rhcPillar.value  != null && !rhcPillar.value!.path.startsWith('http') && !rhcPillar.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('rightCpillar', rhcPillar.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (rhRunBoard.value  != null /*&& !rhRunBoard.value!.path.startsWith('http') && !rhRunBoard.value!.path.startsWith('https')*/) {
+      if (rhRunBoard.value  != null && !rhRunBoard.value!.path.startsWith('http') && !rhRunBoard.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('runnningBorderRight', rhRunBoard.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (lhRunBoard.value  != null /*&& !lhRunBoard.value!.path.startsWith('http') && !lhRunBoard.value!.path.startsWith('https')*/) {
+      if (lhRunBoard.value  != null && !lhRunBoard.value!.path.startsWith('http') && !lhRunBoard.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('runnningBorderLeft', lhRunBoard.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (tailLightRh.value  != null/* && !tailLightRh.value!.path.startsWith('http') && !tailLightRh.value!.path.startsWith('https')*/) {
+      if (tailLightRh.value  != null && !tailLightRh.value!.path.startsWith('http') && !tailLightRh.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('tailLightRight', tailLightRh.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (tailLightLh.value  != null /*&& !tailLightLh.value!.path.startsWith('http') && !tailLightLh.value!.path.startsWith('https')*/) {
+      if (tailLightLh.value  != null && !tailLightLh.value!.path.startsWith('http') && !tailLightLh.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('tailLightLeft', tailLightLh.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (rearWiper.value  != null /*&& !rearWiper.value!.path.startsWith('http') && !rearWiper.value!.path.startsWith('https')*/) {
+      if (rearWiper.value  != null && !rearWiper.value!.path.startsWith('http') && !rearWiper.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('rearWiper', rearWiper.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (dickyDoorImage.value  != null /*&& !dickyDoorImage.value!.path.startsWith('http') && !dickyDoorImage.value!.path.startsWith('https')*/) {
+      if (dickyDoorImage.value  != null && !dickyDoorImage.value!.path.startsWith('http') && !dickyDoorImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('dickyDoor', dickyDoorImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (bootImage.value  != null /*&& !bootImage.value!.path.startsWith('http') && !bootImage.value!.path.startsWith('https')*/) {
+      if (bootImage.value  != null && !bootImage.value!.path.startsWith('http') && !bootImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('boot', bootImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (firewall.value  != null /*&& !firewall.value!.path.startsWith('http') && !firewall.value!.path.startsWith('https')*/) {
-        request.files.add(await http.MultipartFile.fromPath('firewall', firewall.value!.path,contentType: MediaType('image', 'jpg'),));
+      if (firewall.value  != null/* && !firewall.value!.path.startsWith('http') && !firewall.value!.path.startsWith('https')*/) {
+        if (!firewall.value!.path.startsWith('http') && !firewall.value!.path.startsWith('https')) {
+          request.files.add(await http.MultipartFile.fromPath('firewall', firewall.value!.path,contentType: MediaType('image', 'jpg'),));
+        }
       }
-      if (spareWheel.value  != null /*&& !spareWheel.value!.path.startsWith('http') && !spareWheel.value!.path.startsWith('https')*/) {
+      if (spareWheel.value  != null && !spareWheel.value!.path.startsWith('http') && !spareWheel.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('spareWheel', spareWheel.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (lhRearViewMirror.value  != null /*&& !lhRearViewMirror.value!.path.startsWith('http') && !lhRearViewMirror.value!.path.startsWith('https')*/) {
+      if (lhRearViewMirror.value  != null && !lhRearViewMirror.value!.path.startsWith('http') && !lhRearViewMirror.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('rearViewMirrorLeft', lhRearViewMirror.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (rhRearViewMirror.value  != null /*&& !rhRearViewMirror.value!.path.startsWith('http') && !rhRearViewMirror.value!.path.startsWith('https')*/) {
+      if (rhRearViewMirror.value  != null && !rhRearViewMirror.value!.path.startsWith('http') && !rhRearViewMirror.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('rearViewMirrorRight', rhRearViewMirror.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (fuelLid.value  != null /*&& !fuelLid.value!.path.startsWith('http') && !fuelLid.value!.path.startsWith('https')*/) {
+      if (fuelLid.value  != null && !fuelLid.value!.path.startsWith('http') && !fuelLid.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('fuelLid', fuelLid.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       // request.files.add( await http.MultipartFile.fromPath('fogLightRight', ));
       // request.files.add( await http.MultipartFile.fromPath('fogLightLeft', ));
       if (cowlTop.value  != null /*&& !cowlTop.value!.path.startsWith('http') && !cowlTop.value!.path.startsWith('https')*/) {
-        request.files.add(await http.MultipartFile.fromPath('cowlTop', cowlTop.value!.path,contentType: MediaType('image', 'jpg'),));
+        if (!cowlTop.value!.path.startsWith('http') && !cowlTop.value!.path.startsWith('https')) {
+          request.files.add(await http.MultipartFile.fromPath('cowlTop', cowlTop.value!.path,contentType: MediaType('image', 'jpg'),));
+        }
       }
       request.headers.addAll(globals.headers);
 
-      var response = await request.send();
-
+      http.StreamedResponse response = await request.send();
+print(response.toString());
       if (response.statusCode == 200) {
         print(response.stream.bytesToString());
         CustomToast.instance.showMsg(MyStrings.success);
         Get.offNamed(AppRoutes.dashBoardScreen);
+        // Get.back();
       } else {
         print(response.reasonPhrase);
       }
@@ -1087,7 +1127,7 @@ class ExteriorViewModel extends GetxController {
 
   void getExteriorData() async {
     try {
-      var response = await http.get(Uri.parse(EndPoints.baseUrl + EndPoints.exterior + id), headers: globals.headers);
+      var response = await http.get(Uri.parse(EndPoints.baseUrl + EndPoints.exterior + globals.carId.toString()), headers: globals.headers);
       if (response.statusCode == 200) {
         exteriorResponse.value = ExteriorResponse.fromJson(jsonDecode(response.body));
         loadData();

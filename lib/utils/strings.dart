@@ -2,6 +2,7 @@ class MyStrings {
   ///Login Screen
   static const String welcome = "Welcome";
   static const String username = "Username";
+  static const String invalidUsernamePassword = "Invalid username or password";
   static const String password = "Password";
   static const String login = "Login";
   static const String forgotPassword = "Forgot Password?";

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:evaluator_app/model/response/login/validate_user_response.dart';
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/service/endpoints.dart';
+import 'package:evaluator_app/utils/strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -23,15 +24,13 @@ class LoginScreenViewModel extends GetxController {
   void onInit() {
     if (kDebugMode) {
       userNameController.text = 'E8I07V';
-      passwordController.text = '12345';
+      passwordController.text = 'abcd';
     }
     super.onInit();
   }
 
   void validateUser() async {
     try {
-      print(userNameController.text);
-      print(passwordController.text);
       var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.login),
           body: {"userId": userNameController.text, "password": passwordController.text});
 
@@ -45,7 +44,7 @@ class LoginScreenViewModel extends GetxController {
         globals.userId = validateUserResponse!.data!.first.userId;
         Get.toNamed(AppRoutes.homeScreen);
       }else{
-        CustomToast.instance.showMsg(response.reasonPhrase ?? '');
+        CustomToast.instance.showMsg(MyStrings.invalidUsernamePassword);
       }
     } catch (e) {
       print(e);

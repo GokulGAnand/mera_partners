@@ -86,19 +86,19 @@ class DocumentViewModel extends GetxController {
         'nocImage_remarks':nocRemarksController.value.text,
         'evaluationStatusForDocument': 'COMPLETED'
       });
-      if (rcFrontImage.value != null /*&& !rcFrontImage.value!.path.startsWith('http') && !rcFrontImage.value!.path.startsWith('https')*/) {
+      if (rcFrontImage.value != null && !rcFrontImage.value!.path.startsWith('http') && !rcFrontImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('rcFront', rcFrontImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (rcBackImage.value != null/* && !rcBackImage.value!.path.startsWith('http') && !rcBackImage.value!.path.startsWith('https')*/) {
+      if (rcBackImage.value != null && !rcBackImage.value!.path.startsWith('http') && !rcBackImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('rcBack', rcBackImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if(nocImage.value != null /*&& !nocImage.value!.path.startsWith('http') && !nocImage.value!.path.startsWith('https')*/) {
+      if(nocImage.value != null && !nocImage.value!.path.startsWith('http') && !nocImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('nocImage', nocImage.value!.path,contentType: MediaType('image', 'jpg')));
       }
-      if(form35Image.value != null /*&& !form35Image.value!.path.startsWith('http') && !form35Image.value!.path.startsWith('https')*/) {
+      if(form35Image.value != null && !form35Image.value!.path.startsWith('http') && !form35Image.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('form35Image', form35Image.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if(chassisImage.value != null /*&& !form35Image.value!.path.startsWith('http') && !form35Image.value!.path.startsWith('https')*/) {
+      if(chassisImage.value != null && !chassisImage.value!.path.startsWith('http') && !chassisImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('chassisImage', chassisImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       request.headers.addAll(globals.headers);
@@ -109,7 +109,8 @@ class DocumentViewModel extends GetxController {
 
       if (response.statusCode == 200) {
             log(await response.stream.bytesToString());
-            Get.offNamed(AppRoutes.dashBoardScreen);
+            Get.back();
+            // Get.offNamed(AppRoutes.dashBoardScreen);
           } else {
             log(response.reasonPhrase.toString());
           }
@@ -137,6 +138,8 @@ class DocumentViewModel extends GetxController {
 
   void loadData(){
     if (documentResponse.value.data != null && documentResponse.value.data?.rcFront != null && documentResponse.value.data?.rcBack != null) {
+      isPage2Fill.value = true;
+      isPage1Fill.value = true;
       insuranceCompanyController.value.text = documentResponse.value.data?.insuranceCompany ?? '';
       insuranceIDVController.value.text = documentResponse.value.data?.insuranceIDV ?? '';
       insuranceValidityController.value.text = documentResponse.value.data?.insuranceValidity ?? '';

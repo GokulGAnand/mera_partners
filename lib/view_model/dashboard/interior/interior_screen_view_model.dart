@@ -1,13 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:evaluator_app/model/response/interior/interior_info_response.dart';
-import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/service/endpoints.dart';
 import 'package:evaluator_app/service/exception_error_util.dart';
 import 'package:evaluator_app/utils/constants.dart';
-import 'package:evaluator_app/view/dashboard/interior/interior_screen_ui.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
