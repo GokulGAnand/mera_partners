@@ -61,9 +61,7 @@ class EngineScreen extends StatelessWidget {
                     controller: TextEditingController(),
                     labelText: "${MyStrings.engineCompartmentImage}*",
                     helperText: "${MyStrings.engineCompartmentImage}*",
-                    validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.engineCompartmentImage.value);
-                    },
+                    validator: viewModel.engineCompartmentImage.value == null ? ValidateInput.validateRequiredFields : null,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.engineCompartmentImage.value == null
@@ -196,9 +194,7 @@ class EngineScreen extends StatelessWidget {
                     controller: TextEditingController(),
                     labelText: "${MyStrings.engineIdleStartVideo}*",
                     helperText: "${MyStrings.engineIdleStartVideo}*",
-                    validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.engineIdleStartVideo.value);
-                    },
+                    validator: viewModel.engineIdleStartVideo.value == null ? ValidateInput.validateRequiredFields : null,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.engineIdleStartVideo.value == null

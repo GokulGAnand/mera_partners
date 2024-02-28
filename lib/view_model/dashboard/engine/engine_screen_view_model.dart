@@ -195,11 +195,15 @@ class EngineViewModel extends GetxController {
       if (engineOilImage.value  != null && !engineOilImage.value!.path.startsWith('http') && !engineOilImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('engineOil', engineOilImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (turboChargerImage.value  != null && !turboChargerImage.value!.path.startsWith('http') && !turboChargerImage.value!.path.startsWith('https')) {
-        request.files.add(await http.MultipartFile.fromPath('turboCharger', turboChargerImage.value!.path,contentType: MediaType('image', 'jpg'),));
+      if (turboChargerImage.value  != null /*&& !turboChargerImage.value!.path.startsWith('http') && !turboChargerImage.value!.path.startsWith('https')*/) {
+        if (!turboChargerImage.value!.path.startsWith('http') && !turboChargerImage.value!.path.startsWith('https')) {
+          request.files.add(await http.MultipartFile.fromPath('turboCharger', turboChargerImage.value!.path,contentType: MediaType('image', 'jpg'),));
+        }
       }
-      if (engineMountImage.value  != null && !engineMountImage.value!.path.startsWith('http') && !engineMountImage.value!.path.startsWith('https')) {
-        request.files.add(await http.MultipartFile.fromPath('mount', engineMountImage.value!.path,contentType: MediaType('image', 'jpg'),));
+      if (engineMountImage.value  != null /*&& !engineMountImage.value!.path.startsWith('http') && !engineMountImage.value!.path.startsWith('https')*/) {
+        if (!engineMountImage.value!.path.startsWith('http') && !engineMountImage.value!.path.startsWith('https')) {
+          request.files.add(await http.MultipartFile.fromPath('mount', engineMountImage.value!.path,contentType: MediaType('image', 'jpg'),));
+        }
       }
       if (sumpImage.value  != null && !sumpImage.value!.path.startsWith('http') && !sumpImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('sump', sumpImage.value!.path,contentType: MediaType('image', 'jpg'),));
