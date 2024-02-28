@@ -211,7 +211,7 @@ class EngineViewModel extends GetxController {
       if (response.statusCode == 200) {
         print(await response.stream.bytesToString());
         CustomToast.instance.showMsg(MyStrings.success);
-        Get.toNamed(AppRoutes.dashBoardScreen);
+        Get.offNamed(AppRoutes.dashBoardScreen);
       }
       else {
         print(response.reasonPhrase);

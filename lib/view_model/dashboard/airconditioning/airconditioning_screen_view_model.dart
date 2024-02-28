@@ -72,7 +72,7 @@ class AirConditioningViewModel extends GetxController{
           headers: globals.headers
       );
       if (response.statusCode ==200){
-        Get.toNamed(AppRoutes.dashBoardScreen);
+        Get.offNamed(AppRoutes.dashBoardScreen);
       }
     }catch(e) {
       log(e.toString());
