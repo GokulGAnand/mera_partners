@@ -147,7 +147,7 @@ class FeatureViewModel extends GetxController{
      request.headers.addAll(globals.headers);
 
      http.StreamedResponse response = await request.send();
-
+     
      if (response.statusCode == 200) {
        log(await response.stream.bytesToString());
        CustomToast.instance.showMsg(MyStrings.success);

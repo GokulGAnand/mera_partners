@@ -190,6 +190,18 @@ class InteriorViewModel extends GetxController {
       if (interiorViewFromBootDashboardImage.value != null && (interiorViewFromBootDashboardImage.value!.path.startsWith('http') == false || interiorViewFromBootDashboardImage.value!.path.startsWith('https') == false)) {
         request.files.add(await http.MultipartFile.fromPath('interiorView', interiorViewFromBootDashboardImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
+      if (clusterImage.value != null && (clusterImage.value!.path.startsWith('http') == false || clusterImage.value!.path.startsWith('https') == false)) {
+        request.files.add(await http.MultipartFile.fromPath('clusterPanel', clusterImage.value!.path,contentType: MediaType('image', 'jpg'),));
+      }
+      if (insideRearViewMirrorImage.value != null && (insideRearViewMirrorImage.value!.path.startsWith('http') == false || insideRearViewMirrorImage.value!.path.startsWith('https') == false)) {
+        request.files.add(await http.MultipartFile.fromPath('rearViewMirror', insideRearViewMirrorImage.value!.path,contentType: MediaType('image', 'jpg'),));
+      }
+      if (powerWindowAndWindowLockImage.value != null && (powerWindowAndWindowLockImage.value!.path.startsWith('http') == false || powerWindowAndWindowLockImage.value!.path.startsWith('https') == false)) {
+        request.files.add(await http.MultipartFile.fromPath('powerWindowCentalLock', powerWindowAndWindowLockImage.value!.path,contentType: MediaType('image', 'jpg'),));
+      }
+      if (carElectricalImage.value != null && (carElectricalImage.value!.path.startsWith('http') == false || carElectricalImage.value!.path.startsWith('https') == false)) {
+        request.files.add(await http.MultipartFile.fromPath('carElectrical', carElectricalImage.value!.path,contentType: MediaType('image', 'jpg'),));
+      }
       // request.headers.addAll(globals.headers);
       request.headers.addAll({
             'Content-Type': 'application/json',
@@ -199,6 +211,7 @@ class InteriorViewModel extends GetxController {
 
       http.StreamedResponse response = await request.send();
       log(response.statusCode.toString());
+      log(await response.stream.bytesToString());
       if (response.statusCode == 200) {
             log(await response.stream.bytesToString());
             Get.back();
@@ -215,6 +228,7 @@ class InteriorViewModel extends GetxController {
     try {
       var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.interiorInfo+'/'+globals.carId.toString()),
       headers: globals.headers);
+      log(response.body.toString());
       if(response.statusCode == 200){
         log(response.body.toString());
         var data = await jsonDecode(response.body);
@@ -271,6 +285,7 @@ class InteriorViewModel extends GetxController {
       
       carElectricalController.value.text = interiorInfoResponse.value.data![0].carElectrical!.join(",");
       selectCarElectrical.value = carElectricalController.value.text.split(",");
+      // carElectricalImage.value = interiorInfoResponse.value.data?[0].carElectrical?.url != null? File(interiorInfoResponse.value.data![0].dashboardImage!.url ?? '') : null;
       cngLpgKitImage.value = interiorInfoResponse.value.data?[0].cngKitImage?.url != null? File(interiorInfoResponse.value.data![0].cngKitImage!.url ?? '') : null;
       cngLpgKitImageRemarksController.value.text = interiorInfoResponse.value.data![0].cngKitImage!.remarks ?? '';
       selectSecondKey.value = interiorInfoResponse.value.data![0].secondKey ?? '';
