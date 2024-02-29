@@ -169,7 +169,7 @@ class FeatureViewModel extends GetxController{
 
   void getFeatureInfo() async {
     try {
-      ProgressBar.instance.showProgressbar(Get.context!);
+      // ProgressBar.instance.showProgressbar(Get.context!);
       var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.featureInfo+'/'+globals.carId.toString()),
       headers: globals.headers);
       if(response.statusCode == 200){

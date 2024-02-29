@@ -62,7 +62,7 @@ class ReportScreenViewModel extends GetxController{
   }
 
 void getReport() async {
-  ProgressBar.instance.showProgressbar(Get.context!);
+  // ProgressBar.instance.showProgressbar(Get.context!);
   try {
     print(Uri.parse(EndPoints.baseUrl+EndPoints.evaluation+'/'+EndPoints.report+id));
     var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.evaluation+'/'+EndPoints.report+id),headers: globals.headers);

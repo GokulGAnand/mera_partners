@@ -126,7 +126,7 @@ class DocumentViewModel extends GetxController {
   }
 
   void getDocument() async {
-    ProgressBar.instance.showProgressbar(Get.context!);
+    // ProgressBar.instance.showProgressbar(Get.context!);
     try {
       var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.document+'/'+globals.carId.toString()),headers: globals.headers);
       if(response.statusCode == 200){

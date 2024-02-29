@@ -63,11 +63,16 @@ class SpecialCommentsViewModel extends GetxController{
   }
   
   void getComments()async{
-     var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.specialComment+'/'+globals.carId.toString()),headers: globals.headers);
-     if(response.statusCode ==200){
-       specialResponse.value = specialcommentlist.fromJson(json.decode(response.body));
-       loaddata();
-   }log(response.body);
+     try {
+       var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.specialComment+'/'+globals.carId.toString()),headers: globals.headers);
+       if(response.statusCode ==200){
+              specialResponse.value = specialcommentlist.fromJson(json.decode(response.body));
+              loaddata();
+          }
+       log(response.body);
+     } catch (e) {
+       print(e);
+     }
   }
 
   void loaddata(){

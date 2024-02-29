@@ -65,6 +65,18 @@ class AirConditioningViewModel extends GetxController{
   void addCondition()async{
     ProgressBar.instance.showProgressbar(Get.context!);
     try{
+      print(Uri.parse(EndPoints.baseUrl+EndPoints.acInfo+'/'+globals.carId.toString()));
+      print(json.encode({
+        "airCooling":selectedCooling,
+        "heater":selectedHeater.value,
+        "climateControl":selectedClimateControl.value,
+        "acCondensor":selectedAcCondenserCompressor,
+        "acWorking": selectedAcWorking.value,
+        "acFilterDamaged": selectedAcCFilterDamaged.value,
+        "acBlowerGrill": selectedAcBlowerGrill.value,
+        "rearDefogger": selectedRearDefogger.value,
+        "evaluationStatusForAc":"COMPLETED"
+      }),);
       var response =  await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.acInfo+'/'+globals.carId.toString()),
           body: json.encode({
             "airCooling":selectedCooling,
@@ -75,9 +87,11 @@ class AirConditioningViewModel extends GetxController{
             "acFilterDamaged": selectedAcCFilterDamaged.value,
             "acBlowerGrill": selectedAcBlowerGrill.value,
             "rearDefogger": selectedRearDefogger.value,
+            "evaluationStatusForAc":"COMPLETED"
           }),
-          headers: globals.headers
+          headers: globals.jsonHeaders
       );
+      print(response.body.toString());
       if (response.statusCode ==200){
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());

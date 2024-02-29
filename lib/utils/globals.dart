@@ -8,3 +8,4 @@ int? contactNo;
 String? token;
 String? carId;
 var headers = {'Authorization': 'Bearer $token'};
+var jsonHeaders = {'Authorization': 'Bearer $token','Content-Type': 'application/json',};
