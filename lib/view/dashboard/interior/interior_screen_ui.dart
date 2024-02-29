@@ -274,9 +274,7 @@ class InteriorScreen extends StatelessWidget {
                     controller: TextEditingController(),
                     labelText: "${MyStrings.interiorViewFromBootDashboard}*",
                     helperText: "${MyStrings.interiorViewFromBootDashboard}*",
-                    validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.interiorViewFromBootDashboardImage.value);
-                    },
+                    validator: viewModel.interiorViewFromBootDashboardImage.value == null ?ValidateInput.validateRequiredFields:null,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.interiorViewFromBootDashboardImage.value == null ?Padding(
@@ -306,9 +304,7 @@ class InteriorScreen extends StatelessWidget {
                     controller: TextEditingController(),
                     labelText: "${MyStrings.powerWindowDriverImage}*",
                     helperText: "${MyStrings.powerWindowDriverImage}*",
-                    validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.powerWindowDriverImage.value);
-                    },
+                    validator: viewModel.powerWindowDriverImage.value == null ?ValidateInput.validateRequiredFields:null,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.powerWindowDriverImage.value == null ?Padding(
@@ -338,9 +334,7 @@ class InteriorScreen extends StatelessWidget {
                     controller: TextEditingController(),
                     labelText: "${MyStrings.pushWindowDriverImage}*",
                     helperText: "${MyStrings.pushWindowDriverImage}*",
-                    validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.pushWindowDriverImage.value);
-                    },
+                    validator: viewModel.pushWindowDriverImage.value == null ?ValidateInput.validateRequiredFields:null,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.pushWindowDriverImage.value == null ?Padding(
@@ -565,9 +559,7 @@ class InteriorScreen extends StatelessWidget {
                     controller: TextEditingController(),
                     labelText: "${MyStrings.cngLpgKitImage}*",
                     helperText: "${MyStrings.cngLpgKitImage}*",
-                    validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.cngLpgKitImage.value);
-                    },
+                    validator: viewModel.cngLpgKitImage.value == null ?ValidateInput.validateRequiredFields:null,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.cngLpgKitImage.value == null ?Padding(

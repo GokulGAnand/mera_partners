@@ -232,6 +232,8 @@ class EngineViewModel extends GetxController {
     if(engineResponse.value.data  != null /*&& !.value!.path.startsWith('http') && !.value!.path.startsWith('https')*/){
       engineCompartmentImageRemarks.value.text = engineResponse.value.data?[0].engineCompartment?.remarks ?? '';
       engineIdleStartVideoRemarksController.value.text = engineResponse.value.data?[0].startVideo?.remarks ?? '';
+      isPage1Fill.value = true;
+      isPage2Fill.value = true;
       // otherEngineConditionController.value = engineResponse.value.data?[0];
       // otherRadiatorController.value.text = engineResponse.value.data?[0];
       // otherSmokeController.value.text = engineResponse.value.data?[0];
@@ -248,11 +250,11 @@ class EngineViewModel extends GetxController {
       engineController.value.text = engineResponse.value.data?[0].engine?.condition?.join(',') ?? '';
       batteryController.value.text = engineResponse.value.data?[0].battery?.condition?.join(',') ?? '';
       blowByBackCompressionController.value.text = engineResponse.value.data?[0].blowBy?.condition?.join(',') ?? '';
-      engineCompartmentImage.value = engineResponse.value.data?[0].engineCompartment != null ? File(engineResponse.value.data?[0].engineCompartment?.url ?? '') : null;
-      engineIdleStartVideo.value = engineResponse.value.data?[0].startVideo != null ? File(engineResponse.value.data?[0].startVideo?.url ?? '') : null;
-      blowByBackCompressionImage.value = engineResponse.value.data?[0].blowBy != null ? File(engineResponse.value.data?[0].blowBy?.url ?? '') : null;
-      engineImage.value = engineResponse.value.data?[0].engine != null ? File(engineResponse.value.data?[0].engine?.url ?? '') : null;
-      batteryImage.value = engineResponse.value.data?[0].battery != null ? File(engineResponse.value.data?[0].battery?.url ?? '') : null;
+      engineCompartmentImage.value = engineResponse.value.data?[0].engineCompartment?.url != null ? File(engineResponse.value.data?[0].engineCompartment?.url ?? '') : null;
+      engineIdleStartVideo.value = engineResponse.value.data?[0].startVideo?.url != null ? File(engineResponse.value.data?[0].startVideo?.url ?? '') : null;
+      blowByBackCompressionImage.value = engineResponse.value.data?[0].blowBy?.url != null ? File(engineResponse.value.data?[0].blowBy?.url ?? '') : null;
+      engineImage.value = engineResponse.value.data?[0].engine?.url != null ? File(engineResponse.value.data?[0].engine?.url ?? '') : null;
+      batteryImage.value = engineResponse.value.data?[0].battery?.url != null ? File(engineResponse.value.data?[0].battery?.url ?? '') : null;
       selectedEngine.value = engineResponse.value.data?[0].engine?.condition ?? [];
       selectedBattery.value = engineResponse.value.data?[0].battery?.condition ?? [];
       selectedBlowBy.value = engineResponse.value.data?[0].blowBy?.condition ?? [];
@@ -263,12 +265,12 @@ class EngineViewModel extends GetxController {
       selectedCoolant.value = engineResponse.value.data?[0].coolant ?? '';
       selectedSilencer.value = engineResponse.value.data?[0].silencer ?? '';
       selectedGearBoxLeak.value = engineResponse.value.data?[0].gearBoxLeakage ?? '';
-      clutchOperationsImage.value = engineResponse.value.data?[0].clutch != null ? File(engineResponse.value.data?[0].clutch?.url ?? '') : null;
-      gearBoxImage.value = engineResponse.value.data?[0].gearBox != null ? File(engineResponse.value.data?[0].gearBox?.url ?? '') : null;
-      engineOilImage.value = engineResponse.value.data?[0].engineOil != null ? File(engineResponse.value.data?[0].engineOil?.url ?? '') : null;
-      turboChargerImage.value = engineResponse.value.data?[0].turboCharger != null ? File(engineResponse.value.data?[0].turboCharger?.url ?? '') : null;
-      engineMountImage.value = engineResponse.value.data?[0].mount != null ? File(engineResponse.value.data?[0].mount?.url ?? '') : null;
-      sumpImage.value = engineResponse.value.data?[0].sump != null ? File(engineResponse.value.data?[0].sump?.url ?? '') : null;
+      clutchOperationsImage.value = engineResponse.value.data?[0].clutch?.url != null ? File(engineResponse.value.data?[0].clutch?.url ?? '') : null;
+      gearBoxImage.value = engineResponse.value.data?[0].gearBox?.url != null ? File(engineResponse.value.data?[0].gearBox?.url ?? '') : null;
+      engineOilImage.value = engineResponse.value.data?[0].engineOil?.url != null ? File(engineResponse.value.data?[0].engineOil?.url ?? '') : null;
+      turboChargerImage.value = engineResponse.value.data?[0].turboCharger?.url != null ? File(engineResponse.value.data?[0].turboCharger?.url ?? '') : null;
+      engineMountImage.value = engineResponse.value.data?[0].mount?.url != null ? File(engineResponse.value.data?[0].mount?.url ?? '') : null;
+      sumpImage.value = engineResponse.value.data?[0].sump?.url != null ? File(engineResponse.value.data?[0].sump?.url ?? '') : null;
       selectedClutchOperations.value = engineResponse.value.data?[0].clutch?.condition ?? [];
       selectedGearBox.value = engineResponse.value.data?[0].gearBox?.condition ?? [];
       selectedEngineOil.value = engineResponse.value.data?[0].engineOil?.condition ?? [];

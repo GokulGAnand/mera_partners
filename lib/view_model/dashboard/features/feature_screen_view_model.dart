@@ -187,7 +187,7 @@ class FeatureViewModel extends GetxController{
       
       stereoImageController.value.text = featureInfoResponse.value.data![0].stereoImage!.condition!.join(",");
       selectedStereoImage.value = stereoImageController.value.text.split(",");
-      stereoImage.value = featureInfoResponse.value.data![0].stereoImage != null ? File(featureInfoResponse.value.data![0].stereoImage!.url ?? '') : null;
+      stereoImage.value = featureInfoResponse.value.data![0].stereoImage?.url  != null ? File(featureInfoResponse.value.data![0].stereoImage!.url ?? '') : null;
       stereoImageRemarksController.value.text = featureInfoResponse.value.data![0].stereoImage!.remarks ?? '';
       
       sterioBrandController.value.text = featureInfoResponse.value.data![0].stereoBrand ?? '';

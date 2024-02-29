@@ -150,11 +150,11 @@ class DocumentViewModel extends GetxController {
       chassisRemarksController.value.text = documentResponse.value.data?.chassisImage?.remarks ?? '';
       nocRemarksController.value.text = documentResponse.value.data?.nocImage?.remarks ?? '';
       form35RemarksController.value.text = documentResponse.value.data?.form35Image?.remarks ?? '';
-      rcFrontImage.value = documentResponse.value.data?.rcFront != null ?File(documentResponse.value.data?.rcFront?.url ?? ''):null;
-      rcBackImage.value = documentResponse.value.data?.rcBack != null ?File(documentResponse.value.data?.rcBack?.url ?? ''):null;
-      chassisImage.value = documentResponse.value.data?.chassisImage != null ?File(documentResponse.value.data?.chassisImage?.url ?? ''):null;
-      nocImage.value = documentResponse.value.data?.nocImage != null ?File(documentResponse.value.data?.nocImage?.url ?? ''):null;
-      form35Image.value = documentResponse.value.data?.form35Image != null ?File(documentResponse.value.data?.form35Image?.url ?? ''):null;
+      rcFrontImage.value = documentResponse.value.data?.rcFront?.url != null ?File(documentResponse.value.data?.rcFront?.url ?? ''):null;
+      rcBackImage.value = documentResponse.value.data?.rcBack?.url != null ?File(documentResponse.value.data?.rcBack?.url ?? ''):null;
+      chassisImage.value = documentResponse.value.data?.chassisImage?.url != null ?File(documentResponse.value.data?.chassisImage?.url ?? ''):null;
+      nocImage.value = documentResponse.value.data?.nocImage?.url != null ?File(documentResponse.value.data?.nocImage?.url ?? ''):null;
+      form35Image.value = documentResponse.value.data?.form35Image?.url != null ?File(documentResponse.value.data?.form35Image?.url ?? ''):null;
       selectedInterStateTransfer.value = documentResponse.value.data?.interStateTransfer ?? '';
       selectedInsurance.value = documentResponse.value.data?.insurance ?? '';
       selectedNCB.value = documentResponse.value.data?.ncb ?? '';

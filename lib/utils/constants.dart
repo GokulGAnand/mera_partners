@@ -415,7 +415,7 @@ class Constants {
   static const List<String> gloveBoxList =['Cooled Glove Box Available', 'Damaged', 'Good', 'Door Damaged', 'Scratched', 'Other'];
   ///interior
   static const List<String> clusterPanel= ['Good', 'Speedometer Not Working', 'Warning Light', 'Speedometer Damaged', 'Damaged', 'Other'];
-  static const List<String> dashboardImage = ['Good', 'Faded', 'Broken', 'Rattling sound',  'Scratch', 'Other', 'AC Vent Grill Broken', 'Other'];
+  static const List<String> dashboardImage = ['Good', 'Faded', 'Broken', 'Rattling sound',  'Scratch', 'AC Vent Grill Broken', 'Other'];
   static const List<String> frontAndRearSeatImage = ['Good', 'Fabric', 'Leather', 'Fabric Damaged', 'Leather Damaged', 'Dirty', 'Other'];
   static const List<String> insideRearViewMirror = ['Damaged', 'Scratched', 'Good'];
   static const List<String> pushButtonOnOff = ['Functioning', 'Not Functioning', 'Not Applicable'];
