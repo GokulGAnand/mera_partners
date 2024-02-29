@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 
 import '../../../model/response/special_comments/special_comments_response.dart';
 import '../../../utils/constants.dart';
+import '../../../widgets/progressbar.dart';
 
 class SpecialCommentsViewModel extends GetxController{
   Rx<TextEditingController> specialCommentsController = TextEditingController().obs;
@@ -37,7 +38,7 @@ class SpecialCommentsViewModel extends GetxController{
 
   
   void addComments() async {
-    //todo
+    ProgressBar.instance.showProgressbar(Get.context!);
     try {
       print(EndPoints.baseUrl+EndPoints.specialComment+'/'+globals.carId.toString());
       var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.specialComment+'/'+globals.carId.toString()),
@@ -48,10 +49,14 @@ class SpecialCommentsViewModel extends GetxController{
             headers: globals.headers
           );
       if(response.statusCode== 200){
+        ProgressBar.instance.stopProgressBar(Get.context!);
         // Get.back();
             Get.offNamed(AppRoutes.dashBoardScreen);
-          }
+          }else{
+        ProgressBar.instance.stopProgressBar(Get.context!);
+      }
     } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }

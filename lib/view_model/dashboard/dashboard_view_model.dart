@@ -11,6 +11,7 @@ import '../../utils/images.dart';
 import '../../utils/strings.dart';
 import '../../widgets/custom_toast.dart';
 import 'package:evaluator_app/utils/globals.dart' as globals;
+import '../../widgets/progressbar.dart';
 import '../report/report_screen_view_model.dart';
 
 class DashBoardViewModel extends GetxController {
@@ -55,9 +56,11 @@ class DashBoardViewModel extends GetxController {
   }
 
   void getEvaluationStatus() async {
+    ProgressBar.instance.showProgressbar(Get.context!);
     try {
       var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.evaluation+'/'+EndPoints.status+globals.carId.toString()),headers: globals.headers);
       if (response.statusCode == 200) {
+        ProgressBar.instance.stopProgressBar(Get.context!);
         evaluationStatusResponse.value = EvaluationStatusResponse.fromJson(jsonDecode(response.body));
         documentsComplete.value = evaluationStatusResponse.value.data?.evaluationStatusForDocument == 'COMPLETED'?true:false;
             exteriorComplete.value=evaluationStatusResponse.value.data?.evaluationStatusForExterior == 'COMPLETED'?true:false;
@@ -75,15 +78,18 @@ class DashBoardViewModel extends GetxController {
         }
         log(response.body.toString());
       } else {
+        ProgressBar.instance.stopProgressBar(Get.context!);
         CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);
       }
     } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
   }
 
   void addRating() async {
+    ProgressBar.instance.showProgressbar(Get.context!);
     try {
       print(Uri.parse(EndPoints.baseUrl+EndPoints.interiorInfo+'/'+globals.carId.toString()));
       var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.interiorInfo+'/'+id),headers: globals.headers,
@@ -96,16 +102,21 @@ class DashBoardViewModel extends GetxController {
         }
       );
       if( response.statusCode == 200){
+        ProgressBar.instance.stopProgressBar(Get.context!);
         print(response.body.toString());
         updateEvaluationStatus();
-          }
+          }else{
+        ProgressBar.instance.stopProgressBar(Get.context!);
+      }
     } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
   }
 
   void updateEvaluationStatus() async {
+    ProgressBar.instance.showProgressbar(Get.context!);
     try {
       print(Uri.parse(EndPoints.baseUrl+EndPoints.carBasic+globals.carId.toString()));
       var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.carBasic+id),headers: globals.headers,
@@ -113,11 +124,15 @@ class DashBoardViewModel extends GetxController {
         "status":"EVALUATED"
       });
       if(response.statusCode == 200){
+        ProgressBar.instance.stopProgressBar(Get.context!);
         print(response.body.toString());
         CustomToast.instance.showMsg(MyStrings.success);
         Get.toNamed(AppRoutes.homeScreen);
+      }else{
+        ProgressBar.instance.stopProgressBar(Get.context!);
       }
     } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }

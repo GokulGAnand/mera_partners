@@ -14,6 +14,7 @@ import 'package:http/http.dart' as http;
 import 'package:evaluator_app/utils/globals.dart' as globals;
 import '../../../model/response/testdrive/testdrive_response.dart';
 import '../../../utils/constants.dart';
+import '../../../widgets/progressbar.dart';
 
 class TestDriveViewModel extends GetxController {
 
@@ -63,6 +64,7 @@ class TestDriveViewModel extends GetxController {
   
   
   void addTestDrive()async{
+    ProgressBar.instance.showProgressbar(Get.context!);
     try{
       var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.testDriveInfo+'/'+globals.carId.toString()),
           body: json.encode({
@@ -86,10 +88,14 @@ class TestDriveViewModel extends GetxController {
           }
       );
       if(response.statusCode ==200){
+        ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body);
         Get.offNamed(AppRoutes.dashBoardScreen);
+      }else{
+        ProgressBar.instance.stopProgressBar(Get.context!);
       }
     }catch(e){
+      ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
@@ -105,11 +111,19 @@ class TestDriveViewModel extends GetxController {
  var testDriveResponse = testdrivelist().obs;
 
   void GetTestDriveInfo()async{
-    var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.testDriveInfo+'/'+globals.carId.toString()),headers: globals.headers);
-    if (response.statusCode ==200){
-      testDriveResponse.value = testdrivelist.fromJson(json.decode(response.body));
-      log(response.body.toString());
-      loaddata();
+    ProgressBar.instance.showProgressbar(Get.context!);
+    try {
+      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.testDriveInfo+'/'+globals.carId.toString()),headers: globals.headers);
+      if (response.statusCode ==200){
+            testDriveResponse.value = testdrivelist.fromJson(json.decode(response.body));
+            log(response.body.toString());
+            loaddata();
+          }else{
+        ProgressBar.instance.stopProgressBar(Get.context!);
+      }
+    } catch (e) {
+      print(e);
+      ProgressBar.instance.stopProgressBar(Get.context!);
     }
   }
 

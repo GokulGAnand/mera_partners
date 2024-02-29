@@ -11,6 +11,7 @@ import '../../../model/response/exterior/exterior_response.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/strings.dart';
 import '../../../widgets/custom_toast.dart';
+import '../../../widgets/progressbar.dart';
 
 class ExteriorViewModel extends GetxController {
   var isPage1Fill = false.obs;
@@ -368,6 +369,7 @@ class ExteriorViewModel extends GetxController {
   }
 
   void updateExterior() async {
+    ProgressBar.instance.showProgressbar(Get.context!);
     try {
       print(Uri.parse(EndPoints.baseUrl + EndPoints.exterior +globals.carId.toString()));
       var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl + EndPoints.exterior +globals.carId.toString()));
@@ -827,14 +829,17 @@ class ExteriorViewModel extends GetxController {
       http.StreamedResponse response = await request.send();
 print(response.toString());
       if (response.statusCode == 200) {
+        ProgressBar.instance.stopProgressBar(Get.context!);
         print(response.stream.bytesToString());
         CustomToast.instance.showMsg(MyStrings.success);
         Get.offNamed(AppRoutes.dashBoardScreen);
         // Get.back();
       } else {
+        ProgressBar.instance.stopProgressBar(Get.context!);
         print(response.reasonPhrase);
       }
     } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
       print(e);
     }
   }
@@ -1126,16 +1131,20 @@ print(response.toString());
   }
 
   void getExteriorData() async {
+    ProgressBar.instance.showProgressbar(Get.context!);
     try {
       var response = await http.get(Uri.parse(EndPoints.baseUrl + EndPoints.exterior + globals.carId.toString()), headers: globals.headers);
       if (response.statusCode == 200) {
+        ProgressBar.instance.stopProgressBar(Get.context!);
         exteriorResponse.value = ExteriorResponse.fromJson(jsonDecode(response.body));
         loadData();
         print(response.body);
       }else{
+        ProgressBar.instance.stopProgressBar(Get.context!);
         print(response.reasonPhrase);
       }
     } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
       print(e);
     }
   }

@@ -12,6 +12,7 @@ import 'package:evaluator_app/utils/globals.dart' as globals;
 import '../../../model/response/airconditioning/airconditioning_response.dart';
 import '../../../service/exception_error_util.dart';
 import '../../../widgets/custom_toast.dart';
+import '../../../widgets/progressbar.dart';
 
 
 class AirConditioningViewModel extends GetxController{
@@ -62,6 +63,7 @@ class AirConditioningViewModel extends GetxController{
 
 
   void addCondition()async{
+    ProgressBar.instance.showProgressbar(Get.context!);
     try{
       var response =  await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.acInfo+'/'+globals.carId.toString()),
           body: json.encode({
@@ -74,16 +76,17 @@ class AirConditioningViewModel extends GetxController{
             "acBlowerGrill": selectedAcBlowerGrill.value,
             "rearDefogger": selectedRearDefogger.value,
           }),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': '${globals.headers["Authorization"]}'
-          }
+          headers: globals.headers
       );
       if (response.statusCode ==200){
+        ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
         Get.offNamed(AppRoutes.dashBoardScreen);
-      } 
+      } else{
+        ProgressBar.instance.stopProgressBar(Get.context!);
+      }
     }catch(e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
   }

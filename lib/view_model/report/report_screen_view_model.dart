@@ -9,6 +9,7 @@ import '../../service/endpoints.dart';
 import '../../service/exception_error_util.dart';
 import '../../utils/images.dart';
 import '../../widgets/custom_toast.dart';
+import '../../widgets/progressbar.dart';
 import '../dashboard/dashboard_view_model.dart';
 
 class ReportScreenViewModel extends GetxController{
@@ -61,10 +62,12 @@ class ReportScreenViewModel extends GetxController{
   }
 
 void getReport() async {
+  ProgressBar.instance.showProgressbar(Get.context!);
   try {
     print(Uri.parse(EndPoints.baseUrl+EndPoints.evaluation+'/'+EndPoints.report+id));
     var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.evaluation+'/'+EndPoints.report+id),headers: globals.headers);
     if(response.statusCode == 200){
+      ProgressBar.instance.stopProgressBar(Get.context!);
       print(response.body.toString());
       reportResponse.value = ReportResponse.fromJson(jsonDecode(response.body));
       if (reportResponse.value.data != null) {
@@ -231,7 +234,11 @@ void getReport() async {
       }
 
       }
+    else{
+      ProgressBar.instance.stopProgressBar(Get.context!);
+    }
   } catch (e) {
+    ProgressBar.instance.stopProgressBar(Get.context!);
     log(e.toString());
     CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
   }

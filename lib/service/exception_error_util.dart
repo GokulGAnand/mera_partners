@@ -1,9 +1,12 @@
 import 'dart:io';
+import 'package:get/get.dart';
 import '../model/base_response.dart';
 import '../utils/strings.dart';
+import '../widgets/progressbar.dart';
 
 class ExceptionErrorUtil {
   static BaseResponse handleErrors(dynamic error) {
+    ProgressBar.instance.stopProgressBar(Get.context!);
     BaseResponse response = BaseResponse();
     try {
       if (error is FormatException) {

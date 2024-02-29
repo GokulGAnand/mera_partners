@@ -15,6 +15,7 @@ import '../../../routes/app_routes.dart';
 import '../../../service/exception_error_util.dart';
 import '../../../utils/strings.dart';
 import '../../../widgets/custom_toast.dart';
+import '../../../widgets/progressbar.dart';
 
 class FeatureViewModel extends GetxController{
   final Rx<PageController> pageController = PageController(initialPage: 0).obs;
@@ -108,6 +109,7 @@ class FeatureViewModel extends GetxController{
   }
 
   void addFeatureInfo()async{
+    ProgressBar.instance.showProgressbar(Get.context!);
    try{
      var request = http.MultipartRequest('PATCH',Uri.parse(EndPoints.baseUrl+EndPoints.featureInfo+'/'+globals.carId.toString()));
      for(int i=0; i<selectedStereoImage.length; i++){
@@ -149,14 +151,17 @@ class FeatureViewModel extends GetxController{
      http.StreamedResponse response = await request.send();
 
      if (response.statusCode == 200) {
+       ProgressBar.instance.stopProgressBar(Get.context!);
        log(await response.stream.bytesToString());
        CustomToast.instance.showMsg(MyStrings.success);
        Navigator.of(Get.overlayContext!, rootNavigator: true).pop();
      }
      else {
+       ProgressBar.instance.stopProgressBar(Get.context!);
        log(response.reasonPhrase.toString());
      }
    }catch (e){
+     ProgressBar.instance.stopProgressBar(Get.context!);
      log('work: ${e}');
      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
    }
@@ -164,17 +169,21 @@ class FeatureViewModel extends GetxController{
 
   void getFeatureInfo() async {
     try {
+      ProgressBar.instance.showProgressbar(Get.context!);
       var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.featureInfo+'/'+globals.carId.toString()),
       headers: globals.headers);
       if(response.statusCode == 200){
+        ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
         var data = await jsonDecode(response.body);
         featureInfoResponse.value = featuresList.fromJson(data);
         loadData();
       }else{
+        ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());
       }
     } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
     }
   }

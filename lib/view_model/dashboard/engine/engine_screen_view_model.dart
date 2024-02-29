@@ -13,6 +13,7 @@ import '../../../model/response/engine/engine_details_response.dart';
 import '../../../service/exception_error_util.dart';
 import '../../../utils/strings.dart';
 import '../../../widgets/custom_toast.dart';
+import '../../../widgets/progressbar.dart';
 
 class EngineViewModel extends GetxController {
   final GlobalKey<FormState> page1Key = GlobalKey<FormState>();
@@ -118,6 +119,7 @@ class EngineViewModel extends GetxController {
   }
 
   void  updateEngine() async {
+    ProgressBar.instance.showProgressbar(Get.context!);
     try {
       var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl+EndPoints.engineInfo+globals.carId.toString()));
       for(int i = 0; i < selectedEngine.length; i++){
@@ -213,15 +215,18 @@ print(request.toString());
       var response = await request.send();
       print(await response.stream.bytesToString());
       if (response.statusCode == 200) {
+        ProgressBar.instance.stopProgressBar(Get.context!);
         print(await response.stream.bytesToString());
         CustomToast.instance.showMsg(MyStrings.success);
         Get.offNamed(AppRoutes.dashBoardScreen);
       }
       else {
+        ProgressBar.instance.stopProgressBar(Get.context!);
         print(response.reasonPhrase);
       }
 
     } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
@@ -301,16 +306,20 @@ print(request.toString());
   }
 
   void getEngineData()async {
+    ProgressBar.instance.showProgressbar(Get.context!);
     try {
       var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.engineInfo+globals.carId.toString()),headers: globals.headers);
       if (response.statusCode == 200) {
+        ProgressBar.instance.stopProgressBar(Get.context!);
         engineResponse.value = EngineResponse.fromJson(jsonDecode(response.body));
         print(response.body);
         loadData();
       }else{
+        ProgressBar.instance.stopProgressBar(Get.context!);
         print(response.reasonPhrase);
       }
     } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
       print(e);
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
