@@ -51,7 +51,7 @@ class ImagePickerCard extends StatelessWidget {
 
   Future pickVideo(ImageSource source) async {
     try {
-      final video = await ImagePicker().pickVideo(source: source,maxDuration: const Duration(seconds: 60));
+      final video = await ImagePicker().pickVideo(source: source,maxDuration: const Duration(seconds: 20));
       log(video.toString());
       if (video == null) return;
       final videoTemp = File(video.path);

@@ -209,9 +209,9 @@ class EngineViewModel extends GetxController {
         request.files.add(await http.MultipartFile.fromPath('sump', sumpImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       request.headers.addAll(globals.headers);
-
+print(request.toString());
       var response = await request.send();
-
+      print(await response.stream.bytesToString());
       if (response.statusCode == 200) {
         print(await response.stream.bytesToString());
         CustomToast.instance.showMsg(MyStrings.success);

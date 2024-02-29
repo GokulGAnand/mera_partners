@@ -222,11 +222,11 @@ class NewEvaluationViewModel extends GetxController {
         print(jsonEncode(createEvaluationRequest));
       }
       final response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.evaluation), body: json.encode(createEvaluationRequest), headers: headers);
-
+print(response.statusCode);
       if (response.statusCode == 200) {
         CustomToast.instance.showMsg(MyStrings.success);
-        // Get.toNamed(AppRoutes.homeScreen);
-        Get.back();
+        Get.offNamed(AppRoutes.homeScreen);
+        // Get.back();
       }
 
       if (kDebugMode) {

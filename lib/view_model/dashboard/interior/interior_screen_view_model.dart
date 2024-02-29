@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:evaluator_app/model/response/interior/interior_info_response.dart';
+import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/service/endpoints.dart';
 import 'package:evaluator_app/service/exception_error_util.dart';
 import 'package:evaluator_app/utils/constants.dart';
@@ -172,9 +173,9 @@ class InteriorViewModel extends GetxController {
       if (rearSeatImage.value != null && (rearSeatImage.value!.path.startsWith('http') == false || rearSeatImage.value!.path.startsWith('https') == false)) {
         request.files.add(await http.MultipartFile.fromPath('rearSeatImage', rearSeatImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (handBreakImage.value != null && (handBreakImage.value!.path.startsWith('http') == false || handBreakImage.value!.path.startsWith('https') == false)) {
+      /*if (handBreakImage.value != null && (handBreakImage.value!.path.startsWith('http') == false || handBreakImage.value!.path.startsWith('https') == false)) {
         request.files.add(await http.MultipartFile.fromPath('handbreakImage', handBreakImage.value!.path,contentType: MediaType('image', 'jpg'),));
-      }
+      }*/
       if (powerWindowDriverImage.value != null && (powerWindowDriverImage.value!.path.startsWith('http') == false || powerWindowDriverImage.value!.path.startsWith('https') == false)) {
         request.files.add(await http.MultipartFile.fromPath('powerWindowDriverImage', powerWindowDriverImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
@@ -190,18 +191,16 @@ class InteriorViewModel extends GetxController {
       if (interiorViewFromBootDashboardImage.value != null && (interiorViewFromBootDashboardImage.value!.path.startsWith('http') == false || interiorViewFromBootDashboardImage.value!.path.startsWith('https') == false)) {
         request.files.add(await http.MultipartFile.fromPath('interiorView', interiorViewFromBootDashboardImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      // request.headers.addAll(globals.headers);
-      request.headers.addAll({
-            'Content-Type': 'application/json',
-            'Authorization': '${globals.headers["Authorization"]}'
-          });
+      request.headers.addAll(globals.headers);
       log(request.toString());
+      log(request.files.toString());
+      log(request.fields.toString());
 
-      http.StreamedResponse response = await request.send();
+      var response = await request.send();
       log(response.statusCode.toString());
       if (response.statusCode == 200) {
             log(await response.stream.bytesToString());
-            Get.back();
+            Get.offNamed(AppRoutes.dashBoardScreen);
           } else {
             log(response.reasonPhrase.toString());
           }
@@ -269,13 +268,13 @@ class InteriorViewModel extends GetxController {
       handBreakImage.value = interiorInfoResponse.value.data?[0].handbreakImage?.url != null? File(interiorInfoResponse.value.data![0].handbreakImage!.url ?? '') : null;
       handBrakeRemarksController.value.text = interiorInfoResponse.value.data![0].handbreakImage!.remarks ?? '';
       
-      carElectricalController.value.text = interiorInfoResponse.value.data![0].carElectrical!.join(",");
+      carElectricalController.value.text = interiorInfoResponse.value.data?[0].carElectrical != null ? interiorInfoResponse.value.data![0].carElectrical!.join(","):'';
       selectCarElectrical.value = carElectricalController.value.text.split(",");
       cngLpgKitImage.value = interiorInfoResponse.value.data?[0].cngKitImage?.url != null? File(interiorInfoResponse.value.data![0].cngKitImage!.url ?? '') : null;
-      cngLpgKitImageRemarksController.value.text = interiorInfoResponse.value.data![0].cngKitImage!.remarks ?? '';
+      cngLpgKitImageRemarksController.value.text = interiorInfoResponse.value.data?[0].cngKitImage?.remarks ?? '';
       selectSecondKey.value = interiorInfoResponse.value.data![0].secondKey ?? '';
       
-      platformController.value.text = interiorInfoResponse.value.data![0].platform!.join(",");
+      platformController.value.text = interiorInfoResponse.value.data?[0].platform?.join(",") ?? '';
       selectPlatform.value = platformController.value.text.split(",");
     }
   }
