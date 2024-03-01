@@ -124,11 +124,11 @@ class ReportScreen extends StatelessWidget {
                           MyStrings.customerPrice,
                           style: MyStyles.greyMedium500
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: Dimens.standard_8,
                         ),
                         Text(
-                          viewModel.reportResponse.value.data!=null?'₹ '+viewModel.reportResponse.value.data!.customerPrice!:'₹ ',
+                          viewModel.reportResponse.value.data!=null?'₹ ${viewModel.reportResponse.value.data!.customerPrice!}':'₹ ',
                           style: MyStyles.reportStyle,
                         ),
                       ],
@@ -584,7 +584,7 @@ class ReportScreen extends StatelessWidget {
                                 ),
                               ),
                               ListView.builder(
-                                physics: NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 itemCount: viewModel.imageUrls.length,
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
@@ -597,7 +597,24 @@ class ReportScreen extends StatelessWidget {
                                     ),
                                       child: Column(
                                         children: [
-                                          Image.network(viewModel.imageUrls[index]),
+                                          Image.network(viewModel.imageUrls[index],
+                                              fit: BoxFit.fill,
+                                              errorBuilder: (context, error, stackTrace) {
+                                                return const Center(
+                                                  child: Text('No Image'),
+                                                );
+                                              },
+                                              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                                                return child;
+                                              },
+                                              loadingBuilder: (context, child, loadingProgress) {
+                                                if (loadingProgress == null) {
+                                                  return child;
+                                                } else {
+                                                  return const Center(
+                                                    child: CircularProgressIndicator(),
+                                                  );
+                                                }}),
                                           Container(
                                             height: 39,
                                             width: double.maxFinite,

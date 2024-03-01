@@ -847,287 +847,304 @@ print(response.toString());
   var exteriorResponse = ExteriorResponse().obs;
 
   void loadData() {
-    frontImage.value = exteriorResponse.value.data?[0].front?.url != null ? File(exteriorResponse.value.data?[0].front?.url ?? ''):null;
-    frontLeftImage.value = exteriorResponse.value.data?[0].frontLeft?.url != null ? File(exteriorResponse.value.data?[0].frontLeft?.url ?? ''):null;
-    frontRightImage.value = exteriorResponse.value.data?[0].frontRight?.url != null ? File(exteriorResponse.value.data?[0].frontRight?.url ?? ''):null;
-    leftImage.value = exteriorResponse.value.data?[0].leftImage?.url != null ? File(exteriorResponse.value.data?[0].leftImage?.url ?? ''):null;
-    rightImage.value = exteriorResponse.value.data?[0].rightImage?.url != null ? File(exteriorResponse.value.data?[0].rightImage?.url ?? ''):null;
-    rearLeftImage.value = exteriorResponse.value.data?[0].rearLeft?.url != null ? File(exteriorResponse.value.data?[0].rearLeft?.url ?? ''):null;
-    rearImage.value = exteriorResponse.value.data?[0].rear?.url != null ? File(exteriorResponse.value.data?[0].rear?.url ?? ''):null;
-    rearRightImage.value = exteriorResponse.value.data?[0].rearRight?.url != null ? File(exteriorResponse.value.data?[0].rearRight?.url ?? ''):null;
-    roofImage.value = exteriorResponse.value.data?[0].roof?.url != null ? File(exteriorResponse.value.data?[0].roof?.url ?? ''):null;
-    frontWindShieldWiperImage.value = exteriorResponse.value.data?[0].frontWindShield?.url != null ? File(exteriorResponse.value.data?[0].frontWindShield?.url ?? ''):null;
-    selectedFrontImageList.value = exteriorResponse.value.data?[0].front?.condition ?? [];
-    selectedFrontLeftImageList.value = exteriorResponse.value.data?[0].frontLeft?.condition ?? [];
-    selectedFrontRightImageList.value = exteriorResponse.value.data?[0].frontRight?.condition ?? [];
-    selectedLeftImageList.value = exteriorResponse.value.data?[0].leftImage?.condition ?? [];
-    selectedRightImageList.value = exteriorResponse.value.data?[0].rightImage?.condition ?? [];
-    selectedRearLeftImageList.value = exteriorResponse.value.data?[0].rearLeft?.condition ?? [];
-    selectedRearImageList.value = exteriorResponse.value.data?[0].rear?.condition ?? [];
-    selectedRearRightList.value = exteriorResponse.value.data?[0].rearRight?.condition ?? [];
-    selectedRoofImageList.value = exteriorResponse.value.data?[0].roof?.condition ?? [];
-    selectedFrontWindShieldWiperList.value = exteriorResponse.value.data?[0].frontWindShield?.condition ?? [];
-    frontImageController.value.text = exteriorResponse.value.data?[0].front?.condition?.join(',') ?? '';
-    // otherFrontImageController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
-    frontImageRemarks.value.text = exteriorResponse.value.data?[0].front?.remarks ?? '';
-    frontLeftImageController.value.text = exteriorResponse.value.data?[0].frontLeft?.condition?.join(',') ?? '';
-    // otherFrontLeftImageController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
-    frontLeftImageRemarks.value.text = exteriorResponse.value.data?[0].frontLeft?.remarks ?? '';
-    frontRightImageController.value.text = exteriorResponse.value.data?[0].frontRight?.condition?.join(',') ?? '';
-    // otherFrontRightImageController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
-    frontRightImageRemarks.value.text = exteriorResponse.value.data?[0].frontRight?.remarks ?? '';
-    leftImageController.value.text = exteriorResponse.value.data?[0].leftImage?.condition?.join(',') ?? '';
-    // otherLeftImageController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
-    leftImageRemarks.value.text = exteriorResponse.value.data?[0].leftImage?.remarks ?? '';
-    rightImageController.value.text = exteriorResponse.value.data?[0].rightImage?.condition?.join(',') ?? '';
-    // otherRightImageController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
-    rightImageRemarks.value.text = exteriorResponse.value.data?[0].rightImage?.remarks ?? '';
-    rearLeftImageController.value.text = exteriorResponse.value.data?[0].rearLeft?.condition?.join(',') ?? '';
-    // otherRearLeftImageController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
-    rearLeftImageRemarks.value.text = exteriorResponse.value.data?[0].rearLeft?.remarks ?? '';
-    rearImageController.value.text = exteriorResponse.value.data?[0].rear?.condition?.join(',') ?? '';
-    // otherRearImageController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
-    rearImageRemarks.value.text = exteriorResponse.value.data?[0].rear?.remarks ?? '';
-    rearRightController.value.text = exteriorResponse.value.data?[0].rearRight?.condition?.join(',') ?? '';
-    // otherRearRightController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
-    rearRightRemarks.value.text = exteriorResponse.value.data?[0].rearRight?.remarks ?? '';
-    roofImageController.value.text = exteriorResponse.value.data?[0].roof?.condition?.join(',') ?? '';
-    // otherRoofImageController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
-    roofImageRemarks.value.text = exteriorResponse.value.data?[0].roof?.remarks ?? '';
-    frontWindShieldWiperController.value.text = exteriorResponse.value.data?[0].frontWindShield?.condition?.join(',') ?? '';
-    // otherFrontWindShieldWiperController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
-    frontWindShieldWiperRemarks.value.text = exteriorResponse.value.data?[0].frontWindShield?.remarks ?? '';
-    ///page two
-    rearWindShield.value = exteriorResponse.value.data?[0].rearWindShield?.url != null ? File(exteriorResponse.value.data?[0].rearWindShield?.url ?? ''):null;
-    doorGlassLH.value = exteriorResponse.value.data?[0].doorGlassLeft?.url != null ? File(exteriorResponse.value.data?[0].doorGlassLeft?.url ?? ''):null;
-    doorGlassRH.value = exteriorResponse.value.data?[0].doorGlassRight?.url != null ? File(exteriorResponse.value.data?[0].doorGlassRight?.url ?? ''):null;
-    quarterGlass.value = exteriorResponse.value.data?[0].quarterGlass?.url != null ? File(exteriorResponse.value.data?[0].quarterGlass?.url ?? ''):null;
-    headlightsLH.value = exteriorResponse.value.data?[0].headLightLeft?.url != null ? File(exteriorResponse.value.data?[0].headLightLeft?.url ?? ''):null;
-    headlightsRH.value = exteriorResponse.value.data?[0].headLightRight?.url != null ? File(exteriorResponse.value.data?[0].headLightRight?.url ?? ''):null;
-    headlightSupport.value = exteriorResponse.value.data?[0].headLightSupport?.url != null ? File(exteriorResponse.value.data?[0].headLightSupport?.url ?? ''):null;
-    frontBumper.value = exteriorResponse.value.data?[0].bumperFront?.url != null ? File(exteriorResponse.value.data?[0].bumperFront?.url ?? ''):null;
-    rearBumper.value = exteriorResponse.value.data?[0].bumperRear?.url != null ? File(exteriorResponse.value.data?[0].bumperRear?.url ?? ''):null;
-    frontGrill.value = exteriorResponse.value.data?[0].grill?.url != null ? File(exteriorResponse.value.data?[0].grill?.url ?? ''):null;
-    selectedRearWindShieldList.value = exteriorResponse.value.data?[0].rearWindShield?.condition ?? [];
-    selectedDoorGlassLHList.value = exteriorResponse.value.data?[0].doorGlassLeft?.condition ?? [];
-    selectedDoorGlassRHList.value = exteriorResponse.value.data?[0].doorGlassRight?.condition ?? [];
-    selectedQuarterGlassList.value = exteriorResponse.value.data?[0].quarterGlass?.condition ?? [];
-    selectedHeadlightsLHList.value = exteriorResponse.value.data?[0].headLightLeft?.condition ?? [];
-    selectedHeadlightsRHList.value = exteriorResponse.value.data?[0].headLightRight?.condition ?? [];
-    selectedHeadlightSupportList.value = exteriorResponse.value.data?[0].headLightSupport?.condition ?? [];
-    selectedFrontBumperList.value = exteriorResponse.value.data?[0].bumperFront?.condition ?? [];
-    selectedRearBumperList.value = exteriorResponse.value.data?[0].bumperRear?.condition ?? [];
-    selectedFrontGrillList.value = exteriorResponse.value.data?[0].grill?.condition ?? [];
-    rearWindShieldController.value.text = exteriorResponse.value.data?[0].rearWindShield?.condition?.join(',') ?? '';
-    // otherRearWindShieldController.value.text = exteriorResponse.value.data
-    rearWindShieldRemarks.value.text = exteriorResponse.value.data?[0].rearWindShield?.remarks ?? '';
-    doorGlassLHController.value.text = exteriorResponse.value.data?[0].doorGlassLeft?.condition?.join(',') ?? '';
-    // otherDoorGlassLHController.value.text = exteriorResponse.value.data
-    doorGlassLHRemarks.value.text = exteriorResponse.value.data?[0].doorGlassLeft?.remarks ?? '';
-    doorGlassRHController.value.text = exteriorResponse.value.data?[0].doorGlassRight?.condition?.join(',') ?? '';
-    // otherDoorGlassRHController.value.text = exteriorResponse.value.data
-    doorGlassRHRemarks.value.text = exteriorResponse.value.data?[0].doorGlassRight?.remarks ?? '';
-    quarterGlassController.value.text = exteriorResponse.value.data?[0].quarterGlass?.condition?.join(',') ?? '';
-    // otherQuarterGlassController.value.text = exteriorResponse.value.data
-    quarterGlassRemarks.value.text = exteriorResponse.value.data?[0].quarterGlass?.remarks ?? '';
-    headlightsLHController.value.text = exteriorResponse.value.data?[0].headLightLeft?.condition?.join(',') ?? '';
-    // otherHeadlightsLHController.value.text = exteriorResponse.value.data
-    headlightsLHRemarks.value.text = exteriorResponse.value.data?[0].headLightLeft?.remarks ?? '';
-    headlightsRHController.value.text = exteriorResponse.value.data?[0].headLightRight?.condition?.join(',') ?? '';
-    // otherHeadlightsRHController.value.text = exteriorResponse.value.data
-    headlightsRHRemarks.value.text = exteriorResponse.value.data?[0].headLightRight?.remarks ?? '';
-    headlightSupportController.value.text = exteriorResponse.value.data?[0].headLightSupport?.condition?.join(',') ?? '';
-    // otherHeadlightSupportController.value.text = exteriorResponse.value.data
-    headlightSupportRemarks.value.text = exteriorResponse.value.data?[0].headLightSupport?.remarks ?? '';
-    frontBumperController.value.text = exteriorResponse.value.data?[0].bumperFront?.condition?.join(',') ?? '';
-    // otherFrontBumperController.value.text = exteriorResponse.value.data
-    frontBumperRemarks.value.text = exteriorResponse.value.data?[0].bumperFront?.remarks ?? '';
-    rearBumperController.value.text = exteriorResponse.value.data?[0].bumperRear?.condition?.join(',') ?? '';
-    // otherRearBumperController.value.text = exteriorResponse.value.data
-    rearBumperRemarks.value.text = exteriorResponse.value.data?[0].bumperRear?.remarks ?? '';
-    frontGrillController.value.text = exteriorResponse.value.data?[0].grill?.condition?.join(',') ?? '';
-    // otherFrontGrillController.value.text = exteriorResponse.value.data
-    frontGrillRemarks.value.text = exteriorResponse.value.data?[0].grill?.remarks ?? '';
-    ///page three
-    // selectedTyreFrontRHS.value = exteriorResponse.value.data
-    // selectedTyreRearRHS.value = exteriorResponse.value.data
-    // selectedTyreRearLHS.value = exteriorResponse.value.data
-    // selectedTyreFrontLHS.value = exteriorResponse.value.data
-    bonnetPattiImage.value = exteriorResponse.value.data?[0].bonnetPatti?.url != null ? File(exteriorResponse.value.data?[0].bonnetPatti?.url ?? ''):null;
-    upperCrossMember.value = exteriorResponse.value.data?[0].upperCrossMember?.url != null ? File(exteriorResponse.value.data?[0].upperCrossMember?.url ?? ''):null;
-    lowerCrossMember.value = exteriorResponse.value.data?[0].lowerCrossMember?.url != null ? File(exteriorResponse.value.data?[0].lowerCrossMember?.url ?? ''):null;
-    apronLH.value = exteriorResponse.value.data?[0].apronLeft?.url != null ? File(exteriorResponse.value.data?[0].apronLeft?.url ?? ''):null;
-    apronRH.value = exteriorResponse.value.data?[0].apronRight?.url != null ? File(exteriorResponse.value.data?[0].apronRight?.url ?? ''):null;
-    cowlTop.value = exteriorResponse.value.data?[0].cowlTop?.url != null ? File(exteriorResponse.value.data?[0].cowlTop?.url ?? ''):null;
-    tyreFrontRHS.value = exteriorResponse.value.data?[0].frontTyreRight?.url != null ? File(exteriorResponse.value.data?[0].frontTyreRight?.url ?? ''):null;
-    tyreFrontLHS.value = exteriorResponse.value.data?[0].frontTyreLeft?.url != null ? File(exteriorResponse.value.data?[0].frontTyreLeft?.url ?? ''):null;
-    tyreRearRHS.value = exteriorResponse.value.data?[0].rearTyreRight?.url != null ? File(exteriorResponse.value.data?[0].rearTyreRight?.url ?? ''):null;
-    tyreRearLHS.value = exteriorResponse.value.data?[0].rearTyreLeft?.url != null ? File(exteriorResponse.value.data?[0].rearTyreLeft?.url ?? ''):null;
-    chassisExtension.value = exteriorResponse.value.data?[0].chassisExtension?.url != null ? File(exteriorResponse.value.data?[0].chassisExtension?.url ?? ''):null;
-    selectedBonnetPattiList.value = exteriorResponse.value.data?[0].bonnetPatti?.condition ?? [];
-    selectedUpperCrossMemberList.value = exteriorResponse.value.data?[0].upperCrossMember?.condition ?? [];
-    selectedLowerCrossMemberList.value = exteriorResponse.value.data?[0].lowerCrossMember?.condition ?? [];
-    selectedApronLHList.value = exteriorResponse.value.data?[0].apronLeft?.condition ?? [];
-    selectedApronRHList.value = exteriorResponse.value.data?[0].apronRight?.condition ?? [];
-    selectedCowlTopList.value = exteriorResponse.value.data?[0].cowlTop?.condition ?? [];
-    selectedChassisExtensionList.value = exteriorResponse.value.data?[0].chassisExtension?.condition ?? [];
-    bonnetPattiController.value.text = exteriorResponse.value.data?[0].bonnetPatti?.condition?.join(',') ?? '';
-    // otherBonnetPattiController.value.text = exteriorResponse.value.data
-    bonnetPattiRemarks.value.text = exteriorResponse.value.data?[0].bonnetPatti?.remarks ?? '';
-    upperCrossMemberController.value.text = exteriorResponse.value.data?[0].upperCrossMember?.condition?.join(',') ?? '';
-    // otherUpperCrossMemberController.value.text = exteriorResponse.value.data
-    upperCrossMemberRemarks.value.text = exteriorResponse.value.data?[0].upperCrossMember?.remarks ?? '';
-    lowerCrossMemberController.value.text = exteriorResponse.value.data?[0].lowerCrossMember?.condition?.join(',') ?? '';
-    // otherLowerCrossMemberController.value.text = exteriorResponse.value.data
-    lowerCrossMemberRemarks.value.text = exteriorResponse.value.data?[0].lowerCrossMember?.remarks ?? '';
-    apronLHController.value.text = exteriorResponse.value.data?[0].apronLeft?.condition?.join(',') ?? '';
-    // otherApronLHController.value.text = exteriorResponse.value.data
-    apronLHRemarks.value.text = exteriorResponse.value.data?[0].apronLeft?.remarks ?? '';
-    apronRHController.value.text = exteriorResponse.value.data?[0].apronRight?.condition?.join(',') ?? '';
-    // otherApronRHController.value.text = exteriorResponse.value.data
-    apronRHRemarks.value.text = exteriorResponse.value.data?[0].apronRight?.remarks ?? '';
-    cowlTopController.value.text = exteriorResponse.value.data?[0].cowlTop?.condition?.join(',') ?? '';
-    // otherCowlTopController.value.text = exteriorResponse.value.data
-    cowlTopRemarks.value.text = exteriorResponse.value.data?[0].cowlTop?.remarks ?? '';
-    chassisExtensionController.value.text = exteriorResponse.value.data?[0].chassisExtension?.condition?.join(',') ?? '';
-    // otherChassisExtensionController.value.text = exteriorResponse.value.data
-    chassisExtensionRemarks.value.text = exteriorResponse.value.data?[0].chassisExtension?.remarks ?? '';
-    ///page four
-    lhFender.value = exteriorResponse.value.data?[0].fenderLeft?.url != null ? File(exteriorResponse.value.data?[0].fenderLeft?.url ?? ''):null;
-    rhFender.value = exteriorResponse.value.data?[0].fenderRight?.url != null ? File(exteriorResponse.value.data?[0].fenderRight?.url ?? ''):null;
-    lhQuarterPanel.value = exteriorResponse.value.data?[0].quarterPanelLeft?.url != null ? File(exteriorResponse.value.data?[0].quarterPanelLeft?.url ?? ''):null;
-    rhQuarterPanel.value = exteriorResponse.value.data?[0].quarterPanelRight?.url != null ? File(exteriorResponse.value.data?[0].quarterPanelRight?.url ?? ''):null;
-    frontLHDoor.value = exteriorResponse.value.data?[0].doorFrontLeft?.url != null ? File(exteriorResponse.value.data?[0].doorFrontLeft?.url ?? ''):null;
-    frontRHDoor.value = exteriorResponse.value.data?[0].doorFrontRight?.url != null ? File(exteriorResponse.value.data?[0].doorFrontRight?.url ?? ''):null;
-    rearLHDoor.value = exteriorResponse.value.data?[0].doorRearLeft?.url != null ? File(exteriorResponse.value.data?[0].doorRearLeft?.url ?? ''):null;
-    rearRHDoor.value = exteriorResponse.value.data?[0].doorRearRight?.url != null ? File(exteriorResponse.value.data?[0].doorRearRight?.url ?? ''):null;
-    lhaPillar.value = exteriorResponse.value.data?[0].leftApillar?.url != null ? File(exteriorResponse.value.data?[0].leftApillar?.url ?? ''):null;
-    selectedLhFenderList.value = exteriorResponse.value.data?[0].fenderLeft?.condition ?? [];
-    selectedRhFenderList.value = exteriorResponse.value.data?[0].fenderRight?.condition ?? [];
-    selectedLhQuarterPanelList.value = exteriorResponse.value.data?[0].quarterPanelLeft?.condition ?? [];
-    selectedRhQuarterPanelList.value = exteriorResponse.value.data?[0].quarterPanelRight?.condition ?? [];
-    selectedFrontLHDoorList.value = exteriorResponse.value.data?[0].doorFrontLeft?.condition ?? [];
-    selectedFrontRHDoorList.value = exteriorResponse.value.data?[0].doorFrontRight?.condition ?? [];
-    selectedRearLHDoorList.value = exteriorResponse.value.data?[0].doorRearLeft?.condition ?? [];
-    selectedRearRHDoorList.value = exteriorResponse.value.data?[0].doorRearRight?.condition ?? [];
-    selectedLhaPillarList.value = exteriorResponse.value.data?[0].leftApillar?.condition ?? [];
-    lhFenderController.value.text = exteriorResponse.value.data?[0].fenderLeft?.condition?.join(',') ?? '';
-    // otherLhFenderController.value.text = exteriorResponse.value.data
-    lhFenderRemarks.value.text = exteriorResponse.value.data?[0].fenderLeft?.remarks ?? '';
-    rhFenderController.value.text = exteriorResponse.value.data?[0].fenderRight?.condition?.join(',') ?? '';
-    // otherRhFenderController.value.text = exteriorResponse.value.data
-    rhFenderRemarks.value.text = exteriorResponse.value.data?[0].fenderRight?.remarks ?? '';
-    lhQuarterPanelController.value.text = exteriorResponse.value.data?[0].quarterPanelLeft?.condition?.join(',') ?? '';
-    // otherLhQuarterPanelController.value.text = exteriorResponse.value.data
-    lhQuarterPanelRemarks.value.text = exteriorResponse.value.data?[0].quarterPanelLeft?.remarks ?? '';
-    rhQuarterPanelController.value.text = exteriorResponse.value.data?[0].quarterPanelRight?.condition?.join(',') ?? '';
-    // otherRhQuarterPanelController.value.text = exteriorResponse.value.data
-    rhQuarterPanelRemarks.value.text = exteriorResponse.value.data?[0].quarterPanelRight?.remarks ?? '';
-    frontLHDoorController.value.text = exteriorResponse.value.data?[0].doorFrontLeft?.condition?.join(',') ?? '';
-    // otherFrontLHDoorController.value.text = exteriorResponse.value.data
-    frontLHDoorRemarks.value.text = exteriorResponse.value.data?[0].doorFrontLeft?.remarks ?? '';
-    frontRHDoorController.value.text = exteriorResponse.value.data?[0].doorFrontRight?.condition?.join(',') ?? '';
-    // otherFrontRHDoorController.value.text = exteriorResponse.value.data
-    frontRHDoorRemarks.value.text = exteriorResponse.value.data?[0].doorFrontRight?.remarks ?? '';
-    rearLHDoorController.value.text = exteriorResponse.value.data?[0].doorRearLeft?.condition?.join(',') ?? '';
-    // otherRearLHDoorController.value.text = exteriorResponse.value.data
-    rearLHDoorRemarks.value.text = exteriorResponse.value.data?[0].doorRearLeft?.remarks ?? '';
-    rearRHDoorController.value.text = exteriorResponse.value.data?[0].doorRearRight?.condition?.join(',') ?? '';
-    // otherRearRHDoorController.value.text = exteriorResponse.value.data
-    rearRHDoorRemarks.value.text = exteriorResponse.value.data?[0].doorRearRight?.remarks ?? '';
-    lhaPillarController.value.text = exteriorResponse.value.data?[0].leftApillar?.condition?.join(',') ?? '';
-    // otherLhaPillarController.value.text = exteriorResponse.value.data
-    lhaPillarRemarks.value.text = exteriorResponse.value.data?[0].leftApillar?.remarks ?? '';
-    ///page five
-    rhaPillar.value = exteriorResponse.value.data?[0].rightApillar?.url != null ? File(exteriorResponse.value.data?[0].rightApillar?.url ?? ''):null;
-    lhbPillar.value = exteriorResponse.value.data?[0].leftBpillar?.url != null ? File(exteriorResponse.value.data?[0].leftBpillar?.url ?? ''):null;
-    lhcPillar.value = exteriorResponse.value.data?[0].leftCpillar?.url != null ? File(exteriorResponse.value.data?[0].leftCpillar?.url ?? ''):null;
-    rhbPillar.value = exteriorResponse.value.data?[0].rightBpillar?.url != null ? File(exteriorResponse.value.data?[0].rightBpillar?.url ?? ''):null;
-    rhcPillar.value = exteriorResponse.value.data?[0].rightCpillar?.url != null ? File(exteriorResponse.value.data?[0].rightCpillar?.url ?? ''):null;
-    rhRunBoard.value = exteriorResponse.value.data?[0].runnningBorderRight?.url != null ? File(exteriorResponse.value.data?[0].runnningBorderRight?.url ?? ''):null;
-    lhRunBoard.value = exteriorResponse.value.data?[0].runnningBorderLeft?.url != null ? File(exteriorResponse.value.data?[0].runnningBorderLeft?.url ?? ''):null;
-    tailLightLh.value = exteriorResponse.value.data?[0].tailLightLeft?.url != null ? File(exteriorResponse.value.data?[0].tailLightLeft?.url ?? ''):null;
-    tailLightRh.value = exteriorResponse.value.data?[0].tailLightRight?.url != null ? File(exteriorResponse.value.data?[0].tailLightRight?.url ?? ''):null;
-    rearWiper.value = exteriorResponse.value.data?[0].rearWiper?.url != null ? File(exteriorResponse.value.data?[0].rearWiper?.url ?? ''):null;
-    selectedRhaPillarList.value = exteriorResponse.value.data?[0].rightApillar?.condition ?? [];
-    selectedLhbPillarList.value = exteriorResponse.value.data?[0].leftBpillar?.condition ?? [];
-    selectedRhbPillarList.value = exteriorResponse.value.data?[0].rightBpillar?.condition ?? [];
-    selectedLhcPillarList.value = exteriorResponse.value.data?[0].leftCpillar?.condition ?? [];
-    selectedRhcPillarList.value = exteriorResponse.value.data?[0].rightCpillar?.condition ?? [];
-    selectedRhRunBoardList.value = exteriorResponse.value.data?[0].runnningBorderRight?.condition ?? [];
-    selectedLhRunBoardList.value = exteriorResponse.value.data?[0].runnningBorderLeft?.condition ?? [];
-    selectedTailLightLhList.value = exteriorResponse.value.data?[0].tailLightLeft?.condition ?? [];
-    selectedTailLightRhList.value = exteriorResponse.value.data?[0].tailLightRight?.condition ?? [];
-    selectedRearWiperList.value = exteriorResponse.value.data?[0].rearWiper?.condition ?? [];
-    rhaPillarController.value.text = exteriorResponse.value.data?[0].rightApillar?.condition?.join(',') ?? '';
-    // otherRhaPillarController.value.text = exteriorResponse.value.data
-    rhaPillarRemarks.value.text = exteriorResponse.value.data?[0].rightApillar?.remarks ?? '';
-    lhbPillarController.value.text = exteriorResponse.value.data?[0].leftBpillar?.condition?.join(',') ?? '';
-    // otherLhbPillarController.value.text = exteriorResponse.value.data
-    lhbPillarRemarks.value.text = exteriorResponse.value.data?[0].leftBpillar?.remarks ?? '';
-    rhbPillarController.value.text = exteriorResponse.value.data?[0].rightBpillar?.condition?.join(',') ?? '';
-    // otherRhbPillarController.value.text = exteriorResponse.value.data
-    rhbPillarRemarks.value.text = exteriorResponse.value.data?[0].rightBpillar?.remarks ?? '';
-    lhcPillarController.value.text = exteriorResponse.value.data?[0].leftCpillar?.condition?.join(',') ?? '';
-    // otherLhcPillarController.value.text = exteriorResponse.value.data
-    lhcPillarRemarks.value.text = exteriorResponse.value.data?[0].leftCpillar?.remarks ?? '';
-    rhcPillarController.value.text = exteriorResponse.value.data?[0].rightCpillar?.condition?.join(',') ?? '';
-    // otherRhcPillarController.value.text = exteriorResponse.value.data
-    rhcPillarRemarks.value.text = exteriorResponse.value.data?[0].rightCpillar?.remarks ?? '';
-    rhRunBoardController.value.text = exteriorResponse.value.data?[0].runnningBorderRight?.condition?.join(',') ?? '';
-    // otherRhRunBoardController.value.text = exteriorResponse.value.data
-    rhRunBoardRemarks.value.text = exteriorResponse.value.data?[0].runnningBorderRight?.remarks ?? '';
-    lhRunBoardController.value.text = exteriorResponse.value.data?[0].runnningBorderLeft?.condition?.join(',') ?? '';
-    // otherLhRunBoardController.value.text = exteriorResponse.value.data
-    lhRunBoardRemarks.value.text = exteriorResponse.value.data?[0].runnningBorderLeft?.remarks ?? '';
-    tailLightLhController.value.text = exteriorResponse.value.data?[0].tailLightLeft?.condition?.join(',') ?? '';
-    tailLightRhController.value.text = exteriorResponse.value.data?[0].tailLightRight?.condition?.join(',') ?? '';
-    // otherTailLightLhController.value.text = exteriorResponse.value.data?[0].?.remarks ?? '';
-    // otherTailLightRhController.value.text = exteriorResponse.value.data
-    tailLightLhRemarks.value.text = exteriorResponse.value.data?[0].tailLightLeft?.remarks ?? '';
-    tailLightRhRemarks.value.text = exteriorResponse.value.data?[0].tailLightRight?.remarks ?? '';
-    rearWiperController.value.text = exteriorResponse.value.data?[0].rearWiper?.condition?.join(',') ?? '';
-    // otherRearWiperController.value.text = exteriorResponse.value.data
-    rearWiperRemarks.value.text = exteriorResponse.value.data?[0].rearWiper?.remarks ?? '';
-    ///page six
-    selectedJackAndTool.value = exteriorResponse.value.data?[0].jackAndTool ?? '';
-    selectedFullBodyRepaint.value = exteriorResponse.value.data?[0].fullBodyRepaint ?? '';
-    bootImage.value = exteriorResponse.value.data?[0].boot?.url != null ? File(exteriorResponse.value.data?[0].boot?.url ?? ''):null;
-    dickyDoorImage.value = exteriorResponse.value.data?[0].dickyDoor?.url != null ? File(exteriorResponse.value.data?[0].dickyDoor?.url ?? ''):null;
-    spareWheel.value = exteriorResponse.value.data?[0].spareWheel?.url != null ? File(exteriorResponse.value.data?[0].spareWheel?.url ?? ''):null;
-    fuelLid.value = exteriorResponse.value.data?[0].fuelLid?.url != null ? File(exteriorResponse.value.data?[0].fuelLid?.url ?? ''):null;
-    lhRearViewMirror.value = exteriorResponse.value.data?[0].rearViewMirrorLeft?.url != null ? File(exteriorResponse.value.data?[0].rearViewMirrorLeft?.url ?? ''):null;
-    rhRearViewMirror.value = exteriorResponse.value.data?[0].rearViewMirrorRight?.url != null ? File(exteriorResponse.value.data?[0].rearViewMirrorRight?.url ?? ''):null;
-    firewall.value = exteriorResponse.value.data?[0].firewall?.url != null ? File(exteriorResponse.value.data?[0].firewall?.url ?? ''):null;
-    selectedBootList.value = exteriorResponse.value.data?[0].boot?.condition ?? [];
-    selectedDickyDoorList.value = exteriorResponse.value.data?[0].dickyDoor?.condition ?? [];
-    selectedSpareWheelList.value = exteriorResponse.value.data?[0].spareWheel?.condition ?? [];
-    selectedFuelLidList.value = exteriorResponse.value.data?[0].fuelLid?.condition ?? [];
-    selectedRhRearViewMirrorList.value = exteriorResponse.value.data?[0].rearViewMirrorRight?.condition ?? [];
-    selectedLhRearViewMirrorList.value = exteriorResponse.value.data?[0].rearViewMirrorLeft?.condition ?? [];
-    selectedFirewallList.value = exteriorResponse.value.data?[0].firewall?.condition ?? [];
-    missingPartsController.value.text = exteriorResponse.value.data?[0].missingParts ?? '';
-    bootController.value.text = exteriorResponse.value.data?[0].boot?.condition?.join(',') ?? '';
-    // otherBootController.value.text = exteriorResponse.value.data
-    bootRemarks.value.text = exteriorResponse.value.data?[0].boot?.remarks ?? '';
-    dickyDoorController.value.text = exteriorResponse.value.data?[0].dickyDoor?.condition?.join(',') ?? '';
-    // otherDickyDoorController.value.text = exteriorResponse.value.data
-    dickyDoorRemarks.value.text = exteriorResponse.value.data?[0].dickyDoor?.remarks ?? '';
-    spareWheelController.value.text = exteriorResponse.value.data?[0].spareWheel?.condition?.join(',') ?? '';
-    // otherSpareWheelController.value.text = exteriorResponse.value.data
-    spareWheelRemarks.value.text = exteriorResponse.value.data?[0].spareWheel?.remarks ?? '';
-    fuelLidController.value.text = exteriorResponse.value.data?[0].fuelLid?.condition?.join(',') ?? '';
-    // otherFuelLidController.value.text = exteriorResponse.value.data
-    fuelLidRemarks.value.text = exteriorResponse.value.data?[0].fuelLid?.remarks ?? '';
-    lhRearViewMirrorController.value.text = exteriorResponse.value.data?[0].rearViewMirrorLeft?.condition?.join(',') ?? '';
-    // otherRhRearViewMirrorController.value.text = exteriorResponse.value.data
-    lhRearViewMirrorRemarks.value.text = exteriorResponse.value.data?[0].rearViewMirrorLeft?.remarks ?? '';
-    rhRearViewMirrorController.value.text = exteriorResponse.value.data?[0].rearViewMirrorRight?.condition?.join(',') ?? '';
-    // otherLhRearViewMirrorController.value.text = exteriorResponse.value.data
-    rhRearViewMirrorRemarks.value.text = exteriorResponse.value.data?[0].rearViewMirrorLeft?.remarks ?? '';
-    firewallController.value.text = exteriorResponse.value.data?[0].firewall?.condition?.join(',') ?? '';
-    // otherFirewallController.value.text = exteriorResponse.value.data
-    firewallRemarks.value.text = exteriorResponse.value.data?[0].firewall?.remarks ?? '';
+    try {
+      if (exteriorResponse.value.data != null) {
+        isPage1Fill.value = true;
+        isPage2Fill.value = true;
+        isPage3Fill.value = true;
+        isPage4Fill.value = true;
+        isPage5Fill.value = true;
+        isPage6Fill.value = true;
+        frontImage.value = exteriorResponse.value.data?[0].front?.url != null ? File(exteriorResponse.value.data?[0].front?.url ?? ''):null;
+        frontLeftImage.value = exteriorResponse.value.data?[0].frontLeft?.url != null ? File(exteriorResponse.value.data?[0].frontLeft?.url ?? ''):null;
+        frontRightImage.value = exteriorResponse.value.data?[0].frontRight?.url != null ? File(exteriorResponse.value.data?[0].frontRight?.url ?? ''):null;
+        leftImage.value = exteriorResponse.value.data?[0].leftImage?.url != null ? File(exteriorResponse.value.data?[0].leftImage?.url ?? ''):null;
+        rightImage.value = exteriorResponse.value.data?[0].rightImage?.url != null ? File(exteriorResponse.value.data?[0].rightImage?.url ?? ''):null;
+        rearLeftImage.value = exteriorResponse.value.data?[0].rearLeft?.url != null ? File(exteriorResponse.value.data?[0].rearLeft?.url ?? ''):null;
+        rearImage.value = exteriorResponse.value.data?[0].rear?.url != null ? File(exteriorResponse.value.data?[0].rear?.url ?? ''):null;
+        rearRightImage.value = exteriorResponse.value.data?[0].rearRight?.url != null ? File(exteriorResponse.value.data?[0].rearRight?.url ?? ''):null;
+        roofImage.value = exteriorResponse.value.data?[0].roof?.url != null ? File(exteriorResponse.value.data?[0].roof?.url ?? ''):null;
+        frontWindShieldWiperImage.value = exteriorResponse.value.data?[0].frontWindShield?.url != null ? File(exteriorResponse.value.data?[0].frontWindShield?.url ?? ''):null;
+        selectedFrontImageList.value = exteriorResponse.value.data?[0].front?.condition ?? [];
+        selectedFrontLeftImageList.value = exteriorResponse.value.data?[0].frontLeft?.condition ?? [];
+        selectedFrontRightImageList.value = exteriorResponse.value.data?[0].frontRight?.condition ?? [];
+        selectedLeftImageList.value = exteriorResponse.value.data?[0].leftImage?.condition ?? [];
+        selectedRightImageList.value = exteriorResponse.value.data?[0].rightImage?.condition ?? [];
+        selectedRearLeftImageList.value = exteriorResponse.value.data?[0].rearLeft?.condition ?? [];
+        selectedRearImageList.value = exteriorResponse.value.data?[0].rear?.condition ?? [];
+        selectedRearRightList.value = exteriorResponse.value.data?[0].rearRight?.condition ?? [];
+        selectedRoofImageList.value = exteriorResponse.value.data?[0].roof?.condition ?? [];
+        selectedFrontWindShieldWiperList.value = exteriorResponse.value.data?[0].frontWindShield?.condition ?? [];
+        frontImageController.value.text = exteriorResponse.value.data?[0].front?.condition?.join(',') ?? '';
+        // otherFrontImageController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
+        frontImageRemarks.value.text = exteriorResponse.value.data?[0].front?.remarks ?? '';
+        frontLeftImageController.value.text = exteriorResponse.value.data?[0].frontLeft?.condition?.join(',') ?? '';
+        // otherFrontLeftImageController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
+        frontLeftImageRemarks.value.text = exteriorResponse.value.data?[0].frontLeft?.remarks ?? '';
+        frontRightImageController.value.text = exteriorResponse.value.data?[0].frontRight?.condition?.join(',') ?? '';
+        // otherFrontRightImageController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
+        frontRightImageRemarks.value.text = exteriorResponse.value.data?[0].frontRight?.remarks ?? '';
+        leftImageController.value.text = exteriorResponse.value.data?[0].leftImage?.condition?.join(',') ?? '';
+        // otherLeftImageController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
+        leftImageRemarks.value.text = exteriorResponse.value.data?[0].leftImage?.remarks ?? '';
+        rightImageController.value.text = exteriorResponse.value.data?[0].rightImage?.condition?.join(',') ?? '';
+        // otherRightImageController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
+        rightImageRemarks.value.text = exteriorResponse.value.data?[0].rightImage?.remarks ?? '';
+        rearLeftImageController.value.text = exteriorResponse.value.data?[0].rearLeft?.condition?.join(',') ?? '';
+        // otherRearLeftImageController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
+        rearLeftImageRemarks.value.text = exteriorResponse.value.data?[0].rearLeft?.remarks ?? '';
+        rearImageController.value.text = exteriorResponse.value.data?[0].rear?.condition?.join(',') ?? '';
+        // otherRearImageController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
+        rearImageRemarks.value.text = exteriorResponse.value.data?[0].rear?.remarks ?? '';
+        rearRightController.value.text = exteriorResponse.value.data?[0].rearRight?.condition?.join(',') ?? '';
+        // otherRearRightController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
+        rearRightRemarks.value.text = exteriorResponse.value.data?[0].rearRight?.remarks ?? '';
+        roofImageController.value.text = exteriorResponse.value.data?[0].roof?.condition?.join(',') ?? '';
+        // otherRoofImageController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
+        roofImageRemarks.value.text = exteriorResponse.value.data?[0].roof?.remarks ?? '';
+        frontWindShieldWiperController.value.text = exteriorResponse.value.data?[0].frontWindShield?.condition?.join(',') ?? '';
+        // otherFrontWindShieldWiperController.value.text = exteriorResponse.value.data?[0].?.condition?.join(',') ?? '';
+        frontWindShieldWiperRemarks.value.text = exteriorResponse.value.data?[0].frontWindShield?.remarks ?? '';
+
+        ///page two
+        rearWindShield.value = exteriorResponse.value.data?[0].rearWindShield?.url != null ? File(exteriorResponse.value.data?[0].rearWindShield?.url ?? ''):null;
+        doorGlassLH.value = exteriorResponse.value.data?[0].doorGlassLeft?.url != null ? File(exteriorResponse.value.data?[0].doorGlassLeft?.url ?? ''):null;
+        doorGlassRH.value = exteriorResponse.value.data?[0].doorGlassRight?.url != null ? File(exteriorResponse.value.data?[0].doorGlassRight?.url ?? ''):null;
+        quarterGlass.value = exteriorResponse.value.data?[0].quarterGlass?.url != null ? File(exteriorResponse.value.data?[0].quarterGlass?.url ?? ''):null;
+        headlightsLH.value = exteriorResponse.value.data?[0].headLightLeft?.url != null ? File(exteriorResponse.value.data?[0].headLightLeft?.url ?? ''):null;
+        headlightsRH.value = exteriorResponse.value.data?[0].headLightRight?.url != null ? File(exteriorResponse.value.data?[0].headLightRight?.url ?? ''):null;
+        headlightSupport.value = exteriorResponse.value.data?[0].headLightSupport?.url != null ? File(exteriorResponse.value.data?[0].headLightSupport?.url ?? ''):null;
+        frontBumper.value = exteriorResponse.value.data?[0].bumperFront?.url != null ? File(exteriorResponse.value.data?[0].bumperFront?.url ?? ''):null;
+        rearBumper.value = exteriorResponse.value.data?[0].bumperRear?.url != null ? File(exteriorResponse.value.data?[0].bumperRear?.url ?? ''):null;
+        frontGrill.value = exteriorResponse.value.data?[0].grill?.url != null ? File(exteriorResponse.value.data?[0].grill?.url ?? ''):null;
+        selectedRearWindShieldList.value = exteriorResponse.value.data?[0].rearWindShield?.condition ?? [];
+        selectedDoorGlassLHList.value = exteriorResponse.value.data?[0].doorGlassLeft?.condition ?? [];
+        selectedDoorGlassRHList.value = exteriorResponse.value.data?[0].doorGlassRight?.condition ?? [];
+        selectedQuarterGlassList.value = exteriorResponse.value.data?[0].quarterGlass?.condition ?? [];
+        selectedHeadlightsLHList.value = exteriorResponse.value.data?[0].headLightLeft?.condition ?? [];
+        selectedHeadlightsRHList.value = exteriorResponse.value.data?[0].headLightRight?.condition ?? [];
+        selectedHeadlightSupportList.value = exteriorResponse.value.data?[0].headLightSupport?.condition ?? [];
+        selectedFrontBumperList.value = exteriorResponse.value.data?[0].bumperFront?.condition ?? [];
+        selectedRearBumperList.value = exteriorResponse.value.data?[0].bumperRear?.condition ?? [];
+        selectedFrontGrillList.value = exteriorResponse.value.data?[0].grill?.condition ?? [];
+        rearWindShieldController.value.text = exteriorResponse.value.data?[0].rearWindShield?.condition?.join(',') ?? '';
+        // otherRearWindShieldController.value.text = exteriorResponse.value.data
+        rearWindShieldRemarks.value.text = exteriorResponse.value.data?[0].rearWindShield?.remarks ?? '';
+        doorGlassLHController.value.text = exteriorResponse.value.data?[0].doorGlassLeft?.condition?.join(',') ?? '';
+        // otherDoorGlassLHController.value.text = exteriorResponse.value.data
+        doorGlassLHRemarks.value.text = exteriorResponse.value.data?[0].doorGlassLeft?.remarks ?? '';
+        doorGlassRHController.value.text = exteriorResponse.value.data?[0].doorGlassRight?.condition?.join(',') ?? '';
+        // otherDoorGlassRHController.value.text = exteriorResponse.value.data
+        doorGlassRHRemarks.value.text = exteriorResponse.value.data?[0].doorGlassRight?.remarks ?? '';
+        quarterGlassController.value.text = exteriorResponse.value.data?[0].quarterGlass?.condition?.join(',') ?? '';
+        // otherQuarterGlassController.value.text = exteriorResponse.value.data
+        quarterGlassRemarks.value.text = exteriorResponse.value.data?[0].quarterGlass?.remarks ?? '';
+        headlightsLHController.value.text = exteriorResponse.value.data?[0].headLightLeft?.condition?.join(',') ?? '';
+        // otherHeadlightsLHController.value.text = exteriorResponse.value.data
+        headlightsLHRemarks.value.text = exteriorResponse.value.data?[0].headLightLeft?.remarks ?? '';
+        headlightsRHController.value.text = exteriorResponse.value.data?[0].headLightRight?.condition?.join(',') ?? '';
+        // otherHeadlightsRHController.value.text = exteriorResponse.value.data
+        headlightsRHRemarks.value.text = exteriorResponse.value.data?[0].headLightRight?.remarks ?? '';
+        headlightSupportController.value.text = exteriorResponse.value.data?[0].headLightSupport?.condition?.join(',') ?? '';
+        // otherHeadlightSupportController.value.text = exteriorResponse.value.data
+        headlightSupportRemarks.value.text = exteriorResponse.value.data?[0].headLightSupport?.remarks ?? '';
+        frontBumperController.value.text = exteriorResponse.value.data?[0].bumperFront?.condition?.join(',') ?? '';
+        // otherFrontBumperController.value.text = exteriorResponse.value.data
+        frontBumperRemarks.value.text = exteriorResponse.value.data?[0].bumperFront?.remarks ?? '';
+        rearBumperController.value.text = exteriorResponse.value.data?[0].bumperRear?.condition?.join(',') ?? '';
+        // otherRearBumperController.value.text = exteriorResponse.value.data
+        rearBumperRemarks.value.text = exteriorResponse.value.data?[0].bumperRear?.remarks ?? '';
+        frontGrillController.value.text = exteriorResponse.value.data?[0].grill?.condition?.join(',') ?? '';
+        // otherFrontGrillController.value.text = exteriorResponse.value.data
+        frontGrillRemarks.value.text = exteriorResponse.value.data?[0].grill?.remarks ?? '';
+
+        ///page three
+        // selectedTyreFrontRHS.value = exteriorResponse.value.data
+        // selectedTyreRearRHS.value = exteriorResponse.value.data
+        // selectedTyreRearLHS.value = exteriorResponse.value.data
+        // selectedTyreFrontLHS.value = exteriorResponse.value.data
+        bonnetPattiImage.value = exteriorResponse.value.data?[0].bonnetPatti?.url != null ? File(exteriorResponse.value.data?[0].bonnetPatti?.url ?? ''):null;
+        upperCrossMember.value = exteriorResponse.value.data?[0].upperCrossMember?.url != null ? File(exteriorResponse.value.data?[0].upperCrossMember?.url ?? ''):null;
+        lowerCrossMember.value = exteriorResponse.value.data?[0].lowerCrossMember?.url != null ? File(exteriorResponse.value.data?[0].lowerCrossMember?.url ?? ''):null;
+        apronLH.value = exteriorResponse.value.data?[0].apronLeft?.url != null ? File(exteriorResponse.value.data?[0].apronLeft?.url ?? ''):null;
+        apronRH.value = exteriorResponse.value.data?[0].apronRight?.url != null ? File(exteriorResponse.value.data?[0].apronRight?.url ?? ''):null;
+        cowlTop.value = exteriorResponse.value.data?[0].cowlTop?.url != null ? File(exteriorResponse.value.data?[0].cowlTop?.url ?? ''):null;
+        tyreFrontRHS.value = exteriorResponse.value.data?[0].frontTyreRight?.url != null ? File(exteriorResponse.value.data?[0].frontTyreRight?.url ?? ''):null;
+        tyreFrontLHS.value = exteriorResponse.value.data?[0].frontTyreLeft?.url != null ? File(exteriorResponse.value.data?[0].frontTyreLeft?.url ?? ''):null;
+        tyreRearRHS.value = exteriorResponse.value.data?[0].rearTyreRight?.url != null ? File(exteriorResponse.value.data?[0].rearTyreRight?.url ?? ''):null;
+        tyreRearLHS.value = exteriorResponse.value.data?[0].rearTyreLeft?.url != null ? File(exteriorResponse.value.data?[0].rearTyreLeft?.url ?? ''):null;
+        chassisExtension.value = exteriorResponse.value.data?[0].chassisExtension?.url != null ? File(exteriorResponse.value.data?[0].chassisExtension?.url ?? ''):null;
+        selectedBonnetPattiList.value = exteriorResponse.value.data?[0].bonnetPatti?.condition ?? [];
+        selectedUpperCrossMemberList.value = exteriorResponse.value.data?[0].upperCrossMember?.condition ?? [];
+        selectedLowerCrossMemberList.value = exteriorResponse.value.data?[0].lowerCrossMember?.condition ?? [];
+        selectedApronLHList.value = exteriorResponse.value.data?[0].apronLeft?.condition ?? [];
+        selectedApronRHList.value = exteriorResponse.value.data?[0].apronRight?.condition ?? [];
+        selectedCowlTopList.value = exteriorResponse.value.data?[0].cowlTop?.condition ?? [];
+        selectedChassisExtensionList.value = exteriorResponse.value.data?[0].chassisExtension?.condition ?? [];
+        bonnetPattiController.value.text = exteriorResponse.value.data?[0].bonnetPatti?.condition?.join(',') ?? '';
+        // otherBonnetPattiController.value.text = exteriorResponse.value.data
+        bonnetPattiRemarks.value.text = exteriorResponse.value.data?[0].bonnetPatti?.remarks ?? '';
+        upperCrossMemberController.value.text = exteriorResponse.value.data?[0].upperCrossMember?.condition?.join(',') ?? '';
+        // otherUpperCrossMemberController.value.text = exteriorResponse.value.data
+        upperCrossMemberRemarks.value.text = exteriorResponse.value.data?[0].upperCrossMember?.remarks ?? '';
+        lowerCrossMemberController.value.text = exteriorResponse.value.data?[0].lowerCrossMember?.condition?.join(',') ?? '';
+        // otherLowerCrossMemberController.value.text = exteriorResponse.value.data
+        lowerCrossMemberRemarks.value.text = exteriorResponse.value.data?[0].lowerCrossMember?.remarks ?? '';
+        apronLHController.value.text = exteriorResponse.value.data?[0].apronLeft?.condition?.join(',') ?? '';
+        // otherApronLHController.value.text = exteriorResponse.value.data
+        apronLHRemarks.value.text = exteriorResponse.value.data?[0].apronLeft?.remarks ?? '';
+        apronRHController.value.text = exteriorResponse.value.data?[0].apronRight?.condition?.join(',') ?? '';
+        // otherApronRHController.value.text = exteriorResponse.value.data
+        apronRHRemarks.value.text = exteriorResponse.value.data?[0].apronRight?.remarks ?? '';
+        cowlTopController.value.text = exteriorResponse.value.data?[0].cowlTop?.condition?.join(',') ?? '';
+        // otherCowlTopController.value.text = exteriorResponse.value.data
+        cowlTopRemarks.value.text = exteriorResponse.value.data?[0].cowlTop?.remarks ?? '';
+        chassisExtensionController.value.text = exteriorResponse.value.data?[0].chassisExtension?.condition?.join(',') ?? '';
+        // otherChassisExtensionController.value.text = exteriorResponse.value.data
+        chassisExtensionRemarks.value.text = exteriorResponse.value.data?[0].chassisExtension?.remarks ?? '';
+
+        ///page four
+        lhFender.value = exteriorResponse.value.data?[0].fenderLeft?.url != null ? File(exteriorResponse.value.data?[0].fenderLeft?.url ?? ''):null;
+        rhFender.value = exteriorResponse.value.data?[0].fenderRight?.url != null ? File(exteriorResponse.value.data?[0].fenderRight?.url ?? ''):null;
+        lhQuarterPanel.value = exteriorResponse.value.data?[0].quarterPanelLeft?.url != null ? File(exteriorResponse.value.data?[0].quarterPanelLeft?.url ?? ''):null;
+        rhQuarterPanel.value = exteriorResponse.value.data?[0].quarterPanelRight?.url != null ? File(exteriorResponse.value.data?[0].quarterPanelRight?.url ?? ''):null;
+        frontLHDoor.value = exteriorResponse.value.data?[0].doorFrontLeft?.url != null ? File(exteriorResponse.value.data?[0].doorFrontLeft?.url ?? ''):null;
+        frontRHDoor.value = exteriorResponse.value.data?[0].doorFrontRight?.url != null ? File(exteriorResponse.value.data?[0].doorFrontRight?.url ?? ''):null;
+        rearLHDoor.value = exteriorResponse.value.data?[0].doorRearLeft?.url != null ? File(exteriorResponse.value.data?[0].doorRearLeft?.url ?? ''):null;
+        rearRHDoor.value = exteriorResponse.value.data?[0].doorRearRight?.url != null ? File(exteriorResponse.value.data?[0].doorRearRight?.url ?? ''):null;
+        lhaPillar.value = exteriorResponse.value.data?[0].leftApillar?.url != null ? File(exteriorResponse.value.data?[0].leftApillar?.url ?? ''):null;
+        selectedLhFenderList.value = exteriorResponse.value.data?[0].fenderLeft?.condition ?? [];
+        selectedRhFenderList.value = exteriorResponse.value.data?[0].fenderRight?.condition ?? [];
+        selectedLhQuarterPanelList.value = exteriorResponse.value.data?[0].quarterPanelLeft?.condition ?? [];
+        selectedRhQuarterPanelList.value = exteriorResponse.value.data?[0].quarterPanelRight?.condition ?? [];
+        selectedFrontLHDoorList.value = exteriorResponse.value.data?[0].doorFrontLeft?.condition ?? [];
+        selectedFrontRHDoorList.value = exteriorResponse.value.data?[0].doorFrontRight?.condition ?? [];
+        selectedRearLHDoorList.value = exteriorResponse.value.data?[0].doorRearLeft?.condition ?? [];
+        selectedRearRHDoorList.value = exteriorResponse.value.data?[0].doorRearRight?.condition ?? [];
+        selectedLhaPillarList.value = exteriorResponse.value.data?[0].leftApillar?.condition ?? [];
+        lhFenderController.value.text = exteriorResponse.value.data?[0].fenderLeft?.condition?.join(',') ?? '';
+        // otherLhFenderController.value.text = exteriorResponse.value.data
+        lhFenderRemarks.value.text = exteriorResponse.value.data?[0].fenderLeft?.remarks ?? '';
+        rhFenderController.value.text = exteriorResponse.value.data?[0].fenderRight?.condition?.join(',') ?? '';
+        // otherRhFenderController.value.text = exteriorResponse.value.data
+        rhFenderRemarks.value.text = exteriorResponse.value.data?[0].fenderRight?.remarks ?? '';
+        lhQuarterPanelController.value.text = exteriorResponse.value.data?[0].quarterPanelLeft?.condition?.join(',') ?? '';
+        // otherLhQuarterPanelController.value.text = exteriorResponse.value.data
+        lhQuarterPanelRemarks.value.text = exteriorResponse.value.data?[0].quarterPanelLeft?.remarks ?? '';
+        rhQuarterPanelController.value.text = exteriorResponse.value.data?[0].quarterPanelRight?.condition?.join(',') ?? '';
+        // otherRhQuarterPanelController.value.text = exteriorResponse.value.data
+        rhQuarterPanelRemarks.value.text = exteriorResponse.value.data?[0].quarterPanelRight?.remarks ?? '';
+        frontLHDoorController.value.text = exteriorResponse.value.data?[0].doorFrontLeft?.condition?.join(',') ?? '';
+        // otherFrontLHDoorController.value.text = exteriorResponse.value.data
+        frontLHDoorRemarks.value.text = exteriorResponse.value.data?[0].doorFrontLeft?.remarks ?? '';
+        frontRHDoorController.value.text = exteriorResponse.value.data?[0].doorFrontRight?.condition?.join(',') ?? '';
+        // otherFrontRHDoorController.value.text = exteriorResponse.value.data
+        frontRHDoorRemarks.value.text = exteriorResponse.value.data?[0].doorFrontRight?.remarks ?? '';
+        rearLHDoorController.value.text = exteriorResponse.value.data?[0].doorRearLeft?.condition?.join(',') ?? '';
+        // otherRearLHDoorController.value.text = exteriorResponse.value.data
+        rearLHDoorRemarks.value.text = exteriorResponse.value.data?[0].doorRearLeft?.remarks ?? '';
+        rearRHDoorController.value.text = exteriorResponse.value.data?[0].doorRearRight?.condition?.join(',') ?? '';
+        // otherRearRHDoorController.value.text = exteriorResponse.value.data
+        rearRHDoorRemarks.value.text = exteriorResponse.value.data?[0].doorRearRight?.remarks ?? '';
+        lhaPillarController.value.text = exteriorResponse.value.data?[0].leftApillar?.condition?.join(',') ?? '';
+        // otherLhaPillarController.value.text = exteriorResponse.value.data
+        lhaPillarRemarks.value.text = exteriorResponse.value.data?[0].leftApillar?.remarks ?? '';
+
+        ///page five
+        rhaPillar.value = exteriorResponse.value.data?[0].rightApillar?.url != null ? File(exteriorResponse.value.data?[0].rightApillar?.url ?? ''):null;
+        lhbPillar.value = exteriorResponse.value.data?[0].leftBpillar?.url != null ? File(exteriorResponse.value.data?[0].leftBpillar?.url ?? ''):null;
+        lhcPillar.value = exteriorResponse.value.data?[0].leftCpillar?.url != null ? File(exteriorResponse.value.data?[0].leftCpillar?.url ?? ''):null;
+        rhbPillar.value = exteriorResponse.value.data?[0].rightBpillar?.url != null ? File(exteriorResponse.value.data?[0].rightBpillar?.url ?? ''):null;
+        rhcPillar.value = exteriorResponse.value.data?[0].rightCpillar?.url != null ? File(exteriorResponse.value.data?[0].rightCpillar?.url ?? ''):null;
+        rhRunBoard.value = exteriorResponse.value.data?[0].runnningBorderRight?.url != null ? File(exteriorResponse.value.data?[0].runnningBorderRight?.url ?? ''):null;
+        lhRunBoard.value = exteriorResponse.value.data?[0].runnningBorderLeft?.url != null ? File(exteriorResponse.value.data?[0].runnningBorderLeft?.url ?? ''):null;
+        tailLightLh.value = exteriorResponse.value.data?[0].tailLightLeft?.url != null ? File(exteriorResponse.value.data?[0].tailLightLeft?.url ?? ''):null;
+        tailLightRh.value = exteriorResponse.value.data?[0].tailLightRight?.url != null ? File(exteriorResponse.value.data?[0].tailLightRight?.url ?? ''):null;
+        rearWiper.value = exteriorResponse.value.data?[0].rearWiper?.url != null ? File(exteriorResponse.value.data?[0].rearWiper?.url ?? ''):null;
+        selectedRhaPillarList.value = exteriorResponse.value.data?[0].rightApillar?.condition ?? [];
+        selectedLhbPillarList.value = exteriorResponse.value.data?[0].leftBpillar?.condition ?? [];
+        selectedRhbPillarList.value = exteriorResponse.value.data?[0].rightBpillar?.condition ?? [];
+        selectedLhcPillarList.value = exteriorResponse.value.data?[0].leftCpillar?.condition ?? [];
+        selectedRhcPillarList.value = exteriorResponse.value.data?[0].rightCpillar?.condition ?? [];
+        selectedRhRunBoardList.value = exteriorResponse.value.data?[0].runnningBorderRight?.condition ?? [];
+        selectedLhRunBoardList.value = exteriorResponse.value.data?[0].runnningBorderLeft?.condition ?? [];
+        selectedTailLightLhList.value = exteriorResponse.value.data?[0].tailLightLeft?.condition ?? [];
+        selectedTailLightRhList.value = exteriorResponse.value.data?[0].tailLightRight?.condition ?? [];
+        selectedRearWiperList.value = exteriorResponse.value.data?[0].rearWiper?.condition ?? [];
+        rhaPillarController.value.text = exteriorResponse.value.data?[0].rightApillar?.condition?.join(',') ?? '';
+        // otherRhaPillarController.value.text = exteriorResponse.value.data
+        rhaPillarRemarks.value.text = exteriorResponse.value.data?[0].rightApillar?.remarks ?? '';
+        lhbPillarController.value.text = exteriorResponse.value.data?[0].leftBpillar?.condition?.join(',') ?? '';
+        // otherLhbPillarController.value.text = exteriorResponse.value.data
+        lhbPillarRemarks.value.text = exteriorResponse.value.data?[0].leftBpillar?.remarks ?? '';
+        rhbPillarController.value.text = exteriorResponse.value.data?[0].rightBpillar?.condition?.join(',') ?? '';
+        // otherRhbPillarController.value.text = exteriorResponse.value.data
+        rhbPillarRemarks.value.text = exteriorResponse.value.data?[0].rightBpillar?.remarks ?? '';
+        lhcPillarController.value.text = exteriorResponse.value.data?[0].leftCpillar?.condition?.join(',') ?? '';
+        // otherLhcPillarController.value.text = exteriorResponse.value.data
+        lhcPillarRemarks.value.text = exteriorResponse.value.data?[0].leftCpillar?.remarks ?? '';
+        rhcPillarController.value.text = exteriorResponse.value.data?[0].rightCpillar?.condition?.join(',') ?? '';
+        // otherRhcPillarController.value.text = exteriorResponse.value.data
+        rhcPillarRemarks.value.text = exteriorResponse.value.data?[0].rightCpillar?.remarks ?? '';
+        rhRunBoardController.value.text = exteriorResponse.value.data?[0].runnningBorderRight?.condition?.join(',') ?? '';
+        // otherRhRunBoardController.value.text = exteriorResponse.value.data
+        rhRunBoardRemarks.value.text = exteriorResponse.value.data?[0].runnningBorderRight?.remarks ?? '';
+        lhRunBoardController.value.text = exteriorResponse.value.data?[0].runnningBorderLeft?.condition?.join(',') ?? '';
+        // otherLhRunBoardController.value.text = exteriorResponse.value.data
+        lhRunBoardRemarks.value.text = exteriorResponse.value.data?[0].runnningBorderLeft?.remarks ?? '';
+        tailLightLhController.value.text = exteriorResponse.value.data?[0].tailLightLeft?.condition?.join(',') ?? '';
+        tailLightRhController.value.text = exteriorResponse.value.data?[0].tailLightRight?.condition?.join(',') ?? '';
+        // otherTailLightLhController.value.text = exteriorResponse.value.data?[0].?.remarks ?? '';
+        // otherTailLightRhController.value.text = exteriorResponse.value.data
+        tailLightLhRemarks.value.text = exteriorResponse.value.data?[0].tailLightLeft?.remarks ?? '';
+        tailLightRhRemarks.value.text = exteriorResponse.value.data?[0].tailLightRight?.remarks ?? '';
+        rearWiperController.value.text = exteriorResponse.value.data?[0].rearWiper?.condition?.join(',') ?? '';
+        // otherRearWiperController.value.text = exteriorResponse.value.data
+        rearWiperRemarks.value.text = exteriorResponse.value.data?[0].rearWiper?.remarks ?? '';
+
+        ///page six
+        selectedJackAndTool.value = exteriorResponse.value.data?[0].jackAndTool ?? '';
+        selectedFullBodyRepaint.value = exteriorResponse.value.data?[0].fullBodyRepaint ?? '';
+        bootImage.value = exteriorResponse.value.data?[0].boot?.url != null ? File(exteriorResponse.value.data?[0].boot?.url ?? ''):null;
+        dickyDoorImage.value = exteriorResponse.value.data?[0].dickyDoor?.url != null ? File(exteriorResponse.value.data?[0].dickyDoor?.url ?? ''):null;
+        spareWheel.value = exteriorResponse.value.data?[0].spareWheel?.url != null ? File(exteriorResponse.value.data?[0].spareWheel?.url ?? ''):null;
+        fuelLid.value = exteriorResponse.value.data?[0].fuelLid?.url != null ? File(exteriorResponse.value.data?[0].fuelLid?.url ?? ''):null;
+        lhRearViewMirror.value = exteriorResponse.value.data?[0].rearViewMirrorLeft?.url != null ? File(exteriorResponse.value.data?[0].rearViewMirrorLeft?.url ?? ''):null;
+        rhRearViewMirror.value = exteriorResponse.value.data?[0].rearViewMirrorRight?.url != null ? File(exteriorResponse.value.data?[0].rearViewMirrorRight?.url ?? ''):null;
+        firewall.value = exteriorResponse.value.data?[0].firewall?.url != null ? File(exteriorResponse.value.data?[0].firewall?.url ?? ''):null;
+        selectedBootList.value = exteriorResponse.value.data?[0].boot?.condition ?? [];
+        selectedDickyDoorList.value = exteriorResponse.value.data?[0].dickyDoor?.condition ?? [];
+        selectedSpareWheelList.value = exteriorResponse.value.data?[0].spareWheel?.condition ?? [];
+        selectedFuelLidList.value = exteriorResponse.value.data?[0].fuelLid?.condition ?? [];
+        selectedRhRearViewMirrorList.value = exteriorResponse.value.data?[0].rearViewMirrorRight?.condition ?? [];
+        selectedLhRearViewMirrorList.value = exteriorResponse.value.data?[0].rearViewMirrorLeft?.condition ?? [];
+        selectedFirewallList.value = exteriorResponse.value.data?[0].firewall?.condition ?? [];
+        missingPartsController.value.text = exteriorResponse.value.data?[0].missingParts ?? '';
+        bootController.value.text = exteriorResponse.value.data?[0].boot?.condition?.join(',') ?? '';
+        // otherBootController.value.text = exteriorResponse.value.data
+        bootRemarks.value.text = exteriorResponse.value.data?[0].boot?.remarks ?? '';
+        dickyDoorController.value.text = exteriorResponse.value.data?[0].dickyDoor?.condition?.join(',') ?? '';
+        // otherDickyDoorController.value.text = exteriorResponse.value.data
+        dickyDoorRemarks.value.text = exteriorResponse.value.data?[0].dickyDoor?.remarks ?? '';
+        spareWheelController.value.text = exteriorResponse.value.data?[0].spareWheel?.condition?.join(',') ?? '';
+        // otherSpareWheelController.value.text = exteriorResponse.value.data
+        spareWheelRemarks.value.text = exteriorResponse.value.data?[0].spareWheel?.remarks ?? '';
+        fuelLidController.value.text = exteriorResponse.value.data?[0].fuelLid?.condition?.join(',') ?? '';
+        // otherFuelLidController.value.text = exteriorResponse.value.data
+        fuelLidRemarks.value.text = exteriorResponse.value.data?[0].fuelLid?.remarks ?? '';
+        lhRearViewMirrorController.value.text = exteriorResponse.value.data?[0].rearViewMirrorLeft?.condition?.join(',') ?? '';
+        // otherRhRearViewMirrorController.value.text = exteriorResponse.value.data
+        lhRearViewMirrorRemarks.value.text = exteriorResponse.value.data?[0].rearViewMirrorLeft?.remarks ?? '';
+        rhRearViewMirrorController.value.text = exteriorResponse.value.data?[0].rearViewMirrorRight?.condition?.join(',') ?? '';
+        // otherLhRearViewMirrorController.value.text = exteriorResponse.value.data
+        rhRearViewMirrorRemarks.value.text = exteriorResponse.value.data?[0].rearViewMirrorLeft?.remarks ?? '';
+        firewallController.value.text = exteriorResponse.value.data?[0].firewall?.condition?.join(',') ?? '';
+        // otherFirewallController.value.text = exteriorResponse.value.data
+        firewallRemarks.value.text = exteriorResponse.value.data?[0].firewall?.remarks ?? '';
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   void getExteriorData() async {

@@ -480,7 +480,7 @@ class InteriorScreen extends StatelessWidget {
                             title: MyStrings.handBrake,  
                             items: viewModel.handBrake, 
                             selectItem: viewModel.selectHandBrake,
-                            image: viewModel.handBreakImage,
+                            // image: viewModel.handBreakImage,
                             remarksController : viewModel.handBrakeRemarksController.value,
                             othersController: TextEditingController(),
                           );

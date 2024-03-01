@@ -186,6 +186,11 @@ class ImagePickerCard extends StatelessWidget {
                         width: 119,
                         height: 119,
                         fit: BoxFit.fill,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
                         frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
                           return child;
                         },

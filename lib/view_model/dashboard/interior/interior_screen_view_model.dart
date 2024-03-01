@@ -116,22 +116,22 @@ class InteriorViewModel extends GetxController {
   void addInteriorInfo() async {
     ProgressBar.instance.showProgressbar(Get.context!);
     try {
-      var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl+EndPoints.interiorInfo+'/'+globals.carId.toString()));
+      var request = http.MultipartRequest('PATCH', Uri.parse('${EndPoints.baseUrl}${EndPoints.interiorInfo}/${globals.carId}'));
 
       for(int i=0; i<selectPowerWindowAndWindowLock.length; i++){
-       request.fields['powerWindowCentalLock[$i]'] = selectPowerWindowAndWindowLock[i];
+       request.fields['powerWindowCentalLock_condition[$i]'] = selectPowerWindowAndWindowLock[i];
       }
       for(int i=0; i<selectHandBrake.length; i++){
        request.fields['handBreak[$i]'] = selectHandBrake[i];
       }
       for(int i=0; i<selectCarElectrical.length; i++){
-       request.fields['carElectrical[$i]'] = selectCarElectrical[i];
+       request.fields['carElectrical_condition[$i]'] = selectCarElectrical[i];
       }
       for(int i=0; i<selectClusterPanel.length; i++){
-       request.fields['clusterPanel[$i]'] = selectClusterPanel[i];
+       request.fields['clusterPanel_condition[$i]'] = selectClusterPanel[i];
       }
       for(int i=0; i<selectInsideRearViewMirror.length; i++){
-       request.fields['rearViewMirror[$i]'] = selectInsideRearViewMirror[i];
+       request.fields['rearViewMirror_condition[$i]'] = selectInsideRearViewMirror[i];
       }
       for(int i=0; i<selectPlatform.length; i++){
        request.fields['platformImage_condition[$i]'] = selectPlatform[i];
@@ -161,6 +161,7 @@ class InteriorViewModel extends GetxController {
         'warningDetails' : warningDetailsController.value.text,      
         // 'interiorView' : '',
         'dashboardSwitch' : selectDashboardSwitches.value,
+        'carElectrical_remarks' : carElectricalRemarksController.value.text,
         'secondKey' : selectSecondKey.value,
         'platformImage_remarks' : platformRemarksController.value.text,
         'interiorView_remarks' : interiorViewFromBootDashboardRemarksController.value.text,
@@ -193,6 +194,18 @@ class InteriorViewModel extends GetxController {
       }
       if (interiorViewFromBootDashboardImage.value != null && (interiorViewFromBootDashboardImage.value!.path.startsWith('http') == false || interiorViewFromBootDashboardImage.value!.path.startsWith('https') == false)) {
         request.files.add(await http.MultipartFile.fromPath('interiorView', interiorViewFromBootDashboardImage.value!.path,contentType: MediaType('image', 'jpg'),));
+      }
+      if (powerWindowAndWindowLockImage.value != null && (powerWindowAndWindowLockImage.value!.path.startsWith('http') == false || powerWindowAndWindowLockImage.value!.path.startsWith('https') == false)) {
+        request.files.add(await http.MultipartFile.fromPath('powerWindowCentalLock', powerWindowAndWindowLockImage.value!.path,contentType: MediaType('image', 'jpg'),));
+      }
+      if (carElectricalImage.value != null && (carElectricalImage.value!.path.startsWith('http') == false || carElectricalImage.value!.path.startsWith('https') == false)) {
+        request.files.add(await http.MultipartFile.fromPath('carElectrical', carElectricalImage.value!.path,contentType: MediaType('image', 'jpg'),));
+      }
+      if (clusterImage.value != null && (clusterImage.value!.path.startsWith('http') == false || clusterImage.value!.path.startsWith('https') == false)) {
+        request.files.add(await http.MultipartFile.fromPath('clusterPanel', clusterImage.value!.path,contentType: MediaType('image', 'jpg'),));
+      }
+      if (insideRearViewMirrorImage.value != null && (insideRearViewMirrorImage.value!.path.startsWith('http') == false || insideRearViewMirrorImage.value!.path.startsWith('https') == false)) {
+        request.files.add(await http.MultipartFile.fromPath('rearViewMirror', insideRearViewMirrorImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       request.headers.addAll(globals.headers);
       log(request.toString());
@@ -239,6 +252,8 @@ class InteriorViewModel extends GetxController {
 
   void loadData(){
     if(interiorInfoResponse.value.data != null){
+      isPage1Fill.value = true;
+      isPage2Fill.value = true;
       clusterPanelController.value.text = interiorInfoResponse.value.data![0].clusterPanel!.join(",");
       selectClusterPanel.value = clusterPanelController.value.text.split(",");
       warningDetailsController.value.text = interiorInfoResponse.value.data![0].warningDetails!;

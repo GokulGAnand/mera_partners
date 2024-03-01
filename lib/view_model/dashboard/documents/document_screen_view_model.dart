@@ -111,7 +111,7 @@ class DocumentViewModel extends GetxController {
 
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-            log(await response.stream.bytesToString());
+            log(response.stream.toString());
             Get.back();
             // Get.offNamed(AppRoutes.dashBoardScreen);
           } else {

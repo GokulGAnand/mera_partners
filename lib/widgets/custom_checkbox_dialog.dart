@@ -253,17 +253,22 @@ class CustomCheckBoxDialog extends StatelessWidget {
                               width: 119,
                               height: 119,
                               fit: BoxFit.fill,
-                          frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                            return child;
-                          },
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            } else {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }}),
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              },
+                              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                                return child;
+                              },
+                              loadingBuilder: (context, child, loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                } else {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }}),
                           Positioned(
                             child: Container(
                               width: 20,

@@ -235,6 +235,8 @@ print(request.toString());
 
   void loadData(){
     if(engineResponse.value.data  != null /*&& !.value!.path.startsWith('http') && !.value!.path.startsWith('https')*/){
+      isPage1Fill.value = true;
+      isPage2Fill.value = true;
       engineCompartmentImageRemarks.value.text = engineResponse.value.data?[0].engineCompartment?.remarks ?? '';
       engineIdleStartVideoRemarksController.value.text = engineResponse.value.data?[0].startVideo?.remarks ?? '';
       isPage1Fill.value = true;
