@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 
 import '../../../model/response/special_comments/special_comments_response.dart';
 import '../../../utils/constants.dart';
+import '../../../widgets/progressbar.dart';
 
 class SpecialCommentsViewModel extends GetxController{
   Rx<TextEditingController> specialCommentsController = TextEditingController().obs;
@@ -30,17 +31,17 @@ class SpecialCommentsViewModel extends GetxController{
 
   @override
   void onInit() {
-    print(id);
+    log(id);
     getComments();
     super.onInit();
   }
 
   
   void addComments() async {
-    //todo
+    ProgressBar.instance.showProgressbar(Get.context!);
     try {
-      print(EndPoints.baseUrl+EndPoints.specialComment+'/'+globals.carId.toString());
-      var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.specialComment+'/'+globals.carId.toString()),
+      log('${EndPoints.baseUrl}${EndPoints.specialComment}/${globals.carId}');
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.specialComment}/${globals.carId}'),
             body: {
               "carCondition":selectedCarCondition.value,
               "specialComments":specialCommentsController.value.text
@@ -48,21 +49,30 @@ class SpecialCommentsViewModel extends GetxController{
             headers: globals.headers
           );
       if(response.statusCode== 200){
+        ProgressBar.instance.stopProgressBar(Get.context!);
         // Get.back();
             Get.offNamed(AppRoutes.dashBoardScreen);
-          }
+          }else{
+        ProgressBar.instance.stopProgressBar(Get.context!);
+      }
     } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
   }
   
   void getComments()async{
-     var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.specialComment+'/'+globals.carId.toString()),headers: globals.headers);
-     if(response.statusCode ==200){
-       specialResponse.value = specialcommentlist.fromJson(json.decode(response.body));
-       loaddata();
-   }log(response.body);
+     try {
+       var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.specialComment}/${globals.carId}'),headers: globals.headers);
+       if(response.statusCode ==200){
+              specialResponse.value = specialcommentlist.fromJson(json.decode(response.body));
+              loaddata();
+          }
+       log(response.body);
+     } catch (e) {
+       log(e.toString());
+     }
   }
 
   void loaddata(){

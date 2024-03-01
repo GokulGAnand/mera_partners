@@ -10,7 +10,6 @@ import '../../service/internet_check.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimens.dart';
 import '../../utils/images.dart';
-import '../../utils/methods.dart';
 import '../../utils/strings.dart';
 import '../../utils/styles.dart';
 import '../../utils/validate_input.dart';

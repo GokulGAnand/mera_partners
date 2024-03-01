@@ -48,7 +48,7 @@ class AppRoutes {
   static const String completedEvaluationScreen = '/completed_evaluation_screen_ui';
 
   List<GetPage> pages = [
-    GetPage(name: loginScreen, page: () => LoginScreen(), bindings: [
+    GetPage(name: loginScreen, page: () => const LoginScreen(), bindings: [
       LoginBinding(),
     ]),
     GetPage(name: homeScreen, page: () => HomeScreen(), bindings: [

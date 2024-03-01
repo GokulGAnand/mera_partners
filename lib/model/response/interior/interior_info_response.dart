@@ -1,187 +1,248 @@
 class InteriorInfoResponse {
-    final String? status;
-    final String? message;
-    final List<Data>? data;
-    final Meta? meta;
+    String? status;
+    String? message;
+    List<Data>? data;
+    Meta? meta;
 
-    InteriorInfoResponse({
-        this.status,
-        this.message,
-        this.data,
-        this.meta,
-    });
+    InteriorInfoResponse({this.status, this.message, this.data, this.meta});
 
-    factory InteriorInfoResponse.fromJson(Map<String, dynamic> json) => InteriorInfoResponse(
-        status: json["status"],
-        message: json["message"],
-        data: json["data"] == null ? [] : List<Data>.from(json["data"]!.map((x) => Data.fromJson(x))),
-        meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
-    );
+    InteriorInfoResponse.fromJson(Map<String, dynamic> json) {
+        status = json['status'];
+        message = json['message'];
+        if (json['data'] != null) {
+            data = <Data>[];
+            json['data'].forEach((v) {
+                data!.add(Data.fromJson(v));
+            });
+        }
+        meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
+    }
 
-    Map<String, dynamic> toJson() => {
-        "status": status,
-        "message": message,
-        "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
-        "meta": meta?.toJson(),
-    };
+    Map<String, dynamic> toJson() {
+        final Map<String, dynamic> data = <String, dynamic>{};
+        data['status'] = status;
+        data['message'] = message;
+        if (this.data != null) {
+            data['data'] = this.data!.map((v) => v.toJson()).toList();
+        }
+        if (meta != null) {
+            data['meta'] = meta!.toJson();
+        }
+        return data;
+    }
 }
 
 class Data {
-    final String? id;
-    final String? carId;
-    final List<String>? carElectrical;
-    final List<String>? clusterPanel;
-    final String? pushButton;
-    final List<String>? powerWindowCentalLock;
-    final String? combitionSwitch;
-    final String? dashboardCondition;
-    final List<String>? handBreak;
-    final String? key;
-    final String? warningDetails;
-    final List<String>? rearViewMirror;
-    final Image? interiorView;
-    final String? dashboardSwitch;
-    final String? secondKey;
-    final List<String>? platform;
-    final int? interiorStar;
-    final Image? dashboardImage;
-    final Image? frontSeatImage;
-    final Image? handbreakImage;
-    final Image? odometerImage;
-    final Image? powerWindowDriverImage;
-    final Image? pushWindowDriverImage;
-    final Image? rearSeatImage;
-    final Image? cngKitImage;
+    String? sId;
+    String? carId;
+    List<String>? handBreak;
+    CarElectrical? carElectrical;
+    ClusterPanel? clusterPanel;
+    CarElectrical? cngKitImage;
+    String? combitionSwitch;
+    String? dashboardCondition;
+    CarElectrical? dashboardImage;
+    String? dashboardSwitch;
+    CarElectrical? frontSeatImage;
+    CarElectrical? interiorView;
+    String? key;
+    CarElectrical? platformImage;
+    ClusterPanel? powerWindowCentalLock;
+    CarElectrical? powerWindowDriverImage;
+    String? pushButton;
+    CarElectrical? pushWindowDriverImage;
+    CarElectrical? rearSeatImage;
+    ClusterPanel? rearViewMirror;
+    String? secondKey;
+    String? warningDetails;
 
-    Data({
-        this.id,
-        this.carId,
-        this.clusterPanel,
-        this.carElectrical,
-        this.pushButton,
-        this.powerWindowCentalLock,
-        this.combitionSwitch,
-        this.dashboardCondition,
-        this.handBreak,
-        this.key,
-        this.warningDetails,
-        this.rearViewMirror,
-        this.interiorView,
-        this.dashboardSwitch,
-        this.secondKey,
-        this.platform,
-        this.interiorStar,
-        this.dashboardImage,
-        this.frontSeatImage,
-        this.handbreakImage,
-        this.odometerImage,
-        this.powerWindowDriverImage,
-        this.pushWindowDriverImage,
-        this.rearSeatImage,
-        this.cngKitImage
-    });
+    Data(
+        {this.sId,
+            this.carId,
+            this.handBreak,
+            this.carElectrical,
+            this.clusterPanel,
+            this.cngKitImage,
+            this.combitionSwitch,
+            this.dashboardCondition,
+            this.dashboardImage,
+            this.dashboardSwitch,
+            this.frontSeatImage,
+            this.interiorView,
+            this.key,
+            this.platformImage,
+            this.powerWindowCentalLock,
+            this.powerWindowDriverImage,
+            this.pushButton,
+            this.pushWindowDriverImage,
+            this.rearSeatImage,
+            this.rearViewMirror,
+            this.secondKey,
+            this.warningDetails});
 
-    factory Data.fromJson(Map<String, dynamic> json) => Data(
-        id: json["id"],
-        carId: json["carId"],
-        carElectrical: json["carElectrical"] == null ? [] : List<String>.from(json["carElectrical"]!.map((x) => x)),
-        clusterPanel: json["clusterPanel"] == null ? [] : List<String>.from(json["clusterPanel"]!.map((x) => x)),
-        pushButton: json["pushButton"],
-        powerWindowCentalLock: json["powerWindowCentalLock"] == null ? [] : List<String>.from(json["powerWindowCentalLock"]!.map((x) => x)),
-        combitionSwitch: json["combitionSwitch"],
-        dashboardCondition: json["dashboardCondition"],
-        handBreak: json["handBreak"] == null ? [] : List<String>.from(json["handBreak"]!.map((x) => x)),
-        key: json["key"],
-        warningDetails: json["warningDetails"],
-        rearViewMirror: json["rearViewMirror"] == null ? [] : List<String>.from(json["rearViewMirror"]!.map((x) => x)),
-        interiorView: json["interiorView"] == null ? null : Image.fromJson(json["interiorView"]),
-        dashboardSwitch: json["dashboardSwitch"],
-        secondKey: json["secondKey"],
-        platform: json["platform"] == null ? [] : List<String>.from(json["platform"]!.map((x) => x)),
-        interiorStar: json["interiorStar"],
-        dashboardImage: json["dashboardImage"] == null ? null : Image.fromJson(json["dashboardImage"]),
-        frontSeatImage: json["frontSeatImage"] == null ? null : Image.fromJson(json["frontSeatImage"]),
-        handbreakImage: json["handbreakImage"] == null ? null : Image.fromJson(json["handbreakImage"]),
-        odometerImage: json["odometerImage"] == null ? null : Image.fromJson(json["odometerImage"]),
-        powerWindowDriverImage: json["powerWindowDriverImage"] == null ? null : Image.fromJson(json["powerWindowDriverImage"]),
-        pushWindowDriverImage: json["pushWindowDriverImage"] == null ? null : Image.fromJson(json["pushWindowDriverImage"]),
-        rearSeatImage: json["rearSeatImage"] == null ? null : Image.fromJson(json["rearSeatImage"]),
-        cngKitImage: json["cngKitImage"] == null ? null : Image.fromJson(json["cngKitImage"]),
-    );
+    Data.fromJson(Map<String, dynamic> json) {
+        sId = json['_id'];
+        carId = json['carId'];
+        handBreak = json['handBreak'].cast<String>();
+        carElectrical = json['carElectrical'] != null
+            ? CarElectrical.fromJson(json['carElectrical'])
+            : null;
+        clusterPanel = json['clusterPanel'] != null
+            ? ClusterPanel.fromJson(json['clusterPanel'])
+            : null;
+        cngKitImage = json['cngKitImage'] != null
+            ? CarElectrical.fromJson(json['cngKitImage'])
+            : null;
+        combitionSwitch = json['combitionSwitch'];
+        dashboardCondition = json['dashboardCondition'];
+        dashboardImage = json['dashboardImage'] != null
+            ? CarElectrical.fromJson(json['dashboardImage'])
+            : null;
+        dashboardSwitch = json['dashboardSwitch'];
+        frontSeatImage = json['frontSeatImage'] != null
+            ? CarElectrical.fromJson(json['frontSeatImage'])
+            : null;
+        interiorView = json['interiorView'] != null
+            ? CarElectrical.fromJson(json['interiorView'])
+            : null;
+        key = json['key'];
+        platformImage = json['platformImage'] != null
+            ? CarElectrical.fromJson(json['platformImage'])
+            : null;
+        powerWindowCentalLock = json['powerWindowCentalLock'] != null
+            ? ClusterPanel.fromJson(json['powerWindowCentalLock'])
+            : null;
+        powerWindowDriverImage = json['powerWindowDriverImage'] != null
+            ? CarElectrical.fromJson(json['powerWindowDriverImage'])
+            : null;
+        pushButton = json['pushButton'];
+        pushWindowDriverImage = json['pushWindowDriverImage'] != null
+            ? CarElectrical.fromJson(json['pushWindowDriverImage'])
+            : null;
+        rearSeatImage = json['rearSeatImage'] != null
+            ? CarElectrical.fromJson(json['rearSeatImage'])
+            : null;
+        rearViewMirror = json['rearViewMirror'] != null
+            ? ClusterPanel.fromJson(json['rearViewMirror'])
+            : null;
+        secondKey = json['secondKey'];
+        warningDetails = json['warningDetails'];
+    }
 
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "carId": carId,
-        "carElectrical": carElectrical == null ? [] : List<dynamic>.from(carElectrical!.map((x) => x)),
-        "clusterPanel": clusterPanel == null ? [] : List<dynamic>.from(clusterPanel!.map((x) => x)),
-        "pushButton": pushButton,
-        "powerWindowCentalLock": powerWindowCentalLock == null ? [] : List<dynamic>.from(powerWindowCentalLock!.map((x) => x)),
-        "combitionSwitch": combitionSwitch,
-        "dashboardCondition": dashboardCondition,
-        "handBreak": handBreak == null ? [] : List<dynamic>.from(handBreak!.map((x) => x)),
-        "key": key,
-        "warningDetails": warningDetails,
-        "rearViewMirror": rearViewMirror == null ? [] : List<dynamic>.from(rearViewMirror!.map((x) => x)),
-        "interiorView": interiorView?.toJson(),
-        "dashboardSwitch": dashboardSwitch,
-        "secondKey": secondKey,
-        "platform": platform == null ? [] : List<dynamic>.from(platform!.map((x) => x)),
-        "interiorStar": interiorStar,
-        "dashboardImage": dashboardImage?.toJson(),
-        "frontSeatImage": frontSeatImage?.toJson(),
-        "handbreakImage": handbreakImage?.toJson(),
-        "odometerImage": odometerImage?.toJson(),
-        "powerWindowDriverImage": powerWindowDriverImage?.toJson(),
-        "pushWindowDriverImage": pushWindowDriverImage?.toJson(),
-        "rearSeatImage": rearSeatImage?.toJson(),
-        "cngKitImage": cngKitImage?.toJson(),
-    };
+    Map<String, dynamic> toJson() {
+        final Map<String, dynamic> data = <String, dynamic>{};
+        data['_id'] = sId;
+        data['carId'] = carId;
+        data['handBreak'] = handBreak;
+        if (carElectrical != null) {
+            data['carElectrical'] = carElectrical!.toJson();
+        }
+        if (clusterPanel != null) {
+            data['clusterPanel'] = clusterPanel!.toJson();
+        }
+        if (cngKitImage != null) {
+            data['cngKitImage'] = cngKitImage!.toJson();
+        }
+        data['combitionSwitch'] = combitionSwitch;
+        data['dashboardCondition'] = dashboardCondition;
+        if (dashboardImage != null) {
+            data['dashboardImage'] = dashboardImage!.toJson();
+        }
+        data['dashboardSwitch'] = dashboardSwitch;
+        if (frontSeatImage != null) {
+            data['frontSeatImage'] = frontSeatImage!.toJson();
+        }
+        if (interiorView != null) {
+            data['interiorView'] = interiorView!.toJson();
+        }
+        data['key'] = key;
+        if (platformImage != null) {
+            data['platformImage'] = platformImage!.toJson();
+        }
+        if (powerWindowCentalLock != null) {
+            data['powerWindowCentalLock'] = powerWindowCentalLock!.toJson();
+        }
+        if (powerWindowDriverImage != null) {
+            data['powerWindowDriverImage'] = powerWindowDriverImage!.toJson();
+        }
+        data['pushButton'] = pushButton;
+        if (pushWindowDriverImage != null) {
+            data['pushWindowDriverImage'] = pushWindowDriverImage!.toJson();
+        }
+        if (rearSeatImage != null) {
+            data['rearSeatImage'] = rearSeatImage!.toJson();
+        }
+        if (rearViewMirror != null) {
+            data['rearViewMirror'] = rearViewMirror!.toJson();
+        }
+        data['secondKey'] = secondKey;
+        data['warningDetails'] = warningDetails;
+        return data;
+    }
 }
 
-class Image {
-    final String? name;
-    final String? url;
-    final List<String>? condition;
-    final String? remarks;
+class CarElectrical {
+    String? name;
+    String? url;
+    List<String>? condition;
+    String? remarks;
 
-    Image({
-        this.name,
-        this.url,
-        this.condition,
-        this.remarks,
-    });
+    CarElectrical({this.name, this.url, this.condition, this.remarks});
 
-    factory Image.fromJson(Map<String, dynamic> json) => Image(
-        name: json["name"],
-        url: json["url"],
-        condition: json["condition"] == null ? [] : List<String>.from(json["condition"]!.map((x) => x)),
-        remarks: json["remarks"],
-    );
+    CarElectrical.fromJson(Map<String, dynamic> json) {
+        name = json['name'];
+        url = json['url'];
+        condition = json['condition'].cast<String>();
+        remarks = json['remarks'];
+    }
 
-    Map<String, dynamic> toJson() => {
-        "name": name,
-        "url": url,
-        "condition": condition == null ? [] : List<dynamic>.from(condition!.map((x) => x)),
-        "remarks": remarks,
-    };
+    Map<String, dynamic> toJson() {
+        final Map<String, dynamic> data = <String, dynamic>{};
+        data['name'] = name;
+        data['url'] = url;
+        data['condition'] = condition;
+        data['remarks'] = remarks;
+        return data;
+    }
+}
+
+class ClusterPanel {
+    String? name;
+    String? url;
+    List<String>? condition;
+
+    ClusterPanel({this.name, this.url, this.condition});
+
+    ClusterPanel.fromJson(Map<String, dynamic> json) {
+        name = json['name'];
+        url = json['url'];
+        condition = json['condition'].cast<String>();
+    }
+
+    Map<String, dynamic> toJson() {
+        final Map<String, dynamic> data = <String, dynamic>{};
+        data['name'] = name;
+        data['url'] = url;
+        data['condition'] = condition;
+        return data;
+    }
 }
 
 class Meta {
-    final String? access;
-    final String? refresh;
+    String? access;
+    String? refresh;
 
-    Meta({
-        this.access,
-        this.refresh,
-    });
+    Meta({this.access, this.refresh});
 
-    factory Meta.fromJson(Map<String, dynamic> json) => Meta(
-        access: json["access"],
-        refresh: json["refresh"],
-    );
+    Meta.fromJson(Map<String, dynamic> json) {
+        access = json['access'];
+        refresh = json['refresh'];
+    }
 
-    Map<String, dynamic> toJson() => {
-        "access": access,
-        "refresh": refresh,
-    };
+    Map<String, dynamic> toJson() {
+        final Map<String, dynamic> data = <String, dynamic>{};
+        data['access'] = access;
+        data['refresh'] = refresh;
+        return data;
+    }
 }

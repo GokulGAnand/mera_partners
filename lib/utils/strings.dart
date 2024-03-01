@@ -9,7 +9,7 @@ class MyStrings {
   static const String loginDesc = "Login to access your account";
   static const String vUsername = "Enter Username*";
   static const String vPassword = "Enter Password*";
-  static const String keraCarsEvaluator = "Kera Cars Evaluator";
+  static const String meraCarsEvaluator = "Mera Cars Evaluator";
   static const String categories = "Categories";
   static const String newEvaluation = "New\n Evaluation";
   static const String pendingEvaluation = "Pending\n Evaluation";
@@ -253,7 +253,7 @@ class MyStrings {
   static const String viewReport = "View Report";
   /// Report screen
   static const String report = "Report";
-  static const String keraCarsReport = "KERACARS INSPECTION REPORT";
+  static const String meraCarsReport = "MERA CARS INSPECTION REPORT";
   static const String summary = "SUMMARY";
   static const String vehicleDetails = "VEHICLE DETAILS ";
   static const String imageGallery = "IMAGE GALLERY";

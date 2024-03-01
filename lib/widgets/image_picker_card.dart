@@ -22,7 +22,7 @@ class ImagePickerCard extends StatelessWidget {
   final Rx<File?> image;
   final TextEditingController remarksController;
 
-  ImagePickerCard({super.key, this.onSubmit, this.isVideo = false, required this.remarksController, required this.image});
+  const ImagePickerCard({super.key, this.onSubmit, this.isVideo = false, required this.remarksController, required this.image});
 
   Future pickImage(ImageSource source) async {
     try {
@@ -33,7 +33,7 @@ class ImagePickerCard extends StatelessWidget {
           if(!result.isGranted){
             openAppSettings();
           }
-          print("camera access: " + result.isGranted.toString());
+          log("camera access: ${result.isGranted}");
         } 
       }
       final image = await ImagePicker().pickImage(source: source);
@@ -51,7 +51,7 @@ class ImagePickerCard extends StatelessWidget {
 
   Future pickVideo(ImageSource source) async {
     try {
-      final video = await ImagePicker().pickVideo(source: source,maxDuration: const Duration(seconds: 60));
+      final video = await ImagePicker().pickVideo(source: source,maxDuration: const Duration(seconds: 20));
       log(video.toString());
       if (video == null) return;
       final videoTemp = File(video.path);
@@ -186,6 +186,11 @@ class ImagePickerCard extends StatelessWidget {
                         width: 119,
                         height: 119,
                         fit: BoxFit.fill,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
                         frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
                           return child;
                         },
@@ -286,7 +291,7 @@ class ImagePickerCard extends StatelessWidget {
               padding: const EdgeInsets.only(left: 16.0, right: 16),
               child: CustomElevatedButton(onPressed: () {
                 // image?.value = image?.value;
-                print(image.value.toString());
+                log(image.value.toString());
                 Navigator.of(context).pop();
               }, buttonText: MyStrings.submit),
             ),

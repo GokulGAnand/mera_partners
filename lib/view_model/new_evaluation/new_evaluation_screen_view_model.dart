@@ -15,6 +15,7 @@ import '../../model/response/new_evaluation/car_make_response.dart' as make;
 import '../../model/response/new_evaluation/car_model_variant_response.dart';
 import '../../service/exception_error_util.dart';
 import '../../utils/colors.dart';
+import '../../widgets/progressbar.dart';
 
 class NewEvaluationViewModel extends GetxController {
   List<String> modelList = <String>[];
@@ -175,6 +176,7 @@ class NewEvaluationViewModel extends GetxController {
   }
 
   void addNewEvaluation() async {
+    ProgressBar.instance.showProgressbar(Get.context!);
     try {
       var headers = {'Authorization': 'Bearer ${globals.token}','Content-Type': 'application/json',};
 
@@ -222,17 +224,23 @@ class NewEvaluationViewModel extends GetxController {
         print(jsonEncode(createEvaluationRequest));
       }
       final response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.evaluation), body: json.encode(createEvaluationRequest), headers: headers);
-
+      log(Uri.parse(EndPoints.baseUrl + EndPoints.evaluation).toString());
+log(response.statusCode.toString());
+log(response.body.toString());
       if (response.statusCode == 200) {
+        ProgressBar.instance.stopProgressBar(Get.context!);
         CustomToast.instance.showMsg(MyStrings.success);
-        // Get.toNamed(AppRoutes.homeScreen);
-        Get.back();
+        Get.offNamed(AppRoutes.homeScreen);
+        // Get.back();
+      }else{
+        ProgressBar.instance.stopProgressBar(Get.context!);
       }
 
       if (kDebugMode) {
         print(response.body.toString());
       }
     } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }

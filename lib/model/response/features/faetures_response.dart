@@ -12,21 +12,21 @@ class featuresList {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
-    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
+    meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    if (this.meta != null) {
-      data['meta'] = this.meta!.toJson();
+    if (meta != null) {
+      data['meta'] = meta!.toJson();
     }
     return data;
   }
@@ -91,31 +91,31 @@ class Data {
     sunroof = json['sunroof'].cast<String>();
     toolKit = json['toolKit'];
     stereoImage = json['stereoImage'] != null
-        ? new StereoImage.fromJson(json['stereoImage'])
+        ? StereoImage.fromJson(json['stereoImage'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['carId'] = this.carId;
-    data['absEbd'] = this.absEbd;
-    data['airbag'] = this.airbag;
-    data['alloyWheels'] = this.alloyWheels;
-    data['anyInteriorModifications'] = this.anyInteriorModifications;
-    data['fogLamps'] = this.fogLamps;
-    data['gloveBox'] = this.gloveBox;
-    data['gpsNavigation'] = this.gpsNavigation;
-    data['keylessEntry'] = this.keylessEntry;
-    data['rearDefogger'] = this.rearDefogger;
-    data['rearParkingSensor'] = this.rearParkingSensor;
-    data['remoteCentalLock'] = this.remoteCentalLock;
-    data['seatBelt'] = this.seatBelt;
-    data['stereoBrand'] = this.stereoBrand;
-    data['sunroof'] = this.sunroof;
-    data['toolKit'] = this.toolKit;
-    if (this.stereoImage != null) {
-      data['stereoImage'] = this.stereoImage!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['carId'] = carId;
+    data['absEbd'] = absEbd;
+    data['airbag'] = airbag;
+    data['alloyWheels'] = alloyWheels;
+    data['anyInteriorModifications'] = anyInteriorModifications;
+    data['fogLamps'] = fogLamps;
+    data['gloveBox'] = gloveBox;
+    data['gpsNavigation'] = gpsNavigation;
+    data['keylessEntry'] = keylessEntry;
+    data['rearDefogger'] = rearDefogger;
+    data['rearParkingSensor'] = rearParkingSensor;
+    data['remoteCentalLock'] = remoteCentalLock;
+    data['seatBelt'] = seatBelt;
+    data['stereoBrand'] = stereoBrand;
+    data['sunroof'] = sunroof;
+    data['toolKit'] = toolKit;
+    if (stereoImage != null) {
+      data['stereoImage'] = stereoImage!.toJson();
     }
     return data;
   }
@@ -137,11 +137,11 @@ class StereoImage {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['url'] = this.url;
-    data['condition'] = this.condition;
-    data['remarks'] = this.remarks;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['url'] = url;
+    data['condition'] = condition;
+    data['remarks'] = remarks;
     return data;
   }
 }
@@ -158,9 +158,9 @@ class Meta {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['access'] = this.access;
-    data['refresh'] = this.refresh;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['access'] = access;
+    data['refresh'] = refresh;
     return data;
   }
 }

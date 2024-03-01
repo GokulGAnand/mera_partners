@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/service/endpoints.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +11,7 @@ import '../../../utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:evaluator_app/utils/globals.dart' as globals;
 import '../../../widgets/custom_toast.dart';
+import '../../../widgets/progressbar.dart';
 
 class DocumentViewModel extends GetxController {
   final GlobalKey<FormState> page1Key = GlobalKey<FormState>();
@@ -62,8 +62,9 @@ class DocumentViewModel extends GetxController {
   }
 
   void addDocuments() async {
+    ProgressBar.instance.showProgressbar(Get.context!);
     try {
-      var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl+EndPoints.document+'/'+globals.carId.toString()));
+      var request = http.MultipartRequest('PATCH', Uri.parse('${EndPoints.baseUrl}${EndPoints.document}/${globals.carId}'));
       request.fields.addAll({
         'insurance': selectedInsurance.value,
         'insuranceCompany': insuranceCompanyController.value.text,
@@ -108,29 +109,36 @@ class DocumentViewModel extends GetxController {
       var response = await request.send();
 
       if (response.statusCode == 200) {
-            log(await response.stream.bytesToString());
+        ProgressBar.instance.stopProgressBar(Get.context!);
+            log(response.stream.toString());
             Get.back();
             // Get.offNamed(AppRoutes.dashBoardScreen);
           } else {
+        ProgressBar.instance.stopProgressBar(Get.context!);
             log(response.reasonPhrase.toString());
           }
     } catch (e){
+      ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
   }
 
   void getDocument() async {
+    // ProgressBar.instance.showProgressbar(Get.context!);
     try {
-      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.document+'/'+globals.carId.toString()),headers: globals.headers);
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.document}/${globals.carId}'),headers: globals.headers);
       if(response.statusCode == 200){
         log(response.body.toString());
         documentResponse.value = DocumentResponse.fromJson(jsonDecode(response.body));
         loadData();
+        ProgressBar.instance.stopProgressBar(Get.context!);
       }else{
+        ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());
       }
     } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
       // CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }

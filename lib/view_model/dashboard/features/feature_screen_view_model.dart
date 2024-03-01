@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/service/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'package:evaluator_app/utils/constants.dart';
@@ -9,12 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:evaluator_app/utils/globals.dart' as globals;
 import 'package:http_parser/http_parser.dart';
-
 import '../../../model/response/features/faetures_response.dart';
-import '../../../routes/app_routes.dart';
 import '../../../service/exception_error_util.dart';
 import '../../../utils/strings.dart';
 import '../../../widgets/custom_toast.dart';
+import '../../../widgets/progressbar.dart';
 
 class FeatureViewModel extends GetxController{
   final Rx<PageController> pageController = PageController(initialPage: 0).obs;
@@ -46,6 +46,7 @@ class FeatureViewModel extends GetxController{
 
   Rx<TextEditingController> keylessEntryRemarksController = TextEditingController().obs;
   Rx<TextEditingController> stereoImageRemarksController = TextEditingController().obs;
+  Rx<TextEditingController> otherStereoImageController = TextEditingController().obs;
   Rx<TextEditingController> sunroofRemarksController = TextEditingController().obs;
 
   RxList<String> selectedKeylessEntry = <String>[].obs;
@@ -84,7 +85,7 @@ class FeatureViewModel extends GetxController{
   // var abs = ''.obs;
 
   RxList<String> selectedAlloyWheel = <String>[].obs;
-  var selectedFogLamps = ''.obs;
+  // var selectedFogLamps = ''.obs;
   RxList<String> selectedAirBag = <String>[].obs;
   var selectedSeatBelt = ''.obs;
   RxList<String> selectAbsEbd = <String>[].obs;
@@ -108,8 +109,9 @@ class FeatureViewModel extends GetxController{
   }
 
   void addFeatureInfo()async{
+    ProgressBar.instance.showProgressbar(Get.context!);
    try{
-     var request = http.MultipartRequest('PATCH',Uri.parse(EndPoints.baseUrl+EndPoints.featureInfo+'/'+globals.carId.toString()));
+     var request = http.MultipartRequest('PATCH',Uri.parse('${EndPoints.baseUrl}${EndPoints.featureInfo}/${globals.carId}'));
      for(int i=0; i<selectedStereoImage.length; i++){
        request.fields['stereoImage_condition[$i]'] = selectedStereoImage[i];
      }
@@ -135,52 +137,62 @@ class FeatureViewModel extends GetxController{
        'rearParkingSensor': selectedRearParkingSensor.value,
        'gpsNavigation': selectedGpsNavigation.value,
        'rearDefogger': selectedRearDefogger.value,
-       'fogLamps': selectedFogLamps.value,
+       'fogLamps': selectedFogLamp.value,
        'stereoBrand': sterioBrandController.value.text,
        'seatBelt': selectedSeatBelt.value,
+       'stereoImage_remarks': stereoImageRemarksController.value.text,
        'anyInteriorModifications': anyInteriorModificationController.value.text ,
        'evaluationStatusForFeature': 'COMPLETED'
      });
      if (stereoImage.value!=null && (stereoImage.value!.path.startsWith('http') == false || stereoImage.value!.path.startsWith('https') == false)) {
        request.files.add( await http.MultipartFile.fromPath('stereoImage', stereoImage.value!.path,contentType: MediaType('image', 'jpg'),));
-     } 
+     }
      request.headers.addAll(globals.headers);
 
      http.StreamedResponse response = await request.send();
      
      if (response.statusCode == 200) {
+       ProgressBar.instance.stopProgressBar(Get.context!);
        log(await response.stream.bytesToString());
        CustomToast.instance.showMsg(MyStrings.success);
-       Navigator.of(Get.overlayContext!, rootNavigator: true).pop();
+       Get.offNamed(AppRoutes.dashBoardScreen);
      }
      else {
+       ProgressBar.instance.stopProgressBar(Get.context!);
        log(response.reasonPhrase.toString());
      }
    }catch (e){
-     log('work: ${e}');
+     ProgressBar.instance.stopProgressBar(Get.context!);
+     log('work: $e');
      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
    }
   }
 
   void getFeatureInfo() async {
     try {
-      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.featureInfo+'/'+globals.carId.toString()),
+      // ProgressBar.instance.showProgressbar(Get.context!);
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.featureInfo}/${globals.carId}'),
       headers: globals.headers);
       if(response.statusCode == 200){
+        ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
         var data = await jsonDecode(response.body);
         featureInfoResponse.value = featuresList.fromJson(data);
         loadData();
       }else{
+        ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());
       }
     } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
     }
   }
 
   void loadData(){
     if(featureInfoResponse.value.data != null){
+      isPage1Fill.value = true;
+      isPage2Fill.value = true;
       /// page 1
       keylessEntryController.value.text = featureInfoResponse.value.data![0].keylessEntry!.join(",");
       selectedKeylessEntry.value = keylessEntryController.value.text.split(",");

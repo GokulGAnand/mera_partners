@@ -12,6 +12,7 @@ import 'package:evaluator_app/utils/globals.dart' as globals;
 import '../../../model/response/airconditioning/airconditioning_response.dart';
 import '../../../service/exception_error_util.dart';
 import '../../../widgets/custom_toast.dart';
+import '../../../widgets/progressbar.dart';
 
 
 class AirConditioningViewModel extends GetxController{
@@ -54,7 +55,7 @@ class AirConditioningViewModel extends GetxController{
 
   @override
   void onInit() {
-    print(id);
+    log(id);
     getAcinfo();
     super.onInit();
   }
@@ -62,8 +63,21 @@ class AirConditioningViewModel extends GetxController{
 
 
   void addCondition()async{
+    ProgressBar.instance.showProgressbar(Get.context!);
     try{
-      var response =  await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.acInfo+'/'+globals.carId.toString()),
+      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.acInfo}/${globals.carId}').toString());
+      log(json.encode({
+        "airCooling":selectedCooling,
+        "heater":selectedHeater.value,
+        "climateControl":selectedClimateControl.value,
+        "acCondensor":selectedAcCondenserCompressor,
+        "acWorking": selectedAcWorking.value,
+        "acFilterDamaged": selectedAcCFilterDamaged.value,
+        "acBlowerGrill": selectedAcBlowerGrill.value,
+        "rearDefogger": selectedRearDefogger.value,
+        "evaluationStatusForAc":"COMPLETED"
+      }),);
+      var response =  await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.acInfo}/${globals.carId}'),
           body: json.encode({
             "airCooling":selectedCooling,
             "heater":selectedHeater.value,
@@ -73,17 +87,20 @@ class AirConditioningViewModel extends GetxController{
             "acFilterDamaged": selectedAcCFilterDamaged.value,
             "acBlowerGrill": selectedAcBlowerGrill.value,
             "rearDefogger": selectedRearDefogger.value,
+            "evaluationStatusForAc":"COMPLETED"
           }),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': '${globals.headers["Authorization"]}'
-          }
+          headers: globals.jsonHeaders
       );
+      log(response.body.toString());
       if (response.statusCode ==200){
+        ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
         Get.offNamed(AppRoutes.dashBoardScreen);
-      } 
+      } else{
+        ProgressBar.instance.stopProgressBar(Get.context!);
+      }
     }catch(e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
   }
@@ -91,7 +108,7 @@ class AirConditioningViewModel extends GetxController{
 
 
   void getAcinfo()async{
-    var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.acInfo+'/'+globals.carId.toString()),headers: globals.headers);
+    var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.acInfo}/${globals.carId}'),headers: globals.headers);
     if(response.statusCode == 200){
       airConditionResponse.value = airconditininglist.fromJson(json.decode(response.body));
       log(response.body);

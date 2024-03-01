@@ -62,8 +62,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class CustomAppBar1 extends StatelessWidget implements PreferredSizeWidget {
-  CustomAppBar1({
-    Key? key,
+  const CustomAppBar1({
+    super.key,
     this.height,
     this.styleType,
     this.leadingWidth,
@@ -71,9 +71,7 @@ class CustomAppBar1 extends StatelessWidget implements PreferredSizeWidget {
     this.title,
     this.centerTitle,
     this.actions,
-  }) : super(
-    key: key,
-  );
+  });
 
   final double? height;
 

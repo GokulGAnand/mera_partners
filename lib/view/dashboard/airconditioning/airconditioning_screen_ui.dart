@@ -239,7 +239,7 @@ class AirConditioningScreen extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(16,0,16,0),
                   child: CustomDropDown(
                     hintText: MyStrings.acFilterDamaged,
-                    label: viewModel. selectedAcCFilterDamaged.value.isEmpty ? null : "${MyStrings.acFilterDamaged}",
+                    label: viewModel. selectedAcCFilterDamaged.value.isEmpty ? null : MyStrings.acFilterDamaged,
                     value: viewModel. selectedAcCFilterDamaged.value.isEmpty ? null : viewModel.selectedAcCFilterDamaged.value,
                     items: viewModel.acFilterDamagedList.map<DropdownMenuItem<String>>(
                           (String value) {
@@ -270,7 +270,7 @@ class AirConditioningScreen extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(16,0,16,0),
                   child: CustomDropDown(
                     hintText: MyStrings.acBlowerGrill,
-                    label: viewModel. selectedAcBlowerGrill.value.isEmpty ? null : "${MyStrings.acBlowerGrill}",
+                    label: viewModel. selectedAcBlowerGrill.value.isEmpty ? null : MyStrings.acBlowerGrill,
                     value: viewModel. selectedAcBlowerGrill.value.isEmpty ? null : viewModel.selectedAcBlowerGrill.value,
                     items: viewModel.acBlowerGrillList.map<DropdownMenuItem<String>>(
                           (String value) {
@@ -301,7 +301,7 @@ class AirConditioningScreen extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(16,0,16,0),
                   child: CustomDropDown(
                     hintText: MyStrings.rearDefogger,
-                    label: viewModel. selectedRearDefogger.value.isEmpty ? null : "${MyStrings.rearDefogger}",
+                    label: viewModel. selectedRearDefogger.value.isEmpty ? null : MyStrings.rearDefogger,
                     value: viewModel. selectedRearDefogger.value.isEmpty ? null : viewModel.selectedRearDefogger.value,
                     items: viewModel.rearDefoggerList.map<DropdownMenuItem<String>>(
                           (String value) {

@@ -18,9 +18,9 @@ import 'package:evaluator_app/widgets/image_picker_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
 import '../../../utils/methods.dart';
 
+/// ignore: must_be_immutable
 class InteriorScreen extends StatelessWidget {
   InteriorScreen({super.key});
 
@@ -480,7 +480,7 @@ class InteriorScreen extends StatelessWidget {
                             title: MyStrings.handBrake,  
                             items: viewModel.handBrake, 
                             selectItem: viewModel.selectHandBrake,
-                            image: viewModel.handBreakImage,
+                            // image: viewModel.handBreakImage,
                             remarksController : viewModel.handBrakeRemarksController.value,
                             othersController: TextEditingController(),
                           );
@@ -492,9 +492,7 @@ class InteriorScreen extends StatelessWidget {
                     controller: viewModel.handBrakeController.value,
                     labelText: "${MyStrings.handBrake}*",
                     helperText: "${MyStrings.handBrake}*",
-                    validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.handBreakImage.value);
-                    },
+                    validator: ValidateInput.validateRequiredFields,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(

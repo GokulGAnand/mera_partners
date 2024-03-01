@@ -43,7 +43,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
           if(!result.isGranted){
             openAppSettings();
           }
-          print("camera access: " + result.isGranted.toString());
+          log("camera access: ${result.isGranted}");
         } 
       }
       final image = await ImagePicker().pickImage(source: source);
@@ -253,17 +253,22 @@ class CustomCheckBoxDialog extends StatelessWidget {
                               width: 119,
                               height: 119,
                               fit: BoxFit.fill,
-                          frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                            return child;
-                          },
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            } else {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }}),
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Center(
+                                  child: Text('No Image'),
+                                );
+                              },
+                              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                                return child;
+                              },
+                              loadingBuilder: (context, child, loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                } else {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }}),
                           Positioned(
                             child: Container(
                               width: 20,
@@ -282,7 +287,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
                                 ],
                               ),
                               child: IconButton(
-                                padding: EdgeInsets.only(right: 4),
+                                padding: const EdgeInsets.only(right: 4),
                                 onPressed: (){
                                   image!.value = null;
                                 },icon:const Icon( Icons.remove_sharp),
@@ -319,7 +324,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
                                 ],
                               ),
                               child: IconButton(
-                                padding: EdgeInsets.only(right: 4),
+                                padding: const EdgeInsets.only(right: 4),
                                 onPressed: (){
                                   image!.value = null;
                                 },icon:const Icon( Icons.remove_sharp),
@@ -361,9 +366,13 @@ class CustomCheckBoxDialog extends StatelessWidget {
                     }
                     selectItem.remove("Other");
                     Navigator.of(context).pop();
-                  }else if ((selectItem.isNotEmpty && !selectItem.contains("Good")) && image != null && image!.value == null && selectItem.value[0].isNotEmpty){
+                  }else if ((selectItem.isNotEmpty && !selectItem.contains("Good")) && image != null && image!.value == null && selectItem[0].isNotEmpty){
                     CustomToast.instance.showMsg(MyStrings.vUploadImage);
                   }else{
+                    if(selectItem.contains(othersController.value.text) == false){
+                      selectItem.add(othersController.value.text);
+                    }
+                    selectItem.remove("Other");
                     Navigator.of(context).pop();
                   }
                 }

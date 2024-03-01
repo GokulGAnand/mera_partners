@@ -10,6 +10,7 @@ import '../../utils/dimens.dart';
 import '../../utils/strings.dart';
 import '../../widgets/custom_button.dart';
 
+/// ignore: must_be_immutable
 class ReportScreen extends StatelessWidget {
   ReportScreen({super.key});
 
@@ -39,7 +40,7 @@ class ReportScreen extends StatelessWidget {
                 decoration: const BoxDecoration(color: MyColors.blue),
                 child: const Center(
                     child: Text(
-                  MyStrings.keraCarsReport,
+                  MyStrings.meraCarsReport,
                   style: MyStyles.reportTitleStyle,
                 )),
               ),
@@ -75,7 +76,7 @@ class ReportScreen extends StatelessWidget {
                 height: Dimens.standard_25,
               ),
               Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -124,11 +125,11 @@ class ReportScreen extends StatelessWidget {
                           MyStrings.customerPrice,
                           style: MyStyles.greyMedium500
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: Dimens.standard_8,
                         ),
                         Text(
-                          viewModel.reportResponse.value.data!=null?'₹ '+viewModel.reportResponse.value.data!.customerPrice!:'₹ ',
+                          viewModel.reportResponse.value.data!=null?'₹ ${viewModel.reportResponse.value.data!.customerPrice!}':'₹ ',
                           style: MyStyles.reportStyle,
                         ),
                       ],
@@ -584,7 +585,7 @@ class ReportScreen extends StatelessWidget {
                                 ),
                               ),
                               ListView.builder(
-                                physics: NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 itemCount: viewModel.imageUrls.length,
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
@@ -597,7 +598,24 @@ class ReportScreen extends StatelessWidget {
                                     ),
                                       child: Column(
                                         children: [
-                                          Image.network(viewModel.imageUrls[index]),
+                                          Image.network(viewModel.imageUrls[index],
+                                              fit: BoxFit.fill,
+                                              errorBuilder: (context, error, stackTrace) {
+                                                return const Center(
+                                                  child: Text('No Image'),
+                                                );
+                                              },
+                                              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                                                return child;
+                                              },
+                                              loadingBuilder: (context, child, loadingProgress) {
+                                                if (loadingProgress == null) {
+                                                  return child;
+                                                } else {
+                                                  return const Center(
+                                                    child: CircularProgressIndicator(),
+                                                  );
+                                                }}),
                                           Container(
                                             height: 39,
                                             width: double.maxFinite,
@@ -619,7 +637,7 @@ class ReportScreen extends StatelessWidget {
                               },),
                               Row(
                                 children: [
-                                  Text(MyStrings.reportId+': '+viewModel.reportResponse.value.data!.id!,
+                                  Text('${MyStrings.reportId}: ${viewModel.reportResponse.value.data!.id!}',
                                     style: MyStyles.greyMedium,
                                   ),
                                 ],

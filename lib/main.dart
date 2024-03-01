@@ -7,9 +7,9 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: MyColors.white, // status bar color
-      statusBarIconBrightness: Brightness.dark));
+  // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+  //     statusBarColor: MyColors.white, // status bar color
+  //     statusBarIconBrightness: Brightness.dark));
 
   runApp(const MyApp());
 }

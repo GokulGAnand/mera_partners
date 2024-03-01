@@ -9,19 +9,19 @@ class DocumentResponse {
   DocumentResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    if (this.meta != null) {
-      data['meta'] = this.meta!.toJson();
+    if (meta != null) {
+      data['meta'] = meta!.toJson();
     }
     return data;
   }
@@ -105,62 +105,62 @@ class Data {
     rcRemarks = json['rcRemarks'];
     remarks = json['remarks'];
     rcFront =
-    json['rcFront'] != null ? new RcFront.fromJson(json['rcFront']) : null;
+    json['rcFront'] != null ? RcFront.fromJson(json['rcFront']) : null;
     rcBack =
-    json['rcBack'] != null ? new RcFront.fromJson(json['rcBack']) : null;
+    json['rcBack'] != null ? RcFront.fromJson(json['rcBack']) : null;
     nocImage = json['nocImage'] != null
-        ? new RcFront.fromJson(json['nocImage'])
+        ? RcFront.fromJson(json['nocImage'])
         : null;
     pucCertificate = json['pucCertificate'] != null
-        ? new RcFront.fromJson(json['pucCertificate'])
+        ? RcFront.fromJson(json['pucCertificate'])
         : null;
     form35Image = json['form35Image'] != null
-        ? new RcFront.fromJson(json['form35Image'])
+        ? RcFront.fromJson(json['form35Image'])
         : null;
     chassisImage = json['chassisImage'] != null
-        ? new RcFront.fromJson(json['chassisImage'])
+        ? RcFront.fromJson(json['chassisImage'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['taxValidity'] = this.taxValidity;
-    data['rcAvailability'] = this.rcAvailability;
-    data['bankName'] = this.bankName;
-    data['fitnessValidityPeriod'] = this.fitnessValidityPeriod;
-    data['form35'] = this.form35;
-    data['hypothecation'] = this.hypothecation;
-    data['insurance'] = this.insurance;
-    data['insuranceCompany'] = this.insuranceCompany;
-    data['insuranceIDV'] = this.insuranceIDV;
-    data['insuranceMismatch'] = this.insuranceMismatch;
-    data['insuranceRemarks'] = this.insuranceRemarks;
-    data['insuranceValidity'] = this.insuranceValidity;
-    data['interStateTransfer'] = this.interStateTransfer;
-    data['loanNoc'] = this.loanNoc;
-    data['loanStatus'] = this.loanStatus;
-    data['ncb'] = this.ncb;
-    data['ncbPercentage'] = this.ncbPercentage;
-    data['rcMismatch'] = this.rcMismatch;
-    data['rcRemarks'] = this.rcRemarks;
-    data['remarks'] = this.remarks;
-    if (this.rcFront != null) {
-      data['rcFront'] = this.rcFront!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['taxValidity'] = taxValidity;
+    data['rcAvailability'] = rcAvailability;
+    data['bankName'] = bankName;
+    data['fitnessValidityPeriod'] = fitnessValidityPeriod;
+    data['form35'] = form35;
+    data['hypothecation'] = hypothecation;
+    data['insurance'] = insurance;
+    data['insuranceCompany'] = insuranceCompany;
+    data['insuranceIDV'] = insuranceIDV;
+    data['insuranceMismatch'] = insuranceMismatch;
+    data['insuranceRemarks'] = insuranceRemarks;
+    data['insuranceValidity'] = insuranceValidity;
+    data['interStateTransfer'] = interStateTransfer;
+    data['loanNoc'] = loanNoc;
+    data['loanStatus'] = loanStatus;
+    data['ncb'] = ncb;
+    data['ncbPercentage'] = ncbPercentage;
+    data['rcMismatch'] = rcMismatch;
+    data['rcRemarks'] = rcRemarks;
+    data['remarks'] = remarks;
+    if (rcFront != null) {
+      data['rcFront'] = rcFront!.toJson();
     }
-    if (this.rcBack != null) {
-      data['rcBack'] = this.rcBack!.toJson();
+    if (rcBack != null) {
+      data['rcBack'] = rcBack!.toJson();
     }
-    if (this.nocImage != null) {
-      data['nocImage'] = this.nocImage!.toJson();
+    if (nocImage != null) {
+      data['nocImage'] = nocImage!.toJson();
     }
-    if (this.pucCertificate != null) {
-      data['pucCertificate'] = this.pucCertificate!.toJson();
+    if (pucCertificate != null) {
+      data['pucCertificate'] = pucCertificate!.toJson();
     }
-    if (this.form35Image != null) {
-      data['form35Image'] = this.form35Image!.toJson();
+    if (form35Image != null) {
+      data['form35Image'] = form35Image!.toJson();
     }
-    if (this.chassisImage != null) {
-      data['chassisImage'] = this.chassisImage!.toJson();
+    if (chassisImage != null) {
+      data['chassisImage'] = chassisImage!.toJson();
     }
     return data;
   }
@@ -180,10 +180,10 @@ class RcFront {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['url'] = this.url;
-    data['remarks'] = this.remarks;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['url'] = url;
+    data['remarks'] = remarks;
     return data;
   }
 }
@@ -200,9 +200,9 @@ class Meta {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['access'] = this.access;
-    data['refresh'] = this.refresh;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['access'] = access;
+    data['refresh'] = refresh;
     return data;
   }
 }

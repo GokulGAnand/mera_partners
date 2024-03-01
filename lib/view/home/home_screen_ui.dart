@@ -1,6 +1,5 @@
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/constants.dart';
 import 'package:evaluator_app/utils/dimens.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
@@ -128,7 +127,7 @@ class HomeScreen extends StatelessWidget {
         child: Scaffold(
           key: _key,
           appBar: CustomAppBar(
-            title: MyStrings.keraCarsEvaluator,
+            title: MyStrings.meraCarsEvaluator,
             leading: IconButton(
               icon: SvgPicture.asset(MyImages.menu),
               color: MyColors.black0,
