@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:evaluator_app/view_model/dashboard/exterior/exterior_screen_view_model.dart';
 import 'package:evaluator_app/view_model/new_evaluation/new_evaluation_screen_view_model.dart';
 import 'package:evaluator_app/widgets/custom_dropdown.dart';
@@ -2406,7 +2408,7 @@ class ExteriorScreen extends StatelessWidget {
                             Internet.checkInternet().then((value) {
                               if (value) {
                                 viewModel.updateExterior();
-                                print('ranjitha');
+                                log('ranjitha');
                               } else {
                                 CustomToast.instance.showMsg(MyStrings.checkNetwork);
                               }

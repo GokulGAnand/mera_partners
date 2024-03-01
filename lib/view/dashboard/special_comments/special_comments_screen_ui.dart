@@ -16,6 +16,7 @@ import '../../../widgets/custom_dropdown.dart';
 import '../../../widgets/custom_text_form_field.dart';
 import '../../../widgets/custom_toast.dart';
 
+/// ignore: must_be_immutable
 class SpecialCommentsScreen extends StatelessWidget {
   SpecialCommentsScreen({super.key});
 

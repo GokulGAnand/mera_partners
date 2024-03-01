@@ -43,7 +43,7 @@ class CompletedEvaluationViewModel extends GetxController{
 
   void fetchEvaluatedList() async {
     try {
-      print(Uri.parse('${EndPoints.baseUrl}${EndPoints.evaluation}?status=EVALUATED'));
+      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.evaluation}?status=EVALUATED').toString());
       var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.evaluation}?status=EVALUATED'),headers: globals.headers);
       if(response.statusCode == 200){
         carBasicResponse.value = PendingEvaluationList.fromJson(json.decode(response.body));

@@ -55,7 +55,7 @@ class AirConditioningViewModel extends GetxController{
 
   @override
   void onInit() {
-    print(id);
+    log(id);
     getAcinfo();
     super.onInit();
   }
@@ -65,8 +65,8 @@ class AirConditioningViewModel extends GetxController{
   void addCondition()async{
     ProgressBar.instance.showProgressbar(Get.context!);
     try{
-      print(Uri.parse(EndPoints.baseUrl+EndPoints.acInfo+'/'+globals.carId.toString()));
-      print(json.encode({
+      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.acInfo}/${globals.carId}').toString());
+      log(json.encode({
         "airCooling":selectedCooling,
         "heater":selectedHeater.value,
         "climateControl":selectedClimateControl.value,
@@ -77,7 +77,7 @@ class AirConditioningViewModel extends GetxController{
         "rearDefogger": selectedRearDefogger.value,
         "evaluationStatusForAc":"COMPLETED"
       }),);
-      var response =  await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.acInfo+'/'+globals.carId.toString()),
+      var response =  await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.acInfo}/${globals.carId}'),
           body: json.encode({
             "airCooling":selectedCooling,
             "heater":selectedHeater.value,
@@ -91,7 +91,7 @@ class AirConditioningViewModel extends GetxController{
           }),
           headers: globals.jsonHeaders
       );
-      print(response.body.toString());
+      log(response.body.toString());
       if (response.statusCode ==200){
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
@@ -108,7 +108,7 @@ class AirConditioningViewModel extends GetxController{
 
 
   void getAcinfo()async{
-    var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.acInfo+'/'+globals.carId.toString()),headers: globals.headers);
+    var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.acInfo}/${globals.carId}'),headers: globals.headers);
     if(response.statusCode == 200){
       airConditionResponse.value = airconditininglist.fromJson(json.decode(response.body));
       log(response.body);

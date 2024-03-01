@@ -43,7 +43,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
           if(!result.isGranted){
             openAppSettings();
           }
-          print("camera access: " + result.isGranted.toString());
+          log("camera access: ${result.isGranted}");
         } 
       }
       final image = await ImagePicker().pickImage(source: source);
@@ -287,7 +287,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
                                 ],
                               ),
                               child: IconButton(
-                                padding: EdgeInsets.only(right: 4),
+                                padding: const EdgeInsets.only(right: 4),
                                 onPressed: (){
                                   image!.value = null;
                                 },icon:const Icon( Icons.remove_sharp),
@@ -324,7 +324,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
                                 ],
                               ),
                               child: IconButton(
-                                padding: EdgeInsets.only(right: 4),
+                                padding: const EdgeInsets.only(right: 4),
                                 onPressed: (){
                                   image!.value = null;
                                 },icon:const Icon( Icons.remove_sharp),
@@ -366,7 +366,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
                     }
                     selectItem.remove("Other");
                     Navigator.of(context).pop();
-                  }else if ((selectItem.isNotEmpty && !selectItem.contains("Good")) && image != null && image!.value == null && selectItem.value[0].isNotEmpty){
+                  }else if ((selectItem.isNotEmpty && !selectItem.contains("Good")) && image != null && image!.value == null && selectItem[0].isNotEmpty){
                     CustomToast.instance.showMsg(MyStrings.vUploadImage);
                   }else{
                     Navigator.of(context).pop();

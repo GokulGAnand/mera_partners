@@ -1,9 +1,5 @@
-
 import 'dart:convert';
-import 'dart:ffi';
-import 'dart:io';
 import 'dart:developer';
-
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/service/endpoints.dart';
 import 'package:evaluator_app/service/exception_error_util.dart';
@@ -66,7 +62,7 @@ class TestDriveViewModel extends GetxController {
   void addTestDrive()async{
     ProgressBar.instance.showProgressbar(Get.context!);
     try{
-      var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.testDriveInfo+'/'+globals.carId.toString()),
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.testDriveInfo}/${globals.carId}'),
           body: json.encode({
             "steeringWheel": selectedSteeringWheel,
             "suspension": selectedSuspensionSystem,
@@ -113,7 +109,7 @@ class TestDriveViewModel extends GetxController {
   void GetTestDriveInfo()async{
     // ProgressBar.instance.showProgressbar(Get.context!);
     try {
-      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.testDriveInfo+'/'+globals.carId.toString()),headers: globals.headers);
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.testDriveInfo}/${globals.carId}'),headers: globals.headers);
       if (response.statusCode ==200){
             testDriveResponse.value = testdrivelist.fromJson(json.decode(response.body));
             log(response.body.toString());
@@ -122,7 +118,7 @@ class TestDriveViewModel extends GetxController {
         ProgressBar.instance.stopProgressBar(Get.context!);
       }
     } catch (e) {
-      print(e);
+      log(e.toString());
       ProgressBar.instance.stopProgressBar(Get.context!);
     }
   }

@@ -10,6 +10,7 @@ import '../../utils/dimens.dart';
 import '../../utils/strings.dart';
 import '../../widgets/custom_button.dart';
 
+/// ignore: must_be_immutable
 class ReportScreen extends StatelessWidget {
   ReportScreen({super.key});
 
@@ -75,7 +76,7 @@ class ReportScreen extends StatelessWidget {
                 height: Dimens.standard_25,
               ),
               Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -636,7 +637,7 @@ class ReportScreen extends StatelessWidget {
                               },),
                               Row(
                                 children: [
-                                  Text(MyStrings.reportId+': '+viewModel.reportResponse.value.data!.id!,
+                                  Text('${MyStrings.reportId}: ${viewModel.reportResponse.value.data!.id!}',
                                     style: MyStyles.greyMedium,
                                   ),
                                 ],

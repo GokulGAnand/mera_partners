@@ -64,11 +64,11 @@ class ReportScreenViewModel extends GetxController{
 void getReport() async {
   // ProgressBar.instance.showProgressbar(Get.context!);
   try {
-    print(Uri.parse(EndPoints.baseUrl+EndPoints.evaluation+'/'+EndPoints.report+id));
+    log(Uri.parse(EndPoints.baseUrl+EndPoints.evaluation+'/'+EndPoints.report+id).toString());
     var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.evaluation+'/'+EndPoints.report+id),headers: globals.headers);
     if(response.statusCode == 200){
       ProgressBar.instance.stopProgressBar(Get.context!);
-      print(response.body.toString());
+      log(response.body);
       reportResponse.value = ReportResponse.fromJson(jsonDecode(response.body));
       if (reportResponse.value.data != null) {
         extractUrls(reportResponse.value.data!.allCarInfo!.toJson());
@@ -89,7 +89,7 @@ void getReport() async {
           Master(title: MyStrings.color, value: reportResponse.value.data!.color ?? ''),
           Master(title: MyStrings.kilometer, value: reportResponse.value.data!.odometerReading.toString()),
           Master(title: MyStrings.chassisNumber, value: reportResponse.value.data!.chasisNumber ?? ''),
-          Master(title: MyStrings.specialComments, value: reportResponse.value.data!.allCarInfo?.specialComments.toString() ?? ''),
+          Master(title: MyStrings.specialComments, value: reportResponse.value.data!.allCarInfo?.specialComments ?? ''),
         ];
         documents.value = [
           Master(title: MyStrings.rc, value: reportResponse.value.data!.rcAvailability ?? ''),
@@ -98,8 +98,8 @@ void getReport() async {
         ];
         features.value = [
           Master(title: MyStrings.keyLessEntry, value: reportResponse.value.data!.allCarInfo!.keylessEntry?.join(',') ?? ''),
-          Master(title: MyStrings.stereoImage, value: reportResponse.value.data!.allCarInfo!.stereoBrand.toString() ?? ''),
-          Master(title: MyStrings.stereoBrand, value: reportResponse.value.data!.allCarInfo!.stereoBrand.toString() ?? ''),
+          Master(title: MyStrings.stereoImage, value: reportResponse.value.data!.allCarInfo!.stereoBrand ?? ''),
+          Master(title: MyStrings.stereoBrand, value: reportResponse.value.data!.allCarInfo!.stereoBrand ?? ''),
           Master(title: MyStrings.rearParkingSensor, value: reportResponse.value.data!.allCarInfo!.rearParkingSensor ?? ''),
           Master(title: MyStrings.fogLamp, value: reportResponse.value.data!.allCarInfo!.fogLamps ?? ''),
           Master(title: MyStrings.sunroof, value: reportResponse.value.data!.allCarInfo!.sunroof?.join(',') ?? ''),
@@ -112,24 +112,24 @@ void getReport() async {
           Master(title: MyStrings.interiorModifications, value: reportResponse.value.data!.allCarInfo!.interiorView?.condition?.join(',')?? ''),
         ];
         testDrive.value = [
-          Master(title: MyStrings.steering, value: reportResponse.value.data!.allCarInfo!.steeringSystem.toString() ?? ''),
+          Master(title: MyStrings.steering, value: reportResponse.value.data!.allCarInfo!.steeringSystem ?? ''),
           Master(title: MyStrings.steeringWheel, value: reportResponse.value.data!.allCarInfo!.steeringWheel?.join(',') ?? ''),
-          Master(title: MyStrings.steeringAdjustment, value: reportResponse.value.data!.allCarInfo!.steeringAdjustment.toString() ?? ''),
-          Master(title: MyStrings.steeringMountedAudio, value: reportResponse.value.data!.allCarInfo!.steeringMountedAudioControl.toString() ?? ''),
-          Master(title: MyStrings.cruiseControl, value: reportResponse.value.data!.allCarInfo!.cruiseControl.toString() ?? ''),
-          Master(title: MyStrings.seatAdjustment, value: reportResponse.value.data!.allCarInfo!.seatAdjustment.toString() ?? ''),
+          Master(title: MyStrings.steeringAdjustment, value: reportResponse.value.data!.allCarInfo!.steeringAdjustment ?? ''),
+          Master(title: MyStrings.steeringMountedAudio, value: reportResponse.value.data!.allCarInfo!.steeringMountedAudioControl ?? ''),
+          Master(title: MyStrings.cruiseControl, value: reportResponse.value.data!.allCarInfo!.cruiseControl ?? ''),
+          Master(title: MyStrings.seatAdjustment, value: reportResponse.value.data!.allCarInfo!.seatAdjustment ?? ''),
           Master(title: MyStrings.suspensionSystem, value: reportResponse.value.data!.allCarInfo!.suspension?.join(',') ?? ''),
-          Master(title: MyStrings.brakes, value: reportResponse.value.data!.allCarInfo!.brakes.toString() ?? ''),
-          Master(title: MyStrings.clutchSystem, value: reportResponse.value.data!.allCarInfo!.clutchSystem.toString() ?? ''),
+          Master(title: MyStrings.brakes, value: reportResponse.value.data!.allCarInfo!.brakes ?? ''),
+          Master(title: MyStrings.clutchSystem, value: reportResponse.value.data!.allCarInfo!.clutchSystem ?? ''),
           Master(title: MyStrings.transmissionAutomatic, value: reportResponse.value.data!.allCarInfo!.transmissionAutomatic?.join(',') ?? ''),
           Master(title: MyStrings.vehicleHorn, value: reportResponse.value.data!.allCarInfo!.vehicleHorn?.join(',') ?? ''),
         ];
         engine.value = [
-          Master(title: MyStrings.engineSound, value: reportResponse.value.data!.allCarInfo!.engineSound.toString() ?? ''),
+          Master(title: MyStrings.engineSound, value: reportResponse.value.data!.allCarInfo!.engineSound ?? ''),
           Master(title: MyStrings.engine, value: reportResponse.value.data!.allCarInfo!.engineCondition?.join(',') ?? ''),
-          Master(title: MyStrings.smoke, value: reportResponse.value.data!.allCarInfo!.exhaustSmoke.toString() ?? ''),
+          Master(title: MyStrings.smoke, value: reportResponse.value.data!.allCarInfo!.exhaustSmoke ?? ''),
           Master(title: MyStrings.battery, value: reportResponse.value.data!.allCarInfo!.battery?.condition!.join(',') ?? ''),
-          Master(title: MyStrings.radiator, value: reportResponse.value.data!.allCarInfo!.radiator.toString() ?? ''),
+          Master(title: MyStrings.radiator, value: reportResponse.value.data!.allCarInfo!.radiator ?? ''),
           Master(title: MyStrings.startingMotor, value: reportResponse.value.data!.allCarInfo!.startingMotor ?? ''),
           Master(title: MyStrings.coolant, value: reportResponse.value.data!.allCarInfo!.coolant ?? ''),
           Master(title: MyStrings.blowByBackCompression, value: reportResponse.value.data!.allCarInfo!.blowBy?.condition!.join(',') ?? ''),

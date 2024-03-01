@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:evaluator_app/view_model/login/login_view_model.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
@@ -16,7 +18,7 @@ import '../../widgets/custom_text_form_field.dart';
 
 /// ignore: must_be_immutable
 class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -36,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!cameraStatus.isGranted) {
       cameraStatus = await Permission.camera.request();
     }
-    print("camera access: " + cameraStatus.isGranted.toString());
+    log("camera access: ${cameraStatus.isGranted}");
     final deviceInfo =await DeviceInfoPlugin().androidInfo;
     PermissionStatus? storageStatus;
     if(deviceInfo.version.sdkInt>32){
@@ -44,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }else{
         storageStatus = await Permission.storage.request();
     }
-    print("storage access: " + storageStatus.isGranted.toString());
+    log("storage access: ${storageStatus.isGranted}");
   }
 
   @override

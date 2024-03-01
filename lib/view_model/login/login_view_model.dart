@@ -51,7 +51,6 @@ class LoginScreenViewModel extends GetxController {
       }
     } catch (e) {
       ProgressBar.instance.stopProgressBar(Get.context!);
-      print(e);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }

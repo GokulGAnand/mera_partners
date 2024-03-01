@@ -31,7 +31,7 @@ class SpecialCommentsViewModel extends GetxController{
 
   @override
   void onInit() {
-    print(id);
+    log(id);
     getComments();
     super.onInit();
   }
@@ -40,8 +40,8 @@ class SpecialCommentsViewModel extends GetxController{
   void addComments() async {
     ProgressBar.instance.showProgressbar(Get.context!);
     try {
-      print(EndPoints.baseUrl+EndPoints.specialComment+'/'+globals.carId.toString());
-      var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.specialComment+'/'+globals.carId.toString()),
+      log('${EndPoints.baseUrl}${EndPoints.specialComment}/${globals.carId}');
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.specialComment}/${globals.carId}'),
             body: {
               "carCondition":selectedCarCondition.value,
               "specialComments":specialCommentsController.value.text
@@ -64,14 +64,14 @@ class SpecialCommentsViewModel extends GetxController{
   
   void getComments()async{
      try {
-       var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.specialComment+'/'+globals.carId.toString()),headers: globals.headers);
+       var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.specialComment}/${globals.carId}'),headers: globals.headers);
        if(response.statusCode ==200){
               specialResponse.value = specialcommentlist.fromJson(json.decode(response.body));
               loaddata();
           }
        log(response.body);
      } catch (e) {
-       print(e);
+       log(e.toString());
      }
   }
 

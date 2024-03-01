@@ -22,7 +22,7 @@ class ImagePickerCard extends StatelessWidget {
   final Rx<File?> image;
   final TextEditingController remarksController;
 
-  ImagePickerCard({super.key, this.onSubmit, this.isVideo = false, required this.remarksController, required this.image});
+  const ImagePickerCard({super.key, this.onSubmit, this.isVideo = false, required this.remarksController, required this.image});
 
   Future pickImage(ImageSource source) async {
     try {
@@ -33,7 +33,7 @@ class ImagePickerCard extends StatelessWidget {
           if(!result.isGranted){
             openAppSettings();
           }
-          print("camera access: " + result.isGranted.toString());
+          log("camera access: ${result.isGranted}");
         } 
       }
       final image = await ImagePicker().pickImage(source: source);
@@ -291,7 +291,7 @@ class ImagePickerCard extends StatelessWidget {
               padding: const EdgeInsets.only(left: 16.0, right: 16),
               child: CustomElevatedButton(onPressed: () {
                 // image?.value = image?.value;
-                print(image.value.toString());
+                log(image.value.toString());
                 Navigator.of(context).pop();
               }, buttonText: MyStrings.submit),
             ),

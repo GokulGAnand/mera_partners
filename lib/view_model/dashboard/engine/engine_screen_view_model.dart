@@ -211,18 +211,18 @@ class EngineViewModel extends GetxController {
         request.files.add(await http.MultipartFile.fromPath('sump', sumpImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       request.headers.addAll(globals.headers);
-print(request.toString());
+log(request.toString());
       var response = await request.send();
-      print(await response.stream.bytesToString());
+      log(await response.stream.bytesToString());
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        print(await response.stream.bytesToString());
+        log(await response.stream.bytesToString());
         CustomToast.instance.showMsg(MyStrings.success);
         Get.offNamed(AppRoutes.dashBoardScreen);
       }
       else {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        print(response.reasonPhrase);
+        log(response.reasonPhrase.toString());
       }
 
     } catch (e) {
@@ -314,15 +314,15 @@ print(request.toString());
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         engineResponse.value = EngineResponse.fromJson(jsonDecode(response.body));
-        print(response.body);
+        log(response.body);
         loadData();
       }else{
         ProgressBar.instance.stopProgressBar(Get.context!);
-        print(response.reasonPhrase);
+        log(response.reasonPhrase.toString());
       }
     } catch (e) {
       ProgressBar.instance.stopProgressBar(Get.context!);
-      print(e);
+      log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
     }

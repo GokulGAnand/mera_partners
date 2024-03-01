@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:evaluator_app/service/internet_check.dart';
 import 'package:evaluator_app/view_model/dashboard/features/feature_screen_view_model.dart';
 import 'package:evaluator_app/widgets/common_app_bar.dart';
@@ -9,7 +7,6 @@ import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
 import '../../../utils/colors.dart';
 import '../../../utils/dimens.dart';
 import '../../../utils/images.dart';
@@ -20,7 +17,6 @@ import '../../../utils/validate_input.dart';
 import '../../../widgets/common_drawer.dart';
 import '../../../widgets/custom_dropdown.dart';
 import '../../../widgets/custom_text_form_field.dart';
-import '../../../widgets/image_picker_card.dart';
 
 /// ignore: must_be_immutable
 class FeaturesScreen extends StatelessWidget {

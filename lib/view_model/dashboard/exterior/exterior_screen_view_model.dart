@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/service/endpoints.dart';
@@ -371,7 +372,7 @@ class ExteriorViewModel extends GetxController {
   void updateExterior() async {
     ProgressBar.instance.showProgressbar(Get.context!);
     try {
-      print(Uri.parse(EndPoints.baseUrl + EndPoints.exterior +globals.carId.toString()));
+      log(Uri.parse(EndPoints.baseUrl + EndPoints.exterior +globals.carId.toString()).toString());
       var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl + EndPoints.exterior +globals.carId.toString()));
       for (int i = 0; i < selectedFrontImageList.length; i++) {
         request.fields['front_condition[$i]'] = selectedFrontImageList[i];
@@ -827,20 +828,20 @@ class ExteriorViewModel extends GetxController {
       request.headers.addAll(globals.headers);
 
       http.StreamedResponse response = await request.send();
-print(response.toString());
+log(response.toString());
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        print(response.stream.bytesToString());
+        log(await response.stream.bytesToString());
         CustomToast.instance.showMsg(MyStrings.success);
         Get.offNamed(AppRoutes.dashBoardScreen);
         // Get.back();
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        print(response.reasonPhrase);
+        log(response.reasonPhrase.toString());
       }
     } catch (e) {
       ProgressBar.instance.stopProgressBar(Get.context!);
-      print(e);
+      log(e.toString());
     }
   }
 
@@ -1143,7 +1144,7 @@ print(response.toString());
         firewallRemarks.value.text = exteriorResponse.value.data?[0].firewall?.remarks ?? '';
       }
     } catch (e) {
-      print(e);
+      log(e.toString());
     }
   }
 
@@ -1155,14 +1156,14 @@ print(response.toString());
         ProgressBar.instance.stopProgressBar(Get.context!);
         exteriorResponse.value = ExteriorResponse.fromJson(jsonDecode(response.body));
         loadData();
-        print(response.body);
+        log(response.body);
       }else{
         ProgressBar.instance.stopProgressBar(Get.context!);
-        print(response.reasonPhrase);
+        log(response.reasonPhrase.toString());
       }
     } catch (e) {
       ProgressBar.instance.stopProgressBar(Get.context!);
-      print(e);
+      log(e.toString());
     }
   }
 }

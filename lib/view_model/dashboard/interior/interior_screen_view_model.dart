@@ -232,7 +232,7 @@ class InteriorViewModel extends GetxController {
   void getInteriorInfo() async {
     // ProgressBar.instance.showProgressbar(Get.context!);
     try {
-      var response = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.interiorInfo+'/'+globals.carId.toString()),
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.interiorInfo}/${globals.carId}'),
       headers: globals.headers);
       if(response.statusCode == 200){
         ProgressBar.instance.stopProgressBar(Get.context!);

@@ -225,7 +225,7 @@ class NewEvaluationViewModel extends GetxController {
       }
       final response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.evaluation), body: json.encode(createEvaluationRequest), headers: headers);
       log(Uri.parse(EndPoints.baseUrl + EndPoints.evaluation).toString());
-print(response.statusCode);
+log(response.statusCode.toString());
 log(response.body.toString());
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
