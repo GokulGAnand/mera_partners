@@ -254,52 +254,52 @@ class InteriorViewModel extends GetxController {
     if(interiorInfoResponse.value.data != null){
       isPage1Fill.value = true;
       isPage2Fill.value = true;
-      clusterPanelController.value.text = interiorInfoResponse.value.data![0].clusterPanel!.join(",");
+      clusterPanelController.value.text = interiorInfoResponse.value.data?[0].clusterPanel?.condition?.join(",") ?? '';
       selectClusterPanel.value = clusterPanelController.value.text.split(",");
-      warningDetailsController.value.text = interiorInfoResponse.value.data![0].warningDetails!;
+      warningDetailsController.value.text = interiorInfoResponse.value.data?[0].warningDetails??'';
       if(warningDetailsController.value.text.isNotEmpty){
         selectWarningLight.value = 'yes';
       }
-      dashboardImageController.value.text = interiorInfoResponse.value.data![0].dashboardImage!.condition!.join(",");
+      dashboardImageController.value.text = interiorInfoResponse.value.data?[0].dashboardImage?.condition?.join(",") ?? '';
       selectDashboardImage.value = dashboardImageController.value.text.split(",");
-      dashboardImage.value = interiorInfoResponse.value.data?[0].dashboardImage?.url != null? File(interiorInfoResponse.value.data![0].dashboardImage!.url ?? '') : null;
-      dashboardRemarksController.value.text = interiorInfoResponse.value.data![0].dashboardImage!.remarks ?? '';
+      dashboardImage.value = interiorInfoResponse.value.data?[0].dashboardImage?.url != null? File(interiorInfoResponse.value.data?[0].dashboardImage?.url ?? '') : null;
+      dashboardRemarksController.value.text = interiorInfoResponse.value.data?[0].dashboardImage?.remarks ?? '';
 
-      frontSeatImageController.value.text = interiorInfoResponse.value.data![0].frontSeatImage!.condition!.join(",");
+      frontSeatImageController.value.text = interiorInfoResponse.value.data?[0].frontSeatImage?.condition?.join(",") ?? '';
       selectFrontSeatImage.value = frontSeatImageController.value.text.split(",");
-      frontSeatImage.value = interiorInfoResponse.value.data?[0].frontSeatImage?.url != null? File(interiorInfoResponse.value.data![0].frontSeatImage!.url ?? '') : null;
-      frontSeatRemarksController.value.text = interiorInfoResponse.value.data![0].frontSeatImage!.remarks ?? '';
-      rearSeatImageController.value.text = interiorInfoResponse.value.data![0].rearSeatImage!.condition!.join(",");
+      frontSeatImage.value = interiorInfoResponse.value.data?[0].frontSeatImage?.url != null? File(interiorInfoResponse.value.data?[0].frontSeatImage?.url ?? '') : null;
+      frontSeatRemarksController.value.text = interiorInfoResponse.value.data?[0].frontSeatImage?.remarks ?? '';
+      rearSeatImageController.value.text = interiorInfoResponse.value.data?[0].rearSeatImage?.condition?.join(",") ??'';
       selectRearSeatImage.value = rearSeatImageController.value.text.split(",");
-      rearSeatImage.value = interiorInfoResponse.value.data?[0].rearSeatImage?.url != null? File(interiorInfoResponse.value.data![0].rearSeatImage!.url ?? '') : null;
-      rearSeatRemarksController.value.text = interiorInfoResponse.value.data![0].rearSeatImage!.remarks ?? '';
-      insideRearViewMirrorController.value.text = interiorInfoResponse.value.data![0].rearViewMirror!.join(",");
+      rearSeatImage.value = interiorInfoResponse.value.data?[0].rearSeatImage?.url != null? File(interiorInfoResponse.value.data?[0].rearSeatImage?.url ?? '') : null;
+      rearSeatRemarksController.value.text = interiorInfoResponse.value.data?[0].rearSeatImage?.remarks ?? '';
+      insideRearViewMirrorController.value.text = interiorInfoResponse.value.data?[0].rearViewMirror?.condition?.join(",") ?? '';
       selectInsideRearViewMirror.value = insideRearViewMirrorController.value.text.split(",");
-      interiorViewFromBootDashboardRemarksController.value.text = interiorInfoResponse.value.data![0].interiorView!.remarks ?? '';
-      interiorViewFromBootDashboardImage.value = interiorInfoResponse.value.data?[0].interiorView?.url != null? File(interiorInfoResponse.value.data![0].interiorView!.url ?? '') : null;
+      interiorViewFromBootDashboardRemarksController.value.text = interiorInfoResponse.value.data?[0].interiorView?.remarks ?? '';
+      interiorViewFromBootDashboardImage.value = interiorInfoResponse.value.data?[0].interiorView?.url != null? File(interiorInfoResponse.value.data?[0].interiorView?.url ?? '') : null;
 
-      powerWindowDriverImage.value = interiorInfoResponse.value.data?[0].powerWindowDriverImage?.url != null? File(interiorInfoResponse.value.data![0].powerWindowDriverImage!.url ?? '') : null;
-      powerWindowDriverRemarksController.value.text = interiorInfoResponse.value.data![0].powerWindowDriverImage!.remarks ?? '';
-      pushWindowDriverImage.value = interiorInfoResponse.value.data?[0].pushWindowDriverImage?.url != null? File(interiorInfoResponse.value.data![0].pushWindowDriverImage!.url ?? '') : null;
-      pushWindowDriverRemarksController.value.text = interiorInfoResponse.value.data![0].pushWindowDriverImage!.remarks ?? '';
+      powerWindowDriverImage.value = interiorInfoResponse.value.data?[0].powerWindowDriverImage?.url != null? File(interiorInfoResponse.value.data?[0].powerWindowDriverImage?.url ?? '') : null;
+      powerWindowDriverRemarksController.value.text = interiorInfoResponse.value.data?[0].powerWindowDriverImage?.remarks ?? '';
+      pushWindowDriverImage.value = interiorInfoResponse.value.data?[0].pushWindowDriverImage?.url != null? File(interiorInfoResponse.value.data?[0].pushWindowDriverImage?.url ?? '') : null;
+      pushWindowDriverRemarksController.value.text = interiorInfoResponse.value.data?[0].pushWindowDriverImage?.remarks ?? '';
       
-      selectPushButtonOnOff.value = interiorInfoResponse.value.data![0].pushButton ?? '';
-      selectDashboardSwitches.value = interiorInfoResponse.value.data![0].dashboardSwitch!;
+      selectPushButtonOnOff.value = interiorInfoResponse.value.data?[0].pushButton ?? '';
+      selectDashboardSwitches.value = interiorInfoResponse.value.data?[0].dashboardSwitch??'';
 
-      powerWindowAndWindowLockController.value.text = interiorInfoResponse.value.data![0].powerWindowCentalLock!.join(",");
+      powerWindowAndWindowLockController.value.text = interiorInfoResponse.value.data?[0].powerWindowCentalLock?.condition?.join(",") ?? '';
       selectPowerWindowAndWindowLock.value = powerWindowAndWindowLockController.value.text.split(",");
-      handBrakeController.value.text = interiorInfoResponse.value.data![0].handBreak!.join(",");
+      handBrakeController.value.text = interiorInfoResponse.value.data?[0].handBreak?.join(",") ?? '';
       selectHandBrake.value = handBrakeController.value.text.split(",");
-      handBreakImage.value = interiorInfoResponse.value.data?[0].handbreakImage?.url != null? File(interiorInfoResponse.value.data![0].handbreakImage!.url ?? '') : null;
-      handBrakeRemarksController.value.text = interiorInfoResponse.value.data![0].handbreakImage!.remarks ?? '';
+      // handBreakImage.value = interiorInfoResponse.value.data?[0].handbreakImage?.url != null? File(interiorInfoResponse.value.data?[0].handbreakImage?.url ?? '') : null;
+      // handBrakeRemarksController.value.text = interiorInfoResponse.value.data?[0].handbreakImage?.remarks ?? '';
       
-      carElectricalController.value.text = interiorInfoResponse.value.data?[0].carElectrical != null ? interiorInfoResponse.value.data![0].carElectrical!.join(","):'';
+      carElectricalController.value.text = interiorInfoResponse.value.data?[0].carElectrical != null ? interiorInfoResponse.value.data![0].carElectrical?.condition?.join(",") ?? '':'';
       selectCarElectrical.value = carElectricalController.value.text.split(",");
-      cngLpgKitImage.value = interiorInfoResponse.value.data?[0].cngKitImage?.url != null? File(interiorInfoResponse.value.data![0].cngKitImage!.url ?? '') : null;
+      cngLpgKitImage.value = interiorInfoResponse.value.data?[0].cngKitImage?.url != null? File(interiorInfoResponse.value.data?[0].cngKitImage?.url ?? '') : null;
       cngLpgKitImageRemarksController.value.text = interiorInfoResponse.value.data?[0].cngKitImage?.remarks ?? '';
-      selectSecondKey.value = interiorInfoResponse.value.data![0].secondKey ?? '';
+      selectSecondKey.value = interiorInfoResponse.value.data?[0].secondKey ?? '';
       
-      platformController.value.text = interiorInfoResponse.value.data?[0].platform?.join(",") ?? '';
+      platformController.value.text = interiorInfoResponse.value.data?[0].platformImage?.condition?.join(",") ?? '';
       selectPlatform.value = platformController.value.text.split(",");
     }
   }

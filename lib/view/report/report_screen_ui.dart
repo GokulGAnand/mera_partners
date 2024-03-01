@@ -40,7 +40,7 @@ class ReportScreen extends StatelessWidget {
                 decoration: const BoxDecoration(color: MyColors.blue),
                 child: const Center(
                     child: Text(
-                  MyStrings.keraCarsReport,
+                  MyStrings.meraCarsReport,
                   style: MyStyles.reportTitleStyle,
                 )),
               ),

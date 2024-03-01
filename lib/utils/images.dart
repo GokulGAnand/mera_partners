@@ -2,7 +2,7 @@ class MyImages {
   static const imageRoot = "assets/images/";
 
   ///AppLogo_Images
-  static const appLogo = "${imageRoot}logo.png";
+  static const appLogo = "${imageRoot}mera_cars.png";
   static const loginImage = "${imageRoot}login_image.png";
   static const menu = "${imageRoot}menu.svg";
   static const notification = "${imageRoot}notification.svg";

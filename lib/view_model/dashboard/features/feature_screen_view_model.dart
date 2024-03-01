@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/service/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'package:evaluator_app/utils/constants.dart';
@@ -45,6 +46,7 @@ class FeatureViewModel extends GetxController{
 
   Rx<TextEditingController> keylessEntryRemarksController = TextEditingController().obs;
   Rx<TextEditingController> stereoImageRemarksController = TextEditingController().obs;
+  Rx<TextEditingController> otherStereoImageController = TextEditingController().obs;
   Rx<TextEditingController> sunroofRemarksController = TextEditingController().obs;
 
   RxList<String> selectedKeylessEntry = <String>[].obs;
@@ -83,7 +85,7 @@ class FeatureViewModel extends GetxController{
   // var abs = ''.obs;
 
   RxList<String> selectedAlloyWheel = <String>[].obs;
-  var selectedFogLamps = ''.obs;
+  // var selectedFogLamps = ''.obs;
   RxList<String> selectedAirBag = <String>[].obs;
   var selectedSeatBelt = ''.obs;
   RxList<String> selectAbsEbd = <String>[].obs;
@@ -135,10 +137,10 @@ class FeatureViewModel extends GetxController{
        'rearParkingSensor': selectedRearParkingSensor.value,
        'gpsNavigation': selectedGpsNavigation.value,
        'rearDefogger': selectedRearDefogger.value,
-       'fogLamps': selectedFogLamps.value,
+       'fogLamps': selectedFogLamp.value,
        'stereoBrand': sterioBrandController.value.text,
        'seatBelt': selectedSeatBelt.value,
-       'stereoImage_remarks': stereoImageController.value.text,
+       'stereoImage_remarks': stereoImageRemarksController.value.text,
        'anyInteriorModifications': anyInteriorModificationController.value.text ,
        'evaluationStatusForFeature': 'COMPLETED'
      });
@@ -153,7 +155,7 @@ class FeatureViewModel extends GetxController{
        ProgressBar.instance.stopProgressBar(Get.context!);
        log(await response.stream.bytesToString());
        CustomToast.instance.showMsg(MyStrings.success);
-       Navigator.of(Get.overlayContext!, rootNavigator: true).pop();
+       Get.offNamed(AppRoutes.dashBoardScreen);
      }
      else {
        ProgressBar.instance.stopProgressBar(Get.context!);

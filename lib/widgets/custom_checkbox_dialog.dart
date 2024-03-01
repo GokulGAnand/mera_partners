@@ -255,7 +255,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
                               fit: BoxFit.fill,
                               errorBuilder: (context, error, stackTrace) {
                                 return const Center(
-                                  child: CircularProgressIndicator(),
+                                  child: Text('No Image'),
                                 );
                               },
                               frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
@@ -369,6 +369,10 @@ class CustomCheckBoxDialog extends StatelessWidget {
                   }else if ((selectItem.isNotEmpty && !selectItem.contains("Good")) && image != null && image!.value == null && selectItem[0].isNotEmpty){
                     CustomToast.instance.showMsg(MyStrings.vUploadImage);
                   }else{
+                    if(selectItem.contains(othersController.value.text) == false){
+                      selectItem.add(othersController.value.text);
+                    }
+                    selectItem.remove("Other");
                     Navigator.of(context).pop();
                   }
                 }

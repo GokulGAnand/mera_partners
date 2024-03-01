@@ -492,9 +492,7 @@ class InteriorScreen extends StatelessWidget {
                     controller: viewModel.handBrakeController.value,
                     labelText: "${MyStrings.handBrake}*",
                     helperText: "${MyStrings.handBrake}*",
-                    validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.handBreakImage.value);
-                    },
+                    validator: ValidateInput.validateRequiredFields,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(

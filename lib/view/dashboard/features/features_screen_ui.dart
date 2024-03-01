@@ -78,7 +78,7 @@ class FeaturesScreen extends StatelessWidget {
                                 selectItem: viewModel.selectedStereoImage,
                                 image: viewModel.stereoImage,
                                 remarksController : viewModel.stereoImageRemarksController.value,
-                                othersController: TextEditingController(),
+                                othersController: viewModel.otherStereoImageController.value,
                               );
                           },
                         );
