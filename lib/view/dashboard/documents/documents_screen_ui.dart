@@ -523,7 +523,7 @@ class DocumentScreen extends StatelessWidget {
                     controller: TextEditingController(),
                     labelText: "${MyStrings.chassisImpressionImage}*",
                     helperText: "${MyStrings.chassisImpressionImage}*",
-                    validator: viewModel.chassisImage.value == null ? ValidateInput.validateRequiredFields : null,
+                    validator: /*viewModel.chassisImage.value == null ? ValidateInput.validateRequiredFields :*/ null,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.chassisImage.value == null ? Padding(

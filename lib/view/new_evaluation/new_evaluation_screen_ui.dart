@@ -298,7 +298,7 @@ class NewEvaluationScreen extends StatelessWidget {
                     final selectedDate = await showDatePicker(
                       initialDate: DateTime.now(),
                       firstDate: DateTime(1990),
-                      lastDate: DateTime.now(),
+                      lastDate: DateTime(DateTime.now().year+20),
                       context: Get.context!,
                     );
                     if (selectedDate != null) {

@@ -11,6 +11,7 @@ import 'package:evaluator_app/utils/globals.dart' as globals;
 
 import '../../../model/response/airconditioning/airconditioning_response.dart';
 import '../../../service/exception_error_util.dart';
+import '../../../utils/strings.dart';
 import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
 
@@ -98,6 +99,7 @@ class AirConditioningViewModel extends GetxController{
       if (response.statusCode ==200){
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
+        CustomToast.instance.showMsg(MyStrings.success);
         Get.offNamed(AppRoutes.dashBoardScreen);
       } else{
         ProgressBar.instance.stopProgressBar(Get.context!);

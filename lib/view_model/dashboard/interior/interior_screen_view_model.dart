@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 import 'package:evaluator_app/utils/globals.dart' as globals;
 import 'package:http_parser/http_parser.dart';
 
+import '../../../utils/strings.dart';
 import '../../../widgets/progressbar.dart';
 
 class InteriorViewModel extends GetxController {
@@ -218,6 +219,7 @@ class InteriorViewModel extends GetxController {
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
             log(response.stream.toString());
+        CustomToast.instance.showMsg(MyStrings.success);
             Get.offNamed(AppRoutes.dashBoardScreen);
           } else {
         ProgressBar.instance.stopProgressBar(Get.context!);

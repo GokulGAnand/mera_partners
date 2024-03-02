@@ -156,6 +156,7 @@ class NewEvaluationViewModel extends GetxController {
         print(response.body.toString());
       }
       if (response.statusCode == 200) {
+        carModelVariantListResponse.value = CarModelVariantListResponse();
         carModelVariantListResponse.value = CarModelVariantListResponse.fromJson(json.decode(response.body));
       } else {}
 

@@ -152,8 +152,13 @@ class FeatureViewModel extends GetxController{
        'seatBelt': selectedSeatBelt.value,
        'stereoImage_remarks': stereoImageRemarksController.value.text,
        'anyInteriorModifications': anyInteriorModificationController.value.text ,
-       'evaluationStatusForFeature': 'COMPLETED'
+       'evaluationStatusForFeature': 'COMPLETED',
      });
+     if(featureInfoResponse.value.data != null && alloyWheelImage.value !=null){
+       request.fields.addAll({
+         'alloyWheels' : featureInfoResponse.value.data?[0].alloyWheels?.url ?? '',
+       });
+     }
      if (stereoImage.value!=null && (stereoImage.value!.path.startsWith('http') == false || stereoImage.value!.path.startsWith('https') == false)) {
        request.files.add( await http.MultipartFile.fromPath('stereoImage', stereoImage.value!.path,contentType: MediaType('image', 'jpg'),));
      }
@@ -177,11 +182,14 @@ class FeatureViewModel extends GetxController{
      }
      request.headers.addAll(globals.headers);
 
+     log(request.toString());
+     log(request.fields.toString());
+     log(request.files.toString());
      http.StreamedResponse response = await request.send();
      
      if (response.statusCode == 200) {
        ProgressBar.instance.stopProgressBar(Get.context!);
-       log(await response.stream.bytesToString());
+       log(response.stream.toString());
        CustomToast.instance.showMsg(MyStrings.success);
        Get.offNamed(AppRoutes.dashBoardScreen);
      }

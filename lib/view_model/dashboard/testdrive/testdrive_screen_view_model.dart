@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:evaluator_app/utils/globals.dart' as globals;
 import '../../../model/response/testdrive/testdrive_response.dart';
 import '../../../utils/constants.dart';
+import '../../../utils/strings.dart';
 import '../../../widgets/progressbar.dart';
 
 class TestDriveViewModel extends GetxController {
@@ -91,6 +92,7 @@ class TestDriveViewModel extends GetxController {
       if(response.statusCode ==200){
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body);
+        CustomToast.instance.showMsg(MyStrings.success);
         Get.offNamed(AppRoutes.dashBoardScreen);
       }else{
         ProgressBar.instance.stopProgressBar(Get.context!);

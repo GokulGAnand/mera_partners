@@ -74,9 +74,9 @@ void getReport() async {
         extractUrls(reportResponse.value.data!.allCarInfo!.toJson());
         ratingList.value = [
                 Item(title: MyStrings.exterior, rating: reportResponse.value.data!.allCarInfo!.exteriorStar?.toDouble() ?? 0),
-                Item(title: MyStrings.interior, rating: reportResponse.value.data!.allCarInfo!.interiorStar?.toDouble() ?? 0),
+                // Item(title: MyStrings.interior, rating: reportResponse.value.data!.allCarInfo!.interiorStar?.toDouble() ?? 0),
                 Item(title: MyStrings.engine, rating: reportResponse.value.data!.allCarInfo!.engineStar?.toDouble() ?? 0),
-                Item(title: MyStrings.carElectrical, rating: reportResponse.value.data!.allCarInfo!.electricalStar?.toDouble() ?? 0),
+                Item(title: MyStrings.interiorAndElectrical, rating: reportResponse.value.data!.allCarInfo!.interiorAndElectricalStar?.toDouble() ?? 0),
                 Item(title: MyStrings.test, rating: reportResponse.value.data!.allCarInfo!.testDriveStar?.toDouble() ?? 0),
               ];
         vehicleDetails.value = [
@@ -84,7 +84,7 @@ void getReport() async {
           Master(title: MyStrings.registrationDate, value: reportResponse.value.data!.regDate ?? ''),
           Master(title: MyStrings.ownershipNumber, value: reportResponse.value.data!.allCarInfo?.ownershipNumber ?? ''),
           Master(title: MyStrings.fuelType, value: reportResponse.value.data!.allCarInfo?.fuelType ?? ''),
-          Master(title: MyStrings.transmission, value: reportResponse.value.data!.allCarInfo!.transmission ?? ''),
+          Master(title: MyStrings.transmission, value: reportResponse.value.data!.allCarInfo!.transmissionManual ?? ''),
           Master(title: MyStrings.bodyType, value: reportResponse.value.data!.bodyType ?? ''),
           Master(title: MyStrings.color, value: reportResponse.value.data!.color ?? ''),
           Master(title: MyStrings.kilometer, value: reportResponse.value.data!.odometerReading.toString()),
@@ -97,18 +97,18 @@ void getReport() async {
           Master(title: MyStrings.form35, value: reportResponse.value.data!.form35 ?? ''),
         ];
         features.value = [
-          Master(title: MyStrings.keyLessEntry, value: reportResponse.value.data!.allCarInfo!.keylessEntry?.join(',') ?? ''),
+          Master(title: MyStrings.keyLessEntry, value: reportResponse.value.data!.allCarInfo!.keylessEntry?.condition?.join(',') ?? ''),
           Master(title: MyStrings.stereoImage, value: reportResponse.value.data!.allCarInfo!.stereoBrand ?? ''),
           Master(title: MyStrings.stereoBrand, value: reportResponse.value.data!.allCarInfo!.stereoBrand ?? ''),
           Master(title: MyStrings.rearParkingSensor, value: reportResponse.value.data!.allCarInfo!.rearParkingSensor ?? ''),
           Master(title: MyStrings.fogLamp, value: reportResponse.value.data!.allCarInfo!.fogLamps ?? ''),
-          Master(title: MyStrings.sunroof, value: reportResponse.value.data!.allCarInfo!.sunroof?.join(',') ?? ''),
+          Master(title: MyStrings.sunroof, value: reportResponse.value.data!.allCarInfo!.sunroof?.condition?.join(',') ?? ''),
           Master(title: MyStrings.gpsNavigation, value: reportResponse.value.data!.allCarInfo!.gpsNavigation ?? ''),
-          Master(title: MyStrings.alloyWheels, value: reportResponse.value.data!.allCarInfo!.alloyWheels?.join(',') ?? ''),
-          Master(title: MyStrings.airBag, value: reportResponse.value.data!.allCarInfo!.airbag?.join(',') ?? ''),
+          Master(title: MyStrings.alloyWheels, value: reportResponse.value.data!.allCarInfo!.alloyWheels?.condition?.join(',') ?? ''),
+          Master(title: MyStrings.airBag, value: reportResponse.value.data!.allCarInfo!.airbag?.condition?.join(',') ?? ''),
           Master(title: MyStrings.seatBelt, value: reportResponse.value.data!.allCarInfo!.seatBelt ?? ''),
-          Master(title: MyStrings.absEbd, value: reportResponse.value.data!.allCarInfo!.absEbd?.join(',') ?? ''),
-          Master(title: MyStrings.gloveBox, value: reportResponse.value.data!.allCarInfo!.gloveBox?.join(',') ?? ''),
+          Master(title: MyStrings.absEbd, value: reportResponse.value.data!.allCarInfo!.absEbd?.condition?.join(',') ?? ''),
+          Master(title: MyStrings.gloveBox, value: reportResponse.value.data!.allCarInfo!.gloveBox?.condition?.join(',') ?? ''),
           Master(title: MyStrings.interiorModifications, value: reportResponse.value.data!.allCarInfo!.interiorView?.condition?.join(',')?? ''),
         ];
         testDrive.value = [
@@ -126,7 +126,7 @@ void getReport() async {
         ];
         engine.value = [
           Master(title: MyStrings.engineSound, value: reportResponse.value.data!.allCarInfo!.engineSound ?? ''),
-          Master(title: MyStrings.engine, value: reportResponse.value.data!.allCarInfo!.engineCondition?.join(',') ?? ''),
+          Master(title: MyStrings.engine, value: reportResponse.value.data!.allCarInfo?.engine?.condition?.join(',') ?? ''),
           Master(title: MyStrings.smoke, value: reportResponse.value.data!.allCarInfo!.exhaustSmoke ?? ''),
           Master(title: MyStrings.battery, value: reportResponse.value.data!.allCarInfo!.battery?.condition!.join(',') ?? ''),
           Master(title: MyStrings.radiator, value: reportResponse.value.data!.allCarInfo!.radiator ?? ''),
@@ -144,7 +144,7 @@ void getReport() async {
           Master(title: MyStrings.comments, value: reportResponse.value.data!.allCarInfo!.engineComment ?? ''),
         ];
         interiorAndElectrical.value = [
-          Master(title: MyStrings.clusterPanel, value: reportResponse.value.data!.allCarInfo!.clusterPanel?.join(',') ?? ''),
+          Master(title: MyStrings.clusterPanel, value: reportResponse.value.data!.allCarInfo!.clusterPanel?.condition?.join(',') ?? ''),
           Master(title: MyStrings.warningLight, value: reportResponse.value.data!.allCarInfo!.warningDetails ?? ''),
           Master(title: MyStrings.dashboardImage, value: reportResponse.value.data!.allCarInfo!.dashboardCondition ?? ''),
           Master(title: MyStrings.frontSeatImage, value: reportResponse.value.data!.allCarInfo!.frontSeatImage?.remarks ?? ''),
@@ -152,11 +152,11 @@ void getReport() async {
           Master(title: MyStrings.insideRearViewMirror, value: reportResponse.value.data!.allCarInfo?.interiorView?.condition?.join(',') ?? ''),
           Master(title: MyStrings.pushButtonOnOff, value: reportResponse.value.data!.allCarInfo!.pushButton ?? ''),
           Master(title: MyStrings.dashboardSwitches, value: reportResponse.value.data!.allCarInfo!.dashboardSwitch ?? ''),
-          Master(title: MyStrings.powerWindowAndWindowLock, value: reportResponse.value.data!.allCarInfo!.powerWindowCentalLock?.join(',') ?? ''),
+          Master(title: MyStrings.powerWindowAndWindowLock, value: reportResponse.value.data!.allCarInfo!.powerWindowCentalLock?.condition?.join(',') ?? ''),
           Master(title: MyStrings.handBrake, value: reportResponse.value.data!.allCarInfo!.handBreak?.join(',') ?? ''),
-          Master(title: MyStrings.carElectrical, value: reportResponse.value.data!.allCarInfo!.carElectrical?.join(',') ?? ''),
+          Master(title: MyStrings.carElectrical, value: reportResponse.value.data!.allCarInfo!.carElectrical?.condition?.join(',') ?? ''),
           Master(title: MyStrings.secondKey, value: reportResponse.value.data!.allCarInfo!.secondKey ?? ''),
-          Master(title: MyStrings.platform, value: reportResponse.value.data!.allCarInfo!.platform?.join(',') ?? ''),
+          Master(title: MyStrings.platform, value: reportResponse.value.data!.allCarInfo!.platformImage?.condition?.join(',') ?? ''),
         ];
         airCondition.value = [
           Master(title: MyStrings.acWorking, value: reportResponse.value.data!.allCarInfo!.acWorking ?? ''),
