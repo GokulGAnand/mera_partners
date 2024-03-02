@@ -213,10 +213,10 @@ class EngineViewModel extends GetxController {
       request.headers.addAll(globals.headers);
 log(request.toString());
       var response = await request.send();
-      log(await response.stream.bytesToString());
+      log(response.stream.toString());
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        log(await response.stream.bytesToString());
+        log(response.stream.toString());
         CustomToast.instance.showMsg(MyStrings.success);
         Get.offNamed(AppRoutes.dashBoardScreen);
       }

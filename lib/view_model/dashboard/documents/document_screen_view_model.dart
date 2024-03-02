@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http_parser/http_parser.dart';
 import '../../../model/response/document/document_response.dart';
+import '../../../routes/app_routes.dart';
 import '../../../service/exception_error_util.dart';
 import '../../../utils/constants.dart';
 import 'package:http/http.dart' as http;
@@ -111,8 +112,8 @@ class DocumentViewModel extends GetxController {
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
             log(response.stream.toString());
-            Get.back();
-            // Get.offNamed(AppRoutes.dashBoardScreen);
+            // Get.back();
+            Get.offNamed(AppRoutes.dashBoardScreen);
           } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
             log(response.reasonPhrase.toString());
