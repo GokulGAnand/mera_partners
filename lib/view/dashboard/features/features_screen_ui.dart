@@ -47,7 +47,7 @@ class FeaturesScreen extends StatelessWidget {
                                 selectItem: viewModel.selectedKeylessEntry,
                                 image: viewModel.keyLessEntryImage,
                                 remarksController : viewModel.keylessEntryRemarksController.value,
-                                othersController: TextEditingController(),
+                                othersController: viewModel.keylessEntryOtherController.value,
                               );
                           },
                         );
@@ -78,7 +78,7 @@ class FeaturesScreen extends StatelessWidget {
                                 selectItem: viewModel.selectedStereoImage,
                                 image: viewModel.stereoImage,
                                 remarksController : viewModel.stereoImageRemarksController.value,
-                                othersController: viewModel.otherStereoImageController.value,
+                                othersController: viewModel.stereoImageOtherController.value,
                               );
                           },
                         );
@@ -170,7 +170,7 @@ class FeaturesScreen extends StatelessWidget {
                                 selectItem: viewModel.selectedSunRoof,
                                 image: viewModel.sunroofImage,
                                 remarksController : viewModel.sunroofRemarksController.value,
-                                othersController: TextEditingController(),
+                                othersController: viewModel.sunroofOtherController.value,
                               );
                           },
                         );
@@ -278,7 +278,7 @@ class FeaturesScreen extends StatelessWidget {
                                 selectItem: viewModel.selectedAlloyWheel,
                                 image: viewModel.alloyWheelImage,
                                 remarksController : viewModel.alloyWheelsRemarksController.value,
-                                othersController: TextEditingController(),
+                                othersController: viewModel.alloyWheelsOtherController.value,
                               );
                           },
                         );
@@ -332,7 +332,7 @@ class FeaturesScreen extends StatelessWidget {
                                 selectItem: viewModel.selectedAirBag,
                                 image: viewModel.airBagImage,
                                 remarksController : viewModel.airBagsRemarksController.value,
-                                othersController: TextEditingController(),
+                                othersController: viewModel.airBagsOtherController.value,
                               );
                           },
                         );
@@ -387,7 +387,7 @@ class FeaturesScreen extends StatelessWidget {
                                 selectItem: viewModel.selectAbsEbd,
                                 image: viewModel.absEbdImage,
                                 remarksController : viewModel.absEbdRemarksController.value,
-                                othersController: TextEditingController(),
+                                othersController: viewModel.absEbdOtherController.value,
                               );
                           },
                         );
@@ -418,7 +418,7 @@ class FeaturesScreen extends StatelessWidget {
                                 selectItem: viewModel.selectedGloveBox,
                                 image: viewModel.gloveBoxImage,
                                 remarksController : viewModel.gloveBoxRemarksController.value,
-                                othersController: TextEditingController(),
+                                othersController: viewModel.gloveBoxOtherController.value,
                               );
                           },
                         );

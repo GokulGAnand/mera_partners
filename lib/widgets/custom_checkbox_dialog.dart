@@ -17,8 +17,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class CustomCheckBoxDialog extends StatelessWidget {
-  CustomCheckBoxDialog({
+class CustomCheckBoxDialog extends StatefulWidget {
+  const CustomCheckBoxDialog({
     required this.title,
     required this.items,
     this.image,
@@ -32,6 +32,12 @@ class CustomCheckBoxDialog extends StatelessWidget {
   final RxList<String> selectItem;
   final TextEditingController? remarksController;
   final TextEditingController othersController;
+
+  @override
+  State<CustomCheckBoxDialog> createState() => _CustomCheckBoxDialogState();
+}
+
+class _CustomCheckBoxDialogState extends State<CustomCheckBoxDialog> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   Future pickImage(ImageSource source) async {
@@ -51,7 +57,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
       if (image == null) return;
       final imageTemp = File(image.path);
       log(imageTemp.toString());
-      this.image!.value = imageTemp;
+      this.widget.image!.value = imageTemp;
     } on PlatformException catch (e) {
       if (kDebugMode) {
         print('Failed to pick image: $e');
@@ -60,12 +66,28 @@ class CustomCheckBoxDialog extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    for(int i=0; i<selectItem.length; i++){
-      if(selectItem[i].isEmpty){
-        selectItem.removeAt(i);
+  void initState() {
+    List<String> checkItemList = [];
+    for(int i=0; i<widget.items.length; i++){
+      checkItemList.add(widget.items[i].toLowerCase());
+    }
+    for(int i=0; i<widget.selectItem.length; i++){
+      if(widget.selectItem[i].isEmpty){
+        widget.selectItem.removeAt(i);
+      } else {
+          if(checkItemList.contains(widget.selectItem[i].toLowerCase())== false){
+            widget.othersController.text = widget.selectItem[i];
+          }
       }
     }
+    if(widget.othersController.text.isNotEmpty){
+      widget.selectItem.add("other");
+    }
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       children: [
         AlertDialog(
@@ -74,7 +96,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
           shadowColor: Colors.white,
           contentPadding: EdgeInsets.zero,
           insetPadding: const EdgeInsets.all(20.0),
-          title: Text(title,
+          title: Text(widget.title,
           style: MyStyles.uploadImageTitleStyle,),
           titlePadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           shape: const OutlineInputBorder(
@@ -90,21 +112,21 @@ class CustomCheckBoxDialog extends StatelessWidget {
                 child: Column(
                   children: [
                     ListBody(
-                      children: items
+                      children: widget.items
                           .map((item) => Obx(
                             () {
                               return Column(
                                 children: [
                                   const Divider(height: 5,),
                                   CheckboxListTile(
-                                        value: selectItem.contains(item.toLowerCase()),
+                                        value: widget.selectItem.contains(item.toLowerCase()),
                                         title: Text(item,
                                         style: MyStyles.blackW500F15Style,),
                                         onChanged: (isSelected){
                                            if (isSelected!) {
-                                            selectItem.add(item.toLowerCase());
+                                            widget.selectItem.add(item.toLowerCase());
                                           } else {
-                                            selectItem.remove(item.toLowerCase());
+                                            widget.selectItem.remove(item.toLowerCase());
                                           }
                                         },
                                       ),
@@ -116,14 +138,14 @@ class CustomCheckBoxDialog extends StatelessWidget {
                     ),
                     Obx(
                       ()=>
-                         (selectItem.contains("other") )?Padding(
+                         (widget.selectItem.contains("other") )?Padding(
                         padding: const EdgeInsets.only(left: 16.0, right: 16),
                         child: CustomTextFormField(
                           labelText: MyStrings.other,
                           helperText: MyStrings.other,
                           minLines: 1,
                           maxLines: 1,
-                          controller: othersController,
+                          controller: widget.othersController,
                           validator: ValidateInput.validateRequiredFields,
                         ), )
                     :const SizedBox()),
@@ -190,7 +212,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            (image==null)?const SizedBox() 
+            (widget.image==null)?const SizedBox() 
             :Obx(
               ()=>Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,7 +229,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
                           },
                         );
                       },
-                      child: image!.value == null
+                      child: widget.image!.value == null
                           ? Container(
                               width: 119,
                               height: 119,
@@ -239,7 +261,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
                                 ],
                               ),
                             )
-                          : (image!.value != null && (image!.value!.path.startsWith('http') || image!.value!.path.startsWith('https')))?
+                          : (widget.image!.value != null && (widget.image!.value!.path.startsWith('http') || widget.image!.value!.path.startsWith('https')))?
                       Stack(
                         children: [
                           /*Image.network(
@@ -249,7 +271,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
                             fit: BoxFit.fill,
                           ),*/
                           Image.network(
-                              image!.value!.path,
+                              widget.image!.value!.path,
                               width: 119,
                               height: 119,
                               fit: BoxFit.fill,
@@ -289,7 +311,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
                               child: IconButton(
                                 padding: const EdgeInsets.only(right: 4),
                                 onPressed: (){
-                                  image!.value = null;
+                                  widget.image!.value = null;
                                 },icon:const Icon( Icons.remove_sharp),
                                 color: MyColors.white,
                                 iconSize: 10,
@@ -301,7 +323,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
                       Stack(
                         children: [
                           Image.file(
-                            image!.value!,
+                            widget.image!.value!,
                                   width: 119,
                                   height: 119,
                                   fit: BoxFit.fill,
@@ -326,7 +348,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
                               child: IconButton(
                                 padding: const EdgeInsets.only(right: 4),
                                 onPressed: (){
-                                  image!.value = null;
+                                  widget.image!.value = null;
                                 },icon:const Icon( Icons.remove_sharp),
                                 color: MyColors.white,
                                 iconSize: 10,
@@ -340,7 +362,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
                   const SizedBox(
                 height: 30,
               ),
-              (remarksController == null)?
+              (widget.remarksController == null)?
               const SizedBox()
               :Padding(
                 padding: const EdgeInsets.only(left: 16.0, right: 16),
@@ -349,7 +371,7 @@ class CustomCheckBoxDialog extends StatelessWidget {
                   helperText: MyStrings.remarks,
                   minLines: 2,
                   maxLines: 2,
-                  controller: remarksController!,
+                  controller: widget.remarksController!,
                   validator: (p0) => null,
                 ),
               ),
@@ -360,19 +382,19 @@ class CustomCheckBoxDialog extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
               child: CustomElevatedButton(onPressed: () {
                 if (formKey.currentState!.validate()) {
-                  if((selectItem.isNotEmpty && !selectItem.contains("Good") && image != null && image!.value != null) || (selectItem.isNotEmpty && selectItem.contains("good") && image != null && image!.value == null)){
-                    if(selectItem.contains(othersController.value.text) == false){
-                      selectItem.add(othersController.value.text);
+                  if((widget.selectItem.isNotEmpty && !widget.selectItem.contains("Good") && widget.image != null && widget.image!.value != null) || (widget.selectItem.isNotEmpty && widget.selectItem.contains("good") && widget.image != null && widget.image!.value == null)){
+                    if(widget.selectItem.contains(widget.othersController.value.text) == false){
+                      widget.selectItem.add(widget.othersController.value.text);
                     }
-                    selectItem.remove("Other");
+                    widget.selectItem.remove("other");
                     Navigator.of(context).pop();
-                  }else if ((selectItem.isNotEmpty && !selectItem.contains("Good")) && image != null && image!.value == null && selectItem[0].isNotEmpty){
+                  }else if ((widget.selectItem.isNotEmpty && !widget.selectItem.contains("good")) && widget.image != null && widget.image!.value == null && widget.selectItem[0].isNotEmpty){
                     CustomToast.instance.showMsg(MyStrings.vUploadImage);
                   }else{
-                    if(selectItem.contains(othersController.value.text) == false){
-                      selectItem.add(othersController.value.text);
+                    if(widget.selectItem.contains(widget.othersController.value.text) == false){
+                      widget.selectItem.add(widget.othersController.value.text);
                     }
-                    selectItem.remove("Other");
+                    widget.selectItem.remove("other");
                     Navigator.of(context).pop();
                   }
                 }

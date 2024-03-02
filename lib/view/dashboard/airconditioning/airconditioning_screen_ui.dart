@@ -116,7 +116,7 @@ class AirConditioningScreen extends StatelessWidget {
                                 title: MyStrings.cooling, 
                                 items: viewModel.coolingList, 
                                 selectItem: viewModel.selectedCooling,
-                                othersController: TextEditingController(),
+                                othersController: viewModel.coolingOtherController.value,
                               );
                           },
                         );
@@ -212,7 +212,7 @@ class AirConditioningScreen extends StatelessWidget {
                                 title: MyStrings.acCondenserCompressor, 
                                 items: viewModel.acCondenserCompressorList, 
                                 selectItem: viewModel.selectedAcCondenserCompressor,
-                                othersController: TextEditingController(),
+                                othersController: viewModel.acCondenserCompressorOtherController.value,
                               );
                           },
                         );

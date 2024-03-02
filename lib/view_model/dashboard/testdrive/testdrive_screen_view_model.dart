@@ -19,6 +19,11 @@ class TestDriveViewModel extends GetxController {
   Rx<TextEditingController> transmissionAutomaticController = TextEditingController().obs;
   Rx<TextEditingController> vehicleHornController = TextEditingController().obs;
 
+  Rx<TextEditingController> steeringWheelOtherController = TextEditingController().obs;
+  Rx<TextEditingController> suspensionSystemOtherController = TextEditingController().obs;
+  Rx<TextEditingController> transmissionAutomaticOtherController = TextEditingController().obs;
+  Rx<TextEditingController> vehicleHornOtherController = TextEditingController().obs;
+
   var selectedSteeringSystem = "".obs;
   // var selectedSteeringWheel = "".obs;
   RxList<String> selectedSteeringWheel = <String>[""].obs;

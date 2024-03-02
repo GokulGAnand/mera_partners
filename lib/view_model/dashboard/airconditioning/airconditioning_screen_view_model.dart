@@ -20,6 +20,9 @@ class AirConditioningViewModel extends GetxController{
   Rx<TextEditingController> coolingController = TextEditingController().obs;
   Rx<TextEditingController> acCondenserCompressorController = TextEditingController().obs;
 
+  Rx<TextEditingController> coolingOtherController = TextEditingController().obs;
+  Rx<TextEditingController> acCondenserCompressorOtherController = TextEditingController().obs;
+
   var selectedAcWorking = "".obs;
   // var selectedCooling = "".obs;
   RxList<String> selectedCooling = <String>[].obs;

@@ -1,166 +1,157 @@
+import 'dart:convert';
+
+featuresList featureslistFromJson(String str) => featuresList.fromJson(json.decode(str));
+
+String featureslistToJson(featuresList data) => json.encode(data.toJson());
+
 class featuresList {
-  String? status;
-  String? message;
-  List<Data>? data;
-  Meta? meta;
+    final String? status;
+    final String? message;
+    final List<Data>? data;
+    final Meta? meta;
 
-  featuresList({this.status, this.message, this.data, this.meta});
+    featuresList({
+        this.status,
+        this.message,
+        this.data,
+        this.meta,
+    });
 
-  featuresList.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
-      });
-    }
-    meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
-  }
+    factory featuresList.fromJson(Map<String, dynamic> json) => featuresList(
+        status: json["status"],
+        message: json["message"],
+        data: json["data"] == null ? [] : List<Data>.from(json["data"]!.map((x) => Data.fromJson(x))),
+        meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    if (meta != null) {
-      data['meta'] = meta!.toJson();
-    }
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "status": status,
+        "message": message,
+        "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "meta": meta?.toJson(),
+    };
 }
 
 class Data {
-  String? sId;
-  String? carId;
-  List<String>? absEbd;
-  List<String>? airbag;
-  List<String>? alloyWheels;
-  String? anyInteriorModifications;
-  String? fogLamps;
-  List<String>? gloveBox;
-  String? gpsNavigation;
-  List<String>? keylessEntry;
-  String? rearDefogger;
-  String? rearParkingSensor;
-  String? remoteCentalLock;
-  String? seatBelt;
-  String? stereoBrand;
-  List<String>? sunroof;
-  String? toolKit;
-  StereoImage? stereoImage;
+    final String? id;
+    final String? carId;
+    final AbsEbd? sunroof;
+    final AbsEbd? alloyWheels;
+    final AbsEbd? keylessEntry;
+    final AbsEbd? absEbd;
+    final AbsEbd? gloveBox;
+    final AbsEbd? airbag;
+    final String? rearDefogger;
+    final String? anyInteriorModifications;
+    final String? fogLamps;
+    final String? gpsNavigation;
+    final String? rearParkingSensor;
+    final String? seatBelt;
+    final String? stereoBrand;
+    final AbsEbd? stereoImage;
 
-  Data(
-      {this.sId,
+    Data({
+        this.id,
         this.carId,
-        this.absEbd,
-        this.airbag,
+        this.sunroof,
         this.alloyWheels,
+        this.keylessEntry,
+        this.absEbd,
+        this.gloveBox,
+        this.airbag,
+        this.rearDefogger,
         this.anyInteriorModifications,
         this.fogLamps,
-        this.gloveBox,
         this.gpsNavigation,
-        this.keylessEntry,
-        this.rearDefogger,
         this.rearParkingSensor,
-        this.remoteCentalLock,
         this.seatBelt,
         this.stereoBrand,
-        this.sunroof,
-        this.toolKit,
-        this.stereoImage});
+        this.stereoImage,
+    });
 
-  Data.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    carId = json['carId'];
-    absEbd = json['absEbd'].cast<String>();
-    airbag = json['airbag'].cast<String>();
-    alloyWheels = json['alloyWheels'].cast<String>();
-    anyInteriorModifications = json['anyInteriorModifications'];
-    fogLamps = json['fogLamps'];
-    gloveBox = json['gloveBox'].cast<String>();
-    gpsNavigation = json['gpsNavigation'];
-    keylessEntry = json['keylessEntry'].cast<String>();
-    rearDefogger = json['rearDefogger'];
-    rearParkingSensor = json['rearParkingSensor'];
-    remoteCentalLock = json['remoteCentalLock'];
-    seatBelt = json['seatBelt'];
-    stereoBrand = json['stereoBrand'];
-    sunroof = json['sunroof'].cast<String>();
-    toolKit = json['toolKit'];
-    stereoImage = json['stereoImage'] != null
-        ? StereoImage.fromJson(json['stereoImage'])
-        : null;
-  }
+    factory Data.fromJson(Map<String, dynamic> json) => Data(
+        id: json["_id"],
+        carId: json["carId"],
+        sunroof: json["sunroof"] == null ? null : AbsEbd.fromJson(json["sunroof"]),
+        alloyWheels: json["alloyWheels"] == null ? null : AbsEbd.fromJson(json["alloyWheels"]),
+        keylessEntry: json["keylessEntry"] == null ? null : AbsEbd.fromJson(json["keylessEntry"]),
+        absEbd: json["absEbd"] == null ? null : AbsEbd.fromJson(json["absEbd"]),
+        gloveBox: json["gloveBox"] == null ? null : AbsEbd.fromJson(json["gloveBox"]),
+        airbag: json["airbag"] == null ? null : AbsEbd.fromJson(json["airbag"]),
+        rearDefogger: json["rearDefogger"],
+        anyInteriorModifications: json["anyInteriorModifications"],
+        fogLamps: json["fogLamps"],
+        gpsNavigation: json["gpsNavigation"],
+        rearParkingSensor: json["rearParkingSensor"],
+        seatBelt: json["seatBelt"],
+        stereoBrand: json["stereoBrand"],
+        stereoImage: json["stereoImage"] == null ? null : AbsEbd.fromJson(json["stereoImage"]),
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    data['carId'] = carId;
-    data['absEbd'] = absEbd;
-    data['airbag'] = airbag;
-    data['alloyWheels'] = alloyWheels;
-    data['anyInteriorModifications'] = anyInteriorModifications;
-    data['fogLamps'] = fogLamps;
-    data['gloveBox'] = gloveBox;
-    data['gpsNavigation'] = gpsNavigation;
-    data['keylessEntry'] = keylessEntry;
-    data['rearDefogger'] = rearDefogger;
-    data['rearParkingSensor'] = rearParkingSensor;
-    data['remoteCentalLock'] = remoteCentalLock;
-    data['seatBelt'] = seatBelt;
-    data['stereoBrand'] = stereoBrand;
-    data['sunroof'] = sunroof;
-    data['toolKit'] = toolKit;
-    if (stereoImage != null) {
-      data['stereoImage'] = stereoImage!.toJson();
-    }
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "_id": id,
+        "carId": carId,
+        "sunroof": sunroof?.toJson(),
+        "alloyWheels": alloyWheels?.toJson(),
+        "keylessEntry": keylessEntry?.toJson(),
+        "absEbd": absEbd?.toJson(),
+        "gloveBox": gloveBox?.toJson(),
+        "airbag": airbag?.toJson(),
+        "rearDefogger": rearDefogger,
+        "anyInteriorModifications": anyInteriorModifications,
+        "fogLamps": fogLamps,
+        "gpsNavigation": gpsNavigation,
+        "rearParkingSensor": rearParkingSensor,
+        "seatBelt": seatBelt,
+        "stereoBrand": stereoBrand,
+        "stereoImage": stereoImage?.toJson(),
+    };
 }
 
-class StereoImage {
-  String? name;
-  String? url;
-  List<String>? condition;
-  String? remarks;
+class AbsEbd {
+    final String? name;
+    final String? url;
+    final List<String>? condition;
+    final String? remarks;
 
-  StereoImage({this.name, this.url, this.condition, this.remarks});
+    AbsEbd({
+        this.name,
+        this.url,
+        this.condition,
+        this.remarks,
+    });
 
-  StereoImage.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    url = json['url'];
-    condition = json['condition'].cast<String>();
-    remarks = json['remarks'];
-  }
+    factory AbsEbd.fromJson(Map<String, dynamic> json) => AbsEbd(
+        name: json["name"],
+        url: json["url"],
+        condition: json["condition"] == null ? [] : List<String>.from(json["condition"]!.map((x) => x)),
+        remarks: json["remarks"],
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = name;
-    data['url'] = url;
-    data['condition'] = condition;
-    data['remarks'] = remarks;
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "name": name,
+        "url": url,
+        "condition": condition == null ? [] : List<dynamic>.from(condition!.map((x) => x)),
+        "remarks": remarks,
+    };
 }
 
 class Meta {
-  String? access;
-  String? refresh;
+    final String? access;
+    final String? refresh;
 
-  Meta({this.access, this.refresh});
+    Meta({
+        this.access,
+        this.refresh,
+    });
 
-  Meta.fromJson(Map<String, dynamic> json) {
-    access = json['access'];
-    refresh = json['refresh'];
-  }
+    factory Meta.fromJson(Map<String, dynamic> json) => Meta(
+        access: json["access"],
+        refresh: json["refresh"],
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['access'] = access;
-    data['refresh'] = refresh;
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "access": access,
+        "refresh": refresh,
+    };
 }

@@ -44,9 +44,13 @@ class FeatureViewModel extends GetxController{
   Rx<TextEditingController> sterioBrandController = TextEditingController().obs;
   Rx<TextEditingController> sunroofController = TextEditingController().obs;
 
+  Rx<TextEditingController> keylessEntryOtherController = TextEditingController().obs;
+  Rx<TextEditingController> stereoImageOtherController = TextEditingController().obs;
+  Rx<TextEditingController> sterioBrandOtherController = TextEditingController().obs;
+  Rx<TextEditingController> sunroofOtherController = TextEditingController().obs;
+
   Rx<TextEditingController> keylessEntryRemarksController = TextEditingController().obs;
   Rx<TextEditingController> stereoImageRemarksController = TextEditingController().obs;
-  Rx<TextEditingController> otherStereoImageController = TextEditingController().obs;
   Rx<TextEditingController> sunroofRemarksController = TextEditingController().obs;
 
   RxList<String> selectedKeylessEntry = <String>[].obs;
@@ -77,6 +81,12 @@ class FeatureViewModel extends GetxController{
   Rx<TextEditingController> absEbdController = TextEditingController().obs;
   Rx<TextEditingController> gloveBoxController = TextEditingController().obs;
   Rx<TextEditingController> anyInteriorModificationController = TextEditingController().obs;
+
+  Rx<TextEditingController> alloyWheelsOtherController = TextEditingController().obs;
+  Rx<TextEditingController> airBagsOtherController = TextEditingController().obs;
+  Rx<TextEditingController> absEbdOtherController = TextEditingController().obs;
+  Rx<TextEditingController> gloveBoxOtherController = TextEditingController().obs;
+  Rx<TextEditingController> anyInteriorModificationOtherController = TextEditingController().obs;
 
   Rx<TextEditingController> alloyWheelsRemarksController = TextEditingController().obs;
   Rx<TextEditingController> airBagsRemarksController = TextEditingController().obs;
@@ -116,22 +126,22 @@ class FeatureViewModel extends GetxController{
        request.fields['stereoImage_condition[$i]'] = selectedStereoImage[i];
      }
      for(int i=0; i<selectedSunRoof.length; i++){
-       request.fields['sunroof[$i]'] = selectedSunRoof[i];
+       request.fields['sunroof_condition[$i]'] = selectedSunRoof[i];
      }
      for (int i=0; i<selectedAlloyWheel.length; i++){
-       request.fields['alloyWheels[$i]'] =selectedAlloyWheel[i];
+       request.fields['alloyWheels_condition[$i]'] =selectedAlloyWheel[i];
      }
      for (int i=0; i<selectedAirBag.length; i++){
-       request.fields['airbag[$i]'] = selectedAirBag[i];
+       request.fields['airbag_condition[$i]'] = selectedAirBag[i];
      }
      for (int i=0; i<selectedKeylessEntry.length; i++){
-       request.fields['keylessEntry[$i]'] =selectedKeylessEntry[i];
+       request.fields['keylessEntry_condition[$i]'] =selectedKeylessEntry[i];
      }
      for (int i=0; i<selectAbsEbd.length; i++){
-       request.fields['absEbd[$i]'] = selectAbsEbd[i];
+       request.fields['absEbd_condition[$i]'] = selectAbsEbd[i];
      }
      for (int i=0; i<selectedGloveBox.length; i++){
-       request.fields['gloveBox[$i]'] = selectedGloveBox[i];
+       request.fields['gloveBox_condition[$i]'] = selectedGloveBox[i];
      }
      request.fields.addAll({
        'rearParkingSensor': selectedRearParkingSensor.value,
@@ -146,6 +156,24 @@ class FeatureViewModel extends GetxController{
      });
      if (stereoImage.value!=null && (stereoImage.value!.path.startsWith('http') == false || stereoImage.value!.path.startsWith('https') == false)) {
        request.files.add( await http.MultipartFile.fromPath('stereoImage', stereoImage.value!.path,contentType: MediaType('image', 'jpg'),));
+     }
+     if (keyLessEntryImage.value!=null && (keyLessEntryImage.value!.path.startsWith('http') == false || keyLessEntryImage.value!.path.startsWith('https') == false)) {
+       request.files.add( await http.MultipartFile.fromPath('keylessEntry', keyLessEntryImage.value!.path,contentType: MediaType('image', 'jpg'),));
+     }
+     if (sunroofImage.value!=null && (sunroofImage.value!.path.startsWith('http') == false || sunroofImage.value!.path.startsWith('https') == false)) {
+       request.files.add( await http.MultipartFile.fromPath('sunroof', sunroofImage.value!.path,contentType: MediaType('image', 'jpg'),));
+     }
+     if (alloyWheelImage.value!=null && (alloyWheelImage.value!.path.startsWith('http') == false || alloyWheelImage.value!.path.startsWith('https') == false)) {
+       request.files.add( await http.MultipartFile.fromPath('alloyWheels', alloyWheelImage.value!.path,contentType: MediaType('image', 'jpg'),));
+     }
+     if (airBagImage.value!=null && (airBagImage.value!.path.startsWith('http') == false || airBagImage.value!.path.startsWith('https') == false)) {
+       request.files.add( await http.MultipartFile.fromPath('airbag', airBagImage.value!.path,contentType: MediaType('image', 'jpg'),));
+     }
+     if (absEbdImage.value!=null && (absEbdImage.value!.path.startsWith('http') == false || absEbdImage.value!.path.startsWith('https') == false)) {
+       request.files.add( await http.MultipartFile.fromPath('absEbd', absEbdImage.value!.path,contentType: MediaType('image', 'jpg'),));
+     }
+     if (gloveBoxImage.value!=null && (gloveBoxImage.value!.path.startsWith('http') == false || gloveBoxImage.value!.path.startsWith('https') == false)) {
+       request.files.add( await http.MultipartFile.fromPath('gloveBox', gloveBoxImage.value!.path,contentType: MediaType('image', 'jpg'),));
      }
      request.headers.addAll(globals.headers);
 
@@ -194,8 +222,9 @@ class FeatureViewModel extends GetxController{
       isPage1Fill.value = true;
       isPage2Fill.value = true;
       /// page 1
-      keylessEntryController.value.text = featureInfoResponse.value.data![0].keylessEntry!.join(",");
+      keylessEntryController.value.text = featureInfoResponse.value.data![0].keylessEntry!.condition!.join(",");
       selectedKeylessEntry.value = keylessEntryController.value.text.split(",");
+      keyLessEntryImage.value = featureInfoResponse.value.data?[0].keylessEntry?.url != null? File(featureInfoResponse.value.data?[0].keylessEntry?.url ?? '') : null;
       
       stereoImageController.value.text = featureInfoResponse.value.data![0].stereoImage!.condition!.join(",");
       selectedStereoImage.value = stereoImageController.value.text.split(",");
@@ -207,26 +236,31 @@ class FeatureViewModel extends GetxController{
       selectedRearParkingSensor.value = featureInfoResponse.value.data![0].rearParkingSensor ?? '';
       selectedFogLamp.value = featureInfoResponse.value.data![0].fogLamps ?? '';
 
-      sunroofController.value.text = featureInfoResponse.value.data![0].sunroof!.join(",");
+      sunroofController.value.text = featureInfoResponse.value.data![0].sunroof!.condition!.join(",");
       selectedSunRoof.value = sunroofController.value.text.split(",");
+      sunroofImage.value = featureInfoResponse.value.data?[0].sunroof?.url != null? File(featureInfoResponse.value.data?[0].sunroof?.url ?? '') : null;
 
       selectedGpsNavigation.value = featureInfoResponse.value.data![0].gpsNavigation ?? '';
       selectedRearDefogger.value = featureInfoResponse.value.data![0].rearDefogger ?? '';
 
       /// page 2
-      alloyWheelsController.value.text = featureInfoResponse.value.data![0].alloyWheels!.join(",");
+      alloyWheelsController.value.text = featureInfoResponse.value.data![0].alloyWheels!.condition!.join(",");
       selectedAlloyWheel.value = alloyWheelsController.value.text.split(",");
+      alloyWheelImage.value = featureInfoResponse.value.data?[0].alloyWheels?.url != null? File(featureInfoResponse.value.data?[0].alloyWheels?.url ?? '') : null;
       
-      airBagsController.value.text = featureInfoResponse.value.data![0].airbag!.join(",");
+      airBagsController.value.text = featureInfoResponse.value.data![0].airbag!.condition!.join(",");
       selectedAirBag.value = airBagsController.value.text.split(",");
+      airBagImage.value = featureInfoResponse.value.data?[0].airbag?.url != null? File(featureInfoResponse.value.data?[0].airbag?.url ?? '') : null;
       
       selectedSeatBelt.value = featureInfoResponse.value.data![0].seatBelt ?? '';
 
-      absEbdController.value.text = featureInfoResponse.value.data![0].absEbd!.join(",");
+      absEbdController.value.text = featureInfoResponse.value.data![0].absEbd!.condition!.join(",");
       selectAbsEbd.value = absEbdController.value.text.split(",");
+      absEbdImage.value = featureInfoResponse.value.data?[0].absEbd?.url != null? File(featureInfoResponse.value.data?[0].absEbd?.url ?? '') : null;
       
-      gloveBoxController.value.text = featureInfoResponse.value.data![0].gloveBox!.join(",");
+      gloveBoxController.value.text = featureInfoResponse.value.data![0].gloveBox!.condition!.join(",");
       selectedGloveBox.value = gloveBoxController.value.text.split(",");
+      gloveBoxImage.value = featureInfoResponse.value.data?[0].gloveBox?.url != null? File(featureInfoResponse.value.data?[0].gloveBox?.url ?? '') : null;
       
       anyInteriorModificationController.value.text = featureInfoResponse.value.data![0].anyInteriorModifications ?? '';
 

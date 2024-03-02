@@ -119,7 +119,7 @@ class TestDriveScreen extends StatelessWidget {
                                 title: MyStrings.steeringWheel, 
                                 items: viewModel.steeringWheelList, 
                                 selectItem: viewModel.selectedSteeringWheel,
-                                othersController: TextEditingController(),
+                                othersController: viewModel.steeringWheelOtherController.value,
                               );
                           },
                         );
@@ -277,7 +277,7 @@ class TestDriveScreen extends StatelessWidget {
                                 title: MyStrings.suspensionSystem, 
                                 items: viewModel.suspensionSystemList, 
                                 selectItem: viewModel.selectedSuspensionSystem,
-                                othersController: TextEditingController(),
+                                othersController: viewModel.suspensionSystemOtherController.value,
                               );
                           },
                         );
@@ -373,7 +373,7 @@ class TestDriveScreen extends StatelessWidget {
                                 title: MyStrings.transmissionAutomatic, 
                                 items: viewModel.transmissionAutomaticList, 
                                 selectItem: viewModel.selectedTransmissionAutomatic,
-                                othersController: TextEditingController(),
+                                othersController: viewModel.transmissionAutomaticOtherController.value,
                               );
                           },
                         );
@@ -407,7 +407,7 @@ class TestDriveScreen extends StatelessWidget {
                                 title: MyStrings.vehicleHorn, 
                                 items: viewModel.vehicleHornList, 
                                 selectItem: viewModel.selectedVehicleHorn,
-                                othersController: TextEditingController(),
+                                othersController: viewModel.vehicleHornOtherController.value,
                               );
                           },
                         );
