@@ -232,6 +232,7 @@ class MyStrings {
   ///
   static const String logoutConfirmMsg = "Are you sure want to sign out?";
   static const String confirmDiscardChanges = "Are you sure want to discard changes?";
+  static const String confirmDelete = "Are you sure want to delete?";
   static const String unableToConnect = "Unable to connect server";
   static const String engineCompartmentImage = "Engine Compartment Image";
   static const String engineSound = "Engine Sound";

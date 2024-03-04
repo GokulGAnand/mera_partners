@@ -11,6 +11,7 @@ import '../../utils/strings.dart';
 import '../../view_model/pending_evaluation/pending_evaluation_screen_view_model.dart';
 import '../../widgets/common_app_bar.dart';
 import '../../widgets/common_drawer.dart';
+import '../../widgets/custom_dialog.dart';
 import '../../widgets/custom_text_form_field.dart';
 
 /// ignore: must_be_immutable
@@ -95,7 +96,20 @@ class PendingEvaluationScreen extends StatelessWidget {
                                       year: viewModel.carBasic.value.data![index].monthAndYearOfManufacture ?? '',
                                       id: viewModel.carBasic.value.data![index].sId,
                                       onDelete: () {
-
+                                        showDialog(
+                                            barrierDismissible: false,
+                                            context: context,
+                                            builder: (BuildContext context) => CustomDialog(
+                                              title: MyStrings.confirmDelete,
+                                              okFun: () {
+                                                Navigator.of(context).pop();
+                                                viewModel.deleteEvaluation(viewModel.carBasic.value.data![index].sId ?? '');
+                                                viewModel.carBasic.value.data?.removeAt(index);
+                                              },
+                                              cancelFun: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ));
                                       },
                                     ),
                                   );

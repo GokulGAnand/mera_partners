@@ -423,7 +423,7 @@ class InteriorScreen extends StatelessWidget {
                   }).toList(),
                   onChanged: (value) {
                     viewModel.selectDashboardSwitches.value = value;
-                    print(viewModel.selectDashboardSwitches.value);
+                    log(viewModel.selectDashboardSwitches.value);
                   },
                   validator: (value) {
                     if (value == null) {

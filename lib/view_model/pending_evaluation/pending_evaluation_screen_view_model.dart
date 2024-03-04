@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:evaluator_app/service/endpoints.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
+import 'package:evaluator_app/widgets/progressbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -39,17 +40,25 @@ class PendingEvaluationViewModel extends GetxController {
   }
 
   void deleteEvaluation(String carId) async {
+    ProgressBar.instance.showProgressbar(Get.context!);
     try {
       log(Uri.parse(EndPoints.baseUrl+EndPoints.carBasic+carId).toString());
       var response = await http.delete(Uri.parse(EndPoints.baseUrl+EndPoints.carBasic+carId),headers: globals.headers);
 
       if(response.statusCode == 200){
+        ProgressBar.instance.stopProgressBar(Get.context!);
         CustomToast.instance.showMsg(MyStrings.success);
+        update();
+        refresh();
+        notifyChildrens();
+        fetchData();
       }else{
+        ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());
       }
     } catch (e) {
       log(e.toString());
+      ProgressBar.instance.stopProgressBar(Get.context!);
     }
   }
 

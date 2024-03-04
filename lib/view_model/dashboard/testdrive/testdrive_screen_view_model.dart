@@ -11,7 +11,6 @@ import 'package:http/http.dart' as http;
 import 'package:evaluator_app/utils/globals.dart' as globals;
 import '../../../model/response/testdrive/testdrive_response.dart';
 import '../../../utils/constants.dart';
-import '../../../utils/strings.dart';
 import '../../../widgets/progressbar.dart';
 import '../dashboard_view_model.dart';
 
