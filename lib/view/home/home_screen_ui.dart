@@ -4,6 +4,7 @@ import 'package:evaluator_app/utils/dimens.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/view_model/home/home_screen_view_model.dart';
+import 'package:evaluator_app/view_model/pending_evaluation/pending_evaluation_screen_view_model.dart';
 import 'package:evaluator_app/widgets/common_drawer.dart';
 import 'package:evaluator_app/widgets/custom_app_bar.dart';
 import 'package:evaluator_app/widgets/custom_card.dart';
@@ -199,6 +200,9 @@ class HomeScreen extends StatelessWidget {
                           if (index == 0) {
                             Get.toNamed(AppRoutes.newEvaluationScreen);
                           } else if (index == 1) {
+                            if (Get.isRegistered<PendingEvaluationViewModel>()) {
+                              Get.delete<PendingEvaluationViewModel>();
+                            }
                             Get.toNamed(AppRoutes.pendingEvaluationScreen);
                           }else if(index == 2){
                             Get.toNamed(AppRoutes.completedEvaluationScreen);

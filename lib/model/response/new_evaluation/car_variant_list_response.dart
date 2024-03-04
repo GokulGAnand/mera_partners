@@ -1,12 +1,12 @@
-class SpecialCommentList {
+class CarVariantListResponse {
   String? status;
   String? message;
   List<Data>? data;
   Meta? meta;
 
-  SpecialCommentList({this.status, this.message, this.data, this.meta});
+  CarVariantListResponse({this.status, this.message, this.data, this.meta});
 
-  SpecialCommentList.fromJson(Map<String, dynamic> json) {
+  CarVariantListResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     if (json['data'] != null) {
@@ -34,25 +34,37 @@ class SpecialCommentList {
 
 class Data {
   String? sId;
-  String? carId;
-  String? carCondition;
-  String? specialComments;
+  String? make;
+  String? model;
+  String? variant;
+  String? createdAt;
+  String? updatedAt;
 
-  Data({this.sId, this.carId, this.carCondition, this.specialComments});
+  Data(
+      {this.sId,
+        this.make,
+        this.model,
+        this.variant,
+        this.createdAt,
+        this.updatedAt});
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    carId = json['carId'];
-    carCondition = json['carCondition'];
-    specialComments = json['specialComments'];
+    make = json['make'];
+    model = json['model'];
+    variant = json['variant'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['_id'] = sId;
-    data['carId'] = carId;
-    data['carCondition'] = carCondition;
-    data['specialComments'] = specialComments;
+    data['make'] = make;
+    data['model'] = model;
+    data['variant'] = variant;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }

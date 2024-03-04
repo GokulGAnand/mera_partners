@@ -155,7 +155,7 @@ class DashBoardScreen extends StatelessWidget {
                                                           direction: Axis.horizontal,
                                                           allowHalfRating: true,
                                                           itemCount: 5,
-                                                          itemPadding: const EdgeInsets.symmetric(horizontal: 3),
+                                                          itemPadding: const EdgeInsets.symmetric(horizontal: 2),
                                                           itemBuilder: (context, _) => const Icon(
                                                             Icons.star,
                                                             color: MyColors.yellow,

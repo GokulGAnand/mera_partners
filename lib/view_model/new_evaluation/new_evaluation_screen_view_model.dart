@@ -13,14 +13,15 @@ import 'package:evaluator_app/utils/globals.dart' as globals;
 import '../../model/request/new_evaluation/create_evaluation_request.dart';
 import '../../model/response/new_evaluation/car_make_response.dart' as make;
 import '../../model/response/new_evaluation/car_model_variant_response.dart';
+import '../../model/response/new_evaluation/car_variant_list_response.dart';
 import '../../service/exception_error_util.dart';
 import '../../utils/colors.dart';
 import '../../widgets/progressbar.dart';
 
 class NewEvaluationViewModel extends GetxController {
-  List<String> modelList = <String>[];
-  List<String> variantList = <String>[];
-  List<String> makeList = <String>[];
+  RxList<String> modelList = <String>[].obs;
+  RxList<String> variantList = <String>[].obs;
+  RxList<String> makeList = <String>[].obs;
 
   var isPage1Fill = false.obs;
   var isPage2Fill = false.obs;
@@ -81,6 +82,7 @@ class NewEvaluationViewModel extends GetxController {
 
   var carMakeListResponse = make.CarMakeListResponse().obs;
   var carModelVariantListResponse = CarModelVariantListResponse().obs;
+  var carVariantListResponse = CarVariantListResponse().obs;
   var carMakeList = [].obs;
   var carModelList = [].obs;
   var carVariantList = [].obs;
@@ -138,6 +140,9 @@ class NewEvaluationViewModel extends GetxController {
         for (int i = 0; i < carMakeListResponse.value.data!.length; i++) {
           makeList.add(carMakeListResponse.value.data![i].document?.make ?? "");
         }
+        update();
+        refresh();
+        notifyChildrens();
       } else {}
     } catch (e) {
       log(e.toString());
@@ -156,17 +161,46 @@ class NewEvaluationViewModel extends GetxController {
         print(response.body.toString());
       }
       if (response.statusCode == 200) {
+        carModelVariantListResponse.value = CarModelVariantListResponse();
         carModelVariantListResponse.value = CarModelVariantListResponse.fromJson(json.decode(response.body));
       } else {}
 
       if (make != null && make.isNotEmpty) {
+        modelList.value = [];
+        variantList.value = [];
         for (int i = 0; i < carModelVariantListResponse.value.data!.length; i++) {
-          modelList.add(carModelVariantListResponse.value.data![i].model ?? "");
+          modelList.add(carModelVariantListResponse.value.data![i].document?.model ?? "");
         }
       }
       if (model != null && model.isNotEmpty) {
         for (int i = 0; i < carModelVariantListResponse.value.data!.length; i++) {
-          variantList.add(carModelVariantListResponse.value.data![i].variant ?? "");
+          variantList.add(carModelVariantListResponse.value.data![i].document?.variant ?? "");
+        }
+      }
+    } catch (e) {
+      log(e.toString());
+      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
+    }
+  }
+
+  void getCarVariant({String? make, String? model}) async {
+    try {
+      String? makeData = make != null && make.isNotEmpty ? '?make=$make' : '';
+      String? modelData = model != null && model.isNotEmpty ? '&model=$model' : '';
+      var headers = {'Authorization': 'Bearer ${globals.token}'};
+      final response = await http.get(Uri.parse(EndPoints.baseUrl + EndPoints.brand + makeData + modelData), headers: headers);
+
+      if (kDebugMode) {
+        print(response.body.toString());
+      }
+      if (response.statusCode == 200) {
+        carVariantListResponse.value = CarVariantListResponse();
+        carVariantListResponse.value = CarVariantListResponse.fromJson(json.decode(response.body));
+      } else {}
+      if (model != null && model.isNotEmpty) {
+        variantList.value = [];
+        for (int i = 0; i < carVariantListResponse.value.data!.length; i++) {
+          variantList.add(carVariantListResponse.value.data![i].variant ?? "");
         }
       }
     } catch (e) {
@@ -247,6 +281,9 @@ log(response.body.toString());
   }
 
   void onChangeCarMake(selectedValue) {
+    selectedMake.value = '';
+    selectedModel.value = '';
+    selectedVariant.value = '';
     selectedMake.value = selectedValue;
     getCarModelVariant(make: selectedMake.value);
     update();
@@ -263,16 +300,17 @@ log(response.body.toString());
   }
 
   void onChangeCarModel(selectedValue) {
-    // selectedModel.value = Data();
+    selectedModel.value = '';
+    selectedVariant.value = '';
     selectedModel.value = selectedValue;
-    getCarModelVariant(make: selectedMake.value, model: selectedModel.value);
+    getCarVariant(make: selectedMake.value, model: selectedModel.value);
     update();
     refresh();
     notifyChildrens();
   }
 
   void onChangeCarVariant(selectedValue) {
-    // selectedVariant.value = Data();
+    selectedVariant.value = '';
     selectedVariant.value = selectedValue;
   }
 
@@ -292,19 +330,4 @@ log(response.body.toString());
     return items;
   }
 
-  List<DropdownMenuItem<Object?>> buildDropdownModelItems(Iterable<Data> testList) {
-    List<DropdownMenuItem<Object?>> items = [];
-    for (var i in testList) {
-      items.add(
-        DropdownMenuItem(
-          value: i,
-          child: Text(
-            i.model ?? "",
-            style: const TextStyle(color: MyColors.black, overflow: TextOverflow.ellipsis),
-          ),
-        ),
-      );
-    }
-    return items;
-  }
 }

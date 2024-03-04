@@ -4,7 +4,8 @@ class CarModelVariantListResponse {
   List<Data>? data;
   Meta? meta;
 
-  CarModelVariantListResponse({this.status, this.message, this.data, this.meta});
+  CarModelVariantListResponse(
+      {this.status, this.message, this.data, this.meta});
 
   CarModelVariantListResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -34,15 +35,44 @@ class CarModelVariantListResponse {
 
 class Data {
   String? sId;
+  Document? document;
+
+  Data({this.sId, this.document});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    document = json['document'] != null
+        ? Document.fromJson(json['document'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    if (document != null) {
+      data['document'] = document!.toJson();
+    }
+    return data;
+  }
+}
+
+class Document {
+  String? sId;
   String? make;
   String? model;
   String? variant;
   String? createdAt;
   String? updatedAt;
 
-  Data({this.sId, this.make, this.model, this.variant, this.createdAt, this.updatedAt});
+  Document(
+      {this.sId,
+        this.make,
+        this.model,
+        this.variant,
+        this.createdAt,
+        this.updatedAt});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  Document.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     make = json['make'];
     model = json['model'];

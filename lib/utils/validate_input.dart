@@ -64,7 +64,13 @@ class ValidateInput {
     if (value!.trim().isNotEmpty && file != null) {
       return null;
     }else{
-      return MyStrings.required;
+      if(value.trim().isEmpty){
+        return MyStrings.required;
+      }else if(file == null){
+        return MyStrings.imageRequired;
+      }else{
+        return null;
+      }
     }
   }
 

@@ -125,11 +125,9 @@ class EngineScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: viewModel.engineController.value,
-                    labelText: "${MyStrings.engine}*",
-                    helperText: "${MyStrings.engine}*",
-                    validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.engineImage.value);
-                    },
+                    labelText: MyStrings.engine,
+                    helperText: MyStrings.engine,
+                    validator: /*viewModel.engineImage.value == null ? ValidateInput.validateRequiredFields :*/ null,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.engineImage.value == null
@@ -245,11 +243,9 @@ class EngineScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: viewModel.batteryController.value,
-                    labelText: "${MyStrings.battery}*",
-                    helperText: "${MyStrings.battery}*",
-                    validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.batteryImage.value);
-                    },
+                    labelText: MyStrings.battery,
+                    helperText: MyStrings.battery,
+                    validator: /*viewModel.batteryImage.value == null ? ValidateInput.validateRequiredFields : */null,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.batteryImage.value == null
@@ -412,11 +408,9 @@ class EngineScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: viewModel.blowByBackCompressionController.value,
-                    labelText: "${MyStrings.blowByBackCompression}*",
-                    helperText: "${MyStrings.blowByBackCompression}*",
-                    validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.blowByBackCompressionImage.value);
-                    },
+                    labelText: MyStrings.blowByBackCompression,
+                    helperText: MyStrings.blowByBackCompression,
+                    validator: /*viewModel.blowByBackCompressionImage.value == null ? ValidateInput.validateRequiredFields : */null,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.blowByBackCompressionImage.value == null
@@ -531,11 +525,9 @@ class EngineScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: viewModel.clutchOperationsController.value,
-                    labelText: "${MyStrings.clutchOperations}*",
-                    helperText: "${MyStrings.clutchOperations}*",
-                    validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.clutchOperationsImage.value);
-                    },
+                    labelText: MyStrings.clutchOperations,
+                    helperText: MyStrings.clutchOperations,
+                    validator: /*viewModel.clutchOperationsImage.value == null ? ValidateInput.validateRequiredFields : */null,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.clutchOperationsImage.value == null
@@ -572,11 +564,9 @@ class EngineScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: viewModel.gearboxController.value,
-                    labelText: "${MyStrings.gearbox}*",
-                    helperText: "${MyStrings.gearbox}*",
-                    validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.gearBoxImage.value);
-                    },
+                    labelText: MyStrings.gearbox,
+                    helperText: MyStrings.gearbox,
+                    validator: /*viewModel.gearBoxImage.value == null ? ValidateInput.validateRequiredFields : */null,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.gearBoxImage.value == null
@@ -613,11 +603,9 @@ class EngineScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: viewModel.engineOilController.value,
-                    labelText: "${MyStrings.engineOil}*",
-                    helperText: "${MyStrings.engineOil}*",
-                    validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.engineOilImage.value);
-                    },
+                    labelText: MyStrings.engineOil,
+                    helperText: MyStrings.engineOil,
+                    validator: /*viewModel.engineOilImage.value == null ? ValidateInput.validateRequiredFields :*/ null,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.engineOilImage.value == null
@@ -761,11 +749,9 @@ class EngineScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: viewModel.sumpController.value,
-                    labelText: "${MyStrings.sump}*",
-                    helperText: "${MyStrings.sump}*",
-                    validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.sumpImage.value);
-                    },
+                    labelText: MyStrings.sump,
+                    helperText: MyStrings.sump,
+                    validator: /*viewModel.sumpImage.value == null ? ValidateInput.validateRequiredFields : */null,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.sumpImage.value == null

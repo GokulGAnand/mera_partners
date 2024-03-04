@@ -84,16 +84,20 @@ class PendingEvaluationScreen extends StatelessWidget {
                                 itemCount: viewModel.carBasic.value.data!.length,
                                 separatorBuilder: (context, index) => const SizedBox(height: 1),
                                 itemBuilder: (context, index) {
-                                  return EvaluationCard(
-                                    make: viewModel.carBasic.value.data![index].make ?? '',
-                                    variant: viewModel.carBasic.value.data![index].variant ?? '',
-                                    regNumber: viewModel.carBasic.value.data![index].regNumber ?? '',
-                                    leadId: viewModel.carBasic.value.data![index].uniqueId.toString(),
-                                    model: viewModel.carBasic.value.data![index].model ?? '',
-                                    transmission: viewModel.carBasic.value.data![index].transmission ?? '',
-                                    date: viewModel.carBasic.value.data![index].inspectionDate ?? '',
-                                    year: viewModel.carBasic.value.data![index].monthAndYearOfManufacture ?? '',
-                                    id: viewModel.carBasic.value.data![index].sId,
+                                  return Obx(() => EvaluationCard(
+                                      make: viewModel.carBasic.value.data![index].make ?? '',
+                                      variant: viewModel.carBasic.value.data![index].variant ?? '',
+                                      regNumber: viewModel.carBasic.value.data![index].regNumber ?? '',
+                                      leadId: viewModel.carBasic.value.data![index].uniqueId.toString(),
+                                      model: viewModel.carBasic.value.data![index].model ?? '',
+                                      transmission: viewModel.carBasic.value.data![index].transmission ?? '',
+                                      date: viewModel.carBasic.value.data![index].inspectionDate ?? '',
+                                      year: viewModel.carBasic.value.data![index].monthAndYearOfManufacture ?? '',
+                                      id: viewModel.carBasic.value.data![index].sId,
+                                      onDelete: () {
+
+                                      },
+                                    ),
                                   );
                                 }),
                           )

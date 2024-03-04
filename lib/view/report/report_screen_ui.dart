@@ -637,7 +637,7 @@ class ReportScreen extends StatelessWidget {
                               },),
                               Row(
                                 children: [
-                                  Text('${MyStrings.reportId}: ${viewModel.reportResponse.value.data!.id!}',
+                                  Text('${MyStrings.reportId}: ${viewModel.reportResponse.value.data?.sId}',
                                     style: MyStyles.greyMedium,
                                   ),
                                 ],

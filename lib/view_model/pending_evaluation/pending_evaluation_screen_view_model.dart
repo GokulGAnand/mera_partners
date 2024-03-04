@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:evaluator_app/service/endpoints.dart';
+import 'package:evaluator_app/utils/strings.dart';
+import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -31,6 +33,21 @@ class PendingEvaluationViewModel extends GetxController {
           }
       log(carBasicResponse.toString());
       log(response.body);
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  void deleteEvaluation(String carId) async {
+    try {
+      log(Uri.parse(EndPoints.baseUrl+EndPoints.carBasic+carId).toString());
+      var response = await http.delete(Uri.parse(EndPoints.baseUrl+EndPoints.carBasic+carId),headers: globals.headers);
+
+      if(response.statusCode == 200){
+        CustomToast.instance.showMsg(MyStrings.success);
+      }else{
+        log(response.reasonPhrase.toString());
+      }
     } catch (e) {
       log(e.toString());
     }
