@@ -45,6 +45,12 @@ class EngineViewModel extends GetxController {
   Rx<TextEditingController> batteryController = TextEditingController().obs;
   Rx<TextEditingController> blowByBackCompressionController = TextEditingController().obs;
 
+  Rx<TextEditingController> smokeOtherController = TextEditingController().obs;
+  Rx<TextEditingController> radiatorOtherController = TextEditingController().obs;
+  Rx<TextEditingController> startingMotorOtherController = TextEditingController().obs;
+  Rx<TextEditingController> coolantOtherController = TextEditingController().obs;
+
+
   Rx<File?> engineCompartmentImage = Rx<File?>(null);
   Rx<File?> engineIdleStartVideo = Rx<File?>(null);
   Rx<File?> blowByBackCompressionImage = Rx<File?>(null);
@@ -112,6 +118,8 @@ class EngineViewModel extends GetxController {
   Rx<TextEditingController> otherEngineMountController = TextEditingController().obs;
   Rx<TextEditingController> otherSumpController = TextEditingController().obs;
 
+  Rx<TextEditingController> silencerOtherController = TextEditingController().obs;
+
   @override
   void onInit() {
     getEngineData();
@@ -151,12 +159,12 @@ class EngineViewModel extends GetxController {
       }
       request.fields.addAll({
         'engineSound': selectedEngineSound.value,
-        'radiator': selectedRadiator.value,
-        'exhaustSmoke': selectedSmoke.value,
-        'silencer': selectedSilencer.value,
+        'radiator': (selectedRadiator.value.contains(MyStrings.other))?radiatorOtherController.value.text :selectedRadiator.value,
+        'exhaustSmoke': (selectedSmoke.value.contains(MyStrings.other))?smokeOtherController.value.text : selectedSmoke.value,
+        'silencer': (selectedSilencer.value.contains(MyStrings.other))?silencerOtherController.value.text : selectedSilencer.value,
         'engineComment': remarksController.value.text,
-        'startingMotor': selectedStartingMotor.value,
-        'coolant': selectedCoolant.value,
+        'startingMotor': (selectedStartingMotor.value.contains(MyStrings.other))?startingMotorOtherController.value.text :selectedStartingMotor.value,
+        'coolant': (selectedCoolant.value.contains(MyStrings.other))?coolantOtherController.value.text :selectedCoolant.value,
         'gearBoxLeakage': selectedGearBoxLeak.value,
         'evaluationStatusForEngine': 'COMPLETED',
         'engineCompartment_remarks': engineCompartmentImageRemarks.value.text,
@@ -266,11 +274,32 @@ log(request.toString());
       selectedBattery.value = engineResponse.value.data?[0].battery?.condition ?? [];
       selectedBlowBy.value = engineResponse.value.data?[0].blowBy?.condition ?? [];
       selectedEngineSound.value = engineResponse.value.data?[0].engineSound ?? '';
+
       selectedSmoke.value = engineResponse.value.data?[0].exhaustSmoke ?? '';
+      if(smokeList.contains(selectedSmoke.value)==false){
+        smokeOtherController.value.text = selectedSmoke.value;
+        selectedSmoke.value = MyStrings.other;
+      }
       selectedRadiator.value = engineResponse.value.data?[0].radiator ?? '';
+      if(radiatorList.contains(selectedRadiator.value)==false){
+        radiatorOtherController.value.text = selectedRadiator.value;
+        selectedRadiator.value = MyStrings.other;
+      }
       selectedStartingMotor.value = engineResponse.value.data?[0].startingMotor ?? '';
+      if(startMotorList.contains(selectedStartingMotor.value)==false){
+        startingMotorOtherController.value.text = selectedStartingMotor.value;
+        selectedStartingMotor.value = MyStrings.other;
+      }
       selectedCoolant.value = engineResponse.value.data?[0].coolant ?? '';
+      if(coolantList.contains(selectedCoolant.value)==false){
+        coolantOtherController.value.text = selectedCoolant.value;
+        selectedCoolant.value = MyStrings.other;
+      }
       selectedSilencer.value = engineResponse.value.data?[0].silencer ?? '';
+      if(silencerList.contains(selectedSilencer.value)==false){
+        silencerOtherController.value.text = selectedSilencer.value;
+        selectedSilencer.value = MyStrings.other;
+      }
       selectedGearBoxLeak.value = engineResponse.value.data?[0].gearBoxLeakage ?? '';
       clutchOperationsImage.value = engineResponse.value.data?[0].clutch?.url != null ? File(engineResponse.value.data?[0].clutch?.url ?? '') : null;
       gearBoxImage.value = engineResponse.value.data?[0].gearBox?.url != null ? File(engineResponse.value.data?[0].gearBox?.url ?? '') : null;

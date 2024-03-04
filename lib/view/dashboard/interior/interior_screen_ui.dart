@@ -416,7 +416,7 @@ class InteriorScreen extends StatelessWidget {
                   value: viewModel.selectDashboardSwitches.value.isEmpty ? null : viewModel.selectDashboardSwitches.value,
                   items: viewModel.dashboardSwitches.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
-                      value: value.toLowerCase(),
+                      value: value,
                       child: Text(
                         value,
                         style: MyStyles.dropdownMenuStyle,
@@ -425,6 +425,7 @@ class InteriorScreen extends StatelessWidget {
                   }).toList(),
                   onChanged: (value) {
                     viewModel.selectDashboardSwitches.value = value;
+                    print(viewModel.selectDashboardSwitches.value);
                   },
                   validator: (value) {
                     if (value == null) {
@@ -432,6 +433,20 @@ class InteriorScreen extends StatelessWidget {
                     }
                     return null;
                   },
+                ),
+                Obx(()=>(viewModel.selectDashboardSwitches.value.contains(MyStrings.other))?
+                Padding(
+                    padding: const EdgeInsets.fromLTRB(0,24,0,0),
+                    child: CustomTextFormField(
+                          labelStyle: MyStyles.dropdownMenuStyle,
+                          controller: viewModel.dashboardSwitchOtherController.value,
+                          labelText: "${MyStrings.dashboardSwitches} *",
+                          helperText: MyStrings.dashboardSwitches,
+                          onChange: (value) {},
+                          validator: (value)=>ValidateInput.validateRequiredFields(value),
+                        ),
+                  )
+                  :const SizedBox(),
                 ),
                 SizedBox(
                   height: Dimens.standard_24,

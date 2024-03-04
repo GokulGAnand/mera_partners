@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/service/endpoints.dart';
 import 'package:evaluator_app/service/exception_error_util.dart';
+import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -23,6 +24,10 @@ class TestDriveViewModel extends GetxController {
   Rx<TextEditingController> suspensionSystemOtherController = TextEditingController().obs;
   Rx<TextEditingController> transmissionAutomaticOtherController = TextEditingController().obs;
   Rx<TextEditingController> vehicleHornOtherController = TextEditingController().obs;
+
+  Rx<TextEditingController> steeringMountedAudioControlOtherController = TextEditingController().obs;
+  Rx<TextEditingController> brakesOtherController = TextEditingController().obs;
+  Rx<TextEditingController> clutchSystemOtherController = TextEditingController().obs;
 
   var selectedSteeringSystem = "".obs;
   // var selectedSteeringWheel = "".obs;
@@ -73,11 +78,11 @@ class TestDriveViewModel extends GetxController {
             "suspension": selectedSuspensionSystem,
             "steeringSystem": selectedSteeringSystem.value,
             "steeringAdjustment": selectedSteeringAdjustment.value,
-            "steeringMountedAudioControl": selectedSteeringMounted.value,
+            "steeringMountedAudioControl": (selectedSteeringMounted.value.contains(MyStrings.other))?steeringMountedAudioControlOtherController.value.text : selectedSteeringMounted.value,
             "cruiseControl": selectedCruiseControl.value,
             "seatAdjustment": selectedSeatAdjustment.value,
-            "brakes": selectedBrakes.value,
-            "clutchSystem":selectedCluthSystem.value,
+            "brakes": (selectedBrakes.value.contains(MyStrings.other))?brakesOtherController.value.text : selectedBrakes.value,
+            "clutchSystem":(selectedCluthSystem.value.contains(MyStrings.other))?clutchSystemOtherController.value.text : selectedCluthSystem.value,
             "vehicleHorn": selectedVehicleHorn,
             "vehicleHorn_other":"",
             "transmissionAutomatic": selectedTransmissionAutomatic,
@@ -135,12 +140,24 @@ class TestDriveViewModel extends GetxController {
       steeringWheelController.value.text = selectedSteeringWheel.join(",");
       selectedSteeringAdjustment.value = testDriveResponse.value.data?[0].steeringAdjustment?? '';
       selectedSteeringMounted.value = testDriveResponse.value.data?[0].steeringMountedAudioControl?? '';
+      if(steeringMountedAudioControlList.contains(selectedSteeringMounted.value)==false){
+        steeringMountedAudioControlOtherController.value.text = selectedSteeringMounted.value;
+        selectedSteeringMounted.value = MyStrings.other;
+      }
       selectedCruiseControl.value = testDriveResponse.value.data?[0].cruiseControl?? '';
       selectedSeatAdjustment.value = testDriveResponse.value.data?[0].seatAdjustment?? '';
       selectedSuspensionSystem.value = testDriveResponse.value.data?[0].suspension as List<String>;
       suspensionSystemController.value.text = selectedSuspensionSystem.join(",");
       selectedBrakes.value = testDriveResponse.value.data?[0].brakes?? '';
+      if(brakesList.contains(selectedBrakes.value)==false){
+        brakesOtherController.value.text = selectedBrakes.value;
+        selectedBrakes.value = MyStrings.other;
+      }
       selectedCluthSystem.value = testDriveResponse.value.data?[0].clutchSystem?? '';
+      if(clutchSystemList.contains(selectedCluthSystem.value)==false){
+        clutchSystemOtherController.value.text = selectedCluthSystem.value;
+        selectedCluthSystem.value = MyStrings.other;
+      }
       selectedTransmissionAutomatic.value = testDriveResponse.value.data?[0].transmissionAutomatic as List<String>;
       transmissionAutomaticController.value.text = selectedTransmissionAutomatic.join(",");
       selectedVehicleHorn.value = testDriveResponse.value.data?[0].vehicleHorn as List<String>;

@@ -202,6 +202,20 @@ class TestDriveScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                Obx(
+                  ()=>(viewModel.selectedSteeringMounted.value.contains(MyStrings.other))?Padding(
+                    padding: const EdgeInsets.fromLTRB(16,20,16,0),
+                    child: CustomTextFormField(
+                          labelStyle: MyStyles.dropdownMenuStyle,
+                          controller: viewModel.steeringMountedAudioControlOtherController.value,
+                          labelText: "${MyStrings.steeringMountedAudio} *",
+                          helperText: MyStrings.steeringMountedAudio,
+                          onChange: (value) {},
+                          validator: (value)=>ValidateInput.validateRequiredFields(value),
+                        ),
+                  )
+                  :const SizedBox()
+                ),
                 const SizedBox(height: 20),
                 Obx(
                   () => Padding(
@@ -329,6 +343,20 @@ class TestDriveScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                Obx(
+                  ()=>(viewModel.selectedBrakes.value.contains(MyStrings.other))?Padding(
+                    padding: const EdgeInsets.fromLTRB(16,20,16,0),
+                    child: CustomTextFormField(
+                          labelStyle: MyStyles.dropdownMenuStyle,
+                          controller: viewModel.brakesOtherController.value,
+                          labelText: "${MyStrings.brakes} *",
+                          helperText: MyStrings.brakes,
+                          onChange: (value) {},
+                          validator: (value)=>ValidateInput.validateRequiredFields(value),
+                        ),
+                  )
+                  :const SizedBox()
+                ),
                 const SizedBox(height: 20),
                 Obx(
                   () => Padding(
@@ -359,6 +387,20 @@ class TestDriveScreen extends StatelessWidget {
                       },
                     ),
                   ),
+                ),
+                Obx(
+                  ()=>(viewModel.selectedCluthSystem.value.contains(MyStrings.other))?Padding(
+                    padding: const EdgeInsets.fromLTRB(16,20,16,0),
+                    child: CustomTextFormField(
+                          labelStyle: MyStyles.dropdownMenuStyle,
+                          controller: viewModel.clutchSystemOtherController.value,
+                          labelText: "${MyStrings.clutchSystem} *",
+                          helperText: MyStrings.clutchSystem,
+                          onChange: (value) {},
+                          validator: (value)=>ValidateInput.validateRequiredFields(value),
+                        ),
+                  )
+                  :const SizedBox()
                 ),
                 const SizedBox(height: 20),
                 Obx(

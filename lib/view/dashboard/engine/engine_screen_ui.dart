@@ -171,6 +171,20 @@ class EngineScreen extends StatelessWidget {
                     },
                   ),
                 ),
+                Obx(()=>(viewModel.selectedSmoke.value.contains(MyStrings.other))?
+                Padding(
+                    padding: const EdgeInsets.fromLTRB(0,24,0,0),
+                    child: CustomTextFormField(
+                          labelStyle: MyStyles.dropdownMenuStyle,
+                          controller: viewModel.smokeOtherController.value,
+                          labelText: "${MyStrings.smoke} *",
+                          helperText: MyStrings.smoke,
+                          onChange: (value) {},
+                          validator: (value)=>ValidateInput.validateRequiredFields(value),
+                        ),
+                  )
+                  :const SizedBox(),
+                ),
                 SizedBox(
                   height: Dimens.standard_24,
                 ),
@@ -277,6 +291,20 @@ class EngineScreen extends StatelessWidget {
                     },
                   ),
                 ),
+                Obx(()=>(viewModel.selectedRadiator.value.contains(MyStrings.other))?
+                Padding(
+                    padding: const EdgeInsets.fromLTRB(0,24,0,0),
+                    child: CustomTextFormField(
+                          labelStyle: MyStyles.dropdownMenuStyle,
+                          controller: viewModel.radiatorOtherController.value,
+                          labelText: "${MyStrings.radiator} *",
+                          helperText: MyStrings.radiator,
+                          onChange: (value) {},
+                          validator: (value)=>ValidateInput.validateRequiredFields(value),
+                        ),
+                  )
+                  :const SizedBox(),
+                ),
                   SizedBox(
                     height: Dimens.standard_24,
                   ),
@@ -305,6 +333,20 @@ class EngineScreen extends StatelessWidget {
                     },
                   ),
                 ),
+                Obx(()=>(viewModel.selectedStartingMotor.value.contains(MyStrings.other))?
+                Padding(
+                    padding: const EdgeInsets.fromLTRB(0,24,0,0),
+                    child: CustomTextFormField(
+                          labelStyle: MyStyles.dropdownMenuStyle,
+                          controller: viewModel.startingMotorOtherController.value,
+                          labelText: "${MyStrings.startingMotor} *",
+                          helperText: MyStrings.startingMotor,
+                          onChange: (value) {},
+                          validator: (value)=>ValidateInput.validateRequiredFields(value),
+                        ),
+                  )
+                  :const SizedBox(),
+                ),
                 SizedBox(
                   height: Dimens.standard_24,
                 ),
@@ -332,6 +374,20 @@ class EngineScreen extends StatelessWidget {
                       return null;
                     },
                   ),
+                ),
+                Obx(()=>(viewModel.selectedCoolant.value.contains(MyStrings.other))?
+                Padding(
+                    padding: const EdgeInsets.fromLTRB(0,24,0,0),
+                    child: CustomTextFormField(
+                          labelStyle: MyStyles.dropdownMenuStyle,
+                          controller: viewModel.coolantOtherController.value,
+                          labelText: "${MyStrings.coolant} *",
+                          helperText: MyStrings.coolant,
+                          onChange: (value) {},
+                          validator: (value)=>ValidateInput.validateRequiredFields(value),
+                        ),
+                  )
+                  :const SizedBox(),
                 ),
                 SizedBox(
                   height: Dimens.standard_24,
@@ -438,6 +494,20 @@ class EngineScreen extends StatelessWidget {
                         return null;
                       },
                     )),
+                Obx(()=>(viewModel.selectedSilencer.value.contains(MyStrings.other))?
+                Padding(
+                    padding: const EdgeInsets.fromLTRB(0,24,0,0),
+                    child: CustomTextFormField(
+                          labelStyle: MyStyles.dropdownMenuStyle,
+                          controller: viewModel.silencerOtherController.value,
+                          labelText: "${MyStrings.silencer} *",
+                          helperText: MyStrings.silencer,
+                          onChange: (value) {},
+                          validator: (value)=>ValidateInput.validateRequiredFields(value),
+                        ),
+                  )
+                  :const SizedBox(),
+                ),
                 SizedBox(
                   height: Dimens.standard_24,
                 ),

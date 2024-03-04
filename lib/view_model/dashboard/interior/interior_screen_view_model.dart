@@ -6,6 +6,7 @@ import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/service/endpoints.dart';
 import 'package:evaluator_app/service/exception_error_util.dart';
 import 'package:evaluator_app/utils/constants.dart';
+import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -160,7 +161,7 @@ class InteriorViewModel extends GetxController {
         'key' : '',      
         'warningDetails' : warningDetailsController.value.text,      
         // 'interiorView' : '',
-        'dashboardSwitch' : selectDashboardSwitches.value,
+        'dashboardSwitch' : (selectDashboardSwitches.value.contains(MyStrings.other))?dashboardSwitchOtherController.value.text : selectDashboardSwitches.value,
         'carElectrical_remarks' : carElectricalRemarksController.value.text,
         'secondKey' : selectSecondKey.value,
         'platformImage_remarks' : platformRemarksController.value.text,
@@ -287,6 +288,10 @@ class InteriorViewModel extends GetxController {
       
       selectPushButtonOnOff.value = interiorInfoResponse.value.data?[0].pushButton ?? '';
       selectDashboardSwitches.value = interiorInfoResponse.value.data?[0].dashboardSwitch??'';
+      if(dashboardSwitches.contains(selectDashboardSwitches.value)==false){
+        dashboardSwitchOtherController.value.text = selectDashboardSwitches.value;
+        selectDashboardSwitches.value = MyStrings.other;
+      }
 
       powerWindowAndWindowLockController.value.text = interiorInfoResponse.value.data?[0].powerWindowCentalLock?.condition?.join(",") ?? '';
       selectPowerWindowAndWindowLock.value = powerWindowAndWindowLockController.value.text.split(",");
