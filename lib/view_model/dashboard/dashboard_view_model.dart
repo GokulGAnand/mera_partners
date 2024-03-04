@@ -32,7 +32,7 @@ class DashBoardViewModel extends GetxController {
 
   @override
   void onInit() {
-    globals.carId = id;
+    // globals.carId = id;
     dashboard = [
       DashBoardClass(icon: MyImages.difference, label: MyStrings.documents,isComplete: documentsComplete),
       DashBoardClass(icon: MyImages.exterior, label: MyStrings.exterior,isComplete: exteriorComplete),
@@ -58,8 +58,10 @@ class DashBoardViewModel extends GetxController {
   void getEvaluationStatus() async {
     // ProgressBar.instance.showProgressbar(Get.context!);
     try {
+      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.evaluation}/${EndPoints.status}${globals.carId}').toString());
       var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.evaluation}/${EndPoints.status}${globals.carId}'),headers: globals.headers);
       if (response.statusCode == 200) {
+        log(response.body.toString());
         ProgressBar.instance.stopProgressBar(Get.context!);
         evaluationStatusResponse.value = EvaluationStatusResponse.fromJson(jsonDecode(response.body));
         documentsComplete.value = evaluationStatusResponse.value.data?.evaluationStatusForDocument == 'COMPLETED'?true:false;
@@ -78,6 +80,7 @@ class DashBoardViewModel extends GetxController {
         }
         log(response.body.toString());
       } else {
+        log(response.body.toString());
         ProgressBar.instance.stopProgressBar(Get.context!);
         CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);
       }
@@ -92,7 +95,7 @@ class DashBoardViewModel extends GetxController {
     ProgressBar.instance.showProgressbar(Get.context!);
     try {
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.interiorInfo}/${globals.carId}').toString());
-      var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.interiorInfo+'/'+id),headers: globals.headers,
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.interiorInfo}/${globals.carId}'),headers: globals.headers,
         body: {
           "engineStar":ratingList[0].rating.toString(),
           "exteriorStar":ratingList[1].rating.toString(),
@@ -119,7 +122,7 @@ class DashBoardViewModel extends GetxController {
     ProgressBar.instance.showProgressbar(Get.context!);
     try {
       log(Uri.parse(EndPoints.baseUrl+EndPoints.carBasic+globals.carId.toString()).toString());
-      var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.carBasic+id),headers: globals.headers,
+      var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.carBasic+globals.carId.toString()),headers: globals.headers,
           body: {
         "status":"EVALUATED"
       });

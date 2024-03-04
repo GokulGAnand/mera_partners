@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import '../utils/colors.dart';
 import '../utils/images.dart';
 import '../utils/strings.dart';
+import '../view_model/dashboard/dashboard_view_model.dart';
+import 'package:evaluator_app/utils/globals.dart' as globals;
 
 class EvaluationCard extends StatelessWidget {
   final String make;
@@ -19,8 +21,9 @@ class EvaluationCard extends StatelessWidget {
   final String? kmDriven;
   final String? id;
   final bool isCompleted;
+  final VoidCallback? onDelete;
 
-  const EvaluationCard({super.key, required this.make, required this.variant, required this.regNumber, required this.leadId, required this.model, required this.transmission, required this.date, required this.year, this.kmDriven, this.id, this.isCompleted = false});
+  const EvaluationCard({super.key, required this.make, required this.variant, required this.regNumber, required this.leadId, required this.model, required this.transmission, required this.date, required this.year, this.kmDriven, this.id, this.isCompleted = false, this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +88,10 @@ class EvaluationCard extends StatelessWidget {
                         buttonWidth: 139,
                           textStyle:  const TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: MyColors.white),
                           onPressed: () {
+                            if (Get.isRegistered<DashBoardViewModel>()) {
+                              Get.delete<DashBoardViewModel>();
+                            }
+                            globals.carId = id;
                             Get.toNamed(AppRoutes.dashBoardScreen,arguments: id);
                           },
                           buttonText: MyStrings.resumeReport)
@@ -166,7 +173,7 @@ class EvaluationCard extends StatelessWidget {
                           height: 15,
                         ),
                         if(!isCompleted)
-                        Container(
+                        /*Container(
                           height: 40,
                           width: 139,
                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), color: MyColors.blue, border: Border.all(color: MyColors.blue)),
@@ -175,7 +182,13 @@ class EvaluationCard extends StatelessWidget {
                             MyStrings.delete,
                             style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: MyColors.white),
                           )),
-                        ),
+                        ),*/
+                          CustomElevatedButton(
+                              buttonHeight: 40,
+                              buttonWidth: 139,
+                              textStyle:  const TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: MyColors.white),
+                              onPressed: onDelete,
+                              buttonText: MyStrings.delete),
                       ],
                     ),
                   )

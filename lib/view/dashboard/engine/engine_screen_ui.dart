@@ -125,8 +125,8 @@ class EngineScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: viewModel.engineController.value,
-                    labelText: "${MyStrings.engine}*",
-                    helperText: "${MyStrings.engine}*",
+                    labelText: MyStrings.engine,
+                    helperText: MyStrings.engine,
                     validator: /*viewModel.engineImage.value == null ? ValidateInput.validateRequiredFields :*/ null,
                     showCursor: false,
                     isEnabled: false,
@@ -179,7 +179,7 @@ class EngineScreen extends StatelessWidget {
                       context: Get.context!,
                       builder: (context) => ImagePickerCard(
                         remarksController: viewModel.engineIdleStartVideoRemarksController.value,
-                        // isVideo: true,
+                        isVideo: true,
                         image: viewModel.engineIdleStartVideo,
                         onSubmit: () {
                           Navigator.of(context).pop();
@@ -229,8 +229,8 @@ class EngineScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: viewModel.batteryController.value,
-                    labelText: "${MyStrings.battery}*",
-                    helperText: "${MyStrings.battery}*",
+                    labelText: MyStrings.battery,
+                    helperText: MyStrings.battery,
                     validator: /*viewModel.batteryImage.value == null ? ValidateInput.validateRequiredFields : */null,
                     showCursor: false,
                     isEnabled: false,
@@ -352,8 +352,8 @@ class EngineScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: viewModel.blowByBackCompressionController.value,
-                    labelText: "${MyStrings.blowByBackCompression}*",
-                    helperText: "${MyStrings.blowByBackCompression}*",
+                    labelText: MyStrings.blowByBackCompression,
+                    helperText: MyStrings.blowByBackCompression,
                     validator: /*viewModel.blowByBackCompressionImage.value == null ? ValidateInput.validateRequiredFields : */null,
                     showCursor: false,
                     isEnabled: false,
@@ -455,8 +455,8 @@ class EngineScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: viewModel.clutchOperationsController.value,
-                    labelText: "${MyStrings.clutchOperations}*",
-                    helperText: "${MyStrings.clutchOperations}*",
+                    labelText: MyStrings.clutchOperations,
+                    helperText: MyStrings.clutchOperations,
                     validator: /*viewModel.clutchOperationsImage.value == null ? ValidateInput.validateRequiredFields : */null,
                     showCursor: false,
                     isEnabled: false,
@@ -494,8 +494,8 @@ class EngineScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: viewModel.gearboxController.value,
-                    labelText: "${MyStrings.gearbox}*",
-                    helperText: "${MyStrings.gearbox}*",
+                    labelText: MyStrings.gearbox,
+                    helperText: MyStrings.gearbox,
                     validator: /*viewModel.gearBoxImage.value == null ? ValidateInput.validateRequiredFields : */null,
                     showCursor: false,
                     isEnabled: false,
@@ -533,8 +533,8 @@ class EngineScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: viewModel.engineOilController.value,
-                    labelText: "${MyStrings.engineOil}*",
-                    helperText: "${MyStrings.engineOil}*",
+                    labelText: MyStrings.engineOil,
+                    helperText: MyStrings.engineOil,
                     validator: /*viewModel.engineOilImage.value == null ? ValidateInput.validateRequiredFields :*/ null,
                     showCursor: false,
                     isEnabled: false,
@@ -679,8 +679,8 @@ class EngineScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: viewModel.sumpController.value,
-                    labelText: "${MyStrings.sump}*",
-                    helperText: "${MyStrings.sump}*",
+                    labelText: MyStrings.sump,
+                    helperText: MyStrings.sump,
                     validator: /*viewModel.sumpImage.value == null ? ValidateInput.validateRequiredFields : */null,
                     showCursor: false,
                     isEnabled: false,

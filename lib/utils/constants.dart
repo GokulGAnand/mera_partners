@@ -459,8 +459,8 @@ class Constants {
   static const List<String> bonnetPatti = ['Good', 'Scratched', 'Dent', 'Damaged', 'Repaired', 'Replaced', 'Rusted', 'Repainted', 'Other'];
   static const List<String> crossMember = ['Good', 'Damaged', 'Repaired', 'Replaced', 'Rusted', 'Repainted', 'Welded', 'Other'];
   static const List<String> apron = ['Good', 'Replaced', 'Repaired', 'Damaged', 'Rusted', 'Repainted', 'Other'];
-  static const List<String> cowlTop = ['Damaged', 'Repainted', 'Repaired', 'Rusted', 'Other'];
-  static const List<String> chassisExtension =  ['Welded', 'Replaced', 'Repaired', 'Damaged', 'Rusted', 'Other'];
+  static const List<String> cowlTop = ['Good', 'Damaged', 'Repainted', 'Repaired', 'Rusted', 'Other'];
+  static const List<String> chassisExtension =  ['Good', 'Welded', 'Replaced', 'Repaired', 'Damaged', 'Rusted', 'Other'];
   static const List<String> tyreWheelsCondition = ['0-5%', '5-25%', '25-50%', '50-75%', '75%-100%', 'Damaged', 'Other'];
   static const List<String> rhCondition = ['Good', 'Replaced', 'Repainted', 'Rusted', 'Scratched', 'Dented', 'Faded', 'Colour Mismatched', 'Other'];
   static const List<String> lhCondition = ['Good', 'Scratch', 'Dent', 'Damaged', 'Repaired', 'Missing', 'Rusted', 'Repainted', 'Other'];

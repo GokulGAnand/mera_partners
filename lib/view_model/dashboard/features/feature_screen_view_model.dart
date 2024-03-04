@@ -15,6 +15,7 @@ import '../../../service/exception_error_util.dart';
 import '../../../utils/strings.dart';
 import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
+import '../dashboard_view_model.dart';
 
 class FeatureViewModel extends GetxController{
   final Rx<PageController> pageController = PageController(initialPage: 0).obs;
@@ -106,9 +107,9 @@ class FeatureViewModel extends GetxController{
   Rx<File?> absEbdImage = Rx<File?>(null);
   Rx<File?> gloveBoxImage = Rx<File?>(null);
   Rx<File?> clusterImage = Rx<File?>(null);
-  var featuresResponse = featuresList().obs;
+  var featuresResponse = FeaturesList().obs;
 
-  var featureInfoResponse = featuresList().obs;
+  var featureInfoResponse = FeaturesList().obs;
   var id = Get.arguments ?? '';
 
   @override
@@ -191,6 +192,9 @@ class FeatureViewModel extends GetxController{
        ProgressBar.instance.stopProgressBar(Get.context!);
        log(response.stream.toString());
        CustomToast.instance.showMsg(MyStrings.success);
+       if (Get.isRegistered<DashBoardViewModel>()) {
+         Get.delete<DashBoardViewModel>();
+       }
        Get.offNamed(AppRoutes.dashBoardScreen);
      }
      else {
@@ -213,7 +217,7 @@ class FeatureViewModel extends GetxController{
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
         var data = await jsonDecode(response.body);
-        featureInfoResponse.value = featuresList.fromJson(data);
+        featureInfoResponse.value = FeaturesList.fromJson(data);
         loadData();
       }else{
         ProgressBar.instance.stopProgressBar(Get.context!);

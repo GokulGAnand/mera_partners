@@ -1,23 +1,23 @@
 import 'dart:convert';
 
-airconditininglist airconditininglistFromJson(String str) => airconditininglist.fromJson(json.decode(str));
+AirConditionResponse airConditionListFromJson(String str) => AirConditionResponse.fromJson(json.decode(str));
 
-String airconditininglistToJson(airconditininglist data) => json.encode(data.toJson());
+String airConditionListToJson(AirConditionResponse data) => json.encode(data.toJson());
 
-class airconditininglist {
+class AirConditionResponse {
     final String? status;
     final String? message;
     final List<Data>? data;
     final Meta? meta;
 
-    airconditininglist({
+    AirConditionResponse({
         this.status,
         this.message,
         this.data,
         this.meta,
     });
 
-    factory airconditininglist.fromJson(Map<String, dynamic> json) => airconditininglist(
+    factory AirConditionResponse.fromJson(Map<String, dynamic> json) => AirConditionResponse(
         status: json["status"],
         message: json["message"],
         data: json["data"] == null ? [] : List<Data>.from(json["data"]!.map((x) => Data.fromJson(x))),

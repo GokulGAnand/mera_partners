@@ -12,6 +12,7 @@ import '../../../model/response/testdrive/testdrive_response.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/strings.dart';
 import '../../../widgets/progressbar.dart';
+import '../dashboard_view_model.dart';
 
 class TestDriveViewModel extends GetxController {
 
@@ -93,6 +94,9 @@ class TestDriveViewModel extends GetxController {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body);
         CustomToast.instance.showMsg(MyStrings.success);
+        if (Get.isRegistered<DashBoardViewModel>()) {
+          Get.delete<DashBoardViewModel>();
+        }
         Get.offNamed(AppRoutes.dashBoardScreen);
       }else{
         ProgressBar.instance.stopProgressBar(Get.context!);
@@ -107,18 +111,18 @@ class TestDriveViewModel extends GetxController {
   @override
   void onInit() {
     log(id);
-    GetTestDriveInfo();
+    getTestDriveInfo();
     super.onInit();
   }
 
- var testDriveResponse = testdrivelist().obs;
+ var testDriveResponse = TestDriveList().obs;
 
-  void GetTestDriveInfo()async{
+  void getTestDriveInfo()async{
     // ProgressBar.instance.showProgressbar(Get.context!);
     try {
       var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.testDriveInfo}/${globals.carId}'),headers: globals.headers);
       if (response.statusCode ==200){
-            testDriveResponse.value = testdrivelist.fromJson(json.decode(response.body));
+            testDriveResponse.value = TestDriveList.fromJson(json.decode(response.body));
             log(response.body.toString());
             loaddata();
           }else{

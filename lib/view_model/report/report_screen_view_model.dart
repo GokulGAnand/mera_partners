@@ -53,7 +53,7 @@ class ReportScreenViewModel extends GetxController{
     List<String> urls = [];
 
     mainObject.forEach((key, value) {
-      if (value is Map<String, dynamic> && value.containsKey('url')) {
+      if (value is Map<String, dynamic> && value.containsKey('url') && value['url'] != null) {
         urls.add(value['url']);
       }
     });
@@ -71,10 +71,8 @@ void getReport() async {
       log(response.body);
       reportResponse.value = ReportResponse.fromJson(jsonDecode(response.body));
       if (reportResponse.value.data != null) {
-        extractUrls(reportResponse.value.data!.allCarInfo!.toJson());
         ratingList.value = [
                 Item(title: MyStrings.exterior, rating: reportResponse.value.data!.allCarInfo!.exteriorStar?.toDouble() ?? 0),
-                // Item(title: MyStrings.interior, rating: reportResponse.value.data!.allCarInfo!.interiorStar?.toDouble() ?? 0),
                 Item(title: MyStrings.engine, rating: reportResponse.value.data!.allCarInfo!.engineStar?.toDouble() ?? 0),
                 Item(title: MyStrings.interiorAndElectrical, rating: reportResponse.value.data!.allCarInfo!.interiorAndElectricalStar?.toDouble() ?? 0),
                 Item(title: MyStrings.test, rating: reportResponse.value.data!.allCarInfo!.testDriveStar?.toDouble() ?? 0),
@@ -228,6 +226,7 @@ void getReport() async {
           Master(title: MyStrings.fullBodyRepaint, value: reportResponse.value.data!.allCarInfo?.fullBodyRepaint ?? ''),
           Master(title: MyStrings.missingParts, value: reportResponse.value.data!.allCarInfo!.missingParts ?? ''),
         ];
+        extractUrls(reportResponse.value.data!.allCarInfo!.toJson());
         update();
         refresh();
         notifyChildrens();

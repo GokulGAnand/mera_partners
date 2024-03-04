@@ -1,23 +1,23 @@
 import 'dart:convert';
 
-featuresList featureslistFromJson(String str) => featuresList.fromJson(json.decode(str));
+FeaturesList featuresListFromJson(String str) => FeaturesList.fromJson(json.decode(str));
 
-String featureslistToJson(featuresList data) => json.encode(data.toJson());
+String featuresListToJson(FeaturesList data) => json.encode(data.toJson());
 
-class featuresList {
+class FeaturesList {
     final String? status;
     final String? message;
     final List<Data>? data;
     final Meta? meta;
 
-    featuresList({
+    FeaturesList({
         this.status,
         this.message,
         this.data,
         this.meta,
     });
 
-    factory featuresList.fromJson(Map<String, dynamic> json) => featuresList(
+    factory FeaturesList.fromJson(Map<String, dynamic> json) => FeaturesList(
         status: json["status"],
         message: json["message"],
         data: json["data"] == null ? [] : List<Data>.from(json["data"]!.map((x) => Data.fromJson(x))),

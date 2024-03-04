@@ -15,6 +15,7 @@ import 'package:http_parser/http_parser.dart';
 
 import '../../../utils/strings.dart';
 import '../../../widgets/progressbar.dart';
+import '../dashboard_view_model.dart';
 
 class InteriorViewModel extends GetxController {
   final GlobalKey<FormState> page1Key = GlobalKey<FormState>();
@@ -220,6 +221,9 @@ class InteriorViewModel extends GetxController {
         ProgressBar.instance.stopProgressBar(Get.context!);
             log(response.stream.toString());
         CustomToast.instance.showMsg(MyStrings.success);
+        if (Get.isRegistered<DashBoardViewModel>()) {
+          Get.delete<DashBoardViewModel>();
+        }
             Get.offNamed(AppRoutes.dashBoardScreen);
           } else {
         ProgressBar.instance.stopProgressBar(Get.context!);

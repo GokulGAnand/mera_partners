@@ -135,8 +135,8 @@ class DocumentScreen extends StatelessWidget {
                   height: Dimens.standard_24,
                 ),
                 Obx(() => CustomDropDown(
-                  hintText: "${MyStrings.interStateTransfer}*",
-                  label: viewModel.selectedInterStateTransfer.value.isEmpty ? null : "${MyStrings.interStateTransfer}*",
+                  hintText: MyStrings.interStateTransfer,
+                  label: viewModel.selectedInterStateTransfer.value.isEmpty ? null : MyStrings.interStateTransfer,
                   value: viewModel.selectedInterStateTransfer.value.isEmpty ? null : viewModel.selectedInterStateTransfer.value,
                   items: viewModel.yesNoList.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
@@ -151,9 +151,9 @@ class DocumentScreen extends StatelessWidget {
                     viewModel.selectedInterStateTransfer.value = value;
                   },
                   validator: (value) {
-                    if (value == null) {
+                    /*if (value == null) {
                       return MyStrings.required;
-                    }
+                    }*/
                     return null;
                   },
                 ),
@@ -162,8 +162,8 @@ class DocumentScreen extends StatelessWidget {
                   height: Dimens.standard_24,
                 ),
                   Obx(() => CustomDropDown(
-                    hintText: "${MyStrings.insurance}*",
-                    label: viewModel.selectedInsurance.value.isEmpty ? null : "${MyStrings.insurance}*",
+                    hintText: MyStrings.insurance,
+                    label: viewModel.selectedInsurance.value.isEmpty ? null : MyStrings.insurance,
                     value: viewModel.selectedInsurance.value.isEmpty ? null : viewModel.selectedInsurance.value,
                     items: viewModel.insuranceList.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
@@ -178,9 +178,9 @@ class DocumentScreen extends StatelessWidget {
                       viewModel.selectedInsurance.value = value;
                     },
                     validator: (value) {
-                      if (value == null) {
+                      /*if (value == null) {
                         return MyStrings.required;
-                      }
+                      }*/
                       return null;
                     },
                   ),
@@ -225,9 +225,9 @@ class DocumentScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: viewModel.insuranceValidityController.value,
-                    labelText: "${MyStrings.insuranceValidity}*",
-                    helperText: "${MyStrings.insuranceValidity}*",
-                    validator: ValidateInput.validateRequiredFields,
+                    labelText: MyStrings.insuranceValidity,
+                    helperText: MyStrings.insuranceValidity,
+                    validator: (p0) => null,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: InkWell(
@@ -258,8 +258,8 @@ class DocumentScreen extends StatelessWidget {
                   height: Dimens.standard_24,
                 ),
             Obx(() => CustomDropDown(
-              hintText: "${MyStrings.ncb}*",
-              label: viewModel.selectedNCB.value.isEmpty ? null : "${MyStrings.ncb}*",
+              hintText: MyStrings.ncb,
+              label: viewModel.selectedNCB.value.isEmpty ? null : MyStrings.ncb,
               value: viewModel.selectedNCB.value.isEmpty ? null : viewModel.selectedNCB.value,
               items: viewModel.yesNoList.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
@@ -274,9 +274,9 @@ class DocumentScreen extends StatelessWidget {
                 viewModel.selectedNCB.value = value;
               },
               validator: (value) {
-                if (value == null) {
+                /*if (value == null) {
                   return MyStrings.required;
-                }
+                }*/
                 return null;
               },
             ),),
@@ -388,8 +388,8 @@ class DocumentScreen extends StatelessWidget {
                 ),
                 if(viewModel.selectedUnderHypothecation.value == 'Yes')
                 Obx(() => CustomDropDown(
-                    hintText: "${MyStrings.loanNoc}*",
-                    label: viewModel.selectedLoanNoc.value.isEmpty ? null : "${MyStrings.loanNoc}*",
+                    hintText: MyStrings.loanNoc,
+                    label: viewModel.selectedLoanNoc.value.isEmpty ? null : MyStrings.loanNoc,
                     value: viewModel.selectedLoanNoc.value.isEmpty ? null : viewModel.selectedLoanNoc.value,
                     items: viewModel.yesNoList.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
@@ -404,9 +404,9 @@ class DocumentScreen extends StatelessWidget {
                       viewModel.selectedLoanNoc.value = value;
                     },
                     validator: (value) {
-                      if (value == null) {
+                      /*if (value == null) {
                         return MyStrings.required;
-                      }
+                      }*/
                       return null;
                     },
                   ),
@@ -448,8 +448,8 @@ class DocumentScreen extends StatelessWidget {
                   ),
                 if(viewModel.selectedUnderHypothecation.value == 'Yes')
                 Obx(() => CustomDropDown(
-                  hintText: "${MyStrings.form35}*",
-                  label: viewModel.selectedForm35.value.isEmpty ? null : "${MyStrings.form35}*",
+                  hintText: MyStrings.form35,
+                  label: viewModel.selectedForm35.value.isEmpty ? null : MyStrings.form35,
                   value: viewModel.selectedForm35.value.isEmpty ? null : viewModel.selectedForm35.value,
                   items: viewModel.yesNoList.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
@@ -464,9 +464,9 @@ class DocumentScreen extends StatelessWidget {
                     viewModel.selectedForm35.value = value;
                   },
                   validator: (value) {
-                    if (value == null) {
-                      return MyStrings.required;
-                    }
+                      /*if (value == null) {
+                        return MyStrings.required;
+                      }*/
                     return null;
                   },
                 ),
@@ -521,8 +521,8 @@ class DocumentScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
-                    labelText: "${MyStrings.chassisImpressionImage}*",
-                    helperText: "${MyStrings.chassisImpressionImage}*",
+                    labelText: MyStrings.chassisImpressionImage,
+                    helperText: MyStrings.chassisImpressionImage,
                     validator: /*viewModel.chassisImage.value == null ? ValidateInput.validateRequiredFields :*/ null,
                     showCursor: false,
                     isEnabled: false,
@@ -536,8 +536,8 @@ class DocumentScreen extends StatelessWidget {
                   height: Dimens.standard_24,
                 ),
                 Obx(() => CustomDropDown(
-                  hintText: "${MyStrings.rcMismatch}*",
-                  label: viewModel.selectedRcMismatch.value.isEmpty ? null : "${MyStrings.rcMismatch}*",
+                  hintText: MyStrings.rcMismatch,
+                  label: viewModel.selectedRcMismatch.value.isEmpty ? null : MyStrings.rcMismatch,
                   value: viewModel.selectedRcMismatch.value.isEmpty ? null : viewModel.selectedRcMismatch.value,
                   items: viewModel.yesNoList.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
@@ -552,9 +552,9 @@ class DocumentScreen extends StatelessWidget {
                     viewModel.selectedRcMismatch.value = value;
                   },
                   validator: (value) {
-                    if (value == null) {
+                    /*if (value == null) {
                       return MyStrings.required;
-                    }
+                    }*/
                     return null;
                   },
                 ),
@@ -563,8 +563,8 @@ class DocumentScreen extends StatelessWidget {
                   height: Dimens.standard_24,
                 ),
                 Obx(() => CustomDropDown(
-                  hintText: "${MyStrings.insuranceMismatch}*",
-                  label: viewModel.selectedInsuranceMismatch.value.isEmpty ? null : "${MyStrings.insuranceMismatch}*",
+                  hintText: MyStrings.insuranceMismatch,
+                  label: viewModel.selectedInsuranceMismatch.value.isEmpty ? null : MyStrings.insuranceMismatch,
                   value: viewModel.selectedInsuranceMismatch.value.isEmpty ? null : viewModel.selectedInsuranceMismatch.value,
                   items: viewModel.yesNoList.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
@@ -579,9 +579,9 @@ class DocumentScreen extends StatelessWidget {
                     viewModel.selectedInsuranceMismatch.value = value;
                   },
                   validator: (value) {
-                    if (value == null) {
+                    /*if (value == null) {
                       return MyStrings.required;
-                    }
+                    }*/
                     return null;
                   },
                 ),

@@ -14,6 +14,7 @@ import '../../../service/exception_error_util.dart';
 import '../../../utils/strings.dart';
 import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
+import '../dashboard_view_model.dart';
 
 
 class AirConditioningViewModel extends GetxController{
@@ -54,13 +55,13 @@ class AirConditioningViewModel extends GetxController{
   var id = Get.arguments ?? '';
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  var airConditionResponse = airconditininglist().obs;
+  var airConditionResponse = AirConditionResponse().obs;
 
 
   @override
   void onInit() {
     log(id);
-    getAcinfo();
+    getAcInfo();
     super.onInit();
   }
 
@@ -100,6 +101,9 @@ class AirConditioningViewModel extends GetxController{
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
         CustomToast.instance.showMsg(MyStrings.success);
+        if (Get.isRegistered<DashBoardViewModel>()) {
+          Get.delete<DashBoardViewModel>();
+        }
         Get.offNamed(AppRoutes.dashBoardScreen);
       } else{
         ProgressBar.instance.stopProgressBar(Get.context!);
@@ -112,10 +116,10 @@ class AirConditioningViewModel extends GetxController{
   }
 
 
-  void getAcinfo()async{
+  void getAcInfo()async{
     var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.acInfo}/${globals.carId}'),headers: globals.headers);
     if(response.statusCode == 200){
-      airConditionResponse.value = airconditininglist.fromJson(json.decode(response.body));
+      airConditionResponse.value = AirConditionResponse.fromJson(json.decode(response.body));
       log(response.body);
       loadData();
     }

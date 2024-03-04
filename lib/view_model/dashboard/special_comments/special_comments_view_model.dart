@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 import '../../../model/response/special_comments/special_comments_response.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/progressbar.dart';
+import '../dashboard_view_model.dart';
 
 class SpecialCommentsViewModel extends GetxController{
   Rx<TextEditingController> specialCommentsController = TextEditingController().obs;
@@ -22,7 +23,7 @@ class SpecialCommentsViewModel extends GetxController{
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
 
-  var specialResponse = specialcommentlist().obs;
+  var specialResponse = SpecialCommentList().obs;
 
 
   final Rx<PageController> pageController = PageController(initialPage: 1).obs;
@@ -51,6 +52,9 @@ class SpecialCommentsViewModel extends GetxController{
       if(response.statusCode== 200){
         ProgressBar.instance.stopProgressBar(Get.context!);
         // Get.back();
+        if (Get.isRegistered<DashBoardViewModel>()) {
+          Get.delete<DashBoardViewModel>();
+        }
             Get.offNamed(AppRoutes.dashBoardScreen);
           }else{
         ProgressBar.instance.stopProgressBar(Get.context!);
@@ -66,7 +70,7 @@ class SpecialCommentsViewModel extends GetxController{
      try {
        var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.specialComment}/${globals.carId}'),headers: globals.headers);
        if(response.statusCode ==200){
-              specialResponse.value = specialcommentlist.fromJson(json.decode(response.body));
+              specialResponse.value = SpecialCommentList.fromJson(json.decode(response.body));
               loaddata();
           }
        log(response.body);

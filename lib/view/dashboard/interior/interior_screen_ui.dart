@@ -549,9 +549,9 @@ class InteriorScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
-                    labelText: "${MyStrings.cngLpgKitImage}*",
-                    helperText: "${MyStrings.cngLpgKitImage}*",
-                    validator: viewModel.cngLpgKitImage.value == null ?ValidateInput.validateRequiredFields:null,
+                    labelText: MyStrings.cngLpgKitImage,
+                    helperText: MyStrings.cngLpgKitImage,
+                    validator: (p0) => null,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.cngLpgKitImage.value == null ?Padding(

@@ -33,6 +33,7 @@ class MyStrings {
   static const String registrationDate = "Registration Date";
   static const String next = "Next";
   static const String required = "Required";
+  static const String imageRequired = "Image required";
   static const String rcOwnerName = "RC Owner Name";
   static const String ownershipNumber = "Ownership Number";
   static const String regState = "Registration  State";

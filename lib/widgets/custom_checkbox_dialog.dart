@@ -8,7 +8,6 @@ import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/validate_input.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:evaluator_app/widgets/custom_text_form_field.dart';
-import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -57,7 +56,7 @@ class _CustomCheckBoxDialogState extends State<CustomCheckBoxDialog> {
       if (image == null) return;
       final imageTemp = File(image.path);
       log(imageTemp.toString());
-      this.widget.image!.value = imageTemp;
+      widget.image!.value = imageTemp;
     } on PlatformException catch (e) {
       if (kDebugMode) {
         print('Failed to pick image: $e');
@@ -382,7 +381,7 @@ class _CustomCheckBoxDialogState extends State<CustomCheckBoxDialog> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
               child: CustomElevatedButton(onPressed: () {
                 if (formKey.currentState!.validate()) {
-                  if((widget.selectItem.isNotEmpty && !widget.selectItem.contains("Good") && widget.image != null && widget.image!.value != null) || (widget.selectItem.isNotEmpty && widget.selectItem.contains("good") && widget.image != null && widget.image!.value == null)){
+                  /*if((widget.selectItem.isNotEmpty && !widget.selectItem.contains("Good") && widget.image != null && widget.image!.value != null) || (widget.selectItem.isNotEmpty && widget.selectItem.contains("good") && widget.image != null && widget.image!.value == null)){
                     if(widget.selectItem.contains(widget.othersController.value.text) == false){
                       widget.selectItem.add(widget.othersController.value.text);
                     }
@@ -396,7 +395,12 @@ class _CustomCheckBoxDialogState extends State<CustomCheckBoxDialog> {
                     }
                     widget.selectItem.remove("other");
                     Navigator.of(context).pop();
+                  }*/
+                  if(widget.selectItem.contains(widget.othersController.value.text) == false){
+                    widget.selectItem.add(widget.othersController.value.text);
                   }
+                  widget.selectItem.remove("other");
+                  Navigator.of(context).pop();
                 }
               }, buttonText: MyStrings.submit),
             ),

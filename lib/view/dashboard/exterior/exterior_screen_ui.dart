@@ -920,9 +920,11 @@ class ExteriorScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: viewModel.apronLHController.value,
-                    labelText: MyStrings.apronLH,
-                    helperText: MyStrings.apronLH,
-                    validator: (p0) => null,
+                    labelText: '${MyStrings.apronLH}*',
+                    helperText: '${MyStrings.apronLH}*',
+                    validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.apronLH.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -953,9 +955,11 @@ class ExteriorScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: viewModel.apronRHController.value,
-                    labelText: MyStrings.apronRH,
-                    helperText: MyStrings.apronRH,
-                    validator: (p0) => null,
+                    labelText: '${MyStrings.apronRH}*',
+                    helperText: '${MyStrings.apronRH}*',
+                    validator: (value) {
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.apronRH.value);
+                    },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
