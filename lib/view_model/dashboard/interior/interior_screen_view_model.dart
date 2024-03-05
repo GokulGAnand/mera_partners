@@ -288,7 +288,7 @@ class InteriorViewModel extends GetxController {
       
       selectPushButtonOnOff.value = interiorInfoResponse.value.data?[0].pushButton ?? '';
       selectDashboardSwitches.value = interiorInfoResponse.value.data?[0].dashboardSwitch??'';
-      if(dashboardSwitches.contains(selectDashboardSwitches.value)==false){
+      if(dashboardSwitches.contains(selectDashboardSwitches.value)==false  && selectDashboardSwitches.value.isNotEmpty){
         dashboardSwitchOtherController.value.text = selectDashboardSwitches.value;
         selectDashboardSwitches.value = MyStrings.other;
       }

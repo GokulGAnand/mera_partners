@@ -276,27 +276,27 @@ log(request.toString());
       selectedEngineSound.value = engineResponse.value.data?[0].engineSound ?? '';
 
       selectedSmoke.value = engineResponse.value.data?[0].exhaustSmoke ?? '';
-      if(smokeList.contains(selectedSmoke.value)==false){
+      if(smokeList.contains(selectedSmoke.value)==false && selectedSmoke.value.isNotEmpty){
         smokeOtherController.value.text = selectedSmoke.value;
         selectedSmoke.value = MyStrings.other;
       }
       selectedRadiator.value = engineResponse.value.data?[0].radiator ?? '';
-      if(radiatorList.contains(selectedRadiator.value)==false){
+      if(radiatorList.contains(selectedRadiator.value)==false && selectedRadiator.value.isNotEmpty){
         radiatorOtherController.value.text = selectedRadiator.value;
         selectedRadiator.value = MyStrings.other;
       }
       selectedStartingMotor.value = engineResponse.value.data?[0].startingMotor ?? '';
-      if(startMotorList.contains(selectedStartingMotor.value)==false){
+      if(startMotorList.contains(selectedStartingMotor.value)==false && selectedStartingMotor.value.isNotEmpty){
         startingMotorOtherController.value.text = selectedStartingMotor.value;
         selectedStartingMotor.value = MyStrings.other;
       }
       selectedCoolant.value = engineResponse.value.data?[0].coolant ?? '';
-      if(coolantList.contains(selectedCoolant.value)==false){
+      if(coolantList.contains(selectedCoolant.value)==false && selectedCoolant.value.isNotEmpty){
         coolantOtherController.value.text = selectedCoolant.value;
         selectedCoolant.value = MyStrings.other;
       }
       selectedSilencer.value = engineResponse.value.data?[0].silencer ?? '';
-      if(silencerList.contains(selectedSilencer.value)==false){
+      if(silencerList.contains(selectedSilencer.value)==false && selectedSilencer.value.isNotEmpty){
         silencerOtherController.value.text = selectedSilencer.value;
         selectedSilencer.value = MyStrings.other;
       }

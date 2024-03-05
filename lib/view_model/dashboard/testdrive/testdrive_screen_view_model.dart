@@ -140,7 +140,7 @@ class TestDriveViewModel extends GetxController {
       steeringWheelController.value.text = selectedSteeringWheel.join(",");
       selectedSteeringAdjustment.value = testDriveResponse.value.data?[0].steeringAdjustment?? '';
       selectedSteeringMounted.value = testDriveResponse.value.data?[0].steeringMountedAudioControl?? '';
-      if(steeringMountedAudioControlList.contains(selectedSteeringMounted.value)==false){
+      if(steeringMountedAudioControlList.contains(selectedSteeringMounted.value)==false && selectedSteeringMounted.value.isNotEmpty){
         steeringMountedAudioControlOtherController.value.text = selectedSteeringMounted.value;
         selectedSteeringMounted.value = MyStrings.other;
       }
@@ -149,12 +149,12 @@ class TestDriveViewModel extends GetxController {
       selectedSuspensionSystem.value = testDriveResponse.value.data?[0].suspension as List<String>;
       suspensionSystemController.value.text = selectedSuspensionSystem.join(",");
       selectedBrakes.value = testDriveResponse.value.data?[0].brakes?? '';
-      if(brakesList.contains(selectedBrakes.value)==false){
+      if(brakesList.contains(selectedBrakes.value)==false && selectedBrakes.value.isNotEmpty){
         brakesOtherController.value.text = selectedBrakes.value;
         selectedBrakes.value = MyStrings.other;
       }
       selectedCluthSystem.value = testDriveResponse.value.data?[0].clutchSystem?? '';
-      if(clutchSystemList.contains(selectedCluthSystem.value)==false){
+      if(clutchSystemList.contains(selectedCluthSystem.value)==false  && selectedCluthSystem.value.isNotEmpty){
         clutchSystemOtherController.value.text = selectedCluthSystem.value;
         selectedCluthSystem.value = MyStrings.other;
       }
