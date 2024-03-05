@@ -1,23 +1,23 @@
 import 'dart:convert';
 
-testdrivelist testdrivelistFromJson(String str) => testdrivelist.fromJson(json.decode(str));
+TestDriveList testDriveListFromJson(String str) => TestDriveList.fromJson(json.decode(str));
 
-String testdrivelistToJson(testdrivelist data) => json.encode(data.toJson());
+String testDriveListToJson(TestDriveList data) => json.encode(data.toJson());
 
-class testdrivelist {
+class TestDriveList {
     final String? status;
     final String? message;
     final List<Data>? data;
     final Meta? meta;
 
-    testdrivelist({
+    TestDriveList({
         this.status,
         this.message,
         this.data,
         this.meta,
     });
 
-    factory testdrivelist.fromJson(Map<String, dynamic> json) => testdrivelist(
+    factory TestDriveList.fromJson(Map<String, dynamic> json) => TestDriveList(
         status: json["status"],
         message: json["message"],
         data: json["data"] == null ? [] : List<Data>.from(json["data"]!.map((x) => Data.fromJson(x))),

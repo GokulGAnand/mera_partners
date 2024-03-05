@@ -88,9 +88,7 @@ class FeaturesScreen extends StatelessWidget {
                         controller: viewModel.stereoImageController.value,
                         labelText: "${MyStrings.stereoImage}*",
                         helperText: "${MyStrings.stereoImage}*",
-                        validator: (value) {
-                          return ValidateInput.validateRequiredFieldsImage(value, viewModel.stereoImage.value);
-                        },
+                        validator: ValidateInput.validateRequiredFields,
                         showCursor: false,
                         isEnabled: false,
                         suffixIcon: (viewModel.stereoImage.value == null) ?Padding(

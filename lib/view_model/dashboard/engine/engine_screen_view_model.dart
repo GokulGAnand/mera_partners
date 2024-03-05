@@ -14,6 +14,7 @@ import '../../../service/exception_error_util.dart';
 import '../../../utils/strings.dart';
 import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
+import '../dashboard_view_model.dart';
 
 class EngineViewModel extends GetxController {
   final GlobalKey<FormState> page1Key = GlobalKey<FormState>();
@@ -179,13 +180,15 @@ class EngineViewModel extends GetxController {
         'turboCharger_remarks':turboChargerRemarksController.value.text,
         'mount_remarks':engineMountRemarksController.value.text,
         'sump_remarks':sumpRemarksController.value.text,
+        'startVideo_condition[0]':'good'
       });
       if (engineCompartmentImage.value  != null && !engineCompartmentImage.value!.path.startsWith('http') && !engineCompartmentImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('engineCompartment', engineCompartmentImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
       if (engineIdleStartVideo.value  != null && !engineIdleStartVideo.value!.path.startsWith('http') && !engineIdleStartVideo.value!.path.startsWith('https')) {
         var type = engineIdleStartVideo.value!.path.split('.').last;
-        request.files.add(await http.MultipartFile.fromPath('startVideo', engineIdleStartVideo.value!.path,contentType: MediaType('image', type),));
+        log(type);
+        request.files.add(await http.MultipartFile.fromPath('startVideo', engineIdleStartVideo.value!.path,contentType: MediaType('video', type),));
       }
       if (engineImage.value  != null && !engineImage.value!.path.startsWith('http') && !engineImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('engine', engineImage.value!.path,contentType: MediaType('image', 'jpg'),));
@@ -221,11 +224,14 @@ class EngineViewModel extends GetxController {
       request.headers.addAll(globals.headers);
 log(request.toString());
       var response = await request.send();
-      log(await response.stream.bytesToString());
+      log(response.stream.toString());
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        log(await response.stream.bytesToString());
+        log(response.stream.toString());
         CustomToast.instance.showMsg(MyStrings.success);
+        if (Get.isRegistered<DashBoardViewModel>()) {
+          Get.delete<DashBoardViewModel>();
+        }
         Get.offNamed(AppRoutes.dashBoardScreen);
       }
       else {

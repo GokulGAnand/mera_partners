@@ -106,7 +106,7 @@ class NewEvaluationScreen extends StatelessWidget {
                   minLines: 3,
                   maxLines: 3,
                   inputFormatter: [
-                    LengthLimitingTextInputFormatter(Constants.maxInputLength),
+                    LengthLimitingTextInputFormatter(250),
                   ],
                   validator: (p0) => null,
                 ),
@@ -298,7 +298,7 @@ class NewEvaluationScreen extends StatelessWidget {
                     final selectedDate = await showDatePicker(
                       initialDate: DateTime.now(),
                       firstDate: DateTime(1990),
-                      lastDate: DateTime.now(),
+                      lastDate: DateTime(DateTime.now().year+20),
                       context: Get.context!,
                     );
                     if (selectedDate != null) {
@@ -802,78 +802,147 @@ class NewEvaluationScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Form(
             key: viewModel.page3Key,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-
-                Obx(
-                  () => CustomDropDown(
-                    hintText: "${MyStrings.vehicleUsage}*",
-                    label: viewModel.selectedVehicleUsage.value.isEmpty ? null : "${MyStrings.vehicleUsage}*",
-                    value: viewModel.selectedVehicleUsage.value.isEmpty ? null : viewModel.selectedVehicleUsage.value,
-                    items: viewModel.vehicleUsageList.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: MyStyles.dropdownMenuStyle,
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      viewModel.selectedVehicleUsage.value = value;
-                    },
-                    validator: (value) {
-                      if (value == null) {
-                        return MyStrings.required;
-                      }
-                      return null;
-                    },
+            child: Obx(
+                  () => Column(
+                children: [
+                  const SizedBox(
+                    height: 10,
                   ),
-                ),
-                SizedBox(
-                  height: Dimens.standard_24,
-                ),
-                MonthYearPicker(initialYear: DateTime.now().year, startYear: 1992, endYear: DateTime.now().year, month: 1),
-                /*GestureDetector(
-                  onTap: () {
-                    selectYear(Get.context);
-                  },
-                  child: CustomTextFormField(
-                    controller: viewModel.manufacturingYearController.value,
-                    labelText: "${MyStrings.manufacturingYear}*",
-                    helperText: "${MyStrings.manufacturingYear}*",
-                    validator: ValidateInput.validateRequiredFields,
-                    showCursor: false,
-                    isEnabled: false,
-                    suffixIcon: InkWell(
-                      onTap: () async {
-                        selectYear(Get.context);
+
+                  Obx(
+                    () => CustomDropDown(
+                      hintText: "${MyStrings.vehicleUsage}*",
+                      label: viewModel.selectedVehicleUsage.value.isEmpty ? null : "${MyStrings.vehicleUsage}*",
+                      value: viewModel.selectedVehicleUsage.value.isEmpty ? null : viewModel.selectedVehicleUsage.value,
+                      items: viewModel.vehicleUsageList.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: MyStyles.dropdownMenuStyle,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        viewModel.selectedVehicleUsage.value = value;
                       },
-                      child: const Icon(
-                        Icons.calendar_today_outlined,
-                        color: MyColors.grey,
-                        size: 22,
-                      ),
+                      validator: (value) {
+                        if (value == null) {
+                          return MyStrings.required;
+                        }
+                        return null;
+                      },
                     ),
                   ),
-                ),*/
-                SizedBox(
-                  height: Dimens.standard_24,
-                ),
-                /*if( viewModel.carMakeList.isNotEmpty)
-                  Obx(() => CustomDropDown(
-                    hintText: "${MyStrings.carMake}*",
-                    label: viewModel.selectedMake.value.document?.make == null
+                  SizedBox(
+                    height: Dimens.standard_24,
+                  ),
+                  MonthYearPicker(initialYear: DateTime.now().year, startYear: 1992, endYear: DateTime.now().year, month: 1),
+                  /*GestureDetector(
+                    onTap: () {
+                      selectYear(Get.context);
+                    },
+                    child: CustomTextFormField(
+                      controller: viewModel.manufacturingYearController.value,
+                      labelText: "${MyStrings.manufacturingYear}*",
+                      helperText: "${MyStrings.manufacturingYear}*",
+                      validator: ValidateInput.validateRequiredFields,
+                      showCursor: false,
+                      isEnabled: false,
+                      suffixIcon: InkWell(
+                        onTap: () async {
+                          selectYear(Get.context);
+                        },
+                        child: const Icon(
+                          Icons.calendar_today_outlined,
+                          color: MyColors.grey,
+                          size: 22,
+                        ),
+                      ),
+                    ),
+                  ),*/
+                  SizedBox(
+                    height: Dimens.standard_24,
+                  ),
+                  /*if( viewModel.carMakeList.isNotEmpty)
+                    Obx(() => CustomDropDown(
+                      hintText: "${MyStrings.carMake}*",
+                      label: viewModel.selectedMake.value.document?.make == null
+                          ? null
+                          : "${MyStrings.carMake}*",
+                      value: viewModel.selectedMake.value.document?.make == null
+                          ? null
+                          : viewModel.selectedMake.value,
+                      items: viewModel.carMakeList.cast<DropdownMenuItem<Object?>>(),
+                      onChanged: viewModel.onChangeCarMake,
+                      validator: (value) {
+                        if (value == null) {
+                          return MyStrings.required;
+                        }
+                        return null;
+                      },
+                    ),
+                    ),*/
+                  if (viewModel.makeList.isNotEmpty)
+                    Autocomplete<String>(
+                      optionsBuilder: (TextEditingValue textEditingValue) {
+                        if (textEditingValue.text == '') {
+                          return viewModel.makeList;
+                        }
+                        return viewModel.makeList.where((String option) {
+                          return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
+                        });
+                      },
+                      onSelected: viewModel.onChangeCarMake,
+                      fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
+                        return TextFormField(
+                          controller: textEditingController,
+                          focusNode: focusNode,
+                          validator: ValidateInput.validateRequiredFields,
+                          decoration: const InputDecoration(
+                            helperStyle: TextStyle(color: MyColors.black),
+                            contentPadding: EdgeInsets.fromLTRB(16.0, 18.0, 0.0, 18.0),
+                            hintText: '${MyStrings.carMake}*',
+                            labelText: '${MyStrings.carMake}*',
+                            filled: true,
+                            fillColor: MyColors.white,
+                            hintStyle: TextStyle(color: MyColors.greyMedium, fontSize: 16, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400
+                                // fontSize:10,
+                                ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: MyColors.grey),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(4.0),
+                              ),
+                            ),
+                            focusColor: MyColors.red,
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                              borderSide: BorderSide(color: MyColors.grey, width: 2),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                              borderSide: BorderSide(color: MyColors.grey),
+                            ),
+                            labelStyle: TextStyle(height: 0.5, color: MyColors.blue, fontSize: 15, fontWeight: FontWeight.w500, fontStyle: FontStyle.normal),
+                          ),
+                        );
+                      },
+                    ),
+                  SizedBox(
+                    height: Dimens.standard_24,
+                  ),
+                  // if( viewModel.carModelList.isNotEmpty)
+                  /*Obx(() => CustomDropDown(
+                    hintText: "${MyStrings.carModel}*",
+                    label: viewModel.selectedModel.value.model == null
                         ? null
-                        : "${MyStrings.carMake}*",
-                    value: viewModel.selectedMake.value.document?.make == null
+                        : "${MyStrings.carModel}*",
+                    value: viewModel.selectedModel.value.make == null
                         ? null
-                        : viewModel.selectedMake.value,
-                    items: viewModel.carMakeList.cast<DropdownMenuItem<Object?>>(),
-                    onChanged: viewModel.onChangeCarMake,
+                        : viewModel.selectedModel.value,
+                    items: viewModel.carModelList.cast<DropdownMenuItem<Object?>>(),
+                    onChanged: viewModel.onChangeCarModel,
                     validator: (value) {
                       if (value == null) {
                         return MyStrings.required;
@@ -882,17 +951,16 @@ class NewEvaluationScreen extends StatelessWidget {
                     },
                   ),
                   ),*/
-                if (viewModel.makeList.isNotEmpty)
                   Autocomplete<String>(
                     optionsBuilder: (TextEditingValue textEditingValue) {
                       if (textEditingValue.text == '') {
-                        return viewModel.makeList;
+                        return viewModel.modelList;
                       }
-                      return viewModel.makeList.where((String option) {
-                        return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
+                      return viewModel.modelList.where((String option) {
+                        return option.contains(textEditingValue.text.toLowerCase());
                       });
                     },
-                    onSelected: viewModel.onChangeCarMake,
+                    onSelected: viewModel.onChangeCarModel,
                     fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
                       return TextFormField(
                         controller: textEditingController,
@@ -901,8 +969,8 @@ class NewEvaluationScreen extends StatelessWidget {
                         decoration: const InputDecoration(
                           helperStyle: TextStyle(color: MyColors.black),
                           contentPadding: EdgeInsets.fromLTRB(16.0, 18.0, 0.0, 18.0),
-                          hintText: '${MyStrings.carMake}*',
-                          labelText: '${MyStrings.carMake}*',
+                          hintText: '${MyStrings.carModel}*',
+                          labelText: '${MyStrings.carModel}*',
                           filled: true,
                           fillColor: MyColors.white,
                           hintStyle: TextStyle(color: MyColors.greyMedium, fontSize: 16, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400
@@ -928,163 +996,64 @@ class NewEvaluationScreen extends StatelessWidget {
                       );
                     },
                   ),
-                SizedBox(
-                  height: Dimens.standard_24,
-                ),
-                // if( viewModel.carModelList.isNotEmpty)
-                /*Obx(() => CustomDropDown(
-                  hintText: "${MyStrings.carModel}*",
-                  label: viewModel.selectedModel.value.model == null
-                      ? null
-                      : "${MyStrings.carModel}*",
-                  value: viewModel.selectedModel.value.make == null
-                      ? null
-                      : viewModel.selectedModel.value,
-                  items: viewModel.carModelList.cast<DropdownMenuItem<Object?>>(),
-                  onChanged: viewModel.onChangeCarModel,
-                  validator: (value) {
-                    if (value == null) {
-                      return MyStrings.required;
-                    }
-                    return null;
-                  },
-                ),
-                ),*/
-                Autocomplete<String>(
-                  optionsBuilder: (TextEditingValue textEditingValue) {
-                    if (textEditingValue.text == '') {
-                      return viewModel.modelList;
-                    }
-                    return viewModel.modelList.where((String option) {
-                      return option.contains(textEditingValue.text.toLowerCase());
-                    });
-                  },
-                  onSelected: viewModel.onChangeCarModel,
-                  fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
-                    return TextFormField(
-                      controller: textEditingController,
-                      focusNode: focusNode,
-                      validator: ValidateInput.validateRequiredFields,
-                      decoration: const InputDecoration(
-                        helperStyle: TextStyle(color: MyColors.black),
-                        contentPadding: EdgeInsets.fromLTRB(16.0, 18.0, 0.0, 18.0),
-                        hintText: '${MyStrings.carModel}*',
-                        labelText: '${MyStrings.carModel}*',
-                        filled: true,
-                        fillColor: MyColors.white,
-                        hintStyle: TextStyle(color: MyColors.greyMedium, fontSize: 16, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400
-                            // fontSize:10,
+                  SizedBox(
+                    height: Dimens.standard_24,
+                  ),
+                  Autocomplete<String>(
+                    optionsBuilder: (TextEditingValue textEditingValue) {
+                      if (textEditingValue.text == '') {
+                        return viewModel.variantList;
+                      }
+                      return viewModel.variantList.where((String option) {
+                        return option.contains(textEditingValue.text.toLowerCase());
+                      });
+                    },
+                    onSelected: viewModel.onChangeCarVariant,
+                    fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
+                      return TextFormField(
+                        controller: textEditingController,
+                        focusNode: focusNode,
+                        validator: ValidateInput.validateRequiredFields,
+                        decoration: const InputDecoration(
+                          helperStyle: TextStyle(color: MyColors.black),
+                          contentPadding: EdgeInsets.fromLTRB(16.0, 18.0, 0.0, 18.0),
+                          hintText: '${MyStrings.variant}*',
+                          labelText: '${MyStrings.variant}*',
+                          filled: true,
+                          fillColor: MyColors.white,
+                          hintStyle: TextStyle(color: MyColors.greyMedium, fontSize: 16, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400
+                              // fontSize:10,
+                              ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: MyColors.grey),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(4.0),
                             ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: MyColors.grey),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(4.0),
                           ),
-                        ),
-                        focusColor: MyColors.red,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: MyColors.grey, width: 2),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: MyColors.grey),
-                        ),
-                        labelStyle: TextStyle(height: 0.5, color: MyColors.blue, fontSize: 15, fontWeight: FontWeight.w500, fontStyle: FontStyle.normal),
-                      ),
-                    );
-                  },
-                ),
-                SizedBox(
-                  height: Dimens.standard_24,
-                ),
-                Autocomplete<String>(
-                  optionsBuilder: (TextEditingValue textEditingValue) {
-                    if (textEditingValue.text == '') {
-                      return viewModel.variantList;
-                    }
-                    return viewModel.variantList.where((String option) {
-                      return option.contains(textEditingValue.text.toLowerCase());
-                    });
-                  },
-                  onSelected: viewModel.onChangeCarVariant,
-                  fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
-                    return TextFormField(
-                      controller: textEditingController,
-                      focusNode: focusNode,
-                      validator: ValidateInput.validateRequiredFields,
-                      decoration: const InputDecoration(
-                        helperStyle: TextStyle(color: MyColors.black),
-                        contentPadding: EdgeInsets.fromLTRB(16.0, 18.0, 0.0, 18.0),
-                        hintText: '${MyStrings.variant}*',
-                        labelText: '${MyStrings.variant}*',
-                        filled: true,
-                        fillColor: MyColors.white,
-                        hintStyle: TextStyle(color: MyColors.greyMedium, fontSize: 16, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400
-                            // fontSize:10,
-                            ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: MyColors.grey),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(4.0),
+                          focusColor: MyColors.red,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                            borderSide: BorderSide(color: MyColors.grey, width: 2),
                           ),
-                        ),
-                        focusColor: MyColors.red,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: MyColors.grey, width: 2),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: MyColors.grey),
-                        ),
-                        labelStyle: TextStyle(height: 0.5, color: MyColors.blue, fontSize: 15, fontWeight: FontWeight.w500, fontStyle: FontStyle.normal),
-                      ),
-                    );
-                  },
-                ),
-                /*Obx(() => CustomDropDown(
-                  hintText: "${MyStrings.variant}*",
-                  label: viewModel.selectedVariant.value.variant == null
-                      ? null
-                      : "${MyStrings.variant}*",
-                  value: viewModel.selectedVariant.value.variant == null
-                      ? null
-                      : viewModel.selectedVariant.value,
-                  items: viewModel.carVariantList.cast<DropdownMenuItem<Object?>>(),
-                  onChanged: viewModel.onChangeCarVariant,
-                  validator: (value) {
-                    if (value == null) {
-                      return MyStrings.required;
-                    }
-                    return null;
-                  },
-                ),
-                ),*/
-                SizedBox(
-                  height: Dimens.standard_24,
-                ),
-                /*Obx(() => CustomDropDown(
-                    hintText: "${MyStrings.color}*",
-                    label: viewModel.selectedColor.value.isEmpty
-                        ? null
-                        : "${MyStrings.color}*",
-                    value: viewModel.selectedColor.value.isEmpty
-                        ? null
-                        : viewModel.selectedColor.value,
-                    items: viewModel.colorList
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: MyStyles.dropdownMenuStyle,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                            borderSide: BorderSide(color: MyColors.grey),
+                          ),
+                          labelStyle: TextStyle(height: 0.5, color: MyColors.blue, fontSize: 15, fontWeight: FontWeight.w500, fontStyle: FontStyle.normal),
                         ),
                       );
-                    }).toList(),
-                    onChanged: (value) {
-                      viewModel.selectedColor.value = value;
                     },
+                  ),
+                  /*Obx(() => CustomDropDown(
+                    hintText: "${MyStrings.variant}*",
+                    label: viewModel.selectedVariant.value.variant == null
+                        ? null
+                        : "${MyStrings.variant}*",
+                    value: viewModel.selectedVariant.value.variant == null
+                        ? null
+                        : viewModel.selectedVariant.value,
+                    items: viewModel.carVariantList.cast<DropdownMenuItem<Object?>>(),
+                    onChanged: viewModel.onChangeCarVariant,
                     validator: (value) {
                       if (value == null) {
                         return MyStrings.required;
@@ -1092,301 +1061,334 @@ class NewEvaluationScreen extends StatelessWidget {
                       return null;
                     },
                   ),
-                ),*/
-                Autocomplete<String>(
-                  optionsBuilder: (TextEditingValue textEditingValue) {
-                    if (textEditingValue.text == '') {
-                      return viewModel.colorList;
-                    }
-                    return viewModel.colorList.where((String option) {
-                      return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
-                    });
-                  },
-                  onSelected: (option) {
-                    viewModel.selectedColor.value = option;
-                  },
-                  fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
-                    return TextFormField(
-                      controller: textEditingController,
-                      focusNode: focusNode,
-                      validator: ValidateInput.validateRequiredFields,
-                      decoration: const InputDecoration(
-                        helperStyle: TextStyle(color: MyColors.black),
-                        contentPadding: EdgeInsets.fromLTRB(16.0, 18.0, 0.0, 18.0),
-                        hintText: '${MyStrings.color}*',
-                        labelText: '${MyStrings.color}*',
-                        filled: true,
-                        fillColor: MyColors.white,
-                        hintStyle: TextStyle(color: MyColors.greyMedium, fontSize: 16, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400
-                            // fontSize:10,
-                            ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: MyColors.grey),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(4.0),
+                  ),*/
+                  SizedBox(
+                    height: Dimens.standard_24,
+                  ),
+                  /*Obx(() => CustomDropDown(
+                      hintText: "${MyStrings.color}*",
+                      label: viewModel.selectedColor.value.isEmpty
+                          ? null
+                          : "${MyStrings.color}*",
+                      value: viewModel.selectedColor.value.isEmpty
+                          ? null
+                          : viewModel.selectedColor.value,
+                      items: viewModel.colorList
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: MyStyles.dropdownMenuStyle,
                           ),
-                        ),
-                        focusColor: MyColors.red,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: MyColors.grey, width: 2),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: MyColors.grey),
-                        ),
-                        labelStyle: TextStyle(height: 0.5, color: MyColors.blue, fontSize: 15, fontWeight: FontWeight.w500, fontStyle: FontStyle.normal),
-                      ),
-                    );
-                  },
-                ),
-                SizedBox(
-                  height: Dimens.standard_24,
-                ),
-                Autocomplete<String>(
-                  optionsBuilder: (TextEditingValue textEditingValue) {
-                    if (textEditingValue.text == '') {
-                      return viewModel.bodyTypeList;
-                    }
-                    return viewModel.bodyTypeList.where((String option) {
-                      return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
-                    });
-                  },
-                  onSelected: (option) {
-                    viewModel.selectedBodyType.value = option;
-                  },
-                  fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
-                    return TextFormField(
-                      controller: textEditingController,
-                      focusNode: focusNode,
-                      validator: ValidateInput.validateRequiredFields,
-                      decoration: const InputDecoration(
-                        helperStyle: TextStyle(color: MyColors.black),
-                        contentPadding: EdgeInsets.fromLTRB(16.0, 18.0, 0.0, 18.0),
-                        hintText: '${MyStrings.bodyType}*',
-                        labelText: '${MyStrings.bodyType}*',
-                        filled: true,
-                        fillColor: MyColors.white,
-                        hintStyle: TextStyle(color: MyColors.greyMedium, fontSize: 16, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400
-                            // fontSize:10,
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        viewModel.selectedColor.value = value;
+                      },
+                      validator: (value) {
+                        if (value == null) {
+                          return MyStrings.required;
+                        }
+                        return null;
+                      },
+                    ),
+                  ),*/
+                  Autocomplete<String>(
+                    optionsBuilder: (TextEditingValue textEditingValue) {
+                      if (textEditingValue.text == '') {
+                        return viewModel.colorList;
+                      }
+                      return viewModel.colorList.where((String option) {
+                        return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
+                      });
+                    },
+                    onSelected: (option) {
+                      viewModel.selectedColor.value = option;
+                    },
+                    fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
+                      return TextFormField(
+                        controller: textEditingController,
+                        focusNode: focusNode,
+                        validator: ValidateInput.validateRequiredFields,
+                        decoration: const InputDecoration(
+                          helperStyle: TextStyle(color: MyColors.black),
+                          contentPadding: EdgeInsets.fromLTRB(16.0, 18.0, 0.0, 18.0),
+                          hintText: '${MyStrings.color}*',
+                          labelText: '${MyStrings.color}*',
+                          filled: true,
+                          fillColor: MyColors.white,
+                          hintStyle: TextStyle(color: MyColors.greyMedium, fontSize: 16, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400
+                              // fontSize:10,
+                              ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: MyColors.grey),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(4.0),
                             ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: MyColors.grey),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(4.0),
                           ),
-                        ),
-                        focusColor: MyColors.red,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: MyColors.grey, width: 2),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: MyColors.grey),
-                        ),
-                        labelStyle: TextStyle(height: 0.5, color: MyColors.blue, fontSize: 15, fontWeight: FontWeight.w500, fontStyle: FontStyle.normal),
-                      ),
-                    );
-                  },
-                ),
-                /*Obx(
-                  () => CustomDropDown(
-                    hintText: "${MyStrings.bodyType}*",
-                    label: viewModel.selectedBodyType.value.isEmpty
-                        ? null
-                        : "${MyStrings.bodyType}*",
-                    value: viewModel.selectedBodyType.value.isEmpty
-                        ? null
-                        : viewModel.selectedBodyType.value,
-                    items: viewModel.bodyTypeList
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: MyStyles.dropdownMenuStyle,
+                          focusColor: MyColors.red,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                            borderSide: BorderSide(color: MyColors.grey, width: 2),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                            borderSide: BorderSide(color: MyColors.grey),
+                          ),
+                          labelStyle: TextStyle(height: 0.5, color: MyColors.blue, fontSize: 15, fontWeight: FontWeight.w500, fontStyle: FontStyle.normal),
                         ),
                       );
-                    }).toList(),
-                    onChanged: (value) {
-                      viewModel.selectedBodyType.value = value;
-                    },
-                    validator: (value) {
-                      if (value == null) {
-                        return MyStrings.required;
-                      }
-                      return null;
                     },
                   ),
-                ),*/
-                SizedBox(
-                  height: Dimens.standard_24,
-                ),
-                /*Obx(
-                  () => CustomDropDown(
-                    hintText: MyStrings.seats,
-                    label: viewModel.selectedSeats.value.isEmpty
-                        ? null
-                        : MyStrings.seats,
-                    value: viewModel.selectedSeats.value.isEmpty
-                        ? null
-                        : viewModel.selectedSeats.value,
-                    items: viewModel.seatList
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: MyStyles.dropdownMenuStyle,
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      viewModel.selectedSeats.value = value;
-                    },
-                    validator: (value) {
-                      if (value == null) {
-                        return MyStrings.required;
-                      }
-                      return null;
-                    },
+                  SizedBox(
+                    height: Dimens.standard_24,
                   ),
-                ),*/
-                Autocomplete<String>(
-                  optionsBuilder: (TextEditingValue textEditingValue) {
-                    if (textEditingValue.text == '') {
-                      return viewModel.seatList;
-                    }
-                    return viewModel.seatList.where((String option) {
-                      return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
-                    });
-                  },
-                  onSelected: (option) {
-                    viewModel.selectedSeats.value = option;
-                  },
-                  fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
-                    return TextFormField(
-                      controller: textEditingController,
-                      focusNode: focusNode,
-                      validator: (value) => null,
-                      decoration: const InputDecoration(
-                        helperStyle: TextStyle(color: MyColors.black),
-                        contentPadding: EdgeInsets.fromLTRB(16.0, 18.0, 0.0, 18.0),
-                        hintText: MyStrings.seats,
-                        labelText: MyStrings.seats,
-                        filled: true,
-                        fillColor: MyColors.white,
-                        hintStyle: TextStyle(color: MyColors.greyMedium, fontSize: 16, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400
-                            // fontSize:10,
+                  Autocomplete<String>(
+                    optionsBuilder: (TextEditingValue textEditingValue) {
+                      if (textEditingValue.text == '') {
+                        return viewModel.bodyTypeList;
+                      }
+                      return viewModel.bodyTypeList.where((String option) {
+                        return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
+                      });
+                    },
+                    onSelected: (option) {
+                      viewModel.selectedBodyType.value = option;
+                    },
+                    fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
+                      return TextFormField(
+                        controller: textEditingController,
+                        focusNode: focusNode,
+                        validator: ValidateInput.validateRequiredFields,
+                        decoration: const InputDecoration(
+                          helperStyle: TextStyle(color: MyColors.black),
+                          contentPadding: EdgeInsets.fromLTRB(16.0, 18.0, 0.0, 18.0),
+                          hintText: '${MyStrings.bodyType}*',
+                          labelText: '${MyStrings.bodyType}*',
+                          filled: true,
+                          fillColor: MyColors.white,
+                          hintStyle: TextStyle(color: MyColors.greyMedium, fontSize: 16, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400
+                              // fontSize:10,
+                              ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: MyColors.grey),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(4.0),
                             ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: MyColors.grey),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(4.0),
                           ),
-                        ),
-                        focusColor: MyColors.red,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: MyColors.grey, width: 2),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          borderSide: BorderSide(color: MyColors.grey),
-                        ),
-                        labelStyle: TextStyle(height: 0.5, color: MyColors.blue, fontSize: 15, fontWeight: FontWeight.w500, fontStyle: FontStyle.normal),
-                      ),
-                    );
-                  },
-                ),
-                SizedBox(
-                  height: Dimens.standard_24,
-                ),
-                Obx(
-                  () => CustomDropDown(
-                    hintText: '${MyStrings.duplicateKey}*',
-                    label: viewModel.selectedDupKey.value.isEmpty ? null : '${MyStrings.duplicateKey}*',
-                    value: viewModel.selectedDupKey.value.isEmpty ? null : viewModel.selectedDupKey.value,
-                    items: viewModel.duplicateKeyList.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: MyStyles.dropdownMenuStyle,
+                          focusColor: MyColors.red,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                            borderSide: BorderSide(color: MyColors.grey, width: 2),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                            borderSide: BorderSide(color: MyColors.grey),
+                          ),
+                          labelStyle: TextStyle(height: 0.5, color: MyColors.blue, fontSize: 15, fontWeight: FontWeight.w500, fontStyle: FontStyle.normal),
                         ),
                       );
-                    }).toList(),
-                    onChanged: (value) {
-                      viewModel.selectedDupKey.value = value;
-                    },
-                    validator: (value) {
-                      if (value == null) {
-                        return MyStrings.required;
-                      }
-                      return null;
                     },
                   ),
-                ),
-                /*SizedBox(
-                  height: Dimens.standard_24,
-                ),
-                Obx(
-                  () => CustomDropDown(
-                    hintText: "${MyStrings.ccClass}*",
-                    label: viewModel.selectedCCClass.value.isEmpty
-                        ? null
-                        : "${MyStrings.ccClass}*",
-                    value: viewModel.selectedCCClass.value.isEmpty
-                        ? null
-                        : viewModel.selectedCCClass.value,
-                    items: viewModel.ccClassList
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: MyStyles.dropdownMenuStyle,
+                  /*Obx(
+                    () => CustomDropDown(
+                      hintText: "${MyStrings.bodyType}*",
+                      label: viewModel.selectedBodyType.value.isEmpty
+                          ? null
+                          : "${MyStrings.bodyType}*",
+                      value: viewModel.selectedBodyType.value.isEmpty
+                          ? null
+                          : viewModel.selectedBodyType.value,
+                      items: viewModel.bodyTypeList
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: MyStyles.dropdownMenuStyle,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        viewModel.selectedBodyType.value = value;
+                      },
+                      validator: (value) {
+                        if (value == null) {
+                          return MyStrings.required;
+                        }
+                        return null;
+                      },
+                    ),
+                  ),*/
+                  SizedBox(
+                    height: Dimens.standard_24,
+                  ),
+                  /*Obx(
+                    () => CustomDropDown(
+                      hintText: MyStrings.seats,
+                      label: viewModel.selectedSeats.value.isEmpty
+                          ? null
+                          : MyStrings.seats,
+                      value: viewModel.selectedSeats.value.isEmpty
+                          ? null
+                          : viewModel.selectedSeats.value,
+                      items: viewModel.seatList
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: MyStyles.dropdownMenuStyle,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        viewModel.selectedSeats.value = value;
+                      },
+                      validator: (value) {
+                        if (value == null) {
+                          return MyStrings.required;
+                        }
+                        return null;
+                      },
+                    ),
+                  ),*/
+                  Autocomplete<String>(
+                    optionsBuilder: (TextEditingValue textEditingValue) {
+                      if (textEditingValue.text == '') {
+                        return viewModel.seatList;
+                      }
+                      return viewModel.seatList.where((String option) {
+                        return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
+                      });
+                    },
+                    onSelected: (option) {
+                      viewModel.selectedSeats.value = option;
+                    },
+                    fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
+                      return TextFormField(
+                        controller: textEditingController,
+                        focusNode: focusNode,
+                        validator: (value) => null,
+                        decoration: const InputDecoration(
+                          helperStyle: TextStyle(color: MyColors.black),
+                          contentPadding: EdgeInsets.fromLTRB(16.0, 18.0, 0.0, 18.0),
+                          hintText: MyStrings.seats,
+                          labelText: MyStrings.seats,
+                          filled: true,
+                          fillColor: MyColors.white,
+                          hintStyle: TextStyle(color: MyColors.greyMedium, fontSize: 16, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400
+                              // fontSize:10,
+                              ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: MyColors.grey),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(4.0),
+                            ),
+                          ),
+                          focusColor: MyColors.red,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                            borderSide: BorderSide(color: MyColors.grey, width: 2),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                            borderSide: BorderSide(color: MyColors.grey),
+                          ),
+                          labelStyle: TextStyle(height: 0.5, color: MyColors.blue, fontSize: 15, fontWeight: FontWeight.w500, fontStyle: FontStyle.normal),
                         ),
                       );
-                    }).toList(),
-                    onChanged: (value) {
-                      viewModel.selectedCCClass.value = value;
-                    },
-                    validator: (value) {
-                      if (value == null) {
-                        return MyStrings.required;
-                      }
-                      return null;
                     },
                   ),
-                ),*/
-
-                SizedBox(
-                  height: Dimens.standard_48,
-                ),
-                SizedBox(
-                  height: 70,
-                  child: Center(
-                    child: CustomElevatedButton(
-                      onPressed: /*viewModel.selectedVehicleUsage.value.isNotEmpty *//*&& viewModel.manufacturingYearController.value.text.isNotEmpty && viewModel.selectedMake.value.isNotEmpty && viewModel.selectedVariant.value.isNotEmpty && viewModel.selectedColor.value.isNotEmpty && viewModel.selectedBodyType.value.isNotEmpty && viewModel.selectedDupKey.value.isNotEmpty*//*
-                          ?*/ () {
-                              if (viewModel.page3Key.currentState!.validate()) {
-                                viewModel.isPage3Fill.value = true;
-                                viewModel.page3Key.currentState!.save();
-                                viewModel.pageController.value.animateToPage(
-                                  3,
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.linear,
-                                );
-                              }
-                            }
-                          /*: null*/,
-                      buttonText: MyStrings.next,
+                  SizedBox(
+                    height: Dimens.standard_24,
+                  ),
+                  Obx(
+                    () => CustomDropDown(
+                      hintText: '${MyStrings.duplicateKey}*',
+                      label: viewModel.selectedDupKey.value.isEmpty ? null : '${MyStrings.duplicateKey}*',
+                      value: viewModel.selectedDupKey.value.isEmpty ? null : viewModel.selectedDupKey.value,
+                      items: viewModel.duplicateKeyList.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: MyStyles.dropdownMenuStyle,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        viewModel.selectedDupKey.value = value;
+                      },
+                      validator: (value) {
+                        if (value == null) {
+                          return MyStrings.required;
+                        }
+                        return null;
+                      },
                     ),
                   ),
-                ),
-              ],
+                  /*SizedBox(
+                    height: Dimens.standard_24,
+                  ),
+                  Obx(
+                    () => CustomDropDown(
+                      hintText: "${MyStrings.ccClass}*",
+                      label: viewModel.selectedCCClass.value.isEmpty
+                          ? null
+                          : "${MyStrings.ccClass}*",
+                      value: viewModel.selectedCCClass.value.isEmpty
+                          ? null
+                          : viewModel.selectedCCClass.value,
+                      items: viewModel.ccClassList
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: MyStyles.dropdownMenuStyle,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        viewModel.selectedCCClass.value = value;
+                      },
+                      validator: (value) {
+                        if (value == null) {
+                          return MyStrings.required;
+                        }
+                        return null;
+                      },
+                    ),
+                  ),*/
+
+                  SizedBox(
+                    height: Dimens.standard_48,
+                  ),
+                  SizedBox(
+                    height: 70,
+                    child: Center(
+                      child: CustomElevatedButton(
+                        onPressed: /*viewModel.selectedVehicleUsage.value.isNotEmpty *//*&& viewModel.manufacturingYearController.value.text.isNotEmpty && viewModel.selectedMake.value.isNotEmpty && viewModel.selectedVariant.value.isNotEmpty && viewModel.selectedColor.value.isNotEmpty && viewModel.selectedBodyType.value.isNotEmpty && viewModel.selectedDupKey.value.isNotEmpty*//*
+                            ?*/ () {
+                                if (viewModel.page3Key.currentState!.validate()) {
+                                  viewModel.isPage3Fill.value = true;
+                                  viewModel.page3Key.currentState!.save();
+                                  viewModel.pageController.value.animateToPage(
+                                    3,
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.linear,
+                                  );
+                                }
+                              }
+                            /*: null*/,
+                        buttonText: MyStrings.next,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

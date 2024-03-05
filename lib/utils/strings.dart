@@ -33,6 +33,7 @@ class MyStrings {
   static const String registrationDate = "Registration Date";
   static const String next = "Next";
   static const String required = "Required";
+  static const String imageRequired = "Image required";
   static const String rcOwnerName = "RC Owner Name";
   static const String ownershipNumber = "Ownership Number";
   static const String regState = "Registration  State";
@@ -231,6 +232,7 @@ class MyStrings {
   ///
   static const String logoutConfirmMsg = "Are you sure want to sign out?";
   static const String confirmDiscardChanges = "Are you sure want to discard changes?";
+  static const String confirmDelete = "Are you sure want to delete?";
   static const String unableToConnect = "Unable to connect server";
   static const String engineCompartmentImage = "Engine Compartment Image";
   static const String engineSound = "Engine Sound";

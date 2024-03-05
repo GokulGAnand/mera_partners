@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http_parser/http_parser.dart';
 import '../../../model/response/document/document_response.dart';
+import '../../../routes/app_routes.dart';
 import '../../../service/exception_error_util.dart';
 import '../../../utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:evaluator_app/utils/globals.dart' as globals;
 import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
+import '../dashboard_view_model.dart';
 
 class DocumentViewModel extends GetxController {
   final GlobalKey<FormState> page1Key = GlobalKey<FormState>();
@@ -111,8 +113,11 @@ class DocumentViewModel extends GetxController {
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
             log(response.stream.toString());
-            Get.back();
-            // Get.offNamed(AppRoutes.dashBoardScreen);
+            // Get.back();
+        if (Get.isRegistered<DashBoardViewModel>()) {
+          Get.delete<DashBoardViewModel>();
+        }
+            Get.offNamed(AppRoutes.dashBoardScreen);
           } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
             log(response.reasonPhrase.toString());

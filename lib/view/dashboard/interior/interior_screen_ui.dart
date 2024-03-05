@@ -242,9 +242,7 @@ class InteriorScreen extends StatelessWidget {
                     controller: viewModel.insideRearViewMirrorController.value,
                     labelText: "${MyStrings.insideRearViewMirror}*",
                     helperText: "${MyStrings.insideRearViewMirror}*",
-                    validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.insideRearViewMirrorImage.value);
-                    },
+                    validator: ValidateInput.validateRequiredFields,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -425,7 +423,7 @@ class InteriorScreen extends StatelessWidget {
                   }).toList(),
                   onChanged: (value) {
                     viewModel.selectDashboardSwitches.value = value;
-                    print(viewModel.selectDashboardSwitches.value);
+                    log(viewModel.selectDashboardSwitches.value);
                   },
                   validator: (value) {
                     if (value == null) {
@@ -472,9 +470,7 @@ class InteriorScreen extends StatelessWidget {
                     controller: viewModel.powerWindowAndWindowLockController.value,
                     labelText: "${MyStrings.powerWindowAndWindowLock}*",
                     helperText: "${MyStrings.powerWindowAndWindowLock}*",
-                    validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.powerWindowAndWindowLockImage.value);
-                    },
+                    validator: ValidateInput.validateRequiredFields,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -540,9 +536,7 @@ class InteriorScreen extends StatelessWidget {
                     controller: viewModel.carElectricalController.value,
                     labelText: "${MyStrings.carElectrical}*",
                     helperText: "${MyStrings.carElectrical}*",
-                    validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.carElectricalImage.value);
-                    },
+                    validator: ValidateInput.validateRequiredFields,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
@@ -570,9 +564,9 @@ class InteriorScreen extends StatelessWidget {
                   },
                   child: CustomTextFormField(
                     controller: TextEditingController(),
-                    labelText: "${MyStrings.cngLpgKitImage}*",
-                    helperText: "${MyStrings.cngLpgKitImage}*",
-                    validator: viewModel.cngLpgKitImage.value == null ?ValidateInput.validateRequiredFields:null,
+                    labelText: MyStrings.cngLpgKitImage,
+                    helperText: MyStrings.cngLpgKitImage,
+                    validator: (p0) => null,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.cngLpgKitImage.value == null ?Padding(
@@ -631,9 +625,7 @@ class InteriorScreen extends StatelessWidget {
                     controller: viewModel.platformController.value,
                     labelText: "${MyStrings.platform}*",
                     helperText: "${MyStrings.platform}*",
-                    validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.platformImage.value);
-                    },
+                    validator: ValidateInput.validateRequiredFields,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(

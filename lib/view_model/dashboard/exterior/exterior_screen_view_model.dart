@@ -13,6 +13,7 @@ import '../../../utils/constants.dart';
 import '../../../utils/strings.dart';
 import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
+import '../dashboard_view_model.dart';
 
 class ExteriorViewModel extends GetxController {
   var isPage1Fill = false.obs;
@@ -833,6 +834,9 @@ log(response.toString());
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(await response.stream.bytesToString());
         CustomToast.instance.showMsg(MyStrings.success);
+        if (Get.isRegistered<DashBoardViewModel>()) {
+          Get.delete<DashBoardViewModel>();
+        }
         Get.offNamed(AppRoutes.dashBoardScreen);
         // Get.back();
       } else {
