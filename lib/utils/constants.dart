@@ -3,6 +3,8 @@ class Constants {
   static const int amountLength = 15;
   static const int maxInputLength = 25;
   static const int maxTextLength = 100;
+  static const String phoneNum = 'phoneNum';
+  static const String password = 'password';
   static const List<String> yesNoList = [
     'Yes',
     'No',

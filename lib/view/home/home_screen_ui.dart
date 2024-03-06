@@ -14,7 +14,6 @@ import 'package:get/get.dart';
 import '../../utils/images.dart';
 import '../../utils/globals.dart' as globals;
 import '../../utils/methods.dart';
-import '../../widgets/custom_dialog.dart';
 
 /// ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
@@ -101,21 +100,6 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }*/
-
-  void showConfirmDialog(BuildContext context) {
-    showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) => CustomDialog(
-          title: MyStrings.logoutConfirmMsg,
-          okFun: () {
-            Get.offAllNamed(AppRoutes.loginScreen);
-          },
-          cancelFun: () {
-            Navigator.of(context).pop();
-          },
-        ));
-  }
 
   @override
   Widget build(BuildContext context) {

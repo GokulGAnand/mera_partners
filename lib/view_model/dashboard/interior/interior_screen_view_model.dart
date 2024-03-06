@@ -216,7 +216,7 @@ class InteriorViewModel extends GetxController {
 
       var response = await request.send();
       log(response.statusCode.toString());
-      log(await response.stream.bytesToString());
+      log(response.stream.toString());
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
             log(response.stream.toString());

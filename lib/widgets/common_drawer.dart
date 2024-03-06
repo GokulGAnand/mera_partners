@@ -6,8 +6,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../utils/colors.dart';
+import '../utils/constants.dart';
 import '../utils/dimens.dart';
 import '../utils/images.dart';
+import '../utils/shared_pref_manager.dart';
 import '../utils/strings.dart';
 import '../utils/styles.dart';
 
@@ -134,6 +136,8 @@ class CommonDrawer extends StatelessWidget {
                           return CustomDialog(
                             title: MyStrings.logoutConfirmMsg,
                             okFun: () {
+                              SharedPrefManager.instance.setStringAsync(Constants.phoneNum, '');
+                              SharedPrefManager.instance.setStringAsync(Constants.password, '');
                               Get.offAllNamed(AppRoutes.loginScreen);
                             },
                             cancelFun: () {
