@@ -40,11 +40,6 @@ dependencies:
   flutter_svg: ^2.0.9
   connectivity_plus: ^5.0.2
   intl:
-  image_picker: ^1.0.7
-  flutter_rating_bar: ^4.0.1
-  http_parser: ^4.0.2
-  permission_handler: ^11.3.0
-  device_info_plus: ^9.1.2
   shared_preferences: ^2.2.2
 
 dev_dependencies:

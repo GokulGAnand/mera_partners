@@ -32,7 +32,7 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
         key: widget.key,
         style: widget.buttonStyle ??
             ElevatedButton.styleFrom(
-              backgroundColor: MyColors.blue,
+              backgroundColor: MyColors.kPrimaryColor,
               disabledBackgroundColor: widget.disableColor,
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
@@ -41,7 +41,7 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
         child: Text(
           widget.buttonText!,
           textAlign: TextAlign.center,
-          style: widget.textStyle ?? TextStyle(color: widget.textColor ?? MyColors.white, letterSpacing: Dimens.letterSpacing_34, fontSize: 17, fontWeight: FontWeight.w500),
+          style: widget.textStyle ?? TextStyle(color: widget.textColor ?? MyColors.kPrimaryColor, letterSpacing: Dimens.letterSpacing_34, fontSize: 17, fontWeight: FontWeight.w500),
         ),
       ),
     );

@@ -34,8 +34,7 @@ class _ColorLoader2State extends State<CustomLoader> with TickerProviderStateMix
         children: <Widget>[
           CircleAvatar(
               radius: 25,
-              backgroundColor: MyColors.white,
-              // backgroundColor: MyColors.transparent,
+              backgroundColor: MyColors.kPrimaryColor,
               child: Image.asset(
                 MyImages.appLogo,
                 width: 30,

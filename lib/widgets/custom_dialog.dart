@@ -1,5 +1,4 @@
 import 'package:evaluator_app/utils/strings.dart';
-import 'package:evaluator_app/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomDialog extends StatelessWidget {
@@ -11,7 +10,7 @@ class CustomDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(title ?? '',style: MyStyles.cardTitleStyleBlue),
+      title: Text(title ?? '',),
       actions: [
         TextButton(onPressed: cancelFun, child: const Text(MyStrings.cancel),),
         TextButton(onPressed: okFun, child: const Text(MyStrings.ok),),
