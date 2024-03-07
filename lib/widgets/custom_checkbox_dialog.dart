@@ -8,13 +8,18 @@ import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/validate_input.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:evaluator_app/widgets/custom_text_form_field.dart';
+import 'package:evaluator_app/widgets/progressbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:http/http.dart' as http;
+import 'package:evaluator_app/utils/globals.dart' as globals;
+import '../service/endpoints.dart';
 
 class CustomCheckBoxDialog extends StatefulWidget {
   const CustomCheckBoxDialog({
@@ -24,13 +29,21 @@ class CustomCheckBoxDialog extends StatefulWidget {
     required this.selectItem,
     this.remarksController,
     required this.othersController,
-    super.key});
-  final String title; 
-  final List<String> items; 
+    super.key,
+    this.apiKey,
+    this.screenName,
+  });
+
+  final String title;
+  final List<String> items;
   final Rx<File?>? image;
   final RxList<String> selectItem;
   final TextEditingController? remarksController;
   final TextEditingController othersController;
+  final String? apiKey;
+  final String? screenName;
+
+  // final String conditionKey;
 
   @override
   State<CustomCheckBoxDialog> createState() => _CustomCheckBoxDialogState();
@@ -396,17 +409,64 @@ class _CustomCheckBoxDialogState extends State<CustomCheckBoxDialog> {
                     widget.selectItem.remove("other");
                     Navigator.of(context).pop();
                   }*/
-                  if(widget.selectItem.contains(widget.othersController.value.text) == false){
-                    widget.selectItem.add(widget.othersController.value.text);
+                    if (widget.selectItem.contains(widget.othersController.value.text) == false) {
+                      widget.selectItem.add(widget.othersController.value.text);
+                    }
+                    widget.selectItem.remove("other");
+                    if (widget.screenName != null) {
+                      if ((widget.selectItem.isNotEmpty && widget.image?.value != null) || widget.selectItem.isNotEmpty) {
+                        if (widget.screenName == MyStrings.exterior.toLowerCase()) {
+                          uploadImage();
+                        }
+                      }
+                    } else {
+                      Navigator.of(context).pop();
+                    }
                   }
-                  widget.selectItem.remove("other");
-                  Navigator.of(context).pop();
-                }
-              }, buttonText: MyStrings.submit),
-            ),
-          ],
-        ),
-      );
+                },
+                buttonText: MyStrings.submit),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void uploadImage() async {
+    try {
+      ProgressBar.instance.showProgressbar(Get.context!);
+      log(Uri.parse(EndPoints.baseUrl + EndPoints.exterior + globals.carId.toString()).toString());
+      var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl + EndPoints.exterior + globals.carId.toString()));
+      request.fields.addAll({
+        '${widget.apiKey}_remarks': widget.remarksController!.value.text,
+      });
+      for (int i = 0; i < widget.selectItem.length; i++) {
+        request.fields['${widget.apiKey}_condition[$i]'] = widget.selectItem[i];
+      }
+      if (widget.image?.value != null) {
+        var type = widget.image!.value!.path.split('.').last;
+        if (!widget.image!.value!.path.startsWith('http') && !widget.image!.value!.path.startsWith('https')) {
+          request.files.add(await http.MultipartFile.fromPath(
+            widget.apiKey ?? '',
+            widget.image!.value!.path,
+            contentType: MediaType('image', type),
+          ));
+        }
+      }
+      request.headers.addAll(globals.headers);
+
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        ProgressBar.instance.stopProgressBar(Get.context!);
+        Navigator.of(Get.context!).pop();
+      } else {
+        ProgressBar.instance.stopProgressBar(Get.context!);
+        log(response.reasonPhrase.toString());
+      }
+    } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
+      log(e.toString());
+    }
   }
 
   Widget uploadTypeCard(BuildContext context) {

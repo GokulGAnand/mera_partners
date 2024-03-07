@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:evaluator_app/view_model/dashboard/exterior/exterior_screen_view_model.dart';
-import 'package:evaluator_app/view_model/new_evaluation/new_evaluation_screen_view_model.dart';
 import 'package:evaluator_app/widgets/custom_dropdown.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +31,7 @@ class ExteriorScreen extends StatelessWidget {
 
   Widget pageOne(BuildContext context) {
     return Obx(
-          () => Scaffold(
+      () => Scaffold(
         body: SingleChildScrollView(
           child: Form(
             canPop: viewModel.isPage1Fill.value,
@@ -44,15 +43,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'front',
                           title: MyStrings.frontImage,
                           items: viewModel.carCondition,
                           selectItem: viewModel.selectedFrontImageList,
                           image: viewModel.frontImage,
-                          remarksController : viewModel.frontImageRemarks.value,
+                          remarksController: viewModel.frontImageRemarks.value,
                           othersController: viewModel.otherFrontImageController.value,
                         );
                       },
@@ -79,15 +81,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'frontLeft',
                           title: MyStrings.frontLeftImage,
                           items: viewModel.carCondition,
                           selectItem: viewModel.selectedFrontLeftImageList,
                           image: viewModel.frontLeftImage,
-                          remarksController : viewModel.frontLeftImageRemarks.value,
+                          remarksController: viewModel.frontLeftImageRemarks.value,
                           othersController: viewModel.otherFrontLeftImageController.value,
                         );
                       },
@@ -105,13 +110,13 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: viewModel.frontLeftImage.value == null
                         ? Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.upload),
-                    )
+                            padding: Dimens.suffixPadding,
+                            child: SvgPicture.asset(MyImages.upload),
+                          )
                         : const Icon(
-                      Icons.done_rounded,
-                      color: MyColors.green,
-                    ),
+                            Icons.done_rounded,
+                            color: MyColors.green,
+                          ),
                   ),
                 ),
                 SizedBox(
@@ -119,15 +124,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'frontRight',
                           title: MyStrings.frontRightImage,
                           items: viewModel.carCondition,
                           selectItem: viewModel.selectedFrontRightImageList,
                           image: viewModel.frontRightImage,
-                          remarksController : viewModel.frontRightImageRemarks.value,
+                          remarksController: viewModel.frontRightImageRemarks.value,
                           othersController: viewModel.otherFrontRightImageController.value,
                         );
                       },
@@ -154,15 +162,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'leftImage',
                           title: MyStrings.leftImage,
                           items: viewModel.carCondition,
                           selectItem: viewModel.selectedLeftImageList,
                           image: viewModel.leftImage,
-                          remarksController : viewModel.leftImageRemarks.value,
+                          remarksController: viewModel.leftImageRemarks.value,
                           othersController: viewModel.otherLeftImageController.value,
                         );
                       },
@@ -189,15 +200,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'rightImage',
                           title: MyStrings.rightImage,
                           items: viewModel.carCondition,
                           selectItem: viewModel.selectedRightImageList,
                           image: viewModel.rightImage,
-                          remarksController : viewModel.rightImageRemarks.value,
+                          remarksController: viewModel.rightImageRemarks.value,
                           othersController: viewModel.otherRightImageController.value,
                         );
                       },
@@ -208,7 +222,7 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rightImageController.value,
                     labelText: "${MyStrings.rightImage}*",
                     helperText: "${MyStrings.rightImage}*",
-                     validator: (value) {
+                    validator: (value) {
                       return ValidateInput.validateRequiredFieldsImage(value, viewModel.rightImage.value);
                     },
                     showCursor: false,
@@ -224,15 +238,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'rearLeft',
                           title: MyStrings.rearLeftImage,
                           items: viewModel.carCondition,
                           selectItem: viewModel.selectedRearLeftImageList,
                           image: viewModel.rearLeftImage,
-                          remarksController : viewModel.rearLeftImageRemarks.value,
+                          remarksController: viewModel.rearLeftImageRemarks.value,
                           othersController: viewModel.otherRearLeftImageController.value,
                         );
                       },
@@ -243,7 +260,7 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rearLeftImageController.value,
                     labelText: "${MyStrings.rearLeftImage}*",
                     helperText: "${MyStrings.rearLeftImage}*",
-                     validator: (value) {
+                    validator: (value) {
                       return ValidateInput.validateRequiredFieldsImage(value, viewModel.rearLeftImage.value);
                     },
                     showCursor: false,
@@ -254,20 +271,23 @@ class ExteriorScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                  SizedBox(
-                    height: Dimens.standard_24,
-                  ),
+                SizedBox(
+                  height: Dimens.standard_24,
+                ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'rear',
                           title: MyStrings.rearImage,
                           items: viewModel.carCondition,
                           selectItem: viewModel.selectedRearImageList,
                           image: viewModel.rearImage,
-                          remarksController : viewModel.rearImageRemarks.value,
+                          remarksController: viewModel.rearImageRemarks.value,
                           othersController: viewModel.otherRearImageController.value,
                         );
                       },
@@ -278,7 +298,7 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rearImageController.value,
                     labelText: "${MyStrings.rearImage}*",
                     helperText: "${MyStrings.rearImage}*",
-                     validator: (value) {
+                    validator: (value) {
                       return ValidateInput.validateRequiredFieldsImage(value, viewModel.rearImage.value);
                     },
                     showCursor: false,
@@ -289,20 +309,23 @@ class ExteriorScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                  SizedBox(
-                    height: Dimens.standard_24,
-                  ),
+                SizedBox(
+                  height: Dimens.standard_24,
+                ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'rearRight',
                           title: MyStrings.rearRight,
                           items: viewModel.rearCondition,
                           selectItem: viewModel.selectedRearRightList,
                           image: viewModel.rearRightImage,
-                          remarksController : viewModel.rearRightRemarks.value,
+                          remarksController: viewModel.rearRightRemarks.value,
                           othersController: viewModel.otherRearRightController.value,
                         );
                       },
@@ -313,7 +336,7 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.rearRightController.value,
                     labelText: "${MyStrings.rearRight}*",
                     helperText: "${MyStrings.rearRight}*",
-                     validator: (value) {
+                    validator: (value) {
                       return ValidateInput.validateRequiredFieldsImage(value, viewModel.rearRightImage.value);
                     },
                     showCursor: false,
@@ -329,15 +352,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'roof',
                           title: MyStrings.roofImage,
                           items: viewModel.roofCondition,
                           selectItem: viewModel.selectedRoofImageList,
                           image: viewModel.roofImage,
-                          remarksController : viewModel.roofImageRemarks.value,
+                          remarksController: viewModel.roofImageRemarks.value,
                           othersController: viewModel.otherRoofImageController.value,
                         );
                       },
@@ -348,7 +374,7 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.roofImageController.value,
                     labelText: "${MyStrings.roofImage}*",
                     helperText: "${MyStrings.roofImage}*",
-                     validator: (value) {
+                    validator: (value) {
                       return ValidateInput.validateRequiredFieldsImage(value, viewModel.roofImage.value);
                     },
                     showCursor: false,
@@ -364,15 +390,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'frontWindShield',
                           title: MyStrings.frontWindShieldWiper,
                           items: viewModel.windShieldCondition,
                           selectItem: viewModel.selectedFrontWindShieldWiperList,
                           image: viewModel.frontWindShieldWiperImage,
-                          remarksController : viewModel.frontWindShieldWiperRemarks.value,
+                          remarksController: viewModel.frontWindShieldWiperRemarks.value,
                           othersController: viewModel.otherFrontWindShieldWiperController.value,
                         );
                       },
@@ -399,7 +428,7 @@ class ExteriorScreen extends StatelessWidget {
                   height: 70,
                   child: Center(
                     child: CustomElevatedButton(
-                      onPressed:() {
+                      onPressed: () {
                         if (viewModel.page1Key.currentState!.validate()) {
                           viewModel.page1Key.currentState!.save();
                           viewModel.isPage1Fill.value = true;
@@ -424,7 +453,7 @@ class ExteriorScreen extends StatelessWidget {
 
   Widget pageTwo(BuildContext context) {
     return Obx(
-          () => Scaffold(
+      () => Scaffold(
         body: SingleChildScrollView(
           child: Form(
             canPop: viewModel.isPage1Fill.value,
@@ -436,15 +465,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'rearWindShield',
                           title: MyStrings.rearWindShield,
                           items: viewModel.windShieldCondition,
                           selectItem: viewModel.selectedRearWindShieldList,
                           image: viewModel.rearWindShield,
-                          remarksController : viewModel.rearWindShieldRemarks.value,
+                          remarksController: viewModel.rearWindShieldRemarks.value,
                           othersController: viewModel.otherRearWindShieldController.value,
                         );
                       },
@@ -469,15 +501,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'doorGlassLeft',
                           title: MyStrings.doorGlassLH,
                           items: viewModel.doorGlassCondition,
                           selectItem: viewModel.selectedDoorGlassLHList,
                           image: viewModel.doorGlassLH,
-                          remarksController : viewModel.doorGlassLHRemarks.value,
+                          remarksController: viewModel.doorGlassLHRemarks.value,
                           othersController: viewModel.otherDoorGlassLHController.value,
                         );
                       },
@@ -502,15 +537,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'doorGlassRight',
                           title: MyStrings.doorGlassRH,
                           items: viewModel.doorGlassCondition,
                           selectItem: viewModel.selectedDoorGlassRHList,
                           image: viewModel.doorGlassRH,
-                          remarksController : viewModel.doorGlassRHRemarks.value,
+                          remarksController: viewModel.doorGlassRHRemarks.value,
                           othersController: viewModel.otherDoorGlassRHController.value,
                         );
                       },
@@ -535,15 +573,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'quarterGlass',
                           title: MyStrings.quarterGlass,
                           items: viewModel.doorGlassCondition,
                           selectItem: viewModel.selectedQuarterGlassList,
                           image: viewModel.quarterGlass,
-                          remarksController : viewModel.quarterGlassRemarks.value,
+                          remarksController: viewModel.quarterGlassRemarks.value,
                           othersController: viewModel.otherQuarterGlassController.value,
                         );
                       },
@@ -568,15 +609,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'headLightLeft',
                           title: MyStrings.headlightsLH,
                           items: viewModel.lightCondition,
                           selectItem: viewModel.selectedHeadlightsLHList,
                           image: viewModel.headlightsLH,
-                          remarksController : viewModel.headlightsLHRemarks.value,
+                          remarksController: viewModel.headlightsLHRemarks.value,
                           othersController: viewModel.otherHeadlightsLHController.value,
                         );
                       },
@@ -601,15 +645,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'headLightRight',
                           title: MyStrings.headlightsRH,
                           items: viewModel.lightCondition,
                           selectItem: viewModel.selectedHeadlightsRHList,
                           image: viewModel.headlightsRH,
-                          remarksController : viewModel.headlightsRHRemarks.value,
+                          remarksController: viewModel.headlightsRHRemarks.value,
                           othersController: viewModel.otherHeadlightsRHController.value,
                         );
                       },
@@ -634,15 +681,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
-                          title: MyStrings.engine,
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'headLightSupport',
+                          title: MyStrings.headlightSupport,
                           items: viewModel.headLightSupport,
                           selectItem: viewModel.selectedHeadlightSupportList,
                           image: viewModel.headlightSupport,
-                          remarksController : viewModel.headlightSupportRemarks.value,
+                          remarksController: viewModel.headlightSupportRemarks.value,
                           othersController: viewModel.otherHeadlightSupportController.value,
                         );
                       },
@@ -667,15 +717,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'bumperFront',
                           title: MyStrings.frontBumper,
                           items: viewModel.bumper,
                           selectItem: viewModel.selectedFrontBumperList,
                           image: viewModel.frontBumper,
-                          remarksController : viewModel.frontBumperRemarks.value,
+                          remarksController: viewModel.frontBumperRemarks.value,
                           othersController: viewModel.otherFrontBumperController.value,
                         );
                       },
@@ -700,15 +753,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'bumperRear',
                           title: MyStrings.rearBumper,
                           items: viewModel.bumper,
                           selectItem: viewModel.selectedRearBumperList,
                           image: viewModel.rearBumper,
-                          remarksController : viewModel.rearBumperRemarks.value,
+                          remarksController: viewModel.rearBumperRemarks.value,
                           othersController: viewModel.otherRearBumperController.value,
                         );
                       },
@@ -733,15 +789,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'grill',
                           title: MyStrings.frontGrill,
                           items: viewModel.frontGrillList,
                           selectItem: viewModel.selectedFrontGrillList,
                           image: viewModel.frontGrill,
-                          remarksController : viewModel.frontGrillRemarks.value,
+                          remarksController: viewModel.frontGrillRemarks.value,
                           othersController: viewModel.otherFrontGrillController.value,
                         );
                       },
@@ -768,7 +827,7 @@ class ExteriorScreen extends StatelessWidget {
                   height: 70,
                   child: Center(
                     child: CustomElevatedButton(
-                      onPressed:() {
+                      onPressed: () {
                         if (viewModel.page2Key.currentState!.validate()) {
                           viewModel.page2Key.currentState!.save();
                           viewModel.isPage2Fill.value = true;
@@ -792,7 +851,8 @@ class ExteriorScreen extends StatelessWidget {
   }
 
   Widget pageThree(BuildContext context) {
-    return Obx(() => Scaffold(
+    return Obx(
+      () => Scaffold(
         body: SingleChildScrollView(
           child: Form(
             canPop: viewModel.isPage1Fill.value,
@@ -804,15 +864,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'bonnetPatti',
                           title: MyStrings.bonnetPatti,
                           items: viewModel.bonnetPatti,
                           selectItem: viewModel.selectedBonnetPattiList,
                           image: viewModel.bonnetPattiImage,
-                          remarksController : viewModel.bonnetPattiRemarks.value,
+                          remarksController: viewModel.bonnetPattiRemarks.value,
                           othersController: viewModel.otherBonnetPattiController.value,
                         );
                       },
@@ -828,7 +891,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -837,15 +904,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'upperCrossMember',
                           title: MyStrings.upperCrossMember,
                           items: viewModel.crossMember,
                           selectItem: viewModel.selectedUpperCrossMemberList,
                           image: viewModel.upperCrossMember,
-                          remarksController : viewModel.upperCrossMemberRemarks.value,
+                          remarksController: viewModel.upperCrossMemberRemarks.value,
                           othersController: viewModel.otherUpperCrossMemberController.value,
                         );
                       },
@@ -861,7 +931,7 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown,width: 2,height: 2),
+                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2),
                     ),
                   ),
                 ),
@@ -870,15 +940,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'lowerCrossMember',
                           title: MyStrings.lowerCrossMember,
                           items: viewModel.crossMember,
                           selectItem: viewModel.selectedLowerCrossMemberList,
                           image: viewModel.lowerCrossMember,
-                          remarksController : viewModel.lowerCrossMemberRemarks.value,
+                          remarksController: viewModel.lowerCrossMemberRemarks.value,
                           othersController: viewModel.otherLowerCrossMemberController.value,
                         );
                       },
@@ -894,7 +967,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -903,15 +980,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'apronLeft',
                           title: MyStrings.apronLH,
                           items: viewModel.apron,
                           selectItem: viewModel.selectedApronLHList,
                           image: viewModel.apronLH,
-                          remarksController : viewModel.apronLHRemarks.value,
+                          remarksController: viewModel.apronLHRemarks.value,
                           othersController: viewModel.otherApronLHController.value,
                         );
                       },
@@ -929,7 +1009,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -938,15 +1022,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'apronRight',
                           title: MyStrings.apronRH,
                           items: viewModel.apron,
                           selectItem: viewModel.selectedApronRHList,
                           image: viewModel.apronRH,
-                          remarksController : viewModel.apronRHRemarks.value,
+                          remarksController: viewModel.apronRHRemarks.value,
                           othersController: viewModel.otherApronRHController.value,
                         );
                       },
@@ -964,7 +1051,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -973,15 +1064,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'cowlTop',
                           title: MyStrings.cowlTop,
                           items: viewModel.cowlTopList,
                           selectItem: viewModel.selectedCowlTopList,
                           image: viewModel.cowlTop,
-                          remarksController : viewModel.cowlTopRemarks.value,
+                          remarksController: viewModel.cowlTopRemarks.value,
                           othersController: viewModel.otherCowlTopController.value,
                         );
                       },
@@ -997,7 +1091,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -1006,15 +1104,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'chassisExtension',
                           title: MyStrings.chassisExtension,
                           items: viewModel.chassisExtensionList,
                           selectItem: viewModel.selectedChassisExtensionList,
                           image: viewModel.chassisExtension,
-                          remarksController : viewModel.chassisExtensionRemarks.value,
+                          remarksController: viewModel.chassisExtensionRemarks.value,
                           othersController: viewModel.otherChassisExtensionController.value,
                         );
                       },
@@ -1036,7 +1137,6 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 SizedBox(
                   height: Dimens.standard_24,
-
                 ),
                 /*CustomDropDown(
                   hintText: "${MyStrings.tyreFrontRHS}*",
@@ -1063,15 +1163,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),*/
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'frontTyreRight',
                           title: MyStrings.tyreFrontRHS,
                           items: viewModel.tyreWheelsCondition,
                           selectItem: viewModel.selectedTyreFrontRHSList,
                           image: viewModel.tyreFrontRHS,
-                          remarksController : viewModel.tyreFrontRHSRemarks.value,
+                          remarksController: viewModel.tyreFrontRHSRemarks.value,
                           othersController: viewModel.otherTyreFrontRHSController.value,
                         );
                       },
@@ -1089,13 +1192,13 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: viewModel.tyreFrontRHS.value == null
                         ? Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.upload),
-                    )
+                            padding: Dimens.suffixPadding,
+                            child: SvgPicture.asset(MyImages.upload),
+                          )
                         : const Icon(
-                      Icons.done_rounded,
-                      color: MyColors.green,
-                    ),
+                            Icons.done_rounded,
+                            color: MyColors.green,
+                          ),
                   ),
                 ),
                 SizedBox(
@@ -1103,15 +1206,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'frontTyreLeft',
                           title: MyStrings.tyreFrontLHS,
                           items: viewModel.tyreWheelsCondition,
                           selectItem: viewModel.selectedTyreFrontLHSList,
                           image: viewModel.tyreFrontLHS,
-                          remarksController : viewModel.tyreFrontLHSRemarks.value,
+                          remarksController: viewModel.tyreFrontLHSRemarks.value,
                           othersController: viewModel.otherTyreFrontLHSController.value,
                         );
                       },
@@ -1129,13 +1235,13 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: viewModel.tyreFrontLHS.value == null
                         ? Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.upload),
-                    )
+                            padding: Dimens.suffixPadding,
+                            child: SvgPicture.asset(MyImages.upload),
+                          )
                         : const Icon(
-                      Icons.done_rounded,
-                      color: MyColors.green,
-                    ),
+                            Icons.done_rounded,
+                            color: MyColors.green,
+                          ),
                   ),
                 ),
                 /*CustomDropDown(
@@ -1166,15 +1272,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'rearTyreRight',
                           title: MyStrings.tyreRearRHS,
                           items: viewModel.tyreWheelsCondition,
                           selectItem: viewModel.selectedTyreRearRHSList,
                           image: viewModel.tyreRearRHS,
-                          remarksController : viewModel.tyreRearRHSRemarks.value,
+                          remarksController: viewModel.tyreRearRHSRemarks.value,
                           othersController: viewModel.otherTyreRearRHSController.value,
                         );
                       },
@@ -1192,13 +1301,13 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: viewModel.tyreRearRHS.value == null
                         ? Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.upload),
-                    )
+                            padding: Dimens.suffixPadding,
+                            child: SvgPicture.asset(MyImages.upload),
+                          )
                         : const Icon(
-                      Icons.done_rounded,
-                      color: MyColors.green,
-                    ),
+                            Icons.done_rounded,
+                            color: MyColors.green,
+                          ),
                   ),
                 ),
                 /*CustomDropDown(
@@ -1231,7 +1340,7 @@ class ExteriorScreen extends StatelessWidget {
                   height: 70,
                   child: Center(
                     child: CustomElevatedButton(
-                      onPressed:() {
+                      onPressed: () {
                         if (viewModel.page3Key.currentState!.validate()) {
                           viewModel.page3Key.currentState!.save();
                           viewModel.isPage3Fill.value = true;
@@ -1256,7 +1365,7 @@ class ExteriorScreen extends StatelessWidget {
 
   Widget pageFour(BuildContext context) {
     return Obx(
-          () => Scaffold(
+      () => Scaffold(
         body: SingleChildScrollView(
           child: Form(
             canPop: viewModel.isPage1Fill.value,
@@ -1268,15 +1377,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'rearTyreLeft',
                           title: MyStrings.tyreRearLHS,
                           items: viewModel.tyreWheelsCondition,
                           selectItem: viewModel.selectedTyreRearLHSList,
                           image: viewModel.tyreRearLHS,
-                          remarksController : viewModel.tyreRearLHSRemarks.value,
+                          remarksController: viewModel.tyreRearLHSRemarks.value,
                           othersController: viewModel.otherTyreRearLHSController.value,
                         );
                       },
@@ -1288,19 +1400,19 @@ class ExteriorScreen extends StatelessWidget {
                     labelText: "${MyStrings.tyreRearLHS}*",
                     helperText: "${MyStrings.tyreRearLHS}*",
                     validator: (value) {
-                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.tyreRearLHS .value);
+                      return ValidateInput.validateRequiredFieldsImage(value, viewModel.tyreRearLHS.value);
                     },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: viewModel.tyreRearLHS.value == null
                         ? Padding(
-                      padding: Dimens.suffixPadding,
-                      child: SvgPicture.asset(MyImages.upload),
-                    )
+                            padding: Dimens.suffixPadding,
+                            child: SvgPicture.asset(MyImages.upload),
+                          )
                         : const Icon(
-                      Icons.done_rounded,
-                      color: MyColors.green,
-                    ),
+                            Icons.done_rounded,
+                            color: MyColors.green,
+                          ),
                   ),
                 ),
                 /*CustomDropDown(
@@ -1331,15 +1443,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'fenderLeft',
                           title: MyStrings.lhFender,
                           items: viewModel.lhCondition,
                           selectItem: viewModel.selectedLhFenderList,
                           image: viewModel.lhFender,
-                          remarksController : viewModel.lhFenderRemarks.value,
+                          remarksController: viewModel.lhFenderRemarks.value,
                           othersController: viewModel.otherLhFenderController.value,
                         );
                       },
@@ -1355,7 +1470,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -1364,15 +1483,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'fenderRight',
                           title: MyStrings.rhFender,
                           items: viewModel.rhCondition,
                           selectItem: viewModel.selectedRhFenderList,
                           image: viewModel.rhFender,
-                          remarksController : viewModel.rhFenderRemarks.value,
+                          remarksController: viewModel.rhFenderRemarks.value,
                           othersController: viewModel.otherRhFenderController.value,
                         );
                       },
@@ -1388,7 +1510,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -1397,15 +1523,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'quarterPanelLeft',
                           title: MyStrings.lhQuarterPanel,
                           items: viewModel.lhCondition,
                           selectItem: viewModel.selectedLhQuarterPanelList,
                           image: viewModel.lhQuarterPanel,
-                          remarksController : viewModel.lhQuarterPanelRemarks.value,
+                          remarksController: viewModel.lhQuarterPanelRemarks.value,
                           othersController: viewModel.otherLhQuarterPanelController.value,
                         );
                       },
@@ -1421,7 +1550,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -1430,15 +1563,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'quarterPanelRight',
                           title: MyStrings.rhQuarterPanel,
                           items: viewModel.rhCondition,
                           selectItem: viewModel.selectedRhQuarterPanelList,
                           image: viewModel.rhQuarterPanel,
-                          remarksController : viewModel.rhQuarterPanelRemarks.value,
+                          remarksController: viewModel.rhQuarterPanelRemarks.value,
                           othersController: viewModel.otherRhQuarterPanelController.value,
                         );
                       },
@@ -1454,7 +1590,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -1463,15 +1603,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'doorFrontLeft',
                           title: MyStrings.frontLHDoor,
                           items: viewModel.rhCondition,
                           selectItem: viewModel.selectedFrontLHDoorList,
                           image: viewModel.frontLHDoor,
-                          remarksController : viewModel.frontLHDoorRemarks.value,
+                          remarksController: viewModel.frontLHDoorRemarks.value,
                           othersController: viewModel.otherFrontLHDoorController.value,
                         );
                       },
@@ -1487,7 +1630,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -1496,15 +1643,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'doorRearLeft',
                           title: MyStrings.rearLHDoor,
                           items: viewModel.rhCondition,
                           selectItem: viewModel.selectedRearLHDoorList,
                           image: viewModel.rearLHDoor,
-                          remarksController : viewModel.rearLHDoorRemarks.value,
+                          remarksController: viewModel.rearLHDoorRemarks.value,
                           othersController: viewModel.otherRearLHDoorController.value,
                         );
                       },
@@ -1520,7 +1670,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -1529,15 +1683,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'doorFrontRight',
                           title: MyStrings.frontRHDoor,
                           items: viewModel.rhCondition,
                           selectItem: viewModel.selectedFrontRHDoorList,
                           image: viewModel.frontRHDoor,
-                          remarksController : viewModel.frontRHDoorRemarks.value,
+                          remarksController: viewModel.frontRHDoorRemarks.value,
                           othersController: viewModel.otherFrontRHDoorController.value,
                         );
                       },
@@ -1562,15 +1719,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'doorRearRight',
                           title: MyStrings.rearRHDoor,
                           items: viewModel.rhCondition,
                           selectItem: viewModel.selectedRearRHDoorList,
                           image: viewModel.rearRHDoor,
-                          remarksController : viewModel.rearRHDoorRemarks.value,
+                          remarksController: viewModel.rearRHDoorRemarks.value,
                           othersController: viewModel.otherRearRHDoorController.value,
                         );
                       },
@@ -1586,7 +1746,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -1595,15 +1759,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'leftApillar',
                           title: MyStrings.lhaPillar,
                           items: viewModel.pillarsBoardsCondition,
                           selectItem: viewModel.selectedLhaPillarList,
                           image: viewModel.lhaPillar,
-                          remarksController : viewModel.lhaPillarRemarks.value,
+                          remarksController: viewModel.lhaPillarRemarks.value,
                           othersController: viewModel.otherLhaPillarController.value,
                         );
                       },
@@ -1619,7 +1786,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -1630,7 +1801,7 @@ class ExteriorScreen extends StatelessWidget {
                   height: 70,
                   child: Center(
                     child: CustomElevatedButton(
-                      onPressed:() {
+                      onPressed: () {
                         if (viewModel.page4Key.currentState!.validate()) {
                           viewModel.page4Key.currentState!.save();
                           viewModel.isPage4Fill.value = true;
@@ -1655,7 +1826,7 @@ class ExteriorScreen extends StatelessWidget {
 
   Widget pageFive(BuildContext context) {
     return Obx(
-          () => Scaffold(
+      () => Scaffold(
         body: SingleChildScrollView(
           child: Form(
             canPop: viewModel.isPage1Fill.value,
@@ -1667,15 +1838,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'rightApillar',
                           title: MyStrings.rhaPillar,
                           items: viewModel.pillarsBoardsCondition,
                           selectItem: viewModel.selectedRhaPillarList,
                           image: viewModel.rhaPillar,
-                          remarksController : viewModel.rhaPillarRemarks.value,
+                          remarksController: viewModel.rhaPillarRemarks.value,
                           othersController: viewModel.otherRhaPillarController.value,
                         );
                       },
@@ -1691,7 +1865,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -1700,15 +1878,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'leftBpillar',
                           title: MyStrings.lhbPillar,
                           items: viewModel.pillarsBoardsCondition,
                           selectItem: viewModel.selectedLhbPillarList,
                           image: viewModel.lhbPillar,
-                          remarksController : viewModel.lhbPillarRemarks.value,
+                          remarksController: viewModel.lhbPillarRemarks.value,
                           othersController: viewModel.otherLhbPillarController.value,
                         );
                       },
@@ -1724,7 +1905,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -1733,15 +1918,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'rightBpillar',
                           title: MyStrings.rhbPillar,
                           items: viewModel.pillarsBoardsCondition,
                           selectItem: viewModel.selectedRhbPillarList,
                           image: viewModel.rhbPillar,
-                          remarksController : viewModel.rhbPillarRemarks.value,
+                          remarksController: viewModel.rhbPillarRemarks.value,
                           othersController: viewModel.otherRhbPillarController.value,
                         );
                       },
@@ -1757,7 +1945,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -1766,15 +1958,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'leftCpillar',
                           title: MyStrings.lhcPillar,
                           items: viewModel.pillarsBoardsCondition,
                           selectItem: viewModel.selectedLhcPillarList,
                           image: viewModel.lhcPillar,
-                          remarksController : viewModel.lhcPillarRemarks.value,
+                          remarksController: viewModel.lhcPillarRemarks.value,
                           othersController: viewModel.otherLhcPillarController.value,
                         );
                       },
@@ -1790,7 +1985,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -1799,15 +1998,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'rightCpillar',
                           title: MyStrings.rhcPillar,
                           items: viewModel.pillarsBoardsCondition,
                           selectItem: viewModel.selectedRhcPillarList,
                           image: viewModel.rhcPillar,
-                          remarksController : viewModel.rhcPillarRemarks.value,
+                          remarksController: viewModel.rhcPillarRemarks.value,
                           othersController: viewModel.otherRhcPillarController.value,
                         );
                       },
@@ -1823,7 +2025,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -1832,15 +2038,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'runnningBorderLeft',
                           title: MyStrings.lhRunBoard,
                           items: viewModel.pillarsBoardsCondition,
                           selectItem: viewModel.selectedLhRunBoardList,
                           image: viewModel.lhRunBoard,
-                          remarksController : viewModel.lhRunBoardRemarks.value,
+                          remarksController: viewModel.lhRunBoardRemarks.value,
                           othersController: viewModel.otherLhRunBoardController.value,
                         );
                       },
@@ -1856,7 +2065,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -1865,15 +2078,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'runnningBorderRight',
                           title: MyStrings.rhRunBoard,
                           items: viewModel.pillarsBoardsCondition,
                           selectItem: viewModel.selectedRhRunBoardList,
                           image: viewModel.rhRunBoard,
-                          remarksController : viewModel.rhRunBoardRemarks.value,
+                          remarksController: viewModel.rhRunBoardRemarks.value,
                           othersController: viewModel.otherRhRunBoardController.value,
                         );
                       },
@@ -1889,7 +2105,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -1898,15 +2118,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'tailLightLeft',
                           title: MyStrings.tailLightLh,
                           items: viewModel.lightCondition,
                           selectItem: viewModel.selectedTailLightLhList,
                           image: viewModel.tailLightLh,
-                          remarksController : viewModel.tailLightLhRemarks.value,
+                          remarksController: viewModel.tailLightLhRemarks.value,
                           othersController: viewModel.otherTailLightLhController.value,
                         );
                       },
@@ -1931,15 +2154,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'tailLightRight',
                           title: MyStrings.tailLightRh,
                           items: viewModel.lightCondition,
                           selectItem: viewModel.selectedTailLightRhList,
                           image: viewModel.tailLightRh,
-                          remarksController : viewModel.tailLightRhRemarks.value,
+                          remarksController: viewModel.tailLightRhRemarks.value,
                           othersController: viewModel.otherTailLightRhController.value,
                         );
                       },
@@ -1955,7 +2181,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -1964,15 +2194,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'rearWiper',
                           title: MyStrings.rearWiper,
                           items: viewModel.wiper,
                           selectItem: viewModel.selectedRearWiperList,
                           image: viewModel.rearWiper,
-                          remarksController : viewModel.rearWiperRemarks.value,
+                          remarksController: viewModel.rearWiperRemarks.value,
                           othersController: viewModel.otherRearWiperController.value,
                         );
                       },
@@ -1988,7 +2221,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -1999,7 +2236,7 @@ class ExteriorScreen extends StatelessWidget {
                   height: 70,
                   child: Center(
                     child: CustomElevatedButton(
-                      onPressed:() {
+                      onPressed: () {
                         if (viewModel.page5Key.currentState!.validate()) {
                           viewModel.page5Key.currentState!.save();
                           viewModel.isPage5Fill.value = true;
@@ -2024,7 +2261,7 @@ class ExteriorScreen extends StatelessWidget {
 
   Widget pageSix(BuildContext context) {
     return Obx(
-          () => Scaffold(
+      () => Scaffold(
         body: SingleChildScrollView(
           child: Form(
             canPop: viewModel.isPage1Fill.value,
@@ -2036,15 +2273,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'boot',
                           title: MyStrings.boot,
                           items: viewModel.bootList,
                           selectItem: viewModel.selectedBootList,
                           image: viewModel.bootImage,
-                          remarksController : viewModel.bootRemarks.value,
+                          remarksController: viewModel.bootRemarks.value,
                           othersController: viewModel.otherBootController.value,
                         );
                       },
@@ -2060,7 +2300,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -2069,15 +2313,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'dickyDoor',
                           title: MyStrings.dickyDoor,
                           items: viewModel.rhCondition,
                           selectItem: viewModel.selectedDickyDoorList,
                           image: viewModel.dickyDoorImage,
-                          remarksController : viewModel.dickyDoorRemarks.value,
+                          remarksController: viewModel.dickyDoorRemarks.value,
                           othersController: viewModel.otherDickyDoorController.value,
                         );
                       },
@@ -2093,7 +2340,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -2102,15 +2353,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'spareWheel',
                           title: MyStrings.spareWheel,
                           items: viewModel.tyreWheelsCondition,
                           selectItem: viewModel.selectedSpareWheelList,
                           image: viewModel.spareWheel,
-                          remarksController : viewModel.spareWheelRemarks.value,
+                          remarksController: viewModel.spareWheelRemarks.value,
                           othersController: viewModel.otherSpareWheelController.value,
                         );
                       },
@@ -2121,14 +2375,18 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.spareWheelController.value,
                     labelText: "${MyStrings.spareWheel}*",
                     helperText: "${MyStrings.spareWheel}*",
-                     validator: (value) {
+                    validator: (value) {
                       return ValidateInput.validateRequiredFieldsImage(value, viewModel.spareWheel.value);
                     },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -2152,7 +2410,7 @@ class ExteriorScreen extends StatelessWidget {
                     viewModel.selectedJackAndTool.value = value;
                   },
                   validator: (value) {
-                    if(value == null){
+                    if (value == null) {
                       return MyStrings.required;
                     }
                     return null;
@@ -2163,15 +2421,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'rearViewMirrorLeft',
                           title: MyStrings.lhRearViewMirror,
                           items: viewModel.mirror,
                           selectItem: viewModel.selectedLhRearViewMirrorList,
                           image: viewModel.lhRearViewMirror,
-                          remarksController : viewModel.lhRearViewMirrorRemarks.value,
+                          remarksController: viewModel.lhRearViewMirrorRemarks.value,
                           othersController: viewModel.otherLhRearViewMirrorController.value,
                         );
                       },
@@ -2187,7 +2448,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -2196,15 +2461,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'rearViewMirrorRight',
                           title: MyStrings.rhRearViewMirror,
                           items: viewModel.mirror,
                           selectItem: viewModel.selectedRhRearViewMirrorList,
                           image: viewModel.rhRearViewMirror,
-                          remarksController : viewModel.rhRearViewMirrorRemarks.value,
+                          remarksController: viewModel.rhRearViewMirrorRemarks.value,
                           othersController: viewModel.otherRhRearViewMirrorController.value,
                         );
                       },
@@ -2220,7 +2488,11 @@ class ExteriorScreen extends StatelessWidget {
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -2229,15 +2501,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          screenName: MyStrings.exterior.toLowerCase(),
+                          apiKey: 'fuelLid',
                           title: MyStrings.fuelLid,
                           items: viewModel.fuelLidList,
                           selectItem: viewModel.selectedFuelLidList,
                           image: viewModel.fuelLid,
-                          remarksController : viewModel.fuelLidRemarks.value,
+                          remarksController: viewModel.fuelLidRemarks.value,
                           othersController: viewModel.otherFuelLidController.value,
                         );
                       },
@@ -2248,14 +2523,18 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.fuelLidController.value,
                     labelText: "${MyStrings.fuelLid}*",
                     helperText: "${MyStrings.fuelLid}*",
-                     validator: (value) {
+                    validator: (value) {
                       return ValidateInput.validateRequiredFieldsImage(value, viewModel.fuelLid.value);
                     },
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -2264,15 +2543,18 @@ class ExteriorScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await showDialog(barrierDismissible: false,
+                    await showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) {
                         return CustomCheckBoxDialog(
+                          apiKey: 'firewall',
+                          screenName: MyStrings.exterior.toLowerCase(),
                           title: MyStrings.firewall,
                           items: viewModel.fireWallList,
                           selectItem: viewModel.selectedFirewallList,
                           image: viewModel.firewall,
-                          remarksController : viewModel.firewallRemarks.value,
+                          remarksController: viewModel.firewallRemarks.value,
                           othersController: viewModel.otherFirewallController.value,
                         );
                       },
@@ -2283,12 +2565,16 @@ class ExteriorScreen extends StatelessWidget {
                     controller: viewModel.firewallController.value,
                     labelText: MyStrings.firewall,
                     helperText: MyStrings.firewall,
-                    validator:(p0) => null,
+                    validator: (p0) => null,
                     showCursor: false,
                     isEnabled: false,
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(17, 8.0, 17, 8),
-                      child: SvgPicture.asset(MyImages.arrowDown, width: 2, height: 2,),
+                      child: SvgPicture.asset(
+                        MyImages.arrowDown,
+                        width: 2,
+                        height: 2,
+                      ),
                     ),
                   ),
                 ),
@@ -2321,7 +2607,7 @@ class ExteriorScreen extends StatelessWidget {
                     viewModel.selectedFullBodyRepaint.value = value;
                   },
                   validator: (value) {
-                    if(value == null){
+                    if (value == null) {
                       return MyStrings.required;
                     }
                     return null;
@@ -2334,7 +2620,7 @@ class ExteriorScreen extends StatelessWidget {
                   height: 70,
                   child: Center(
                     child: CustomElevatedButton(
-                      onPressed:() {
+                      onPressed: () {
                         if (viewModel.page6Key.currentState!.validate()) {
                           viewModel.page6Key.currentState!.save();
                           viewModel.isPage6Fill.value = true;
@@ -2369,216 +2655,113 @@ class ExteriorScreen extends StatelessWidget {
         barrierDismissible: false,
         context: context,
         builder: (BuildContext context) => CustomDialog(
-          title: MyStrings.confirmDiscardChanges,
-          okFun: () {
-            Navigator.of(context).pop();
-            Navigator.of(context).pop();
-          },
-          cancelFun: () {
-            Navigator.of(context).pop();
-          },
-        ));
+              title: MyStrings.confirmDiscardChanges,
+              okFun: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+              cancelFun: () {
+                Navigator.of(context).pop();
+              },
+            ));
   }
 
   @override
   Widget build(BuildContext context) {
     pages = [pageOne(context), pageTwo(context), pageThree(context), pageFour(context), pageFive(context), pageSix(context)];
     return Obx(() => PopScope(
-      canPop: false,
-      onPopInvoked: (didPop) {
-        Methods.showConfirmDialog(context);
-      },
-      child: Scaffold(
-        key: _key,
-        appBar: CommonAppBar(
-          centerTitle: false,
-          title: MyStrings.exterior,
-          leading: IconButton(
-            icon: SvgPicture.asset(MyImages.menu),
-            color: MyColors.black0,
-            iconSize: 28,
-            onPressed: () {
-              _key.currentState!.openDrawer();
-            },
-          ),
-          actions: [
-            Row(
-              children: [
-                Padding(
-                  padding: Dimens.padding16,
-                  child: SvgPicture.asset(
-                    MyImages.notification,
-                    width: Dimens.standard_24,
-                    height: Dimens.standard_24,
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
-        drawer: const CommonDrawer(),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
-              child: SizedBox(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),
-                  child: Row(
-                    children: [
-                      Text(
-                        MyStrings.page + (viewModel.activePage.value + 1).toString(),
-                        style: MyStyles.blackW500F15Style,
+          canPop: false,
+          onPopInvoked: (didPop) {
+            Methods.showConfirmDialog(context);
+          },
+          child: Scaffold(
+            key: _key,
+            appBar: CommonAppBar(
+              centerTitle: false,
+              title: MyStrings.exterior,
+              leading: IconButton(
+                icon: SvgPicture.asset(MyImages.menu),
+                color: MyColors.black0,
+                iconSize: 28,
+                onPressed: () {
+                  _key.currentState!.openDrawer();
+                },
+              ),
+              actions: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: Dimens.padding16,
+                      child: SvgPicture.asset(
+                        MyImages.notification,
+                        width: Dimens.standard_24,
+                        height: Dimens.standard_24,
                       ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0, bottom: 35, left: 5, right: 5),
-              child: Row(
-                children: List<Widget>.generate(
-                    pages!.length,
-                        (index) => Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          viewModel.pageController.value.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
-                        },
-                        child: Container(
-                          height: 6,
-                          margin: const EdgeInsets.only(left: 10, right: 10),
-                          width: MediaQuery.of(context).size.width / pages!.length,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: viewModel.activePage.value == index ? MyColors.kPrimaryColor : MyColors.lightBlue,
-                          ),
-                        ),
-                      ),
-                    )),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                child: PageView.builder(
-                  controller: viewModel.pageController.value,
-                  onPageChanged: (int page) {
-                    viewModel.activePage.value = page;
-                  },
-                  itemCount: pages!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return pages![index % pages!.length];
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    ));
-  }
-}
-
-/// ignore: must_be_immutable
-class MonthYearPicker extends StatefulWidget {
-  MonthYearPicker({required this.initialYear, required this.startYear, required this.endYear, this.currentYear, required this.month, super.key});
-
-  late int initialYear;
-  late int startYear;
-  late int endYear;
-  late int? currentYear;
-  late int month;
-
-  @override
-  State<MonthYearPicker> createState() => _MonthPickerState();
-}
-
-class _MonthPickerState extends State<MonthYearPicker> {
-  final List<String> _monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  final List<String> _yearList = [];
-  late int selectedMonthIndex;
-  late int selectedYearIndex;
-  String selectedMonth = "";
-  String selectedYear = "";
-
-  @override
-  void initState() {
-    for (int i = widget.startYear; i <= widget.endYear; i++) {
-      _yearList.add(i.toString());
-    }
-    selectedMonthIndex = widget.month - 1;
-    selectedYearIndex = _yearList.indexOf(widget.currentYear?.toString() ?? widget.initialYear.toString());
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setState(() {
-        selectedMonth = _monthList[selectedMonthIndex];
-        selectedYear = _yearList[selectedYearIndex];
-      });
-    });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const Padding(
-          padding: EdgeInsets.only(bottom: 8.0),
-          child: Row(
-            children: [
-              Text(
-                '${MyStrings.monthAndYearOfManufacture}*',
-                style: TextStyle(height: 0.5, color: MyColors.blue, fontSize: 15, fontWeight: FontWeight.w500, fontStyle: FontStyle.normal),
-              ),
-            ],
-          ),
-        ),
-        InputDecorator(
-          decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
-          child: SizedBox(
-            height: 27,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: DropdownButton<String>(
-                    underline: const SizedBox(),
-                    items: _monthList.map((e) {
-                      return DropdownMenuItem<String>(value: e, child: Text(e));
-                    }).toList(),
-                    value: selectedMonth,
-                    onChanged: (val) {
-                      setState(() {
-                        selectedMonthIndex = _monthList.indexOf(val!);
-                        selectedMonth = val;
-                        Get.find<NewEvaluationViewModel>().selectedMonth.value = val;
-                      });
-                    },
-                  ),
-                ),
-                // const SizedBox(width: 20),
-                Expanded(
-                  child: DropdownButton<String>(
-                    underline: Container(),
-                    items: _yearList.map((e) {
-                      return DropdownMenuItem<String>(value: e, child: Text(e));
-                    }).toList(),
-                    value: selectedYear,
-                    onChanged: (val) {
-                      setState(() {
-                        selectedYear = val ?? "";
-                        Get.find<NewEvaluationViewModel>().selectedYear.value = val ?? "";
-                      });
-                    },
-                  ),
+                    ),
+                  ],
                 )
               ],
             ),
+            drawer: const CommonDrawer(),
+            body: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+                  child: SizedBox(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),
+                      child: Row(
+                        children: [
+                          Text(
+                            MyStrings.page + (viewModel.activePage.value + 1).toString(),
+                            style: MyStyles.blackW500F15Style,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0, bottom: 35, left: 5, right: 5),
+                  child: Row(
+                    children: List<Widget>.generate(
+                        pages!.length,
+                        (index) => Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  viewModel.pageController.value.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+                                },
+                                child: Container(
+                                  height: 6,
+                                  margin: const EdgeInsets.only(left: 10, right: 10),
+                                  width: MediaQuery.of(context).size.width / pages!.length,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: viewModel.activePage.value == index ? MyColors.kPrimaryColor : MyColors.lightBlue,
+                                  ),
+                                ),
+                              ),
+                            )),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                    child: PageView.builder(
+                      controller: viewModel.pageController.value,
+                      onPageChanged: (int page) {
+                        viewModel.activePage.value = page;
+                      },
+                      itemCount: pages!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return pages![index % pages!.length];
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
-    );
+        ));
   }
 }

@@ -1,3 +1,5 @@
+import 'package:evaluator_app/utils/constants.dart';
+import 'package:evaluator_app/utils/shared_pref_manager.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +14,8 @@ class Methods {
         builder: (BuildContext context) => CustomDialog(
           title: MyStrings.logoutConfirmMsg,
           okFun: () {
+            SharedPrefManager.instance.setStringAsync(Constants.phoneNum, '');
+            SharedPrefManager.instance.setStringAsync(Constants.password, '');
             Get.offAllNamed(AppRoutes.loginScreen);
           },
           cancelFun: () {

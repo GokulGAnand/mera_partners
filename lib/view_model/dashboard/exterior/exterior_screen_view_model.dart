@@ -7,7 +7,7 @@ import 'package:evaluator_app/utils/globals.dart' as globals;
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
+// import 'package:http_parser/http_parser.dart';
 import '../../../model/response/exterior/exterior_response.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/strings.dart';
@@ -375,7 +375,7 @@ class ExteriorViewModel extends GetxController {
     try {
       log(Uri.parse(EndPoints.baseUrl + EndPoints.exterior +globals.carId.toString()).toString());
       var request = http.MultipartRequest('PATCH', Uri.parse(EndPoints.baseUrl + EndPoints.exterior +globals.carId.toString()));
-      for (int i = 0; i < selectedFrontImageList.length; i++) {
+      /*for (int i = 0; i < selectedFrontImageList.length; i++) {
         request.fields['front_condition[$i]'] = selectedFrontImageList[i];
       }
       for (int i = 0; i < selectedLeftImageList.length; i++) {
@@ -557,9 +557,9 @@ class ExteriorViewModel extends GetxController {
       }
       for (int i = 0; i < selectedTyreRearLHSList.length; i++) {
         request.fields['rearTyreLeft_condition[$i]'] = selectedTyreRearLHSList[i];
-      }
+      }*/
       request.fields.addAll({
-        'front_remarks': frontImageRemarks.value.text,
+        /*'front_remarks': frontImageRemarks.value.text,
         'frontLeft_remarks': frontLeftImageRemarks.value.text,
         'frontRight_remarks': frontRightImageRemarks.value.text,
         'rearLeft_remarks': rearLeftImageRemarks.value.text,
@@ -624,22 +624,16 @@ class ExteriorViewModel extends GetxController {
         // 'fogLightRight_condition[1]': 'bad',
         // 'fogLightLeft_remarks': '',
         // 'fogLightLeft_condition[0]': 'bad',
-        // 'fogLightLeft_condition[1]': 'bad',
+        // 'fogLightLeft_condition[1]': 'bad',*/
         'jackAndTool': selectedJackAndTool.value,
         'fullBodyRepaint': selectedFullBodyRepaint.value,
         'missingParts': missingPartsController.value.text,
-        'cowlTop_remarks': cowlTopRemarks.value.text,
+        // 'cowlTop_remarks': cowlTopRemarks.value.text,
         'evaluationStatusForExterior':'COMPLETED'
       });
-      if (frontImage.value != null && !frontImage.value!.path.startsWith('http') && !frontImage.value!.path.startsWith('https')) {
+      /*if (frontImage.value != null && !frontImage.value!.path.startsWith('http') && !frontImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('front', frontImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      /*if (leftImage.value != null && !leftImage.value!.path.startsWith('http') && !leftImage.value!.path.startsWith('https')) {
-        request.files.add(await http.MultipartFile.fromPath('left', leftImage.value!.path,contentType: MediaType('image', 'jpg'),));
-      }*/
-      /*if (rightImage.value != null && !rightImage.value!.path.startsWith('http') && !rightImage.value!.path.startsWith('https')) {
-        request.files.add(await http.MultipartFile.fromPath('right', rightImage.value!.path,contentType: MediaType('image', 'jpg'),));
-      }*/
       if (frontLeftImage.value != null && !frontLeftImage.value!.path.startsWith('http') && !frontLeftImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('frontLeft', frontLeftImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
@@ -655,8 +649,6 @@ class ExteriorViewModel extends GetxController {
       if (rearImage.value != null && !rearImage.value!.path.startsWith('http') && !rearImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('rear', rearImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      // request.files.add( await http.MultipartFile.fromPath('frontWithHoodOpen', ));
-      // request.files.add( await http.MultipartFile.fromPath('rearBootOpen', ));
       if (leftImage.value != null && !leftImage.value!.path.startsWith('http') && !leftImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('leftImage', leftImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
@@ -687,7 +679,7 @@ class ExteriorViewModel extends GetxController {
       if (headlightsLH.value  != null && !headlightsLH.value!.path.startsWith('http') && !headlightsLH.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('headLightLeft', headlightsLH.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (headlightSupport.value  != null /*&& !headlightSupport.value!.path.startsWith('http') && !headlightSupport.value!.path.startsWith('https')*/) {
+      if (headlightSupport.value  != null *//*&& !headlightSupport.value!.path.startsWith('http') && !headlightSupport.value!.path.startsWith('https')*//*) {
         if (!headlightSupport.value!.path.startsWith('http') && !headlightSupport.value!.path.startsWith('https')) {
           request.files.add(await http.MultipartFile.fromPath('headLightSupport', headlightSupport.value!.path,contentType: MediaType('image', 'jpg'),));
         }
@@ -698,7 +690,7 @@ class ExteriorViewModel extends GetxController {
       if (rearBumper.value  != null && !rearBumper.value!.path.startsWith('http') && !rearBumper.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('bumperRear', rearBumper.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (bonnetPattiImage.value  != null /*&& !bonnetPattiImage.value!.path.startsWith('http') && !bonnetPattiImage.value!.path.startsWith('https')*/) {
+      if (bonnetPattiImage.value  != null *//*&& !bonnetPattiImage.value!.path.startsWith('http') && !bonnetPattiImage.value!.path.startsWith('https')*//*) {
         if (!bonnetPattiImage.value!.path.startsWith('http') && !bonnetPattiImage.value!.path.startsWith('https')) {
           request.files.add(await http.MultipartFile.fromPath('bonnetPatti', bonnetPattiImage.value!.path,contentType: MediaType('image', 'jpg'),));
         }
@@ -712,17 +704,17 @@ class ExteriorViewModel extends GetxController {
       if (upperCrossMember.value  != null && !upperCrossMember.value!.path.startsWith('http') && !upperCrossMember.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('upperCrossMember', upperCrossMember.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (apronLH.value  != null /*&& !apronLH.value!.path.startsWith('http') && !apronLH.value!.path.startsWith('https')*/) {
+      if (apronLH.value  != null *//*&& !apronLH.value!.path.startsWith('http') && !apronLH.value!.path.startsWith('https')*//*) {
         if (!apronLH.value!.path.startsWith('http') && !apronLH.value!.path.startsWith('https')) {
           request.files.add(await http.MultipartFile.fromPath('apronLeft', apronLH.value!.path,contentType: MediaType('image', 'jpg'),));
         }
       }
-      if (apronRH.value  != null /*&& !apronRH.value!.path.startsWith('http') && !apronRH.value!.path.startsWith('https')*/) {
+      if (apronRH.value  != null *//*&& !apronRH.value!.path.startsWith('http') && !apronRH.value!.path.startsWith('https')*//*) {
         if (!apronRH.value!.path.startsWith('http') && !apronRH.value!.path.startsWith('https')) {
           request.files.add(await http.MultipartFile.fromPath('apronRight', apronRH.value!.path,contentType: MediaType('image', 'jpg'),));
         }
       }
-      if (chassisExtension.value  != null /*&& !chassisExtension.value!.path.startsWith('http') && !chassisExtension.value!.path.startsWith('https')*/) {
+      if (chassisExtension.value  != null *//*&& !chassisExtension.value!.path.startsWith('http') && !chassisExtension.value!.path.startsWith('https')*//*) {
         if (!chassisExtension.value!.path.startsWith('http') && !chassisExtension.value!.path.startsWith('https')) {
           request.files.add(await http.MultipartFile.fromPath('chassisExtension', chassisExtension.value!.path,contentType: MediaType('image', 'jpg'),));
         }
@@ -802,7 +794,7 @@ class ExteriorViewModel extends GetxController {
       if (bootImage.value  != null && !bootImage.value!.path.startsWith('http') && !bootImage.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('boot', bootImage.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      if (firewall.value  != null/* && !firewall.value!.path.startsWith('http') && !firewall.value!.path.startsWith('https')*/) {
+      if (firewall.value  != null*//* && !firewall.value!.path.startsWith('http') && !firewall.value!.path.startsWith('https')*//*) {
         if (!firewall.value!.path.startsWith('http') && !firewall.value!.path.startsWith('https')) {
           request.files.add(await http.MultipartFile.fromPath('firewall', firewall.value!.path,contentType: MediaType('image', 'jpg'),));
         }
@@ -819,20 +811,18 @@ class ExteriorViewModel extends GetxController {
       if (fuelLid.value  != null && !fuelLid.value!.path.startsWith('http') && !fuelLid.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('fuelLid', fuelLid.value!.path,contentType: MediaType('image', 'jpg'),));
       }
-      // request.files.add( await http.MultipartFile.fromPath('fogLightRight', ));
-      // request.files.add( await http.MultipartFile.fromPath('fogLightLeft', ));
-      if (cowlTop.value  != null /*&& !cowlTop.value!.path.startsWith('http') && !cowlTop.value!.path.startsWith('https')*/) {
+      if (cowlTop.value  != null *//*&& !cowlTop.value!.path.startsWith('http') && !cowlTop.value!.path.startsWith('https')*//*) {
         if (!cowlTop.value!.path.startsWith('http') && !cowlTop.value!.path.startsWith('https')) {
           request.files.add(await http.MultipartFile.fromPath('cowlTop', cowlTop.value!.path,contentType: MediaType('image', 'jpg'),));
         }
-      }
+      }*/
       request.headers.addAll(globals.headers);
 
-      http.StreamedResponse response = await request.send();
+      var response = await request.send();
 log(response.toString());
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        log(await response.stream.bytesToString());
+        log(response.stream.toString());
         CustomToast.instance.showMsg(MyStrings.success);
         if (Get.isRegistered<DashBoardViewModel>()) {
           Get.delete<DashBoardViewModel>();

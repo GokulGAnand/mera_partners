@@ -45,6 +45,7 @@ dependencies:
   http_parser: ^4.0.2
   permission_handler: ^11.3.0
   device_info_plus: ^9.1.2
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

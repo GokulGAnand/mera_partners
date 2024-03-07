@@ -711,6 +711,9 @@ class NewEvaluationScreen extends StatelessWidget {
                     return TextFormField(
                       controller: textEditingController,
                       focusNode: focusNode,
+                      onSaved: (newValue) {
+                        viewModel.selectedEngineCC.value = textEditingController.text;
+                      },
                       validator: ValidateInput.validateRequiredFields,
                       decoration: const InputDecoration(
                         helperStyle: TextStyle(color: MyColors.black),
@@ -898,6 +901,9 @@ class NewEvaluationScreen extends StatelessWidget {
                         return TextFormField(
                           controller: textEditingController,
                           focusNode: focusNode,
+                          onSaved: (newValue) {
+                            viewModel.selectedMake.value = textEditingController.text;
+                          },
                           validator: ValidateInput.validateRequiredFields,
                           decoration: const InputDecoration(
                             helperStyle: TextStyle(color: MyColors.black),
@@ -965,6 +971,9 @@ class NewEvaluationScreen extends StatelessWidget {
                       return TextFormField(
                         controller: textEditingController,
                         focusNode: focusNode,
+                        onSaved: (newValue) {
+                          viewModel.selectedModel.value = textEditingController.text;
+                        },
                         validator: ValidateInput.validateRequiredFields,
                         decoration: const InputDecoration(
                           helperStyle: TextStyle(color: MyColors.black),
@@ -1013,6 +1022,9 @@ class NewEvaluationScreen extends StatelessWidget {
                       return TextFormField(
                         controller: textEditingController,
                         focusNode: focusNode,
+                        onSaved: (newValue) {
+                          viewModel.selectedVariant.value = textEditingController.text;
+                        },
                         validator: ValidateInput.validateRequiredFields,
                         decoration: const InputDecoration(
                           helperStyle: TextStyle(color: MyColors.black),
@@ -1784,6 +1796,8 @@ class _MonthPickerState extends State<MonthYearPicker> {
       setState(() {
         selectedMonth = _monthList[selectedMonthIndex];
         selectedYear = _yearList[selectedYearIndex];
+        Get.find<NewEvaluationViewModel>().selectedMonth.value = selectedMonth;
+        Get.find<NewEvaluationViewModel>().selectedYear.value = selectedYear;
       });
     });
     super.initState();

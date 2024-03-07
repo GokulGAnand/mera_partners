@@ -186,7 +186,7 @@ class FeatureViewModel extends GetxController{
      log(request.toString());
      log(request.fields.toString());
      log(request.files.toString());
-     http.StreamedResponse response = await request.send();
+     var response = await request.send();
      
      if (response.statusCode == 200) {
        ProgressBar.instance.stopProgressBar(Get.context!);

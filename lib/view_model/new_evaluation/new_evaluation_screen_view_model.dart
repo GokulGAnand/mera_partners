@@ -259,6 +259,7 @@ class NewEvaluationViewModel extends GetxController {
       }
       final response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.evaluation), body: json.encode(createEvaluationRequest), headers: headers);
       log(Uri.parse(EndPoints.baseUrl + EndPoints.evaluation).toString());
+      log(json.encode(createEvaluationRequest));
 log(response.statusCode.toString());
 log(response.body.toString());
       if (response.statusCode == 200) {
