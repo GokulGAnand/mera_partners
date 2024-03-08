@@ -18,10 +18,10 @@ class CustomElevatedButton extends StatefulWidget {
   const CustomElevatedButton({super.key, @required this.onPressed, @required this.buttonText, this.splashColor, this.textColor, this.disableColor, this.buttonColor, this.buttonHeight, this.buttonWidth, this.buttonStyle, this.textStyle, this.icon});
 
   @override
-  _CustomElevatedButtonState createState() => _CustomElevatedButtonState();
+  CustomElevatedButtonState createState() => CustomElevatedButtonState();
 }
 
-class _CustomElevatedButtonState extends State<CustomElevatedButton> {
+class CustomElevatedButtonState extends State<CustomElevatedButton> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
