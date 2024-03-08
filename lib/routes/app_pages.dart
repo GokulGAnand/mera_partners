@@ -14,7 +14,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.documentScreen,
-      page: () => const DocumentScreen(),
+      page: () => DocumentScreen(),
       binding: DocumentScreenBinding(),
     ),
   ];
