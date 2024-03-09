@@ -286,5 +286,9 @@ class MyStrings {
   static const String engineComments = "Engine Comments";
   static const String vUploadImage = "To continue, upload an image";
   static const String empty = "";
+ ///onboard screen
+ static const String bidFromAnyWhere = "Bid From Anywhere";
+ static const String detailedInspection = 'Detailed Inspection';
+ static const String easyDocumentTransfer = 'Easy Document Transfer';
 
 }
