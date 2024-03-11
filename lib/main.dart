@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       getPages: AppRoutes().pages,
-      initialRoute: AppRoutes.onboardingScreen,
-      initialBinding: OnboardingBinding(),
+      initialRoute: AppRoutes.loginScreen,
+      // initialBinding: OnboardingBinding(),
     );
   }
 }

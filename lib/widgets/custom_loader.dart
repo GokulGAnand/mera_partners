@@ -9,17 +9,10 @@ class CustomLoader extends StatefulWidget {
   const CustomLoader({super.key, this.color1 = MyColors.kPrimaryColor});
 
   @override
-<<<<<<< HEAD
-  _ColorLoader2State createState() => _ColorLoader2State();
-}
-
-class _ColorLoader2State extends State<CustomLoader> with TickerProviderStateMixin {
-=======
   ColorLoader2State createState() => ColorLoader2State();
 }
 
 class ColorLoader2State extends State<CustomLoader> with TickerProviderStateMixin {
->>>>>>> a1815bfbac36ac28c6712515d4495907fb7e21bd
   Animation<double>? animation1;
   AnimationController? controller1;
 
@@ -43,11 +36,7 @@ class ColorLoader2State extends State<CustomLoader> with TickerProviderStateMixi
               radius: 25,
               backgroundColor: MyColors.kPrimaryColor,
               child: Image.asset(
-<<<<<<< HEAD
-                MyImages.appLogo,
-=======
                 MyImages.splash,
->>>>>>> a1815bfbac36ac28c6712515d4495907fb7e21bd
                 width: 30,
                 height: 40,
               )),

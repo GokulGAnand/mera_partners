@@ -30,7 +30,7 @@ class MyStyles {
     fontSize: 14,
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w400,
-    height: 0.09,
+    // height: 0.09,
   );
   static const pageTitleStyle = TextStyle(
     color: MyColors.black,

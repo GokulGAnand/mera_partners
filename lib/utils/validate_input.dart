@@ -8,7 +8,6 @@ class ValidateInput {
       return MyStrings.required;
     }
   }
-<<<<<<< HEAD
 
   static String? validateMobile(String? value) {
     String patttern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
@@ -20,6 +19,4 @@ class ValidateInput {
     }
     return null;
   }  
-=======
->>>>>>> a1815bfbac36ac28c6712515d4495907fb7e21bd
 }

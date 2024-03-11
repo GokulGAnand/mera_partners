@@ -15,7 +15,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
   @override
   Widget build(BuildContext context) {
     return AppBar(
-          backgroundColor: MyColors.kPrimaryColor,
+          backgroundColor: MyColors.blue,
           automaticallyImplyLeading: false,
           elevation: 0,
           leading: GestureDetector(

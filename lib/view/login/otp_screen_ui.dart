@@ -113,7 +113,8 @@ class _OtpScreenState extends State<OtpScreen>{
           alignment: Alignment.center,
           child: CustomElevatedButton(
                 textColor: MyColors.white, 
-                buttonColor: MyColors.kPrimaryColor.withOpacity((loginScreenViewModel.buttonDisable.value)?0.25:1),
+                elevation: 0,
+                buttonColor: MyColors.blue.withOpacity((loginScreenViewModel.buttonDisable.value)?0.3:1),
                 buttonText: "Verify",
                 onPressed: () {
                   if(loginScreenViewModel.buttonDisable.value == false){
@@ -138,7 +139,6 @@ class _OtpScreenState extends State<OtpScreen>{
                         textAlign: TextAlign.center,
                         maxLength: 1,
                         leftPadding: 0.0,
-                        textFieldStyle: MyStyles.titleStyle,
                         onChange: (value) {
                           if (value.length == 1 && last == false) {
                             FocusScope.of(context).nextFocus();
