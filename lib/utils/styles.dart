@@ -25,6 +25,13 @@ class MyStyles {
     fontWeight: FontWeight.w400,
     height: 0.09,
   );
+  static const subTitleGreayStyle = TextStyle(
+    color: MyColors.subTitleColor,
+    fontSize: 14,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w400,
+    // height: 0.09,
+  );
   static const pageTitleStyle = TextStyle(
     color: MyColors.black,
     fontSize: 16,

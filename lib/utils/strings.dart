@@ -277,6 +277,10 @@ class MyStrings {
   // static const String electrical = "Electrical";
   // static const String engineComments = "Engine Comments";
   // static const String vUploadImage = "To continue, upload an image";
+
+  //Login and OTP screen
+  static const String invalidMobileNumber = "Invalid mobile number";
+  static const String invalidOTP = "Invalid OTP";
   ///Document Verification
   static const String documentVerification = "Document Verification";
   static const String skip = "Skip";
@@ -292,7 +296,8 @@ class MyStrings {
   static const String enterPinCode = "Enter your pin code";
   static const String district = "District";
   static const String enterDistrict = "Enter your district";
-  static const String next = "Next";
+  static const String
+  next = "Next";
   static const String personalDocuments = "Personal Documents";
   static const String aadhaarCardFront = "Aadhaar Card Front";
   static const String aadhaarCardBack = "Aadhaar Card Back";
@@ -321,5 +326,12 @@ class MyStrings {
   static const String cancelledChequeOrPassBook = "Cancelled Cheque/Passbook Front";
   static const String proceedToPay = "Proceed to Pay";
   static const String empty = "";
+ ///onboard screen
+ static const String bidFromAnyWhere = "Bid From Anywhere";
+ static const String detailedInspection = 'Detailed Inspection';
+ static const String easyDocumentTransfer = 'Easy Document Transfer';
+ static const String subtitle1 = 'Welcome to Meracars, your gateway to an exciting world of automotive possibilities.';
+ static const String getStarted = 'Get Started';
+
 
 }
