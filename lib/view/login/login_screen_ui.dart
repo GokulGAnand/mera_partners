@@ -45,12 +45,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     Text(
                 "Login",
-                style: MyStyles.loginTitleStyle,
+                style: TextStyle(
+                  color: MyColors.black,
+                  fontSize: 28,
+                  fontFamily: 'DM Sans',
+                  fontWeight: FontWeight.w700,
+                  height: 0,
+                ),
               ),
               SizedBox(height: Dimens.standard_20,),
               Text(
                 "Please enter the phone number we will send the OTP in this phone number.",
-                style: MyStyles.subTitleStyle,
+                style: MyStyles.subTitleGreayStyle,
               ),
               SizedBox(height: Dimens.standard_20,),
                     CustomTextFormField(
@@ -61,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: Dimens.standard_20,),
                     RichText(
                 text: TextSpan(
-                  style: MyStyles.subTitleStyle,
+                  style: MyStyles.subTitleGreayStyle,
                   children: <TextSpan>[
                     TextSpan(
                         text: 'By logging in you agree to  our ',),

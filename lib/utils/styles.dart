@@ -4,31 +4,54 @@ import 'dimens.dart';
 
 class MyStyles {
   static final regular = TextStyle(color: MyColors.kPrimaryColor, fontWeight: FontWeight.w400, fontSize: Dimens.standard_14);
-  static final regular12 = TextStyle(color: MyColors.kPrimaryColor, fontWeight: FontWeight.w500, fontSize: Dimens.standard_12);
-  static final bold = TextStyle(color: MyColors.kPrimaryColor, fontWeight: FontWeight.w700, fontSize: Dimens.standard_30);
-  static final regularTitle = TextStyle(color: MyColors.kPrimaryColor, fontWeight: FontWeight.w700, fontSize: Dimens.standard_15);
-
-  static final loginTitleStyle = TextStyle(
-    color: MyColors.titleColor,
-    fontWeight: FontWeight.w500,
-    fontSize: Dimens.standard_28,
-  );
-
-  static final titleStyle = TextStyle(
-    color: MyColors.titleColor,
-    fontWeight: FontWeight.w500,
-    fontSize: Dimens.standard_16,
-  );
-
-  static final subTitleStyle = TextStyle(
-    color: MyColors.subTitleColor,
-    fontWeight: FontWeight.w400,
-    fontSize: Dimens.standard_14,
-  );
-
-  static final appBarTitleStyle = TextStyle(
+  static const titleStyle = TextStyle(
     color: MyColors.white,
+    fontSize: 22,
+    fontFamily: 'DM Sans',
     fontWeight: FontWeight.w700,
-    fontSize: Dimens.standard_22,
+    height: 0,
   );
+  static const subTitleWhiteStyle = TextStyle(
+    color: MyColors.white,
+    fontSize: 14,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w400,
+    height: 0.09,
+  );
+  static const subTitleBlackStyle = TextStyle(
+    color: MyColors.black,
+    fontSize: 14,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w400,
+    height: 0.09,
+  );
+  static const subTitleGreayStyle = TextStyle(
+    color: MyColors.subTitleColor,
+    fontSize: 14,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w400,
+    height: 0.09,
+  );
+  static const pageTitleStyle = TextStyle(
+    color: MyColors.black,
+    fontSize: 16,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
+    height: 0,
+  );
+  static const blackBold28 = TextStyle(
+    color: MyColors.black,
+    fontSize: 28,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w700,
+    height: 0,
+  );
+  static const blackBold20 = TextStyle(
+    color: MyColors.black,
+    fontSize: 20,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
+    height: 0,
+  );
+
 }

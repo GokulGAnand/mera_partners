@@ -4,7 +4,7 @@ String? userName;
 String? userId;
 String? email;
 String? city;
-int? mobileNo;
+int? contactNo;
 String? token;
 String? carId;
 String? phoneNum;

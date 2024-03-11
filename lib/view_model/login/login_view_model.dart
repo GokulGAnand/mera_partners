@@ -77,7 +77,7 @@ class LoginScreenViewModel extends GetxController {
       if (response.statusCode == 200) {
         log(response.body.toString());
         SharedPrefManager.instance.setStringAsync(Constants.phoneNum, mobileController.value.text);
-        globals.mobileNo =int.parse(mobileController.value.text.toString());
+        globals.contactNo =int.parse(mobileController.value.text.toString());
       }else{
         CustomToast.instance.showMsg(MyStrings.invalidOTP);
       }

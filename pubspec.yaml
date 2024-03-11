@@ -70,9 +70,9 @@ flutter:
 
   #   Fonts:
   fonts:
-    - family: Inter
+    - family: DM Sans
       fonts:
-        - asset: assets/fonts/inter_regular.ttf
-        - asset: assets/fonts/Inter-Medium.ttf
+        - asset: assets/fonts/DMSans_18pt-Regular.ttf
+        - asset: assets/fonts/DMSans_18pt-Medium.ttf
 
 

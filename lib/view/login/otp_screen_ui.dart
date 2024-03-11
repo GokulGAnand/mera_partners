@@ -49,7 +49,7 @@ class _OtpScreenState extends State<OtpScreen>{
           children: [
             Text(
               "Please enter the phone number we will send the OTP in this phone number.",
-              style: MyStyles.subTitleStyle,
+              style: MyStyles.subTitleGreayStyle,
             ),
             SizedBox(height: Dimens.standard_10,),
             Row(
@@ -89,7 +89,7 @@ class _OtpScreenState extends State<OtpScreen>{
                 return Row(
                   children: [
                     Text("Request OTP in ",
-                    style:MyStyles.subTitleStyle,),
+                    style:MyStyles.subTitleGreayStyle,),
                     Text('${loginScreenViewModel.time.value}', 
                   style: TextStyle(
                       color: MyColors.red,
