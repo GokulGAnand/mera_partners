@@ -316,6 +316,10 @@ class MyStrings {
   static const String gallery = "Gallery";
   static const String paySuccessDesc = "All the documents has been uploaded\nand is under verification";
   static const String cont = "continue";
+  static const String shopImage = "Shop Image";
+  static const String visitingCard = "Visiting Card";
+  static const String cancelledChequeOrPassBook = "Cancelled Cheque/Passbook Front";
+  static const String proceedToPay = "Proceed to Pay";
   static const String empty = "";
 
 }

@@ -146,7 +146,7 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
               borderRadius: const BorderRadius.all(Radius.circular(8.0)),
               borderSide: BorderSide(color: widget.enabledBorderColor ?? MyColors.grey),
             ),
-            labelStyle: widget.labelStyle ?? TextStyle(height: widget.labelHeight ?? 0.5, color: widget.labelColor ?? MyColors.kPrimaryColor, fontSize: 15, fontWeight: FontWeight.w500, fontStyle: FontStyle.normal),
+            labelStyle: widget.labelStyle ?? TextStyle(height: widget.labelHeight ?? 0.5, color: widget.labelColor ?? MyColors.black, fontSize: 15, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal),
             prefixIcon: widget.prefixIcon,
             suffixIcon: widget.suffixIcon,
           ),
