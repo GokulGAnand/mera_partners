@@ -1,30 +1,35 @@
+import 'dart:ffi';
+import 'dart:math';
+
 import 'package:evaluator_app/utils/colors.dart';
+import 'package:evaluator_app/utils/images.dart';
+import 'package:evaluator_app/utils/strings.dart';
+import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../view_model/onboarding/onboarding_view_model.dart';
 
 class OnBoardingWidgets extends StatelessWidget {
   final String? image;
   final String? title;
   final String? subtitle;
   final int values;
-  const OnBoardingWidgets({super.key, this.image, this.title, this.subtitle,required this.values});
+  const OnBoardingWidgets({super.key, this.image, this.title, this.subtitle, required this.values});
 
   @override
   Widget build(BuildContext context) {
+    OnboardingScreenViewModel controller = Get.find<OnboardingScreenViewModel>();
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 100,
-
         ),
         Container(
-           height: 300,
+          height: 300,
           // width: 50,
           decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(image??''),
-              fit: BoxFit.values[values]
-            ),
+            image: DecorationImage(image: AssetImage(image ?? ''), fit: BoxFit.values[values]),
           ),
         ),
         Container(
@@ -34,23 +39,56 @@ class OnBoardingWidgets extends StatelessWidget {
             borderRadius: BorderRadius.circular(25),
             color: Colors.white,
           ),
-          padding: EdgeInsets.all(30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                '${title}',
-                style: const TextStyle(fontSize: 24,fontStyle: FontStyle.normal,fontWeight: FontWeight.w700,color: MyColors.black),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Text(
-                '${subtitle}',
-                style: const TextStyle(fontSize: 15,fontStyle: FontStyle.normal,fontWeight: FontWeight.w400,color: MyColors.grey),
-                textAlign: TextAlign.center,
-              )
-            ],
+          padding: const EdgeInsets.all(30),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 150, 0, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${title}',
+                  style: const TextStyle(fontSize: 24, fontStyle: FontStyle.normal, fontWeight: FontWeight.w700, color: MyColors.black),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 32),
+                  child: Text(
+                    '${subtitle}',
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w400,
+                      color: MyColors.black1,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Obx(
+          () => Padding(
+            padding: const EdgeInsets.fromLTRB(15, 60, 15, 0),
+            child: CustomElevatedButton(
+              onPressed: () {
+                print('Current Page: ${controller.page.value}');
+                if (controller.page.value == 2) {
+                  // Handle the action for page value 2
+                } else {
+                  controller.indicator.animateToPage(
+                    controller.page.value.toInt() + 1,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeIn,
+                  );
+                }
+                controller.update();
+              },
+              textColor: MyColors.white,
+              buttonText: controller.page.value == 2 ? MyStrings.getStarted : MyStrings.next,
+            ),
           ),
         )
       ],
