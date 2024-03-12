@@ -13,4 +13,5 @@ class MyColors {
 
   static const Color titleColor = Color(0XFF202831);
   static const Color subTitleColor = Color(0XFF4D535A);
+  static const Color disableTextColor = Color(0XFF6A6F75);
 }

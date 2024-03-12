@@ -41,7 +41,7 @@ dependencies:
   connectivity_plus: ^5.0.2
   intl:
   shared_preferences: ^2.2.2
-  permission_handler:
+  permission_handler: ^11.3.0
   image_picker:
   http_parser:
   device_info_plus:
@@ -72,6 +72,7 @@ flutter:
   # Images:
   assets:
     - assets/images/
+    - assets/svg/
 
   #   Fonts:
   fonts:

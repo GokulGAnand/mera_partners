@@ -54,4 +54,12 @@ class MyStyles {
     height: 0,
   );
 
+  static const selectedTabBarTitleStyle = TextStyle(
+    color: MyColors.black,
+    fontSize: 14,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
+    height: 0,
+  );
+
 }

@@ -54,7 +54,7 @@ class OnboardingScreen extends GetView<OnboardingScreenViewModel> {
                   width: 24,
                   height: 10,
                   decoration: controller.page.value == index
-                      ? BoxDecoration(shape: BoxShape.rectangle, borderRadius: BorderRadius.circular(controller.page.value == index ? 10 : 0), color: MyColors.blue1)
+                      ? BoxDecoration(shape: BoxShape.rectangle, borderRadius: BorderRadius.circular(controller.page.value == index ? 10 : 0), color: MyColors.kPrimaryColor)
                       : const BoxDecoration(
                           shape: BoxShape.circle,
                           color: MyColors.grey,
