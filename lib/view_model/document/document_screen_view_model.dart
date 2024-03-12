@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:evaluator_app/utils/globals.dart' as globals;
 import 'package:http_parser/http_parser.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../../model/response/user_data/user_info_response.dart';
 
 class DocumentScreenViewModel extends GetxController{
@@ -32,18 +33,18 @@ class DocumentScreenViewModel extends GetxController{
   Rx<File?> visitingCard = Rx<File?>(null);
   Rx<File?> cancelledCheque = Rx<File?>(null);
   var userInfoResponse = UserInfoResponse().obs;
-  // final Razorpay razorpay = Razorpay('rzp_test_zppMuXi3XdVVOB');
+  final Razorpay razorpay = Razorpay();
 
   @override
   void onInit(){
-    // razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    // razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    // razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     getDocument();
     super.onInit();
   }
 
-  /*void _handlePaymentSuccess(PaymentSuccessResponse response) {
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
     // Do something when payment succeeds
   }
 
@@ -53,7 +54,7 @@ class DocumentScreenViewModel extends GetxController{
 
   void _handleExternalWallet(ExternalWalletResponse response) {
     // Do something when an external wallet is selected
-  }*/
+  }
 
   @override
   void dispose() {
