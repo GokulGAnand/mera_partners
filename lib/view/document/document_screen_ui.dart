@@ -1,4 +1,6 @@
 import 'package:evaluator_app/utils/styles.dart';
+import 'package:evaluator_app/widgets/custom_appbar.dart';
+import 'package:evaluator_app/widgets/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utils/dimens.dart';
@@ -17,7 +19,7 @@ class DocumentScreen extends StatelessWidget {
 
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   List<Widget>? pages;
-  DocumentScreenViewModel viewModel = Get.find<DocumentScreenViewModel>();
+  DocumentScreenViewModel viewModel = Get.isRegistered<DocumentScreenViewModel>() ? Get.find<DocumentScreenViewModel>() : Get.put(DocumentScreenViewModel());
 
   Widget pageOne() {
     return Obx(
@@ -259,7 +261,7 @@ class DocumentScreen extends StatelessWidget {
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.linear,
                     );
-                  };
+                  }
                 }
               },
               buttonText: MyStrings.next,
@@ -395,6 +397,7 @@ class DocumentScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("₹10,000",style: MyStyles.blackBold28,),
+                  SizedBox(height: 10,),
                   Text(MyStrings.securityDepositDesc,style: MyStyles.pageTitleStyle,),
                 ],
               ),
@@ -445,6 +448,38 @@ class DocumentScreen extends StatelessWidget {
           // },
           child: Scaffold(
             key: _key,
+            appBar: CustomAppBar(title: MyStrings.documentVerification,subTitle: MyStrings.documentDesc,
+              actions: [Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 10),
+                child: OutlinedButton(
+                  style:  OutlinedButton.styleFrom(
+                  side: const BorderSide(width: 1, color: MyColors.white),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))
+                          ),
+                    onPressed: () {
+                        if (viewModel.activePage.value == 3) {
+                          showDialog(context: context, builder: (context) {
+                            return CustomDialog(
+                              title: MyStrings.skipWarning,
+                              okFun: () {
+
+                              },
+                              cancelFun: () {
+                                Navigator.of(context).pop();
+                              },
+                            );
+                          },);
+                        }else{
+                          viewModel.pageController.value.animateToPage(
+                            viewModel.activePage.value + 1,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.linear,
+                          );
+                        }
+
+                }, child: Text(MyStrings.skip,style: MyStyles.regular,)),
+              )],
+            ),
             resizeToAvoidBottomInset: false,
             body: Column(
               children: [

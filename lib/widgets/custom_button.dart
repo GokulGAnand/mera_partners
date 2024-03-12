@@ -35,7 +35,7 @@ class CustomElevatedButtonState extends State<CustomElevatedButton> {
         style: widget.buttonStyle ??
             ElevatedButton.styleFrom(
               elevation: (widget.elevation != null)?widget.elevation :null,
-              backgroundColor: widget.buttonColor ?? MyColors.blue,
+              backgroundColor: widget.buttonColor ?? MyColors.kPrimaryColor,
               disabledBackgroundColor: widget.disableColor,
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),

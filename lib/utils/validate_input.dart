@@ -10,11 +10,11 @@ class ValidateInput {
   }
 
   static String? validateMobile(String? value) {
-    String patttern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
-    RegExp regExp = new RegExp(patttern);
-    if (value!.length == 0) {
+    String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+    RegExp regExp = RegExp(pattern);
+    if (value!.isEmpty) {
       return 'Please enter mobile number';
-    } else if (!regExp.hasMatch(value!)) {
+    } else if (!regExp.hasMatch(value)) {
       return 'Please enter valid mobile number';
     }
     return null;

@@ -325,6 +325,7 @@ class MyStrings {
   static const String visitingCard = "Visiting Card";
   static const String cancelledChequeOrPassBook = "Cancelled Cheque/Passbook Front";
   static const String proceedToPay = "Proceed to Pay";
+  static const String skipWarning = "You wont be able to bid if you\nskip document upload !";
   static const String empty = "";
  ///onboard screen
  static const String bidFromAnyWhere = "Bid From Anywhere";

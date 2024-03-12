@@ -32,11 +32,33 @@ class DocumentScreenViewModel extends GetxController{
   Rx<File?> visitingCard = Rx<File?>(null);
   Rx<File?> cancelledCheque = Rx<File?>(null);
   var userInfoResponse = UserInfoResponse().obs;
+  // final Razorpay razorpay = Razorpay('rzp_test_zppMuXi3XdVVOB');
 
   @override
   void onInit(){
+    // razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    // razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    // razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     getDocument();
     super.onInit();
+  }
+
+  /*void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    // Do something when payment succeeds
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Do something when payment fails
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Do something when an external wallet is selected
+  }*/
+
+  @override
+  void dispose() {
+    // razorpay.clear();
+    super.dispose();
   }
 
   void getDocument() async {
