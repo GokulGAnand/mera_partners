@@ -4,7 +4,6 @@ class MyImages {
   static const appLogo = "${imageRoot}mera_cars.png";
   static const loginImage = "${imageRoot}login_image.png";
   static const splash = "${imageRoot}mera_partners.png";
-  static const loading = "${imageRoot}loading.png";
   static const upload = "${imageRoot}upload.png";
   static const success = "${imageRoot}success.png";
   static const error = "${imageRoot}error.png";
@@ -12,5 +11,6 @@ class MyImages {
   static const onboarding1 ="${imageRoot}onboarding1.png";
   static const onboarding2 ="${imageRoot}onboarding2.png";
   static const onboarding3 ="${imageRoot}onboarding3.png";
-  static const arrowForward = "${imageRoot}arrow_forward.png";
+  static const camera = "${imageRoot}camera_add.svg";
+  static const gallery = "${imageRoot}gallery_add.svg";
 }

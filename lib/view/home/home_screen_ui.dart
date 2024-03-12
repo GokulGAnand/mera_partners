@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
           elevation: 0,
           currentIndex: homeScreenViewModel.selectedIndex.value,
           selectedLabelStyle:  TextStyle(
-            color: MyColors.blue,
+            color: MyColors.kPrimaryColor,
             fontSize: 12,
             fontFamily: 'DM Sans',
             fontWeight: FontWeight.w400,
@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 40,
                   child: SvgPicture.asset(
                     "assets/svg/bids.svg",
-                    color: (homeScreenViewModel.selectedIndex.value == 0) ?MyColors.blue: MyColors.disableTextColor,
+                    color: (homeScreenViewModel.selectedIndex.value == 0) ?MyColors.kPrimaryColor: MyColors.disableTextColor,
                   ),
                 ),
                 label: "Bids"),
@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 30,
                   child: SvgPicture.asset(
                     "assets/svg/my_cars.svg",
-                    color: (homeScreenViewModel.selectedIndex.value == 1) ?MyColors.blue: MyColors.disableTextColor,
+                    color: (homeScreenViewModel.selectedIndex.value == 1) ?MyColors.kPrimaryColor: MyColors.disableTextColor,
                   ),
                 ),
                 label: "My Cars"),
@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 30,
                   child: SvgPicture.asset(
                     "assets/svg/orders.svg",
-                    color: (homeScreenViewModel.selectedIndex.value == 2) ?MyColors.blue: MyColors.disableTextColor,
+                    color: (homeScreenViewModel.selectedIndex.value == 2) ?MyColors.kPrimaryColor: MyColors.disableTextColor,
                   ),
                 ),
                 label: "Orders"),
@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 30,
                   child: SvgPicture.asset(
                     "assets/svg/wallet.svg",
-                    color: (homeScreenViewModel.selectedIndex.value == 3) ?MyColors.blue: MyColors.disableTextColor,
+                    color: (homeScreenViewModel.selectedIndex.value == 3) ?MyColors.kPrimaryColor: MyColors.disableTextColor,
                   ),
                 ),
                 label: "Wallet"),
@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 30,
                   child: SvgPicture.asset(
                     "assets/svg/account.svg",
-                    color: (homeScreenViewModel.selectedIndex.value ==4) ?MyColors.blue: MyColors.disableTextColor,
+                    color: (homeScreenViewModel.selectedIndex.value ==4) ?MyColors.kPrimaryColor: MyColors.disableTextColor,
                   ),
                 ),
                 label: "Account"),

@@ -9,20 +9,23 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
   const CustomAppBar({
     required this.title,
     this.appBarHeight = 150,
-    super.key});
+    super.key, this.subTitle, this.actions});
   final String title;
+  final String? subTitle;
   final double? appBarHeight;
+  final List<Widget>? actions;
   @override
   Widget build(BuildContext context) {
     return AppBar(
-          backgroundColor: MyColors.blue,
+          backgroundColor: MyColors.kPrimaryColor,
           automaticallyImplyLeading: false,
           elevation: 0,
+          actions: actions,
           leading: GestureDetector(
             onTap: (){
               Get.back();
             },
-            child: Icon(Icons.arrow_back, color: Colors.white,)),
+            child: const Icon(Icons.arrow_back, color: Colors.white,)),
           flexibleSpace: SafeArea(
             child: Padding(
               padding: Dimens.padding16,
@@ -34,6 +37,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
                   Text(
                     title,
                     style: MyStyles.titleStyle
+                  ),
+                  if(subTitle != null)
+                    const SizedBox(height: 13,),
+                  if(subTitle != null)
+                  Text(
+                      subTitle ?? '',
+                    style: MyStyles.regular
                   )
                 ],
               ),

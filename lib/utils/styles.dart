@@ -3,7 +3,7 @@ import 'colors.dart';
 import 'dimens.dart';
 
 class MyStyles {
-  static final regular = TextStyle(color: MyColors.kPrimaryColor, fontWeight: FontWeight.w400, fontSize: Dimens.standard_14);
+  static final regular = TextStyle(color: MyColors.white, fontWeight: FontWeight.w400, fontSize: Dimens.standard_14);
   static const titleStyle = TextStyle(
     color: MyColors.white,
     fontSize: 22,

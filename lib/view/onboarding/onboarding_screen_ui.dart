@@ -1,16 +1,17 @@
+import 'dart:developer';
+
 import 'package:evaluator_app/utils/images.dart';
 import 'package:evaluator_app/utils/strings.dart';
-import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../routes/app_routes.dart';
 import '../../utils/colors.dart';
 import '../../view_model/onboarding/onboarding_view_model.dart';
-import '../../widgets/onboardingWidgets.dart';
+import '../../widgets/onboarding_widget.dart';
 
+/// ignore: must_be_immutable
 class OnboardingScreen extends GetView<OnboardingScreenViewModel> {
   OnboardingScreen({super.key});
-  OnboardingScreenViewModel viewModel = Get.find<OnboardingScreenViewModel>();
+  OnboardingScreenViewModel viewModel = Get.isRegistered<OnboardingScreenViewModel>() ? Get.find<OnboardingScreenViewModel>() : Get.put(OnboardingScreenViewModel());
   List<Widget>? pages;
 
   @override
@@ -22,7 +23,7 @@ class OnboardingScreen extends GetView<OnboardingScreenViewModel> {
           controller: controller.indicator,
           onPageChanged: ((value) {
             controller.page.value = value;
-            print(controller.page.value);
+            log(controller.page.value.toString());
           }),
           children: const [
             // start page onboarding
@@ -53,7 +54,7 @@ class OnboardingScreen extends GetView<OnboardingScreenViewModel> {
                   width: 24,
                   height: 10,
                   decoration: controller.page.value == index
-                      ? BoxDecoration(shape: BoxShape.rectangle, borderRadius: BorderRadius.circular(controller.page.value == index ? 10 : 0), color: MyColors.blue1)
+                      ? BoxDecoration(shape: BoxShape.rectangle, borderRadius: BorderRadius.circular(controller.page.value == index ? 10 : 0), color: MyColors.kPrimaryColor)
                       : const BoxDecoration(
                           shape: BoxShape.circle,
                           color: MyColors.grey,

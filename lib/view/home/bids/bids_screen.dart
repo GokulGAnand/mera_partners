@@ -35,8 +35,8 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                     child: CustomTextFormField(
                       controller: TextEditingController(), 
                       prefixIcon: Icon(Icons.search),
-                      borderColor: MyColors.blue.withOpacity(0.1),
-                      focusedBorderColor: MyColors.blue.withOpacity(0.1),
+                      borderColor: MyColors.kPrimaryColor.withOpacity(0.1),
+                      focusedBorderColor: MyColors.kPrimaryColor.withOpacity(0.1),
                       fillColor: const Color.fromARGB(255, 149, 185, 221).withOpacity(0.1),
                       validator: null),
                   )),
@@ -47,9 +47,9 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                   margin: EdgeInsets.only(bottom: 10),
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: MyColors.blue.withOpacity(0.1),
+                    color: MyColors.kPrimaryColor.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: MyColors.blue)
+                    border: Border.all(color: MyColors.kPrimaryColor)
                   ),
                   child: SvgPicture.asset("assets/svg/notification.svg"),
                 )
@@ -61,7 +61,7 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                     labelColor: MyColors.black,
                     unselectedLabelStyle: MyStyles.selectedTabBarTitleStyle,
                     unselectedLabelColor: MyColors.grey.withOpacity(0.5),
-                    indicatorColor: MyColors.blue,
+                    indicatorColor: MyColors.kPrimaryColor,
                     indicatorSize: TabBarIndicatorSize.tab,
                     indicatorWeight: 4,
                     dividerColor: MyColors.grey.withOpacity(0.25),
