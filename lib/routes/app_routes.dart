@@ -12,6 +12,7 @@ class AppRoutes {
   static const splashScreen = '/splash_screen';
   static const documentScreen = '/document_screen_ui';
   static const onboardingScreen ='/onboarding_screen_ui';
+  static const tutorialScreen = '/tutorial_screen_ui';
   static const String loginScreen = '/login_screen_ui';
   static const String otpScreen = '/otp_screen_ui';
   static const String homeScreen = '/home_screen_ui';
@@ -28,10 +29,10 @@ class AppRoutes {
     GetPage(name: otpScreen, page: () => const OtpScreen(),
       bindings: [
       LoginBinding(),
-    ]), 
+    ]),
     GetPage(name: homeScreen, page: () => const HomeScreen(),
       bindings: [
       HomeBinding(),
-    ]), 
+    ]),
   ];
 }
