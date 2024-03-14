@@ -7,6 +7,7 @@ import 'package:evaluator_app/utils/constants.dart';
 import 'package:evaluator_app/utils/shared_pref_manager.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
+import 'package:evaluator_app/widgets/progressbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -49,14 +50,18 @@ class LoginScreenViewModel extends GetxController {
   //API Integration
   Future<void> mobileLogin() async {
     try {
+      ProgressBar.instance.showProgressbar(Get.context!);
       var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.login), body: {"contactNo": mobileController.value.text});
 
       if (response.statusCode == 200) {
+        ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
       } else {
+        ProgressBar.instance.stopProgressBar(Get.context!);
         CustomToast.instance.showMsg(MyStrings.invalidMobileNumber);
       }
     } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
@@ -64,17 +69,21 @@ class LoginScreenViewModel extends GetxController {
 
   Future<void> verifyOTP() async {
     try {
+      ProgressBar.instance.showProgressbar(Get.context!);
       String otp = otpTextField1.value.text.toString() + otpTextField2.value.text.toString() + otpTextField3.value.text.toString() + otpTextField4.value.text.toString();
       var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.verifyOtp), body: {"contactNo": mobileController.value.text, "otp": otp});
 
       if (response.statusCode == 200) {
+        ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
         SharedPrefManager.instance.setStringAsync(Constants.phoneNum, mobileController.value.text);
         globals.contactNo = int.parse(mobileController.value.text.toString());
       } else {
+        ProgressBar.instance.stopProgressBar(Get.context!);
         CustomToast.instance.showMsg(MyStrings.invalidOTP);
       }
     } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }

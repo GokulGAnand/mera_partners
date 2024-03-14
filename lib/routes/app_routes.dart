@@ -1,6 +1,12 @@
 
+import 'package:evaluator_app/view/home/bids/bids_screen.dart';
+import 'package:evaluator_app/view/home/bids/binding/bids_binding.dart';
 import 'package:evaluator_app/view/home/binding/home_binding.dart';
 import 'package:evaluator_app/view/home/home_screen_ui.dart';
+import 'package:evaluator_app/view/home/my_cars/binding/my_cars_binding.dart';
+import 'package:evaluator_app/view/home/my_cars/my_cars_screen.dart';
+import 'package:evaluator_app/view/home/orders/binding/orders_binding.dart';
+import 'package:evaluator_app/view/home/orders/orders_screen.dart';
 import 'package:evaluator_app/view/login/binding/login_binding.dart';
 import 'package:evaluator_app/view/login/login_screen_ui.dart';
 import 'package:evaluator_app/view/login/otp_screen_ui.dart';
@@ -15,6 +21,10 @@ class AppRoutes {
   static const String loginScreen = '/login_screen_ui';
   static const String otpScreen = '/otp_screen_ui';
   static const String homeScreen = '/home_screen_ui';
+
+  static const String bidsScreen = '/bids_screen_ui';
+  static const String myCarsScreen = '/my_cars_screen_ui';
+  static const String ordersScreen = '/orders_screen_ui';
 
   List<GetPage> pages = [
     GetPage(name: onboardingScreen, page: () => OnboardingScreen(),
@@ -33,5 +43,17 @@ class AppRoutes {
       bindings: [
       HomeBinding(),
     ]), 
+    GetPage(name: bidsScreen, page: () => const BidsScreen(),
+      bindings: [
+      BidsBinding(),
+    ]),
+    GetPage(name: myCarsScreen, page: () => const MyCarsScreen(),
+      bindings: [
+      MyCarsBinding(),
+    ]),
+    GetPage(name: ordersScreen, page: () => const OrdersScreen(),
+      bindings: [
+      OrdersBinding(),
+    ]),
   ];
 }

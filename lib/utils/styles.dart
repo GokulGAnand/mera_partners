@@ -61,5 +61,5 @@ class MyStyles {
     fontWeight: FontWeight.w500,
     height: 0,
   );
-
+  
 }

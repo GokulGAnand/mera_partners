@@ -1,4 +1,5 @@
 import 'package:evaluator_app/utils/colors.dart';
+import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/view_model/home/home_view_model.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: (homeScreenViewModel.selectedIndex.value == 0) ?MyColors.kPrimaryColor: MyColors.disableTextColor,
                   ),
                 ),
-                label: "Bids"),
+                label:MyStrings.bids),
             BottomNavigationBarItem(
                 icon: SizedBox(
                   width: 30,
@@ -60,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: (homeScreenViewModel.selectedIndex.value == 1) ?MyColors.kPrimaryColor: MyColors.disableTextColor,
                   ),
                 ),
-                label: "My Cars"),
+                label: MyStrings.myCars),
             BottomNavigationBarItem(
                 icon: SizedBox(
                   width: 30,
@@ -70,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: (homeScreenViewModel.selectedIndex.value == 2) ?MyColors.kPrimaryColor: MyColors.disableTextColor,
                   ),
                 ),
-                label: "Orders"),
+                label: MyStrings.orders),
             BottomNavigationBarItem(
                 icon: SizedBox(
                   width: 30,
@@ -80,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: (homeScreenViewModel.selectedIndex.value == 3) ?MyColors.kPrimaryColor: MyColors.disableTextColor,
                   ),
                 ),
-                label: "Wallet"),
+                label: MyStrings.wallet),
             BottomNavigationBarItem(
                 icon: SizedBox(
                   width: 30,
@@ -90,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: (homeScreenViewModel.selectedIndex.value ==4) ?MyColors.kPrimaryColor: MyColors.disableTextColor,
                   ),
                 ),
-                label: "Account"),
+                label: MyStrings.account),
           ],
           onTap: (index) {
             homeScreenViewModel.selectedIndex.value = index;

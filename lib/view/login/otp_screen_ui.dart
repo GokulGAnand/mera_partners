@@ -1,5 +1,6 @@
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/dimens.dart';
+import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/view_model/login/login_view_model.dart';
 import 'package:evaluator_app/widgets/custom_appbar.dart';
@@ -41,7 +42,7 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "OTP Verification"),
+      appBar: const CustomAppBar(title: MyStrings.otpVerification),
       body: SingleChildScrollView(
         child: Padding(
           padding: Dimens.padding16,
@@ -49,7 +50,7 @@ class _OtpScreenState extends State<OtpScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                "Please enter the phone number we will send the OTP in this phone number.",
+                MyStrings.otpDesc,
                 style: MyStyles.subTitleGreayStyle,
               ),
               SizedBox(
@@ -75,7 +76,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       loginScreenViewModel.resend.value = false;
                     },
                     child: Text(
-                      'Resend OTP',
+                      MyStrings.resendOTP,
                       style: TextStyle(
                         color: MyColors.red,
                         fontWeight: FontWeight.w400,
@@ -87,7 +88,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 return Row(
                   children: [
                     const Text(
-                      "Request OTP in ",
+                      MyStrings.requestOTP,
                       style: MyStyles.subTitleGreayStyle,
                     ),
                     Text(
@@ -114,12 +115,12 @@ class _OtpScreenState extends State<OtpScreen> {
               textColor: MyColors.white,
               elevation: 0,
               buttonColor: MyColors.kPrimaryColor.withOpacity((loginScreenViewModel.buttonDisable.value) ? 0.3 : 1),
-              buttonText: "Verify",
+              buttonText: MyStrings.verify,
               onPressed: () {
                 if (loginScreenViewModel.buttonDisable.value == false) {
                   loginScreenViewModel.verifyOTP();
                 } else {
-                  CustomToast.instance.showMsg("Please enter valid OTP");
+                  CustomToast.instance.showMsg(MyStrings.validOTP);
                 }
               }),
         );

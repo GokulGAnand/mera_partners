@@ -10,6 +10,11 @@ class MyColors {
   static const Color blue1= Color(0xFF98C8F9);
   static const Color black1 = Color(0xFF3B4147);
   static const Color green = Color(0xCD237D13);
+  static const Color yellow = Color(0xCDFFC700);
+
+  static const Color bgColor = Color(0xFFF3F7FA);
+  static const Color containerBG = Color(0xFFE8EDEE);
+  static const Color warning = Color(0xFFEF3B3B);
 
   static const Color titleColor = Color(0XFF202831);
   static const Color subTitleColor = Color(0XFF4D535A);
