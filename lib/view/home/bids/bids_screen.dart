@@ -1,6 +1,7 @@
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
+import 'package:evaluator_app/view/live/live_cars_list_screen.dart';
 import 'package:evaluator_app/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -78,8 +79,8 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                     child: TabBarView(
                       controller: tabController,
                       children: const [
-                        Center(child: Text(MyStrings.live)),
-                        Center(child: Text(MyStrings.otb)),
+                        LiveCarsListScreen(),
+                        Center(child: Text("OTB(4)")),
                       ],
                     ),
                   ),

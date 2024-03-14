@@ -5,7 +5,7 @@ String? userId;
 String? email;
 String? city;
 int? contactNo;
-String? token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVlZDI1YzQ4NTczZGM0ODBjZjg5YTkiLCJyb2xlIjoiREVBTEVSIiwiaWF0IjoxNzEwMTUwNDE0LCJleHAiOjE3MTI3NDI0MTR9.XplpPCma4dIzFKZ5_3W3AtRRIzGJlnlVqq6gXB9OHbs';
+String? token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVlZDI1YzQ4NTczZGM0ODBjZjg5YTkiLCJyb2xlIjoiREVBTEVSIiwiaWF0IjoxNzEwNDE3MTIwLCJleHAiOjE3MTMwMDkxMjB9.Qwbypr0JfHQo6eFuEYDpat87AfloFC-v1Pu45jAofZk';
 String? carId;
 String? phoneNum;
 String? password;

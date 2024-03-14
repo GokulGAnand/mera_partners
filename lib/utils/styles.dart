@@ -39,6 +39,12 @@ class MyStyles {
     fontWeight: FontWeight.w500,
     height: 0,
   );
+  static const whiteTitleStyle = TextStyle(
+    color: MyColors.white,
+    fontSize: 16,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
+  );
   static const blackBold28 = TextStyle(
     color: MyColors.black,
     fontSize: 28,
@@ -61,5 +67,51 @@ class MyStyles {
     fontWeight: FontWeight.w500,
     height: 0,
   );
-  
+  static const green14500 = TextStyle(
+    color: MyColors.green,
+    fontSize: 14,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
+    height: 0,
+  );
+  static const regular12 = TextStyle(
+    color: MyColors.subTitleColor,
+    fontSize: 12,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
+    height: 0,
+  );
+  static const orange14700 = TextStyle(
+    color: MyColors.orange,
+    fontSize: 14,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w700,
+    height: 0,
+  );
+  static const orange12500 = TextStyle(
+    color: MyColors.orange,
+    fontSize: 12,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
+  );
+  static const black12400 = TextStyle(
+    color: MyColors.subTitleColor,
+    fontSize: 12,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w400,
+  );
+  static const white16700 = TextStyle(
+    color: MyColors.white,
+    fontSize: 16,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w700,
+  );
+  static const black16700 = TextStyle(
+    color: MyColors.black,
+    fontSize: 16,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w700,
+  );
+
+
 }

@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 
 class Dimens {
   static const double spaceWidth = 16;
+  static const double buttonWidth = 150;
+  static const double defHeight = 48;
 
   ///padding
   static const EdgeInsets padding16 = EdgeInsets.all(16);

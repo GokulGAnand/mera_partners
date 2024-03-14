@@ -151,7 +151,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                   margin: EdgeInsets.only(top: 4),
                                   decoration: BoxDecoration(
                                       color: (rating[index]["rating"] >= 4.5)
-                                          ? MyColors.green
+                                          ? MyColors.green1
                                           : (rating[index]["rating"] >= 3.0)
                                               ? MyColors.yellow
                                               : MyColors.red,
@@ -483,7 +483,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             children: [
               CircleAvatar(
                 radius: 10,
-                backgroundColor: MyColors.green,
+                backgroundColor: MyColors.green1,
                 child: SvgPicture.asset(
                   "assets/svg/no_crash.svg",
                 ),

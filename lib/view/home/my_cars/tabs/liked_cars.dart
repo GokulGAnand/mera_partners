@@ -71,7 +71,7 @@ class LikedCars extends StatelessWidget {
                             height: 17,
                             padding: EdgeInsets.symmetric(horizontal: 10),
                             decoration: BoxDecoration(
-                              color: MyColors.green,
+                              color: MyColors.green1,
                               borderRadius: BorderRadius.circular(8)
                             ),
                             child: Text("Live",

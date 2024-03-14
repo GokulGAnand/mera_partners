@@ -28,7 +28,7 @@ class CustomElevatedButtonState extends State<CustomElevatedButton> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SizedBox(
-      width: widget.buttonWidth ?? size.width * 0.99,
+      width: widget.buttonWidth ?? size.width * 0.99 ,
       height: widget.buttonHeight ?? Dimens.standard_53,
       child: ElevatedButton(
         key: widget.key,

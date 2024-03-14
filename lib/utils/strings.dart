@@ -292,6 +292,7 @@ class MyStrings {
   static const String validOTP = "Please enter valid OTP";
   static const String invalidMobileNumber = "Invalid mobile number";
   static const String invalidOTP = "Invalid OTP";
+
   ///Document Verification
   static const String documentVerification = "Document Verification";
   static const String skip = "Skip";
@@ -307,8 +308,7 @@ class MyStrings {
   static const String enterPinCode = "Enter your pin code";
   static const String district = "District";
   static const String enterDistrict = "Enter your district";
-  static const String
-  next = "Next";
+  static const String next = "Next";
   static const String personalDocuments = "Personal Documents";
   static const String aadhaarCardFront = "Aadhaar Card Front";
   static const String aadhaarCardBack = "Aadhaar Card Back";
@@ -337,13 +337,24 @@ class MyStrings {
   static const String cancelledChequeOrPassBook = "Cancelled Cheque/Passbook Front";
   static const String proceedToPay = "Proceed to Pay";
   static const String skipWarning = "You wont be able to bid if you\nskip document upload !";
+
+  ///onboard screen
+  static const String bidFromAnyWhere = "Bid From Anywhere";
+  static const String detailedInspection = 'Detailed Inspection';
+  static const String easyDocumentTransfer = 'Easy Document Transfer';
+  static const String subtitle1 = 'Welcome to Meracars, your gateway to an exciting world of automotive possibilities.';
+  static const String getStarted = 'Get Started';
   static const String empty = "";
- ///onboard screen
- static const String bidFromAnyWhere = "Bid From Anywhere";
- static const String detailedInspection = 'Detailed Inspection';
- static const String easyDocumentTransfer = 'Easy Document Transfer';
- static const String subtitle1 = 'Welcome to Meracars, your gateway to an exciting world of automotive possibilities.';
- static const String getStarted = 'Get Started';
+ ///tutorial screen
+ static const String stagesOfBidding = "Stages of bidding";
+ static const String tutorialBlack = "The scheduled bid in an auction is represented in the ";
+ static const String black = " black ";
+ static const String color =" color";
+ static const String blue = "blue";
+ static const String green = "green";
+ static const String red ="red";
+ static const String tutorialSubtitle = "The scheduled bid in an auction is represented in the";
+ static const String startBiding = "Start Bidding";
 
   ///home screen
   static const String bids = "Bids";
@@ -364,4 +375,9 @@ class MyStrings {
   static const String negotiation = "Negotiation";
   static const String procured = "Procured";
   static const String rcTransfer = "RC Transfer";
+  ///live
+  // static const String live = 'live';
+  static const String autoBid = 'Auto bid';
+  static const String bid = 'Bid';
+  static const String highestBid = 'Highest bid';
 }
