@@ -9,14 +9,15 @@ class CustomElevatedButton extends StatefulWidget {
   final Color? buttonColor;
   final Color? splashColor;
   final Color? disableColor;
+  final double? elevation;
   final double? buttonHeight;
   final double? buttonWidth;
   final Icon? icon;
+  final Widget? child;
   final ButtonStyle? buttonStyle;
   final TextStyle? textStyle;
 
-
-  const CustomElevatedButton({super.key, @required this.onPressed, @required this.buttonText, this.splashColor, this.textColor, this.disableColor, this.buttonColor, this.buttonHeight, this.buttonWidth, this.buttonStyle, this.textStyle, this.icon,});
+  const CustomElevatedButton({super.key, @required this.onPressed, @required this.buttonText, this.splashColor, this.textColor, this.disableColor, this.buttonColor, this.elevation, this.buttonHeight, this.buttonWidth, this.buttonStyle, this.textStyle, this.icon, this.child});
 
   @override
   CustomElevatedButtonState createState() => CustomElevatedButtonState();
@@ -33,16 +34,17 @@ class CustomElevatedButtonState extends State<CustomElevatedButton> {
         key: widget.key,
         style: widget.buttonStyle ??
             ElevatedButton.styleFrom(
-              backgroundColor: MyColors.blue,
+              elevation: (widget.elevation != null)?widget.elevation :null,
+              backgroundColor: widget.buttonColor ?? MyColors.kPrimaryColor,
               disabledBackgroundColor: widget.disableColor,
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
             ),
         onPressed: widget.onPressed,
-        child: Text(
+        child: widget.child ?? Text(
           widget.buttonText!,
           textAlign: TextAlign.center,
-          style: widget.textStyle ?? TextStyle(color: widget.textColor ?? MyColors.blue, letterSpacing: Dimens.letterSpacing_34, fontSize: 17, fontWeight: FontWeight.w500),
+          style: widget.textStyle ?? TextStyle(color: widget.textColor ?? MyColors.white, letterSpacing: Dimens.letterSpacing_34, fontSize: 17, fontWeight: FontWeight.w500),
         ),
       ),
     );

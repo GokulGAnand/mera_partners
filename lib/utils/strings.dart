@@ -277,6 +277,11 @@ class MyStrings {
   // static const String electrical = "Electrical";
   // static const String engineComments = "Engine Comments";
   // static const String vUploadImage = "To continue, upload an image";
+
+  //Login and OTP screen
+  static const String invalidMobileNumber = "Invalid mobile number";
+  static const String invalidOTP = "Invalid OTP";
+
   ///Document Verification
   static const String documentVerification = "Document Verification";
   static const String skip = "Skip";
@@ -292,8 +297,7 @@ class MyStrings {
   static const String enterPinCode = "Enter your pin code";
   static const String district = "District";
   static const String enterDistrict = "Enter your district";
-  static const String
-  next = "Next";
+  static const String next = "Next";
   static const String personalDocuments = "Personal Documents";
   static const String aadhaarCardFront = "Aadhaar Card Front";
   static const String aadhaarCardBack = "Aadhaar Card Back";
@@ -317,6 +321,18 @@ class MyStrings {
   static const String gallery = "Gallery";
   static const String paySuccessDesc = "All the documents has been uploaded\nand is under verification";
   static const String cont = "continue";
+  static const String shopImage = "Shop Image";
+  static const String visitingCard = "Visiting Card";
+  static const String cancelledChequeOrPassBook = "Cancelled Cheque/Passbook Front";
+  static const String proceedToPay = "Proceed to Pay";
+  static const String skipWarning = "You wont be able to bid if you\nskip document upload !";
+
+  ///onboard screen
+  static const String bidFromAnyWhere = "Bid From Anywhere";
+  static const String detailedInspection = 'Detailed Inspection';
+  static const String easyDocumentTransfer = 'Easy Document Transfer';
+  static const String subtitle1 = 'Welcome to Meracars, your gateway to an exciting world of automotive possibilities.';
+  static const String getStarted = 'Get Started';
   static const String empty = "";
  ///onboard screen
  static const String bidFromAnyWhere = "Bid From Anywhere";
@@ -336,5 +352,6 @@ class MyStrings {
  static const String startBiding = "Start Bidding";
 
 
-
+  ///live
+  static const String live = 'live';
 }

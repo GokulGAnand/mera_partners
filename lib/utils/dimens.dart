@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class Dimens {
-  static const double titleFontSize = 19;
-  static const double bodyTitleFontSize = 19;
-  static const double cardTitleFontSize = 15;
-  static const double fontSize17 = 17;
+  static const double spaceWidth = 16;
 
   ///padding
   static const EdgeInsets padding16 = EdgeInsets.all(16);

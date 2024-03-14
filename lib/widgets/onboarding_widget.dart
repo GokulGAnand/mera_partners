@@ -1,10 +1,9 @@
-
+import 'dart:developer';
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../view_model/onboarding/onboarding_view_model.dart';
 
 class OnBoardingWidgets extends StatelessWidget {
@@ -12,6 +11,7 @@ class OnBoardingWidgets extends StatelessWidget {
   final String? title;
   final String? subtitle;
   final int values;
+
   const OnBoardingWidgets({super.key, this.image, this.title, this.subtitle, required this.values});
 
   @override
@@ -43,7 +43,7 @@ class OnBoardingWidgets extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${title}',
+                  '$title',
                   style: const TextStyle(fontSize: 24, fontStyle: FontStyle.normal, fontWeight: FontWeight.w700, color: MyColors.black),
                 ),
                 const SizedBox(
@@ -52,7 +52,7 @@ class OnBoardingWidgets extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 32),
                   child: Text(
-                    '${subtitle}',
+                    '$subtitle',
                     style: const TextStyle(
                       fontSize: 15,
                       fontStyle: FontStyle.normal,
@@ -71,7 +71,7 @@ class OnBoardingWidgets extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(15, 60, 15, 0),
             child: CustomElevatedButton(
               onPressed: () {
-                print('Current Page: ${controller.page.value}');
+                log('Current Page: ${controller.page.value}');
                 if (controller.page.value == 2) {
                   // Handle the action for page value 2
                 } else {
@@ -85,6 +85,20 @@ class OnBoardingWidgets extends StatelessWidget {
               },
               textColor: MyColors.white,
               buttonText: controller.page.value == 2 ? MyStrings.getStarted : MyStrings.next,
+              child: controller.page.value != 2?const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(MyStrings.next,style: TextStyle(
+                    color: MyColors.white,
+                    fontSize: 16,
+                    fontFamily: 'DM Sans',
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1,
+                  ),),
+                  SizedBox(width: 13,),
+                  Icon(Icons.arrow_forward_ios_sharp,color: MyColors.white,size: 15,)
+                ],
+              ):null,
             ),
           ),
         )

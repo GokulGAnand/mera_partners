@@ -5,10 +5,13 @@ class CustomTextFormField extends StatefulWidget {
   const CustomTextFormField({
     super.key,
     this.labelText,
+    this.textFieldStyle = const TextStyle(color: MyColors.black, fontSize: 16, fontWeight: FontWeight.w400),
     this.isPwdType = false,
     required this.controller,
     this.maxLines = 1,
     this.minLines = 1,
+    this.maxLength,
+    this.textAlign = TextAlign.start,
     this.isEnabled = true,
     this.isReadonly = false,
     this.textCapitalization = TextCapitalization.sentences,
@@ -37,9 +40,11 @@ class CustomTextFormField extends StatefulWidget {
     this.focusNode,
     this.labelStyle,
     this.topPadding,
+    this.leftPadding,
   });
 
   final String? labelText;
+  final TextStyle? textFieldStyle;
   final bool isPwdType;
   final bool isEnabled;
   final bool isReadonly;
@@ -48,6 +53,8 @@ class CustomTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final int maxLines;
   final int minLines;
+  final int? maxLength;
+  final TextAlign? textAlign;
   final bool showSuffix;
   final Widget? suffixIcon;
   final TextStyle? labelStyle;
@@ -69,6 +76,7 @@ class CustomTextFormField extends StatefulWidget {
   final bool showCursor;
   final double? labelHeight;
   final double? topPadding;
+  final double? leftPadding;
   final void focusNode;
 
   final Key? formKey;
@@ -102,7 +110,7 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
             : Container(),
         TextFormField(
           key: widget.key,
-          style: const TextStyle(color: MyColors.black, fontSize: 16, fontWeight: FontWeight.w400),
+          style: widget.textFieldStyle,
           inputFormatters: widget.inputFormatter,
           controller: widget.controller,
           keyboardType: widget.keyboardType,
@@ -115,6 +123,8 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
           textCapitalization: widget.textCapitalization,
           maxLines: widget.maxLines,
           minLines: widget.minLines,
+          maxLength: widget.maxLength, 
+          textAlign: widget.textAlign!,
           textInputAction: widget.inputAction,
           focusNode: myFocusNode,
           onChanged: widget.onChange,
@@ -122,8 +132,9 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
           onSaved: widget.onSave,
           onTap: widget.onClick,
           decoration: InputDecoration(
+            counter: const SizedBox(),
             helperStyle: const TextStyle(color: MyColors.black),
-            contentPadding: EdgeInsets.fromLTRB(16.0, widget.topPadding ?? 18.0, 0.0, 18.0),
+            contentPadding: EdgeInsets.fromLTRB(widget.leftPadding ?? 16.0, widget.topPadding ?? 18.0, 0.0, 18.0),
             hintText: widget.helperText,
             labelText: widget.labelText,
             filled: true,
@@ -146,7 +157,7 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
               borderRadius: const BorderRadius.all(Radius.circular(8.0)),
               borderSide: BorderSide(color: widget.enabledBorderColor ?? MyColors.grey),
             ),
-            labelStyle: widget.labelStyle ?? TextStyle(height: widget.labelHeight ?? 0.5, color: widget.labelColor ?? MyColors.kPrimaryColor, fontSize: 15, fontWeight: FontWeight.w500, fontStyle: FontStyle.normal),
+            labelStyle: widget.labelStyle ?? TextStyle(height: widget.labelHeight ?? 0.5, color: widget.labelColor ?? MyColors.black, fontSize: 15, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal),
             prefixIcon: widget.prefixIcon,
             suffixIcon: widget.suffixIcon,
           ),
