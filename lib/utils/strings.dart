@@ -336,4 +336,7 @@ class MyStrings {
 
   ///live
   static const String live = 'live';
+  static const String autoBid = 'Auto bid';
+  static const String bid = 'Bid';
+  static const String highestBid = 'Highest bid';
 }
