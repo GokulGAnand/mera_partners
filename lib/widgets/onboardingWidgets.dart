@@ -1,8 +1,5 @@
-import 'dart:ffi';
-import 'dart:math';
 
 import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/images.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';

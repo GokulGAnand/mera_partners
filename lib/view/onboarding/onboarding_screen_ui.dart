@@ -1,23 +1,23 @@
 import 'package:evaluator_app/utils/images.dart';
 import 'package:evaluator_app/utils/strings.dart';
-import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../routes/app_routes.dart';
 import '../../utils/colors.dart';
 import '../../view_model/onboarding/onboarding_view_model.dart';
 import '../../widgets/onboardingWidgets.dart';
 
-class OnboardingScreen extends GetView<OnboardingScreenViewModel> {
+class OnboardingScreen extends  GetView<OnboardingScreenViewModel> {
   OnboardingScreen({super.key});
-  OnboardingScreenViewModel viewModel = Get.find<OnboardingScreenViewModel>();
+  OnboardingScreenViewModel viewModel = Get.isRegistered<OnboardingScreenViewModel>()? Get.find<OnboardingScreenViewModel>()  : Get.put(OnboardingScreenViewModel());
+  // OnboardingScreenViewModel viewModel = Get.find<OnboardingScreenViewModel>();
   List<Widget>? pages;
 
-  @override
-  Widget build(BuildContext context) {
 
-    return Scaffold(
-      body: Stack(children: [
+  @override
+
+  Widget build(BuildContext context) {
+    return Container(
+      child: Stack(children: [
         PageView(
           controller: controller.indicator,
           onPageChanged: ((value) {
@@ -60,11 +60,8 @@ class OnboardingScreen extends GetView<OnboardingScreenViewModel> {
                         ),
                 ),
               ),
-
             ),
-
           ),
-
         ),
         //here
       ]),
