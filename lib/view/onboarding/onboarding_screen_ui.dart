@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../utils/colors.dart';
 import '../../view_model/onboarding/onboarding_view_model.dart';
-import '../../widgets/onboardingWidgets.dart';
+import '../../widgets/onboarding_widget.dart';
 
 class OnboardingScreen extends  GetView<OnboardingScreenViewModel> {
   OnboardingScreen({super.key});

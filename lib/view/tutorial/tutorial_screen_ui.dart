@@ -34,7 +34,7 @@ class TutorialScreen extends GetView<TutorialScreenViewModel> {
             image: MyImages.highBid,
             title: MyStrings.stagesOfBidding,
             subtitle: MyStrings.tutorialSubtitle,
-            colour: MyColors.blue,
+            colour: MyColors.kPrimaryColor,
             colourTitle: "blue",
           ),
           TutorialWidgets(

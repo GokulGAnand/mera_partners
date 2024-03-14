@@ -4,6 +4,7 @@ import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/view/onboarding/bindings/onboarding_screen_bindings.dart';
 import 'package:evaluator_app/view/onboarding/onboarding_screen_ui.dart';
+import 'package:evaluator_app/view/tutorial/tutorial_screen_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -43,9 +44,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: MyColors.kPrimaryColor),
         useMaterial3: true,
       ),
-      // home: DocumentScreen(),
-      getPages: AppRoutes().pages,
-      initialRoute: AppRoutes.loginScreen,
+      home: TutorialScreen(),
+      // getPages: AppRoutes().pages,
+      // initialRoute: AppRoutes.loginScreen,
       // initialBinding: OnboardingBinding(),
     );
   }
