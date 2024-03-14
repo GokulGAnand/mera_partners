@@ -14,7 +14,7 @@ class MyColors {
   static const Color lightGrey = Color(0xFFE9EAEA);
   static const Color green = Color(0xFF00BD6A);
   static const Color green1 = Color(0xCD237D13);
-  static const Color green = Color(0xFF138600);
+  static const Color green2 = Color(0xFF138600);
   static const Color orange = Color(0xFFFF7A00);
 
   static const Color titleColor = Color(0XFF202831);
