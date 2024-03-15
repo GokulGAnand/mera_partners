@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../view/onboarding/onboarding_screen_ui.dart';
 import '../../view/tutorial/tutorial_screen_ui.dart';
 
 class OnboardingScreenViewModel extends GetxController {

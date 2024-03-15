@@ -1,7 +1,5 @@
 import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class CustomOrderContainer extends StatelessWidget {
   const CustomOrderContainer({
