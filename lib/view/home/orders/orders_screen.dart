@@ -1,23 +1,25 @@
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
-import 'package:evaluator_app/view/live/live_cars_list_screen.dart';
+import 'package:evaluator_app/view/home/orders/tabs/negotiation.dart';
+import 'package:evaluator_app/view/home/orders/tabs/procured.dart';
+import 'package:evaluator_app/view/home/orders/tabs/rc_transfer.dart';
 import 'package:evaluator_app/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class BidsScreen extends StatefulWidget {
-  const BidsScreen({super.key});
+class OrdersScreen extends StatefulWidget {
+  const OrdersScreen({super.key});
 
   @override
-  State<BidsScreen> createState() => _BidsScreenState();
+  State<OrdersScreen> createState() => _OrdersScreenState();
 }
 
-class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateMixin{
+class _OrdersScreenState extends State<OrdersScreen> with SingleTickerProviderStateMixin{
   late TabController tabController;
   @override
   void initState() {
-    tabController = TabController(length: 2, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
@@ -70,17 +72,19 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                     indicatorWeight: 4,
                     dividerColor: MyColors.grey.withOpacity(0.25),
                     dividerHeight: 2,
-                    tabs: const [
-                      Tab(text: MyStrings.live),
-                      Tab(text: MyStrings.otb),
+                    tabs:  const [
+                      Tab(text: MyStrings.negotiation),
+                      Tab(text: MyStrings.procured),
+                      Tab(text: MyStrings.rcTransfer),
                     ],
                   ),
                   Expanded(
                     child: TabBarView(
                       controller: tabController,
                       children: const [
-                        LiveCarsListScreen(),
-                        Center(child: Text("OTB(4)")),
+                        Center(child: Negotiation()),
+                        Center(child: Procured()),
+                        Center(child: RcTransfer()),
                       ],
                     ),
                   ),

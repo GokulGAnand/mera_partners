@@ -3,6 +3,7 @@ import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/dimens.dart';
 import 'package:evaluator_app/utils/images.dart';
+import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/validate_input.dart';
 import 'package:evaluator_app/view_model/login/login_view_model.dart';
@@ -41,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Login",
+                        MyStrings.login,
                         style: TextStyle(
                           color: MyColors.black,
                           fontSize: 28,
@@ -54,13 +55,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: Dimens.standard_20,
                       ),
                       const Text(
-                        "Please enter the phone number we will send the OTP in this phone number.",
+                        MyStrings.loginDesc,
                         style: MyStyles.subTitleGreayStyle,
                       ),
                       SizedBox(
                         height: Dimens.standard_20,
                       ),
-                      CustomTextFormField(labelText: "Mobile Number", keyboardType: TextInputType.number, controller: loginScreenViewModel.mobileController, validator: (value) => ValidateInput.validateMobile(value)),
+                      CustomTextFormField(labelText: MyStrings.mobileNo, keyboardType: TextInputType.number, controller: loginScreenViewModel.mobileController, validator: (value) => ValidateInput.validateMobile(value)),
                       SizedBox(
                         height: Dimens.standard_20,
                       ),
@@ -69,12 +70,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: MyStyles.subTitleGreayStyle,
                           children: <TextSpan>[
                             const TextSpan(
-                              text: 'By logging in you agree to  our ',
+                              text: MyStrings.aggreeTerms,
                             ),
                             TextSpan(
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    log("Terms & Condition");
+                                    log(MyStrings.termsCondition);
                                     showDialog(
                                       context: context,
                                       builder: (context) {
@@ -123,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       },
                                     );
                                   },
-                                text: 'Terms & Conditions',
+                                text: MyStrings.termsCondition,
                                 style: const TextStyle(decoration: TextDecoration.underline, fontWeight: FontWeight.w500)),
                           ],
                         ),
@@ -142,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
         alignment: Alignment.center,
         child: CustomElevatedButton(
             textColor: MyColors.white,
-            buttonText: "Submit",
+            buttonText: MyStrings.submit,
             onPressed: () async {
               if (loginScreenViewModel.loginForm.currentState!.validate()) {
                 await loginScreenViewModel.mobileLogin();

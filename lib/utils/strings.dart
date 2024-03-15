@@ -279,6 +279,17 @@ class MyStrings {
   // static const String vUploadImage = "To continue, upload an image";
 
   //Login and OTP screen
+  static const String login = "Login";
+  static const String loginDesc = "Please enter the phone number we will send the OTP in this phone number.";
+  static const String mobileNo = "Mobile Number";
+  static const String aggreeTerms = 'By logging in you agree to  our ';
+  static const String termsCondition = "Terms & Condition";
+  static const String otpVerification = "OTP Verification";
+  static const String otpDesc = "Please enter the phone number we will send the OTP in this phone number.";
+  static const String resendOTP = "Resend OTP";
+  static const String requestOTP = "Request OTP in ";
+  static const String verify = "Verify";
+  static const String validOTP = "Please enter valid OTP";
   static const String invalidMobileNumber = "Invalid mobile number";
   static const String invalidOTP = "Invalid OTP";
 
@@ -345,7 +356,28 @@ class MyStrings {
  static const String tutorialSubtitle = "The scheduled bid in an auction is represented in the";
  static const String startBiding = "Start Bidding";
 
+  ///home screen
+  static const String bids = "Bids";
+  static const String myCars = "My Cars";
+  static const String orders = "Orders";
+  static const String wallet = "Wallet";
+  static const String account = "Account";
 
+  ///bids screen
+  static const String live = "LIVE(4)";
+  static const String otb = "OTB(4)";
+
+  ///my cars
+  static const String biddedCars = "Bidded Cars(4)";
+  static const String likedCars = "Liked Cars(4)";
+
+  //order screen
+  static const String negotiation = "Negotiation";
+  static const String procured = "Procured";
+  static const String rcTransfer = "RC Transfer";
   ///live
-  static const String live = 'live';
+  // static const String live = 'live';
+  static const String autoBid = 'Auto bid';
+  static const String bid = 'Bid';
+  static const String highestBid = 'Highest bid';
 }

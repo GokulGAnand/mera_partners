@@ -1,19 +1,19 @@
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
-import 'package:evaluator_app/view/live/live_cars_list_screen.dart';
+import 'package:evaluator_app/view/home/my_cars/tabs/liked_cars.dart';
 import 'package:evaluator_app/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class BidsScreen extends StatefulWidget {
-  const BidsScreen({super.key});
+class MyCarsScreen extends StatefulWidget {
+  const MyCarsScreen({super.key});
 
   @override
-  State<BidsScreen> createState() => _BidsScreenState();
+  State<MyCarsScreen> createState() => _MyCarsScreenState();
 }
 
-class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateMixin{
+class _MyCarsScreenState extends State<MyCarsScreen> with SingleTickerProviderStateMixin{
   late TabController tabController;
   @override
   void initState() {
@@ -70,17 +70,17 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                     indicatorWeight: 4,
                     dividerColor: MyColors.grey.withOpacity(0.25),
                     dividerHeight: 2,
-                    tabs: const [
-                      Tab(text: MyStrings.live),
-                      Tab(text: MyStrings.otb),
+                    tabs:  const [
+                      Tab(text: MyStrings.biddedCars),
+                      Tab(text: MyStrings.likedCars),
                     ],
                   ),
                   Expanded(
                     child: TabBarView(
                       controller: tabController,
                       children: const [
-                        LiveCarsListScreen(),
-                        Center(child: Text("OTB(4)")),
+                        Center(child: Text(MyStrings.biddedCars)),
+                        Center(child: LikedCars()),
                       ],
                     ),
                   ),

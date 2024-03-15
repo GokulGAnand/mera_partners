@@ -41,6 +41,7 @@ class CustomTextFormField extends StatefulWidget {
     this.labelStyle,
     this.topPadding,
     this.leftPadding,
+    this.contentPadding
   });
 
   final String? labelText;
@@ -78,6 +79,7 @@ class CustomTextFormField extends StatefulWidget {
   final double? topPadding;
   final double? leftPadding;
   final void focusNode;
+  final EdgeInsetsGeometry? contentPadding;
 
   final Key? formKey;
 
@@ -134,7 +136,7 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
           decoration: InputDecoration(
             counter: const SizedBox(),
             helperStyle: const TextStyle(color: MyColors.black),
-            contentPadding: EdgeInsets.fromLTRB(widget.leftPadding ?? 16.0, widget.topPadding ?? 18.0, 0.0, 18.0),
+            contentPadding: widget.contentPadding ?? EdgeInsets.fromLTRB(widget.leftPadding ?? 16.0, widget.topPadding ?? 18.0, 0.0, 18.0),
             hintText: widget.helperText,
             labelText: widget.labelText,
             filled: true,

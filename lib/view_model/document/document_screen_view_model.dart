@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/service/endpoints.dart';
 import 'package:evaluator_app/widgets/progressbar.dart';
 import 'package:http/http.dart' as http;
@@ -9,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:evaluator_app/utils/globals.dart' as globals;
 import 'package:http_parser/http_parser.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import '../../model/response/payment/create_order_response.dart';
 import '../../model/response/user_data/user_info_response.dart';
 
 class DocumentScreenViewModel extends GetxController{
@@ -33,32 +35,41 @@ class DocumentScreenViewModel extends GetxController{
   Rx<File?> visitingCard = Rx<File?>(null);
   Rx<File?> cancelledCheque = Rx<File?>(null);
   var userInfoResponse = UserInfoResponse().obs;
+  var createOrderResponse = CreateOrderResponse().obs;
   final Razorpay razorpay = Razorpay();
+  String? orderId;
+  String? paymentId;
+  String? signature;
 
   @override
   void onInit(){
-    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    // razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+    // razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
+    // razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
     getDocument();
     super.onInit();
   }
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    // Do something when payment succeeds
+  void handlePaymentSuccess(PaymentSuccessResponse response) {
+    paymentId = response.paymentId;
+    signature = response.signature;
+    verifyPayment();
+    log('success message');
   }
 
-  void _handlePaymentError(PaymentFailureResponse response) {
+  void handlePaymentError(PaymentFailureResponse response) {
     // Do something when payment fails
+    log('fail message');
   }
 
-  void _handleExternalWallet(ExternalWalletResponse response) {
+  void handleExternalWallet(ExternalWalletResponse response) {
     // Do something when an external wallet is selected
+    log('wallet message');
   }
 
   @override
   void dispose() {
-    // razorpay.clear();
+    razorpay.clear();
     super.dispose();
   }
 
@@ -157,5 +168,69 @@ class DocumentScreenViewModel extends GetxController{
       return false;
     }
 
+  }
+
+  void createOrder() async {
+    try {
+      log(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.createOrder).toString());
+      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.createOrder), headers: globals.jsonHeaders,
+          body: json.encode({
+        "amount":10000
+      }));
+      log(response.body.toString());
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        createOrderResponse.value = CreateOrderResponse.fromJson(json.decode(response.body));
+        var  options = {
+          'key': 'rzp_test_1DP5mmOlF5G5ag',
+          'name': 'Mera Cars',
+          'currency': 'INR',
+          'amount': createOrderResponse.value.data?.amount,
+          'description': 'Security Deposit',
+          'retry': {'enabled': true, 'max_count': 1},
+          'send_sms_hash': true,
+          'order_id': '${createOrderResponse.value.data?.id}',
+          'callback_url': 'http://192.168.1.12:8000/api/v1/users/verifyPayment',
+          'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
+          'external': {
+            'wallets': ['paytm']
+          }
+        };
+        // razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
+        // razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+        // razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
+        try {
+          razorpay.open(options);
+        } catch (e) {
+          log(e.toString());
+        }
+      } else {
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+  void verifyPayment() async {
+    try {
+      log(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.verifyPayment).toString());
+      log(json.encode({
+        "razorpay_order_id":createOrderResponse.value.data?.id,
+        "razorpay_payment_id":paymentId,
+        "razorpay_signature":signature
+      }));
+      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.verifyPayment), headers: globals.jsonHeaders,
+          body: json.encode({
+            "razorpay_order_id":createOrderResponse.value.data?.id,
+            "razorpay_payment_id":paymentId,
+            "razorpay_signature":signature
+          }));
+      log(response.body.toString());
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        log("success");
+        Get.offNamed(AppRoutes.homeScreen);
+      } else {}
+    } catch (e) {
+      log('ranjitha');
+      log(e.toString());
+    }
   }
 }
