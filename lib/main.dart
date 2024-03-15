@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
+import 'package:evaluator_app/view/home/home_screen_ui.dart';
 import 'package:evaluator_app/view/onboarding/bindings/onboarding_screen_bindings.dart';
 import 'package:evaluator_app/view/onboarding/onboarding_screen_ui.dart';
 import 'package:evaluator_app/view/tutorial/tutorial_screen_ui.dart';
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: MyColors.kPrimaryColor),
         useMaterial3: true,
       ),
-      home: TutorialScreen(),
+      home: OnboardingScreen(),
       // getPages: AppRoutes().pages,
       // initialRoute: AppRoutes.loginScreen,
       // initialBinding: OnboardingBinding(),

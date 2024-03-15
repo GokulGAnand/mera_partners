@@ -6,6 +6,7 @@ import '../../utils/colors.dart';
 import '../../view_model/onboarding/onboarding_view_model.dart';
 import '../../widgets/onboarding_widget.dart';
 
+
 class OnboardingScreen extends  GetView<OnboardingScreenViewModel> {
   OnboardingScreen({super.key});
   OnboardingScreenViewModel viewModel = Get.isRegistered<OnboardingScreenViewModel>()? Get.find<OnboardingScreenViewModel>()  : Get.put(OnboardingScreenViewModel());
@@ -26,7 +27,7 @@ class OnboardingScreen extends  GetView<OnboardingScreenViewModel> {
           }),
           children: const [
             // start page onboarding
-            OnBoardingWidgets(image: MyImages.onboarding1, title: MyStrings.bidFromAnyWhere, subtitle: MyStrings.subtitle1, values: 2),
+            OnBoardingWidgets(image: MyImages.onboarding1, title: MyStrings.bidFromAnyWhere, subtitle: MyStrings.subtitle1, values: 1),
             OnBoardingWidgets(
               image: MyImages.onboarding2,
               title: MyStrings.detailedInspection,
