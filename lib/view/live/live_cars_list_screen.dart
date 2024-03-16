@@ -268,7 +268,7 @@ class LiveCarsListScreen extends StatelessWidget {
                       SizedBox(
                         width: 5,
                       ),
-                      Text('ID:73423642 ', style: MyStyles.black12400),
+                      Text('ID:73423642 ', style: MyStyles.subtitle12400),
                     ],
                   ),
                   const Text(

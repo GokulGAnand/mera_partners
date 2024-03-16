@@ -1,4 +1,8 @@
 
+import 'package:evaluator_app/view/home/account/about_us/about_us_screen.dart';
+import 'package:evaluator_app/view/home/account/account_screen_ui.dart';
+import 'package:evaluator_app/view/home/account/binding/account_binding.dart';
+import 'package:evaluator_app/view/home/account/privacy_policy/privacy_policy_screen.dart';
 import 'package:evaluator_app/view/home/bids/bids_screen.dart';
 import 'package:evaluator_app/view/home/bids/binding/bids_binding.dart';
 import 'package:evaluator_app/view/home/binding/home_binding.dart';
@@ -26,6 +30,10 @@ class AppRoutes {
   static const String bidsScreen = '/bids_screen_ui';
   static const String myCarsScreen = '/my_cars_screen_ui';
   static const String ordersScreen = '/orders_screen_ui';
+  static const String accountScreen = '/account_screen_ui';
+
+  static const String aboutUsScreen = '/about_us_screen_ui';
+  static const String privacyPolicyScreen = '/privacy_policy_screen_ui';
 
   List<GetPage> pages = [
     GetPage(name: onboardingScreen, page: () => OnboardingScreen(),
@@ -55,6 +63,18 @@ class AppRoutes {
     GetPage(name: ordersScreen, page: () => const OrdersScreen(),
       bindings: [
       OrdersBinding(),
+    ]),
+    GetPage(name: accountScreen, page: () => const AccountScreen(),
+      bindings: [
+      AccountBinding(),
+    ]),
+    GetPage(name: aboutUsScreen, page: () => const AboutUsScreen(),
+      bindings: [
+      AccountBinding(),
+    ]),
+    GetPage(name: privacyPolicyScreen, page: () => const PrivacyPolicyScreen(),
+      bindings: [
+      AccountBinding(),
     ]),
   ];
 }

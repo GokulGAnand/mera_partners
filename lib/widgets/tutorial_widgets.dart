@@ -60,7 +60,7 @@ class TutorialWidgets extends StatelessWidget {
                         fontSize: 15,
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.w400,
-                        color: MyColors.black2,
+                        color: MyColors.grey,
                       ),
                       children: [
                         TextSpan(
