@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../utils/dimens.dart';
 import '../../view_model/home/live/live_cars_list_view_model.dart';
 import '../../widgets/custom_car_detail_card.dart';
 

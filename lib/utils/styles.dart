@@ -149,14 +149,6 @@ class MyStyles {
     height: 0,
   );
 
-  static const white11400 = TextStyle(
-    color: Colors.white,
-    fontSize: 11,
-    fontFamily: 'DM Sans',
-    fontWeight: FontWeight.w400,
-    height: 0,
-  );
-
   static const white11500 = TextStyle(
     color: Colors.white,
     fontSize: 11,
@@ -168,14 +160,6 @@ class MyStyles {
   static const white8700 = TextStyle(
     color: Colors.white,
     fontSize: 8.31,
-    fontFamily: 'DM Sans',
-    fontWeight: FontWeight.w700,
-    height: 0,
-  );
-
-  static const grey14700 = TextStyle(
-    color: MyColors.subTitleColor,
-    fontSize: 14,
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w700,
     height: 0,
