@@ -17,6 +17,7 @@ class MyImages {
   static const leadBid ="${imageRoot}leadbid.png";
   static const looseBid ="${imageRoot}loosebid.png";
   static const profile ="${imageRoot}profile.png";
+  static const imageLoading = "${imageRoot}image_loading.png";
 
   static const camera = "${imageRoot}camera_add.svg";
   static const gallery = "${imageRoot}gallery_add.svg";

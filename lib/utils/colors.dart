@@ -7,10 +7,12 @@ class MyColors {
   static const Color grey2 = Color(0xFF989CA0);
   static const Color black = Color(0xFF202831);
   static const Color black3 = Color(0XFF000000);
+  static const Color black4 = Color(0XFF12161B);
   static const Color white = Color(0xFFFFFFFF);
   static const Color red = Color(0xFFE01111);
   static const Color red2 = Color(0xFFEF3A3A);
   static const Color red3 = Color(0xFFEB1B0C);
+  static const Color red4 = Color(0xFFFF0000);
   static const Color blue1= Color(0xFF98C8F9);
   static const Color blue2= Color(0xFF9CC2E8);
   static const Color lightBlue= Color(0xFFE9F2FA);

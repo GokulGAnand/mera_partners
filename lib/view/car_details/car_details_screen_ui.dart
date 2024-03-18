@@ -1,3 +1,4 @@
+import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
@@ -181,49 +182,54 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       scrollDirection: Axis.horizontal,
                       itemCount: 4,
                       itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: Column(
-                            children: [
-                              Stack(
-                                alignment: Alignment.bottomCenter,
-                                children: [
-                                  SizedBox(
-                                    width: 62,
-                                    height: 62,
-                                  ),
-                                  Container(
-                                    width: 58,
-                                    height: 58,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        image: DecorationImage(
-                                            image: NetworkImage(
-                                                "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
-                                            fit: BoxFit.fill)),
-                                  ),
-                                  Positioned(
-                                    right: 0,
-                                    top: 0,
-                                    child: CircleAvatar(
-                                      radius: 8,
-                                      backgroundColor: MyColors.red2,
-                                      child: Text(
-                                        '99+',
-                                        style: MyStyles.white8700,
-                                      ),
+                        return GestureDetector(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.galleryScreen);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Column(
+                              children: [
+                                Stack(
+                                  alignment: Alignment.bottomCenter,
+                                  children: [
+                                    SizedBox(
+                                      width: 62,
+                                      height: 62,
                                     ),
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                'Exterior',
-                                style: MyStyles.black12400,
-                              )
-                            ],
+                                    Container(
+                                      width: 58,
+                                      height: 58,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(5),
+                                          image: DecorationImage(
+                                              image: NetworkImage(
+                                                  "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
+                                              fit: BoxFit.fill)),
+                                    ),
+                                    Positioned(
+                                      right: 0,
+                                      top: 0,
+                                      child: CircleAvatar(
+                                        radius: 8,
+                                        backgroundColor: MyColors.red2,
+                                        child: Text(
+                                          '99+',
+                                          style: MyStyles.white8700,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  'Exterior',
+                                  style: MyStyles.black12400,
+                                )
+                              ],
+                            ),
                           ),
                         );
                       }),

@@ -145,6 +145,14 @@ class MyStyles {
     height: 0,
   );
 
+  static const white11700 = TextStyle(
+    color: Colors.white,
+    fontSize: 11,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w700,
+    height: 0,
+  );
+
   static const white8700 = TextStyle(
     color: Colors.white,
     fontSize: 8.31,
