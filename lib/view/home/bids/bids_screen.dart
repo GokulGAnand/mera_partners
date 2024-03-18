@@ -1,6 +1,7 @@
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
+import 'package:evaluator_app/utils/svg.dart';
 import 'package:evaluator_app/view/live/live_cars_list_screen.dart';
 import 'package:evaluator_app/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,7 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: MyColors.kPrimaryColor.withOpacity(0.1))
                   ),
-                  child: SvgPicture.asset("assets/svg/notification.svg"),
+                  child: SvgPicture.asset(MySvg.notification),
                 )
               ],
             ),

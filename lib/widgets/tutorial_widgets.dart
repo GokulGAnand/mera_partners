@@ -21,12 +21,12 @@ class TutorialWidgets extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Column(
       children: [
-        SizedBox(height: Dimens.standard_20),
+        // SizedBox(height: Dimens.standard_2),
         Container(
           height: size.height * 0.3,
-          width: size.width * 0.72,
+          width: size.width * 0.8,
           // alignment: Alignment.bottomCenter,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), color: MyColors.grey),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), color: MyColors.lightGrey),
           child: Container(
             height: size.height * 0.3,
             decoration: BoxDecoration(
@@ -42,90 +42,89 @@ class TutorialWidgets extends StatelessWidget {
             borderRadius: BorderRadius.circular(25),
             // color: Colors.white,
           ),
-          padding: const EdgeInsets.all(10),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-            child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: Dimens.standard_10),
-                Text(
-                  '${title}',
-                  style: const TextStyle(fontSize: 18, fontStyle: FontStyle.normal, fontWeight: FontWeight.w500, color: MyColors.black),
-                ),
-                SizedBox(height: Dimens.standard_15),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5),
-                  child: Text.rich(
-                    TextSpan(
-                        text: '${subtitle}',
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          color: MyColors.black2,
+          child: Column(
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: Dimens.standard_20),
+              Text(
+                '${title}',
+                style: const TextStyle(fontSize: 18, fontStyle: FontStyle.normal, fontWeight: FontWeight.w500, color: MyColors.black),
+              ),
+              SizedBox(height: Dimens.standard_20),
+              Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: Text.rich(
+                  TextSpan(
+                      text: '${subtitle}',
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w400,
+                        color: MyColors.grey,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: " ${colourTitle ?? ''}",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w700,
+                            color: colour,
+                          ),
                         ),
-                        children: [
-                          TextSpan(
-                            text: " ${colourTitle ?? ''}",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w700,
-                              color: colour,
-                            ),
+                        TextSpan(
+                          text: MyStrings.color,
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w400,
+                            color: MyColors.black,
                           ),
-                          TextSpan(
-                            text: MyStrings.color,
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w400,
-                              color: MyColors.black,
-                            ),
-                          ),
-                        ]),
-                    textAlign: TextAlign.center,
-                  ),
+                        ),
+                      ]),
+                  textAlign: TextAlign.center,
                 ),
-                SizedBox(height: Dimens.standard_15),
-                Obx(() => Align(
-                      alignment: const Alignment(0, 0.10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List<Widget>.generate(
-                          4,
-                          (index) => Container(
-                            margin: const EdgeInsets.all(1),
-                            width: 24,
-                            height: 10,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: controller.page.value == index ? MyColors.kPrimaryColor : MyColors.grey,
-                            ),
+              ),
+              SizedBox(height: Dimens.standard_20),
+              Obx(() => Align(
+                    alignment: const Alignment(0, 0.10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List<Widget>.generate(
+                        4,
+                        (index) => Container(
+                          margin: const EdgeInsets.all(1),
+                          width: 24,
+                          height: 10,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: controller.page.value == index ? MyColors.kPrimaryColor : MyColors.lightGrey,
                           ),
                         ),
                       ),
-                    )),
-                SizedBox(height: Dimens.standard_18),
-                Obx(
-                  () => CustomElevatedButton(
-                    onPressed: () {
-                      print('Current Page: ${controller.page.value}');
-                      if (controller.page.value == 3) {
-                      } else {
-                        controller.indicator.jumpToPage(
-                          controller.page.value.toInt() + 1,
-                        );
-                      }
-                      controller.update();
-                    },
-                    textColor: MyColors.white,
-                    buttonText: controller.page.value == 3 ? MyStrings.startBiding : MyStrings.next,
-                  ),
-                )
-              ],
-            ),
+                    ),
+                  )),
+              SizedBox(height: Dimens.standard_20),
+              Obx(
+                () => CustomElevatedButton(
+                  onPressed: () {
+                    print('Current Page: ${controller.page.value}');
+                    if (controller.page.value == 3) {
+                      Navigator.of(context).popUntil((route) => route.isFirst);
+                    } else {
+                      controller.indicator.jumpToPage(
+                        controller.page.value.toInt() + 1,
+                      );
+                    }
+                    controller.update();
+
+                  },
+                  textColor: MyColors.white,
+                  buttonText: controller.page.value == 3 ? MyStrings.startBiding : MyStrings.next,
+
+                ),
+              )
+            ],
           ),
         ),
       ],

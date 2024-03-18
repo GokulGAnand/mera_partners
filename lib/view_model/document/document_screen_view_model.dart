@@ -171,34 +171,88 @@ class DocumentScreenViewModel extends GetxController{
 
   }
 
+  // void createOrder() async {
+  //   try {
+  //     log(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.createOrder).toString());
+  //     var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.createOrder), headers: globals.jsonHeaders,
+  //         body: json.encode({
+  //       "amount":10000
+  //     }));
+  //     log(response.body.toString());
+  //     if (response.statusCode == 201 || response.statusCode == 200) {
+  //       createOrderResponse.value = CreateOrderResponse.fromJson(json.decode(response.body));
+  //       var  options = {
+  //         'key': 'rzp_test_1DP5mmOlF5G5ag',
+  //         'name': 'Mera Cars',
+  //         'currency': 'INR',
+  //         'amount': createOrderResponse.value.data?.amount,
+  //         'description': 'Security Deposit',
+  //         'retry': {'enabled': true, 'max_count': 1},
+  //         'send_sms_hash': true,
+  //         'order_id': '${createOrderResponse.value.data?.id}',
+  //         'callback_url': 'http://192.168.1.12:8000/api/v1/users/verifyPayment',
+  //         'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
+  //         'external': {
+  //           'wallets': ['paytm']
+  //         }
+  //       };
+  //       // razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
+  //       // razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+  //       // razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
+  //       try {
+  //         razorpay.open(options);
+  //       } catch (e) {
+  //         log(e.toString());
+  //       }
+  //     } else {
+  //     }
+  //   } catch (e) {
+  //     log(e.toString());
+  //   }
+  // }
+
   void createOrder() async {
     try {
-      log(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.createOrder).toString());
-      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.createOrder), headers: globals.jsonHeaders,
+      var userName = 'rzp_test_zppMuXi3XdVVOB';
+      var password = 'OUure4VITgjPCnoinJTjTbno';
+      var basicAuth = 'Basic ${base64Encode(utf8.encode('$userName:$password'))}';
+      log(Uri.parse('https://api.razorpay.com/v1/orders').toString());
+      var response = await http.post(Uri.parse('https://api.razorpay.com/v1/orders'),
+          headers: <String, String>{
+        'Content-Type':'application/json',
+            'authorization':basicAuth
+          },
           body: json.encode({
-        "amount":10000
+        "amount":100,
+            'currency': 'INR',
+            "receipt": "Receipt no. 1",
       }));
       log(response.body.toString());
       if (response.statusCode == 201 || response.statusCode == 200) {
-        createOrderResponse.value = CreateOrderResponse.fromJson(json.decode(response.body));
+        // createOrderResponse.value = CreateOrderResponse.fromJson(json.decode(response.body));
+        // data.value = Response.fromJson(json.decode(response.body));
+        final data = json.decode(response.body);
+        Razorpay razorpay = Razorpay();
+        log(data["id"]);
         var  options = {
-          'key': 'rzp_test_1DP5mmOlF5G5ag',
+          // 'key': 'rzp_test_1DP5mmOlF5G5ag',
+          'key': 'rzp_test_zppMuXi3XdVVOB',
           'name': 'Mera Cars',
-          'currency': 'INR',
-          'amount': createOrderResponse.value.data?.amount,
+          // 'currency': 'INR',
+          // 'amount': data.value.amount,
           'description': 'Security Deposit',
           'retry': {'enabled': true, 'max_count': 1},
           'send_sms_hash': true,
-          'order_id': '${createOrderResponse.value.data?.id}',
-          'callback_url': 'http://192.168.1.12:8000/api/v1/users/verifyPayment',
-          'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
-          'external': {
+          'order_id': '${data["id"]}',
+          // 'callback_url': EndPoints.baseUrl+EndPoints.users+EndPoints.verifyPayment,
+          // 'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
+          /*'external': {
             'wallets': ['paytm']
-          }
+          }*/
         };
-        // razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
-        // razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
-        // razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
+        razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
+        razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+        razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
         try {
           razorpay.open(options);
         } catch (e) {

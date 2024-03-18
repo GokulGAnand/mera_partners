@@ -1,6 +1,7 @@
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
+import 'package:evaluator_app/utils/svg.dart';
 import 'package:evaluator_app/view/home/orders/tabs/negotiation.dart';
 import 'package:evaluator_app/view/home/orders/tabs/procured.dart';
 import 'package:evaluator_app/view/home/orders/tabs/rc_transfer.dart';
@@ -15,7 +16,8 @@ class OrdersScreen extends StatefulWidget {
   State<OrdersScreen> createState() => _OrdersScreenState();
 }
 
-class _OrdersScreenState extends State<OrdersScreen> with SingleTickerProviderStateMixin{
+class _OrdersScreenState extends State<OrdersScreen>
+    with SingleTickerProviderStateMixin {
   late TabController tabController;
   @override
   void initState() {
@@ -34,60 +36,63 @@ class _OrdersScreenState extends State<OrdersScreen> with SingleTickerProviderSt
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
-                  child: SizedBox(
-                    height: 50,
-                    child: CustomTextFormField(
-                      controller: TextEditingController(), 
+                    child: SizedBox(
+                  height: 50,
+                  child: CustomTextFormField(
+                      controller: TextEditingController(),
                       prefixIcon: Icon(Icons.search),
                       borderColor: MyColors.kPrimaryColor.withOpacity(0.1),
                       focusedBorderColor: MyColors.kPrimaryColor,
                       contentPadding: EdgeInsets.all(8),
-                      enabledBorderColor: MyColors.kPrimaryColor.withOpacity(0.1),
+                      enabledBorderColor:
+                          MyColors.kPrimaryColor.withOpacity(0.1),
                       fillColor: MyColors.kPrimaryColor.withOpacity(0.1),
                       validator: null),
-                  )),
-                const SizedBox(width: 15,),
+                )),
+                const SizedBox(
+                  width: 15,
+                ),
                 Container(
                   width: 50,
                   height: 44,
                   margin: EdgeInsets.only(bottom: 8),
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: MyColors.kPrimaryColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: MyColors.kPrimaryColor.withOpacity(0.1))
-                  ),
-                  child: SvgPicture.asset("assets/svg/notification.svg"),
+                      color: MyColors.kPrimaryColor.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                          color: MyColors.kPrimaryColor.withOpacity(0.1))),
+                  child: SvgPicture.asset(MySvg.notification),
                 )
               ],
             ),
             TabBar(
-                    controller: tabController,
-                    labelStyle: MyStyles.selectedTabBarTitleStyle,
-                    labelColor: MyColors.black,
-                    unselectedLabelStyle: MyStyles.selectedTabBarTitleStyle,
-                    unselectedLabelColor: MyColors.grey.withOpacity(0.5),
-                    indicatorColor: MyColors.kPrimaryColor,
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    indicatorWeight: 4,
-                    dividerColor: MyColors.grey.withOpacity(0.25),
-                    dividerHeight: 2,
-                    tabs:  const [
-                      Tab(text: MyStrings.negotiation),
-                      Tab(text: MyStrings.procured),
-                      Tab(text: MyStrings.rcTransfer),
-                    ],
-                  ),
-                  Expanded(
-                    child: TabBarView(
-                      controller: tabController,
-                      children: const [
-                        Center(child: Negotiation()),
-                        Center(child: Procured()),
-                        Center(child: RcTransfer()),
-                      ],
-                    ),
-                  ),
+              controller: tabController,
+              labelStyle: MyStyles.selectedTabBarTitleStyle,
+              labelColor: MyColors.black,
+              unselectedLabelStyle: MyStyles.selectedTabBarTitleStyle,
+              unselectedLabelColor: MyColors.grey.withOpacity(0.5),
+              indicatorColor: MyColors.kPrimaryColor,
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicatorWeight: 4,
+              dividerColor: MyColors.grey.withOpacity(0.25),
+              dividerHeight: 2,
+              tabs: const [
+                Tab(text: MyStrings.negotiation),
+                Tab(text: MyStrings.procured),
+                Tab(text: MyStrings.rcTransfer),
+              ],
+            ),
+            Expanded(
+              child: TabBarView(
+                controller: tabController,
+                children: const [
+                  Center(child: Negotiation()),
+                  Center(child: Procured()),
+                  Center(child: RcTransfer()),
+                ],
+              ),
+            ),
           ],
         ),
       ),

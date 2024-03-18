@@ -21,7 +21,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  LoginScreenViewModel loginScreenViewModel = Get.isRegistered<LoginScreenViewModel>() ? Get.find<LoginScreenViewModel>() : Get.put(LoginScreenViewModel());
+  LoginScreenViewModel loginScreenViewModel =
+      Get.isRegistered<LoginScreenViewModel>()
+          ? Get.find<LoginScreenViewModel>()
+          : Get.put(LoginScreenViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,10 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(height: size.height * 0.5, alignment: Alignment.bottomCenter, child: Image.asset(MyImages.loginImage)),
+                Container(
+                    height: size.height * 0.5,
+                    alignment: Alignment.bottomCenter,
+                    child: Image.asset(MyImages.loginImage)),
                 Padding(
                   padding: Dimens.padding16,
                   child: Column(
@@ -43,13 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       const Text(
                         MyStrings.login,
-                        style: TextStyle(
-                          color: MyColors.black,
-                          fontSize: 28,
-                          fontFamily: 'DM Sans',
-                          fontWeight: FontWeight.w700,
-                          height: 0,
-                        ),
+                        style: MyStyles.blackBold28,
                       ),
                       SizedBox(
                         height: Dimens.standard_20,
@@ -61,7 +61,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: Dimens.standard_20,
                       ),
-                      CustomTextFormField(labelText: MyStrings.mobileNo, keyboardType: TextInputType.number, controller: loginScreenViewModel.mobileController, validator: (value) => ValidateInput.validateMobile(value)),
+                      CustomTextFormField(
+                          labelText: MyStrings.mobileNo,
+                          keyboardType: TextInputType.number,
+                          controller: loginScreenViewModel.mobileController,
+                          validator: (value) =>
+                              ValidateInput.validateMobile(value)),
                       SizedBox(
                         height: Dimens.standard_20,
                       ),
@@ -84,7 +89,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                             child: SingleChildScrollView(
                                               child: Column(children: <Widget>[
                                                 Padding(
-                                                  padding: const EdgeInsets.all(18.0),
+                                                  padding: const EdgeInsets.all(
+                                                      18.0),
                                                   child: SingleChildScrollView(
                                                     child: Column(
                                                       children: [
@@ -92,27 +98,72 @@ class _LoginScreenState extends State<LoginScreen> {
                                                           text: const TextSpan(
                                                             style: TextStyle(
                                                               fontSize: 16,
-                                                              color: MyColors.black,
+                                                              color: MyColors
+                                                                  .black,
                                                             ),
                                                             children: <TextSpan>[
-                                                              TextSpan(text: 'Introduction\n\n', style: TextStyle(fontWeight: FontWeight.bold)),
-                                                              TextSpan(text: 'These Website Standard Terms and Conditions written on this webpage shall manage your use of our website, Webiste Name accessible at Website.com.\n\n'),
-                                                              TextSpan(text: 'These Terms will be applied fully and affect to your use of this Website. By using this Website, you agreed to accept all terms and conditions written in here. You must not use this Website if you disagree with any of these Website Standard Terms and Conditions.\n\n'),
-                                                              TextSpan(text: 'Minors or people below 18 years old are not allowed to use this Website.\n\n'),
-                                                              TextSpan(text: 'Intellectual Property Rights\n\n', style: TextStyle(fontWeight: FontWeight.bold)),
-                                                              TextSpan(text: 'These Website Standard Terms and Conditions written on this webpage shall manage your use of our website, Webiste Name accessible at Website.com.\n\n'),
-                                                              TextSpan(text: 'These Terms will be applied fully and affect to your use of this Website. By using this Website, you agreed to accept all terms and conditions written in here. You must not use this Website if you disagree with any of these Website Standard Terms and Conditions.\n\n'),
-                                                              TextSpan(text: 'Minors or people below 18 years old are not allowed to use this Website.\n\n'),
-                                                              TextSpan(text: 'Intellectual Property Rights\n\n', style: TextStyle(fontWeight: FontWeight.bold)),
-                                                              TextSpan(text: 'Other than the content you own, under these Terms, Company Name and/or its licensors own all the intellectual property rights and materials contained in this Website.\n\n'),
-                                                              TextSpan(text: 'You are granted limited license only for purposes of viewing the material contained on this Website.\n\n'),
-                                                              TextSpan(text: 'Your Content\n\n', style: TextStyle(fontWeight: FontWeight.bold)),
-                                                              TextSpan(text: 'In these Website Standard Terms and Conditions, “Your Content” shall mean any audio, video text, images or other material you choose to display on this Website. By displaying Your Content, you grant Company Name a non-exclusive, worldwide irrevocable, sub licensable license to use, reproduce, adapt, publish, translate and distribute it in any and all media.\n\n'),
-                                                              TextSpan(text: ''),
+                                                              TextSpan(
+                                                                  text:
+                                                                      'Introduction\n\n',
+                                                                  style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold)),
+                                                              TextSpan(
+                                                                  text:
+                                                                      'These Website Standard Terms and Conditions written on this webpage shall manage your use of our website, Webiste Name accessible at Website.com.\n\n'),
+                                                              TextSpan(
+                                                                  text:
+                                                                      'These Terms will be applied fully and affect to your use of this Website. By using this Website, you agreed to accept all terms and conditions written in here. You must not use this Website if you disagree with any of these Website Standard Terms and Conditions.\n\n'),
+                                                              TextSpan(
+                                                                  text:
+                                                                      'Minors or people below 18 years old are not allowed to use this Website.\n\n'),
+                                                              TextSpan(
+                                                                  text:
+                                                                      'Intellectual Property Rights\n\n',
+                                                                  style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold)),
+                                                              TextSpan(
+                                                                  text:
+                                                                      'These Website Standard Terms and Conditions written on this webpage shall manage your use of our website, Webiste Name accessible at Website.com.\n\n'),
+                                                              TextSpan(
+                                                                  text:
+                                                                      'These Terms will be applied fully and affect to your use of this Website. By using this Website, you agreed to accept all terms and conditions written in here. You must not use this Website if you disagree with any of these Website Standard Terms and Conditions.\n\n'),
+                                                              TextSpan(
+                                                                  text:
+                                                                      'Minors or people below 18 years old are not allowed to use this Website.\n\n'),
+                                                              TextSpan(
+                                                                  text:
+                                                                      'Intellectual Property Rights\n\n',
+                                                                  style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold)),
+                                                              TextSpan(
+                                                                  text:
+                                                                      'Other than the content you own, under these Terms, Company Name and/or its licensors own all the intellectual property rights and materials contained in this Website.\n\n'),
+                                                              TextSpan(
+                                                                  text:
+                                                                      'You are granted limited license only for purposes of viewing the material contained on this Website.\n\n'),
+                                                              TextSpan(
+                                                                  text:
+                                                                      'Your Content\n\n',
+                                                                  style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold)),
+                                                              TextSpan(
+                                                                  text:
+                                                                      'In these Website Standard Terms and Conditions, “Your Content” shall mean any audio, video text, images or other material you choose to display on this Website. By displaying Your Content, you grant Company Name a non-exclusive, worldwide irrevocable, sub licensable license to use, reproduce, adapt, publish, translate and distribute it in any and all media.\n\n'),
+                                                              TextSpan(
+                                                                  text: ''),
                                                             ],
                                                           ),
                                                         ),
-                                                        const SizedBox(height: 10),
+                                                        const SizedBox(
+                                                            height: 10),
                                                       ],
                                                     ),
                                                   ),
@@ -125,7 +176,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     );
                                   },
                                 text: MyStrings.termsCondition,
-                                style: const TextStyle(decoration: TextDecoration.underline, fontWeight: FontWeight.w500)),
+                                style: const TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.w500)),
                           ],
                         ),
                       ),

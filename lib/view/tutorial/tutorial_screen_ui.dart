@@ -15,7 +15,7 @@ class TutorialScreen extends GetView<TutorialScreenViewModel> {
   Widget build(BuildContext context) {
     return SizedBox(
       // color: MyColors.white,
-      width: MediaQuery.of(context).size.width * 0.9,
+      width: MediaQuery.of(context).size.width * 0.95,
       height: MediaQuery.of(context).size.height * 0.63,
       child: PageView(
         controller: controller.indicator, 

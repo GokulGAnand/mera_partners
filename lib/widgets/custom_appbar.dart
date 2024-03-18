@@ -9,11 +9,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
   const CustomAppBar({
     required this.title,
     this.appBarHeight = 150,
+    this.showBackIcon = true,
     super.key, this.subTitle, this.actions});
   final String title;
   final String? subTitle;
   final double? appBarHeight;
   final List<Widget>? actions;
+  final bool showBackIcon;
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -21,11 +23,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
           automaticallyImplyLeading: false,
           elevation: 0,
           actions: actions,
-          leading: GestureDetector(
+          leading: (showBackIcon)?GestureDetector(
             onTap: (){
               Get.back();
             },
-            child: const Icon(Icons.arrow_back, color: Colors.white,)),
+            child: const Icon(Icons.arrow_back, color: Colors.white,))
+            :const SizedBox(),
           flexibleSpace: SafeArea(
             child: Padding(
               padding: Dimens.padding16,

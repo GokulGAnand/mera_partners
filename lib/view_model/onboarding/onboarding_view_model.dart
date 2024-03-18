@@ -6,23 +6,10 @@ class OnboardingScreenViewModel extends GetxController {
   PageController indicator = PageController();
   RxInt page = 0.obs;
   RxInt controller = 0.obs;
-  BuildContext? context;
 
 
-  @override
-  void onInit() {
-    super.onInit();
-    showAlertDialog();
-  }
-  void showAlertDialog() {
-    showDialog(
-      context: Get.context!,
-      builder: (BuildContext context) {
-        return TutorialScreen();
-      },
-    );
 
-  }
+
 
 
 
