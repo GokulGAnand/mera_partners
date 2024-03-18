@@ -79,9 +79,9 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                   Expanded(
                     child: TabBarView(
                       controller: tabController,
-                      children: const [
+                      children: [
                         LiveCarsListScreen(),
-                        Center(child: Text("OTB(4)")),
+                        const Center(child: Text("OTB(4)")),
                       ],
                     ),
                   ),

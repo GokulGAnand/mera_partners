@@ -22,7 +22,7 @@ class DocumentScreenViewModel extends GetxController{
   var activePage = 0.obs;
 
   Rx<TextEditingController> fullNameController = TextEditingController().obs;
-  Rx<TextEditingController> phoneNumberController = TextEditingController(text: '8838119533').obs;
+  Rx<TextEditingController> phoneNumberController = TextEditingController(text: '8888888888').obs;
   Rx<TextEditingController> businessNameController = TextEditingController().obs;
   Rx<TextEditingController> businessAddressController = TextEditingController().obs;
   Rx<TextEditingController> pinCodeController = TextEditingController().obs;
@@ -116,6 +116,7 @@ class DocumentScreenViewModel extends GetxController{
   Future<bool> addDocument() async {
     ProgressBar.instance.showProgressbar(Get.context!);
     try {
+      //todo
       var request = http.MultipartRequest('PATCH', Uri.parse('${EndPoints.baseUrl}${EndPoints.users}65eed25c48573dc480cf89a9'));
       request.fields.addAll({
             'fullname': fullNameController.value.text,

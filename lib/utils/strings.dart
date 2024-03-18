@@ -364,8 +364,9 @@ class MyStrings {
   static const String account = "Account";
 
   ///bids screen
-  static const String live = "LIVE(4)";
+  static const String live = "LIVE";
   static const String otb = "OTB(4)";
+  static const String rating = "Rating";
 
   ///my cars
   static const String biddedCars = "Bidded Cars(4)";
