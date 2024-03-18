@@ -32,6 +32,12 @@ class MyStyles {
     fontWeight: FontWeight.w400,
     // height: 0.09,
   );
+  static const grey14700 = TextStyle(
+    color: MyColors.subTitleColor,
+    fontSize: 14,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w700,
+  );
   static const pageTitleStyle = TextStyle(
     color: MyColors.black,
     fontSize: 16,
@@ -68,7 +74,7 @@ class MyStyles {
     height: 0,
   );
   static const green14500 = TextStyle(
-    color: MyColors.green,
+    color: MyColors.green2,
     fontSize: 14,
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w500,
@@ -111,6 +117,20 @@ class MyStyles {
     fontSize: 16,
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w700,
+  );
+  static const red12700 = TextStyle(
+    color: MyColors.red,
+    fontSize: 12,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w700,
+    height: 0.01,
+  );
+  static const white11400 = TextStyle(
+    color: MyColors.white,
+    fontSize: 11,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w400,
+    height: 0,
   );
 
 

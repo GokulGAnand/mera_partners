@@ -19,4 +19,8 @@ class MyImages {
 
   static const camera = "${imageRoot}camera_add.svg";
   static const gallery = "${imageRoot}gallery_add.svg";
+  static const location = "${imageRoot}location.svg";
+  static const verified = "${imageRoot}verified.svg";
+  static const carTag = "${imageRoot}car_tag.svg";
+  static const loadingCar = "${imageRoot}loading_car.svg";
 }
