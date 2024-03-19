@@ -326,11 +326,12 @@ class MyStrings {
   static const String unableToConnect = "Unable to connect server";
   static const String dealerProof = "Dealer Proof";
   static const String paySuccess = "Payment Successful";
+  static const String payFail = "Payment Failed";
   static const String payError = "Payment Error";
   static const String addDocument = "Add Document";
   static const String camera = "Camera";
   static const String gallery = "Gallery";
-  static const String paySuccessDesc = "All the documents has been uploaded\nand is under verification";
+  static const String paySuccessDesc = "All the documents has been uploaded \nand is under verification";
   static const String cont = "continue";
   static const String shopImage = "Shop Image";
   static const String visitingCard = "Visiting Card";

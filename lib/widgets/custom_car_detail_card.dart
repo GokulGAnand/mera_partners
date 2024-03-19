@@ -12,6 +12,7 @@ import '../utils/strings.dart';
 import '../utils/styles.dart';
 import 'custom_button.dart';
 
+/// ignore: must_be_immutable
 class CustomCarDetailCard extends StatelessWidget {
   final String imageUrl;
   final List<String> images;
@@ -91,7 +92,7 @@ class CustomCarDetailCard extends StatelessWidget {
         // shape: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
         child: SizedBox(
           width: double.maxFinite,
-          height: MediaQuery.of(context).size.height * 0.57,
+          height: MediaQuery.of(context).size.height * 0.6,
           child: Column(
             children: [
               Stack(

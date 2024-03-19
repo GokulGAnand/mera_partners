@@ -34,10 +34,10 @@ class ColorLoader2State extends State<CustomLoader> with TickerProviderStateMixi
         children: <Widget>[
           CircleAvatar(
               radius: 25,
-              backgroundColor: MyColors.kPrimaryColor,
+              backgroundColor: MyColors.white,
               child: Image.asset(
-                MyImages.splash,
-                width: 30,
+                MyImages.logo,
+                width: 40,
                 height: 40,
               )),
           RotationTransition(

@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Image.asset(MyImages.splash),
+        child: Image.asset(MyImages.logo),
       ),
       floatingActionButton: SizedBox(width:100,height:100,child: Image.asset(MyImages.loader)),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

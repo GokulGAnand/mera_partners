@@ -26,7 +26,6 @@ class MyStyles {
     fontSize: 14,
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w400,
-    height: 0.09,
   );
   static const subTitleGreayStyle = TextStyle(
     color: MyColors.subTitleColor,

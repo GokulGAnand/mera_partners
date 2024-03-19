@@ -4,6 +4,8 @@ import 'package:evaluator_app/view/car_details/car_details_screen_ui.dart';
 import 'package:evaluator_app/view/gallery/binding/gallery_binding.dart';
 import 'package:evaluator_app/view/gallery/gallery_screen.dart';
 import 'package:evaluator_app/view/gallery/image_view_screen.dart';
+import 'package:evaluator_app/view/document/binding/document_screen_binding.dart';
+import 'package:evaluator_app/view/document/document_screen_ui.dart';
 import 'package:evaluator_app/view/home/account/about_us/about_us_screen.dart';
 import 'package:evaluator_app/view/home/account/account_screen_ui.dart';
 import 'package:evaluator_app/view/home/account/binding/account_binding.dart';
@@ -47,6 +49,10 @@ class AppRoutes {
     GetPage(name: onboardingScreen, page: () => OnboardingScreen(),
       bindings: [
       OnboardingBinding(),
+    ]),
+    GetPage(name: documentScreen, page: () => DocumentScreen(),
+      bindings: [
+      DocumentScreenBinding(),
     ]),
     GetPage(name: loginScreen, page: () => const LoginScreen(),
       bindings: [

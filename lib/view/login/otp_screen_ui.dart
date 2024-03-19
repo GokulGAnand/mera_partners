@@ -86,7 +86,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       loginScreenViewModel.startTimer(60);
                       loginScreenViewModel.resend.value = false;
                     },
-                    child: Text(
+                    child: const Text(
                       MyStrings.resendOTP,
                       style: MyStyles.red14400,
                     ),
@@ -122,7 +122,7 @@ class _OtpScreenState extends State<OtpScreen> {
               buttonText: MyStrings.verify,
               onPressed: () {
                 if (loginScreenViewModel.buttonDisable.value == false) {
-                  loginScreenViewModel.verifyOTP();
+                  loginScreenViewModel.verifyOTP(context);
                 } else {
                   CustomToast.instance.showMsg(MyStrings.validOTP);
                 }

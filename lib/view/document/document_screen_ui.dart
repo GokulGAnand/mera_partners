@@ -1,3 +1,4 @@
+import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/widgets/custom_appbar.dart';
 import 'package:evaluator_app/widgets/custom_dialog.dart';
@@ -12,6 +13,7 @@ import '../../utils/colors.dart';
 import '../../utils/images.dart';
 import '../../view_model/document/document_screen_view_model.dart';
 import '../../widgets/image_picker_bottom_sheet.dart';
+import '../../widgets/progressbar.dart';
 
 /// ignore: must_be_immutable
 class DocumentScreen extends StatelessWidget {
@@ -450,6 +452,7 @@ class DocumentScreen extends StatelessWidget {
             onPressed: () {
               if (viewModel.page4Key.currentState!.validate()) {
                 viewModel.page4Key.currentState!.save();
+                ProgressBar.instance.showProgressbar(Get.context!);
                 viewModel.createOrder();
               }
             },
@@ -544,7 +547,9 @@ class DocumentScreen extends StatelessWidget {
                             builder: (context) {
                               return CustomDialog(
                                 title: MyStrings.skipWarning,
-                                okFun: () {},
+                                okFun: () {
+                                  Get.toNamed(AppRoutes.homeScreen);
+                                },
                                 cancelFun: () {
                                   Navigator.of(context).pop();
                                 },

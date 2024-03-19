@@ -6,7 +6,7 @@ import '../../utils/colors.dart';
 import '../../view_model/onboarding/onboarding_view_model.dart';
 import '../../widgets/onboarding_widget.dart';
 
-
+/// ignore: must_be_immutable
 class OnboardingScreen extends  GetView<OnboardingScreenViewModel> {
   OnboardingScreen({super.key});
   OnboardingScreenViewModel viewModel = Get.isRegistered<OnboardingScreenViewModel>()? Get.find<OnboardingScreenViewModel>()  : Get.put(OnboardingScreenViewModel());
