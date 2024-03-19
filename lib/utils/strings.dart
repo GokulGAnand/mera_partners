@@ -371,14 +371,50 @@ class MyStrings {
   ///my cars
   static const String biddedCars = "Bidded Cars(4)";
   static const String likedCars = "Liked Cars(4)";
+  static const String viewDetail = 'View detail';
 
   //order screen
   static const String negotiation = "Negotiation";
   static const String procured = "Procured";
   static const String rcTransfer = "RC Transfer";
+  static const String dealLost = 'Deal Lost';
+  static const String dealWon = 'Deal Won';
+  static const String completed = 'Completed';
+  static const String pending = 'Pending';
+  static const String lostDeals = 'Lost deals';
+  static const String viewBill = 'View bill';
+
+  ///account screen
+  static const String customerSupport = 'Customer Support';
+  static const String accountSettings = 'Account Settings';
+  static const String aboutUs = 'About Us';
+  static const String privacyPolicy= 'Privacy Policy';
+  static const String logOut= 'LogOut';
+  static const String meraPartners= 'Mera Partners';
+  static const String version= 'v0.1';
+
   ///live
   // static const String live = 'live';
   static const String autoBid = 'Auto bid';
   static const String bid = 'Bid';
   static const String highestBid = 'Highest bid';
+
+  /// car details screen
+  static const String fmv = 'FMV';
+  static const String criticalIssue = 'CRITICAL ISSUES';
+  static const String documents = 'Documents';
+  static const String exterior = 'Exterior';
+  static const String interiorAndElectrical = 'Interior & Electricals';
+  static const String interior = 'Interior';
+  static const String engine = 'Engine';
+  static const String damage = 'Damages';
+  static const String ac = 'AC';
+  static const String testDrive = 'Test Drive';
+  static const String inspectionReport = 'INSPECTION REPORT';
+  static const String damaged = 'Damaged';
+  static const String repaired = 'Repaired';
+  static const String na = 'N/A';
+  static const String notAvailable = 'Not Available';
+  static const String otherIssues = 'Other Issues';
+  static const String viewLessIssues = 'View Less Issues';
 }

@@ -1,4 +1,5 @@
 import 'package:evaluator_app/utils/dimens.dart';
+import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: CustomAppBar(title: "Privacy Policy"),
+      appBar: CustomAppBar(title: MyStrings.privacyPolicy),
       body: SingleChildScrollView(
         child: Padding(
           padding: Dimens.padding16,

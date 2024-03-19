@@ -1,5 +1,6 @@
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
+import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
 import 'package:evaluator_app/view_model/car_details/car_details_view_model.dart';
@@ -92,13 +93,13 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
               gradient: LinearGradient(
                 end: Alignment(2.00, 0.00),
                 begin: Alignment(-1, 0),
-                colors: [MyColors.kPrimaryColor, Color(0x0036454F)],
+                colors: [MyColors.kPrimaryColor, MyColors.black5],
               ),
             ),
             child: Row(
               children: [
                 Text(
-                  'Highest bid',
+                  MyStrings.highestBid,
                   textAlign: TextAlign.center,
                   style: MyStyles.whiteTitleStyle,
                 ),
@@ -178,7 +179,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                   height: 90,
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: 4,
+                      itemCount: carDetailsScreenViewModel.imageList.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: (){
@@ -223,7 +224,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                   height: 5,
                                 ),
                                 Text(
-                                  'Exterior',
+                                  carDetailsScreenViewModel.imageList[index],
                                   style: MyStyles.black12400,
                                 )
                               ],
@@ -245,11 +246,11 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: 'FMV  ',
+                            text: MyStrings.fmv,
                             style: MyStyles.subTitleGreayStyle,
                           ),
                           TextSpan(
-                            text: '₹8,92,000',
+                            text: '  ₹8,92,000',
                             style: MyStyles.grey14700,
                           ),
                         ],
@@ -270,7 +271,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'CRITICAL ISSUES',
+                  MyStrings.criticalIssue,
                   style: MyStyles.black14700,
                 ),
                 const SizedBox(
@@ -317,7 +318,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Documents",
+                  MyStrings.documents,
                   style: MyStyles.black12700,
                 ),
                 Row(
@@ -361,21 +362,24 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             padding: EdgeInsets.all(20),
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                  begin: Alignment(0.00, 0.00),
-                  end: Alignment(1, 0),
-                  colors: <Color>[MyColors.kPrimaryColor, MyColors.white]),
+                  begin: Alignment(-1, 0),
+                  end: Alignment(2.00, 0.00),
+                  colors: <Color>[MyColors.kPrimaryColor, MyColors.black5]),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   "2016 Duster",
                   style: MyStyles.white14500,
                 ),
+                const SizedBox(height: 3,),
                 Text(
                   "110 PS RXZ 4X2 AMT",
                   style: MyStyles.white16700,
                 ),
+                const SizedBox(height: 12,),
                 Text(
                   "₹19,99,999",
                   style: MyStyles.titleStyle,
@@ -405,7 +409,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Documents",
+                        MyStrings.documents,
                         style: MyStyles.black12700,
                       ),
                       Row(
@@ -442,7 +446,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                           carDetailsScreenViewModel.exteriorKey,
                           carDetailsScreenViewModel.exteriorTabController,
                           850,
-                          "Exterior",
+                          MyStrings.exterior,
                           carDetailsScreenViewModel.exteriorShowMore, () {
                         carDetailsScreenViewModel.exteriorShowMore.value =
                             !carDetailsScreenViewModel.exteriorShowMore.value;
@@ -455,7 +459,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                           carDetailsScreenViewModel
                               .interiorElectricalTabController,
                           850,
-                          "Interior and Electricals",
+                          MyStrings.interiorAndElectrical,
                           carDetailsScreenViewModel.interiorShowMore, () {
                         carDetailsScreenViewModel.interiorShowMore.value =
                             !carDetailsScreenViewModel.interiorShowMore.value;
@@ -467,7 +471,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                           carDetailsScreenViewModel.engineKey,
                           carDetailsScreenViewModel.engineTabController,
                           850,
-                          "Engine",
+                          MyStrings.engine,
                           carDetailsScreenViewModel.engineShowMore, () {
                         carDetailsScreenViewModel.engineShowMore.value =
                             !carDetailsScreenViewModel.engineShowMore.value;
@@ -479,7 +483,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                           carDetailsScreenViewModel.acKey,
                           carDetailsScreenViewModel.acTabController,
                           850,
-                          "AC",
+                          MyStrings.ac,
                           carDetailsScreenViewModel.acShowMore, () {
                         carDetailsScreenViewModel.acShowMore.value =
                             !carDetailsScreenViewModel.acShowMore.value;
@@ -491,7 +495,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                           carDetailsScreenViewModel.testDriveKey,
                           carDetailsScreenViewModel.testDriveTabController,
                           850,
-                          "Test Drive",
+                          MyStrings.testDrive,
                           carDetailsScreenViewModel.testDriveShowMore, () {
                         carDetailsScreenViewModel.testDriveShowMore.value =
                             !carDetailsScreenViewModel.testDriveShowMore.value;
@@ -569,7 +573,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                               borderRadius: BorderRadius.circular(6),
                               side: BorderSide(color: MyColors.kPrimaryColor))),
                       buttonColor: MyColors.kPrimaryColor.withOpacity(0.3),
-                      buttonText: "Autobid",
+                      buttonText: MyStrings.autoBid,
                       textStyle: MyStyles.primary16500,
                     ),
                   ),
@@ -590,7 +594,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                               borderRadius: BorderRadius.circular(6),
                               side: BorderSide(color: MyColors.kPrimaryColor))),
                       buttonColor: MyColors.kPrimaryColor.withOpacity(0.3),
-                      buttonText: "Bid",
+                      buttonText: MyStrings.bid,
                       textStyle: MyStyles.whiteTitleStyle,
                     ),
                   ),
@@ -610,7 +614,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "INSPECTION REPORT",
+            MyStrings.inspectionReport,
             style: MyStyles.black12700,
           ),
           const SizedBox(
@@ -885,7 +889,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                                       BorderRadius.circular(
                                                           6))),
                                           buttonColor: MyColors.warning,
-                                          buttonText: "Damaged",
+                                          buttonText: MyStrings.damaged,
                                           textStyle: MyStyles.white12500),
                                     ),
                                   ),
@@ -905,7 +909,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                                 borderRadius:
                                                     BorderRadius.circular(6))),
                                         buttonColor: MyColors.warning,
-                                        buttonText: "Repaired",
+                                        buttonText: MyStrings.repaired,
                                         textStyle: MyStyles.white12500,
                                       ),
                                     ),
@@ -957,13 +961,13 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                           backgroundColor: MyColors.black3,
                           radius: 14,
                           child: Text(
-                            'N/A',
+                            MyStrings.na,
                             textAlign: TextAlign.center,
                             style: MyStyles.white8700,
                           ),
                         ),
                         title: Text(
-                          'Not Available',
+                          MyStrings.notAvailable,
                           style: MyStyles.black12500,
                         ),
                         subtitle: Text(
@@ -979,8 +983,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                             children: [
                               Text(
                                 (showMore.value == false)
-                                    ? '${4 - 2} Other Issues'
-                                    : 'View Less Issues',
+                                    ? '${4 - 2} ${MyStrings.otherIssues}'
+                                    : MyStrings.viewLessIssues,
                                 textAlign: TextAlign.center,
                                 style: MyStyles.red3_12700,
                               ),

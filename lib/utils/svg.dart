@@ -7,6 +7,9 @@ class MySvg {
   static const wallet = "${svgRoot}wallet.svg";
   static const account = "${svgRoot}account.svg";
 
+  static const remove = "${svgRoot}remove.svg";
+  static const cancel = "${svgRoot}cancel.svg";
+  static const add = "${svgRoot}add.svg";
   static const notification = "${svgRoot}notification.svg";
   static const arrowBack = "${svgRoot}arrow_back.svg";
   static const distance = "${svgRoot}distance.svg";

@@ -1,3 +1,4 @@
+import 'package:evaluator_app/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
@@ -7,6 +8,14 @@ class CarDetailsScreenViewModel extends GetxController {
   RxInt pageIndex = 0.obs;
 
   ///page 1
+  
+  List<String> imageList = [
+    MyStrings.exterior,
+    MyStrings.interior,
+    MyStrings.engine,
+    MyStrings.damage
+  ];
+
   ScrollController page1ScrollController = ScrollController();
 
   void scrollListener() {
@@ -44,12 +53,12 @@ class CarDetailsScreenViewModel extends GetxController {
   }
 
   List<Map<String, dynamic>> rating = [
-    {"title": "Documents", "rating": 0.0},
-    {"title": "Exterior", "rating": 4.5},
-    {"title": "Interior & Electrical", "rating": 3.0},
-    {"title": "Engine", "rating": 1.5},
-    {"title": "AC", "rating": 3.2},
-    {"title": "Test Drive", "rating": 2.4}
+    {"title": MyStrings.documents, "rating": 0.0},
+    {"title": MyStrings.exterior, "rating": 4.5},
+    {"title": MyStrings.interiorAndElectrical, "rating": 3.0},
+    {"title": MyStrings.engine, "rating": 1.5},
+    {"title": MyStrings.ac, "rating": 3.2},
+    {"title": MyStrings.testDrive, "rating": 2.4}
   ];
 
   late TabController exteriorTabController;

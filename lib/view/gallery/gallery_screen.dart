@@ -6,7 +6,6 @@ import 'package:evaluator_app/utils/svg.dart';
 import 'package:evaluator_app/view_model/gallery/gallery_view_model.dart';
 import 'package:evaluator_app/widgets/common_appbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
@@ -23,18 +22,10 @@ class _GalleryScreenState extends State<GalleryScreen> {
           ? Get.find<GalleryScreenViewModel>()
           : Get.put(GalleryScreenViewModel());
   
-  List<Map<String, dynamic>> imagesList = [
-    {"title": "Exterior", "isClick": true.obs, "images":["Front Main (Scratched,Dented)", "Front Left", "Front Right"]},
-    {"title": "Engine", "isClick": false.obs, "images":["Front Main (Scratched,Dented)", "Front Main (Scratched,Dented)"]},
-    {"title": "Interior", "isClick": false.obs, "images":["Front Main (Scratched,Dented)", "Front Main (Scratched,Dented)", "Front Main (Scratched,Dented)"]},
-    {"title": "Damages", "isClick": false.obs, "images":["Front Main (Scratched,Dented)", "Front Main (Scratched,Dented)", "Front Main (Scratched,Dented)", "Front Main (Scratched,Dented)","Front Main (Scratched,Dented)"]},
-  ];
-  RxInt imageIndex = 0.obs;
-  RxBool showLoading = true.obs;
   @override
   void initState() {
     Future.delayed(Duration(seconds: 3)).then((value) {
-      showLoading.value = false;
+      galleryScreenViewModel.showLoading.value = false;
     });
     super.initState();
   }
@@ -42,7 +33,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CommonAppBar(title: imagesList[imageIndex.value]["title"]),
+      appBar: CommonAppBar(title: galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["title"]),
       body: SingleChildScrollView(
         child: Obx(
           () {
@@ -54,22 +45,22 @@ class _GalleryScreenState extends State<GalleryScreen> {
                   width: double.infinity,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: imagesList.length,
+                    itemCount: galleryScreenViewModel.imagesList.length,
                     itemBuilder: (context, index) {
                       return Obx(
                         () {
                           return GestureDetector(
                             onTap: (){
-                              imageIndex.value = index;
+                              galleryScreenViewModel.imageIndex.value = index;
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(right: 12.0),
                               child: Row(
                                 children: [
                                   Text(
-                                    "${imagesList[index]["title"]}" + "${(index==0)?" (${imagesList[index]["images"].length})":""}",
+                                    "${galleryScreenViewModel.imagesList[index]["title"]}" + "${(index==0)?" (${galleryScreenViewModel.imagesList[index]["images"].length})":""}",
                                     style: TextStyle(
-                                    color: (imageIndex.value == index)?MyColors.kPrimaryColor:MyColors.black,
+                                    color: (galleryScreenViewModel.imageIndex.value == index)?MyColors.kPrimaryColor:MyColors.black,
                                     fontSize: 14,
                                     fontFamily: 'DM Sans',
                                     fontWeight: FontWeight.w500,
@@ -82,7 +73,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                                       radius: 9,
                                       backgroundColor: MyColors.red4,
                                       child: Text(
-                                    imagesList[index]["images"].length.toString(),
+                                    galleryScreenViewModel.imagesList[index]["images"].length.toString(),
                                     style: MyStyles.white11700,
                                     ),
                                     ),
@@ -100,10 +91,10 @@ class _GalleryScreenState extends State<GalleryScreen> {
                 ListView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: (showLoading.value)?4:imagesList[imageIndex.value]["images"].length,
+                  itemCount: (galleryScreenViewModel.showLoading.value)?4:galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"].length,
                   itemBuilder: (context, index) {
                     return Obx((){
-                      if(showLoading.value){
+                      if(galleryScreenViewModel.showLoading.value){
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 15.0),
                         child: Stack(
@@ -124,7 +115,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                     }
                     return GestureDetector(
                       onTap: (){
-                        Get.toNamed(AppRoutes.imageViewScreen, arguments: imagesList[imageIndex.value]["title"]);
+                        Get.toNamed(AppRoutes.imageViewScreen, arguments: galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["title"]);
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 15.0),
@@ -149,7 +140,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                                   borderRadius: BorderRadius.circular(6),
                                 ),
                                 child: Text(
-                                  imagesList[imageIndex.value]["images"][index].toString(),
+                                  galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].toString(),
                                   style: MyStyles.black12500,
                                 ),
                               ),

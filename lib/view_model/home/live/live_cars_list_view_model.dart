@@ -34,6 +34,13 @@ class LiveCarsListViewModel extends GetxController{
     });
   }
 
+  List<int> bid = [
+    2000,
+    5000,
+    10000
+  ];
+  RxInt bidValue = 172000.obs;
+
   @override
   void onInit() {
     pageController.value = PageController(initialPage: 0, viewportFraction: 0.85);

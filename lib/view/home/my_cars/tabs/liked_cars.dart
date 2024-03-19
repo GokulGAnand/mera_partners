@@ -1,4 +1,5 @@
 import 'package:evaluator_app/utils/colors.dart';
+import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
@@ -107,7 +108,7 @@ class LikedCars extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "Highest Bid",
+                              MyStrings.highestBid,
                               style: MyStyles.primary12500,
                             ),
                             const SizedBox(
@@ -132,7 +133,7 @@ class LikedCars extends StatelessWidget {
                                             color: MyColors.kPrimaryColor))),
                                 buttonColor:
                                     MyColors.kPrimaryColor.withOpacity(0.3),
-                                buttonText: "View detail",
+                                buttonText: MyStrings.viewDetail,
                                 textStyle: MyStyles.primary14500,
                               ),
                             ),

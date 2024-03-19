@@ -90,6 +90,13 @@ class MyStyles {
     fontWeight: FontWeight.w700,
     height: 0,
   );
+  static const green2_18700 = TextStyle(
+    color: MyColors.green2,
+    fontSize: 18,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w700,
+    height: 0,
+  );
   static const regular12 = TextStyle(
     color: MyColors.subTitleColor,
     fontSize: 12,
@@ -234,6 +241,13 @@ class MyStyles {
     fontWeight: FontWeight.w700,
   );
 
+  static const blue3_14700 = TextStyle(
+    color: MyColors.blue3,
+    fontSize: 14,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w700,
+  );
+
   static const primary16500 = TextStyle(
     color: MyColors.kPrimaryColor,
     fontSize: 16,
@@ -274,6 +288,13 @@ class MyStyles {
     fontSize: 12,
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w500,
+  );
+  
+  static const black18700 = TextStyle(
+    color: MyColors.black,
+    fontSize: 18,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w700,
   );
   static const white12500 = TextStyle(
     color: MyColors.white,

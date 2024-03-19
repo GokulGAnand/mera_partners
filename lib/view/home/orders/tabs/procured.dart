@@ -1,10 +1,10 @@
 import 'package:evaluator_app/utils/colors.dart';
+import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:evaluator_app/widgets/custom_order_container.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Procured extends StatelessWidget {
@@ -47,7 +47,7 @@ class Procured extends StatelessWidget {
                           width: 3,
                         ),
                         Text(
-                          "Deal Won",
+                          MyStrings.dealWon,
                           style: MyStyles.whiteTitleStyle,
                         ),
                       ],
@@ -64,7 +64,7 @@ class Procured extends StatelessWidget {
                             borderRadius: BorderRadius.circular(6),
                             side: BorderSide(color: MyColors.kPrimaryColor))),
                     buttonColor: MyColors.kPrimaryColor.withOpacity(0.3),
-                    buttonText: "View bill",
+                    buttonText: MyStrings.viewBill,
                     textStyle: MyStyles.primary14500,
                   ),
                 );

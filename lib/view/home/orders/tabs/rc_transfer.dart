@@ -1,4 +1,5 @@
 import 'package:evaluator_app/utils/colors.dart';
+import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:evaluator_app/widgets/custom_order_container.dart';
@@ -37,7 +38,7 @@ class RcTransfer extends StatelessWidget {
                             borderRadius: BorderRadius.circular(6),
                             side: BorderSide.none)),
                     buttonColor: MyColors.green3,
-                    buttonText: "Completed",
+                    buttonText: MyStrings.completed,
                     textStyle: MyStyles.white14500,
                   ),
                 );

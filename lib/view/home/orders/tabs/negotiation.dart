@@ -1,4 +1,5 @@
 import 'package:evaluator_app/utils/colors.dart';
+import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
 import 'package:evaluator_app/view_model/home/orders/orders_view_model.dart';
@@ -104,7 +105,7 @@ class _NegotiationState extends State<Negotiation> {
                           gradient: LinearGradient(
                             begin: Alignment(-1.00, 0.00),
                             end: Alignment(1, 0),
-                            colors: [MyColors.warning, Color(0x0036454F)],
+                            colors: [MyColors.warning, MyColors.black5],
                           ),
                         ),
                         child: Row(
@@ -141,7 +142,7 @@ class _NegotiationState extends State<Negotiation> {
                             width: 3,
                           ),
                           Text(
-                            "Deal Lost",
+                            MyStrings.dealLost,
                             style: MyStyles.whiteTitleStyle,
                           ),
                         ],
@@ -160,7 +161,7 @@ class _NegotiationState extends State<Negotiation> {
                                 borderRadius: BorderRadius.circular(6),
                                 side: BorderSide.none)),
                         buttonColor: MyColors.green3,
-                        buttonText: "Completed",
+                        buttonText: MyStrings.completed,
                         textStyle: MyStyles.white14500,
                       );
                     }
@@ -175,7 +176,7 @@ class _NegotiationState extends State<Negotiation> {
                               borderRadius: BorderRadius.circular(6),
                               side: BorderSide(color: MyColors.kPrimaryColor))),
                       buttonColor: MyColors.kPrimaryColor.withOpacity(0.3),
-                      buttonText: "View details",
+                      buttonText: MyStrings.viewDetail,
                       textStyle: MyStyles.primary14500,
                     );
                   }),

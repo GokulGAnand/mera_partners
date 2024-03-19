@@ -2,22 +2,34 @@ import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/dimens.dart';
 import 'package:evaluator_app/utils/images.dart';
+import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
+import 'package:evaluator_app/view_model/home/account/account_view_model.dart';
 import 'package:evaluator_app/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get_core/get_core.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get.dart';
+import 'package:evaluator_app/utils/globals.dart' as globals;
 
-class AccountScreen extends StatelessWidget {
+class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
 
+  @override
+  State<AccountScreen> createState() => _AccountScreenState();
+}
+
+class _AccountScreenState extends State<AccountScreen> {
+  AccountScreenViewModel accountScreenViewModel =
+      Get.isRegistered<AccountScreenViewModel>()
+          ? Get.find<AccountScreenViewModel>()
+          : Get.put(AccountScreenViewModel());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Account",
+        title: MyStrings.account,
+        appBarHeight: 105,
         showBackIcon: false,
       ),
       body: SingleChildScrollView(
@@ -35,11 +47,11 @@ class AccountScreen extends StatelessWidget {
                   backgroundImage: AssetImage(MyImages.profile),
                 ),
                 title: Text(
-                  'MeraUser',
+                  globals.userName.toString(),
                   style: MyStyles.pageTitleStyle,
                 ),
                 subtitle: Text(
-                  'ID: MU3546',
+                  'ID: ${globals.userId.toString()}',
                   style: MyStyles.grey2_12400,
                 ),
               ),
@@ -55,14 +67,14 @@ class AccountScreen extends StatelessWidget {
                       width: 6,
                     ),
                     Text(
-                      'Customer Support',
+                      MyStrings.customerSupport,
                       style: MyStyles.selectedTabBarTitleStyle,
                     )
                   ],
                 ),
               ),
               Text(
-                'Account Settings',
+                MyStrings.accountSettings,
                 style: MyStyles.grey2_14500,
               ),
 
@@ -76,23 +88,27 @@ class AccountScreen extends StatelessWidget {
                       width: 6,
                     ),
                     Text(
-                      'Document verification',
+                      MyStrings.documentVerification,
                       style: MyStyles.subTitleBlackStyle,
                     ),
                     const SizedBox(
                       width: 6,
                     ),
-                    Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                      decoration: BoxDecoration(
-                          color: MyColors.green1,
-                          borderRadius: BorderRadius.circular(4)),
-                      child: Text(
-                        'Completed',
-                        textAlign: TextAlign.center,
-                        style: MyStyles.white12500
-                      ),
+                    Obx(
+                      () {
+                        return Container(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                          decoration: BoxDecoration(
+                              color: (accountScreenViewModel.documentVerification.isFalse)?MyColors.yellow :MyColors.green1,
+                              borderRadius: BorderRadius.circular(4)),
+                          child: Text(
+                            (accountScreenViewModel.documentVerification.isFalse)? MyStrings.pending :MyStrings.completed,
+                            textAlign: TextAlign.center,
+                            style: (accountScreenViewModel.documentVerification.isFalse)? MyStyles.black12500 :MyStyles.white12500
+                          ),
+                        );
+                      }
                     )
                   ],
                 ),
@@ -105,7 +121,7 @@ class AccountScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'About Us',
+                      MyStrings.aboutUs,
                       style: MyStyles.subTitleBlackStyle,
                     ),
                     SvgPicture.asset(MySvg.arrowRight)
@@ -121,7 +137,7 @@ class AccountScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Privacy Policy',
+                      MyStrings.privacyPolicy,
                       style: MyStyles.subTitleBlackStyle,
                     ),
                     SvgPicture.asset(MySvg.arrowRight)
@@ -136,7 +152,7 @@ class AccountScreen extends StatelessWidget {
                     width: 6,
                   ),
                   Text(
-                    'LogOut',
+                    MyStrings.logOut,
                     style: MyStyles.subTitleBlackStyle,
                   ),
                 ],
@@ -145,11 +161,11 @@ class AccountScreen extends StatelessWidget {
               RichText(
                   text: TextSpan(children: [
                 TextSpan(
-                  text: 'Mera Partners',
+                  text: MyStrings.meraPartners,
                   style: MyStyles.grey16400
                 ),
                 TextSpan(
-                  text: ' v0.1',
+                  text: ' ${MyStrings.version}',
                   style: MyStyles.grey16500,
                 ),
               ]))

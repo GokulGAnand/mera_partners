@@ -29,6 +29,8 @@ class CustomCarDetailCard extends StatelessWidget {
   final String ownerShip;
   final String transmission;
   late final Rx<bool>? isFavourite = false.obs;
+  final Function()? autoBid;
+  final Function()? bid;
   Rx<PageController> pageController = PageController(initialPage: 0, viewportFraction: 0.85).obs;
   var activePage = 0.obs;
   Timer? carouselTimer;
@@ -64,6 +66,8 @@ class CustomCarDetailCard extends StatelessWidget {
     required this.ownerShip,
     required this.transmission,
     required this.images,
+    required this.autoBid,
+    required this.bid,
   });
 
   @override
@@ -468,9 +472,13 @@ class CustomCarDetailCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(6),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: autoBid,
                         buttonText: MyStrings.autoBid),
-                    CustomElevatedButton(buttonWidth: MediaQuery.of(context).size.width * 0.38, buttonHeight: Dimens.defHeight, onPressed: () {}, buttonText: MyStrings.bid),
+                    CustomElevatedButton(
+                      buttonWidth: MediaQuery.of(context).size.width * 0.38, 
+                      buttonHeight: Dimens.defHeight, 
+                      onPressed: bid, 
+                      buttonText: MyStrings.bid),
                   ],
                 ),
               ),
