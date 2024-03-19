@@ -6,6 +6,13 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
     <uses-permission android:name="android.permission.CAMERA" />
+    <queries>
+    <!-- If your app checks for call support -->
+    <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="tel" />
+    </intent>
+    </queries>
     <application
         android:label="Mera Partners"
         android:name="${applicationName}"

@@ -14,6 +14,11 @@ class SharedPrefManager {
     return prefs.setString(type, value);
   }
 
+  Future<bool> removeStringAsync(String type) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.remove(type);
+  }
+
   SharedPrefManager._internal();
 
   static SharedPrefManager get instance => _prefManager;

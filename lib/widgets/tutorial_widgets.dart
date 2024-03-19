@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../utils/colors.dart';
@@ -117,11 +118,9 @@ class TutorialWidgets extends StatelessWidget {
                       );
                     }
                     controller.update();
-
                   },
                   textColor: MyColors.white,
                   buttonText: controller.page.value == 3 ? MyStrings.startBiding : MyStrings.next,
-
                 ),
               )
             ],

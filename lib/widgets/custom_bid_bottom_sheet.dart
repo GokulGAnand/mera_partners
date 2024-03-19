@@ -1,4 +1,5 @@
 import 'package:evaluator_app/utils/colors.dart';
+import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
@@ -9,8 +10,8 @@ import 'package:intl/intl.dart';
 
 class CustomBidBottomSheet extends StatelessWidget {
   CustomBidBottomSheet(
-      {required this.bid, 
-      required this.bidValue, 
+      {required this.bid,
+      required this.bidValue,
       this.isAutoBid = false,
       super.key});
   final List<int> bid;
@@ -21,7 +22,7 @@ class CustomBidBottomSheet extends StatelessWidget {
     NumberFormat numberFormat =
         NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
     return Container(
-      height: (isAutoBid)?442:363,
+      height: (isAutoBid) ? 442 : 363,
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: MyColors.white,
@@ -66,7 +67,7 @@ class CustomBidBottomSheet extends StatelessWidget {
               ),
               Spacer(),
               InkWell(
-                onTap: (){
+                onTap: () {
                   Get.back();
                 },
                 child: SvgPicture.asset(
@@ -75,68 +76,75 @@ class CustomBidBottomSheet extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16,),
+          const SizedBox(
+            height: 16,
+          ),
           Text(
-            'Current bid : ₹ 1,71,000',
+            '${MyStrings.currentBid} : ₹ 1,71,000',
             style: MyStyles.selectedTabBarTitleStyle,
           ),
-          const SizedBox(height: 8,),
+          const SizedBox(
+            height: 8,
+          ),
           Text(
-            'Step rate : ₹ 1,000',
+            '${MyStrings.stepRate} : ₹ 1,000',
             style: MyStyles.selectedTabBarTitleStyle,
           ),
-          (isAutoBid)?Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 12,),
-              Text(
-                'Auto bid',
-                style: MyStyles.blue3_14700,
-              ),
-              const SizedBox(height: 8,),
-              Text(
-                'We’ll automatically increase your bid by ₹ 1000 until reaching the set amount.',
-                style: MyStyles.grey14500,
-              ),
-            ],
-          )
-          :const SizedBox(),
+          (isAutoBid)
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      MyStrings.autoBid,
+                      style: MyStyles.blue3_14700,
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      MyStrings.autoBidDesc,
+                      style: MyStyles.grey14500,
+                    ),
+                  ],
+                )
+              : const SizedBox(),
           Container(
             width: double.infinity,
             height: 54,
             margin: EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
-              color: MyColors.lightBlue,
+                color: MyColors.lightBlue,
                 borderRadius: BorderRadius.circular(4),
                 border: Border.all(color: MyColors.kPrimaryColor)),
             child: Row(
               children: [
                 InkWell(
-                  onTap: (){
-                    bidValue.value -= 1000;
-                  },
-                  child: SizedBox(width: 56, child: Icon(Icons.remove))),
+                    onTap: () {
+                      bidValue.value -= 1000;
+                    },
+                    child: SizedBox(width: 56, child: Icon(Icons.remove))),
                 VerticalDivider(
                   color: MyColors.kPrimaryColor,
                 ),
-                Obx(
-                  () {
-                    return Expanded(
-                        child: Text(
-                      numberFormat.format(bidValue.value),
-                      textAlign: TextAlign.center,
-                      style: MyStyles.black18700,
-                    ));
-                  }
-                ),
+                Obx(() {
+                  return Expanded(
+                      child: Text(
+                    numberFormat.format(bidValue.value),
+                    textAlign: TextAlign.center,
+                    style: MyStyles.black18700,
+                  ));
+                }),
                 VerticalDivider(
                   color: MyColors.kPrimaryColor,
                 ),
                 InkWell(
-                  onTap: (){
-                    bidValue.value += 1000;
-                  },
-                  child: SizedBox(width: 56, child: Icon(Icons.add))),
+                    onTap: () {
+                      bidValue.value += 1000;
+                    },
+                    child: SizedBox(width: 56, child: Icon(Icons.add))),
               ],
             ),
           ),
@@ -147,30 +155,41 @@ class CustomBidBottomSheet extends StatelessWidget {
                 for (int i = 0; i < bid.length; i++) ...[
                   Expanded(
                       child: InkWell(
-                        onTap: (){
-                          bidValue.value += bid[i];
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          margin: EdgeInsets.only(right: (i==bid.length-1)?0:8),
-                                            decoration: BoxDecoration(
-                        color: MyColors.lightBlue,
+                    onTap: () {
+                      bidValue.value += bid[i];
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 5),
+                      margin:
+                          EdgeInsets.only(right: (i == bid.length - 1) ? 0 : 8),
+                      decoration: BoxDecoration(
+                          color: MyColors.lightBlue,
                           borderRadius: BorderRadius.circular(4),
                           border: Border.all(color: MyColors.kPrimaryColor)),
-                                            child: Text(
+                      child: Text(
                         '+ ' + numberFormat.format(bid[i]),
                         textAlign: TextAlign.center,
                         style: MyStyles.black14700,
-                                            ),
-                                          ),
-                      ))
+                      ),
+                    ),
+                  ))
                 ],
               ],
             ),
           ),
-          const SizedBox(height: 15,),
-          CustomElevatedButton(
-              onPressed: () {}, buttonText: "Confirm bid at ₹ 1,72,000 ")
+          const SizedBox(
+            height: 15,
+          ),
+          Obx(() {
+            return CustomElevatedButton(
+              onPressed: () {},
+              buttonText: ((isAutoBid)
+                      ? MyStrings.confirmAutoBid
+                      : MyStrings.confirmBid) +
+                  numberFormat.format(bidValue.value),
+              textStyle: MyStyles.white14700,
+            );
+          })
         ],
       ),
     );

@@ -1,7 +1,9 @@
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
+import 'package:evaluator_app/utils/constants.dart';
 import 'package:evaluator_app/utils/dimens.dart';
 import 'package:evaluator_app/utils/images.dart';
+import 'package:evaluator_app/utils/shared_pref_manager.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
@@ -58,19 +60,24 @@ class _AccountScreenState extends State<AccountScreen> {
               Divider(
                 color: MyColors.subTitleColor.withOpacity(0.25),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 18.0),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(MySvg.call),
-                    const SizedBox(
-                      width: 6,
-                    ),
-                    Text(
-                      MyStrings.customerSupport,
-                      style: MyStyles.selectedTabBarTitleStyle,
-                    )
-                  ],
+              InkWell(
+                onTap: () async{
+                  await accountScreenViewModel.launchCaller();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 18.0),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(MySvg.call),
+                      const SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        MyStrings.customerSupport,
+                        style: MyStyles.selectedTabBarTitleStyle,
+                      )
+                    ],
+                  ),
                 ),
               ),
               Text(
@@ -94,22 +101,18 @@ class _AccountScreenState extends State<AccountScreen> {
                     const SizedBox(
                       width: 6,
                     ),
-                    Obx(
-                      () {
-                        return Container(
+                    Container(
                           padding:
                               const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                           decoration: BoxDecoration(
-                              color: (accountScreenViewModel.documentVerification.isFalse)?MyColors.yellow :MyColors.green1,
+                              color: (globals.isDocumentsVerified! == false)?MyColors.yellow :MyColors.green1,
                               borderRadius: BorderRadius.circular(4)),
                           child: Text(
-                            (accountScreenViewModel.documentVerification.isFalse)? MyStrings.pending :MyStrings.completed,
+                            (globals.isDocumentsVerified == false)? MyStrings.pending :MyStrings.completed,
                             textAlign: TextAlign.center,
-                            style: (accountScreenViewModel.documentVerification.isFalse)? MyStyles.black12500 :MyStyles.white12500
+                            style: (globals.isDocumentsVerified  == false)? MyStyles.black12500 :MyStyles.white12500
                           ),
-                        );
-                      }
-                    )
+                        )
                   ],
                 ),
               ),
@@ -145,17 +148,25 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
               ),
               const SizedBox(height: 20,),
-              Row(
-                children: [
-                  SvgPicture.asset(MySvg.logout),
-                  const SizedBox(
-                    width: 6,
-                  ),
-                  Text(
-                    MyStrings.logOut,
-                    style: MyStyles.subTitleBlackStyle,
-                  ),
-                ],
+              InkWell(
+                onTap: () async{
+                  bool removeVal = await SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
+                  if(removeVal){
+                    Get.offAllNamed(AppRoutes.loginScreen);
+                  }
+                },
+                child: Row(
+                  children: [
+                    SvgPicture.asset(MySvg.logout),
+                    const SizedBox(
+                      width: 6,
+                    ),
+                    Text(
+                      MyStrings.logOut,
+                      style: MyStyles.subTitleBlackStyle,
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 30,),
               RichText(

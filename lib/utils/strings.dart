@@ -326,11 +326,12 @@ class MyStrings {
   static const String unableToConnect = "Unable to connect server";
   static const String dealerProof = "Dealer Proof";
   static const String paySuccess = "Payment Successful";
+  static const String payFail = "Payment Failed";
   static const String payError = "Payment Error";
   static const String addDocument = "Add Document";
   static const String camera = "Camera";
   static const String gallery = "Gallery";
-  static const String paySuccessDesc = "All the documents has been uploaded\nand is under verification";
+  static const String paySuccessDesc = "All the documents has been uploaded \nand is under verification";
   static const String cont = "continue";
   static const String shopImage = "Shop Image";
   static const String visitingCard = "Visiting Card";
@@ -397,7 +398,12 @@ class MyStrings {
   // static const String live = 'live';
   static const String autoBid = 'Auto bid';
   static const String bid = 'Bid';
+  static const String confirmAutoBid = 'Confirm Autobid at ';
+  static const String confirmBid = 'Confirm bid at ';
   static const String highestBid = 'Highest bid';
+  static const String currentBid = 'Current bid';
+  static const String stepRate = 'Step rate';
+  static const String autoBidDesc = 'We’ll automatically increase your bid by ₹ 1000 until reaching the set amount.';
 
   /// car details screen
   static const String fmv = 'FMV';

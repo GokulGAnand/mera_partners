@@ -4,7 +4,9 @@ import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../routes/app_routes.dart';
 import '../view_model/onboarding/onboarding_view_model.dart';
+import 'package:evaluator_app/utils/globals.dart' as globals;
 
 class OnBoardingWidgets extends StatelessWidget {
   final String? image;
@@ -12,7 +14,7 @@ class OnBoardingWidgets extends StatelessWidget {
   final String? subtitle;
   final int values;
 
-  const OnBoardingWidgets({Key? key, this.image, this.title, this.subtitle, required this.values}) : super(key: key);
+  const OnBoardingWidgets({super.key, this.image, this.title, this.subtitle, required this.values});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class OnBoardingWidgets extends StatelessWidget {
                 children: [
                   Text(
                     '$title',
-                    style: TextStyle(fontSize: 24, fontStyle: FontStyle.normal, fontWeight: FontWeight.w700, color: MyColors.black),
+                    style:  TextStyle(fontSize: 24, fontStyle: FontStyle.normal, fontWeight: FontWeight.w700, color: MyColors.black),
                   ),
                   SizedBox(
                     height: screenSize.height * 0.02,
@@ -65,7 +67,13 @@ class OnBoardingWidgets extends StatelessWidget {
                   onPressed: () {
                     log('Current Page: ${controller.page.value}');
                     if (controller.page.value == 2) {
-                      // Handle the action for page value 2
+                      if (globals.isDocumentsVerified != null && globals.isDocumentsVerified == true) {
+                        Get.toNamed(AppRoutes.homeScreen);
+                      }else if(globals.isDocumentsVerified == false || (globals.addressProofFront == null && globals.addressProofFront == false)){
+                        Get.toNamed(AppRoutes.documentScreen);
+                      }else{
+                        Get.toNamed(AppRoutes.homeScreen);
+                      }
                     } else {
                       controller.indicator.animateToPage(
                         controller.page.value.toInt() + 1,
