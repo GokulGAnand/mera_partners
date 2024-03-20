@@ -2,7 +2,7 @@ library my_prj.globals;
 
 String? userName;
 String? userId;
-bool? isDocumentsVerified = false;
+String? documentStatus;
 bool? addressProofFront;
 String? city;
 int? contactNo;

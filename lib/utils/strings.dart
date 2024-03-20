@@ -343,7 +343,7 @@ class MyStrings {
   static const String bidFromAnyWhere = "Bid From Anywhere";
   static const String detailedInspection = 'Detailed Inspection';
   static const String easyDocumentTransfer = 'Easy Document Transfer';
-  static const String subtitle1 = 'Welcome to Meracars, your gateway to an exciting world of automotive possibilities.';
+  static const String subtitle1 = 'Welcome to Meracars, your gateway to an\nexciting world of automotive possibilities.';
   static const String getStarted = 'Get Started';
   static const String empty = "";
  ///tutorial screen
@@ -366,7 +366,7 @@ class MyStrings {
 
   ///bids screen
   static const String live = "LIVE";
-  static const String otb = "OTB(4)";
+  static const String otb = "OTB";
   static const String rating = "Rating";
 
   ///my cars
@@ -402,9 +402,43 @@ class MyStrings {
   static const String confirmAutoBid = 'Confirm Autobid at ';
   static const String confirmBid = 'Confirm bid at ';
   static const String highestBid = 'Highest bid';
+
+  ///notification screen
+  static const String notification = 'Notifications';
+  static const String offer = 'Customer has a final offer ,dont lose your\ncar now';
+  static const String offer1 = '2016 Duster 110... has arrived';
+  static const String offer2 = 'All the Documents has been successfully verified. You can start Bidding';
+  static const String title1 = '1 minutes ago';
+  static const String title2 = '13 minutes ago';
+  static const String title3 = '10 minutes ago';
+  ///procured bill screen
+  static const String billSummary ='BILL SUMMARY';
+  static const String totalPayment = 'Total payment';
+  static const String additionalCharges ='Additional charges';
+  static const String gst ='GST';
+  static const String totalAmount = 'Total Amount';
+  static const String transfer = 'Transfer total amount to MeraCars bank\n account.';
+  static const String needHelp ='Need Help ?';
+  static const String viewButton ='View Bank Details';
+  static const String acHName = 'Account Holder’s Name';
+  static const String mAdmin = 'Mera Admin';
+  static const String admin = 'Account Number';
+  static const String aC = '545045775465';
+  static const String ifsc = 'IFSC Code';
+  static const String ifscCode = 'MC82734823';
+  static const String bankAc ='Bank Account Details';
   static const String currentBid = 'Current bid';
   static const String stepRate = 'Step rate';
+  static const String verifyPending= 'Verification Pending';
+  static const String verifyWarning = 'Complete the Document verification to start bidding';
   static const String autoBidDesc = 'We’ll automatically increase your bid by ₹ 1000 until reaching the set amount.';
+
+  ///OTB
+  static const String oneTouchBuy = 'One Touch Buy';
+  static const String closingPrice = 'Closing Price';
+  static const String otbPrice = 'OTB Price';
+  static const String confirmBuy = 'Confirm buy at ';
+  static const String otbBuyDesc = 'Purchase this car immediately at \nthe listed price';
 
   /// car details screen
   static const String fmv = 'FMV';

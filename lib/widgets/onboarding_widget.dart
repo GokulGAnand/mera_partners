@@ -1,10 +1,12 @@
 import 'dart:developer';
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
+import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../routes/app_routes.dart';
+import '../utils/enum.dart';
 import '../view_model/onboarding/onboarding_view_model.dart';
 import 'package:evaluator_app/utils/globals.dart' as globals;
 
@@ -36,40 +38,28 @@ class OnBoardingWidgets extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(5, screenSize.height * 0.25, 0, 0),
+              padding: EdgeInsets.fromLTRB(0, screenSize.height * 0.25, screenSize.width * 0.1, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '$title',
-                    style:  TextStyle(fontSize: 24, fontStyle: FontStyle.normal, fontWeight: FontWeight.w700, color: MyColors.black),
-                  ),
+                  Text('$title', style: MyStyles.black24700),
                   SizedBox(
                     height: screenSize.height * 0.02,
                   ),
-                  Text(
-                    '$subtitle',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w400,
-                      color: MyColors.black1,
-                    ),
-      
-                  ),
+                  Text('$subtitle', style: MyStyles.black115400),
                 ],
               ),
             ),
             Obx(
-                  () => Padding(
+              () => Padding(
                 padding: EdgeInsets.fromLTRB(screenSize.width * 0.05, screenSize.height * 0.10, screenSize.width * 0.05, 0),
                 child: CustomElevatedButton(
                   onPressed: () {
                     log('Current Page: ${controller.page.value}');
                     if (controller.page.value == 2) {
-                      if (globals.isDocumentsVerified != null && globals.isDocumentsVerified == true) {
+                      if (globals.documentStatus != null && globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name) {
                         Get.toNamed(AppRoutes.homeScreen);
-                      }else if(globals.isDocumentsVerified == false || (globals.addressProofFront == null && globals.addressProofFront == false)){
+                      }else if(globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name || (globals.addressProofFront == null && globals.addressProofFront == false)){
                         Get.toNamed(AppRoutes.documentScreen);
                       }else{
                         Get.toNamed(AppRoutes.homeScreen);
@@ -85,20 +75,12 @@ class OnBoardingWidgets extends StatelessWidget {
                   },
                   textColor: MyColors.white,
                   buttonText: controller.page.value == 2 ? MyStrings.getStarted : MyStrings.next,
-                  child: controller.page.value != 2? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(MyStrings.next,style: TextStyle(
-                        color: MyColors.white,
-                        fontSize: 16,
-                        fontFamily: 'DM Sans',
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 1,
-                      ),),
-                      SizedBox(width: screenSize.width * 0.03),
-                      Icon(Icons.arrow_forward_ios_sharp,color: MyColors.white,size: 15)
-                    ],
-                  ):null,
+                  child: controller.page.value != 2
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [const Text(MyStrings.next, style: MyStyles.white16700), SizedBox(width: screenSize.width * 0.03), const Icon(Icons.arrow_forward_ios_sharp, color: MyColors.white, size: 15)],
+                        )
+                      : null,
                 ),
               ),
             )

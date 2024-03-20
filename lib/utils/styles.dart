@@ -3,12 +3,10 @@ import 'colors.dart';
 import 'dimens.dart';
 
 class MyStyles {
-  static final regular = TextStyle(
-      color: MyColors.white,
-      fontWeight: FontWeight.w400,
-      fontSize: Dimens.standard_14);
+
+  static final regular = TextStyle(color: MyColors.white, fontWeight: FontWeight.w400, fontSize: Dimens.standard_14);
   static const titleStyle = TextStyle(
-    color: MyColors.white,
+    color: MyColors.white  ,
     fontSize: 22,
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w700,
@@ -26,6 +24,7 @@ class MyStyles {
     fontSize: 14,
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w400,
+    // height: 0.09,
   );
   static const subTitleGreayStyle = TextStyle(
     color: MyColors.subTitleColor,
@@ -65,6 +64,13 @@ class MyStyles {
     fontSize: 20,
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w500,
+    height: 0,
+  );
+  static const black20700 = TextStyle(
+    color: MyColors.black,
+    fontSize: 20,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w700,
     height: 0,
   );
 
@@ -133,6 +139,7 @@ class MyStyles {
     fontSize: 16,
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w700,
+    letterSpacing: 1,
   );
   static const black16700 = TextStyle(
     color: MyColors.black,
@@ -140,6 +147,67 @@ class MyStyles {
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w700,
   );
+  static const blue16W700 =TextStyle(
+      fontWeight: FontWeight.w700,
+      fontSize: 16,
+      color:  MyColors.kPrimaryColor
+  );
+  static const white14700 = TextStyle(
+      fontWeight: FontWeight.w700,
+      fontSize: 14,
+      color: MyColors.white
+  );
+  static const black16400 = TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: 16,
+      color:  MyColors.subTitleColor
+  );
+  static const black18700 = TextStyle(
+      fontWeight: FontWeight.w700,
+      fontSize: 16,
+      color:  MyColors.subTitleColor
+  );
+  static const black12500 =TextStyle(
+      fontWeight: FontWeight.w500,
+      fontSize: 12,
+      color: MyColors.black
+  );
+  static const kPrimary16500 =TextStyle(
+      fontSize: 16,
+      color: MyColors.kPrimaryColor,
+      fontWeight: FontWeight.w500);
+  static const black15400 = TextStyle(
+    fontSize: 15,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
+    color: MyColors.black,
+  );
+  static const constBlack215400 =TextStyle(
+    fontSize: 15,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
+    color: MyColors.black2,
+  );
+  static const black18500 = TextStyle(
+      fontSize: 18,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      color: MyColors.black
+  );
+  static const black24700 =TextStyle(
+      fontSize: 24,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w700,
+      color: MyColors.black
+  );
+  static const black115400 =TextStyle(
+    fontSize: 15,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
+    color: MyColors.black1,
+  );
+
+
   static const red12700 = TextStyle(
     color: MyColors.red,
     fontSize: 12,
@@ -194,6 +262,13 @@ class MyStyles {
     fontWeight: FontWeight.w700,
     height: 0,
   );
+  static const black14500 = TextStyle(
+    color: MyColors.black,
+    fontSize: 14,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
+    height: 0,
+  );
 
   static const red14400 = TextStyle(
     color: MyColors.red,
@@ -231,13 +306,6 @@ class MyStyles {
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w500,
     height: 1.5,
-  );
-
-  static const white14700 = TextStyle(
-    color: MyColors.white,
-    fontSize: 14,
-    fontFamily: 'DM Sans',
-    fontWeight: FontWeight.w700,
   );
 
   static const blue3_14700 = TextStyle(
@@ -282,19 +350,6 @@ class MyStyles {
     fontWeight: FontWeight.w700,
   );
 
-  static const black12500 = TextStyle(
-    color: MyColors.black,
-    fontSize: 12,
-    fontFamily: 'DM Sans',
-    fontWeight: FontWeight.w500,
-  );
-  
-  static const black18700 = TextStyle(
-    color: MyColors.black,
-    fontSize: 18,
-    fontFamily: 'DM Sans',
-    fontWeight: FontWeight.w700,
-  );
   static const white12500 = TextStyle(
     color: MyColors.white,
     fontSize: 12,

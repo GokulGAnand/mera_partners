@@ -1,12 +1,14 @@
 import 'dart:async';
+import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/get.dart';
+import 'package:evaluator_app/utils/globals.dart' as globals;
 import '../utils/colors.dart';
 import '../utils/dimens.dart';
+import '../utils/enum.dart';
 import '../utils/images.dart';
 import '../utils/strings.dart';
 import '../utils/styles.dart';
@@ -30,11 +32,35 @@ class CustomCarDetailCard extends StatelessWidget {
   final String ownerShip;
   final String transmission;
   late final Rx<bool>? isFavourite = false.obs;
+  final bool? isOtb;
+  final bool? isScheduled;
   final Function()? autoBid;
   final Function()? bid;
+  final Function()? otbTapped;
   Rx<PageController> pageController = PageController(initialPage: 0, viewportFraction: 0.85).obs;
   var activePage = 0.obs;
   Timer? carouselTimer;
+
+
+  showPendingDialog(){
+    showDialog(
+      context: Get.context!,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text(MyStrings.verifyPending,style: MyStyles.black20700,),
+          content: const Text(MyStrings.verifyWarning,style: MyStyles.pageTitleStyle,),
+          actions: [
+            TextButton(onPressed: () {
+              Get.toNamed(AppRoutes.documentScreen);
+            }, child: Text(MyStrings.cont.toUpperCase()),),
+            TextButton(onPressed: () {
+              Navigator.of(context).pop();
+            }, child: Text(MyStrings.cancel.toUpperCase(),style: const TextStyle(color: MyColors.grey),),),
+          ],
+        );
+      },
+    );
+  }
 
   Timer getTimer() {
     return Timer.periodic(const Duration(seconds: 3), (timer) {
@@ -67,8 +93,11 @@ class CustomCarDetailCard extends StatelessWidget {
     required this.ownerShip,
     required this.transmission,
     required this.images,
-    required this.autoBid,
-    required this.bid,
+    this.autoBid,
+    this.bid,
+    this.isOtb,
+    this.otbTapped,
+    this.isScheduled = false,
   });
 
   @override
@@ -237,7 +266,7 @@ class CustomCarDetailCard extends StatelessWidget {
                     const SizedBox(
                       width: 12,
                     ),
-                    Text(bidStatus, style: MyStyles.whiteTitleStyle),
+                    Text(isOtb == true ? MyStrings.closingPrice : bidStatus, style: MyStyles.whiteTitleStyle),
                     const SizedBox(
                       width: 15,
                     ),
@@ -454,6 +483,7 @@ class CustomCarDetailCard extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
+              if((isOtb == null || isOtb != true) && isScheduled == false)
               Padding(
                 padding: const EdgeInsets.only(left: 12.0, right: 12),
                 child: Row(
@@ -473,16 +503,50 @@ class CustomCarDetailCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(6),
                           ),
                         ),
-                        onPressed: autoBid,
+                        onPressed: globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name ? autoBid : () {
+                          showPendingDialog();
+                        },
                         buttonText: MyStrings.autoBid),
                     CustomElevatedButton(
-                      buttonWidth: MediaQuery.of(context).size.width * 0.38, 
-                      buttonHeight: Dimens.defHeight, 
-                      onPressed: bid, 
+                      buttonWidth: MediaQuery.of(context).size.width * 0.38,
+                      buttonHeight: Dimens.defHeight,
+                      onPressed: globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name ?bid :() {
+                        showPendingDialog();
+                      },
                       buttonText: MyStrings.bid),
                   ],
                 ),
               ),
+              if(isOtb == true)
+                Padding(
+                  padding: const EdgeInsets.only(left: 12.0, right: 12),
+                  child: CustomElevatedButton(
+                      buttonHeight: Dimens.defHeight,
+                      onPressed: globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name ?otbTapped:() {
+                        showPendingDialog();
+                      },
+                      buttonText: MyStrings.oneTouchBuy),
+                ),
+              if(isScheduled == true)
+                Padding(
+                  padding: const EdgeInsets.only(left: 12.0, right: 12),
+                  child: CustomElevatedButton(
+                      buttonHeight: Dimens.defHeight,
+                      textColor: MyColors.kPrimaryColor,
+                      buttonStyle: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(
+                            width: 1,
+                            strokeAlign: BorderSide.strokeAlignCenter,
+                            color: MyColors.kPrimaryColor,
+                          ),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        disabledBackgroundColor: MyColors.lightBlue,
+                      ),
+                      onPressed: null,
+                      buttonText: 'Scheduled for tomorrow, 6:00 PM'),
+                ),
             ],
           ),
         ),

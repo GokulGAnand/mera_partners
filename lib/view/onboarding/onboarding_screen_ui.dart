@@ -10,7 +10,6 @@ import '../../widgets/onboarding_widget.dart';
 class OnboardingScreen extends  GetView<OnboardingScreenViewModel> {
   OnboardingScreen({super.key});
   OnboardingScreenViewModel viewModel = Get.isRegistered<OnboardingScreenViewModel>()? Get.find<OnboardingScreenViewModel>()  : Get.put(OnboardingScreenViewModel());
-  // OnboardingScreenViewModel viewModel = Get.find<OnboardingScreenViewModel>();
   List<Widget>? pages;
 
 

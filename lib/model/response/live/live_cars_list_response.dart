@@ -5,7 +5,8 @@ class LiveCarsResponse {
   int? count;
   Meta? meta;
 
-  LiveCarsResponse({this.status, this.message, this.data, this.count, this.meta});
+  LiveCarsResponse(
+      {this.status, this.message, this.data, this.count, this.meta});
 
   LiveCarsResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -13,23 +14,23 @@ class LiveCarsResponse {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(new Data.fromJson(v));
       });
     }
     count = json['count'];
-    meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
+    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['count'] = count;
-    if (meta != null) {
-      data['meta'] = meta!.toJson();
+    data['count'] = this.count;
+    if (this.meta != null) {
+      data['meta'] = this.meta!.toJson();
     }
     return data;
   }
@@ -59,15 +60,49 @@ class Data {
   Front? rearLeft;
   Front? rearRight;
   String? monthAndYearOfManufacture;
+  int? odometerReading;
   Front? engineCompartment;
-  num? engineStar;
+  int? statusValues;
+  int? engineStar;
   String? transmission;
-  num? exteriorStar;
-  num? testDriveStar;
-  num? interiorAndElectricalStar;
+  double? exteriorStar;
+  int? testDriveStar;
+  int? interiorAndElectricalStar;
   String? specialComments;
 
-  Data({this.sId, this.uniqueId, this.make, this.model, this.variant, this.maskedRegNumber, this.vehicleLocation, this.ownershipNumber, this.fuelType, this.qcStatus, this.highestBid, this.totalBidder, this.status, this.createdAt, this.realValue, this.front, this.frontLeft, this.frontRight, this.frontWithHoodOpen, this.rear, this.rearLeft, this.rearRight, this.monthAndYearOfManufacture, this.engineCompartment, this.engineStar, this.transmission, this.exteriorStar, this.testDriveStar, this.interiorAndElectricalStar, this.specialComments});
+  Data(
+      {this.sId,
+        this.uniqueId,
+        this.make,
+        this.model,
+        this.variant,
+        this.maskedRegNumber,
+        this.vehicleLocation,
+        this.ownershipNumber,
+        this.fuelType,
+        this.qcStatus,
+        this.highestBid,
+        this.totalBidder,
+        this.status,
+        this.createdAt,
+        this.realValue,
+        this.front,
+        this.frontLeft,
+        this.frontRight,
+        this.frontWithHoodOpen,
+        this.rear,
+        this.rearLeft,
+        this.rearRight,
+        this.monthAndYearOfManufacture,
+        this.odometerReading,
+        this.engineCompartment,
+        this.statusValues,
+        this.engineStar,
+        this.transmission,
+        this.exteriorStar,
+        this.testDriveStar,
+        this.interiorAndElectricalStar,
+        this.specialComments});
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -85,15 +120,28 @@ class Data {
     status = json['status'];
     createdAt = json['createdAt'];
     realValue = json['realValue'];
-    front = json['front'] != null ? Front.fromJson(json['front']) : null;
-    frontLeft = json['frontLeft'] != null ? Front.fromJson(json['frontLeft']) : null;
-    frontRight = json['frontRight'] != null ? Front.fromJson(json['frontRight']) : null;
-    frontWithHoodOpen = json['frontWithHoodOpen'] != null ? Front.fromJson(json['frontWithHoodOpen']) : null;
-    rear = json['rear'] != null ? Front.fromJson(json['rear']) : null;
-    rearLeft = json['rearLeft'] != null ? Front.fromJson(json['rearLeft']) : null;
-    rearRight = json['rearRight'] != null ? Front.fromJson(json['rearRight']) : null;
+    front = json['front'] != null ? new Front.fromJson(json['front']) : null;
+    frontLeft = json['frontLeft'] != null
+        ? new Front.fromJson(json['frontLeft'])
+        : null;
+    frontRight = json['frontRight'] != null
+        ? new Front.fromJson(json['frontRight'])
+        : null;
+    frontWithHoodOpen = json['frontWithHoodOpen'] != null
+        ? new Front.fromJson(json['frontWithHoodOpen'])
+        : null;
+    rear = json['rear'] != null ? new Front.fromJson(json['rear']) : null;
+    rearLeft =
+    json['rearLeft'] != null ? new Front.fromJson(json['rearLeft']) : null;
+    rearRight = json['rearRight'] != null
+        ? new Front.fromJson(json['rearRight'])
+        : null;
     monthAndYearOfManufacture = json['monthAndYearOfManufacture'];
-    engineCompartment = json['engineCompartment'] != null ? Front.fromJson(json['engineCompartment']) : null;
+    odometerReading = json['odometerReading'];
+    engineCompartment = json['engineCompartment'] != null
+        ? new Front.fromJson(json['engineCompartment'])
+        : null;
+    statusValues = json['statusValues'];
     engineStar = json['engineStar'];
     transmission = json['transmission'];
     exteriorStar = json['exteriorStar'];
@@ -103,53 +151,55 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    data['uniqueId'] = uniqueId;
-    data['make'] = make;
-    data['model'] = model;
-    data['variant'] = variant;
-    data['maskedRegNumber'] = maskedRegNumber;
-    data['vehicleLocation'] = vehicleLocation;
-    data['ownershipNumber'] = ownershipNumber;
-    data['fuelType'] = fuelType;
-    data['qcStatus'] = qcStatus;
-    data['highestBid'] = highestBid;
-    data['totalBidder'] = totalBidder;
-    data['status'] = status;
-    data['createdAt'] = createdAt;
-    data['realValue'] = realValue;
-    if (front != null) {
-      data['front'] = front!.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['uniqueId'] = this.uniqueId;
+    data['make'] = this.make;
+    data['model'] = this.model;
+    data['variant'] = this.variant;
+    data['maskedRegNumber'] = this.maskedRegNumber;
+    data['vehicleLocation'] = this.vehicleLocation;
+    data['ownershipNumber'] = this.ownershipNumber;
+    data['fuelType'] = this.fuelType;
+    data['qcStatus'] = this.qcStatus;
+    data['highestBid'] = this.highestBid;
+    data['totalBidder'] = this.totalBidder;
+    data['status'] = this.status;
+    data['createdAt'] = this.createdAt;
+    data['realValue'] = this.realValue;
+    if (this.front != null) {
+      data['front'] = this.front!.toJson();
     }
-    if (frontLeft != null) {
-      data['frontLeft'] = frontLeft!.toJson();
+    if (this.frontLeft != null) {
+      data['frontLeft'] = this.frontLeft!.toJson();
     }
-    if (frontRight != null) {
-      data['frontRight'] = frontRight!.toJson();
+    if (this.frontRight != null) {
+      data['frontRight'] = this.frontRight!.toJson();
     }
-    if (frontWithHoodOpen != null) {
-      data['frontWithHoodOpen'] = frontWithHoodOpen!.toJson();
+    if (this.frontWithHoodOpen != null) {
+      data['frontWithHoodOpen'] = this.frontWithHoodOpen!.toJson();
     }
-    if (rear != null) {
-      data['rear'] = rear!.toJson();
+    if (this.rear != null) {
+      data['rear'] = this.rear!.toJson();
     }
-    if (rearLeft != null) {
-      data['rearLeft'] = rearLeft!.toJson();
+    if (this.rearLeft != null) {
+      data['rearLeft'] = this.rearLeft!.toJson();
     }
-    if (rearRight != null) {
-      data['rearRight'] = rearRight!.toJson();
+    if (this.rearRight != null) {
+      data['rearRight'] = this.rearRight!.toJson();
     }
-    data['monthAndYearOfManufacture'] = monthAndYearOfManufacture;
-    if (engineCompartment != null) {
-      data['engineCompartment'] = engineCompartment!.toJson();
+    data['monthAndYearOfManufacture'] = this.monthAndYearOfManufacture;
+    data['odometerReading'] = this.odometerReading;
+    if (this.engineCompartment != null) {
+      data['engineCompartment'] = this.engineCompartment!.toJson();
     }
-    data['engineStar'] = engineStar;
-    data['transmission'] = transmission;
-    data['exteriorStar'] = exteriorStar;
-    data['testDriveStar'] = testDriveStar;
-    data['interiorAndElectricalStar'] = interiorAndElectricalStar;
-    data['specialComments'] = specialComments;
+    data['statusValues'] = this.statusValues;
+    data['engineStar'] = this.engineStar;
+    data['transmission'] = this.transmission;
+    data['exteriorStar'] = this.exteriorStar;
+    data['testDriveStar'] = this.testDriveStar;
+    data['interiorAndElectricalStar'] = this.interiorAndElectricalStar;
+    data['specialComments'] = this.specialComments;
     return data;
   }
 }
@@ -170,11 +220,11 @@ class Front {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = name;
-    data['url'] = url;
-    data['condition'] = condition;
-    data['remarks'] = remarks;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['url'] = this.url;
+    data['condition'] = this.condition;
+    data['remarks'] = this.remarks;
     return data;
   }
 }
@@ -191,9 +241,9 @@ class Meta {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['access'] = access;
-    data['refresh'] = refresh;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['access'] = this.access;
+    data['refresh'] = this.refresh;
     return data;
   }
 }
