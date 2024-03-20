@@ -19,4 +19,10 @@ class MyImages {
 
   static const camera = "${imageRoot}camera_add.svg";
   static const gallery = "${imageRoot}gallery_add.svg";
+  static const roundedCar = "${imageRoot}rounded car.png";
+  static const notification = "${imageRoot}notifications_active.png";
+  static const notification1 = "${imageRoot}notifications_active.svg";
+  static const roundedCar1 = "${imageRoot}roundedcar.svg";
+
+
 }
