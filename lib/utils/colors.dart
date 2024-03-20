@@ -5,6 +5,7 @@ class MyColors {
   static const Color kPrimaryColor = Color(0xFF1B69B8);
   static const Color grey = Color(0xFF6A6F75);
   static const Color grey2 = Color(0xFF989CA0);
+  static const Color grey3 = Color(0xFFBABCBF);
   static const Color black = Color(0xFF202831);
   static const Color black3 = Color(0XFF000000);
   static const Color black4 = Color(0XFF12161B);

@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 
 class CustomOrderContainer extends StatelessWidget {
   const CustomOrderContainer(
-      {required this.button, this.dealStatus, super.key});
+      {required this.button,
+      this.dealStatus,
+      this.backgroundBlackOpacity,
+      super.key});
 
   final Widget button;
   final Widget? dealStatus;
+  final Widget? backgroundBlackOpacity;
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +26,40 @@ class CustomOrderContainer extends StatelessWidget {
           ]),
       child: Column(
         children: [
-          Container(
-            width: double.infinity,
-            height: 107,
+          Stack(
             alignment: Alignment.bottomCenter,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-                image: DecorationImage(
-                    image: NetworkImage(
-                        "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
-                    fit: BoxFit.fill)),
-            child: (dealStatus != null) ? dealStatus : const SizedBox(),
+            children: [
+              Container(
+                width: double.infinity,
+                height: 107,
+                alignment: Alignment.bottomCenter,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8)),
+                    image: DecorationImage(
+                        image: NetworkImage(
+                            "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
+                        fit: BoxFit.fill)),
+              ),
+              (backgroundBlackOpacity != null)
+                  ? backgroundBlackOpacity!
+                  : Container(
+                      width: double.infinity,
+                      height: 107,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment(0.00, -1.00),
+                          end: Alignment(0, 1),
+                          colors: [
+                            MyColors.black3.withOpacity(0),
+                            MyColors.black3.withOpacity(0.7)
+                          ],
+                        ),
+                      ),
+                    ),
+              (dealStatus != null) ? dealStatus! : const SizedBox()
+            ],
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),

@@ -373,6 +373,7 @@ class MyStrings {
   static const String biddedCars = "Bidded Cars(4)";
   static const String likedCars = "Liked Cars(4)";
   static const String viewDetail = 'View detail';
+  static const String viewOffer = 'View Offer';
 
   //order screen
   static const String negotiation = "Negotiation";

@@ -1,3 +1,4 @@
+import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
@@ -95,6 +96,33 @@ class _NegotiationState extends State<Negotiation> {
               ),
               itemBuilder: (context, index) {
                 return CustomOrderContainer(
+                  backgroundBlackOpacity: Obx(() {
+                    if (orderScreenViewModel.isNegotiation.value) {
+                      return Container(
+                        width: double.infinity,
+                        height: 107,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment(0.00, -1.00),
+                            end: Alignment(0, 1),
+                            colors: [
+                              MyColors.black3.withOpacity(0),
+                              MyColors.black3.withOpacity(0.7)
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+                    return Container(
+                      width: double.infinity,
+                      height: 107,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(8),
+                              topRight: Radius.circular(8)),
+                          color: MyColors.black3.withOpacity(0.4)),
+                    );
+                  }),
                   dealStatus: Obx(() {
                     if (orderScreenViewModel.isNegotiation.value) {
                       return Container(
@@ -103,8 +131,8 @@ class _NegotiationState extends State<Negotiation> {
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
-                            begin: Alignment(-1.00, 0.00),
-                            end: Alignment(1, 0),
+                            begin: Alignment(-0.5, 0.00),
+                            end: Alignment(2, 0),
                             colors: [MyColors.warning, MyColors.black5],
                           ),
                         ),
@@ -161,17 +189,20 @@ class _NegotiationState extends State<Negotiation> {
                                 borderRadius: BorderRadius.circular(6),
                                 side: BorderSide.none)),
                         buttonColor: MyColors.green3,
-                        buttonText: MyStrings.completed,
+                        buttonText: MyStrings.viewOffer,
                         textStyle: MyStyles.white14500,
                       );
                     }
                     return CustomElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.carDetailsScreen);
+                      },
                       buttonStyle: ElevatedButton.styleFrom(
                           padding: EdgeInsets.all(2),
                           backgroundColor:
                               MyColors.kPrimaryColor.withOpacity(0.1),
                           elevation: 0,
+                          shadowColor: Colors.transparent,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(6),
                               side: BorderSide(color: MyColors.kPrimaryColor))),

@@ -335,4 +335,10 @@ class MyStyles {
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w400,
   );
+  static const grey3_12400 = TextStyle(
+    color: MyColors.grey3,
+    fontSize: 12,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w400,
+  );
 }
