@@ -682,8 +682,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                               ? MyColors.green1
                                               : (carDetailsScreenViewModel
                                                               .rating[index]
-                                                          ["rating"] >=
-                                                      2.5)
+                                                          ["rating"] >= 2.5 && carDetailsScreenViewModel
+                                                              .rating[index]
+                                                          ["rating"] <= 3.5)
                                                   ? MyColors.yellow
                                                   : MyColors.red,
                                           borderRadius:

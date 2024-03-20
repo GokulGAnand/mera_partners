@@ -385,6 +385,11 @@ class MyStrings {
   static const String pending = 'Pending';
   static const String lostDeals = 'Lost deals';
   static const String viewBill = 'View bill';
+  static const String biddedAmount = 'Bidded Amount';
+  static const String negotiatedAmount= 'Negotiated Amount';
+  static const String negotiationDesc = 'Accept the offer before the timer ends';
+  static const String reject = 'Reject';
+  static const String accept = 'Accept';
 
   ///account screen
   static const String customerSupport = 'Customer Support';

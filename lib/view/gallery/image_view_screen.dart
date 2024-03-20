@@ -19,20 +19,20 @@ class ImageViewScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: Text(
-                              "Front Main (Scratched,Dented) ",
-                              style: MyStyles.white16700,
-                            ),
+              "Front Main (Scratched,Dented) ",
+              style: MyStyles.white16700,
+            ),
           ),
           InteractiveViewer(
             child: Container(
-                              width: double.infinity,
-                              height: 216,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: NetworkImage(
-                                          "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
-                                      fit: BoxFit.fill)),
-                            ),
+              width: double.infinity,
+              height: 216,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(
+                          "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
+                      fit: BoxFit.fill)),
+            ),
           ),
         ],
       ),

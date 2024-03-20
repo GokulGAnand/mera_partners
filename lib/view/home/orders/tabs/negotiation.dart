@@ -6,6 +6,7 @@ import 'package:evaluator_app/utils/svg.dart';
 import 'package:evaluator_app/view_model/home/orders/orders_view_model.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:evaluator_app/widgets/custom_order_container.dart';
+import 'package:evaluator_app/widgets/negotiation_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -180,7 +181,18 @@ class _NegotiationState extends State<Negotiation> {
                   button: Obx(() {
                     if (orderScreenViewModel.isNegotiation.value) {
                       return CustomElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (context) {
+                              return NegotiationBottomSheet(
+                                biddedAmount: 173000,
+                                negotiatedAmount: 193000,
+                              );
+                            });
+                        },
                         buttonStyle: ElevatedButton.styleFrom(
                             padding: EdgeInsets.all(2),
                             backgroundColor: MyColors.green3,
