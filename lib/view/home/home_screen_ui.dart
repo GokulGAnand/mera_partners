@@ -1,13 +1,11 @@
 import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/strings.dart';
+import 'package:evaluator_app/utils/styles.dart';
+import 'package:evaluator_app/utils/svg.dart';
+import 'package:evaluator_app/view/tutorial/tutorial_screen_ui.dart';
 import 'package:evaluator_app/view_model/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
-import '../tutorial/tutorial_screen_ui.dart';
-import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/view_model/home/home_view_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -23,15 +21,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    showDialog(
-      barrierDismissible: false,
-      context: Get.context!,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        backgroundColor: MyColors.white,
-        content: TutorialScreen(),
-      ),
-    );
+    // showDialog(
+    //   barrierDismissible: false,
+    //   context: Get.context!,
+    //   builder: (context) => AlertDialog(
+    //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    //     backgroundColor: MyColors.white,
+    //     content: TutorialScreen(),
+    //   ),
+    // );
     super.initState();
   }
 
@@ -48,66 +46,61 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           currentIndex: homeScreenViewModel.selectedIndex.value,
-          selectedLabelStyle: TextStyle(
-            color: MyColors.kPrimaryColor,
-            fontSize: 12,
-            fontFamily: 'DM Sans',
-            fontWeight: FontWeight.w400,
-          ),
-          unselectedLabelStyle: TextStyle(
-            color: MyColors.disableTextColor,
-            fontSize: 12,
-            fontFamily: 'DM Sans',
-            fontWeight: FontWeight.w400,
-          ),
+          selectedLabelStyle: MyStyles.primary12400,
+          unselectedLabelStyle: MyStyles.grey12400,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-                icon: SizedBox(
+                icon: Container(
                   width: 30,
                   height: 40,
+                  alignment: Alignment.bottomCenter,
                   child: SvgPicture.asset(
-                    "assets/svg/bids.svg",
-                    color: (homeScreenViewModel.selectedIndex.value == 0) ?MyColors.kPrimaryColor: MyColors.disableTextColor,
+                    MySvg.bids,
+                    color: (homeScreenViewModel.selectedIndex.value == 0) ?MyColors.kPrimaryColor: MyColors.grey,
                   ),
                 ),
                 label: "Bids"),
             BottomNavigationBarItem(
-                icon: SizedBox(
+                icon: Container(
                   width: 30,
-                  height: 30,
+                  height: 40,
+                  alignment: Alignment.bottomCenter,
                   child: SvgPicture.asset(
-                    "assets/svg/my_cars.svg",
-                    color: (homeScreenViewModel.selectedIndex.value == 1) ?MyColors.kPrimaryColor: MyColors.disableTextColor,
+                    MySvg.myCars,
+                    color: (homeScreenViewModel.selectedIndex.value == 1) ?MyColors.kPrimaryColor: MyColors.grey,
                   ),
                 ),
                 label: "My Cars"),
             BottomNavigationBarItem(
-                icon: SizedBox(
+                icon: Container(
                   width: 30,
-                  height: 30,
+                  height: 40,
+                  alignment: Alignment.bottomCenter,
                   child: SvgPicture.asset(
-                    "assets/svg/orders.svg",
-                    color: (homeScreenViewModel.selectedIndex.value == 2) ?MyColors.kPrimaryColor: MyColors.disableTextColor,
+                    MySvg.orders,
+                    color: (homeScreenViewModel.selectedIndex.value == 2) ?MyColors.kPrimaryColor: MyColors.grey,
                   ),
                 ),
                 label: "Orders"),
             BottomNavigationBarItem(
-                icon: SizedBox(
+                icon: Container(
                   width: 30,
-                  height: 30,
+                  height: 40,
+                  alignment: Alignment.bottomCenter,
                   child: SvgPicture.asset(
-                    "assets/svg/wallet.svg",
-                    color: (homeScreenViewModel.selectedIndex.value == 3) ?MyColors.kPrimaryColor: MyColors.disableTextColor,
+                    MySvg.wallet,
+                    color: (homeScreenViewModel.selectedIndex.value == 3) ?MyColors.kPrimaryColor: MyColors.grey,
                   ),
                 ),
                 label: "Wallet"),
             BottomNavigationBarItem(
-                icon: SizedBox(
+                icon: Container(
                   width: 30,
-                  height: 30,
+                  height: 40,
+                  alignment: Alignment.bottomCenter,
                   child: SvgPicture.asset(
-                    "assets/svg/account.svg",
-                    color: (homeScreenViewModel.selectedIndex.value ==4) ?MyColors.kPrimaryColor: MyColors.disableTextColor,
+                    MySvg.account,
+                    color: (homeScreenViewModel.selectedIndex.value ==4) ?MyColors.kPrimaryColor: MyColors.grey,
                   ),
                 ),
                 label: "Account"),

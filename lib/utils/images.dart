@@ -1,9 +1,8 @@
 class MyImages {
   static const imageRoot = "assets/images/";
 
-  static const appLogo = "${imageRoot}mera_cars.png";
   static const loginImage = "${imageRoot}login_image.png";
-  static const splash = "${imageRoot}mera_partners.png";
+  static const logo = "${imageRoot}mera_partners.png";
   static const upload = "${imageRoot}upload.png";
   static const success = "${imageRoot}success.png";
   static const error = "${imageRoot}error.png";
@@ -16,6 +15,8 @@ class MyImages {
   static const highBid ="${imageRoot}highbid.png";
   static const leadBid ="${imageRoot}leadbid.png";
   static const looseBid ="${imageRoot}loosebid.png";
+  static const profile ="${imageRoot}profile.png";
+  static const imageLoading = "${imageRoot}image_loading.png";
 
   static const camera = "${imageRoot}camera_add.svg";
   static const gallery = "${imageRoot}gallery_add.svg";
@@ -25,4 +26,8 @@ class MyImages {
   static const roundedCar1 = "${imageRoot}roundedcar.svg";
 
 
+  static const location = "${imageRoot}location.svg";
+  static const verified = "${imageRoot}verified.svg";
+  static const carTag = "${imageRoot}car_tag.svg";
+  static const loadingCar = "${imageRoot}loading_car.svg";
 }

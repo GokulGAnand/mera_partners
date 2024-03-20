@@ -326,11 +326,12 @@ class MyStrings {
   static const String unableToConnect = "Unable to connect server";
   static const String dealerProof = "Dealer Proof";
   static const String paySuccess = "Payment Successful";
+  static const String payFail = "Payment Failed";
   static const String payError = "Payment Error";
   static const String addDocument = "Add Document";
   static const String camera = "Camera";
   static const String gallery = "Gallery";
-  static const String paySuccessDesc = "All the documents has been uploaded\nand is under verification";
+  static const String paySuccessDesc = "All the documents has been uploaded \nand is under verification";
   static const String cont = "continue";
   static const String shopImage = "Shop Image";
   static const String visitingCard = "Visiting Card";
@@ -364,21 +365,41 @@ class MyStrings {
   static const String account = "Account";
 
   ///bids screen
-  static const String live = "LIVE(4)";
+  static const String live = "LIVE";
   static const String otb = "OTB(4)";
+  static const String rating = "Rating";
 
   ///my cars
   static const String biddedCars = "Bidded Cars(4)";
   static const String likedCars = "Liked Cars(4)";
+  static const String viewDetail = 'View detail';
 
   //order screen
   static const String negotiation = "Negotiation";
   static const String procured = "Procured";
   static const String rcTransfer = "RC Transfer";
+  static const String dealLost = 'Deal Lost';
+  static const String dealWon = 'Deal Won';
+  static const String completed = 'Completed';
+  static const String pending = 'Pending';
+  static const String lostDeals = 'Lost deals';
+  static const String viewBill = 'View bill';
+
+  ///account screen
+  static const String customerSupport = 'Customer Support';
+  static const String accountSettings = 'Account Settings';
+  static const String aboutUs = 'About Us';
+  static const String privacyPolicy= 'Privacy Policy';
+  static const String logOut= 'LogOut';
+  static const String meraPartners= 'Mera Partners';
+  static const String version= 'v0.1';
+
   ///live
   // static const String live = 'live';
   static const String autoBid = 'Auto bid';
   static const String bid = 'Bid';
+  static const String confirmAutoBid = 'Confirm Autobid at ';
+  static const String confirmBid = 'Confirm bid at ';
   static const String highestBid = 'Highest bid';
 
   ///notification screen
@@ -398,7 +419,6 @@ class MyStrings {
   static const String transfer = 'Transfer total amount to MeraCars bank\n account.';
   static const String needHelp ='Need Help ?';
   static const String viewButton ='View Bank Details';
-  static const String customerSupport = 'Customer Support';
   static const String acHName = 'Account Holder’s Name';
   static const String mAdmin = 'Mera Admin';
   static const String admin = 'Account Number';
@@ -406,4 +426,26 @@ class MyStrings {
   static const String ifsc = 'IFSC Code';
   static const String ifscCode = 'MC82734823';
   static const String bankAc ='Bank Account Details';
+  static const String currentBid = 'Current bid';
+  static const String stepRate = 'Step rate';
+  static const String autoBidDesc = 'We’ll automatically increase your bid by ₹ 1000 until reaching the set amount.';
+
+  /// car details screen
+  static const String fmv = 'FMV';
+  static const String criticalIssue = 'CRITICAL ISSUES';
+  static const String documents = 'Documents';
+  static const String exterior = 'Exterior';
+  static const String interiorAndElectrical = 'Interior & Electricals';
+  static const String interior = 'Interior';
+  static const String engine = 'Engine';
+  static const String damage = 'Damages';
+  static const String ac = 'AC';
+  static const String testDrive = 'Test Drive';
+  static const String inspectionReport = 'INSPECTION REPORT';
+  static const String damaged = 'Damaged';
+  static const String repaired = 'Repaired';
+  static const String na = 'N/A';
+  static const String notAvailable = 'Not Available';
+  static const String otherIssues = 'Other Issues';
+  static const String viewLessIssues = 'View Less Issues';
 }

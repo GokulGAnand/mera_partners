@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/service/endpoints.dart';
+import 'package:evaluator_app/view_model/login/login_view_model.dart';
+import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:evaluator_app/widgets/progressbar.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -12,8 +14,9 @@ import 'package:http_parser/http_parser.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../../model/response/payment/create_order_response.dart';
 import '../../model/response/user_data/user_info_response.dart';
+import '../../utils/strings.dart';
 
-class DocumentScreenViewModel extends GetxController{
+class DocumentScreenViewModel extends GetxController {
   final GlobalKey<FormState> page1Key = GlobalKey<FormState>();
   final GlobalKey<FormState> page2Key = GlobalKey<FormState>();
   final GlobalKey<FormState> page3Key = GlobalKey<FormState>();
@@ -22,7 +25,7 @@ class DocumentScreenViewModel extends GetxController{
   var activePage = 0.obs;
 
   Rx<TextEditingController> fullNameController = TextEditingController().obs;
-  Rx<TextEditingController> phoneNumberController = TextEditingController(text: '8838119533').obs;
+  Rx<TextEditingController> phoneNumberController = TextEditingController(text: globals.phoneNum).obs;
   Rx<TextEditingController> businessNameController = TextEditingController().obs;
   Rx<TextEditingController> businessAddressController = TextEditingController().obs;
   Rx<TextEditingController> pinCodeController = TextEditingController().obs;
@@ -42,23 +45,30 @@ class DocumentScreenViewModel extends GetxController{
   String? signature;
 
   @override
-  void onInit(){
-    // razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
-    // razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
-    // razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
-    getDocument();
+  void onInit() {
+    if (Get.isRegistered<LoginScreenViewModel>()) {
+      if (Get.find<LoginScreenViewModel>().userInfoResponse.value.data != null) {
+        userInfoResponse.value = Get.find<LoginScreenViewModel>().userInfoResponse.value;
+        loadData();
+      } else {
+        getDocument();
+      }
+    } else {
+      getDocument();
+    }
     super.onInit();
   }
 
   void handlePaymentSuccess(PaymentSuccessResponse response) {
     paymentId = response.paymentId;
     signature = response.signature;
+    ProgressBar.instance.showProgressbar(Get.context!);
     verifyPayment();
     log('success message');
   }
 
   void handlePaymentError(PaymentFailureResponse response) {
-    // Do something when payment fails
+    CustomToast.instance.showMsg(MyStrings.payFail);
     log('fail message');
   }
 
@@ -75,18 +85,17 @@ class DocumentScreenViewModel extends GetxController{
 
   void getDocument() async {
     try {
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}65eed25c48573dc480cf89a9'),headers: globals.headers);
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.userId}'), headers: globals.headers);
       userInfoResponse.value = UserInfoResponse.fromJson(json.decode(response.body));
-      if(userInfoResponse.value.data != null){
+      if (userInfoResponse.value.data != null) {
         loadData();
       }
     } catch (e) {
       log(e.toString());
     }
-
   }
 
-  void loadData(){
+  void loadData() {
     fullNameController.value.text = userInfoResponse.value.data?[0].fullname ?? '';
     phoneNumberController.value.text = userInfoResponse.value.data?[0].contactNo.toString() ?? '';
     businessNameController.value.text = userInfoResponse.value.data?[0].businessName ?? '';
@@ -116,36 +125,29 @@ class DocumentScreenViewModel extends GetxController{
   Future<bool> addDocument() async {
     ProgressBar.instance.showProgressbar(Get.context!);
     try {
-      var request = http.MultipartRequest('PATCH', Uri.parse('${EndPoints.baseUrl}${EndPoints.users}65eed25c48573dc480cf89a9'));
-      request.fields.addAll({
-            'fullname': fullNameController.value.text,
-            'businessName': businessNameController.value.text,
-            'businessAddress': businessAddressController.value.text,
-            'pincode': pinCodeController.value.text,
-            'contactNo': phoneNumberController.value.text,
-            'district': districtController.value.text
-          });
+      var request = http.MultipartRequest('PATCH', Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.userId!}'));
+      request.fields.addAll({'fullname': fullNameController.value.text, 'businessName': businessNameController.value.text, 'businessAddress': businessAddressController.value.text, 'pincode': pinCodeController.value.text, 'contactNo': phoneNumberController.value.text, 'district': districtController.value.text});
       if (panCard.value != null && !panCard.value!.path.startsWith('http') && !panCard.value!.path.startsWith('https')) {
-        request.files.add(await http.MultipartFile.fromPath('panCard', panCard.value!.path,contentType: MediaType('image', panCard.value!.path.split('.').last)));
+        request.files.add(await http.MultipartFile.fromPath('panCard', panCard.value!.path, contentType: MediaType('image', panCard.value!.path.split('.').last)));
       }
       if (aadhaarFront.value != null && !aadhaarFront.value!.path.startsWith('http') && !aadhaarFront.value!.path.startsWith('https')) {
-        request.files.add(await http.MultipartFile.fromPath('addressProofFront', aadhaarFront.value!.path,contentType: MediaType('image', aadhaarFront.value!.path.split('.').last)));
+        request.files.add(await http.MultipartFile.fromPath('addressProofFront', aadhaarFront.value!.path, contentType: MediaType('image', aadhaarFront.value!.path.split('.').last)));
       }
       if (aadhaarBack.value != null && !aadhaarBack.value!.path.startsWith('http') && !aadhaarBack.value!.path.startsWith('https')) {
-        request.files.add(await http.MultipartFile.fromPath('addressProofBack', aadhaarBack.value!.path,contentType: MediaType('image', aadhaarBack.value!.path.split('.').last)));
+        request.files.add(await http.MultipartFile.fromPath('addressProofBack', aadhaarBack.value!.path, contentType: MediaType('image', aadhaarBack.value!.path.split('.').last)));
       }
       if (shopImage.value != null) {
-            if (!shopImage.value!.path.startsWith('http') && !shopImage.value!.path.startsWith('https')) {
-              request.files.add(await http.MultipartFile.fromPath('shopPicture', shopImage.value!.path,contentType: MediaType('image', shopImage.value!.path.split('.').last)));
-            }
-          }
+        if (!shopImage.value!.path.startsWith('http') && !shopImage.value!.path.startsWith('https')) {
+          request.files.add(await http.MultipartFile.fromPath('shopPicture', shopImage.value!.path, contentType: MediaType('image', shopImage.value!.path.split('.').last)));
+        }
+      }
       if (visitingCard.value != null) {
-            if (!visitingCard.value!.path.startsWith('http') && !visitingCard.value!.path.startsWith('https')) {
-              request.files.add(await http.MultipartFile.fromPath('visitingCard', visitingCard.value!.path,contentType: MediaType('image', visitingCard.value!.path.split('.').last)));
-            }
-          }
+        if (!visitingCard.value!.path.startsWith('http') && !visitingCard.value!.path.startsWith('https')) {
+          request.files.add(await http.MultipartFile.fromPath('visitingCard', visitingCard.value!.path, contentType: MediaType('image', visitingCard.value!.path.split('.').last)));
+        }
+      }
       if (cancelledCheque.value != null && !cancelledCheque.value!.path.startsWith('http') && !cancelledCheque.value!.path.startsWith('https')) {
-        request.files.add(await http.MultipartFile.fromPath('canceledCheque', cancelledCheque.value!.path,contentType: MediaType('image', cancelledCheque.value!.path.split('.').last)));
+        request.files.add(await http.MultipartFile.fromPath('canceledCheque', cancelledCheque.value!.path, contentType: MediaType('image', cancelledCheque.value!.path.split('.').last)));
       }
       request.headers.addAll(globals.headers);
 
@@ -153,82 +155,133 @@ class DocumentScreenViewModel extends GetxController{
 
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-            log('success');
-            log(response.stream.toString());
-            return true;
-          }
-          else {
+        log('success');
+        log(response.stream.toString());
+        return true;
+      } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
-            log(response.reasonPhrase.toString());
-            return false;
-          }
+        log(response.reasonPhrase.toString());
+        return false;
+      }
     } catch (e) {
       log(e.toString());
       ProgressBar.instance.stopProgressBar(Get.context!);
       return false;
     }
-
   }
 
   void createOrder() async {
     try {
       log(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.createOrder).toString());
-      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.createOrder), headers: globals.jsonHeaders,
-          body: json.encode({
-        "amount":10000
-      }));
+      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.createOrder), headers: globals.jsonHeaders, body: json.encode({"amount": 10000}));
       log(response.body.toString());
       if (response.statusCode == 201 || response.statusCode == 200) {
+        ProgressBar.instance.stopProgressBar(Get.context!);
         createOrderResponse.value = CreateOrderResponse.fromJson(json.decode(response.body));
-        var  options = {
-          'key': 'rzp_test_1DP5mmOlF5G5ag',
+        var options = {
+          'key': 'rzp_test_zppMuXi3XdVVOB',
           'name': 'Mera Cars',
           'currency': 'INR',
           'amount': createOrderResponse.value.data?.amount,
           'description': 'Security Deposit',
           'retry': {'enabled': true, 'max_count': 1},
-          'send_sms_hash': true,
+          // 'send_sms_hash': true,
           'order_id': '${createOrderResponse.value.data?.id}',
-          'callback_url': 'http://192.168.1.12:8000/api/v1/users/verifyPayment',
-          'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
+          // 'callback_url': 'http://192.168.1.12:8000/api/v1/users/verifyPayment',
+          'prefill': {'contact': globals.phoneNum, 'email': 'test@razorpay.com'},
           'external': {
             'wallets': ['paytm']
           }
         };
-        // razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
-        // razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
-        // razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
+        razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
+        razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+        razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
         try {
           razorpay.open(options);
         } catch (e) {
           log(e.toString());
         }
       } else {
+        ProgressBar.instance.stopProgressBar(Get.context!);
       }
     } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
     }
   }
+
+  // void createOrder() async {
+  //   try {
+  //     var userName = 'rzp_test_zppMuXi3XdVVOB';
+  //     var password = 'OUure4VITgjPCnoinJTjTbno';
+  //     var basicAuth = 'Basic ${base64Encode(utf8.encode('$userName:$password'))}';
+  //     log(Uri.parse('https://api.razorpay.com/v1/orders').toString());
+  //     var response = await http.post(Uri.parse('https://api.razorpay.com/v1/orders'),
+  //         headers: <String, String>{
+  //       'Content-Type':'application/json',
+  //           'authorization':basicAuth
+  //         },
+  //         body: json.encode({
+  //       "amount":100,
+  //           'currency': 'INR',
+  //           "receipt": "Receipt no. 1",
+  //     }));
+  //     log(response.body.toString());
+  //     if (response.statusCode == 201 || response.statusCode == 200) {
+  //       // createOrderResponse.value = CreateOrderResponse.fromJson(json.decode(response.body));
+  //       // data.value = Response.fromJson(json.decode(response.body));
+  //       final data = json.decode(response.body);
+  //       Razorpay razorpay = Razorpay();
+  //       log(data["id"]);
+  //       var  options = {
+  //         // 'key': 'rzp_test_1DP5mmOlF5G5ag',
+  //         'key': 'rzp_test_zppMuXi3XdVVOB',
+  //         'name': 'Mera Cars',
+  //         // 'currency': 'INR',
+  //         // 'amount': data.value.amount,
+  //         'description': 'Security Deposit',
+  //         'retry': {'enabled': true, 'max_count': 1},
+  //         'send_sms_hash': true,
+  //         'order_id': '${data["id"]}',
+  //         // 'callback_url': EndPoints.baseUrl+EndPoints.users+EndPoints.verifyPayment,
+  //         // 'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
+  //         /*'external': {
+  //           'wallets': ['paytm']
+  //         }*/
+  //       };
+  //       razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
+  //       razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+  //       razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
+  //       try {
+  //         razorpay.open(options);
+  //       } catch (e) {
+  //         log(e.toString());
+  //       }
+  //     } else {
+  //     }
+  //   } catch (e) {
+  //     log(e.toString());
+  //   }
+  // }
   void verifyPayment() async {
     try {
       log(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.verifyPayment).toString());
-      log(json.encode({
-        "razorpay_order_id":createOrderResponse.value.data?.id,
-        "razorpay_payment_id":paymentId,
-        "razorpay_signature":signature
-      }));
+      log(json.encode({"razorpay_order_id": createOrderResponse.value.data?.id, "razorpay_payment_id": paymentId, "razorpay_signature": signature}));
       var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.verifyPayment), headers: globals.jsonHeaders,
           body: json.encode({
-            "razorpay_order_id":createOrderResponse.value.data?.id,
-            "razorpay_payment_id":paymentId,
-            "razorpay_signature":signature
-          }));
+            "razorpay_order_id": createOrderResponse.value.data?.id,
+            "razorpay_payment_id": paymentId,
+            "razorpay_signature": signature}));
       log(response.body.toString());
       if (response.statusCode == 201 || response.statusCode == 200) {
+        ProgressBar.instance.stopProgressBar(Get.context!);
         log("success");
         Get.offNamed(AppRoutes.homeScreen);
-      } else {}
+      } else {
+        ProgressBar.instance.stopProgressBar(Get.context!);
+      }
     } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
       log('ranjitha');
       log(e.toString());
     }

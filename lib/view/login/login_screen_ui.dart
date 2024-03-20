@@ -43,13 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       const Text(
                         MyStrings.login,
-                        style: TextStyle(
-                          color: MyColors.black,
-                          fontSize: 28,
-                          fontFamily: 'DM Sans',
-                          fontWeight: FontWeight.w700,
-                          height: 0,
-                        ),
+                        style: MyStyles.blackBold28,
                       ),
                       SizedBox(
                         height: Dimens.standard_20,
@@ -80,6 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       context: context,
                                       builder: (context) {
                                         return Scaffold(
+                                          appBar: AppBar(),
                                           body: SafeArea(
                                             child: SingleChildScrollView(
                                               child: Column(children: <Widget>[
@@ -147,7 +142,6 @@ class _LoginScreenState extends State<LoginScreen> {
             onPressed: () async {
               if (loginScreenViewModel.loginForm.currentState!.validate()) {
                 await loginScreenViewModel.mobileLogin();
-                Get.toNamed(AppRoutes.otpScreen);
               }
             }),
       ),

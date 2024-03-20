@@ -1,4 +1,5 @@
 import 'package:evaluator_app/utils/styles.dart';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../utils/colors.dart';
@@ -22,9 +23,11 @@ class TutorialWidgets extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Column(
       children: [
+        // SizedBox(height: Dimens.standard_2),
         Container(
           height: size.height * 0.3,
           width: size.width * 0.8,
+          // alignment: Alignment.bottomCenter,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), color: MyColors.lightGrey),
           child: Container(
             height: size.height * 0.3,
@@ -39,8 +42,10 @@ class TutorialWidgets extends StatelessWidget {
           height: size.height * 0.35,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
+            // color: Colors.white,
           ),
           child: Column(
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: Dimens.standard_20),
               Text(

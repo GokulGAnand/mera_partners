@@ -5,7 +5,9 @@ import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../routes/app_routes.dart';
 import '../view_model/onboarding/onboarding_view_model.dart';
+import 'package:evaluator_app/utils/globals.dart' as globals;
 
 class OnBoardingWidgets extends StatelessWidget {
   final String? image;
@@ -54,7 +56,13 @@ class OnBoardingWidgets extends StatelessWidget {
                   onPressed: () {
                     log('Current Page: ${controller.page.value}');
                     if (controller.page.value == 2) {
-                      // Handle the action for page value 2
+                      if (globals.isDocumentsVerified != null && globals.isDocumentsVerified == true) {
+                        Get.toNamed(AppRoutes.homeScreen);
+                      }else if(globals.isDocumentsVerified == false || (globals.addressProofFront == null && globals.addressProofFront == false)){
+                        Get.toNamed(AppRoutes.documentScreen);
+                      }else{
+                        Get.toNamed(AppRoutes.homeScreen);
+                      }
                     } else {
                       controller.indicator.animateToPage(
                         controller.page.value.toInt() + 1,

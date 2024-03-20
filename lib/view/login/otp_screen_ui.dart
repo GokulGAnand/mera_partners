@@ -18,7 +18,10 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  LoginScreenViewModel loginScreenViewModel = Get.isRegistered<LoginScreenViewModel>() ? Get.find<LoginScreenViewModel>() : Get.put(LoginScreenViewModel());
+  LoginScreenViewModel loginScreenViewModel =
+      Get.isRegistered<LoginScreenViewModel>()
+          ? Get.find<LoginScreenViewModel>()
+          : Get.put(LoginScreenViewModel());
 
   @override
   void initState() {
@@ -58,10 +61,18 @@ class _OtpScreenState extends State<OtpScreen> {
               ),
               Row(
                 children: [
-                  Expanded(child: otpField(loginScreenViewModel.otpTextField1, true, false)),
-                  Expanded(child: otpField(loginScreenViewModel.otpTextField2, false, false)),
-                  Expanded(child: otpField(loginScreenViewModel.otpTextField3, false, false)),
-                  Expanded(child: otpField(loginScreenViewModel.otpTextField4, false, true)),
+                  Expanded(
+                      child: otpField(
+                          loginScreenViewModel.otpTextField1, true, false)),
+                  Expanded(
+                      child: otpField(
+                          loginScreenViewModel.otpTextField2, false, false)),
+                  Expanded(
+                      child: otpField(
+                          loginScreenViewModel.otpTextField3, false, false)),
+                  Expanded(
+                      child: otpField(
+                          loginScreenViewModel.otpTextField4, false, true)),
                 ],
               ),
               SizedBox(
@@ -75,13 +86,9 @@ class _OtpScreenState extends State<OtpScreen> {
                       loginScreenViewModel.startTimer(60);
                       loginScreenViewModel.resend.value = false;
                     },
-                    child: Text(
+                    child: const Text(
                       MyStrings.resendOTP,
-                      style: TextStyle(
-                        color: MyColors.red,
-                        fontWeight: FontWeight.w400,
-                        fontSize: Dimens.standard_14,
-                      ),
+                      style: MyStyles.red14400,
                     ),
                   );
                 }
@@ -93,11 +100,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     ),
                     Text(
                       loginScreenViewModel.time.value,
-                      style: TextStyle(
-                        color: MyColors.red,
-                        fontWeight: FontWeight.w400,
-                        fontSize: Dimens.standard_14,
-                      ),
+                      style: MyStyles.red14400,
                     )
                   ],
                 );
@@ -114,11 +117,12 @@ class _OtpScreenState extends State<OtpScreen> {
           child: CustomElevatedButton(
               textColor: MyColors.white,
               elevation: 0,
-              buttonColor: MyColors.kPrimaryColor.withOpacity((loginScreenViewModel.buttonDisable.value) ? 0.3 : 1),
+              buttonColor: MyColors.kPrimaryColor.withOpacity(
+                  (loginScreenViewModel.buttonDisable.value) ? 0.3 : 1),
               buttonText: MyStrings.verify,
               onPressed: () {
                 if (loginScreenViewModel.buttonDisable.value == false) {
-                  loginScreenViewModel.verifyOTP();
+                  loginScreenViewModel.verifyOTP(context);
                 } else {
                   CustomToast.instance.showMsg(MyStrings.validOTP);
                 }
@@ -148,7 +152,10 @@ class _OtpScreenState extends State<OtpScreen> {
             if (value.isEmpty && first == false) {
               FocusScope.of(context).previousFocus();
             }
-            if (loginScreenViewModel.otpTextField1.text.isNotEmpty && loginScreenViewModel.otpTextField2.text.isNotEmpty && loginScreenViewModel.otpTextField3.text.isNotEmpty && loginScreenViewModel.otpTextField4.text.isNotEmpty) {
+            if (loginScreenViewModel.otpTextField1.text.isNotEmpty &&
+                loginScreenViewModel.otpTextField2.text.isNotEmpty &&
+                loginScreenViewModel.otpTextField3.text.isNotEmpty &&
+                loginScreenViewModel.otpTextField4.text.isNotEmpty) {
               loginScreenViewModel.buttonDisable.value = false;
             } else {
               loginScreenViewModel.buttonDisable.value = true;
