@@ -5,15 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:evaluator_app/utils/globals.dart' as globals;
-import '../../../model/response/live/live_cars_list_response.dart';
-import '../../../service/endpoints.dart';
-import '../../../service/exception_error_util.dart';
-import '../../../widgets/custom_toast.dart';
-import '../../../widgets/progressbar.dart';
+import '../../../../model/response/live/live_cars_list_response.dart';
+import '../../../../service/endpoints.dart';
+import '../../../../service/exception_error_util.dart';
+import '../../../../widgets/custom_toast.dart';
+import '../../../../widgets/progressbar.dart';
 
-class LiveCarsListViewModel extends GetxController{
+class BidCarsListViewModel extends GetxController{
 
-  var liveCarsResponse = LiveCarsResponse().obs;
+  var bidCarsResponse = LiveCarsResponse().obs;
   final Rx<PageController> pageController = PageController(initialPage: 0).obs;
   // the index of the current page
   var activePage = 0.obs;
@@ -51,12 +51,11 @@ class LiveCarsListViewModel extends GetxController{
 
   void getCarData()async {
     try {
-      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&status=SCHEDULED').toString());
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&status=SCHEDULED'),headers: globals.headers);
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE'),headers: globals.headers);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
+        bidCarsResponse.value = LiveCarsResponse.fromJson(jsonDecode(response.body));
         log(response.body);
-        liveCarsResponse.value = LiveCarsResponse.fromJson(jsonDecode(response.body));
       }else{
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());

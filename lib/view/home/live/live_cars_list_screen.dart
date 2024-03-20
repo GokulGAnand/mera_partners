@@ -1,8 +1,9 @@
+import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/widgets/custom_bid_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../view_model/home/live/live_cars_list_view_model.dart';
-import '../../widgets/custom_car_detail_card.dart';
+import '../../../view_model/home/live/live_cars_list_view_model.dart';
+import '../../../widgets/custom_car_detail_card.dart';
 
 /// ignore: must_be_immutable
 class LiveCarsListScreen extends StatelessWidget {
@@ -23,6 +24,8 @@ class LiveCarsListScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   itemBuilder: (context, index) {
                     return CustomCarDetailCard(
+                      isOtb: false,
+                      isScheduled: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == 'scheduled' ? true : false,
                       imageUrl: controller.liveCarsResponse.value.data?[index]
                               .rearRight?.url ??
                           '',
@@ -69,12 +72,11 @@ class LiveCarsListScreen extends StatelessWidget {
                               .liveCarsResponse.value.data?[index].realValue
                               .toString() ??
                           '',
-                      //todo
                       kmDriven: controller.liveCarsResponse.value.data?[index]
-                                  .testDriveStar !=
+                                  .odometerReading !=
                               null
                           ? controller
-                              .liveCarsResponse.value.data![index].testDriveStar
+                              .liveCarsResponse.value.data![index].odometerReading
                               .toString()
                           : '0',
                       ownerShip: controller.liveCarsResponse.value.data?[index]

@@ -6,6 +6,7 @@ import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../routes/app_routes.dart';
+import '../utils/enum.dart';
 import '../view_model/onboarding/onboarding_view_model.dart';
 import 'package:evaluator_app/utils/globals.dart' as globals;
 
@@ -56,9 +57,9 @@ class OnBoardingWidgets extends StatelessWidget {
                   onPressed: () {
                     log('Current Page: ${controller.page.value}');
                     if (controller.page.value == 2) {
-                      if (globals.isDocumentsVerified != null && globals.isDocumentsVerified == true) {
+                      if (globals.documentStatus != null && globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name) {
                         Get.toNamed(AppRoutes.homeScreen);
-                      }else if(globals.isDocumentsVerified == false || (globals.addressProofFront == null && globals.addressProofFront == false)){
+                      }else if(globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name || (globals.addressProofFront == null && globals.addressProofFront == false)){
                         Get.toNamed(AppRoutes.documentScreen);
                       }else{
                         Get.toNamed(AppRoutes.homeScreen);

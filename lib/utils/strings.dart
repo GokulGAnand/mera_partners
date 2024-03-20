@@ -366,7 +366,7 @@ class MyStrings {
 
   ///bids screen
   static const String live = "LIVE";
-  static const String otb = "OTB(4)";
+  static const String otb = "OTB";
   static const String rating = "Rating";
 
   ///my cars
@@ -428,7 +428,16 @@ class MyStrings {
   static const String bankAc ='Bank Account Details';
   static const String currentBid = 'Current bid';
   static const String stepRate = 'Step rate';
+  static const String verifyPending= 'Verification Pending';
+  static const String verifyWarning = 'Complete the Document verification to start bidding';
   static const String autoBidDesc = 'We’ll automatically increase your bid by ₹ 1000 until reaching the set amount.';
+
+  ///OTB
+  static const String oneTouchBuy = 'One Touch Buy';
+  static const String closingPrice = 'Closing Price';
+  static const String otbPrice = 'OTB Price';
+  static const String confirmBuy = 'Confirm buy at ';
+  static const String otbBuyDesc = 'Purchase this car immediately at \nthe listed price';
 
   /// car details screen
   static const String fmv = 'FMV';

@@ -66,6 +66,13 @@ class MyStyles {
     fontWeight: FontWeight.w500,
     height: 0,
   );
+  static const black20700 = TextStyle(
+    color: MyColors.black,
+    fontSize: 20,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w700,
+    height: 0,
+  );
 
   static const selectedTabBarTitleStyle = TextStyle(
     color: MyColors.black,
@@ -253,6 +260,13 @@ class MyStyles {
     fontSize: 14,
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w700,
+    height: 0,
+  );
+  static const black14500 = TextStyle(
+    color: MyColors.black,
+    fontSize: 14,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
     height: 0,
   );
 

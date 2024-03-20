@@ -12,21 +12,21 @@ class UserInfoResponse {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(new Data.fromJson(v));
       });
     }
-    meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
+    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    if (meta != null) {
-      data['meta'] = meta!.toJson();
+    if (this.meta != null) {
+      data['meta'] = this.meta!.toJson();
     }
     return data;
   }
@@ -38,7 +38,9 @@ class Data {
   bool? isBlocked;
   String? role;
   int? contactNo;
-  bool? isDocumentsVerified;
+  bool? isDeposited;
+  int? depositedAmount;
+  String? isDocumentsVerified;
   String? createdAt;
   String? updatedAt;
   AddressProofBack? addressProofBack;
@@ -52,6 +54,8 @@ class Data {
   String? pincode;
   AddressProofBack? shopPicture;
   AddressProofBack? visitingCard;
+  String? orderId;
+  String? paymentId;
 
   Data(
       {this.sId,
@@ -59,6 +63,8 @@ class Data {
         this.isBlocked,
         this.role,
         this.contactNo,
+        this.isDeposited,
+        this.depositedAmount,
         this.isDocumentsVerified,
         this.createdAt,
         this.updatedAt,
@@ -72,7 +78,9 @@ class Data {
         this.panCard,
         this.pincode,
         this.shopPicture,
-        this.visitingCard});
+        this.visitingCard,
+        this.orderId,
+        this.paymentId});
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -80,67 +88,75 @@ class Data {
     isBlocked = json['isBlocked'];
     role = json['role'];
     contactNo = json['contactNo'];
+    isDeposited = json['isDeposited'];
+    depositedAmount = json['depositedAmount'];
     isDocumentsVerified = json['isDocumentsVerified'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     addressProofBack = json['addressProofBack'] != null
-        ? AddressProofBack.fromJson(json['addressProofBack'])
+        ? new AddressProofBack.fromJson(json['addressProofBack'])
         : null;
     addressProofFront = json['addressProofFront'] != null
-        ? AddressProofBack.fromJson(json['addressProofFront'])
+        ? new AddressProofBack.fromJson(json['addressProofFront'])
         : null;
     businessAddress = json['businessAddress'];
     businessName = json['businessName'];
     canceledCheque = json['canceledCheque'] != null
-        ? AddressProofBack.fromJson(json['canceledCheque'])
+        ? new AddressProofBack.fromJson(json['canceledCheque'])
         : null;
     district = json['district'];
     fullname = json['fullname'];
     panCard = json['panCard'] != null
-        ? AddressProofBack.fromJson(json['panCard'])
+        ? new AddressProofBack.fromJson(json['panCard'])
         : null;
     pincode = json['pincode'];
     shopPicture = json['shopPicture'] != null
-        ? AddressProofBack.fromJson(json['shopPicture'])
+        ? new AddressProofBack.fromJson(json['shopPicture'])
         : null;
     visitingCard = json['visitingCard'] != null
-        ? AddressProofBack.fromJson(json['visitingCard'])
+        ? new AddressProofBack.fromJson(json['visitingCard'])
         : null;
+    orderId = json['order_id'];
+    paymentId = json['payment_id'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    data['userId'] = userId;
-    data['isBlocked'] = isBlocked;
-    data['role'] = role;
-    data['contactNo'] = contactNo;
-    data['isDocumentsVerified'] = isDocumentsVerified;
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
-    if (addressProofBack != null) {
-      data['addressProofBack'] = addressProofBack!.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['userId'] = this.userId;
+    data['isBlocked'] = this.isBlocked;
+    data['role'] = this.role;
+    data['contactNo'] = this.contactNo;
+    data['isDeposited'] = this.isDeposited;
+    data['depositedAmount'] = this.depositedAmount;
+    data['isDocumentsVerified'] = this.isDocumentsVerified;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    if (this.addressProofBack != null) {
+      data['addressProofBack'] = this.addressProofBack!.toJson();
     }
-    if (addressProofFront != null) {
-      data['addressProofFront'] = addressProofFront!.toJson();
+    if (this.addressProofFront != null) {
+      data['addressProofFront'] = this.addressProofFront!.toJson();
     }
-    data['businessAddress'] = businessAddress;
-    data['businessName'] = businessName;
-    if (canceledCheque != null) {
-      data['canceledCheque'] = canceledCheque!.toJson();
+    data['businessAddress'] = this.businessAddress;
+    data['businessName'] = this.businessName;
+    if (this.canceledCheque != null) {
+      data['canceledCheque'] = this.canceledCheque!.toJson();
     }
-    data['district'] = district;
-    data['fullname'] = fullname;
-    if (panCard != null) {
-      data['panCard'] = panCard!.toJson();
+    data['district'] = this.district;
+    data['fullname'] = this.fullname;
+    if (this.panCard != null) {
+      data['panCard'] = this.panCard!.toJson();
     }
-    data['pincode'] = pincode;
-    if (shopPicture != null) {
-      data['shopPicture'] = shopPicture!.toJson();
+    data['pincode'] = this.pincode;
+    if (this.shopPicture != null) {
+      data['shopPicture'] = this.shopPicture!.toJson();
     }
-    if (visitingCard != null) {
-      data['visitingCard'] = visitingCard!.toJson();
+    if (this.visitingCard != null) {
+      data['visitingCard'] = this.visitingCard!.toJson();
     }
+    data['order_id'] = this.orderId;
+    data['payment_id'] = this.paymentId;
     return data;
   }
 }
@@ -159,10 +175,10 @@ class AddressProofBack {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = name;
-    data['url'] = url;
-    data['type'] = type;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['url'] = this.url;
+    data['type'] = this.type;
     return data;
   }
 }
@@ -179,9 +195,9 @@ class Meta {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['access'] = access;
-    data['refresh'] = refresh;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['access'] = this.access;
+    data['refresh'] = this.refresh;
     return data;
   }
 }
