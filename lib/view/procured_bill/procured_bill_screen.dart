@@ -4,12 +4,13 @@ import 'package:evaluator_app/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../utils/dimens.dart';
+import '../../view_model/procured_bill/procured_bill_view_model.dart';
 import '../../widgets/bank_details_bottom_sheet.dart';
 import '../../widgets/custom_button.dart';
 
 class ProcuredBillScreen extends StatelessWidget {
-   const ProcuredBillScreen({super.key});
-
+    ProcuredBillScreen({super.key});
+   ProcuredBillScreenViewModel viewModel = Get.isRegistered<ProcuredBillScreenViewModel>()? Get.find<ProcuredBillScreenViewModel>()  : Get.put(ProcuredBillScreenViewModel());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,40 +128,45 @@ class ProcuredBillScreen extends StatelessWidget {
           Row(
             children: [
               SizedBox(width: Dimens.standard_20),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.05,
-                width: MediaQuery.of(context).size.width * 0.5,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  border: Border.all(color: MyColors.kPrimaryColor, width: 2),
-                  color: MyColors.lightBlue,
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.only(left: 6),
-                  child: Stack(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 15),
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            MyStrings.customerSupport,
-                            style: MyStyles.kPrimary16500,
+              InkWell(
+                onTap: ()async {
+                  await viewModel.launchCaller();
+                },
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.05,
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    border: Border.all(color: MyColors.kPrimaryColor, width: 2),
+                    color: MyColors.lightBlue,
+                  ),
+                  child:  const Padding(
+                    padding: EdgeInsets.only(left: 6),
+                    child: Stack(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 15),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              MyStrings.customerSupport,
+                              style: MyStyles.kPrimary16500,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 6),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Icon(
-                            Icons.call,
-                            color: MyColors.kPrimaryColor,
-                            size: 17,
+                        Padding(
+                          padding: EdgeInsets.only(left: 6),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Icon(
+                              Icons.call,
+                              color: MyColors.kPrimaryColor,
+                              size: 17,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

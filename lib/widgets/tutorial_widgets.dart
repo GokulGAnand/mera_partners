@@ -1,5 +1,4 @@
 import 'package:evaluator_app/utils/styles.dart';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../utils/colors.dart';
@@ -58,7 +57,7 @@ class TutorialWidgets extends StatelessWidget {
                 child: Text.rich(
                   TextSpan(
                       text: '${subtitle}',
-                      style: MyStyles.constBlack215400,
+                      style: MyStyles.black15400,
                       children: [
                         TextSpan(
                           text: " ${colourTitle ?? ''}",

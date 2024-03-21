@@ -175,12 +175,7 @@ class MyStyles {
     fontWeight: FontWeight.w400,
     color: MyColors.black,
   );
-  static const constBlack215400 =TextStyle(
-    fontSize: 15,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.w400,
-    color: MyColors.black2,
-  );
+
   static const black18500 = TextStyle(
       fontSize: 18,
       fontStyle: FontStyle.normal,
