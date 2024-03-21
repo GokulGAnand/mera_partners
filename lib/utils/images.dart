@@ -31,4 +31,9 @@ class MyImages {
   static const carTag = "${imageRoot}car_tag.svg";
   static const loadingCar = "${imageRoot}loading_car.svg";
   static const bolt = "${imageRoot}bolt.png";
+  static const car = "${imageRoot}car.png";
+  static const bid = "${imageRoot}bid.png";
+  static const won = "${imageRoot}won.png";
+  static const bidClosed = "${imageRoot}bid_closed.png";
+  static const carSold = "${imageRoot}car_sold.png";
 }

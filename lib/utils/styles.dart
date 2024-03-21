@@ -404,4 +404,11 @@ class MyStyles {
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w400,
   );
+  static const blue14500 = TextStyle(
+    color: MyColors.kPrimaryColor,
+    fontSize: 14,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
+    height: 0,
+  );
 }

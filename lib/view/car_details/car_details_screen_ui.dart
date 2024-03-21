@@ -1,10 +1,12 @@
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
+import 'package:evaluator_app/utils/images.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
 import 'package:evaluator_app/view_model/car_details/car_details_view_model.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -82,7 +84,34 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                     Text('Kozhikode', style: MyStyles.white11400)
                   ],
                 ),
-              )
+              ),
+              /// car badges added
+              /*Positioned(
+                top: 0,
+                  left: 0,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 258,
+                    decoration: BoxDecoration(
+                      image: const DecorationImage(image: AssetImage(MyImages.carSold)),
+                      gradient: LinearGradient(
+                        begin: const Alignment(0.00, 5.00),
+                        end: const Alignment(0, 1),
+                        colors: [
+                          MyColors.black3.withOpacity(0),
+                          MyColors.black3.withOpacity(0.7)
+                        ],
+                      ),
+                    ),
+                  )),
+              Positioned(
+                  left: 12,
+                  top: 12,
+                  child: InkWell(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: SvgPicture.asset(MySvg.arrowBack))),*/
             ],
           ),
           Container(

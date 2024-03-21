@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../routes/app_routes.dart';
 import '../../../view_model/home/otb/otb_view_model.dart';
 import '../../../widgets/custom_car_detail_card.dart';
 import '../../../widgets/otb_bottom_sheet.dart';
@@ -21,6 +22,9 @@ class OTBScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   itemBuilder: (context, index) {
                     return CustomCarDetailCard(
+                      onCarTapped: () {
+                        Get.toNamed(AppRoutes.carDetailsScreen);
+                      },
                       isOtb: true,
                       imageUrl: controller.carsListResponse.value.data?[index].rearRight?.url ?? '',
                       carLocation: controller.carsListResponse.value.data?[index].vehicleLocation ?? '',

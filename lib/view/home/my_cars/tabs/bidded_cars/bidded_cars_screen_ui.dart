@@ -1,6 +1,7 @@
 import 'package:evaluator_app/widgets/custom_bid_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../../routes/app_routes.dart';
 import '../../../../../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 import '../../../../../widgets/custom_car_detail_card.dart';
 
@@ -21,6 +22,9 @@ class BidCarsListScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   itemBuilder: (context, index) {
                     return CustomCarDetailCard(
+                      onCarTapped: () {
+                        Get.toNamed(AppRoutes.carDetailsScreen);
+                      },
                       imageUrl: controller.bidCarsResponse.value.data?[index].rearRight?.url ?? '',
                       carLocation: controller.bidCarsResponse.value.data?[index].vehicleLocation ?? '',
                       bidStatus: controller.bidCarsResponse.value.data?[index].status ?? '',
