@@ -2,6 +2,7 @@ import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/constants.dart';
 import 'package:evaluator_app/utils/dimens.dart';
+import 'package:evaluator_app/utils/enum.dart';
 import 'package:evaluator_app/utils/images.dart';
 import 'package:evaluator_app/utils/shared_pref_manager.dart';
 import 'package:evaluator_app/utils/strings.dart';
@@ -105,12 +106,12 @@ class _AccountScreenState extends State<AccountScreen> {
                           padding:
                               const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                           decoration: BoxDecoration(
-                              color: (globals.isDocumentsVerified! == false)?MyColors.yellow :MyColors.green1,
+                              color: (globals.documentStatus?.toUpperCase() != DocumentStatus.VERIFIED.name)?MyColors.yellow :MyColors.green1,
                               borderRadius: BorderRadius.circular(4)),
                           child: Text(
-                            (globals.isDocumentsVerified == false)? MyStrings.pending :MyStrings.completed,
+                            (globals.documentStatus?.toUpperCase() != DocumentStatus.VERIFIED.name)? MyStrings.pending :MyStrings.completed,
                             textAlign: TextAlign.center,
-                            style: (globals.isDocumentsVerified  == false)? MyStyles.black12500 :MyStyles.white12500
+                            style: (globals.documentStatus != DocumentStatus.VERIFIED.name)? MyStyles.black12500 :MyStyles.white12500
                           ),
                         )
                   ],

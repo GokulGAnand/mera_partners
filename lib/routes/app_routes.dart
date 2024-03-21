@@ -23,6 +23,7 @@ import 'package:evaluator_app/view/login/login_screen_ui.dart';
 import 'package:evaluator_app/view/login/otp_screen_ui.dart';
 import 'package:evaluator_app/view/onboarding/bindings/onboarding_screen_bindings.dart';
 import 'package:evaluator_app/view/onboarding/onboarding_screen_ui.dart';
+import 'package:evaluator_app/view/procured_bill/procured_bill_screen.dart';
 import 'package:get/get.dart';
 
 class AppRoutes {
@@ -42,6 +43,7 @@ class AppRoutes {
   static const String carDetailsScreen = '/car_details_screen_ui';
   static const String galleryScreen = '/gallery_screen_ui';
   static const String imageViewScreen = '/image_view_screen_ui';
+  static const String procuredBill = '/procured_bill_screen_ui';
   static const String aboutUsScreen = '/about_us_screen_ui';
   static const String privacyPolicyScreen = '/privacy_policy_screen_ui';
 
@@ -75,6 +77,10 @@ class AppRoutes {
       MyCarsBinding(),
     ]),
     GetPage(name: ordersScreen, page: () => const OrdersScreen(),
+      bindings: [
+      OrdersBinding(),
+    ]),
+    GetPage(name: procuredBill, page: () => const ProcuredBillScreen(),
       bindings: [
       OrdersBinding(),
     ]),

@@ -66,6 +66,13 @@ class MyStyles {
     fontWeight: FontWeight.w500,
     height: 0,
   );
+  static const black20700 = TextStyle(
+    color: MyColors.black,
+    fontSize: 20,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w700,
+    height: 0,
+  );
 
   static const selectedTabBarTitleStyle = TextStyle(
     color: MyColors.black,
@@ -90,6 +97,13 @@ class MyStyles {
   );
   static const green2_18700 = TextStyle(
     color: MyColors.green2,
+    fontSize: 18,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w700,
+    height: 0,
+  );
+  static const warning_red_18700 = TextStyle(
+    color: MyColors.warning,
     fontSize: 18,
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w700,
@@ -175,6 +189,12 @@ class MyStyles {
     fontWeight: FontWeight.w400,
     color: MyColors.black,
   );
+  static const constBlack215400 =TextStyle(
+    fontSize: 15,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
+    color: MyColors.black,
+  );
 
   static const black18500 = TextStyle(
       fontSize: 18,
@@ -248,6 +268,13 @@ class MyStyles {
     fontSize: 14,
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w700,
+    height: 0,
+  );
+  static const black14500 = TextStyle(
+    color: MyColors.black,
+    fontSize: 14,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
     height: 0,
   );
 
@@ -367,6 +394,12 @@ class MyStyles {
   );
   static const grey12400 = TextStyle(
     color: MyColors.grey,
+    fontSize: 12,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w400,
+  );
+  static const grey3_12400 = TextStyle(
+    color: MyColors.grey3,
     fontSize: 12,
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w400,

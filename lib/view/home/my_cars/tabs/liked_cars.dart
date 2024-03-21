@@ -1,3 +1,4 @@
+import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
@@ -5,6 +6,7 @@ import 'package:evaluator_app/utils/svg.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 class LikedCars extends StatelessWidget {
   const LikedCars({super.key});
@@ -38,6 +40,7 @@ class LikedCars extends StatelessWidget {
                   child: Column(
                     children: [
                       Stack(
+                        alignment: Alignment.bottomCenter,
                         children: [
                           Container(
                             width: double.infinity,
@@ -50,6 +53,20 @@ class LikedCars extends StatelessWidget {
                                     image: NetworkImage(
                                         "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
                                     fit: BoxFit.fill)),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 107,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment(0.00, -1.00),
+                                end: Alignment(0, 1),
+                                colors: [
+                                  MyColors.black3.withOpacity(0),
+                                  MyColors.black3.withOpacity(0.7)
+                                ],
+                              ),
+                            ),
                           ),
                           Positioned(
                             right: 10,
@@ -121,7 +138,9 @@ class LikedCars extends StatelessWidget {
                             SizedBox(
                               height: 40,
                               child: CustomElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Get.toNamed(AppRoutes.carDetailsScreen);
+                                },
                                 buttonStyle: ElevatedButton.styleFrom(
                                     padding: EdgeInsets.all(2),
                                     backgroundColor:

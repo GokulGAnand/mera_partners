@@ -1,11 +1,14 @@
+import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
+import 'package:evaluator_app/view/procured_bill/procured_bill_screen.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:evaluator_app/widgets/custom_order_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 class Procured extends StatelessWidget {
   const Procured({super.key});
@@ -54,7 +57,9 @@ class Procured extends StatelessWidget {
                     ),
                   ),
                   button: CustomElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed(AppRoutes.procuredBill);
+                    },
                     buttonStyle: ElevatedButton.styleFrom(
                         padding: EdgeInsets.all(2),
                         backgroundColor:

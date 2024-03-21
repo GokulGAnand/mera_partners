@@ -24,6 +24,13 @@ class _GalleryScreenState extends State<GalleryScreen> {
   
   @override
   void initState() {
+    for(int i=0; i<galleryScreenViewModel.imagesList.length; i++){
+      if(Get.arguments == galleryScreenViewModel.imagesList[i]["title"]){
+        galleryScreenViewModel.imagesList.forEach((element) {element["isClick"].value = false;});
+        galleryScreenViewModel.imagesList[i]["isClick"].value = true;
+        galleryScreenViewModel.imageIndex.value = i;
+      }
+    }
     Future.delayed(Duration(seconds: 3)).then((value) {
       galleryScreenViewModel.showLoading.value = false;
     });

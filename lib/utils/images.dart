@@ -30,4 +30,5 @@ class MyImages {
   static const verified = "${imageRoot}verified.svg";
   static const carTag = "${imageRoot}car_tag.svg";
   static const loadingCar = "${imageRoot}loading_car.svg";
+  static const bolt = "${imageRoot}bolt.png";
 }

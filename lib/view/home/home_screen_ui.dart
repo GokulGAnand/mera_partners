@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   alignment: Alignment.bottomCenter,
                   child: SvgPicture.asset(
                     MySvg.wallet,
-                    color: (homeScreenViewModel.selectedIndex.value == 3) ?MyColors.kPrimaryColor: MyColors.grey,
+                    color: (homeScreenViewModel.selectedIndex.value == 3) ?MyColors.kPrimaryColor: MyColors.grey3,
                   ),
                 ),
                 label: "Wallet"),
@@ -106,7 +106,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 label: "Account"),
           ],
           onTap: (index) {
-            homeScreenViewModel.selectedIndex.value = index;
+          if(index!=3){
+              homeScreenViewModel.selectedIndex.value = index;
+            }else{
+
+            }
+            
           },
         );
       }),

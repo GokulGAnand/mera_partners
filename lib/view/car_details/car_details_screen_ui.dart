@@ -183,7 +183,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: (){
-                            Get.toNamed(AppRoutes.galleryScreen);
+                            Get.toNamed(AppRoutes.galleryScreen, arguments: carDetailsScreenViewModel.imageList[index]);
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(right: 8.0),
@@ -206,7 +206,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                                   "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
                                               fit: BoxFit.fill)),
                                     ),
-                                    Positioned(
+                                    (index==carDetailsScreenViewModel.imageList.length-1)?Positioned(
                                       right: 0,
                                       top: 0,
                                       child: CircleAvatar(
@@ -217,7 +217,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                           style: MyStyles.white8700,
                                         ),
                                       ),
-                                    )
+                                    ):const SizedBox()
                                   ],
                                 ),
                                 const SizedBox(
@@ -682,8 +682,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                               ? MyColors.green1
                                               : (carDetailsScreenViewModel
                                                               .rating[index]
-                                                          ["rating"] >=
-                                                      2.5)
+                                                          ["rating"] >= 2.5 && carDetailsScreenViewModel
+                                                              .rating[index]
+                                                          ["rating"] <= 3.5)
                                                   ? MyColors.yellow
                                                   : MyColors.red,
                                           borderRadius:

@@ -2,10 +2,14 @@ import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
-import 'package:evaluator_app/view/live/live_cars_list_screen.dart';
+import 'package:evaluator_app/view_model/home/otb/otb_view_model.dart';
 import 'package:evaluator_app/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import '../../../view_model/home/live/live_cars_list_view_model.dart';
+import '../live/live_cars_list_screen.dart';
+import '../otb/otb_screen_ui.dart';
 
 class BidsScreen extends StatefulWidget {
   const BidsScreen({super.key});
@@ -16,8 +20,16 @@ class BidsScreen extends StatefulWidget {
 
 class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateMixin{
   late TabController tabController;
+  var count = '';
+  var otbCount = '';
   @override
   void initState() {
+    if(Get.isRegistered<LiveCarsListViewModel>()){
+      count = Get.find<LiveCarsListViewModel>().liveCarsResponse.value.count.toString();
+    }
+    if(Get.isRegistered<OTBCarsListViewModel>()){
+      count = Get.find<OTBCarsListViewModel>().carsListResponse.value.count.toString();
+    }
     tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
@@ -37,10 +49,10 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                     height: 50,
                     child: CustomTextFormField(
                       controller: TextEditingController(), 
-                      prefixIcon: Icon(Icons.search),
+                      prefixIcon: const Icon(Icons.search),
                       borderColor: MyColors.kPrimaryColor.withOpacity(0.1),
                       focusedBorderColor: MyColors.kPrimaryColor,
-                      contentPadding: EdgeInsets.all(8),
+                      contentPadding: const EdgeInsets.all(8),
                       enabledBorderColor: MyColors.kPrimaryColor.withOpacity(0.1),
                       fillColor: MyColors.kPrimaryColor.withOpacity(0.1),
                       validator: null),
@@ -49,8 +61,8 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                 Container(
                   width: 50,
                   height: 44,
-                  margin: EdgeInsets.only(bottom: 8),
-                  padding: EdgeInsets.all(10),
+                  margin: const EdgeInsets.only(bottom: 8),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: MyColors.kPrimaryColor.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
@@ -71,9 +83,9 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                     indicatorWeight: 4,
                     dividerColor: MyColors.grey.withOpacity(0.25),
                     dividerHeight: 2,
-                    tabs: const [
-                      Tab(text: MyStrings.live),
-                      Tab(text: MyStrings.otb),
+                    tabs: [
+                      Tab(text: '${MyStrings.live}($count)'),
+                      Tab(text: '${MyStrings.otb}($count)'),
                     ],
                   ),
                   Expanded(
@@ -81,7 +93,7 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                       controller: tabController,
                       children: [
                         LiveCarsListScreen(),
-                        const Center(child: Text("OTB(4)")),
+                        OTBScreen(),
                       ],
                     ),
                   ),

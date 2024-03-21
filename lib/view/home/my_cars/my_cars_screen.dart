@@ -2,6 +2,7 @@ import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
+import 'package:evaluator_app/view/home/my_cars/tabs/bidded_cars/bidded_cars_screen_ui.dart';
 import 'package:evaluator_app/view/home/my_cars/tabs/liked_cars.dart';
 import 'package:evaluator_app/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -83,9 +84,9 @@ class _MyCarsScreenState extends State<MyCarsScreen>
             Expanded(
               child: TabBarView(
                 controller: tabController,
-                children: const [
-                  Center(child: Text(MyStrings.biddedCars)),
-                  Center(child: LikedCars()),
+                children: [
+                  BidCarsListScreen(),
+                  const Center(child: LikedCars()),
                 ],
               ),
             ),
