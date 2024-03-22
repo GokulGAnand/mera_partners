@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
@@ -24,7 +26,7 @@ class CustomBidBottomSheet extends StatelessWidget {
     return Container(
       height: (isAutoBid) ? 442 : 363,
       padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: MyColors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(14),
@@ -42,7 +44,7 @@ class CustomBidBottomSheet extends StatelessWidget {
                 Container(
                   width: 32,
                   height: 4,
-                  margin: EdgeInsets.only(bottom: 16),
+                  margin: const EdgeInsets.only(bottom: 16),
                   decoration: BoxDecoration(
                       color: MyColors.grey,
                       borderRadius: BorderRadius.circular(100)),
@@ -61,11 +63,11 @@ class CustomBidBottomSheet extends StatelessWidget {
               const SizedBox(
                 width: 5,
               ),
-              Text(
+              const Text(
                 "24min 06sec",
                 style: MyStyles.green2_18700,
               ),
-              Spacer(),
+              const Spacer(),
               InkWell(
                 onTap: () {
                   Get.back();
@@ -79,29 +81,29 @@ class CustomBidBottomSheet extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          Text(
+          const Text(
             '${MyStrings.currentBid} : ₹ 1,71,000',
             style: MyStyles.selectedTabBarTitleStyle,
           ),
           const SizedBox(
             height: 8,
           ),
-          Text(
+          const Text(
             '${MyStrings.stepRate} : ₹ 1,000',
             style: MyStyles.selectedTabBarTitleStyle,
           ),
           (isAutoBid)
-              ? Column(
+              ? const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       height: 12,
                     ),
                     Text(
                       MyStrings.autoBid,
                       style: MyStyles.blue3_14700,
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 8,
                     ),
                     Text(
@@ -114,7 +116,7 @@ class CustomBidBottomSheet extends StatelessWidget {
           Container(
             width: double.infinity,
             height: 54,
-            margin: EdgeInsets.symmetric(vertical: 15),
+            margin: const EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
                 color: MyColors.lightBlue,
                 borderRadius: BorderRadius.circular(4),
@@ -125,8 +127,8 @@ class CustomBidBottomSheet extends StatelessWidget {
                     onTap: () {
                       bidValue.value -= 1000;
                     },
-                    child: SizedBox(width: 56, child: Icon(Icons.remove))),
-                VerticalDivider(
+                    child: const SizedBox(width: 56, child: Icon(Icons.remove))),
+                const VerticalDivider(
                   color: MyColors.kPrimaryColor,
                 ),
                 Obx(() {
@@ -137,14 +139,14 @@ class CustomBidBottomSheet extends StatelessWidget {
                     style: MyStyles.black18700,
                   ));
                 }),
-                VerticalDivider(
+                const VerticalDivider(
                   color: MyColors.kPrimaryColor,
                 ),
                 InkWell(
                     onTap: () {
                       bidValue.value += 1000;
                     },
-                    child: SizedBox(width: 56, child: Icon(Icons.add))),
+                    child: const SizedBox(width: 56, child: Icon(Icons.add))),
               ],
             ),
           ),
@@ -159,7 +161,7 @@ class CustomBidBottomSheet extends StatelessWidget {
                       bidValue.value += bid[i];
                     },
                     child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 5),
+                      padding: const EdgeInsets.symmetric(vertical: 5),
                       margin:
                           EdgeInsets.only(right: (i == bid.length - 1) ? 0 : 8),
                       decoration: BoxDecoration(
@@ -167,7 +169,7 @@ class CustomBidBottomSheet extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4),
                           border: Border.all(color: MyColors.kPrimaryColor)),
                       child: Text(
-                        '+ ' + numberFormat.format(bid[i]),
+                        '+ ${numberFormat.format(bid[i])}',
                         textAlign: TextAlign.center,
                         style: MyStyles.black14700,
                       ),

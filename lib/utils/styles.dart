@@ -102,7 +102,7 @@ class MyStyles {
     fontWeight: FontWeight.w700,
     height: 0,
   );
-  static const warning_red_18700 = TextStyle(
+  static const warningRed_18700 = TextStyle(
     color: MyColors.warning,
     fontSize: 18,
     fontFamily: 'DM Sans',

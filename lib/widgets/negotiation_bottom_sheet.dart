@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
@@ -59,7 +61,7 @@ class NegotiationBottomSheet extends StatelessWidget {
               ),
               const Text(
                 "24min 06sec",
-                style: MyStyles.warning_red_18700,
+                style: MyStyles.warningRed_18700,
               ),
               const Spacer(),
               InkWell(
@@ -113,13 +115,13 @@ const SizedBox(
                     child: CustomElevatedButton(
                       onPressed: () {},
                       buttonStyle: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.all(2),
+                          padding: const EdgeInsets.all(2),
                           backgroundColor:
                               MyColors.kPrimaryColor.withOpacity(0.1),
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(6),
-                              side: BorderSide(color: MyColors.kPrimaryColor))),
+                              side: const BorderSide(color: MyColors.kPrimaryColor))),
                       buttonColor: MyColors.kPrimaryColor.withOpacity(0.3),
                       buttonText: MyStrings.reject,
                       textStyle: MyStyles.primary16500,
@@ -135,12 +137,12 @@ const SizedBox(
                     child: CustomElevatedButton(
                       onPressed: () {},
                       buttonStyle: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.all(2),
+                          padding: const EdgeInsets.all(2),
                           backgroundColor: MyColors.kPrimaryColor,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(6),
-                              side: BorderSide(color: MyColors.kPrimaryColor))),
+                              side: const BorderSide(color: MyColors.kPrimaryColor))),
                       buttonColor: MyColors.kPrimaryColor.withOpacity(0.3),
                       buttonText: MyStrings.accept,
                       textStyle: MyStyles.whiteTitleStyle,

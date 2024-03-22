@@ -27,7 +27,7 @@ class NotificationWidget extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 20,
-            backgroundImage: AssetImage(image ?? ''),
+            backgroundImage: AssetImage(image),
           ),
           const SizedBox(width:Dimens.standard_8),
           Expanded(

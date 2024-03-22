@@ -1,5 +1,4 @@
 import 'package:evaluator_app/utils/styles.dart';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../utils/colors.dart';
@@ -49,7 +48,7 @@ class TutorialWidgets extends StatelessWidget {
             children: [
               SizedBox(height: Dimens.standard_20),
               Text(
-                '${title}',
+                '$title',
                 style: MyStyles.black18500,
               ),
               SizedBox(height: Dimens.standard_20),
@@ -57,7 +56,7 @@ class TutorialWidgets extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 5),
                 child: Text.rich(
                   TextSpan(
-                      text: '${subtitle}',
+                      text: '$subtitle',
                       style: MyStyles.constBlack215400,
                       children: [
                         TextSpan(

@@ -32,7 +32,7 @@ class _NegotiationState extends State<Negotiation> {
         children: [
           Container(
             height: 33,
-            margin: EdgeInsets.symmetric(vertical: 12),
+            margin: const EdgeInsets.symmetric(vertical: 12),
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount:
@@ -41,10 +41,9 @@ class _NegotiationState extends State<Negotiation> {
                   return Obx(() {
                     return GestureDetector(
                       onTap: () {
-                        orderScreenViewModel.negotiationOrdersCategory
-                            .forEach((element) {
+                        for (var element in orderScreenViewModel.negotiationOrdersCategory) {
                           element["isClick"].value = false;
-                        });
+                        }
                         orderScreenViewModel
                             .negotiationOrdersCategory[index]["isClick"]
                             .value = true;
@@ -52,8 +51,8 @@ class _NegotiationState extends State<Negotiation> {
                             !orderScreenViewModel.isNegotiation.value;
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12),
-                        margin: EdgeInsets.only(right: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        margin: const EdgeInsets.only(right: 10),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             color: MyColors.kPrimaryColor.withOpacity(
@@ -86,10 +85,10 @@ class _NegotiationState extends State<Negotiation> {
                 }),
           ),
           GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: 3,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 22,
                 mainAxisSpacing: 18,
@@ -104,8 +103,8 @@ class _NegotiationState extends State<Negotiation> {
                         height: 107,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
-                            begin: Alignment(0.00, -1.00),
-                            end: Alignment(0, 1),
+                            begin: const Alignment(0.00, -1.00),
+                            end: const Alignment(0, 1),
                             colors: [
                               MyColors.black3.withOpacity(0),
                               MyColors.black3.withOpacity(0.7)
@@ -118,7 +117,7 @@ class _NegotiationState extends State<Negotiation> {
                       width: double.infinity,
                       height: 107,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(8),
                               topRight: Radius.circular(8)),
                           color: MyColors.black3.withOpacity(0.4)),
@@ -129,8 +128,8 @@ class _NegotiationState extends State<Negotiation> {
                       return Container(
                         // width: double.infinity,
                         height: 25,
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: const BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment(-0.5, 0.00),
                             end: Alignment(2, 0),
@@ -146,7 +145,7 @@ class _NegotiationState extends State<Negotiation> {
                             const SizedBox(
                               width: 3,
                             ),
-                            Text(
+                            const Text(
                               "29min 59sec",
                               style: MyStyles.white14700,
                             ),
@@ -157,8 +156,8 @@ class _NegotiationState extends State<Negotiation> {
                     return Container(
                       // width: double.infinity,
                       height: 25,
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: const BoxDecoration(
                         color: MyColors.warning,
                       ),
                       child: Row(
@@ -170,7 +169,7 @@ class _NegotiationState extends State<Negotiation> {
                           const SizedBox(
                             width: 3,
                           ),
-                          Text(
+                          const Text(
                             MyStrings.dealLost,
                             style: MyStyles.whiteTitleStyle,
                           ),
@@ -187,14 +186,14 @@ class _NegotiationState extends State<Negotiation> {
                             backgroundColor: Colors.transparent,
                             context: context,
                             builder: (context) {
-                              return NegotiationBottomSheet(
+                              return const NegotiationBottomSheet(
                                 biddedAmount: 173000,
                                 negotiatedAmount: 193000,
                               );
                             });
                         },
                         buttonStyle: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.all(2),
+                            padding: const EdgeInsets.all(2),
                             backgroundColor: MyColors.green3,
                             elevation: 0,
                             shape: RoundedRectangleBorder(
@@ -210,14 +209,14 @@ class _NegotiationState extends State<Negotiation> {
                         Get.toNamed(AppRoutes.carDetailsScreen);
                       },
                       buttonStyle: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.all(2),
+                          padding: const EdgeInsets.all(2),
                           backgroundColor:
                               MyColors.kPrimaryColor.withOpacity(0.1),
                           elevation: 0,
                           shadowColor: Colors.transparent,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(6),
-                              side: BorderSide(color: MyColors.kPrimaryColor))),
+                              side: const BorderSide(color: MyColors.kPrimaryColor))),
                       buttonColor: MyColors.kPrimaryColor.withOpacity(0.3),
                       buttonText: MyStrings.viewDetail,
                       textStyle: MyStyles.primary14500,

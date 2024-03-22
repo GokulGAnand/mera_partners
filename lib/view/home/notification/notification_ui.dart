@@ -1,5 +1,3 @@
-import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/images.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +22,7 @@ class NotificationScreen extends StatelessWidget {
      body: ListView.builder(
        itemCount: 5,
        itemBuilder: (context, index) {
-         return  NotificationWidget(title: MyStrings.title1, subtitle: MyStrings.offer, image: '');
+         return  const NotificationWidget(title: MyStrings.title1, subtitle: MyStrings.offer, image: '');
        },
 
 

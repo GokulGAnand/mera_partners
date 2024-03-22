@@ -10,6 +10,7 @@ import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
 import 'package:evaluator_app/view_model/home/account/account_view_model.dart';
 import 'package:evaluator_app/widgets/custom_appbar.dart';
+import 'package:evaluator_app/widgets/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -30,7 +31,7 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: MyStrings.account,
         appBarHeight: 105,
         showBackIcon: false,
@@ -42,9 +43,9 @@ class _AccountScreenState extends State<AccountScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ListTile(
-                contentPadding: EdgeInsets.all(0),
+                contentPadding: const EdgeInsets.all(0),
                 minLeadingWidth: 0,
-                leading: CircleAvatar(
+                leading: const CircleAvatar(
                   radius: 18,
                   backgroundColor: MyColors.white,
                   backgroundImage: AssetImage(MyImages.profile),
@@ -73,7 +74,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       const SizedBox(
                         width: 6,
                       ),
-                      Text(
+                      const Text(
                         MyStrings.customerSupport,
                         style: MyStyles.selectedTabBarTitleStyle,
                       )
@@ -81,7 +82,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   ),
                 ),
               ),
-              Text(
+              const Text(
                 MyStrings.accountSettings,
                 style: MyStyles.grey2_14500,
               ),
@@ -95,7 +96,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     const SizedBox(
                       width: 6,
                     ),
-                    Text(
+                    const Text(
                       MyStrings.documentVerification,
                       style: MyStyles.subTitleBlackStyle,
                     ),
@@ -124,7 +125,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       MyStrings.aboutUs,
                       style: MyStyles.subTitleBlackStyle,
                     ),
@@ -140,7 +141,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       MyStrings.privacyPolicy,
                       style: MyStyles.subTitleBlackStyle,
                     ),
@@ -151,10 +152,23 @@ class _AccountScreenState extends State<AccountScreen> {
               const SizedBox(height: 20,),
               InkWell(
                 onTap: () async{
-                  bool removeVal = await SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
-                  if(removeVal){
-                    Get.offAllNamed(AppRoutes.loginScreen);
-                  }
+                  showDialog(
+                    context: context, 
+                  builder: (context){
+                    return CustomDialog(
+                      title: MyStrings.logOutDesc,
+                      okFun: () async{
+                        bool removeVal = await SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
+                        if(removeVal){
+                          Get.offAllNamed(AppRoutes.loginScreen);
+                        }
+                      },
+                      cancelFun: (){
+                        Get.back();
+                      },
+                    );
+                  });
+                  
                 },
                 child: Row(
                   children: [
@@ -162,7 +176,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     const SizedBox(
                       width: 6,
                     ),
-                    Text(
+                    const Text(
                       MyStrings.logOut,
                       style: MyStyles.subTitleBlackStyle,
                     ),
@@ -171,7 +185,7 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
               const SizedBox(height: 30,),
               RichText(
-                  text: TextSpan(children: [
+                  text: const TextSpan(children: [
                 TextSpan(
                   text: MyStrings.meraPartners,
                   style: MyStyles.grey16400

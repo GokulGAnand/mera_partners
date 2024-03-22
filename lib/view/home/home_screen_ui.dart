@@ -1,7 +1,8 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
-import 'package:evaluator_app/view/tutorial/tutorial_screen_ui.dart';
 import 'package:evaluator_app/view_model/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
