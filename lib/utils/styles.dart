@@ -195,6 +195,7 @@ class MyStyles {
     fontWeight: FontWeight.w400,
     color: MyColors.black,
   );
+
   static const black18500 = TextStyle(
       fontSize: 18,
       fontStyle: FontStyle.normal,
@@ -402,5 +403,12 @@ class MyStyles {
     fontSize: 12,
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w400,
+  );
+  static const blue14500 = TextStyle(
+    color: MyColors.kPrimaryColor,
+    fontSize: 14,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
+    height: 0,
   );
 }

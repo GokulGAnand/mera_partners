@@ -443,7 +443,11 @@ class MyStrings {
   static const String oneTouchBuy = 'One Touch Buy';
   static const String closingPrice = 'Closing Price';
   static const String otbPrice = 'OTB Price';
+  static const String currentOtbPrice = 'Current OTB Price';
+  static const String minQuotePrice = 'Minimum quote price';
+  static const String quotePriceDesc = 'Please state the price you are willing to offer';
   static const String confirmBuy = 'Confirm buy at ';
+  static const String quotePriceAt = 'Quote Price at ';
   static const String otbBuyDesc = 'Purchase this car immediately at \nthe listed price';
 
   /// car details screen
@@ -464,4 +468,10 @@ class MyStrings {
   static const String notAvailable = 'Not Available';
   static const String otherIssues = 'Other Issues';
   static const String viewLessIssues = 'View Less Issues';
+
+  /// toast messages
+  static const String offerAccepted = 'Offer accepted';
+  static const String bidPlaced = 'Successfully placed bid';
+  static const String carPurchased = 'Car purchased';
+  static const String offerSubmit = 'Offer submitted';
 }

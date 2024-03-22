@@ -1,3 +1,4 @@
+import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/widgets/custom_bid_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,6 +24,9 @@ class LiveCarsListScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   itemBuilder: (context, index) {
                     return CustomCarDetailCard(
+                      onCarTapped: () {
+                        Get.toNamed(AppRoutes.carDetailsScreen);
+                      },
                       isOtb: false,
                       isScheduled: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == 'scheduled' ? true : false,
                       imageUrl: controller.liveCarsResponse.value.data?[index]

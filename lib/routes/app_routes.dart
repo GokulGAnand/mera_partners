@@ -80,7 +80,7 @@ class AppRoutes {
       bindings: [
       OrdersBinding(),
     ]),
-    GetPage(name: procuredBill, page: () => const ProcuredBillScreen(),
+    GetPage(name: procuredBill, page: () =>  ProcuredBillScreen(),
       bindings: [
       OrdersBinding(),
     ]),

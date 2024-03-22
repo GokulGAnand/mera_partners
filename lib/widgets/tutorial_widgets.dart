@@ -56,8 +56,8 @@ class TutorialWidgets extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 5),
                 child: Text.rich(
                   TextSpan(
-                      text: '$subtitle',
-                      style: MyStyles.constBlack215400,
+                      text: '${subtitle}',
+                      style: MyStyles.black15400,
                       children: [
                         TextSpan(
                           text: " ${colourTitle ?? ''}",
