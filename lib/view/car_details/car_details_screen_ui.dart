@@ -1,12 +1,10 @@
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/images.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
 import 'package:evaluator_app/view_model/car_details/car_details_view_model.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -611,15 +609,15 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                   // boxShadow:
                 ),
               ),
-              Container(
-                width: 92,
-                height: 66,
-                decoration: const BoxDecoration(
-                    color: MyColors.blue2,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        bottomLeft: Radius.circular(8))),
-              ),
+              // Container(
+              //   width: 92,
+              //   height: 66,
+              //   decoration: const BoxDecoration(
+              //       color: MyColors.blue2,
+              //       borderRadius: BorderRadius.only(
+              //           topLeft: Radius.circular(8),
+              //           bottomLeft: Radius.circular(8))),
+              // ),
               SizedBox(
                 height: 66,
                 child: ListView.builder(
@@ -627,67 +625,76 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                     scrollDirection: Axis.horizontal,
                     itemCount: carDetailsScreenViewModel.rating.length,
                     itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () async {
-                          // if (carDetailsScreenViewModel.pageIndex.value == 1) {
-                          await carDetailsScreenViewModel.scrollItem(index);
-                          // }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 18),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                carDetailsScreenViewModel.rating[index]
-                                    ["title"],
-                                style: MyStyles.black12500,
+                      return Obx(
+                        () {
+                          return InkWell(
+                            onTap: () async {
+                              // if (carDetailsScreenViewModel.pageIndex.value == 1) {
+                              carDetailsScreenViewModel.inspectionIndex.value = index;
+                              await carDetailsScreenViewModel.scrollItem();
+                              // }
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 18),
+                              decoration: BoxDecoration(
+                                color: (carDetailsScreenViewModel.inspectionIndex.value == index)?MyColors.blue2:Colors.transparent,
+                                borderRadius: BorderRadius.circular(8)
                               ),
-                              const SizedBox(
-                                height: 2,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    carDetailsScreenViewModel.rating[index]
+                                        ["title"],
+                                    style: MyStyles.black12500,
+                                  ),
+                                  const SizedBox(
+                                    height: 2,
+                                  ),
+                                  (index == 0)
+                                      ? const SizedBox()
+                                      : Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 4),
+                                          margin: const EdgeInsets.only(top: 4),
+                                          decoration: BoxDecoration(
+                                              color: (carDetailsScreenViewModel
+                                                              .rating[index]
+                                                          ["rating"] >=
+                                                      4.0)
+                                                  ? MyColors.green1
+                                                  : (carDetailsScreenViewModel
+                                                                      .rating[index]
+                                                                  ["rating"] >=
+                                                              2.5 &&
+                                                          carDetailsScreenViewModel
+                                                                      .rating[index]
+                                                                  ["rating"] <=
+                                                              3.5)
+                                                      ? MyColors.yellow
+                                                      : MyColors.red,
+                                              borderRadius:
+                                                  BorderRadius.circular(4)),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                carDetailsScreenViewModel
+                                                    .rating[index]["rating"]
+                                                    .toString(),
+                                                style: MyStyles.white11500,
+                                              ),
+                                              const SizedBox(
+                                                width: 4,
+                                              ),
+                                              SvgPicture.asset(MySvg.star)
+                                            ],
+                                          ),
+                                        )
+                                ],
                               ),
-                              (index == 0)
-                                  ? const SizedBox()
-                                  : Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 4),
-                                      margin: const EdgeInsets.only(top: 4),
-                                      decoration: BoxDecoration(
-                                          color: (carDetailsScreenViewModel
-                                                          .rating[index]
-                                                      ["rating"] >=
-                                                  4.0)
-                                              ? MyColors.green1
-                                              : (carDetailsScreenViewModel
-                                                                  .rating[index]
-                                                              ["rating"] >=
-                                                          2.5 &&
-                                                      carDetailsScreenViewModel
-                                                                  .rating[index]
-                                                              ["rating"] <=
-                                                          3.5)
-                                                  ? MyColors.yellow
-                                                  : MyColors.red,
-                                          borderRadius:
-                                              BorderRadius.circular(4)),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            carDetailsScreenViewModel
-                                                .rating[index]["rating"]
-                                                .toString(),
-                                            style: MyStyles.white11500,
-                                          ),
-                                          const SizedBox(
-                                            width: 4,
-                                          ),
-                                          SvgPicture.asset(MySvg.star)
-                                        ],
-                                      ),
-                                    )
-                            ],
-                          ),
-                        ),
+                            ),
+                          );
+                        }
                       );
                     }),
               ),

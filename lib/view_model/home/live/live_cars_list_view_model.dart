@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:evaluator_app/utils/globals.dart' as globals;
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../../model/response/live/live_cars_list_response.dart';
 import '../../../service/endpoints.dart';
 import '../../../service/exception_error_util.dart';
@@ -41,22 +42,35 @@ class LiveCarsListViewModel extends GetxController{
   ];
   RxInt bidValue = 172000.obs;
 
+  //declare pagination controller
+  final PagingController<int,Data> infinitePagingController=PagingController(firstPageKey: 1);
+  int limit = 10;
+
   @override
   void onInit() {
     pageController.value = PageController(initialPage: 0, viewportFraction: 0.85);
     carouselTimer = getTimer();
-    getCarData();
+    infinitePagingController.addPageRequestListener((pageKey) {
+      getCarData(pageKey);
+    });
     super.onInit();
   }
 
-  void getCarData()async {
+  void getCarData(int pageKey)async {
     try {
-      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&status=SCHEDULED').toString());
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&status=SCHEDULED'),headers: globals.headers);
+      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&status=SCHEDULED&page=$pageKey&limit=$limit').toString());
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&status=SCHEDULED&page=$pageKey&limit=10'),headers: globals.headers);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body);
         liveCarsResponse.value = LiveCarsResponse.fromJson(jsonDecode(response.body));
+        final isLastPage = liveCarsResponse.value.data!.length < limit;
+        if (isLastPage) {
+          infinitePagingController.appendLastPage(liveCarsResponse.value.data!);
+        } else {
+          final nextPageKey = pageKey + 1;
+          infinitePagingController.appendPage(liveCarsResponse.value.data!, nextPageKey);
+        }
       }else{
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());
