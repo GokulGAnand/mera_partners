@@ -33,7 +33,7 @@ class MyImages {
   static const bolt = "${imageRoot}bolt.png";
   static const car = "${imageRoot}car.png";
   static const bid = "${imageRoot}bid.png";
-  static const won = "${imageRoot}won.png";
+  static const bidWon = "${imageRoot}bid_won.png";
   static const bidClosed = "${imageRoot}bid_closed.png";
   static const carSold = "${imageRoot}car_sold.png";
 }

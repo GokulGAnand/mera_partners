@@ -8,7 +8,12 @@ class CarDetailsScreenViewModel extends GetxController {
   RxInt pageIndex = 0.obs;
 
   ///page 1
-  
+  String carStatus = "";
+  //""
+  //bid won
+  //bid closed
+  //car sold 
+
   List<String> imageList = [
     MyStrings.exterior,
     MyStrings.interior,

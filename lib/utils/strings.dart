@@ -451,6 +451,9 @@ class MyStrings {
   static const String otbBuyDesc = 'Purchase this car immediately at \nthe listed price';
 
   /// car details screen
+  static const String bidWon = 'Bid Won';
+  static const String bidClosed = 'Bid Closed';
+  static const String carSold = 'Car Sold';
   static const String fmv = 'FMV';
   static const String criticalIssue = 'CRITICAL ISSUES';
   static const String documents = 'Documents';

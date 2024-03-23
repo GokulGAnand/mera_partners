@@ -1,5 +1,6 @@
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
+import 'package:evaluator_app/utils/images.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
@@ -61,6 +62,16 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                           "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
                       fit: BoxFit.fill)),
             ),
+            (carDetailsScreenViewModel.carStatus != "")?Container(
+              width: double.infinity,
+              height: 258,
+              padding: EdgeInsets.all(32),
+              decoration: BoxDecoration(
+                color: MyColors.black3.withOpacity(0.7),),
+              child: Image.asset((carDetailsScreenViewModel.carStatus == "bid won")?MyImages.bidWon
+              :(carDetailsScreenViewModel.carStatus == "bid closed")?MyImages.bidClosed
+              :MyImages.carSold),
+            ): const SizedBox(),
             Positioned(
                 left: 12,
                 top: 12,
@@ -88,25 +99,35 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
           width: double.infinity,
           height: 37,
           padding: const EdgeInsets.only(left: 12),
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
+          decoration: BoxDecoration(
+            color: (carDetailsScreenViewModel.carStatus == "bid won")?MyColors.green4
+            :(carDetailsScreenViewModel.carStatus == "bid closed")? MyColors.grey4
+            :(carDetailsScreenViewModel.carStatus == "car sold")? MyColors.yellow
+            :null,
+            gradient: (carDetailsScreenViewModel.carStatus != "")?null
+            :LinearGradient(
               end: Alignment(2.00, 0.00),
               begin: Alignment(-1, 0),
               colors: [MyColors.kPrimaryColor, MyColors.black5],
             ),
           ),
-          child: const Row(
+          child: Row(
             children: [
               Text(
-                MyStrings.highestBid,
+                (carDetailsScreenViewModel.carStatus == "bid won") ? MyStrings.bidWon 
+                :(carDetailsScreenViewModel.carStatus == "bid closed")? MyStrings.bidClosed
+                :(carDetailsScreenViewModel.carStatus == "car sold")? MyStrings.carSold
+                :MyStrings.highestBid,
                 textAlign: TextAlign.center,
-                style: MyStyles.whiteTitleStyle,
+                style: (carDetailsScreenViewModel.carStatus == "bid closed")? MyStyles.pageTitleStyle
+                :(carDetailsScreenViewModel.carStatus == "car sold")? MyStyles.pageTitleStyle
+                :MyStyles.whiteTitleStyle,
               ),
               SizedBox(
                 width: 8,
               ),
               Text(
-                '₹6,50,000',
+                (carDetailsScreenViewModel.carStatus == "")? '₹6,50,000': '',
                 textAlign: TextAlign.center,
                 style: MyStyles.white16700,
               )

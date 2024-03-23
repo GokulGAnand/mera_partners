@@ -59,7 +59,7 @@ class LiveCarsListViewModel extends GetxController{
   void getCarData(int pageKey)async {
     try {
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&status=SCHEDULED&page=$pageKey&limit=$limit').toString());
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&status=SCHEDULED&page=$pageKey&limit=10'),headers: globals.headers);
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&status=SCHEDULED&page=$pageKey&limit=$limit'),headers: globals.headers);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body);
