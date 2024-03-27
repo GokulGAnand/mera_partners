@@ -8,6 +8,7 @@ import '../../view_model/procured_bill/procured_bill_view_model.dart';
 import '../../widgets/bank_details_bottom_sheet.dart';
 import '../../widgets/custom_button.dart';
 
+/// ignore: must_be_immutable
 class ProcuredBillScreen extends StatelessWidget {
     ProcuredBillScreen({super.key});
    ProcuredBillScreenViewModel viewModel = Get.isRegistered<ProcuredBillScreenViewModel>()? Get.find<ProcuredBillScreenViewModel>()  : Get.put(ProcuredBillScreenViewModel());

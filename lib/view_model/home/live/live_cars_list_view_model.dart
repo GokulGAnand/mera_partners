@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:evaluator_app/service/socket_service.dart';
+import 'package:evaluator_app/utils/strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -11,17 +13,19 @@ import '../../../service/endpoints.dart';
 import '../../../service/exception_error_util.dart';
 import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-class LiveCarsListViewModel extends GetxController{
-
+class LiveCarsListViewModel extends GetxController {
   var liveCarsResponse = LiveCarsResponse().obs;
   final Rx<PageController> pageController = PageController(initialPage: 0).obs;
-  // the index of the current page
   var activePage = 0.obs;
-  late IO.Socket socket;
-
+  SocketService? socketService;
   Timer? carouselTimer;
+  List<int> bid = [2000, 5000, 10000];
+  RxInt bidValue = 172000.obs;
+  final PagingController<int, Data> infinitePagingController = PagingController(firstPageKey: 1);
+  int limit = 10;
+  Rx<TextEditingController> autoBidController = TextEditingController().obs;
+  Rx<TextEditingController> bidController = TextEditingController().obs;
 
   Timer getTimer() {
     return Timer.periodic(const Duration(seconds: 3), (timer) {
@@ -37,60 +41,42 @@ class LiveCarsListViewModel extends GetxController{
     });
   }
 
-  List<int> bid = [
-    2000,
-    5000,
-    10000
-  ];
-  RxInt bidValue = 172000.obs;
-
-  //declare pagination controller
-  final PagingController<int,Data> infinitePagingController=PagingController(firstPageKey: 1);
-  int limit = 10;
-
   @override
-  void onInit() {
+  void onInit() async {
     pageController.value = PageController(initialPage: 0, viewportFraction: 0.85);
     carouselTimer = getTimer();
     infinitePagingController.addPageRequestListener((pageKey) {
       getCarData(pageKey);
     });
-    initSocket();
+    socketService = await SocketService().connectToSocket();
     super.onInit();
   }
-  
-  void initSocket() async {
-    // var response = await http.get(Uri.parse("http://192.168.1.12:8000/api/v1/auction/65da50e0b3e80a24a02fe594"),
-    //   headers: globals.headers,
-    // );
-    // print(response.toString());
-    socket = IO.io("http://192.168.1.12:8000", <String, dynamic>{
-      'transports': ['websocket'],
-      'autoConnect': false,
-    });
-    socket.connect();
-    socket.on('getBidInfo', (data) => (data) {
-      print(data.toString());
-    });
-  }
-  
-  void placeBid()async {
-    // var response = await http.post(Uri.parse( "http://192.168.1.12:8000/api/v1/auction/bid"),headers: globals.headers,
-    //   body: jsonEncode({
-    //     "amount":100000000,
-    //     "carId":"65e80b6c5e64f7a09a29310a"
-    //   })
-    // );
-    socket.emit("bidInfo",{
-      "amount":100000000,
-      "carId":"65e80b6c5e64f7a09a29310a"
-    });
+
+  void placeBid(amount, carId) async {
+    try {
+      //todo change url and data
+      socketService?.sendSocketRequest("bidInfo", {"amount": 100000, "carId": "65dd5e7fb28cddf13dc9a68c"});
+      var response = await http.post(Uri.parse("http://192.168.1.10:8000/api/v1/auction/bid"), headers: globals.jsonHeaders, body: jsonEncode({"amount": 100000, "carId": "65dd5e7fb28cddf13dc9a68c"}));
+      log(response.body);
+      if(response.statusCode == 200){
+        CustomToast.instance.showMsgWithIcon(MyStrings.bidPlaced, null);
+      }else{
+        CustomToast.instance.showMsg(MyStrings.somethingWentWrong);
+      }
+    } catch (e) {
+      CustomToast.instance.showMsg(MyStrings.unableToConnect);
+      log(e.toString());
+    }
   }
 
-  void getCarData(int pageKey)async {
+  void listenSocket(){
+    socketService?.getSocketResponse('getBidInfo',);
+  }
+
+  void getCarData(int pageKey) async {
     try {
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&status=SCHEDULED&page=$pageKey&limit=$limit').toString());
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&status=SCHEDULED&page=$pageKey&limit=$limit'),headers: globals.headers);
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&status=SCHEDULED&page=$pageKey&limit=$limit'), headers: globals.headers);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body);
@@ -102,7 +88,7 @@ class LiveCarsListViewModel extends GetxController{
           final nextPageKey = pageKey + 1;
           infinitePagingController.appendPage(liveCarsResponse.value.data!, nextPageKey);
         }
-      }else{
+      } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());
       }

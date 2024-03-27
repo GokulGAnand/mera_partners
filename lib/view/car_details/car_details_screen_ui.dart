@@ -65,7 +65,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             (carDetailsScreenViewModel.carStatus != "")?Container(
               width: double.infinity,
               height: 258,
-              padding: EdgeInsets.all(32),
+              padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
                 color: MyColors.black3.withOpacity(0.7),),
               child: Image.asset((carDetailsScreenViewModel.carStatus == "bid won")?MyImages.bidWon
@@ -105,7 +105,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             :(carDetailsScreenViewModel.carStatus == "car sold")? MyColors.yellow
             :null,
             gradient: (carDetailsScreenViewModel.carStatus != "")?null
-            :LinearGradient(
+            :const LinearGradient(
               end: Alignment(2.00, 0.00),
               begin: Alignment(-1, 0),
               colors: [MyColors.kPrimaryColor, MyColors.black5],
@@ -123,7 +123,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                 :(carDetailsScreenViewModel.carStatus == "car sold")? MyStyles.pageTitleStyle
                 :MyStyles.whiteTitleStyle,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               Text(

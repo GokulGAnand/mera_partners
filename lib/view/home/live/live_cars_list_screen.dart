@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:evaluator_app/model/response/live/live_cars_list_response.dart';
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/widgets/custom_bid_bottom_sheet.dart';
@@ -11,19 +12,17 @@ import '../../../widgets/custom_car_detail_card.dart';
 class LiveCarsListScreen extends StatelessWidget {
   LiveCarsListScreen({super.key});
 
-  LiveCarsListViewModel controller = Get.isRegistered<LiveCarsListViewModel>()
-      ? Get.find<LiveCarsListViewModel>()
-      : Get.put(LiveCarsListViewModel());
+  LiveCarsListViewModel controller = Get.isRegistered<LiveCarsListViewModel>() ? Get.find<LiveCarsListViewModel>() : Get.put(LiveCarsListViewModel());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: PagedListView<int, Data>(
-                    pagingController: controller.infinitePagingController,
-                    builderDelegate: PagedChildBuilderDelegate<Data>(
+        padding: const EdgeInsets.all(8.0),
+        child: PagedListView<int, Data>(
+          pagingController: controller.infinitePagingController,
+          builderDelegate: PagedChildBuilderDelegate<Data>(
               // itemCount: controller.liveCarsResponse.value.data?.length,
               // padding: const EdgeInsets.all(8),
               itemBuilder: ((context, item, index) {
@@ -32,26 +31,18 @@ class LiveCarsListScreen extends StatelessWidget {
                 Get.toNamed(AppRoutes.carDetailsScreen);
               },
               isOtb: false,
-              isScheduled:
-                  item.status?.toLowerCase() == 'scheduled' ? true : false,
+              isScheduled: item.status?.toLowerCase() == 'scheduled' ? true : false,
               imageUrl: item.rearRight?.url ?? '',
               carLocation: item.vehicleLocation ?? '',
               bidStatus: item.status ?? '',
               bidAmount: item.totalBidder.toString(),
               carModel: item.model ?? '',
               carVariant: item.variant ?? '',
-              rating: ((item.engineStar ??
-                      0 +
-                          (item.exteriorStar ?? 0) +
-                          (item.interiorAndElectricalStar ?? 0) +
-                          (item.testDriveStar ?? 0)) /
-                  4),
+              rating: ((item.engineStar ?? 0 + (item.exteriorStar ?? 0) + (item.interiorAndElectricalStar ?? 0) + (item.testDriveStar ?? 0)) / 4),
               fuelType: item.fuelType ?? '',
               id: item.uniqueId.toString(),
               fmv: item.realValue.toString(),
-              kmDriven: item.odometerReading != null
-                  ? item.odometerReading.toString()
-                  : '0',
+              kmDriven: item.odometerReading != null ? item.odometerReading.toString() : '0',
               ownerShip: item.ownershipNumber ?? '',
               transmission: item.transmission ?? '',
               images: [
@@ -68,6 +59,7 @@ class LiveCarsListScreen extends StatelessWidget {
                     context: context,
                     builder: (context) {
                       return CustomBidBottomSheet(
+                        amountController: controller.autoBidController.value,
                         isAutoBid: true,
                         bid: controller.bid,
                         bidValue: controller.bidValue,
@@ -81,22 +73,24 @@ class LiveCarsListScreen extends StatelessWidget {
                     context: context,
                     builder: (context) {
                       return CustomBidBottomSheet(
+                        amountController: controller.bidController.value,
                         bid: controller.bid,
                         bidValue: controller.bidValue,
                         onBidPressed: () {
                           try {
-                            controller.placeBid();
+                            controller.placeBid(controller.bidController.value.text, item.sId);
+                            Navigator.of(context).pop();
                           } catch (e) {
-                            print(e);
+                            log(e.toString());
                           }
                         },
                       );
                     });
               },
             );
-                    })),
-                  ),
-          )),
+          })),
+        ),
+      )),
     );
   }
 }

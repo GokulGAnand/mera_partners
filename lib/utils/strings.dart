@@ -324,6 +324,7 @@ class MyStrings {
   static const String ok = "Ok";
   static const String cancel = "Cancel";
   static const String unableToConnect = "Unable to connect server";
+  static const String somethingWentWrong = "Something went wrong";
   static const String dealerProof = "Dealer Proof";
   static const String paySuccess = "Payment Successful";
   static const String payFail = "Payment Failed";

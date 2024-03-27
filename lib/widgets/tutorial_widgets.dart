@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -56,7 +57,7 @@ class TutorialWidgets extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 5),
                 child: Text.rich(
                   TextSpan(
-                      text: '${subtitle}',
+                      text: '$subtitle',
                       style: MyStyles.black15400,
                       children: [
                         TextSpan(
@@ -96,7 +97,7 @@ class TutorialWidgets extends StatelessWidget {
               Obx(
                 () => CustomElevatedButton(
                   onPressed: () {
-                    print('Current Page: ${controller.page.value}');
+                    log('Current Page: ${controller.page.value}');
                     if (controller.page.value == 3) {
                       Navigator.of(context).popUntil((route) => route.isFirst);
                     } else {

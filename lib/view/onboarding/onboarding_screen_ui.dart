@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:evaluator_app/utils/images.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class OnboardingScreen extends  GetView<OnboardingScreenViewModel> {
           controller: controller.indicator,
           onPageChanged: ((value) {
             controller.page.value = value;
-            print(controller.page.value);
+            log(controller.page.value.toString());
           }),
           children: const [
             // start page onboarding

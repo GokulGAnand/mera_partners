@@ -5,7 +5,7 @@ import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/notification_widget.dart';
 
 class NotificationScreen extends StatelessWidget {
-  const NotificationScreen({Key? key});
+  const NotificationScreen({super.key,});
 
   @override
   Widget build(BuildContext context) {

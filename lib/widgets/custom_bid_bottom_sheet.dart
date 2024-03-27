@@ -10,20 +10,19 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+/// ignore: must_be_immutable
 class CustomBidBottomSheet extends StatelessWidget {
-  CustomBidBottomSheet(
-      {required this.bid,
-      required this.bidValue,
-      this.isAutoBid = false,
-      super.key, this.onBidPressed});
+  CustomBidBottomSheet({required this.bid, required this.bidValue, this.isAutoBid = false, super.key, this.onBidPressed, this.amountController});
+
   final List<int> bid;
   RxInt bidValue;
   final bool isAutoBid;
   final void Function()? onBidPressed;
+  final TextEditingController? amountController;
+
   @override
   Widget build(BuildContext context) {
-    NumberFormat numberFormat =
-        NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
+    NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
     return Container(
       height: (isAutoBid) ? 442 : 363,
       padding: const EdgeInsets.all(16.0),
@@ -46,9 +45,7 @@ class CustomBidBottomSheet extends StatelessWidget {
                   width: 32,
                   height: 4,
                   margin: const EdgeInsets.only(bottom: 16),
-                  decoration: BoxDecoration(
-                      color: MyColors.grey,
-                      borderRadius: BorderRadius.circular(100)),
+                  decoration: BoxDecoration(color: MyColors.grey, borderRadius: BorderRadius.circular(100)),
                 ),
               ],
             ),
@@ -118,10 +115,7 @@ class CustomBidBottomSheet extends StatelessWidget {
             width: double.infinity,
             height: 54,
             margin: const EdgeInsets.symmetric(vertical: 15),
-            decoration: BoxDecoration(
-                color: MyColors.lightBlue,
-                borderRadius: BorderRadius.circular(4),
-                border: Border.all(color: MyColors.kPrimaryColor)),
+            decoration: BoxDecoration(color: MyColors.lightBlue, borderRadius: BorderRadius.circular(4), border: Border.all(color: MyColors.kPrimaryColor)),
             child: Row(
               children: [
                 InkWell(
@@ -163,12 +157,8 @@ class CustomBidBottomSheet extends StatelessWidget {
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 5),
-                      margin:
-                          EdgeInsets.only(right: (i == bid.length - 1) ? 0 : 8),
-                      decoration: BoxDecoration(
-                          color: MyColors.lightBlue,
-                          borderRadius: BorderRadius.circular(4),
-                          border: Border.all(color: MyColors.kPrimaryColor)),
+                      margin: EdgeInsets.only(right: (i == bid.length - 1) ? 0 : 8),
+                      decoration: BoxDecoration(color: MyColors.lightBlue, borderRadius: BorderRadius.circular(4), border: Border.all(color: MyColors.kPrimaryColor)),
                       child: Text(
                         '+ ${numberFormat.format(bid[i])}',
                         textAlign: TextAlign.center,
@@ -186,10 +176,7 @@ class CustomBidBottomSheet extends StatelessWidget {
           Obx(() {
             return CustomElevatedButton(
               onPressed: onBidPressed,
-              buttonText: ((isAutoBid)
-                      ? MyStrings.confirmAutoBid
-                      : MyStrings.confirmBid) +
-                  numberFormat.format(bidValue.value),
+              buttonText: ((isAutoBid) ? MyStrings.confirmAutoBid : MyStrings.confirmBid) + numberFormat.format(bidValue.value),
               textStyle: MyStyles.white14700,
             );
           })
