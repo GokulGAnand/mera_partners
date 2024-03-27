@@ -83,6 +83,13 @@ class LiveCarsListScreen extends StatelessWidget {
                       return CustomBidBottomSheet(
                         bid: controller.bid,
                         bidValue: controller.bidValue,
+                        onBidPressed: () {
+                          try {
+                            controller.placeBid();
+                          } catch (e) {
+                            print(e);
+                          }
+                        },
                       );
                     });
               },

@@ -6,4 +6,6 @@ class EndPoints {
   static String login = 'auth/dealerLogin';
   static String verifyOtp = 'auth/verifyOtp';
   static String carBasic = 'car-basic';
+  static String auction = 'auction/';
+  static String bid = 'bid';
 }

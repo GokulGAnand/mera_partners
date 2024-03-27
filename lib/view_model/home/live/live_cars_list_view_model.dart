@@ -11,6 +11,7 @@ import '../../../service/endpoints.dart';
 import '../../../service/exception_error_util.dart';
 import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class LiveCarsListViewModel extends GetxController{
 
@@ -18,6 +19,7 @@ class LiveCarsListViewModel extends GetxController{
   final Rx<PageController> pageController = PageController(initialPage: 0).obs;
   // the index of the current page
   var activePage = 0.obs;
+  late IO.Socket socket;
 
   Timer? carouselTimer;
 
@@ -53,7 +55,36 @@ class LiveCarsListViewModel extends GetxController{
     infinitePagingController.addPageRequestListener((pageKey) {
       getCarData(pageKey);
     });
+    initSocket();
     super.onInit();
+  }
+  
+  void initSocket() async {
+    // var response = await http.get(Uri.parse("http://192.168.1.12:8000/api/v1/auction/65da50e0b3e80a24a02fe594"),
+    //   headers: globals.headers,
+    // );
+    // print(response.toString());
+    socket = IO.io("http://192.168.1.12:8000", <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': false,
+    });
+    socket.connect();
+    socket.on('getBidInfo', (data) => (data) {
+      print(data.toString());
+    });
+  }
+  
+  void placeBid()async {
+    // var response = await http.post(Uri.parse( "http://192.168.1.12:8000/api/v1/auction/bid"),headers: globals.headers,
+    //   body: jsonEncode({
+    //     "amount":100000000,
+    //     "carId":"65e80b6c5e64f7a09a29310a"
+    //   })
+    // );
+    socket.emit("bidInfo",{
+      "amount":100000000,
+      "carId":"65e80b6c5e64f7a09a29310a"
+    });
   }
 
   void getCarData(int pageKey)async {

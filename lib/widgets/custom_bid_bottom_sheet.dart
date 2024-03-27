@@ -15,10 +15,11 @@ class CustomBidBottomSheet extends StatelessWidget {
       {required this.bid,
       required this.bidValue,
       this.isAutoBid = false,
-      super.key});
+      super.key, this.onBidPressed});
   final List<int> bid;
   RxInt bidValue;
   final bool isAutoBid;
+  final void Function()? onBidPressed;
   @override
   Widget build(BuildContext context) {
     NumberFormat numberFormat =
@@ -184,7 +185,7 @@ class CustomBidBottomSheet extends StatelessWidget {
           ),
           Obx(() {
             return CustomElevatedButton(
-              onPressed: () {},
+              onPressed: onBidPressed,
               buttonText: ((isAutoBid)
                       ? MyStrings.confirmAutoBid
                       : MyStrings.confirmBid) +
