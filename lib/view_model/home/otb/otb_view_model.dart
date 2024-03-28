@@ -14,25 +14,7 @@ import '../../../widgets/progressbar.dart';
 
 class OTBCarsListViewModel extends GetxController {
   var carsListResponse = LiveCarsResponse().obs;
-  final Rx<PageController> pageController = PageController(initialPage: 0).obs;
-  // the index of the current page
-  var activePage = 0.obs;
 
-  Timer? carouselTimer;
-
-  Timer getTimer() {
-    return Timer.periodic(const Duration(seconds: 3), (timer) {
-      if (activePage.value == 4) {
-        activePage.value = 0;
-      }
-      pageController.value.animateToPage(
-        activePage.value,
-        duration: const Duration(seconds: 1),
-        curve: Curves.easeInOutCirc,
-      );
-      activePage.value++;
-    });
-  }
 
   //declare pagination controller
   final PagingController<int,Data> infinitePagingController=PagingController(firstPageKey: 1);
@@ -40,8 +22,6 @@ class OTBCarsListViewModel extends GetxController {
 
   @override
   void onInit() {
-    pageController.value = PageController(initialPage: 0, viewportFraction: 0.85);
-    carouselTimer = getTimer();
     infinitePagingController.addPageRequestListener((pageKey) {
       getCarData(pageKey);
     });
