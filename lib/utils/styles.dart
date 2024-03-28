@@ -171,7 +171,7 @@ class MyStyles {
   );
   static const black18700 = TextStyle(
       fontWeight: FontWeight.w700,
-      fontSize: 16,
+      fontSize: 18,
       color:  MyColors.subTitleColor
   );
   static const black12500 =TextStyle(

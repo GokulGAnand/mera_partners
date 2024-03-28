@@ -16,7 +16,7 @@ import '../../../widgets/progressbar.dart';
 class LiveCarsListViewModel extends GetxController {
   var liveCarsResponse = LiveCarsResponse().obs;
   SocketService? socketService;
-  List<int> bid = [2000, 5000, 10000];
+  List<int> bid = [5000, 10000, 15000];
   RxInt bidValue = 172000.obs;
   final PagingController<int, Data> infinitePagingController = PagingController(firstPageKey: 1);
   int limit = 10;
@@ -30,6 +30,14 @@ class LiveCarsListViewModel extends GetxController {
       getCarData(pageKey);
     });
     socketService = await SocketService().connectToSocket();
+    bidController.value.addListener(() {
+      if (bidController.value.text.length > 3) {
+        bidController.value.selection = TextSelection.fromPosition(
+          TextPosition(offset: bidController.value.text.length - 3),
+        );
+      }
+    });
+
     super.onInit();
   }
 

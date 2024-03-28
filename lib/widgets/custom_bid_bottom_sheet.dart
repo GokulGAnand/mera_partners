@@ -5,16 +5,18 @@ import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
+import 'package:evaluator_app/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 /// ignore: must_be_immutable
 class CustomBidBottomSheet extends StatelessWidget {
-  CustomBidBottomSheet({required this.bid, required this.bidValue, this.isAutoBid = false, super.key, this.onBidPressed, this.amountController});
+  CustomBidBottomSheet({required this.bidValue, this.isAutoBid = false, super.key, this.onBidPressed, this.amountController});
 
-  final List<int> bid;
+  final List<int> bid = [5000, 10000, 15000];
   RxInt bidValue;
   final bool isAutoBid;
   final void Function()? onBidPressed;
@@ -126,14 +128,27 @@ class CustomBidBottomSheet extends StatelessWidget {
                 const VerticalDivider(
                   color: MyColors.kPrimaryColor,
                 ),
-                Obx(() {
-                  return Expanded(
-                      child: Text(
-                    numberFormat.format(bidValue.value),
-                    textAlign: TextAlign.center,
-                    style: MyStyles.black18700,
-                  ));
-                }),
+                // Obx(() {
+                //   return Expanded(
+                //       child: Text(
+                //     numberFormat.format(bidValue.value),
+                //     textAlign: TextAlign.center,
+                //     style: MyStyles.black18700,
+                //   ));
+                // }),
+                Expanded(child: BidTextFormField(
+                  controller: amountController ?? TextEditingController(),
+                  keyboardType: const TextInputType.numberWithOptions(decimal: false),
+                  inputFormatter: [FilteringTextInputFormatter.digitsOnly,],
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Value cannot be empty";
+                    } else if ((int.tryParse(value) ?? 0) < bidValue.value) {
+                      return "Bid nominal can't be lower than the initial price";
+                    }
+                    return null;
+                  },
+                ),),
                 const VerticalDivider(
                   color: MyColors.kPrimaryColor,
                 ),
