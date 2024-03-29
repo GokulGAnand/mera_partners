@@ -71,7 +71,7 @@ class Procured extends StatelessWidget {
                     buttonColor: MyColors.kPrimaryColor.withOpacity(0.3),
                     buttonText: MyStrings.viewBill,
                     textStyle: MyStyles.primary14500,
-                  ),
+                  ), showButton: true,
                 );
               }),
         ],

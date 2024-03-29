@@ -1,17 +1,22 @@
+import 'package:evaluator_app/model/response/live/live_cars_list_response.dart';
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'custom_toast.dart';
 
 class CustomOrderContainer extends StatelessWidget {
-  const CustomOrderContainer(
+   CustomOrderContainer(
       {required this.button,
       this.dealStatus,
       this.backgroundBlackOpacity,
+        required this.showButton,
       super.key});
 
   final Widget button;
   final Widget? dealStatus;
   final Widget? backgroundBlackOpacity;
+  final bool showButton;
 
   @override
   Widget build(BuildContext context) {
@@ -76,19 +81,26 @@ class CustomOrderContainer extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.copy_rounded,
-                        size: 16,
-                      ),
-                      Text(
-                        "ID:73423642 ",
-                        style: MyStyles.subtitle12400,
-                      ),
-                    ],
+                  child: GestureDetector(
+                    onTap: () {
+                      Clipboard.setData(ClipboardData(text: ''));
+                      CustomToast.instance.showMsg('Text copied to clipboard');
+                    },
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.copy_rounded,
+                          size: 16,
+                        ),
+                        Text(
+                          "ID:73423642 ",
+                          style: MyStyles.subtitle12400,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
+
                 Text(
                   "Final: ₹19,99,999",
                   style: MyStyles.primary14700,
@@ -98,7 +110,7 @@ class CustomOrderContainer extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 40,
-                  child: button,
+                  child: showButton ? button : null,
                 ),
               ],
             ),

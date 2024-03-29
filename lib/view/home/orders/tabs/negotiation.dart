@@ -222,7 +222,7 @@ class _NegotiationState extends State<Negotiation> {
                       buttonText: MyStrings.viewDetail,
                       textStyle: MyStyles.primary14500,
                     );
-                  }),
+                  }), showButton: true,
                 );
               }),
         ],
