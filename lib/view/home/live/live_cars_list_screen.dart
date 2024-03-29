@@ -28,7 +28,7 @@ class LiveCarsListScreen extends StatelessWidget {
               itemBuilder: ((context, item, index) {
             return CustomCarDetailCard(
               onCarTapped: () {
-                Get.toNamed(AppRoutes.carDetailsScreen);
+                Get.toNamed(AppRoutes.carDetailsScreen, arguments: item.sId);
               },
               isOtb: false,
               isScheduled: item.status?.toLowerCase() == 'scheduled' ? true : false,

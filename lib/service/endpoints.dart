@@ -1,5 +1,6 @@
 class EndPoints {
   static String baseUrl = 'https://api.meracars.com/api/v1/';
+  static String evaluation = 'evaluation';
   static String users = 'users/';
   static String createOrder = 'createOder';
   static String verifyPayment = 'verifyPayment';
@@ -8,4 +9,5 @@ class EndPoints {
   static String carBasic = 'car-basic';
   static String auction = 'auction/';
   static String bid = 'bid';
+  static String report = 'report/';
 }
