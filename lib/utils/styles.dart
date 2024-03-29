@@ -171,7 +171,7 @@ class MyStyles {
   );
   static const black18700 = TextStyle(
       fontWeight: FontWeight.w700,
-      fontSize: 16,
+      fontSize: 18,
       color:  MyColors.subTitleColor
   );
   static const black12500 =TextStyle(
@@ -325,6 +325,13 @@ class MyStyles {
 
   static const primary16500 = TextStyle(
     color: MyColors.kPrimaryColor,
+    fontSize: 16,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
+  );
+
+  static const black6_16500 = TextStyle(
+    color: MyColors.black6,
     fontSize: 16,
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w500,

@@ -38,7 +38,7 @@ class LiveCarsResponse {
 
 class Data {
   String? sId;
-  int? uniqueId;
+  num? uniqueId;
   String? make;
   String? model;
   String? variant;
@@ -52,23 +52,22 @@ class Data {
   String? status;
   String? createdAt;
   int? realValue;
+  String? winner;
+  String? monthAndYearOfManufacture;
+  num? odometerReading;
+  num? statusValues;
   Front? front;
   Front? frontLeft;
   Front? frontRight;
-  Front? frontWithHoodOpen;
-  Front? rear;
   Front? rearLeft;
+  Front? rear;
   Front? rearRight;
-  String? monthAndYearOfManufacture;
-  int? odometerReading;
-  Front? engineCompartment;
-  int? statusValues;
-  int? engineStar;
+  num? engineStar;
   String? transmission;
-  double? exteriorStar;
-  int? testDriveStar;
-  int? interiorAndElectricalStar;
-  String? specialComments;
+  num? exteriorStar;
+  num? testDriveStar;
+  num? interiorAndElectricalStar;
+  Front? engineCompartment;
 
   Data(
       {this.sId,
@@ -86,23 +85,22 @@ class Data {
         this.status,
         this.createdAt,
         this.realValue,
+        this.winner,
+        this.monthAndYearOfManufacture,
+        this.odometerReading,
+        this.statusValues,
         this.front,
         this.frontLeft,
         this.frontRight,
-        this.frontWithHoodOpen,
-        this.rear,
         this.rearLeft,
+        this.rear,
         this.rearRight,
-        this.monthAndYearOfManufacture,
-        this.odometerReading,
-        this.engineCompartment,
-        this.statusValues,
         this.engineStar,
         this.transmission,
         this.exteriorStar,
         this.testDriveStar,
         this.interiorAndElectricalStar,
-        this.specialComments});
+        this.engineCompartment});
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -120,6 +118,10 @@ class Data {
     status = json['status'];
     createdAt = json['createdAt'];
     realValue = json['realValue'];
+    winner = json['winner'];
+    monthAndYearOfManufacture = json['monthAndYearOfManufacture'];
+    odometerReading = json['odometerReading'];
+    statusValues = json['statusValues'];
     front = json['front'] != null ? Front.fromJson(json['front']) : null;
     frontLeft = json['frontLeft'] != null
         ? Front.fromJson(json['frontLeft'])
@@ -127,27 +129,20 @@ class Data {
     frontRight = json['frontRight'] != null
         ? Front.fromJson(json['frontRight'])
         : null;
-    frontWithHoodOpen = json['frontWithHoodOpen'] != null
-        ? Front.fromJson(json['frontWithHoodOpen'])
-        : null;
-    rear = json['rear'] != null ? Front.fromJson(json['rear']) : null;
     rearLeft =
     json['rearLeft'] != null ? Front.fromJson(json['rearLeft']) : null;
+    rear = json['rear'] != null ? Front.fromJson(json['rear']) : null;
     rearRight = json['rearRight'] != null
         ? Front.fromJson(json['rearRight'])
         : null;
-    monthAndYearOfManufacture = json['monthAndYearOfManufacture'];
-    odometerReading = json['odometerReading'];
-    engineCompartment = json['engineCompartment'] != null
-        ? Front.fromJson(json['engineCompartment'])
-        : null;
-    statusValues = json['statusValues'];
     engineStar = json['engineStar'];
     transmission = json['transmission'];
     exteriorStar = json['exteriorStar'];
     testDriveStar = json['testDriveStar'];
     interiorAndElectricalStar = json['interiorAndElectricalStar'];
-    specialComments = json['specialComments'];
+    engineCompartment = json['engineCompartment'] != null
+        ? Front.fromJson(json['engineCompartment'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -167,6 +162,10 @@ class Data {
     data['status'] = status;
     data['createdAt'] = createdAt;
     data['realValue'] = realValue;
+    data['winner'] = winner;
+    data['monthAndYearOfManufacture'] = monthAndYearOfManufacture;
+    data['odometerReading'] = odometerReading;
+    data['statusValues'] = statusValues;
     if (front != null) {
       data['front'] = front!.toJson();
     }
@@ -176,30 +175,23 @@ class Data {
     if (frontRight != null) {
       data['frontRight'] = frontRight!.toJson();
     }
-    if (frontWithHoodOpen != null) {
-      data['frontWithHoodOpen'] = frontWithHoodOpen!.toJson();
+    if (rearLeft != null) {
+      data['rearLeft'] = rearLeft!.toJson();
     }
     if (rear != null) {
       data['rear'] = rear!.toJson();
     }
-    if (rearLeft != null) {
-      data['rearLeft'] = rearLeft!.toJson();
-    }
     if (rearRight != null) {
       data['rearRight'] = rearRight!.toJson();
     }
-    data['monthAndYearOfManufacture'] = monthAndYearOfManufacture;
-    data['odometerReading'] = odometerReading;
-    if (engineCompartment != null) {
-      data['engineCompartment'] = engineCompartment!.toJson();
-    }
-    data['statusValues'] = statusValues;
     data['engineStar'] = engineStar;
     data['transmission'] = transmission;
     data['exteriorStar'] = exteriorStar;
     data['testDriveStar'] = testDriveStar;
     data['interiorAndElectricalStar'] = interiorAndElectricalStar;
-    data['specialComments'] = specialComments;
+    if (engineCompartment != null) {
+      data['engineCompartment'] = engineCompartment!.toJson();
+    }
     return data;
   }
 }

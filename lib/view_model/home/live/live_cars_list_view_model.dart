@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:evaluator_app/service/socket_service.dart';
@@ -16,39 +15,29 @@ import '../../../widgets/progressbar.dart';
 
 class LiveCarsListViewModel extends GetxController {
   var liveCarsResponse = LiveCarsResponse().obs;
-  final Rx<PageController> pageController = PageController(initialPage: 0).obs;
-  var activePage = 0.obs;
   SocketService? socketService;
-  Timer? carouselTimer;
-  List<int> bid = [2000, 5000, 10000];
+  List<int> bid = [5000, 10000, 15000];
   RxInt bidValue = 172000.obs;
   final PagingController<int, Data> infinitePagingController = PagingController(firstPageKey: 1);
   int limit = 10;
   Rx<TextEditingController> autoBidController = TextEditingController().obs;
   Rx<TextEditingController> bidController = TextEditingController().obs;
 
-  Timer getTimer() {
-    return Timer.periodic(const Duration(seconds: 3), (timer) {
-      if (activePage.value == 4) {
-        activePage.value = 0;
-      }
-      pageController.value.animateToPage(
-        activePage.value,
-        duration: const Duration(seconds: 1),
-        curve: Curves.easeInOutCirc,
-      );
-      activePage.value++;
-    });
-  }
 
   @override
   void onInit() async {
-    pageController.value = PageController(initialPage: 0, viewportFraction: 0.85);
-    carouselTimer = getTimer();
     infinitePagingController.addPageRequestListener((pageKey) {
       getCarData(pageKey);
     });
     socketService = await SocketService().connectToSocket();
+    bidController.value.addListener(() {
+      if (bidController.value.text.length > 3) {
+        bidController.value.selection = TextSelection.fromPosition(
+          TextPosition(offset: bidController.value.text.length - 3),
+        );
+      }
+    });
+
     super.onInit();
   }
 

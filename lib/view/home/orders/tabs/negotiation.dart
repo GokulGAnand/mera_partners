@@ -95,133 +95,58 @@ class _NegotiationState extends State<Negotiation> {
                 mainAxisExtent: 272,
               ),
               itemBuilder: (context, index) {
-                return CustomOrderContainer(
-                  backgroundBlackOpacity: Obx(() {
-                    if (orderScreenViewModel.isNegotiation.value) {
-                      return Container(
-                        width: double.infinity,
-                        height: 107,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: const Alignment(0.00, -1.00),
-                            end: const Alignment(0, 1),
-                            colors: [
-                              MyColors.black3.withOpacity(0),
-                              MyColors.black3.withOpacity(0.7)
-                            ],
-                          ),
-                        ),
-                      );
-                    }
-                    return Container(
-                      width: double.infinity,
-                      height: 107,
-                      decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(8),
-                              topRight: Radius.circular(8)),
-                          color: MyColors.black3.withOpacity(0.4)),
-                    );
-                  }),
-                  dealStatus: Obx(() {
-                    if (orderScreenViewModel.isNegotiation.value) {
-                      return Container(
-                        // width: double.infinity,
-                        height: 25,
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment(-0.5, 0.00),
-                            end: Alignment(2, 0),
-                            colors: [MyColors.warning, MyColors.black5],
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                              MySvg.timer,
-                              width: 18,
+                return Obx(
+                  () {
+                    return CustomOrderContainer(
+                      backgroundBlackOpacity: Obx(() {
+                        if (orderScreenViewModel.isNegotiation.value) {
+                          return Container(
+                            width: double.infinity,
+                            height: 107,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: const Alignment(0.00, -1.00),
+                                end: const Alignment(0, 1),
+                                colors: [
+                                  MyColors.black3.withOpacity(0),
+                                  MyColors.black3.withOpacity(0.7)
+                                ],
+                              ),
                             ),
-                            const SizedBox(
-                              width: 3,
-                            ),
-                            const Text(
-                              "29min 59sec",
-                              style: MyStyles.white14700,
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                    return Container(
-                      // width: double.infinity,
-                      height: 25,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      decoration: const BoxDecoration(
-                        color: MyColors.warning,
-                      ),
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(
-                            MySvg.dealLost,
-                            width: 18,
-                          ),
-                          const SizedBox(
-                            width: 3,
-                          ),
-                          const Text(
-                            MyStrings.dealLost,
-                            style: MyStyles.whiteTitleStyle,
-                          ),
-                        ],
-                      ),
+                          );
+                        }
+                        return Container(
+                          width: double.infinity,
+                          height: 107,
+                          decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(8),
+                                  topRight: Radius.circular(8)),
+                              color: MyColors.black3.withOpacity(0.4)),
+                        );
+                      }),
+                      dealStatus: (orderScreenViewModel.isNegotiation.value)?"timer":"deal lost",
+                      buttonStatus: (orderScreenViewModel.isNegotiation.value)?"completed":"view details",
+                      buttonText:  (orderScreenViewModel.isNegotiation.value)?MyStrings.viewOffer:MyStrings.viewDetail,
+                      onPressed: (){
+                        if (orderScreenViewModel.isNegotiation.value) {
+                           showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                context: context,
+                                builder: (context) {
+                                  return const NegotiationBottomSheet(
+                                    biddedAmount: 173000,
+                                    negotiatedAmount: 193000,
+                                  );
+                                });
+                        } else {
+                          Get.toNamed(AppRoutes.carDetailsScreen);
+                        }
+                      }, 
+                      showButton: true,
                     );
-                  }),
-                  button: Obx(() {
-                    if (orderScreenViewModel.isNegotiation.value) {
-                      return CustomElevatedButton(
-                        onPressed: () {
-                          showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (context) {
-                              return const NegotiationBottomSheet(
-                                biddedAmount: 173000,
-                                negotiatedAmount: 193000,
-                              );
-                            });
-                        },
-                        buttonStyle: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.all(2),
-                            backgroundColor: MyColors.green3,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                side: BorderSide.none)),
-                        buttonColor: MyColors.green3,
-                        buttonText: MyStrings.viewOffer,
-                        textStyle: MyStyles.white14500,
-                      );
-                    }
-                    return CustomElevatedButton(
-                      onPressed: () {
-                        Get.toNamed(AppRoutes.carDetailsScreen);
-                      },
-                      buttonStyle: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.all(2),
-                          backgroundColor:
-                              MyColors.kPrimaryColor.withOpacity(0.1),
-                          elevation: 0,
-                          shadowColor: Colors.transparent,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6),
-                              side: const BorderSide(color: MyColors.kPrimaryColor))),
-                      buttonColor: MyColors.kPrimaryColor.withOpacity(0.3),
-                      buttonText: MyStrings.viewDetail,
-                      textStyle: MyStyles.primary14500,
-                    );
-                  }),
+                  }
                 );
               }),
         ],

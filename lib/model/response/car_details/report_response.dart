@@ -33,12 +33,19 @@ class Data {
     String? chasisNumber;
     String? monthAndYearOfManufacture;
     String? regDate;
+    String? rto;
     String? bodyType;
     String? color;
     num? odometerReading;
     String? rcAvailability;
     String? insurance;
+    String? ncb;
+    String? hypothecation;
+    String? loanStatus;
+    String? loanNoc;
     String? form35;
+    String? rcMismatch;
+    String? duplicateKey;
     String? regNumber;
     String? customerPrice;
 
@@ -48,12 +55,19 @@ class Data {
             this.chasisNumber,
             this.monthAndYearOfManufacture,
             this.regDate,
+            this.rto,
             this.bodyType,
             this.color,
             this.odometerReading,
             this.rcAvailability,
             this.insurance,
+            this.ncb,
+            this.hypothecation,
+            this.loanStatus,
+            this.loanNoc,
             this.form35,
+            this.rcMismatch,
+            this.duplicateKey,
             this.regNumber,
             this.customerPrice});
 
@@ -65,12 +79,19 @@ class Data {
         chasisNumber = json['chasisNumber'];
         monthAndYearOfManufacture = json['monthAndYearOfManufacture'];
         regDate = json['regDate'];
+        rto = json['rto'];
         bodyType = json['bodyType'];
         color = json['color'];
         odometerReading = json['odometerReading'];
         rcAvailability = json['rcAvailability'];
         insurance = json['insurance'];
+        ncb = json['ncb'];
+        hypothecation = json['hypothecation'];
+        loanStatus = json['loanStatus'];
+        loanNoc = json['loanNoc'];
         form35 = json['form35'];
+        rcMismatch = json['rcMismatch'];
+        duplicateKey = json['duplicateKey'];
         regNumber = json['regNumber'];
         customerPrice = json['customerPrice'];
     }
@@ -84,12 +105,19 @@ class Data {
         data['chasisNumber'] = chasisNumber;
         data['monthAndYearOfManufacture'] = monthAndYearOfManufacture;
         data['regDate'] = regDate;
+        data['rto'] = rto;
         data['bodyType'] = bodyType;
         data['color'] = color;
         data['odometerReading'] = odometerReading;
         data['rcAvailability'] = rcAvailability;
         data['insurance'] = insurance;
+        data['ncb'] = ncb;
+        data['hypothecation'] = hypothecation;
+        data['loanStatus'] = loanStatus;
+        data['loanNoc'] = loanNoc;
         data['form35'] = form35;
+        data['rcMismatch'] = rcMismatch;
+        data['duplicateKey'] = duplicateKey;
         data['regNumber'] = regNumber;
         data['customerPrice'] = customerPrice;
         return data;
@@ -1100,13 +1128,15 @@ class Battery {
 class ClusterPanel {
     String? name;
     String? url;
+    String? remarks;
     List<String>? condition;
 
-    ClusterPanel({this.name, this.url, this.condition});
+    ClusterPanel({this.name, this.url, this.remarks, this.condition});
 
     ClusterPanel.fromJson(Map<String, dynamic> json) {
         name = json['name'];
         url = json['url'];
+        remarks = json['remarks'];
         condition = json['condition'].cast<String>();
     }
 
@@ -1114,6 +1144,7 @@ class ClusterPanel {
         final Map<String, dynamic> data = <String, dynamic>{};
         data['name'] = name;
         data['url'] = url;
+        data['remarks'] = remarks;
         data['condition'] = condition;
         return data;
     }

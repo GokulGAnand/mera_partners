@@ -3,10 +3,12 @@
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
+import 'package:evaluator_app/view/tutorial/tutorial_screen_ui.dart';
 import 'package:evaluator_app/view_model/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,19 +22,49 @@ class _HomeScreenState extends State<HomeScreen> {
       ? Get.find<HomeScreenViewModel>()
       : Get.put(HomeScreenViewModel());
 
+
+  bool _tutorialShown = false;
+
   @override
   void initState() {
-    // showDialog(
-    //   barrierDismissible: false,
-    //   context: Get.context!,
-    //   builder: (context) => AlertDialog(
-    //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-    //     backgroundColor: MyColors.white,
-    //     content: TutorialScreen(),
-    //   ),
-    // );
     super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      _checkTutorial();
+    });
   }
+
+  Future<void> _checkTutorial() async {
+    if (!_tutorialShown) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      bool shown = prefs.getBool('tutorialShown') ?? false;
+      if (!shown) {
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12)),
+            backgroundColor: MyColors.white,
+            content: TutorialScreen(),
+          ),
+        ).then((_) {
+          _markTutorialAsShown();
+        });
+      }
+    }
+  }
+
+  Future<void> _markTutorialAsShown() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('tutorialShown', true);
+    setState(() {
+      _tutorialShown = true;
+    });
+  }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {

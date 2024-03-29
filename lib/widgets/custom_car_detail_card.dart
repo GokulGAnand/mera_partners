@@ -529,11 +529,11 @@ class CustomCarDetailCard extends StatelessWidget {
                         CustomElevatedButton(
                             buttonWidth: MediaQuery.of(context).size.width * 0.38,
                             buttonHeight: Dimens.defHeight,
-                            onPressed: globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name
+                            onPressed: bid,/*globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name
                                 ? bid
                                 : () {
                                     showPendingDialog();
-                                  },
+                                  },*/
                             buttonText: MyStrings.bid),
                       ],
                     ),

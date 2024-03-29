@@ -40,7 +40,7 @@ class CustomBottomSheet extends StatelessWidget {
               SizedBox(width: 20),
               Text(
                 MyStrings.bankAc,
-                style: MyStyles.black18700,
+                style: MyStyles.black16700,
               )
             ],
           ),

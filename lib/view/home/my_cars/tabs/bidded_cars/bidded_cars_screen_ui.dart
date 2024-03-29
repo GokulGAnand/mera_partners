@@ -57,7 +57,6 @@ class BidCarsListScreen extends StatelessWidget {
                                 builder: (context) {
                                   return CustomBidBottomSheet(
                                     isAutoBid: true,
-                                    bid: controller.bid,
                                     bidValue: controller.bidValue,
                                   );
                                 });
@@ -69,8 +68,7 @@ class BidCarsListScreen extends StatelessWidget {
                                 context: context,
                                 builder: (context) {
                                   return CustomBidBottomSheet(
-                                    bid: controller.bid,
-                                    bidValue: controller.bidValue,
+                                    bidValue: RxInt(item.highestBid ?? 0),
                                   );
                                 });
                           },

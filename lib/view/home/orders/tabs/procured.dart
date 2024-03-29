@@ -32,45 +32,10 @@ class Procured extends StatelessWidget {
               ),
               itemBuilder: (context, index) {
                 return CustomOrderContainer(
-                  dealStatus: Container(
-                    // width: double.infinity,
-                    height: 25,
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    decoration: const BoxDecoration(
-                      color: MyColors.green3,
-                    ),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                          MySvg.dealWon,
-                          width: 18,
-                        ),
-                        const SizedBox(
-                          width: 3,
-                        ),
-                        const Text(
-                          MyStrings.dealWon,
-                          style: MyStyles.whiteTitleStyle,
-                        ),
-                      ],
-                    ),
-                  ),
-                  button: CustomElevatedButton(
-                    onPressed: () {
-                      Get.toNamed(AppRoutes.procuredBill);
-                    },
-                    buttonStyle: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.all(2),
-                        backgroundColor:
-                            MyColors.kPrimaryColor.withOpacity(0.1),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6),
-                            side: const BorderSide(color: MyColors.kPrimaryColor))),
-                    buttonColor: MyColors.kPrimaryColor.withOpacity(0.3),
-                    buttonText: MyStrings.viewBill,
-                    textStyle: MyStyles.primary14500,
-                  ),
+                  dealStatus: "deal won",
+                  buttonStatus: "view details",
+                  buttonText: MyStrings.viewBill,
+                  showButton: true,
                 );
               }),
         ],

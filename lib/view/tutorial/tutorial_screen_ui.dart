@@ -21,7 +21,7 @@ class TutorialScreen extends GetView<TutorialScreenViewModel> {
         onPageChanged: ((value) {
           controller.page.value = value;
         }),
-        children: const [
+        children:  [
           TutorialWidgets(
             image: MyImages.scBid,
             title: MyStrings.stagesOfBidding,

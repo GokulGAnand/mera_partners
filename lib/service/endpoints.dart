@@ -1,6 +1,9 @@
 class EndPoints {
-  static String baseUrl = 'https://api.meracars.com/api/v1/';
-  static String evaluation = 'evaluation';
+  // static String baseUrl = 'https://api.meracars.com/api/v1/';
+  ///live server url
+  // static String baseUrl = 'https://api.meracars.com/api/v1/';
+  ///test server url
+  static String baseUrl = 'http://13.201.64.137:8080/api/v1/';
   static String users = 'users/';
   static String createOrder = 'createOder';
   static String verifyPayment = 'verifyPayment';
@@ -10,4 +13,5 @@ class EndPoints {
   static String auction = 'auction/';
   static String bid = 'bid';
   static String report = 'report/';
+  static String evaluation = 'evaluation';
 }

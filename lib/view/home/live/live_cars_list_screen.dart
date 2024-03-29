@@ -61,8 +61,7 @@ class LiveCarsListScreen extends StatelessWidget {
                       return CustomBidBottomSheet(
                         amountController: controller.autoBidController.value,
                         isAutoBid: true,
-                        bid: controller.bid,
-                        bidValue: controller.bidValue,
+                        bidValue: RxInt(item.highestBid ?? 0),
                       );
                     });
               },
@@ -74,8 +73,7 @@ class LiveCarsListScreen extends StatelessWidget {
                     builder: (context) {
                       return CustomBidBottomSheet(
                         amountController: controller.bidController.value,
-                        bid: controller.bid,
-                        bidValue: controller.bidValue,
+                        bidValue: RxInt(item.highestBid ?? 0),
                         onBidPressed: () {
                           try {
                             controller.placeBid(controller.bidController.value.text, item.sId);

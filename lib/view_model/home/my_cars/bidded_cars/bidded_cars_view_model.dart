@@ -1,7 +1,5 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:evaluator_app/utils/globals.dart' as globals;
@@ -15,25 +13,6 @@ import '../../../../widgets/progressbar.dart';
 class BidCarsListViewModel extends GetxController{
 
   var bidCarsResponse = LiveCarsResponse().obs;
-  final Rx<PageController> pageController = PageController(initialPage: 0).obs;
-  // the index of the current page
-  var activePage = 0.obs;
-
-  Timer? carouselTimer;
-
-  Timer getTimer() {
-    return Timer.periodic(const Duration(seconds: 3), (timer) {
-      if (activePage.value == 4) {
-        activePage.value = 0;
-      }
-      pageController.value.animateToPage(
-        activePage.value,
-        duration: const Duration(seconds: 1),
-        curve: Curves.easeInOutCirc,
-      );
-      activePage.value++;
-    });
-  }
 
   List<int> bid = [
     2000,
@@ -48,8 +27,6 @@ class BidCarsListViewModel extends GetxController{
 
   @override
   void onInit() {
-    pageController.value = PageController(initialPage: 0, viewportFraction: 0.85);
-    carouselTimer = getTimer();
     infinitePagingController.addPageRequestListener((pageKey) {
       getCarData(pageKey);
     });
