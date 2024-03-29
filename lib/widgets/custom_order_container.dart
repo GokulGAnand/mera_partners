@@ -38,7 +38,7 @@ class CustomOrderContainer extends StatelessWidget {
                 width: double.infinity,
                 height: 107,
                 alignment: Alignment.bottomCenter,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(8),
                         topRight: Radius.circular(8)),
@@ -54,8 +54,8 @@ class CustomOrderContainer extends StatelessWidget {
                       height: 107,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          begin: Alignment(0.00, -1.00),
-                          end: Alignment(0, 1),
+                          begin: const Alignment(0.00, -1.00),
+                          end: const Alignment(0, 1),
                           colors: [
                             MyColors.black3.withOpacity(0),
                             MyColors.black3.withOpacity(0.7)
@@ -71,11 +71,11 @@ class CustomOrderContainer extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   "2016 Duster",
                   style: MyStyles.black12400,
                 ),
-                Text(
+                const Text(
                   "110 PS RXZ 4X2 AMT",
                   style: MyStyles.black14700,
                 ),
@@ -100,8 +100,7 @@ class CustomOrderContainer extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                Text(
+                const Text(
                   "Final: ₹19,99,999",
                   style: MyStyles.primary14700,
                 ),

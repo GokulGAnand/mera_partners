@@ -102,7 +102,7 @@ class MyStyles {
     fontWeight: FontWeight.w700,
     height: 0,
   );
-  static const warning_red_18700 = TextStyle(
+  static const warningRed_18700 = TextStyle(
     color: MyColors.warning,
     fontSize: 18,
     fontFamily: 'DM Sans',
@@ -171,7 +171,7 @@ class MyStyles {
   );
   static const black18700 = TextStyle(
       fontWeight: FontWeight.w700,
-      fontSize: 16,
+      fontSize: 18,
       color:  MyColors.subTitleColor
   );
   static const black12500 =TextStyle(
@@ -403,5 +403,12 @@ class MyStyles {
     fontSize: 12,
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w400,
+  );
+  static const blue14500 = TextStyle(
+    color: MyColors.kPrimaryColor,
+    fontSize: 14,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
+    height: 0,
   );
 }

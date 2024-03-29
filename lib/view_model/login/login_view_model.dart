@@ -5,6 +5,7 @@ import 'package:evaluator_app/model/response/user_data/user_info_response.dart';
 import 'package:evaluator_app/service/endpoints.dart';
 import 'package:evaluator_app/service/exception_error_util.dart';
 import 'package:evaluator_app/utils/constants.dart';
+import 'package:evaluator_app/utils/enum.dart';
 import 'package:evaluator_app/utils/shared_pref_manager.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
@@ -81,7 +82,6 @@ class LoginScreenViewModel extends GetxController {
         ProgressBar.instance.stopProgressBar(context);
         log(response.body.toString());
         SharedPrefManager.instance.setStringAsync(Constants.phoneNum, mobileController.value.text);
-        // globals.contactNo = int.parse(mobileController.value.text.toString());
         userInfoResponse.value = UserInfoResponse.fromJson(jsonDecode(response.body));
         if (userInfoResponse.value.data != null) {
           if (userInfoResponse.value.data?.first.fullname != null) {
@@ -92,13 +92,13 @@ class LoginScreenViewModel extends GetxController {
           globals.userId = userInfoResponse.value.data?.first.userId;
           globals.documentStatus = userInfoResponse.value.data?.first.isDocumentsVerified;
           globals.addressProofFront = userInfoResponse.value.data?.first.addressProofFront != null ? true : false;
-          if (userInfoResponse.value.data?.first.isDocumentsVerified != null && userInfoResponse.value.data?.first.isDocumentsVerified == true) {
+          if (userInfoResponse.value.data?.first.isDocumentsVerified != null && userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.SUBMITTED.name) {
             Get.toNamed(AppRoutes.homeScreen);
-          }else if(userInfoResponse.value.data?.first.fullname == null){
+          } else if (userInfoResponse.value.data?.first.fullname == null) {
             Get.toNamed(AppRoutes.onboardingScreen);
-          }else if(userInfoResponse.value.data?.first.isDocumentsVerified == false || userInfoResponse.value.data?.first.addressProofFront == null){
+          } else if (userInfoResponse.value.data?.first.isDocumentsVerified?.toLowerCase() == DocumentStatus.NOTSUBMITTED.name.toLowerCase() || userInfoResponse.value.data?.first.addressProofFront == null) {
             Get.toNamed(AppRoutes.documentScreen);
-          }else{
+          } else {
             Get.toNamed(AppRoutes.onboardingScreen);
           }
         }

@@ -3,7 +3,6 @@ import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
-import 'package:evaluator_app/view/procured_bill/procured_bill_screen.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:evaluator_app/widgets/custom_order_container.dart';
 import 'package:flutter/material.dart';
@@ -22,10 +21,10 @@ class Procured extends StatelessWidget {
             height: 12,
           ),
           GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: 3,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 22,
                 mainAxisSpacing: 18,
@@ -36,8 +35,8 @@ class Procured extends StatelessWidget {
                   dealStatus: Container(
                     // width: double.infinity,
                     height: 25,
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: const BoxDecoration(
                       color: MyColors.green3,
                     ),
                     child: Row(
@@ -49,7 +48,7 @@ class Procured extends StatelessWidget {
                         const SizedBox(
                           width: 3,
                         ),
-                        Text(
+                        const Text(
                           MyStrings.dealWon,
                           style: MyStyles.whiteTitleStyle,
                         ),
@@ -61,13 +60,13 @@ class Procured extends StatelessWidget {
                       Get.toNamed(AppRoutes.procuredBill);
                     },
                     buttonStyle: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(2),
+                        padding: const EdgeInsets.all(2),
                         backgroundColor:
                             MyColors.kPrimaryColor.withOpacity(0.1),
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(6),
-                            side: BorderSide(color: MyColors.kPrimaryColor))),
+                            side: const BorderSide(color: MyColors.kPrimaryColor))),
                     buttonColor: MyColors.kPrimaryColor.withOpacity(0.3),
                     buttonText: MyStrings.viewBill,
                     textStyle: MyStyles.primary14500,

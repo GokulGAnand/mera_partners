@@ -40,10 +40,10 @@ class _OrdersScreenState extends State<OrdersScreen>
                   height: 50,
                   child: CustomTextFormField(
                       controller: TextEditingController(),
-                      prefixIcon: Icon(Icons.search),
+                      prefixIcon: const Icon(Icons.search),
                       borderColor: MyColors.kPrimaryColor.withOpacity(0.1),
                       focusedBorderColor: MyColors.kPrimaryColor,
-                      contentPadding: EdgeInsets.all(8),
+                      contentPadding: const EdgeInsets.all(8),
                       enabledBorderColor:
                           MyColors.kPrimaryColor.withOpacity(0.1),
                       fillColor: MyColors.kPrimaryColor.withOpacity(0.1),
@@ -55,8 +55,8 @@ class _OrdersScreenState extends State<OrdersScreen>
                 Container(
                   width: 50,
                   height: 44,
-                  margin: EdgeInsets.only(bottom: 8),
-                  padding: EdgeInsets.all(10),
+                  margin: const EdgeInsets.only(bottom: 8),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       color: MyColors.kPrimaryColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),

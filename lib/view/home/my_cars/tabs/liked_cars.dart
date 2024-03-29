@@ -21,7 +21,7 @@ class LikedCars extends StatelessWidget {
         Expanded(
           child: GridView.builder(
               itemCount: 3,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 22,
                 mainAxisSpacing: 18,
@@ -45,7 +45,7 @@ class LikedCars extends StatelessWidget {
                           Container(
                             width: double.infinity,
                             height: 107,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(8),
                                     topRight: Radius.circular(8)),
@@ -59,8 +59,8 @@ class LikedCars extends StatelessWidget {
                             height: 107,
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
-                                begin: Alignment(0.00, -1.00),
-                                end: Alignment(0, 1),
+                                begin: const Alignment(0.00, -1.00),
+                                end: const Alignment(0, 1),
                                 colors: [
                                   MyColors.black3.withOpacity(0),
                                   MyColors.black3.withOpacity(0.7)
@@ -88,11 +88,11 @@ class LikedCars extends StatelessWidget {
                           children: [
                             Container(
                               height: 17,
-                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
                               decoration: BoxDecoration(
                                   color: MyColors.green1,
                                   borderRadius: BorderRadius.circular(8)),
-                              child: Text(
+                              child: const Text(
                                 "Live",
                                 style: MyStyles.white12500,
                               ),
@@ -100,17 +100,17 @@ class LikedCars extends StatelessWidget {
                             const SizedBox(
                               height: 8,
                             ),
-                            Text(
+                            const Text(
                               "2016 Duster",
                               style: MyStyles.black12400,
                             ),
-                            Text(
+                            const Text(
                               "110 PS RXZ 4X2 AMT",
                               style: MyStyles.black14700,
                             ),
-                            Padding(
+                            const Padding(
                               padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
+                                  EdgeInsets.symmetric(vertical: 10.0),
                               child: Row(
                                 children: [
                                   Icon(
@@ -124,14 +124,14 @@ class LikedCars extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Text(
+                            const Text(
                               MyStrings.highestBid,
                               style: MyStyles.primary12500,
                             ),
                             const SizedBox(
                               height: 2,
                             ),
-                            Text("₹6,50,000", style: MyStyles.primary16500),
+                            const Text("₹6,50,000", style: MyStyles.primary16500),
                             const SizedBox(
                               height: 8,
                             ),
@@ -142,13 +142,13 @@ class LikedCars extends StatelessWidget {
                                   Get.toNamed(AppRoutes.carDetailsScreen);
                                 },
                                 buttonStyle: ElevatedButton.styleFrom(
-                                    padding: EdgeInsets.all(2),
+                                    padding: const EdgeInsets.all(2),
                                     backgroundColor:
                                         MyColors.kPrimaryColor.withOpacity(0.1),
                                     elevation: 0,
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(6),
-                                        side: BorderSide(
+                                        side: const BorderSide(
                                             color: MyColors.kPrimaryColor))),
                                 buttonColor:
                                     MyColors.kPrimaryColor.withOpacity(0.3),

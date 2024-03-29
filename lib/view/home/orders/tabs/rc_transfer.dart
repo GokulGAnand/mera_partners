@@ -25,7 +25,7 @@ class RcTransfer extends StatelessWidget {
             height: 12,
           ),
           GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: controller.liveCarsResponse.value.data?.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -40,7 +40,7 @@ class RcTransfer extends StatelessWidget {
                   button: CustomElevatedButton(
                     onPressed: () {},
                     buttonStyle: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(2),
+                        padding: const EdgeInsets.all(2),
                         backgroundColor: MyColors.green3,
                         elevation: 0,
                         shape: RoundedRectangleBorder(

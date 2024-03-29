@@ -1,27 +1,27 @@
 import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/images.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
+import 'package:evaluator_app/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
 import '../utils/dimens.dart';
 
-class OTBBottomSheet extends StatelessWidget {
-  const OTBBottomSheet({super.key, required this.otbPrice, this.onPressed});
+class QuotePriceBottomSheet extends StatelessWidget {
+  const QuotePriceBottomSheet({super.key, required this.otbPrice, this.onPressed, required this.quotePriceController});
 
   final int otbPrice;
   final void Function()? onPressed;
+  final TextEditingController quotePriceController ;
 
   @override
   Widget build(BuildContext context) {
     NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
     return Container(
-      height: MediaQuery.of(context).size.height * 0.35,
+      height: MediaQuery.of(context).size.height * 0.45,
       padding: const EdgeInsets.all(16.0),
       decoration: const BoxDecoration(
         color: MyColors.white,
@@ -77,23 +77,36 @@ class OTBBottomSheet extends StatelessWidget {
             height: 16,
           ),
           Text(
-            '${MyStrings.otbPrice} : ₹ $otbPrice',
+            '${MyStrings.currentOtbPrice} : ₹ $otbPrice',
             style: MyStyles.selectedTabBarTitleStyle,
           ),
           const SizedBox(
-            height: 16,
+            height: 12,
           ),
-          Row(
+          const Text(
+            '${MyStrings.minQuotePrice}  ₹ 27,000',
+            style: MyStyles.blue14500,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          CustomTextFormField(
+            borderColor: MyColors.kPrimaryColor,
+            controller: quotePriceController,
+              validator: (p0) => null,
+            prefixIcon: const Icon(Icons.currency_rupee),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          const Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(MyImages.bolt,height: Dimens.iconSizeS,width: Dimens.iconSizeS,color: MyColors.black,),
-              const SizedBox(
-                width: 3,
+              Padding(
+                padding: EdgeInsets.only(top: 1.5,right: 1),
+                child: Icon(Icons.info_outline,size: Dimens.iconSizeS,),
               ),
-              const Text(
-                MyStrings.otbBuyDesc,
-                style: MyStyles.grey14500,
-              ),
+              Text(MyStrings.quotePriceDesc),
             ],
           ),
           const SizedBox(
@@ -102,7 +115,7 @@ class OTBBottomSheet extends StatelessWidget {
           // Obx(() {return
           CustomElevatedButton(
             onPressed: onPressed,
-            buttonText: (MyStrings.confirmBuy) + numberFormat.format(otbPrice),
+            buttonText: (MyStrings.quotePriceAt) + numberFormat.format(otbPrice),
             textStyle: MyStyles.white14700,
           ),
           // })

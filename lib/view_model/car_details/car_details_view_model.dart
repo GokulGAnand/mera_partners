@@ -8,7 +8,12 @@ class CarDetailsScreenViewModel extends GetxController {
   RxInt pageIndex = 0.obs;
 
   ///page 1
-  
+  String carStatus = "";
+  //""
+  //bid won
+  //bid closed
+  //car sold 
+
   List<String> imageList = [
     MyStrings.exterior,
     MyStrings.interior,
@@ -16,40 +21,46 @@ class CarDetailsScreenViewModel extends GetxController {
     MyStrings.damage
   ];
 
-  ScrollController page1ScrollController = ScrollController();
+  late ScrollController scrollController;
+  RxBool showSliverAppBarTitle = false.obs;
 
   void scrollListener() {
-    if (page1ScrollController.offset >= page1ScrollController.position.maxScrollExtent &&
-        !page1ScrollController.position.outOfRange) {
-        pageIndex.value = 1;
-        print("reach the bottom");
-    }
+    scrollController = ScrollController()
+    ..addListener(() {
+        showSliverAppBarTitle.value = isSliverAppBarExpanded? true: false ;
+    });
+  }
+
+  bool get isSliverAppBarExpanded {
+    return scrollController.hasClients &&
+        scrollController.offset > (600 - kToolbarHeight);
   }
 
   ///page 2
-  final documentKey = GlobalKey();
-  final exteriorKey = GlobalKey();
-  final interiorElectricalKey = GlobalKey();
-  final engineKey = GlobalKey();
-  final acKey = GlobalKey();
-  final testDriveKey = GlobalKey();
+  final GlobalKey<State<StatefulWidget>> documentKey = GlobalKey();
+  final GlobalKey<State<StatefulWidget>> exteriorKey = GlobalKey();
+  final GlobalKey<State<StatefulWidget>> interiorElectricalKey = GlobalKey();
+  final GlobalKey<State<StatefulWidget>> engineKey = GlobalKey();
+  final GlobalKey<State<StatefulWidget>> acKey = GlobalKey();
+  final GlobalKey<State<StatefulWidget>> testDriveKey = GlobalKey();
 
-  Future scrollItem(int index) async{
+  RxInt inspectionIndex = 0.obs;
+  Future scrollItem() async{
     BuildContext? context;
-    if(index==0){
+    if(inspectionIndex.value==0){
       context = documentKey.currentContext;
-    } else if(index==1){
+    } else if(inspectionIndex.value==1){
       context = exteriorKey.currentContext;
-    } else if(index==2){
+    } else if(inspectionIndex.value==2){
       context = interiorElectricalKey.currentContext;
-    } else if(index==3){
+    } else if(inspectionIndex.value==3){
       context = engineKey.currentContext;
-    } else if(index==4){
+    } else if(inspectionIndex.value==4){
       context = acKey.currentContext;
-    } else if(index==5){
+    } else if(inspectionIndex.value==5){
       context = testDriveKey.currentContext;
     }
-    await Scrollable.ensureVisible(context!, duration: Duration(milliseconds: 800));
+    await Scrollable.ensureVisible(context!, duration: const Duration(milliseconds: 800));
   }
 
   List<Map<String, dynamic>> rating = [
@@ -79,7 +90,7 @@ class CarDetailsScreenViewModel extends GetxController {
 
   @override
   void onInit() {
-    page1ScrollController.addListener(scrollListener);
+    scrollListener();
     videoController = VideoPlayerController.networkUrl(Uri.parse(
         'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
       ..initialize().then((_) {});

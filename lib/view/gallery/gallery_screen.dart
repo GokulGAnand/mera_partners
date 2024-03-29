@@ -26,12 +26,12 @@ class _GalleryScreenState extends State<GalleryScreen> {
   void initState() {
     for(int i=0; i<galleryScreenViewModel.imagesList.length; i++){
       if(Get.arguments == galleryScreenViewModel.imagesList[i]["title"]){
-        galleryScreenViewModel.imagesList.forEach((element) {element["isClick"].value = false;});
+        for (var element in galleryScreenViewModel.imagesList) {element["isClick"].value = false;}
         galleryScreenViewModel.imagesList[i]["isClick"].value = true;
         galleryScreenViewModel.imageIndex.value = i;
       }
     }
-    Future.delayed(Duration(seconds: 3)).then((value) {
+    Future.delayed(const Duration(seconds: 3)).then((value) {
       galleryScreenViewModel.showLoading.value = false;
     });
     super.initState();
@@ -48,7 +48,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
               children: [
                 Container(
                   height: 30,
-                  margin: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                  margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
                   width: double.infinity,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
@@ -65,7 +65,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                               child: Row(
                                 children: [
                                   Text(
-                                    "${galleryScreenViewModel.imagesList[index]["title"]}" + "${(index==0)?" (${galleryScreenViewModel.imagesList[index]["images"].length})":""}",
+                                    "${galleryScreenViewModel.imagesList[index]["title"]}${(index==0)?" (${galleryScreenViewModel.imagesList[index]["images"].length})":""}",
                                     style: TextStyle(
                                     color: (galleryScreenViewModel.imageIndex.value == index)?MyColors.kPrimaryColor:MyColors.black,
                                     fontSize: 14,
@@ -96,7 +96,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                   ),
                 ),
                 ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: (galleryScreenViewModel.showLoading.value)?4:galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"].length,
                   itemBuilder: (context, index) {
@@ -110,7 +110,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                             Container(
                                         width: double.infinity,
                                         height: 216,
-                                        decoration: BoxDecoration(
+                                        decoration: const BoxDecoration(
                                             image: DecorationImage(
                                                 image: AssetImage(MyImages.imageLoading),
                                                 fit: BoxFit.fill)),
@@ -131,7 +131,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                             Container(
                                   width: double.infinity,
                                   height: 216,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       image: DecorationImage(
                                           image: NetworkImage(
                                               "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
@@ -141,7 +141,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                               bottom: 8,
                               left: 8,
                               child: Container(
-                                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+                                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
                                 decoration: BoxDecoration(
                                   color: MyColors.white,
                                   borderRadius: BorderRadius.circular(6),

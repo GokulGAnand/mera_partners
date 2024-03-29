@@ -1,7 +1,9 @@
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/dimens.dart';
 import 'package:evaluator_app/utils/styles.dart';
+import 'package:evaluator_app/utils/svg.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
@@ -27,7 +29,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
             onTap: (){
               Get.back();
             },
-            child: const Icon(Icons.arrow_back, color: Colors.white,))
+            child:Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14.0),
+              child: SvgPicture.asset(MySvg.arrowBack, color: MyColors.white,),
+            ),)
             :const SizedBox(),
           flexibleSpace: SafeArea(
             child: Padding(

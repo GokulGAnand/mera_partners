@@ -16,8 +16,8 @@ class ImageViewScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(12.0),
+          const Padding(
+            padding: EdgeInsets.all(12.0),
             child: Text(
               "Front Main (Scratched,Dented) ",
               style: MyStyles.white16700,
@@ -27,7 +27,7 @@ class ImageViewScreen extends StatelessWidget {
             child: Container(
               width: double.infinity,
               height: 216,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: NetworkImage(
                           "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),

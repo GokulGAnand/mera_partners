@@ -1,6 +1,9 @@
+import 'package:evaluator_app/model/response/live/live_cars_list_response.dart';
 import 'package:evaluator_app/widgets/custom_bid_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import '../../../../../routes/app_routes.dart';
 import '../../../../../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 import '../../../../../widgets/custom_car_detail_card.dart';
 
@@ -13,67 +16,68 @@ class BidCarsListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(
-        () => SafeArea(
-          child: controller.bidCarsResponse.value.data != null
-              ? ListView.builder(
-                  itemCount: controller.bidCarsResponse.value.data?.length,
-                  padding: const EdgeInsets.all(8),
-                  itemBuilder: (context, index) {
-                    return CustomCarDetailCard(
-                      imageUrl: controller.bidCarsResponse.value.data?[index].rearRight?.url ?? '',
-                      carLocation: controller.bidCarsResponse.value.data?[index].vehicleLocation ?? '',
-                      bidStatus: controller.bidCarsResponse.value.data?[index].status ?? '',
-                      bidAmount: controller.bidCarsResponse.value.data?[index].totalBidder.toString() ?? '',
-                      carModel: controller.bidCarsResponse.value.data?[index].model ?? '',
-                      carVariant: controller.bidCarsResponse.value.data?[index].variant ?? '',
-                      rating: ((controller.bidCarsResponse.value.data![index].engineStar ?? 0 + (controller.bidCarsResponse.value.data![index].exteriorStar ?? 0) + (controller.bidCarsResponse.value.data![index].interiorAndElectricalStar ?? 0) + (controller.bidCarsResponse.value.data![index].testDriveStar ?? 0)) / 4),
-                      fuelType: controller.bidCarsResponse.value.data?[index].fuelType ?? '',
-                      id: controller.bidCarsResponse.value.data?[index].uniqueId.toString() ?? '',
-                      fmv: controller.bidCarsResponse.value.data?[index].realValue.toString() ?? '',
-                      kmDriven: controller.bidCarsResponse.value.data?[index].odometerReading != null ? controller.bidCarsResponse.value.data![index].odometerReading.toString() : '0',
-                      ownerShip: controller.bidCarsResponse.value.data?[index].ownershipNumber ?? '',
-                      transmission: controller.bidCarsResponse.value.data?[index].transmission ?? '',
-                      images: [
-                        controller.bidCarsResponse.value.data?[index].frontLeft?.url ?? '',
-                        controller.bidCarsResponse.value.data?[index].front?.url ?? '',
-                        controller.bidCarsResponse.value.data?[index].frontRight?.url ?? '',
-                        controller.bidCarsResponse.value.data?[index].rear?.url ?? '',
-                        controller.bidCarsResponse.value.data?[index].engineCompartment?.url ?? '',
-                      ],
-                      autoBid: () {
-                        showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (context) {
-                              return CustomBidBottomSheet(
-                                isAutoBid: true,
-                                bid: controller.bid,
-                                bidValue: controller.bidValue,
-                              );
-                            });
+      body: SafeArea(
+          child:Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: PagedListView<int, Data>(
+              pagingController: controller.infinitePagingController,
+              builderDelegate: PagedChildBuilderDelegate<Data>(
+                      // itemCount: controller.bidCarsResponse.value.data?.length,
+                      // padding: const EdgeInsets.all(8),
+                      itemBuilder: (context, item, index) {
+                        return CustomCarDetailCard(
+                          onCarTapped: () {
+                            Get.toNamed(AppRoutes.carDetailsScreen);
+                          },
+                          imageUrl: item.rearRight?.url ?? '',
+                          carLocation: item.vehicleLocation ?? '',
+                          bidStatus: item.status ?? '',
+                          bidAmount: item.totalBidder.toString(),
+                          carModel: item.model ?? '',
+                          carVariant: item.variant ?? '',
+                          rating: ((item.engineStar ?? 0 + (item.exteriorStar ?? 0) + (item.interiorAndElectricalStar ?? 0) + (item.testDriveStar ?? 0)) / 4),
+                          fuelType: item.fuelType ?? '',
+                          id: item.uniqueId.toString(),
+                          fmv: item.realValue.toString(),
+                          kmDriven: item.odometerReading != null ? item.odometerReading.toString() : '0',
+                          ownerShip: item.ownershipNumber ?? '',
+                          transmission: item.transmission ?? '',
+                          images: [
+                            item.frontLeft?.url ?? '',
+                            item.front?.url ?? '',
+                            item.frontRight?.url ?? '',
+                            item.rear?.url ?? '',
+                            item.engineCompartment?.url ?? '',
+                          ],
+                          autoBid: () {
+                            showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                context: context,
+                                builder: (context) {
+                                  return CustomBidBottomSheet(
+                                    isAutoBid: true,
+                                    bidValue: controller.bidValue,
+                                  );
+                                });
+                          },
+                          bid: () {
+                            showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                context: context,
+                                builder: (context) {
+                                  return CustomBidBottomSheet(
+                                    bidValue: RxInt(item.highestBid ?? 0),
+                                  );
+                                });
+                          },
+                        );
                       },
-                      bid: () {
-                        showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (context) {
-                              return CustomBidBottomSheet(
-                                bid: controller.bid,
-                                bidValue: controller.bidValue,
-                              );
-                            });
-                      },
-                    );
-                  },
-                )
-              : const Center(
-                  child: CircularProgressIndicator(),
-                ),
+                    ),
+            ),
+          )
         ),
-      ),
-    );
+      );
   }
 }

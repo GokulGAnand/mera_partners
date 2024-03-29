@@ -1,30 +1,34 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
+import 'package:evaluator_app/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+/// ignore: must_be_immutable
 class CustomBidBottomSheet extends StatelessWidget {
-  CustomBidBottomSheet(
-      {required this.bid,
-      required this.bidValue,
-      this.isAutoBid = false,
-      super.key});
-  final List<int> bid;
+  CustomBidBottomSheet({required this.bidValue, this.isAutoBid = false, super.key, this.onBidPressed, this.amountController});
+
+  final List<int> bid = [5000, 10000, 15000];
   RxInt bidValue;
   final bool isAutoBid;
+  final void Function()? onBidPressed;
+  final TextEditingController? amountController;
+
   @override
   Widget build(BuildContext context) {
-    NumberFormat numberFormat =
-        NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
+    NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
     return Container(
       height: (isAutoBid) ? 442 : 363,
       padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: MyColors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(14),
@@ -42,10 +46,8 @@ class CustomBidBottomSheet extends StatelessWidget {
                 Container(
                   width: 32,
                   height: 4,
-                  margin: EdgeInsets.only(bottom: 16),
-                  decoration: BoxDecoration(
-                      color: MyColors.grey,
-                      borderRadius: BorderRadius.circular(100)),
+                  margin: const EdgeInsets.only(bottom: 16),
+                  decoration: BoxDecoration(color: MyColors.grey, borderRadius: BorderRadius.circular(100)),
                 ),
               ],
             ),
@@ -61,11 +63,11 @@ class CustomBidBottomSheet extends StatelessWidget {
               const SizedBox(
                 width: 5,
               ),
-              Text(
+              const Text(
                 "24min 06sec",
                 style: MyStyles.green2_18700,
               ),
-              Spacer(),
+              const Spacer(),
               InkWell(
                 onTap: () {
                   Get.back();
@@ -79,29 +81,29 @@ class CustomBidBottomSheet extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          Text(
+          const Text(
             '${MyStrings.currentBid} : ₹ 1,71,000',
             style: MyStyles.selectedTabBarTitleStyle,
           ),
           const SizedBox(
             height: 8,
           ),
-          Text(
+          const Text(
             '${MyStrings.stepRate} : ₹ 1,000',
             style: MyStyles.selectedTabBarTitleStyle,
           ),
           (isAutoBid)
-              ? Column(
+              ? const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       height: 12,
                     ),
                     Text(
                       MyStrings.autoBid,
                       style: MyStyles.blue3_14700,
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 8,
                     ),
                     Text(
@@ -114,37 +116,47 @@ class CustomBidBottomSheet extends StatelessWidget {
           Container(
             width: double.infinity,
             height: 54,
-            margin: EdgeInsets.symmetric(vertical: 15),
-            decoration: BoxDecoration(
-                color: MyColors.lightBlue,
-                borderRadius: BorderRadius.circular(4),
-                border: Border.all(color: MyColors.kPrimaryColor)),
+            margin: const EdgeInsets.symmetric(vertical: 15),
+            decoration: BoxDecoration(color: MyColors.lightBlue, borderRadius: BorderRadius.circular(4), border: Border.all(color: MyColors.kPrimaryColor)),
             child: Row(
               children: [
                 InkWell(
                     onTap: () {
                       bidValue.value -= 1000;
                     },
-                    child: SizedBox(width: 56, child: Icon(Icons.remove))),
-                VerticalDivider(
+                    child: const SizedBox(width: 56, child: Icon(Icons.remove))),
+                const VerticalDivider(
                   color: MyColors.kPrimaryColor,
                 ),
-                Obx(() {
-                  return Expanded(
-                      child: Text(
-                    numberFormat.format(bidValue.value),
-                    textAlign: TextAlign.center,
-                    style: MyStyles.black18700,
-                  ));
-                }),
-                VerticalDivider(
+                // Obx(() {
+                //   return Expanded(
+                //       child: Text(
+                //     numberFormat.format(bidValue.value),
+                //     textAlign: TextAlign.center,
+                //     style: MyStyles.black18700,
+                //   ));
+                // }),
+                Expanded(child: BidTextFormField(
+                  controller: amountController ?? TextEditingController(),
+                  keyboardType: const TextInputType.numberWithOptions(decimal: false),
+                  inputFormatter: [FilteringTextInputFormatter.digitsOnly,],
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Value cannot be empty";
+                    } else if ((int.tryParse(value) ?? 0) < bidValue.value) {
+                      return "Bid nominal can't be lower than the initial price";
+                    }
+                    return null;
+                  },
+                ),),
+                const VerticalDivider(
                   color: MyColors.kPrimaryColor,
                 ),
                 InkWell(
                     onTap: () {
                       bidValue.value += 1000;
                     },
-                    child: SizedBox(width: 56, child: Icon(Icons.add))),
+                    child: const SizedBox(width: 56, child: Icon(Icons.add))),
               ],
             ),
           ),
@@ -159,15 +171,11 @@ class CustomBidBottomSheet extends StatelessWidget {
                       bidValue.value += bid[i];
                     },
                     child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 5),
-                      margin:
-                          EdgeInsets.only(right: (i == bid.length - 1) ? 0 : 8),
-                      decoration: BoxDecoration(
-                          color: MyColors.lightBlue,
-                          borderRadius: BorderRadius.circular(4),
-                          border: Border.all(color: MyColors.kPrimaryColor)),
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      margin: EdgeInsets.only(right: (i == bid.length - 1) ? 0 : 8),
+                      decoration: BoxDecoration(color: MyColors.lightBlue, borderRadius: BorderRadius.circular(4), border: Border.all(color: MyColors.kPrimaryColor)),
                       child: Text(
-                        '+ ' + numberFormat.format(bid[i]),
+                        '+ ${numberFormat.format(bid[i])}',
                         textAlign: TextAlign.center,
                         style: MyStyles.black14700,
                       ),
@@ -182,11 +190,8 @@ class CustomBidBottomSheet extends StatelessWidget {
           ),
           Obx(() {
             return CustomElevatedButton(
-              onPressed: () {},
-              buttonText: ((isAutoBid)
-                      ? MyStrings.confirmAutoBid
-                      : MyStrings.confirmBid) +
-                  numberFormat.format(bidValue.value),
+              onPressed: onBidPressed,
+              buttonText: ((isAutoBid) ? MyStrings.confirmAutoBid : MyStrings.confirmBid) + numberFormat.format(bidValue.value),
               textStyle: MyStyles.white14700,
             );
           })
