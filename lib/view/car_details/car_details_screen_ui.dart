@@ -7,7 +7,10 @@ import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
 import 'package:evaluator_app/view_model/car_details/car_details_view_model.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
+import 'package:evaluator_app/widgets/custom_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
@@ -54,15 +57,11 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
           children: [
             Stack(
               children: [
-                Container(
-                  width: double.infinity,
-                  height: 258,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(
-                              "https://bucketkeracars.s3.ap-south-1.amazonaws.com/frontLeft-1710562433850-IMG_20240315_104745.jpg"),
-                          fit: BoxFit.fill)),
-                ),
+                CustomSlider(
+                  sliderImage: carDetailsScreenViewModel.sliderImage, 
+                  pageSliderController: carDetailsScreenViewModel.pageSliderController, 
+                  activePage: carDetailsScreenViewModel.activePage,
+                  height: 258,),
                 (carDetailsScreenViewModel.carStatus != "")?Container(
                   width: double.infinity,
                   height: 258,
@@ -171,22 +170,28 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            for (int i = 0; i < 4; i++) ...[
-                              const Text(
-                                'Diesel',
-                                style: MyStyles.regular12,
-                              ),
-                              (i != 3)
-                                  ? const Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 4.0),
-                                      child: VerticalDivider(
-                                        width: 15,
-                                        color: MyColors.subTitleColor,
-                                        thickness: 1,
-                                      ),
-                                    )
-                                  : const SizedBox(),
-                            ]
+                            if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.fuelType != null)...[
+                              Text(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.fuelType!.capitalize.toString(), style: MyStyles.regular12),
+                              const SizedBox(width: 6),
+                            ],
+                            if(carDetailsScreenViewModel.reportResponse.value.data!.odometerReading != null)...[
+                              const Text('|', style: MyStyles.regular12),
+                              const SizedBox(width: 6),
+                              Text(carDetailsScreenViewModel.reportResponse.value.data!.odometerReading.toString() + ' KM', style: MyStyles.regular12),
+                              const SizedBox(width: 6),
+                            ],
+                            if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.ownershipNumber != null)...[
+                              const Text('|', style: MyStyles.regular12),
+                              const SizedBox(width: 6),
+                              Text(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.ownershipNumber!.capitalize.toString(), style: MyStyles.regular12),
+                              const SizedBox(width: 6),
+                            ],
+                            if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.transmission != null)...[
+                              const Text('|', style: MyStyles.regular12),
+                              const SizedBox(width: 6),
+                              Text(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.transmission!.capitalize.toString(), style: MyStyles.regular12),
+                              const SizedBox(width: 6),
+                            ],
                           ],
                         ),
                       ),
@@ -223,23 +228,20 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                         height: 58,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(5),
-                                            image: const DecorationImage(
+                                            image: DecorationImage(
                                                 image: NetworkImage(
-                                                    "https://bucketkeracars.s3.ap-south-1.amazonaws.com/frontLeft-1710562433850-IMG_20240315_104745.jpg"),
+                                                   carDetailsScreenViewModel.imageList[index]["imageList"][0].value),
                                                 fit: BoxFit.fill)),
                                       ),
-                                      (index ==
-                                              carDetailsScreenViewModel
-                                                      .imageList.length -
-                                                  1)
-                                          ? const Positioned(
+                                      (carDetailsScreenViewModel.imageList[index]["title"]== MyStrings.engine)
+                                          ? Positioned(
                                               right: 0,
                                               top: 0,
                                               child: CircleAvatar(
                                                 radius: 8,
                                                 backgroundColor: MyColors.red2,
                                                 child: Text(
-                                                  '99+',
+                                                  '${carDetailsScreenViewModel.imageList[index]["imageList"].length}',
                                                   style: MyStyles.white8700,
                                                 ),
                                               ),
@@ -251,7 +253,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                     height: 5,
                                   ),
                                   Text(
-                                    carDetailsScreenViewModel.imageList[index],
+                                    carDetailsScreenViewModel.imageList[index]["title"],
                                     style: MyStyles.black12400,
                                   )
                                 ],
@@ -269,7 +271,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       const SizedBox(
                         width: 8,
                       ),
-                      const Text.rich(
+                      Text.rich(
                         TextSpan(
                           children: [
                             TextSpan(
@@ -277,7 +279,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                               style: MyStyles.subTitleGreayStyle,
                             ),
                             TextSpan(
-                              text: '  ₹8,92,000',
+                              text: '  ₹${(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue ?? 0).toString()}',
                               style: MyStyles.grey14700,
                             ),
                           ],
@@ -310,9 +312,14 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                   const SizedBox(
                     height: 10,
                   ),
-                  Wrap(
+                  (carDetailsScreenViewModel.criticalIssue.isEmpty)?
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: const Text("Not any Critical Issue", style: MyStyles.subtitle12400,),
+                  )
+                  :Wrap(
                     children: [
-                      for (int i = 0; i < 4; i++) ...[
+                      for (int i = 0; i < carDetailsScreenViewModel.criticalIssue.length; i++) ...[
                         Padding(
                           padding: const EdgeInsets.only(right: 12.0, top: 12),
                           child: Row(
@@ -322,8 +329,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                               const SizedBox(
                                 width: 5,
                               ),
-                              const Text(
-                                "Flood Affected",
+                              Text(
+                                carDetailsScreenViewModel.criticalIssue[i],
                                 style: MyStyles.red2_12700,
                               )
                             ],
@@ -898,8 +905,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             indicatorWeight: 4,
             dividerColor: MyColors.grey.withOpacity(0.25),
             dividerHeight: 2,
-            tabs: const [
-              Tab(text: "View 7 Issues"),
+            tabs: [
+              Tab(text: "View ${(issueList.isEmpty)?'':issueList.length} Issues"),
               Tab(text: "Other Parts"),
             ],
           ),

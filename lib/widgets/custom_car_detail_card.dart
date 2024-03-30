@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:evaluator_app/routes/app_routes.dart';
+import 'package:evaluator_app/widgets/custom_slider.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,7 +42,6 @@ class CustomCarDetailCard extends StatefulWidget {
   final Function() onCarTapped;
   Rx<PageController> pageController = PageController(initialPage: 0, viewportFraction: 0.85).obs;
   var activePage = 0.obs;
-  Timer? carouselTimer;
   final Duration? bidStartTime;
   final Duration? bidEndTime;
   Duration elapsed = Duration.zero;
@@ -81,20 +81,6 @@ class CustomCarDetailCard extends StatefulWidget {
         );
       },
     );
-  }
-
-  Timer getTimer() {
-    return Timer.periodic(const Duration(seconds: 3), (timer) {
-      if (activePage.value == 5) {
-        activePage.value = 0;
-      }
-      pageController.value.animateToPage(
-        activePage.value,
-        duration: const Duration(seconds: 1),
-        curve: Curves.easeInOutCirc,
-      );
-      activePage.value++;
-    });
   }
 
   void startTimer(){
@@ -137,7 +123,6 @@ class CustomCarDetailCard extends StatefulWidget {
     this.otbTapped,
     this.isScheduled = false,
     required this.onCarTapped,
-    this.carouselTimer,
     this.bidStartTime,
     this.bidEndTime,
   });
@@ -162,7 +147,6 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
   void dispose() {
     widget.timeStreamController.close();
     widget.streamSubscription?.cancel();
-    widget.carouselTimer?.cancel();
     super.dispose();
   }
 
@@ -197,57 +181,11 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
               children: [
                 Stack(
                   children: [
-                    Positioned(
-                      child: Obx(
-                        () => SizedBox(
-                          height: 200,
-                          child: PageView.builder(
-                            controller: widget.pageController.value,
-                            onPageChanged: (index) {
-                              widget.activePage.value = index;
-                            },
-                            itemBuilder: (_, index) {
-                              return AnimatedBuilder(
-                                  animation: widget.pageController.value,
-                                  builder: (ctx, child) {
-                                    return child!;
-                                  },
-                                  child: Image.network(widget.images[index], fit: BoxFit.cover, errorBuilder: (context, error, stackTrace) {
-                                    return SvgPicture.asset(MyImages.loadingCar);
-                                  }, frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                                    return child;
-                                  }, loadingBuilder: (context, child, loadingProgress) {
-                                    if (loadingProgress == null) {
-                                      return child;
-                                    } else {
-                                      return SvgPicture.asset(MyImages.loadingCar);
-                                    }
-                                  }));
-                            },
-                            itemCount: widget.images.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 213,
-                        decoration: ShapeDecoration(
-                          gradient: LinearGradient(
-                            begin: const Alignment(0.00, -0.00),
-                            end: const Alignment(0, 1),
-                            colors: [Colors.black.withOpacity(0), Colors.black],
-                          ),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(8),
-                              topRight: Radius.circular(8),
-                            ),
-                          ),
-                        ),
-                      ),
+                    CustomSlider(
+                      sliderImage: widget.images,
+                      pageSliderController: widget.pageController,
+                      activePage: widget.activePage,
+                      showBlackOpacity: true,
                     ),
                     Positioned(
                       bottom: 8,
@@ -286,32 +224,6 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                             onTap: () {
                               widget.isFavourite!.value == true ? widget.isFavourite!.value = false : widget.isFavourite!.value = true;
                             },
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 10,
-                      left: MediaQuery.of(context).size.width * 0.39,
-                      child: Obx(
-                        () => SizedBox(
-                          width: 41,
-                          height: 4.56,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: List.generate(
-                              5,
-                              (index) => GestureDetector(
-                                child: Container(
-                                  margin: const EdgeInsets.only(left: 2.0),
-                                  child: Icon(
-                                    Icons.circle,
-                                    size: 6.0,
-                                    color: widget.activePage.value == index ? MyColors.white : MyColors.grey,
-                                  ),
-                                ),
-                              ),
-                            ),
                           ),
                         ),
                       ),

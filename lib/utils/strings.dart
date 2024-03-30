@@ -232,7 +232,7 @@ class MyStrings {
   // static const String logoutConfirmMsg = "Are you sure want to sign out?";
   // static const String confirmDiscardChanges = "Are you sure want to discard changes?";
   // static const String confirmDelete = "Are you sure want to delete?";
-  // static const String engineCompartmentImage = "Engine Compartment Image";
+  static const String engineCompartmentImage = "Engine Compartment Image";
   static const String engineSound = "Engine Sound";
   static const String smoke = "Smoke";
   static const String engineIdleStartVideo = "Engine Idle Start Video";

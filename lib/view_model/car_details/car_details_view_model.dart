@@ -26,12 +26,11 @@ class CarDetailsScreenViewModel extends GetxController {
   //bid closed
   //car sold 
 
-  List<String> imageList = [
-    MyStrings.exterior,
-    MyStrings.interior,
-    MyStrings.engine,
-    MyStrings.damage
-  ];
+  Rx<PageController> pageSliderController = PageController(initialPage: 0, viewportFraction: 1).obs;
+  var activePage = 0.obs;
+  // Timer? carouselTimer;
+
+  List<Map<String, dynamic>> imageList = [];
 
   late ScrollController scrollController;
   RxBool showSliverAppBarTitle = false.obs;
@@ -131,24 +130,27 @@ class CarDetailsScreenViewModel extends GetxController {
   "weak breaks", "gear not engaged", "drum scratch", "alloy wheel missing", "needs replacement", "deployed", "not satisfactory",
   "abs ebd sensor damaged", "abs ebd module damaged"];
 
+  var sliderImage = <String>[].obs;
+  var criticalIssue = <String>[].obs;
   var ratingList = <Item>[].obs;
-  var vehicleDetails = <Master>[].obs;
+  // var vehicleDetails = <Master>[].obs;
   var documents = <Master>[].obs;
   var otherInformation = <Master>[].obs;
   var regAndFitness = <Master>[].obs;
   var exterior = <Master>[].obs;
-  // var exteriorImages = <Master>[].obs;
-  // var interiorImages = <Master>[].obs;
+  var exteriorImages = <Master>[].obs;
+  var interiorImages = <Master>[].obs;
   var airCondition = <Master>[].obs;
   var engine = <Master>[].obs;
-  // var engineImages = <Master>[].obs;
+  var engineImages = <Master>[].obs;
+  var damageImages = <Master>[].obs;
   var testDrive = <Master>[].obs;
-  var features = <Master>[].obs;
+  // var features = <Master>[].obs;
   // var allImages = <Master>[].obs;
   var interiorAndElectrical = <Master>[].obs;
   var reportResponse = ReportResponse().obs;
   // List<DashBoardClass> dashboard = [];
-  List<String> imageUrls = [];
+  // List<String> imageUrls = [];
 
   //issue
   var exteriorIssue = <Master>[].obs;
@@ -165,6 +167,12 @@ class CarDetailsScreenViewModel extends GetxController {
   var testDriveOtherParts = <Master>[].obs;
 
   void separateListData() {
+      if(redListData.contains(reportResponse.value.data!.allCarInfo!.carCondition.toString().toLowerCase())){
+        criticalIssue.add(reportResponse.value.data!.allCarInfo!.carCondition.toString().toLowerCase());
+      }
+      if(redListData.contains(reportResponse.value.data!.allCarInfo!.specialComments.toString().toLowerCase())){
+        criticalIssue.add(reportResponse.value.data!.allCarInfo!.specialComments.toString().toLowerCase());
+      }
     for(int i=0; i<exterior.length; i++){
       if(goodListData.contains(exterior[i].value.toString().toLowerCase())){
         exteriorOtherParts.add(exterior[i]);
@@ -349,16 +357,53 @@ class CarDetailsScreenViewModel extends GetxController {
   }
 
 
-   List<String> extractUrls(Map<String, dynamic> mainObject) {
-    List<String> urls = [];
-
+   void addImageList() {
+    exteriorImages.value = [
+      if(reportResponse.value.data!.allCarInfo!.front != null) Master(title: MyStrings.frontImage, value: reportResponse.value.data!.allCarInfo!.front!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.frontLeft != null) Master(title: MyStrings.frontLeftImage, value: reportResponse.value.data!.allCarInfo!.frontLeft!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.frontRight != null) Master(title: MyStrings.frontRightImage, value: reportResponse.value.data!.allCarInfo!.frontRight!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.leftImage != null) Master(title: MyStrings.leftImage, value: reportResponse.value.data!.allCarInfo!.leftImage!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rightImage != null) Master(title: MyStrings.rightImage, value: reportResponse.value.data!.allCarInfo!.rightImage!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rearLeft != null) Master(title: MyStrings.rearLeftImage, value: reportResponse.value.data!.allCarInfo!.rearLeft!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rear != null) Master(title: MyStrings.rearImage, value: reportResponse.value.data!.allCarInfo!.rear!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rearRight != null) Master(title: MyStrings.rearRight, value: reportResponse.value.data!.allCarInfo!.rearRight!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.roof != null) Master(title: MyStrings.roofImage, value: reportResponse.value.data!.allCarInfo!.roof!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.bumperFront != null) Master(title: MyStrings.frontBumper, value: reportResponse.value.data!.allCarInfo!.bumperFront!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.apronLeft != null) Master(title: MyStrings.apronLH, value: reportResponse.value.data!.allCarInfo!.apronLeft!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.apronRight != null) Master(title: MyStrings.apronRH, value: reportResponse.value.data!.allCarInfo!.apronRight!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.frontTyreRight != null) Master(title: MyStrings.tyreFrontRHS, value: reportResponse.value.data!.allCarInfo!.frontTyreRight!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.frontTyreLeft != null) Master(title: MyStrings.tyreFrontLHS, value: reportResponse.value.data!.allCarInfo!.frontTyreLeft!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rearTyreRight != null) Master(title: MyStrings.tyreRearRHS, value: reportResponse.value.data!.allCarInfo!.rearTyreRight!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rearTyreLeft != null) Master(title: MyStrings.tyreRearLHS, value: reportResponse.value.data!.allCarInfo!.rearTyreLeft!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.doorFrontRight != null) Master(title: MyStrings.frontRHDoor, value: reportResponse.value.data!.allCarInfo!.doorFrontRight!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.boot != null) Master(title: MyStrings.boot, value: reportResponse.value.data!.allCarInfo!.boot!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.spareWheel != null) Master(title: MyStrings.spareWheel, value: reportResponse.value.data!.allCarInfo!.spareWheel!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.fuelLid != null) Master(title: MyStrings.fuelLid, value: reportResponse.value.data!.allCarInfo!.fuelLid!.url ?? ''),
+    ];
+    interiorImages.value = [
+      if(reportResponse.value.data!.allCarInfo!.clusterPanel != null) Master(title: MyStrings.clusterPanel, value: reportResponse.value.data!.allCarInfo!.clusterPanel!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.dashboardImage != null) Master(title: MyStrings.dashboardImage, value: reportResponse.value.data!.allCarInfo!.dashboardImage!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.frontSeatImage != null) Master(title: MyStrings.frontSeatImage, value: reportResponse.value.data!.allCarInfo!.frontSeatImage!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rearSeatImage != null) Master(title: MyStrings.rearSeatImage, value: reportResponse.value.data!.allCarInfo!.rearSeatImage!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rearViewMirror != null) Master(title: MyStrings.insideRearViewMirror, value: reportResponse.value.data!.allCarInfo!.rearViewMirror!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.interiorView != null) Master(title: MyStrings.interiorViewFromBootDashboard, value: reportResponse.value.data!.allCarInfo!.interiorView!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.powerWindowDriverImage != null) Master(title: MyStrings.powerWindowDriverImage, value: reportResponse.value.data!.allCarInfo!.powerWindowDriverImage!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.pushWindowDriverImage != null) Master(title: MyStrings.pushWindowDriverImage, value: reportResponse.value.data!.allCarInfo!.pushWindowDriverImage!.url ?? ''),
+    ];
+    engineImages.value = [
+      if(reportResponse.value.data!.allCarInfo!.engineCompartment != null) Master(title: MyStrings.engineCompartmentImage, value: reportResponse.value.data!.allCarInfo!.engineCompartment!.url ?? '')
+    ];
+    
+    Map<String, dynamic> mainObject = reportResponse.value.data!.allCarInfo!.toJson();
     mainObject.forEach((key, value) {
-      if (value is Map<String, dynamic> && value.containsKey('url') && value['url'] != null) {
-        urls.add(value['url']);
+      if (value is Map<String, dynamic> && value.containsKey('url') && value['url'] != null && value.containsValue('damaged')) {
+        damageImages.add(value['url']);
       }
     });
-    imageUrls = urls;
-    return urls;
+    if(exteriorImages.isNotEmpty) imageList.add({"title":MyStrings.exterior, "imageList": exteriorImages});
+    if(interiorImages.isNotEmpty) imageList.add({"title":MyStrings.interior, "imageList": interiorImages});
+    if(engineImages.isNotEmpty) imageList.add({"title":MyStrings.engine, "imageList": engineImages});
+    if(damageImages.isNotEmpty) imageList.add({"title":MyStrings.damage, "imageList": damageImages});
   }
 
   void getReport() async {
@@ -373,6 +418,13 @@ class CarDetailsScreenViewModel extends GetxController {
         log(response.body);
         reportResponse.value = ReportResponse.fromJson(jsonDecode(response.body));
         if (reportResponse.value.data != null) {
+          sliderImage.value = [
+            reportResponse.value.data!.allCarInfo!.frontLeft!.url ?? '',
+            reportResponse.value.data!.allCarInfo!.front!.url ?? '',
+            reportResponse.value.data!.allCarInfo!.frontRight!.url ?? '',
+            reportResponse.value.data!.allCarInfo!.rear!.url ?? '',
+            reportResponse.value.data!.allCarInfo!.engineCompartment!.url ?? '',
+          ];
           ratingList.value = [
             Item(title: MyStrings.documents, rating: 0.0),
             Item(title: MyStrings.exterior, rating: reportResponse.value.data!.allCarInfo!.exteriorStar?.toDouble() ?? 0),
@@ -552,6 +604,7 @@ class CarDetailsScreenViewModel extends GetxController {
             ..initialize().then((_) {});
           }
           separateListData();
+          addImageList();
           update();
           refresh();
           notifyChildrens();

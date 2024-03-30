@@ -261,6 +261,7 @@ class AllCarInfo {
     String? climateControl;
     String? heater;
     String? carCondition;
+    num? realValue;
     String? specialComments;
     num? engineStar;
     num? exteriorStar;
@@ -274,6 +275,7 @@ class AllCarInfo {
     String? vehicleLocation;
     String? ownershipNumber;
     String? fuelType;
+    String? transmission;
     String? qcStatus;
     num? highestBid;
     num? totalBidder;
@@ -422,6 +424,7 @@ class AllCarInfo {
             this.climateControl,
             this.heater,
             this.carCondition,
+            this.realValue,
             this.specialComments,
             this.engineStar,
             this.exteriorStar,
@@ -435,6 +438,7 @@ class AllCarInfo {
             this.vehicleLocation,
             this.ownershipNumber,
             this.fuelType,
+            this.transmission,
             this.qcStatus,
             this.highestBid,
             this.totalBidder,
@@ -728,6 +732,7 @@ class AllCarInfo {
         climateControl = json['climateControl'];
         heater = json['heater'];
         carCondition = json['carCondition'];
+        realValue = json['realValue'];
         specialComments = json['specialComments'];
         engineStar = json['engineStar'];
         exteriorStar = json['exteriorStar'];
@@ -741,6 +746,7 @@ class AllCarInfo {
         vehicleLocation = json['vehicleLocation'];
         ownershipNumber = json['ownershipNumber'];
         fuelType = json['fuelType'];
+        transmission = json['transmission'];
         qcStatus = json['qcStatus'];
         highestBid = json['highestBid'];
         totalBidder = json['totalBidder'];
@@ -1061,6 +1067,7 @@ class AllCarInfo {
         data['climateControl'] = climateControl;
         data['heater'] = heater;
         data['carCondition'] = carCondition;
+        data['realValue'] = realValue;
         data['specialComments'] = specialComments;
         data['engineStar'] = engineStar;
         data['exteriorStar'] = exteriorStar;
@@ -1074,6 +1081,7 @@ class AllCarInfo {
         data['vehicleLocation'] = vehicleLocation;
         data['ownershipNumber'] = ownershipNumber;
         data['fuelType'] = fuelType;
+        data['transmission'] = transmission;
         data['qcStatus'] = qcStatus;
         data['highestBid'] = highestBid;
         data['totalBidder'] = totalBidder;
