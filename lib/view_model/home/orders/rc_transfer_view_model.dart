@@ -12,7 +12,7 @@ import 'package:evaluator_app/utils/globals.dart' as globals;
 
 
 class RcTransferViewModel extends GetxController{
-  var liveCarsResponse = LiveCarsResponse().obs;
+  var liveCarsResponse = CarListResponse().obs;
 
   @override
   void onInit() {
@@ -26,7 +26,7 @@ class RcTransferViewModel extends GetxController{
       if (response.statusCode ==200){
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body);
-        liveCarsResponse.value =LiveCarsResponse.fromJson(jsonDecode(response.body));
+        liveCarsResponse.value =CarListResponse.fromJson(jsonDecode(response.body));
       }else{
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());
