@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:evaluator_app/model/response/live/live_cars_list_response.dart';
 import 'package:evaluator_app/routes/app_routes.dart';
+import 'package:evaluator_app/utils/constants.dart';
 import 'package:evaluator_app/widgets/custom_bid_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,7 +36,9 @@ class LiveCarsListScreen extends StatelessWidget {
               imageUrl: item.rearRight?.url ?? '',
               carLocation: item.vehicleLocation ?? '',
               bidStatus: item.status ?? '',
-              bidAmount: item.totalBidder.toString(),
+              bidAmount: Constants.numberFormat.format(item.highestBid).toString(),
+              bidStartTime: Duration(minutes: 1),
+              bidEndTime: Duration(minutes: 1),
               carModel: item.model ?? '',
               carVariant: item.variant ?? '',
               rating: ((item.engineStar ?? 0 + (item.exteriorStar ?? 0) + (item.interiorAndElectricalStar ?? 0) + (item.testDriveStar ?? 0)) / 4),
@@ -62,6 +65,21 @@ class LiveCarsListScreen extends StatelessWidget {
                         amountController: controller.autoBidController.value,
                         isAutoBid: true,
                         bidValue: RxInt(item.highestBid ?? 0),
+                        stepRate: item.highestBid! <= 99999
+                            ? RxInt(1000)
+                            : (item.highestBid! >= 100000 && item.highestBid! <= 299999)
+                            ? RxInt(4000)
+                            : (item.highestBid! >= 300000 && item.highestBid! <= 499999)
+                            ? RxInt(7000)
+                            : RxInt(10000),
+                        onAutoBidPressed: () {
+                          try {
+                            controller.placeAutoBid(controller.bidController.value.text, item.sId);
+                            Navigator.of(context).pop();
+                          } catch (e) {
+                            log(e.toString());
+                          }
+                        },
                       );
                     });
               },
@@ -74,6 +92,13 @@ class LiveCarsListScreen extends StatelessWidget {
                       return CustomBidBottomSheet(
                         amountController: controller.bidController.value,
                         bidValue: RxInt(item.highestBid ?? 0),
+                        stepRate: item.highestBid! <= 99999
+                            ? RxInt(1000)
+                            : (item.highestBid! >= 100000 && item.highestBid! <= 299999)
+                            ? RxInt(4000)
+                            : (item.highestBid! >= 300000 && item.highestBid! <= 499999)
+                            ? RxInt(7000)
+                            : RxInt(10000),
                         onBidPressed: () {
                           try {
                             controller.placeBid(controller.bidController.value.text, item.sId);

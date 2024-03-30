@@ -14,7 +14,7 @@ import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
 
 class LiveCarsListViewModel extends GetxController {
-  var liveCarsResponse = LiveCarsResponse().obs;
+  var liveCarsResponse = CarListResponse().obs;
   SocketService? socketService;
   List<int> bid = [5000, 10000, 15000];
   RxInt bidValue = 172000.obs;
@@ -44,22 +44,40 @@ class LiveCarsListViewModel extends GetxController {
   void placeBid(amount, carId) async {
     try {
       //todo change url and data
-      socketService?.sendSocketRequest("bidInfo", {"amount": 100000, "carId": "65dd5e7fb28cddf13dc9a68c"});
-      var response = await http.post(Uri.parse("http://192.168.1.10:8000/api/v1/auction/bid"), headers: globals.jsonHeaders, body: jsonEncode({"amount": 100000, "carId": "65dd5e7fb28cddf13dc9a68c"}));
+      socketService?.sendSocketRequest("bidInfo", {"amount": amount, "carId": carId});
+      log(amount+' bid amount');
+      log(carId+' car id');
+      var response = await http.post(Uri.parse(EndPoints.socketUrl+EndPoints.auction+EndPoints.bid), headers: globals.jsonHeaders, body: jsonEncode({"amount": amount, "carId": carId}));
       log(response.body);
+      String message = json.decode(response.body)['message'];
       if(response.statusCode == 200){
         CustomToast.instance.showMsgWithIcon(MyStrings.bidPlaced, null);
       }else{
-        CustomToast.instance.showMsg(MyStrings.somethingWentWrong);
+        CustomToast.instance.showMsg(message);
       }
     } catch (e) {
       CustomToast.instance.showMsg(MyStrings.unableToConnect);
       log(e.toString());
     }
   }
-
-  void listenSocket(){
-    socketService?.getSocketResponse('getBidInfo',);
+  void placeAutoBid(autoBidLimit, carId) async {
+    try {
+      //todo change url and data
+      socketService?.sendSocketRequest("bidInfo", {"amount": autoBidLimit, "carId": carId});
+      log(autoBidLimit+' bid limit');
+      log(carId+' car id');
+      var response = await http.post(Uri.parse(EndPoints.socketUrl+EndPoints.auction+EndPoints.bid), headers: globals.jsonHeaders, body: jsonEncode({"amount": autoBidLimit, "carId": carId}));
+      log(response.body);
+      String message = json.decode(response.body)['message'];
+      if(response.statusCode == 200){
+        CustomToast.instance.showMsgWithIcon(MyStrings.bidPlaced, null);
+      }else{
+        CustomToast.instance.showMsg(message);
+      }
+    } catch (e) {
+      CustomToast.instance.showMsg(MyStrings.unableToConnect);
+      log(e.toString());
+    }
   }
 
   void getCarData(int pageKey) async {
@@ -69,7 +87,7 @@ class LiveCarsListViewModel extends GetxController {
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body);
-        liveCarsResponse.value = LiveCarsResponse.fromJson(jsonDecode(response.body));
+        liveCarsResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
         final isLastPage = liveCarsResponse.value.data!.length < limit;
         if (isLastPage) {
           infinitePagingController.appendLastPage(liveCarsResponse.value.data!);

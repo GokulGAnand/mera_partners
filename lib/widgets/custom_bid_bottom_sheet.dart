@@ -14,12 +14,14 @@ import 'package:intl/intl.dart';
 
 /// ignore: must_be_immutable
 class CustomBidBottomSheet extends StatelessWidget {
-  CustomBidBottomSheet({required this.bidValue, this.isAutoBid = false, super.key, this.onBidPressed, this.amountController});
+  CustomBidBottomSheet({required this.bidValue, this.isAutoBid = false, super.key, this.onBidPressed, this.amountController, this.stepRate, this.onAutoBidPressed});
 
   final List<int> bid = [5000, 10000, 15000];
-  RxInt bidValue;
+  final RxInt bidValue;
+  final RxInt? stepRate;
   final bool isAutoBid;
   final void Function()? onBidPressed;
+  final void Function()? onAutoBidPressed;
   final TextEditingController? amountController;
 
   @override
@@ -81,15 +83,15 @@ class CustomBidBottomSheet extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          const Text(
-            '${MyStrings.currentBid} : ₹ 1,71,000',
+          Text(
+            '${MyStrings.currentBid} : ${numberFormat.format(bidValue.value)}',
             style: MyStyles.selectedTabBarTitleStyle,
           ),
           const SizedBox(
             height: 8,
           ),
-          const Text(
-            '${MyStrings.stepRate} : ₹ 1,000',
+          Text(
+            '${MyStrings.stepRate} : ${numberFormat.format(stepRate?.value)}',
             style: MyStyles.selectedTabBarTitleStyle,
           ),
           (isAutoBid)
@@ -144,7 +146,7 @@ class CustomBidBottomSheet extends StatelessWidget {
                     if (value!.isEmpty) {
                       return "Value cannot be empty";
                     } else if ((int.tryParse(value) ?? 0) < bidValue.value) {
-                      return "Bid nominal can't be lower than the initial price";
+                      return "Bid amount can't be lower than the current amount";
                     }
                     return null;
                   },
@@ -190,7 +192,7 @@ class CustomBidBottomSheet extends StatelessWidget {
           ),
           Obx(() {
             return CustomElevatedButton(
-              onPressed: onBidPressed,
+              onPressed: isAutoBid? onAutoBidPressed : onBidPressed,
               buttonText: ((isAutoBid) ? MyStrings.confirmAutoBid : MyStrings.confirmBid) + numberFormat.format(bidValue.value),
               textStyle: MyStyles.white14700,
             );

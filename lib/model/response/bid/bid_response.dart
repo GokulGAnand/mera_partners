@@ -1,44 +1,6 @@
-class CarListResponse {
-  String? status;
-  String? message;
-  List<Data>? data;
-  int? count;
-  Meta? meta;
-
-  CarListResponse(
-      {this.status, this.message, this.data, this.count, this.meta});
-
-  CarListResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
-      });
-    }
-    count = json['count'];
-    meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    data['count'] = count;
-    if (meta != null) {
-      data['meta'] = meta!.toJson();
-    }
-    return data;
-  }
-}
-
-class Data {
+class BidResponse {
   String? sId;
-  num? uniqueId;
+  int? uniqueId;
   String? make;
   String? model;
   String? variant;
@@ -51,25 +13,18 @@ class Data {
   int? totalBidder;
   String? status;
   String? createdAt;
-  int? realValue;
-  String? winner;
-  String? monthAndYearOfManufacture;
-  num? odometerReading;
-  num? statusValues;
   Front? front;
   Front? frontLeft;
   Front? frontRight;
-  Front? rearLeft;
   Front? rear;
+  Front? rearLeft;
   Front? rearRight;
-  num? engineStar;
-  String? transmission;
-  num? exteriorStar;
-  num? testDriveStar;
-  num? interiorAndElectricalStar;
-  Front? engineCompartment;
+  String? winner;
+  String? monthAndYearOfManufacture;
+  int? odometerReading;
+  int? statusValues;
 
-  Data(
+  BidResponse(
       {this.sId,
         this.uniqueId,
         this.make,
@@ -84,25 +39,18 @@ class Data {
         this.totalBidder,
         this.status,
         this.createdAt,
-        this.realValue,
-        this.winner,
-        this.monthAndYearOfManufacture,
-        this.odometerReading,
-        this.statusValues,
         this.front,
         this.frontLeft,
         this.frontRight,
-        this.rearLeft,
         this.rear,
+        this.rearLeft,
         this.rearRight,
-        this.engineStar,
-        this.transmission,
-        this.exteriorStar,
-        this.testDriveStar,
-        this.interiorAndElectricalStar,
-        this.engineCompartment});
+        this.winner,
+        this.monthAndYearOfManufacture,
+        this.odometerReading,
+        this.statusValues});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  BidResponse.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     uniqueId = json['uniqueId'];
     make = json['make'];
@@ -117,11 +65,6 @@ class Data {
     totalBidder = json['totalBidder'];
     status = json['status'];
     createdAt = json['createdAt'];
-    realValue = json['realValue'];
-    winner = json['winner'];
-    monthAndYearOfManufacture = json['monthAndYearOfManufacture'];
-    odometerReading = json['odometerReading'];
-    statusValues = json['statusValues'];
     front = json['front'] != null ? Front.fromJson(json['front']) : null;
     frontLeft = json['frontLeft'] != null
         ? Front.fromJson(json['frontLeft'])
@@ -129,20 +72,16 @@ class Data {
     frontRight = json['frontRight'] != null
         ? Front.fromJson(json['frontRight'])
         : null;
+    rear = json['rear'] != null ? Front.fromJson(json['rear']) : null;
     rearLeft =
     json['rearLeft'] != null ? Front.fromJson(json['rearLeft']) : null;
-    rear = json['rear'] != null ? Front.fromJson(json['rear']) : null;
     rearRight = json['rearRight'] != null
         ? Front.fromJson(json['rearRight'])
         : null;
-    engineStar = json['engineStar'];
-    transmission = json['transmission'];
-    exteriorStar = json['exteriorStar'];
-    testDriveStar = json['testDriveStar'];
-    interiorAndElectricalStar = json['interiorAndElectricalStar'];
-    engineCompartment = json['engineCompartment'] != null
-        ? Front.fromJson(json['engineCompartment'])
-        : null;
+    winner = json['winner'];
+    monthAndYearOfManufacture = json['monthAndYearOfManufacture'];
+    odometerReading = json['odometerReading'];
+    statusValues = json['statusValues'];
   }
 
   Map<String, dynamic> toJson() {
@@ -161,11 +100,6 @@ class Data {
     data['totalBidder'] = totalBidder;
     data['status'] = status;
     data['createdAt'] = createdAt;
-    data['realValue'] = realValue;
-    data['winner'] = winner;
-    data['monthAndYearOfManufacture'] = monthAndYearOfManufacture;
-    data['odometerReading'] = odometerReading;
-    data['statusValues'] = statusValues;
     if (front != null) {
       data['front'] = front!.toJson();
     }
@@ -175,23 +109,19 @@ class Data {
     if (frontRight != null) {
       data['frontRight'] = frontRight!.toJson();
     }
-    if (rearLeft != null) {
-      data['rearLeft'] = rearLeft!.toJson();
-    }
     if (rear != null) {
       data['rear'] = rear!.toJson();
+    }
+    if (rearLeft != null) {
+      data['rearLeft'] = rearLeft!.toJson();
     }
     if (rearRight != null) {
       data['rearRight'] = rearRight!.toJson();
     }
-    data['engineStar'] = engineStar;
-    data['transmission'] = transmission;
-    data['exteriorStar'] = exteriorStar;
-    data['testDriveStar'] = testDriveStar;
-    data['interiorAndElectricalStar'] = interiorAndElectricalStar;
-    if (engineCompartment != null) {
-      data['engineCompartment'] = engineCompartment!.toJson();
-    }
+    data['winner'] = winner;
+    data['monthAndYearOfManufacture'] = monthAndYearOfManufacture;
+    data['odometerReading'] = odometerReading;
+    data['statusValues'] = statusValues;
     return data;
   }
 }
@@ -217,25 +147,6 @@ class Front {
     data['url'] = url;
     data['condition'] = condition;
     data['remarks'] = remarks;
-    return data;
-  }
-}
-
-class Meta {
-  String? access;
-  String? refresh;
-
-  Meta({this.access, this.refresh});
-
-  Meta.fromJson(Map<String, dynamic> json) {
-    access = json['access'];
-    refresh = json['refresh'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['access'] = access;
-    data['refresh'] = refresh;
     return data;
   }
 }
