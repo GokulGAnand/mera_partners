@@ -16,19 +16,23 @@ import 'package:intl/intl.dart';
 class CustomBidBottomSheet extends StatelessWidget {
   CustomBidBottomSheet({required this.bidValue, this.isAutoBid = false, super.key, this.onBidPressed, this.amountController, this.stepRate, this.onAutoBidPressed});
 
-  final List<int> bid = [5000, 10000, 15000];
+  final RxList<int> bid = [5000, 10000, 15000].obs;
   final RxInt bidValue;
   final RxInt? stepRate;
   final bool isAutoBid;
   final void Function()? onBidPressed;
   final void Function()? onAutoBidPressed;
-  final TextEditingController? amountController;
+  final Rx<TextEditingController>? amountController;
 
   @override
   Widget build(BuildContext context) {
     NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
+    NumberFormat numberFormatter = NumberFormat.currency(locale: 'HI', name: '', decimalDigits: 0);
+    if (amountController != null && amountController!.value.text.isEmpty){
+      amountController!.value.text = numberFormatter.format(bidValue.value).toString();
+    }
     return Container(
-      height: (isAutoBid) ? 442 : 363,
+      height: (isAutoBid) ? 442 : MediaQuery.of(context).size.height * 0.55,
       padding: const EdgeInsets.all(16.0),
       decoration: const BoxDecoration(
         color: MyColors.white,
@@ -37,7 +41,7 @@ class CustomBidBottomSheet extends StatelessWidget {
           topRight: Radius.circular(14),
         ),
       ),
-      child: Column(
+      child: Obx(() =>Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
@@ -124,7 +128,12 @@ class CustomBidBottomSheet extends StatelessWidget {
               children: [
                 InkWell(
                     onTap: () {
-                      bidValue.value -= 1000;
+                      // bidValue.value -= 1000;
+                      if (int.parse(amountController!.value.text.replaceAll(',', '')) > bidValue.value) {
+                        int bidAmount = int.parse(amountController!.value.text.replaceAll(',', ''));
+                        bidAmount -= stepRate?.value ?? 0;
+                        amountController?.value.text = bidAmount.toString();
+                      }
                     },
                     child: const SizedBox(width: 56, child: Icon(Icons.remove))),
                 const VerticalDivider(
@@ -138,8 +147,8 @@ class CustomBidBottomSheet extends StatelessWidget {
                 //     style: MyStyles.black18700,
                 //   ));
                 // }),
-                Expanded(child: BidTextFormField(
-                  controller: amountController ?? TextEditingController(),
+                Expanded(child: Obx(() =>BidTextFormField(
+                  controller: amountController!.value,
                   keyboardType: const TextInputType.numberWithOptions(decimal: false),
                   inputFormatter: [FilteringTextInputFormatter.digitsOnly,],
                   validator: (value) {
@@ -150,13 +159,18 @@ class CustomBidBottomSheet extends StatelessWidget {
                     }
                     return null;
                   },
-                ),),
+                ),
+                ),
+                ),
                 const VerticalDivider(
                   color: MyColors.kPrimaryColor,
                 ),
                 InkWell(
                     onTap: () {
-                      bidValue.value += 1000;
+                      // bidValue.value += 1000;
+                      int bidAmount = int.parse(amountController!.value.text.replaceAll(',', ''));
+                      bidAmount += stepRate?.value ?? 0;
+                      amountController?.value.text = bidAmount.toString();
                     },
                     child: const SizedBox(width: 56, child: Icon(Icons.add))),
               ],
@@ -170,7 +184,10 @@ class CustomBidBottomSheet extends StatelessWidget {
                   Expanded(
                       child: InkWell(
                     onTap: () {
-                      bidValue.value += bid[i];
+                      // bidValue.value += bid[i];
+                      int bidAmount = int.parse(amountController!.value.text.replaceAll(',', ''));
+                      bidAmount += bid[i];
+                      amountController?.value.text = bidAmount.toString();
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 5),
@@ -193,12 +210,12 @@ class CustomBidBottomSheet extends StatelessWidget {
           Obx(() {
             return CustomElevatedButton(
               onPressed: isAutoBid? onAutoBidPressed : onBidPressed,
-              buttonText: ((isAutoBid) ? MyStrings.confirmAutoBid : MyStrings.confirmBid) + numberFormat.format(bidValue.value),
+              buttonText: ((isAutoBid) ? MyStrings.confirmAutoBid : MyStrings.confirmBid) + numberFormat.format(int.tryParse(amountController!.value.text) ?? bidValue.value),
               textStyle: MyStyles.white14700,
             );
           })
         ],
       ),
-    );
+    ));
   }
 }

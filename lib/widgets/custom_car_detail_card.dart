@@ -42,11 +42,11 @@ class CustomCarDetailCard extends StatefulWidget {
   final Function() onCarTapped;
   Rx<PageController> pageController = PageController(initialPage: 0, viewportFraction: 0.85).obs;
   var activePage = 0.obs;
-  final Duration? bidStartTime;
-  final Duration? bidEndTime;
+  final DateTime? bidStartTime;
+  final DateTime? bidEndTime;
+  Duration? duration;
   Duration elapsed = Duration.zero;
-  final StreamController<Duration> timeStreamController = StreamController.broadcast();
-  StreamSubscription<Duration>? streamSubscription;
+  Timer? _timer;
 
   showPendingDialog() {
     showDialog(
@@ -83,16 +83,6 @@ class CustomCarDetailCard extends StatefulWidget {
     );
   }
 
-  void startTimer(){
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if(elapsed >= bidStartTime!){
-        timer.cancel();
-      } else {
-        timeStreamController.add(elapsed);
-      }
-    });
-  }
-
   String _formatDuration(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
@@ -124,7 +114,7 @@ class CustomCarDetailCard extends StatefulWidget {
     this.isScheduled = false,
     required this.onCarTapped,
     this.bidStartTime,
-    this.bidEndTime,
+    this.bidEndTime, this.duration,
   });
 
   @override
@@ -132,21 +122,31 @@ class CustomCarDetailCard extends StatefulWidget {
 }
 
 class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
+
+  void startTimer() {
+    print('ranjitha');
+    print(DateTime.now().toString());
+    print(widget.duration.toString());
+    widget._timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        widget.elapsed =  widget.elapsed + const Duration(seconds: 1);
+      });
+      widget.duration = widget.duration ?? Duration(seconds: 0);
+      if ( widget.elapsed >=  widget.duration!) {
+        widget._timer?.cancel();
+        print("Auction ended!");
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    widget.streamSubscription = widget.timeStreamController.stream.listen((duration) {
-      setState(() {
-        widget.elapsed = duration;
-      });
-    });
-    widget.startTimer();
+    startTimer();
   }
 
   @override
   void dispose() {
-    widget.timeStreamController.close();
-    widget.streamSubscription?.cancel();
     super.dispose();
   }
 
@@ -404,19 +404,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                                 color: MyColors.orange,
                                 size: 14,
                               ),
-                              StreamBuilder(
-                                stream: widget.timeStreamController.stream,
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    return Text(
-                                      widget._formatDuration(widget.bidStartTime! - widget.elapsed),
-                                      style: MyStyles.orange14700,
-                                    );
-                                  } else {
-                                    return const CircularProgressIndicator();
-                                  }
-                                },
-                              ),
+                              Text( widget._formatDuration( widget.duration ?? Duration(seconds: 1) -  widget.elapsed), style: MyStyles.orange14700),
                             ],
                           ),
                         ],
@@ -494,9 +482,9 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                                 borderRadius: BorderRadius.circular(6),
                               ),
                             ),
-                            onPressed: globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name ? widget.autoBid : () {
+                            onPressed: widget.autoBid,/*globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name ? widget.autoBid : () {
                                     widget.showPendingDialog();
-                                  },
+                                  },*/
                             buttonText: MyStrings.autoBid),
                         CustomElevatedButton(
                             buttonWidth: MediaQuery.of(context).size.width * 0.38,

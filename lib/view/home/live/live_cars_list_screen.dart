@@ -18,102 +18,105 @@ class LiveCarsListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: PagedListView<int, Data>(
-          pagingController: controller.infinitePagingController,
-          builderDelegate: PagedChildBuilderDelegate<Data>(
-              // itemCount: controller.liveCarsResponse.value.data?.length,
-              // padding: const EdgeInsets.all(8),
-              itemBuilder: ((context, item, index) {
-            return CustomCarDetailCard(
-              onCarTapped: () {
-                Get.toNamed(AppRoutes.carDetailsScreen, arguments: item.sId);
-              },
-              isOtb: false,
-              isScheduled: item.status?.toLowerCase() == 'scheduled' ? true : false,
-              imageUrl: item.rearRight?.url ?? '',
-              carLocation: item.vehicleLocation ?? '',
-              bidStatus: item.status ?? '',
-              bidAmount: Constants.numberFormat.format(item.highestBid).toString(),
-              bidStartTime: Duration(minutes: 1),
-              bidEndTime: Duration(minutes: 1),
-              carModel: item.model ?? '',
-              carVariant: item.variant ?? '',
-              rating: ((item.engineStar ?? 0 + (item.exteriorStar ?? 0) + (item.interiorAndElectricalStar ?? 0) + (item.testDriveStar ?? 0)) / 4),
-              fuelType: item.fuelType ?? '',
-              id: item.uniqueId.toString(),
-              fmv: item.realValue.toString(),
-              kmDriven: item.odometerReading != null ? item.odometerReading.toString() : '0',
-              ownerShip: item.ownershipNumber ?? '',
-              transmission: item.transmission ?? '',
-              images: [
-                item.frontLeft?.url ?? '',
-                item.front?.url ?? '',
-                item.frontRight?.url ?? '',
-                item.rear?.url ?? '',
-                item.engineCompartment?.url ?? '',
-              ],
-              autoBid: () {
-                showModalBottomSheet(
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    context: context,
-                    builder: (context) {
-                      return CustomBidBottomSheet(
-                        amountController: controller.autoBidController.value,
-                        isAutoBid: true,
-                        bidValue: RxInt(item.highestBid ?? 0),
-                        stepRate: item.highestBid! <= 99999
-                            ? RxInt(1000)
-                            : (item.highestBid! >= 100000 && item.highestBid! <= 299999)
-                            ? RxInt(4000)
-                            : (item.highestBid! >= 300000 && item.highestBid! <= 499999)
-                            ? RxInt(7000)
-                            : RxInt(10000),
-                        onAutoBidPressed: () {
-                          try {
-                            controller.placeAutoBid(controller.bidController.value.text, item.sId);
-                            Navigator.of(context).pop();
-                          } catch (e) {
-                            log(e.toString());
-                          }
-                        },
-                      );
-                    });
-              },
-              bid: () {
-                showModalBottomSheet(
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    context: context,
-                    builder: (context) {
-                      return CustomBidBottomSheet(
-                        amountController: controller.bidController.value,
-                        bidValue: RxInt(item.highestBid ?? 0),
-                        stepRate: item.highestBid! <= 99999
-                            ? RxInt(1000)
-                            : (item.highestBid! >= 100000 && item.highestBid! <= 299999)
-                            ? RxInt(4000)
-                            : (item.highestBid! >= 300000 && item.highestBid! <= 499999)
-                            ? RxInt(7000)
-                            : RxInt(10000),
-                        onBidPressed: () {
-                          try {
-                            controller.placeBid(controller.bidController.value.text, item.sId);
-                            Navigator.of(context).pop();
-                          } catch (e) {
-                            log(e.toString());
-                          }
-                        },
-                      );
-                    });
-              },
-            );
-          })),
+      body: Obx(
+        () => SafeArea(
+          child: controller.liveCarsResponse.value.data != null
+              ? ListView.builder(
+                  itemCount: controller.liveCarsResponse.value.data?.length,
+                  padding: const EdgeInsets.all(8),
+                  itemBuilder: (context, index) {
+                    return CustomCarDetailCard(
+                      onCarTapped: () {
+                        Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.liveCarsResponse.value.data?[index].sId);
+                      },
+                      isOtb: false,
+                      isScheduled: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == 'scheduled' ? true : false,
+                      imageUrl: controller.liveCarsResponse.value.data?[index].rearRight?.url ?? '',
+                      carLocation: controller.liveCarsResponse.value.data?[index].vehicleLocation ?? '',
+                      bidStatus: controller.liveCarsResponse.value.data?[index].status ?? '',
+                      bidAmount: Constants.numberFormat.format(controller.liveCarsResponse.value.data?[index].highestBid).toString(),
+                      bidStartTime: DateTime.parse(controller.liveCarsResponse.value.data?[index].bidStartTime ?? '2024-03-29T10:30:00.000Z'),
+                      bidEndTime: DateTime.parse(controller.liveCarsResponse.value.data?[index].bidEndTime ?? '2024-03-29T11:00:00.000Z'),
+                      carModel: controller.liveCarsResponse.value.data?[index].model ?? '',
+                      carVariant: controller.liveCarsResponse.value.data?[index].variant ?? '',
+                      rating: ((controller.liveCarsResponse.value.data?[index].engineStar ?? 0 + (controller.liveCarsResponse.value.data?[index].exteriorStar ?? 0) + (controller.liveCarsResponse.value.data?[index].interiorAndElectricalStar ?? 0) + (controller.liveCarsResponse.value.data?[index].testDriveStar ?? 0)) / 4),
+                      fuelType: controller.liveCarsResponse.value.data?[index].fuelType ?? '',
+                      id: controller.liveCarsResponse.value.data?[index].uniqueId.toString() ?? '',
+                      fmv: controller.liveCarsResponse.value.data?[index].realValue.toString() ?? 'x',
+                      kmDriven: controller.liveCarsResponse.value.data?[index].odometerReading != null ? controller.liveCarsResponse.value.data![index].odometerReading.toString() : '0',
+                      ownerShip: controller.liveCarsResponse.value.data?[index].ownershipNumber ?? '',
+                      transmission: controller.liveCarsResponse.value.data?[index].transmission ?? '',
+                      images: [
+                        controller.liveCarsResponse.value.data?[index].frontLeft?.url ?? '',
+                        controller.liveCarsResponse.value.data?[index].front?.url ?? '',
+                        controller.liveCarsResponse.value.data?[index].frontRight?.url ?? '',
+                        controller.liveCarsResponse.value.data?[index].rear?.url ?? '',
+                        controller.liveCarsResponse.value.data?[index].engineCompartment?.url ?? '',
+                      ],
+                      autoBid: () {
+                        showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (context) {
+                              return CustomBidBottomSheet(
+                                amountController: controller.autoBidController,
+                                isAutoBid: true,
+                                bidValue: RxInt(controller.liveCarsResponse.value.data?[index].highestBid ?? 0),
+                                stepRate: controller.liveCarsResponse.value.data![index].highestBid! <= 99999
+                                    ? RxInt(1000)
+                                    : (controller.liveCarsResponse.value.data![index].highestBid! >= 100000 && controller.liveCarsResponse.value.data![index].highestBid! <= 299999)
+                                    ? RxInt(4000)
+                                    : (controller.liveCarsResponse.value.data![index].highestBid! >= 300000 && controller.liveCarsResponse.value.data![index].highestBid! <= 499999)
+                                    ? RxInt(7000)
+                                    : RxInt(10000),
+                                onAutoBidPressed: () {
+                                  try {
+                                    controller.placeAutoBid(controller.bidController.value.text, controller.liveCarsResponse.value.data?[index].sId);
+                                    Navigator.of(context).pop();
+                                  } catch (e) {
+                                    log(e.toString());
+                                  }
+                                },
+                              );
+                            });
+                      },
+                      bid: () {
+                        showModalBottomSheet(
+                            enableDrag: true,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (context) {
+                              return CustomBidBottomSheet(
+                                amountController: controller.bidController,
+                                bidValue: RxInt(controller.liveCarsResponse.value.data?[index].highestBid ?? 0),
+                                stepRate: controller.liveCarsResponse.value.data![index].highestBid! <= 99999
+                                    ? RxInt(1000)
+                                    : (controller.liveCarsResponse.value.data![index].highestBid! >= 100000 && controller.liveCarsResponse.value.data![index].highestBid! <= 299999)
+                                    ? RxInt(4000)
+                                    : (controller.liveCarsResponse.value.data![index].highestBid! >= 300000 && controller.liveCarsResponse.value.data![index].highestBid! <= 499999)
+                                    ? RxInt(7000)
+                                    : RxInt(10000),
+                                onBidPressed: () {
+                                  try {
+                                    controller.placeBid(controller.bidController.value.text, controller.liveCarsResponse.value.data?[index].sId);
+                                    Navigator.of(context).pop();
+                                  } catch (e) {
+                                    log(e.toString());
+                                  }
+                                },
+                              );
+                            });
+                      },
+                    );
+                  },
+                )
+              : const Center(
+                  child: CircularProgressIndicator(),
+                ),
         ),
-      )),
+      ),
     );
   }
 }

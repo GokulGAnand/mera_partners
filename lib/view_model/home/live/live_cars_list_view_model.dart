@@ -26,6 +26,7 @@ class LiveCarsListViewModel extends GetxController {
 
   @override
   void onInit() async {
+    getCarData(1);
     infinitePagingController.addPageRequestListener((pageKey) {
       getCarData(pageKey);
     });
@@ -62,7 +63,6 @@ class LiveCarsListViewModel extends GetxController {
   }
   void placeAutoBid(autoBidLimit, carId) async {
     try {
-      //todo change url and data
       socketService?.sendSocketRequest("bidInfo", {"amount": autoBidLimit, "carId": carId});
       log(autoBidLimit+' bid limit');
       log(carId+' car id');
