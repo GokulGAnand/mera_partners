@@ -9,15 +9,21 @@ class CarListResponse {
       {this.status, this.message, this.data, this.count, this.meta});
 
   CarListResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
+    if (json['status'] != null) {
+      status = json['status'];
+    }
+    if (json['message'] != null) {
+      message = json['message'];
+    }
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
         data!.add(Data.fromJson(v));
       });
     }
-    count = json['count'];
+    if (json['count'] != null) {
+      count = json['count'];
+    }
     meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
   }
 

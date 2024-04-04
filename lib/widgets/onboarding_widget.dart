@@ -62,7 +62,7 @@ class OnBoardingWidgets extends StatelessWidget {
                       }else if(globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name || (globals.addressProofFront == null && globals.addressProofFront == false)){
                         Get.toNamed(AppRoutes.documentScreen);
                       }else{
-                        Get.toNamed(AppRoutes.homeScreen);
+                        Get.toNamed(AppRoutes.documentScreen);
                       }
                     } else {
                       controller.indicator.animateToPage(

@@ -15,14 +15,24 @@ class SocketService {
 
   connectToSocket() {
     //todo change url
-    socket = IO.io('ws://192.168.1.26:8000', <String, dynamic>{
+    socket = IO.io('ws://13.201.64.137:8080', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
     });
 
+    List<Data> parseCarDataList(String jsonString) {
+      final parsed = jsonDecode(jsonString).cast<Map<String, dynamic>>();
+      return parsed.map<Data>((json) => Data.fromJson(json)).toList();
+    }
+
     socket?.on('getBidInfo', (data) {
       log('Received message: $data');
-      Get.find<LiveCarsListViewModel>().liveCarsResponse.value = CarListResponse.fromJson(jsonDecode(data));
+      if (data != null) {
+        List<Data> carList = parseCarDataList(data);
+        Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data = carList;
+        Get.find<LiveCarsListViewModel>().updateBid(carList);
+        Get.find<LiveCarsListViewModel>().liveCarsResponse.refresh(); // Manually trigger UI update
+      }
     });
 
     socket?.connect();

@@ -1,4 +1,5 @@
 import 'package:evaluator_app/model/response/live/live_cars_list_response.dart';
+import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/widgets/custom_bid_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,8 +32,8 @@ class BidCarsListScreen extends StatelessWidget {
                           },
                           imageUrl: item.rearRight?.url ?? '',
                           carLocation: item.vehicleLocation ?? '',
-                          bidStatus: item.status ?? '',
-                          bidAmount: item.totalBidder.toString(),
+                          bidStatus: RxString(item.status ?? ''),
+                          bidAmount: RxString(item.totalBidder.toString()),
                           carModel: item.model ?? '',
                           carVariant: item.variant ?? '',
                           rating: ((item.engineStar ?? 0 + (item.exteriorStar ?? 0) + (item.interiorAndElectricalStar ?? 0) + (item.testDriveStar ?? 0)) / 4),
@@ -71,7 +72,7 @@ class BidCarsListScreen extends StatelessWidget {
                                     bidValue: RxInt(item.highestBid ?? 0),
                                   );
                                 });
-                          },
+                          }, statusColor: MyColors.kPrimaryColor,
                         );
                       },
                     ),

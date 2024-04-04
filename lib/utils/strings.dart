@@ -375,6 +375,7 @@ class MyStrings {
   static const String live = "LIVE";
   static const String otb = "OTB";
   static const String rating = "Rating";
+  static const String scheduledBid = "Scheduled bid";
 
   ///my cars
   static const String biddedCars = "Bidded Cars(4)";
@@ -484,4 +485,9 @@ class MyStrings {
   static const String bidPlaced = 'Successfully placed bid';
   static const String carPurchased = 'Car purchased';
   static const String offerSubmit = 'Offer submitted';
+  static const String vLowBidAmount = 'Your bid must be higher than current bid + step rate';
+  /// toast messages
+  static const String youAreLeading = 'You are leading';
+  static const String youAreLoosing = 'You are loosing';
+
 }

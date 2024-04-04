@@ -2,6 +2,7 @@ library my_prj.globals;
 
 String? userName;
 String? userId;
+String? uniqueUserId;
 String? documentStatus;
 bool? addressProofFront;
 String? city;

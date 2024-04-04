@@ -42,6 +42,13 @@ class LiveCarsListViewModel extends GetxController {
     super.onInit();
   }
 
+  void updateBid(dynamic newData) {
+    liveCarsResponse.value.data = newData;
+    update();
+    refresh();
+    notifyChildrens();
+  }
+
   void placeBid(amount, carId) async {
     try {
       //todo change url and data

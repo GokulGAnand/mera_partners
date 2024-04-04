@@ -21,8 +21,9 @@ class CustomCarDetailCard extends StatefulWidget {
   final String imageUrl;
   final List<String> images;
   final String carLocation;
-  final String bidStatus;
-  final String bidAmount;
+  final RxString bidStatus;
+  final RxString bidAmount;
+  final Color statusColor;
   final String carModel;
   final String carVariant;
   final num rating;
@@ -115,6 +116,7 @@ class CustomCarDetailCard extends StatefulWidget {
     required this.onCarTapped,
     this.bidStartTime,
     this.bidEndTime, this.duration,
+    required this.statusColor,
   });
 
   @override
@@ -142,7 +144,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
   @override
   void initState() {
     super.initState();
-    startTimer();
+    // startTimer();
   }
 
   @override
@@ -152,7 +154,8 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return Obx(
+            () =>GestureDetector(
       onTap: widget.onCarTapped,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 58.0, top: 8),
@@ -233,11 +236,11 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                 Container(
                   height: 37,
                   clipBehavior: Clip.antiAlias,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      end: Alignment(2.00, 0.00),
-                      begin: Alignment(-1, 0),
-                      colors: [MyColors.kPrimaryColor, MyColors.black5],
+                      end: const Alignment(2.00, 0.00),
+                      begin: const Alignment(-1, 0),
+                      colors: [widget.statusColor, MyColors.black5],
                     ),
                   ),
                   child: Row(
@@ -245,11 +248,11 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       const SizedBox(
                         width: 12,
                       ),
-                      Text(widget.isOtb == true ? MyStrings.closingPrice : widget.bidStatus, style: MyStyles.whiteTitleStyle),
+                      Obx(() =>Text(widget.isOtb == true ? MyStrings.closingPrice : widget.bidStatus.value, style: MyStyles.whiteTitleStyle)),
                       const SizedBox(
                         width: 15,
                       ),
-                      if (widget.bidAmount.isNotEmpty) Text(widget.bidAmount, textAlign: TextAlign.center, style: MyStyles.white16700),
+                      if (widget.bidAmount.isNotEmpty && widget.isScheduled == false) Obx(() =>Text(widget.bidAmount.value, textAlign: TextAlign.center, style: MyStyles.white16700)),
                     ],
                   ),
                 ),
@@ -536,6 +539,6 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
           ),
         ),
       ),
-    );
+    ));
   }
 }
