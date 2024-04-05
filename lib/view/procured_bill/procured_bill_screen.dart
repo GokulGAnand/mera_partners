@@ -1,19 +1,30 @@
-import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/strings.dart';
-import 'package:evaluator_app/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../utils/dimens.dart';
+import '../../utils/colors.dart';
+import '../../utils/strings.dart';
+import '../../utils/styles.dart';
 import '../../view_model/procured_bill/procured_bill_view_model.dart';
 import '../../widgets/bank_details_bottom_sheet.dart';
 import '../../widgets/custom_button.dart';
 
-/// ignore: must_be_immutable
 class ProcuredBillScreen extends StatelessWidget {
-    ProcuredBillScreen({super.key});
-   ProcuredBillScreenViewModel viewModel = Get.isRegistered<ProcuredBillScreenViewModel>()? Get.find<ProcuredBillScreenViewModel>()  : Get.put(ProcuredBillScreenViewModel());
+  ProcuredBillScreen({Key? key}) : super(key: key);
+
+  final ProcuredBillScreenViewModel viewModel = Get.isRegistered<ProcuredBillScreenViewModel>()
+      ? Get.find<ProcuredBillScreenViewModel>()
+      : Get.put(ProcuredBillScreenViewModel());
+
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic>? arguments = Get.arguments as Map<String, dynamic>?;
+    final String? finalPrice = arguments?['finalPrice'];
+    final String? carModel = arguments?['carModel'];
+    final String? carName = arguments?['carName'];
+    print('Final Price: $finalPrice');
+    print('Car Model: $carModel');
+    print('Car Name: $carName');
+
     return Scaffold(
       backgroundColor: MyColors.lightBlue1,
       body: Column(
@@ -30,8 +41,8 @@ class ProcuredBillScreen extends StatelessWidget {
                   },
                   child: const Icon(Icons.arrow_back, color: MyColors.black, size: 24),
                 ),
-                title: const Text('2016 Duster', style: MyStyles.selectedTabBarTitleStyle),
-                subtitle: const Text('110 PS RXZ 4X2 AMT', style: MyStyles.black16700),
+                title: Text(carName ?? '', style: MyStyles.selectedTabBarTitleStyle),
+                subtitle:  Text(carModel?? '', style: MyStyles.black16700),
               ),
             ),
           ),
@@ -56,10 +67,7 @@ class ProcuredBillScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            MyStrings.totalPayment,
-                            style: MyStyles.black16400,
-                          ),
+                          const Text(MyStrings.totalPayment, style: MyStyles.black16400),
                           SizedBox(height: Dimens.standard_10),
                           const Text(MyStrings.additionalCharges, style: MyStyles.black16400),
                           SizedBox(height: Dimens.standard_10),
@@ -69,7 +77,7 @@ class ProcuredBillScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('₹1,93,000', style: MyStyles.black16400),
+                           Text(finalPrice?? '', style: MyStyles.black16400),
                           SizedBox(height: Dimens.standard_10),
                           const Text('₹5000', style: MyStyles.black16400),
                           SizedBox(height: Dimens.standard_10),
@@ -130,7 +138,7 @@ class ProcuredBillScreen extends StatelessWidget {
             children: [
               SizedBox(width: Dimens.standard_20),
               InkWell(
-                onTap: ()async {
+                onTap: () async {
                   await viewModel.launchCaller();
                 },
                 child: Container(
@@ -141,7 +149,7 @@ class ProcuredBillScreen extends StatelessWidget {
                     border: Border.all(color: MyColors.kPrimaryColor, width: 2),
                     color: MyColors.lightBlue,
                   ),
-                  child:  const Padding(
+                  child: const Padding(
                     padding: EdgeInsets.only(left: 6),
                     child: Stack(
                       children: [

@@ -96,6 +96,11 @@ class _NegotiationState extends State<Negotiation> {
               ),
               itemBuilder: (context, index) {
                 return CustomOrderContainer(
+                  imageURL: '',
+                  carID: '',
+                  carName: '',
+                  carModel: '',
+                  finalPrice: '',
                   backgroundBlackOpacity: Obx(() {
                     if (orderScreenViewModel.isNegotiation.value) {
                       return Container(

@@ -9,6 +9,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../tutorial/tutorial_screen_ui.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -60,7 +62,6 @@ class _HomeScreenState extends State<HomeScreen> {
       _tutorialShown = true;
     });
   }
-
 
 
 

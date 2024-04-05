@@ -9,21 +9,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../utils/dimens.dart';
+import '../../../../view_model/orders/procured_view_model.dart';
+
 class Procured extends StatelessWidget {
-  const Procured({super.key});
+   Procured({super.key});
+   ProcuredScreenViewModel controller = Get.isRegistered<ProcuredScreenViewModel>()
+      ? Get.find<ProcuredScreenViewModel>()
+      : Get.put(ProcuredScreenViewModel());
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
+    return ListView(
         children: [
-          const SizedBox(
-            height: 12,
+            SizedBox(
+            height: Dimens.standard_16,
           ),
           GridView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: 3,
+              itemCount:   controller.liveCarsResponse.value.data?.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 22,
@@ -32,6 +37,11 @@ class Procured extends StatelessWidget {
               ),
               itemBuilder: (context, index) {
                 return CustomOrderContainer(
+                  carModel: controller.liveCarsResponse.value.data?[index].model?? '',
+                  finalPrice: controller.liveCarsResponse.value.data?[index].highestBid.toString()??'',
+                  carName: controller.liveCarsResponse.value.data?[index].make?? '',
+                  carID: controller.liveCarsResponse.value.data?[index].uniqueId?.toString()??  '',
+                  imageURL: controller.liveCarsResponse.value.data?[index].frontLeft?.url ?? '',
                   dealStatus: Container(
                     // width: double.infinity,
                     height: 25,
@@ -45,8 +55,8 @@ class Procured extends StatelessWidget {
                           MySvg.dealWon,
                           width: 18,
                         ),
-                        const SizedBox(
-                          width: 3,
+                         SizedBox(
+                          width: Dimens.standard_3,
                         ),
                         const Text(
                           MyStrings.dealWon,
@@ -57,7 +67,13 @@ class Procured extends StatelessWidget {
                   ),
                   button: CustomElevatedButton(
                     onPressed: () {
-                      Get.toNamed(AppRoutes.procuredBill);
+                      Get.toNamed(AppRoutes.procuredBill,
+                        arguments: {
+                          'finalPrice': controller.liveCarsResponse.value.data?[index].highestBid.toString(),
+                          'carModel': controller.liveCarsResponse.value.data?[index].model ?? '',
+                          'carName': controller.liveCarsResponse.value.data?[index].make ?? '',
+                        }
+                      );
                     },
                     buttonStyle: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.all(2),
@@ -74,7 +90,7 @@ class Procured extends StatelessWidget {
                 );
               }),
         ],
-      ),
+
     );
   }
 }
