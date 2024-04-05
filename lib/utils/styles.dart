@@ -330,6 +330,13 @@ class MyStyles {
     fontWeight: FontWeight.w500,
   );
 
+  static const black6_16500 = TextStyle(
+    color: MyColors.black6,
+    fontSize: 16,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
+  );
+
   static const primary12400 = TextStyle(
     color: MyColors.kPrimaryColor,
     fontSize: 12,

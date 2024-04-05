@@ -11,7 +11,7 @@ import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
 
 class OTBCarsListViewModel extends GetxController {
-  var carsListResponse = LiveCarsResponse().obs;
+  var carsListResponse = CarListResponse().obs;
 
 
   //declare pagination controller
@@ -31,7 +31,7 @@ class OTBCarsListViewModel extends GetxController {
       var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=OTB&page=$pageKey&limit=$limit'), headers: globals.headers);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        carsListResponse.value = LiveCarsResponse.fromJson(jsonDecode(response.body));
+        carsListResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
         log(response.body);
         final isLastPage = carsListResponse.value.data!.length < limit;
         if (isLastPage) {

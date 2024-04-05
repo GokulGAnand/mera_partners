@@ -50,7 +50,6 @@ class LoginScreenViewModel extends GetxController {
       }
     });
   }
-
   //API Integration
   Future<void> mobileLogin() async {
     try {
@@ -90,16 +89,17 @@ class LoginScreenViewModel extends GetxController {
           globals.contactNo = userInfoResponse.value.data?.first.contactNo;
           globals.token = userInfoResponse.value.meta?.access;
           globals.userId = userInfoResponse.value.data?.first.userId;
+          globals.uniqueUserId = userInfoResponse.value.data?.first.sId;
           globals.documentStatus = userInfoResponse.value.data?.first.isDocumentsVerified;
           globals.addressProofFront = userInfoResponse.value.data?.first.addressProofFront != null ? true : false;
-          if (userInfoResponse.value.data?.first.isDocumentsVerified != null && userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.SUBMITTED.name) {
+          if (userInfoResponse.value.data?.first.isDocumentsVerified != null && userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.SUBMITTED.name && userInfoResponse.value.data?.first.isDeposited != null && userInfoResponse.value.data?.first.isDeposited == true) {
             Get.toNamed(AppRoutes.homeScreen);
+          }  else if (userInfoResponse.value.data?.first.isDocumentsVerified?.toLowerCase() == DocumentStatus.NOTSUBMITTED.name.toLowerCase() || userInfoResponse.value.data?.first.addressProofFront == null) {
+            Get.toNamed(AppRoutes.documentScreen);
           } else if (userInfoResponse.value.data?.first.fullname == null) {
             Get.toNamed(AppRoutes.onboardingScreen);
-          } else if (userInfoResponse.value.data?.first.isDocumentsVerified?.toLowerCase() == DocumentStatus.NOTSUBMITTED.name.toLowerCase() || userInfoResponse.value.data?.first.addressProofFront == null) {
+          }else {
             Get.toNamed(AppRoutes.documentScreen);
-          } else {
-            Get.toNamed(AppRoutes.onboardingScreen);
           }
         }
       } else {

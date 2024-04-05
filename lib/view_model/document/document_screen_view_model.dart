@@ -85,7 +85,7 @@ class DocumentScreenViewModel extends GetxController {
 
   void getDocument() async {
     try {
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.userId}'), headers: globals.headers);
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId}'), headers: globals.headers);
       userInfoResponse.value = UserInfoResponse.fromJson(json.decode(response.body));
       if (userInfoResponse.value.data != null) {
         loadData();
@@ -125,7 +125,7 @@ class DocumentScreenViewModel extends GetxController {
   Future<bool> addDocument() async {
     ProgressBar.instance.showProgressbar(Get.context!);
     try {
-      var request = http.MultipartRequest('PATCH', Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.userId!}'));
+      var request = http.MultipartRequest('PATCH', Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId!}'));
       request.fields.addAll({'fullname': fullNameController.value.text, 'businessName': businessNameController.value.text, 'businessAddress': businessAddressController.value.text, 'pincode': pinCodeController.value.text, 'contactNo': phoneNumberController.value.text, 'district': districtController.value.text});
       if (panCard.value != null && !panCard.value!.path.startsWith('http') && !panCard.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('panCard', panCard.value!.path, contentType: MediaType('image', panCard.value!.path.split('.').last)));
@@ -150,6 +150,8 @@ class DocumentScreenViewModel extends GetxController {
         request.files.add(await http.MultipartFile.fromPath('canceledCheque', cancelledCheque.value!.path, contentType: MediaType('image', cancelledCheque.value!.path.split('.').last)));
       }
       request.headers.addAll(globals.headers);
+      log(request.fields.toString());
+      log(request.toString());
 
       var response = await request.send();
 

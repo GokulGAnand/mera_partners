@@ -1,23 +1,29 @@
-class LiveCarsResponse {
+class CarListResponse {
   String? status;
   String? message;
   List<Data>? data;
-  int? count;
+  num? count;
   Meta? meta;
 
-  LiveCarsResponse(
+  CarListResponse(
       {this.status, this.message, this.data, this.count, this.meta});
 
-  LiveCarsResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
+  CarListResponse.fromJson(Map<String, dynamic> json) {
+    if (json['status'] != null) {
+      status = json['status'];
+    }
+    if (json['message'] != null) {
+      message = json['message'];
+    }
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
         data!.add(Data.fromJson(v));
       });
     }
-    count = json['count'];
+    if (json['count'] != null) {
+      count = json['count'];
+    }
     meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
   }
 
@@ -38,7 +44,7 @@ class LiveCarsResponse {
 
 class Data {
   String? sId;
-  int? uniqueId;
+  num? uniqueId;
   String? make;
   String? model;
   String? variant;
@@ -48,27 +54,29 @@ class Data {
   String? fuelType;
   String? qcStatus;
   int? highestBid;
-  int? totalBidder;
+  num? totalBidder;
   String? status;
   String? createdAt;
   int? realValue;
+  String? monthAndYearOfManufacture;
+  num? odometerReading;
+  String? transmission;
+  num? statusValues;
+  List<LeaderBoard>? leaderBoard;
+  String? winner;
   Front? front;
   Front? frontLeft;
   Front? frontRight;
-  Front? frontWithHoodOpen;
-  Front? rear;
   Front? rearLeft;
+  Front? rear;
   Front? rearRight;
-  String? monthAndYearOfManufacture;
-  int? odometerReading;
+  num? engineStar;
+  num? exteriorStar;
+  num? testDriveStar;
+  num? interiorAndElectricalStar;
   Front? engineCompartment;
-  int? statusValues;
-  int? engineStar;
-  String? transmission;
-  double? exteriorStar;
-  int? testDriveStar;
-  int? interiorAndElectricalStar;
-  String? specialComments;
+  String? bidEndTime;
+  String? bidStartTime;
 
   Data(
       {this.sId,
@@ -86,23 +94,25 @@ class Data {
         this.status,
         this.createdAt,
         this.realValue,
+        this.monthAndYearOfManufacture,
+        this.odometerReading,
+        this.transmission,
+        this.statusValues,
+        this.leaderBoard,
+        this.winner,
         this.front,
         this.frontLeft,
         this.frontRight,
-        this.frontWithHoodOpen,
-        this.rear,
         this.rearLeft,
+        this.rear,
         this.rearRight,
-        this.monthAndYearOfManufacture,
-        this.odometerReading,
-        this.engineCompartment,
-        this.statusValues,
         this.engineStar,
-        this.transmission,
         this.exteriorStar,
         this.testDriveStar,
         this.interiorAndElectricalStar,
-        this.specialComments});
+        this.engineCompartment,
+        this.bidEndTime,
+        this.bidStartTime});
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -120,6 +130,17 @@ class Data {
     status = json['status'];
     createdAt = json['createdAt'];
     realValue = json['realValue'];
+    monthAndYearOfManufacture = json['monthAndYearOfManufacture'];
+    odometerReading = json['odometerReading'];
+    transmission = json['transmission'];
+    statusValues = json['statusValues'];
+    if (json['leaderBoard'] != null) {
+      leaderBoard = <LeaderBoard>[];
+      json['leaderBoard'].forEach((v) {
+        leaderBoard!.add(LeaderBoard.fromJson(v));
+      });
+    }
+    winner = json['winner'];
     front = json['front'] != null ? Front.fromJson(json['front']) : null;
     frontLeft = json['frontLeft'] != null
         ? Front.fromJson(json['frontLeft'])
@@ -127,27 +148,21 @@ class Data {
     frontRight = json['frontRight'] != null
         ? Front.fromJson(json['frontRight'])
         : null;
-    frontWithHoodOpen = json['frontWithHoodOpen'] != null
-        ? Front.fromJson(json['frontWithHoodOpen'])
-        : null;
-    rear = json['rear'] != null ? Front.fromJson(json['rear']) : null;
     rearLeft =
     json['rearLeft'] != null ? Front.fromJson(json['rearLeft']) : null;
+    rear = json['rear'] != null ? Front.fromJson(json['rear']) : null;
     rearRight = json['rearRight'] != null
         ? Front.fromJson(json['rearRight'])
         : null;
-    monthAndYearOfManufacture = json['monthAndYearOfManufacture'];
-    odometerReading = json['odometerReading'];
-    engineCompartment = json['engineCompartment'] != null
-        ? Front.fromJson(json['engineCompartment'])
-        : null;
-    statusValues = json['statusValues'];
     engineStar = json['engineStar'];
-    transmission = json['transmission'];
     exteriorStar = json['exteriorStar'];
     testDriveStar = json['testDriveStar'];
     interiorAndElectricalStar = json['interiorAndElectricalStar'];
-    specialComments = json['specialComments'];
+    engineCompartment = json['engineCompartment'] != null
+        ? Front.fromJson(json['engineCompartment'])
+        : null;
+    bidEndTime = json['bidEndTime'];
+    bidStartTime = json['bidStartTime'];
   }
 
   Map<String, dynamic> toJson() {
@@ -167,6 +182,14 @@ class Data {
     data['status'] = status;
     data['createdAt'] = createdAt;
     data['realValue'] = realValue;
+    data['monthAndYearOfManufacture'] = monthAndYearOfManufacture;
+    data['odometerReading'] = odometerReading;
+    data['transmission'] = transmission;
+    data['statusValues'] = statusValues;
+    if (leaderBoard != null) {
+      data['leaderBoard'] = leaderBoard!.map((v) => v.toJson()).toList();
+    }
+    data['winner'] = winner;
     if (front != null) {
       data['front'] = front!.toJson();
     }
@@ -176,30 +199,46 @@ class Data {
     if (frontRight != null) {
       data['frontRight'] = frontRight!.toJson();
     }
-    if (frontWithHoodOpen != null) {
-      data['frontWithHoodOpen'] = frontWithHoodOpen!.toJson();
+    if (rearLeft != null) {
+      data['rearLeft'] = rearLeft!.toJson();
     }
     if (rear != null) {
       data['rear'] = rear!.toJson();
     }
-    if (rearLeft != null) {
-      data['rearLeft'] = rearLeft!.toJson();
-    }
     if (rearRight != null) {
       data['rearRight'] = rearRight!.toJson();
     }
-    data['monthAndYearOfManufacture'] = monthAndYearOfManufacture;
-    data['odometerReading'] = odometerReading;
-    if (engineCompartment != null) {
-      data['engineCompartment'] = engineCompartment!.toJson();
-    }
-    data['statusValues'] = statusValues;
     data['engineStar'] = engineStar;
-    data['transmission'] = transmission;
     data['exteriorStar'] = exteriorStar;
     data['testDriveStar'] = testDriveStar;
     data['interiorAndElectricalStar'] = interiorAndElectricalStar;
-    data['specialComments'] = specialComments;
+    if (engineCompartment != null) {
+      data['engineCompartment'] = engineCompartment!.toJson();
+    }
+    data['bidEndTime'] = bidEndTime;
+    data['bidStartTime'] = bidStartTime;
+    return data;
+  }
+}
+
+class LeaderBoard {
+  num? amount;
+  String? userId;
+  bool? isAutobid;
+
+  LeaderBoard({this.amount, this.userId, this.isAutobid});
+
+  LeaderBoard.fromJson(Map<String, dynamic> json) {
+    amount = json['amount'];
+    userId = json['userId'];
+    isAutobid = json['isAutobid'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['amount'] = amount;
+    data['userId'] = userId;
+    data['isAutobid'] = isAutobid;
     return data;
   }
 }

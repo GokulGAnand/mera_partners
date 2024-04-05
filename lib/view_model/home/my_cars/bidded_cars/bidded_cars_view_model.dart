@@ -12,7 +12,7 @@ import '../../../../widgets/progressbar.dart';
 
 class BidCarsListViewModel extends GetxController{
 
-  var bidCarsResponse = LiveCarsResponse().obs;
+  var bidCarsResponse = CarListResponse().obs;
 
   List<int> bid = [
     2000,
@@ -38,7 +38,7 @@ class BidCarsListViewModel extends GetxController{
       var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&page=$pageKey&limit=$limit'),headers: globals.headers);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        bidCarsResponse.value = LiveCarsResponse.fromJson(jsonDecode(response.body));
+        bidCarsResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
         log(response.body);
         final isLastPage = bidCarsResponse.value.data!.length < limit;
         if (isLastPage) {

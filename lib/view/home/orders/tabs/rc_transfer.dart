@@ -34,6 +34,7 @@ class RcTransfer extends StatelessWidget {
           ),
           itemBuilder: (context, index) {
             return CustomOrderContainer(
+              buttonStatus: "pending",
               carID: controller.liveCarsResponse.value.data?[index].uniqueId?.toString() ?? '',
               finalPrice: controller.liveCarsResponse.value.data?[index].highestBid.toString() ?? '',
               carModel: controller.liveCarsResponse.value.data?[index].model ?? '',

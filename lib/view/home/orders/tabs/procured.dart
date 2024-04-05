@@ -37,6 +37,7 @@ class Procured extends StatelessWidget {
               ),
               itemBuilder: (context, index) {
                 return CustomOrderContainer(
+                  buttonStatus: "view details",
                   carModel: controller.liveCarsResponse.value.data?[index].model?? '',
                   finalPrice: controller.liveCarsResponse.value.data?[index].highestBid.toString()??'',
                   carName: controller.liveCarsResponse.value.data?[index].make?? '',

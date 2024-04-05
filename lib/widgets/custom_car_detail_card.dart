@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:evaluator_app/routes/app_routes.dart';
+import 'package:evaluator_app/widgets/custom_slider.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,12 +17,13 @@ import '../utils/styles.dart';
 import 'custom_button.dart';
 
 /// ignore: must_be_immutable
-class CustomCarDetailCard extends StatelessWidget {
+class CustomCarDetailCard extends StatefulWidget {
   final String imageUrl;
   final List<String> images;
   final String carLocation;
-  final String bidStatus;
-  final String bidAmount;
+  final RxString bidStatus;
+  final RxString bidAmount;
+  final Color statusColor;
   final String carModel;
   final String carVariant;
   final num rating;
@@ -41,7 +43,11 @@ class CustomCarDetailCard extends StatelessWidget {
   final Function() onCarTapped;
   Rx<PageController> pageController = PageController(initialPage: 0, viewportFraction: 0.85).obs;
   var activePage = 0.obs;
-  Timer? carouselTimer;
+  final DateTime? bidStartTime;
+  final DateTime? bidEndTime;
+  Duration? duration;
+  Duration elapsed = Duration.zero;
+  Timer? _timer;
 
   showPendingDialog() {
     showDialog(
@@ -78,18 +84,11 @@ class CustomCarDetailCard extends StatelessWidget {
     );
   }
 
-  Timer getTimer() {
-    return Timer.periodic(const Duration(seconds: 3), (timer) {
-      if (activePage.value == 5) {
-        activePage.value = 0;
-      }
-      pageController.value.animateToPage(
-        activePage.value,
-        duration: const Duration(seconds: 1),
-        curve: Curves.easeInOutCirc,
-      );
-      activePage.value++;
-    });
+  String _formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "$twoDigitMinutes:$twoDigitSeconds";
   }
 
   CustomCarDetailCard({
@@ -115,13 +114,49 @@ class CustomCarDetailCard extends StatelessWidget {
     this.otbTapped,
     this.isScheduled = false,
     required this.onCarTapped,
+    this.bidStartTime,
+    this.bidEndTime, this.duration,
+    required this.statusColor,
   });
 
   @override
+  State<CustomCarDetailCard> createState() => _CustomCarDetailCardState();
+}
+
+class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
+
+  void startTimer() {
+    print('ranjitha');
+    print(DateTime.now().toString());
+    print(widget.duration.toString());
+    widget._timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        widget.elapsed =  widget.elapsed + const Duration(seconds: 1);
+      });
+      widget.duration = widget.duration ?? Duration(seconds: 0);
+      if ( widget.elapsed >=  widget.duration!) {
+        widget._timer?.cancel();
+        print("Auction ended!");
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // startTimer();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    carouselTimer = getTimer();
-    return GestureDetector(
-      onTap: onCarTapped,
+    return Obx(
+            () =>GestureDetector(
+      onTap: widget.onCarTapped,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 58.0, top: 8),
         child: Container(
@@ -149,57 +184,11 @@ class CustomCarDetailCard extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    Positioned(
-                      child: Obx(
-                        () => SizedBox(
-                          height: 200,
-                          child: PageView.builder(
-                            controller: pageController.value,
-                            onPageChanged: (index) {
-                              activePage.value = index;
-                            },
-                            itemBuilder: (_, index) {
-                              return AnimatedBuilder(
-                                  animation: pageController.value,
-                                  builder: (ctx, child) {
-                                    return child!;
-                                  },
-                                  child: Image.network(images[index], fit: BoxFit.cover, errorBuilder: (context, error, stackTrace) {
-                                    return SvgPicture.asset(MyImages.loadingCar);
-                                  }, frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                                    return child;
-                                  }, loadingBuilder: (context, child, loadingProgress) {
-                                    if (loadingProgress == null) {
-                                      return child;
-                                    } else {
-                                      return SvgPicture.asset(MyImages.loadingCar);
-                                    }
-                                  }));
-                            },
-                            itemCount: images.length,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 213,
-                        decoration: ShapeDecoration(
-                          gradient: LinearGradient(
-                            begin: const Alignment(0.00, -0.00),
-                            end: const Alignment(0, 1),
-                            colors: [Colors.black.withOpacity(0), Colors.black],
-                          ),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(8),
-                              topRight: Radius.circular(8),
-                            ),
-                          ),
-                        ),
-                      ),
+                    CustomSlider(
+                      sliderImage: widget.images,
+                      pageSliderController: widget.pageController,
+                      activePage: widget.activePage,
+                      showBlackOpacity: true,
                     ),
                     Positioned(
                       bottom: 8,
@@ -209,7 +198,7 @@ class CustomCarDetailCard extends StatelessWidget {
                           SvgPicture.asset(
                             MyImages.location,
                           ),
-                          Text(carLocation, style: MyStyles.white11400),
+                          Text(widget.carLocation, style: MyStyles.white11400),
                         ],
                       ),
                     ),
@@ -231,39 +220,13 @@ class CustomCarDetailCard extends StatelessWidget {
                         child: Obx(
                           () => GestureDetector(
                             child: Icon(
-                              isFavourite!.value ? Icons.favorite : Icons.favorite_border,
-                              color: isFavourite!.value ? MyColors.red : MyColors.grey,
+                              widget.isFavourite!.value ? Icons.favorite : Icons.favorite_border,
+                              color: widget.isFavourite!.value ? MyColors.red : MyColors.grey,
                               size: 16,
                             ),
                             onTap: () {
-                              isFavourite!.value == true ? isFavourite!.value = false : isFavourite!.value = true;
+                              widget.isFavourite!.value == true ? widget.isFavourite!.value = false : widget.isFavourite!.value = true;
                             },
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 10,
-                      left: MediaQuery.of(context).size.width * 0.39,
-                      child: Obx(
-                        () => SizedBox(
-                          width: 41,
-                          height: 4.56,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: List.generate(
-                              5,
-                              (index) => GestureDetector(
-                                child: Container(
-                                  margin: const EdgeInsets.only(left: 2.0),
-                                  child: Icon(
-                                    Icons.circle,
-                                    size: 6.0,
-                                    color: activePage.value == index ? MyColors.white : MyColors.grey,
-                                  ),
-                                ),
-                              ),
-                            ),
                           ),
                         ),
                       ),
@@ -273,11 +236,11 @@ class CustomCarDetailCard extends StatelessWidget {
                 Container(
                   height: 37,
                   clipBehavior: Clip.antiAlias,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      end: Alignment(2.00, 0.00),
-                      begin: Alignment(-1, 0),
-                      colors: [MyColors.kPrimaryColor, MyColors.black5],
+                      end: const Alignment(2.00, 0.00),
+                      begin: const Alignment(-1, 0),
+                      colors: [widget.statusColor, MyColors.black5],
                     ),
                   ),
                   child: Row(
@@ -285,11 +248,11 @@ class CustomCarDetailCard extends StatelessWidget {
                       const SizedBox(
                         width: 12,
                       ),
-                      Text(isOtb == true ? MyStrings.closingPrice : bidStatus, style: MyStyles.whiteTitleStyle),
+                      Obx(() =>Text(widget.isOtb == true ? MyStrings.closingPrice : widget.bidStatus.value, style: MyStyles.whiteTitleStyle)),
                       const SizedBox(
                         width: 15,
                       ),
-                      if (bidAmount.isNotEmpty) Text('₹$bidAmount', textAlign: TextAlign.center, style: MyStyles.white16700),
+                      if (widget.bidAmount.isNotEmpty && widget.isScheduled == false) Obx(() =>Text(widget.bidAmount.value, textAlign: TextAlign.center, style: MyStyles.white16700)),
                     ],
                   ),
                 ),
@@ -306,15 +269,15 @@ class CustomCarDetailCard extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Text(carModel, style: MyStyles.subTitleBlackStyle),
+                              Text(widget.carModel, style: MyStyles.subTitleBlackStyle),
                               const SizedBox(
                                 width: 2,
                               ),
-                              if (criticalIssue?.toLowerCase() == 'good') SvgPicture.asset(MyImages.verified)
+                              if (widget.criticalIssue?.toLowerCase() == 'good') SvgPicture.asset(MyImages.verified)
                             ],
                           ),
                           const SizedBox(height: 4),
-                          Text(carVariant, style: MyStyles.black16700),
+                          Text(widget.carVariant, style: MyStyles.black16700),
                         ],
                       ),
                       Row(
@@ -322,9 +285,9 @@ class CustomCarDetailCard extends StatelessWidget {
                           Text(
                             '${MyStrings.rating} ',
                             style: TextStyle(
-                              color: rating >= 4
+                              color: widget.rating >= 4
                                   ? MyColors.green2
-                                  : rating >= 2.5 && rating <= 3.5
+                                  : widget.rating >= 2.5 && widget.rating <= 3.5
                                       ? MyColors.yellow
                                       : MyColors.red,
                               fontSize: 14,
@@ -334,11 +297,11 @@ class CustomCarDetailCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            rating.toString(),
+                            widget.rating.toString(),
                             style: TextStyle(
-                              color: rating >= 4
+                              color: widget.rating >= 4
                                   ? MyColors.green2
-                                  : rating >= 2.5 && rating <= 3.5
+                                  : widget.rating >= 2.5 && widget.rating <= 3.5
                                       ? MyColors.yellow
                                       : MyColors.red,
                               fontSize: 14,
@@ -352,9 +315,9 @@ class CustomCarDetailCard extends StatelessWidget {
                           ),
                           Icon(
                             Icons.star,
-                            color: rating >= 4
+                            color: widget.rating >= 4
                                 ? MyColors.green2
-                                : rating >= 2.5 && rating <= 3.5
+                                : widget.rating >= 2.5 && widget.rating <= 3.5
                                     ? MyColors.yellow
                                     : MyColors.red,
                             size: Dimens.iconSizeS,
@@ -379,19 +342,19 @@ class CustomCarDetailCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(fuelType, style: MyStyles.regular12),
+                            Text(widget.fuelType, style: MyStyles.regular12),
                             const SizedBox(width: 6),
                             const Text('|', style: MyStyles.regular12),
                             const SizedBox(width: 6),
-                            Text('$kmDriven KM', style: MyStyles.regular12),
+                            Text('${widget.kmDriven} KM', style: MyStyles.regular12),
                             const SizedBox(width: 6),
                             const Text('|', style: MyStyles.regular12),
                             const SizedBox(width: 6),
-                            Text(ownerShip, style: MyStyles.regular12),
+                            Text(widget.ownerShip, style: MyStyles.regular12),
                             const SizedBox(width: 6),
-                            if (transmission.isNotEmpty) const Text('|', style: MyStyles.regular12),
-                            if (transmission.isNotEmpty) const SizedBox(width: 6),
-                            Text(transmission, style: MyStyles.regular12),
+                            if (widget.transmission.isNotEmpty) const Text('|', style: MyStyles.regular12),
+                            if (widget.transmission.isNotEmpty) const SizedBox(width: 6),
+                            Text(widget.transmission, style: MyStyles.regular12),
                           ],
                         ),
                       ),
@@ -401,7 +364,7 @@ class CustomCarDetailCard extends StatelessWidget {
                 const SizedBox(
                   height: 17,
                 ),
-                if (criticalIssue != null && criticalIssue?.toLowerCase() != 'good')
+                if (widget.criticalIssue != null && widget.criticalIssue?.toLowerCase() != 'good')
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0, right: 12),
                     child: Row(
@@ -414,11 +377,11 @@ class CustomCarDetailCard extends StatelessWidget {
                         const SizedBox(
                           width: 4,
                         ),
-                        Text(criticalIssue ?? '', style: MyStyles.red12700),
+                        Text(widget.criticalIssue ?? '', style: MyStyles.red12700),
                       ],
                     ),
                   ),
-                if (criticalIssue != null)
+                if (widget.criticalIssue != null)
                   const SizedBox(
                     height: 21,
                   ),
@@ -427,7 +390,7 @@ class CustomCarDetailCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -444,7 +407,7 @@ class CustomCarDetailCard extends StatelessWidget {
                                 color: MyColors.orange,
                                 size: 14,
                               ),
-                              Text('09min 06sec', style: MyStyles.orange14700),
+                              Text( widget._formatDuration( widget.duration ?? Duration(seconds: 1) -  widget.elapsed), style: MyStyles.orange14700),
                             ],
                           ),
                         ],
@@ -463,14 +426,14 @@ class CustomCarDetailCard extends StatelessWidget {
                                     size: Dimens.iconSizeS,
                                   ),
                                   onTap: () {
-                                    Clipboard.setData(ClipboardData(text: id));
+                                    Clipboard.setData(ClipboardData(text: widget.id));
                                     CustomToast.instance.showMsg('Text copied to clipboard');
                                   },
                                 ),
                                 const SizedBox(
                                   width: 5,
                                 ),
-                                Text('ID:$id', style: MyStyles.black12400),
+                                Text('ID:${widget.id}', style: MyStyles.black12400),
                               ],
                             ),
                           ),
@@ -487,7 +450,7 @@ class CustomCarDetailCard extends StatelessWidget {
                                 TextSpan(
                                   children: [
                                     const TextSpan(text: 'FMV  ', style: MyStyles.subTitleGreayStyle),
-                                    TextSpan(text: '₹$fmv', style: MyStyles.grey14700),
+                                    TextSpan(text: '₹${widget.fmv}', style: MyStyles.grey14700),
                                   ],
                                 ),
                                 textAlign: TextAlign.center,
@@ -502,7 +465,7 @@ class CustomCarDetailCard extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                if ((isOtb == null || isOtb != true) && isScheduled == false)
+                if ((widget.isOtb == null || widget.isOtb != true) && widget.isScheduled == false)
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0, right: 12),
                     child: Row(
@@ -522,14 +485,15 @@ class CustomCarDetailCard extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(6),
                               ),
                             ),
-                            onPressed: globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name ? autoBid : () {
-                                    showPendingDialog();
-                                  },
+                            onPressed: widget.autoBid,/*globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name ? widget.autoBid : () {
+                                    widget.showPendingDialog();
+                                  },*/
                             buttonText: MyStrings.autoBid),
                         CustomElevatedButton(
                             buttonWidth: MediaQuery.of(context).size.width * 0.38,
                             buttonHeight: Dimens.defHeight,
-                            onPressed: bid,/*globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name
+                            onPressed: widget.bid,
+                            /*globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name
                                 ? bid
                                 : () {
                                     showPendingDialog();
@@ -538,19 +502,19 @@ class CustomCarDetailCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                if (isOtb == true)
+                if (widget.isOtb == true)
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0, right: 12),
                     child: CustomElevatedButton(
                         buttonHeight: Dimens.defHeight,
                         onPressed: globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name
-                            ? otbTapped
+                            ? widget.otbTapped
                             : () {
-                                showPendingDialog();
+                                widget.showPendingDialog();
                               },
                         buttonText: MyStrings.oneTouchBuy),
                   ),
-                if (isScheduled == true)
+                if (widget.isScheduled == true)
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0, right: 12),
                     child: DottedBorder(
@@ -575,6 +539,6 @@ class CustomCarDetailCard extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }
