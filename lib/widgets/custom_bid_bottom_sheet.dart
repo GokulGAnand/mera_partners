@@ -49,7 +49,7 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
   Widget build(BuildContext context) {
     NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
     return Container(
-        height: (widget.isAutoBid) ? 442 : MediaQuery.of(context).size.height * 0.55,
+        height: (widget.isAutoBid) ? MediaQuery.of(context).size.height * 0.65 : MediaQuery.of(context).size.height * 0.55,
         padding: const EdgeInsets.all(16.0),
         decoration: const BoxDecoration(
           color: MyColors.white,
@@ -116,21 +116,21 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
               style: MyStyles.selectedTabBarTitleStyle,
             ),
             (widget.isAutoBid)
-                ? const Column(
+                ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 12,
                 ),
-                Text(
+                const Text(
                   MyStrings.autoBid,
                   style: MyStyles.blue3_14700,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 Text(
-                  MyStrings.autoBidDesc,
+                  'We’ll automatically increase your bid by ₹ ${widget.stepRate?.value} until reaching the set amount.',
                   style: MyStyles.grey14500,
                 ),
               ],

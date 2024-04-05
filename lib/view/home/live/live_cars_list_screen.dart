@@ -70,8 +70,10 @@ class LiveCarsListScreen extends StatelessWidget {
                         controller.liveCarsResponse.value.data?[index].engineCompartment?.url ?? '',
                       ],
                       autoBid: () {
+                        controller.autoBidController.value.clear();
                         showModalBottomSheet(
                             isScrollControlled: true,
+                            enableDrag: true,
                             backgroundColor: Colors.transparent,
                             context: context,
                             builder: (context) {
@@ -80,7 +82,7 @@ class LiveCarsListScreen extends StatelessWidget {
                                 isAutoBid: true,
                                 bidValue: RxInt(controller.liveCarsResponse.value.data?[index].highestBid ?? 0),
                                 stepRate: controller.liveCarsResponse.value.data![index].highestBid! <= 99999
-                                    ? RxInt(1000)
+                                    ? RxInt(2000)
                                     : (controller.liveCarsResponse.value.data![index].highestBid! >= 100000 && controller.liveCarsResponse.value.data![index].highestBid! <= 299999)
                                     ? RxInt(4000)
                                     : (controller.liveCarsResponse.value.data![index].highestBid! >= 300000 && controller.liveCarsResponse.value.data![index].highestBid! <= 499999)
@@ -88,7 +90,7 @@ class LiveCarsListScreen extends StatelessWidget {
                                     : RxInt(10000),
                                 onAutoBidPressed: () {
                                   try {
-                                    controller.placeAutoBid(controller.bidController.value.text, controller.liveCarsResponse.value.data?[index].sId);
+                                    controller.placeAutoBid(controller.autoBidController.value.text, controller.liveCarsResponse.value.data?[index].sId);
                                     Navigator.of(context).pop();
                                   } catch (e) {
                                     log(e.toString());
@@ -98,6 +100,7 @@ class LiveCarsListScreen extends StatelessWidget {
                             });
                       },
                       bid: () {
+                        controller.bidController.value.clear();
                         showModalBottomSheet(
                             enableDrag: true,
                             isScrollControlled: true,
@@ -108,7 +111,7 @@ class LiveCarsListScreen extends StatelessWidget {
                                 amountController: controller.bidController,
                                 bidValue: RxInt(controller.liveCarsResponse.value.data?[index].highestBid ?? 0),
                                 stepRate: controller.liveCarsResponse.value.data![index].highestBid! <= 99999
-                                    ? RxInt(1000)
+                                    ? RxInt(2000)
                                     : (controller.liveCarsResponse.value.data![index].highestBid! >= 100000 && controller.liveCarsResponse.value.data![index].highestBid! <= 299999)
                                     ? RxInt(4000)
                                     : (controller.liveCarsResponse.value.data![index].highestBid! >= 300000 && controller.liveCarsResponse.value.data![index].highestBid! <= 499999)
