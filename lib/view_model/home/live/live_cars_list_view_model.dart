@@ -26,15 +26,22 @@ class LiveCarsListViewModel extends GetxController {
 
   @override
   void onInit() async {
-    getCarData(1);
-    infinitePagingController.addPageRequestListener((pageKey) {
-      getCarData(pageKey);
-    });
+    getCarData();
+    // infinitePagingController.addPageRequestListener((pageKey) {
+    //   getCarData(pageKey);
+    // });
     socketService = await SocketService().connectToSocket();
     bidController.value.addListener(() {
       if (bidController.value.text.length > 3) {
         bidController.value.selection = TextSelection.fromPosition(
           TextPosition(offset: bidController.value.text.length - 3),
+        );
+      }
+    });
+    autoBidController.value.addListener(() {
+      if (autoBidController.value.text.length > 3) {
+        autoBidController.value.selection = TextSelection.fromPosition(
+          TextPosition(offset: autoBidController.value.text.length - 3),
         );
       }
     });
@@ -51,7 +58,6 @@ class LiveCarsListViewModel extends GetxController {
 
   void placeBid(amount, carId) async {
     try {
-      //todo change url and data
       socketService?.sendSocketRequest("bidInfo", {"amount": amount, "carId": carId});
       log(amount+' bid amount');
       log(carId+' car id');
@@ -68,12 +74,15 @@ class LiveCarsListViewModel extends GetxController {
       log(e.toString());
     }
   }
+
   void placeAutoBid(autoBidLimit, carId) async {
     try {
-      socketService?.sendSocketRequest("bidInfo", {"amount": autoBidLimit, "carId": carId});
-      log(autoBidLimit+' bid limit');
-      log(carId+' car id');
-      var response = await http.post(Uri.parse(EndPoints.socketUrl+EndPoints.auction+EndPoints.bid), headers: globals.jsonHeaders, body: jsonEncode({"amount": autoBidLimit, "carId": carId}));
+      socketService?.sendSocketRequest("bidInfo", {"autoBidLimit": autoBidLimit, "carId": carId});
+      log(jsonEncode({"autoBidLimit": autoBidLimit, "carId": carId}));
+      log(Uri.parse(EndPoints.socketUrl+EndPoints.auction+EndPoints.bid).toString());
+      var response = await http.post(Uri.parse(EndPoints.socketUrl+EndPoints.auction+EndPoints.bid),
+          headers: globals.jsonHeaders,
+          body: jsonEncode({"autoBidLimit": autoBidLimit, "carId": carId}));
       log(response.body);
       String message = json.decode(response.body)['message'];
       if(response.statusCode == 200){
@@ -87,10 +96,10 @@ class LiveCarsListViewModel extends GetxController {
     }
   }
 
-  void getCarData(int pageKey) async {
+  void getCarData() async {
     try {
-      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&status=SCHEDULED&page=$pageKey&limit=$limit').toString());
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&status=SCHEDULED&page=$pageKey&limit=$limit'), headers: globals.headers);
+      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&status=SCHEDULED').toString());
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&status=SCHEDULED'), headers: globals.headers);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body);
@@ -99,8 +108,8 @@ class LiveCarsListViewModel extends GetxController {
         if (isLastPage) {
           infinitePagingController.appendLastPage(liveCarsResponse.value.data!);
         } else {
-          final nextPageKey = pageKey + 1;
-          infinitePagingController.appendPage(liveCarsResponse.value.data!, nextPageKey);
+          // final nextPageKey = pageKey + 1;
+          // infinitePagingController.appendPage(liveCarsResponse.value.data!, nextPageKey);
         }
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);

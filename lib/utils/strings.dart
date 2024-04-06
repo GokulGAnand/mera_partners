@@ -277,12 +277,6 @@ class MyStrings {
   // static const String seatBelt = "Seat Belt";
   // static const String absEbd = "ABS EBD (Anti-lock Braking System)";
   // static const String gloveBox = "Glove Box";
-  // static const String interiorModifications = "Any Interior Modifications";
-  // ///
-  // static const String ratingTitle = "Provide a rating\nbased on Evaluation";
-  // static const String electrical = "Electrical";
-  // static const String engineComments = "Engine Comments";
-  // static const String vUploadImage = "To continue, upload an image";
 
   //Login and OTP screen
   static const String login = "Login";
@@ -486,8 +480,11 @@ class MyStrings {
   static const String carPurchased = 'Car purchased';
   static const String offerSubmit = 'Offer submitted';
   static const String vLowBidAmount = 'Your bid must be higher than current bid + step rate';
-  /// toast messages
+  /// bid messages
   static const String youAreLeading = 'You are leading';
   static const String youAreLoosing = 'You are loosing';
+  static const String acceptingBids = 'Accepting bids';
+  static const String bidEndsIn = 'Bid ends in';
+  static const String lastCall = 'Last call';
 
 }

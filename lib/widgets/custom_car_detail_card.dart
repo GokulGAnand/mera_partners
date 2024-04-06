@@ -45,8 +45,7 @@ class CustomCarDetailCard extends StatefulWidget {
   var activePage = 0.obs;
   final DateTime? bidStartTime;
   final DateTime? bidEndTime;
-  Duration? duration;
-  Duration elapsed = Duration.zero;
+  Duration duration = Duration.zero;
   Timer? _timer;
 
   showPendingDialog() {
@@ -115,7 +114,7 @@ class CustomCarDetailCard extends StatefulWidget {
     this.isScheduled = false,
     required this.onCarTapped,
     this.bidStartTime,
-    this.bidEndTime, this.duration,
+    this.bidEndTime,
     required this.statusColor,
   });
 
@@ -126,25 +125,22 @@ class CustomCarDetailCard extends StatefulWidget {
 class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
 
   void startTimer() {
-    print('ranjitha');
-    print(DateTime.now().toString());
-    print(widget.duration.toString());
-    widget._timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        widget.elapsed =  widget.elapsed + const Duration(seconds: 1);
-      });
-      widget.duration = widget.duration ?? Duration(seconds: 0);
-      if ( widget.elapsed >=  widget.duration!) {
-        widget._timer?.cancel();
-        print("Auction ended!");
+    widget._timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (widget.duration.inSeconds == 0) {
+        timer.cancel();
+      } else {
+        setState(() {
+          widget.duration = widget.duration - Duration(seconds: 1);
+        });
       }
     });
   }
 
   @override
   void initState() {
+    widget.duration = Duration(minutes: 20);
     super.initState();
-    // startTimer();
+    startTimer();
   }
 
   @override
@@ -394,20 +390,32 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Bid ends in',
-                            style: MyStyles.orange12500,
+                            widget.duration.inMinutes >= 10 ? MyStrings.acceptingBids:
+                            widget.duration.inMinutes < 10 ? MyStrings.bidEndsIn : MyStrings.lastCall,
+                            style: TextStyle(
+                              color: widget.duration.inMinutes >= 10 ? MyColors.green : widget.duration.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                              fontSize: 12,
+                              fontFamily: 'DM Sans',
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 1,
                           ),
                           Row(
                             children: [
                               Icon(
                                 Icons.timer_sharp,
-                                color: MyColors.orange,
+                                color: widget.duration.inMinutes >= 10 ? MyColors.green : widget.duration.inMinutes < 10 ? MyColors.orange : MyColors.red,
                                 size: 14,
                               ),
-                              Text( widget._formatDuration( widget.duration ?? Duration(seconds: 1) -  widget.elapsed), style: MyStyles.orange14700),
+                              Text( widget._formatDuration( widget.duration ), style: TextStyle(
+                                color: widget.duration.inMinutes >= 10 ? MyColors.green : widget.duration.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                                fontSize: 14,
+                                fontFamily: 'DM Sans',
+                                fontWeight: FontWeight.w700,
+                                height: 0,
+                              )),
                             ],
                           ),
                         ],
