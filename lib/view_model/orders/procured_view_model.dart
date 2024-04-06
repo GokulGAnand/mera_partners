@@ -11,7 +11,7 @@ import 'package:http/http.dart'as http;
 
 
 class ProcuredScreenViewModel extends GetxController{
-  var liveCarsResponse = LiveCarsResponse().obs;
+  var liveCarsResponse = CarListResponse().obs;
   @override
   void onInit() {
     getProcuredBill();
@@ -24,7 +24,7 @@ class ProcuredScreenViewModel extends GetxController{
       if (response.statusCode == 200) {
         print("Response sv : ${response.body}" );
         ProgressBar.instance.stopProgressBar(Get.context!);
-        liveCarsResponse.value = LiveCarsResponse.fromJson(jsonDecode(response.body));
+        liveCarsResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
         print(response.reasonPhrase.toString());
@@ -34,7 +34,7 @@ class ProcuredScreenViewModel extends GetxController{
       print(e.toString() );
       CustomToast.instance.showMsg(ExceptionErrorUtil .handleErrors(e).errorMessage ?? '');
 
-      
+
     }
   }
 }

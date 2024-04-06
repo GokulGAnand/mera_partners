@@ -144,10 +144,9 @@ class _NegotiationState extends State<Negotiation> {
                           Get.toNamed(AppRoutes.carDetailsScreen);
                         }
                       },
-                      showButton: true,
+                      showButton: true, carModel: '', carName: '', carID: '', imageURL: '', finalPrice: '',
                     );
-                  }), showButton: true,
-                );
+                  });
               }),
         ],
       ),

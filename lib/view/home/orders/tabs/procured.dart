@@ -43,29 +43,9 @@ class Procured extends StatelessWidget {
                   carName: controller.liveCarsResponse.value.data?[index].make?? '',
                   carID: controller.liveCarsResponse.value.data?[index].uniqueId?.toString()??  '',
                   imageURL: controller.liveCarsResponse.value.data?[index].frontLeft?.url ?? '',
-                  dealStatus: Container(
-                    // width: double.infinity,
-                    height: 25,
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    decoration: const BoxDecoration(
-                      color: MyColors.green3,
-                    ),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                          MySvg.dealWon,
-                          width: 18,
-                        ),
-                         SizedBox(
-                          width: Dimens.standard_3,
-                        ),
-                        const Text(
-                          MyStrings.dealWon,
-                          style: MyStyles.whiteTitleStyle,
-                        ),
-                      ],
-                    ),
-                  ),
+                   dealStatus: "deal won",
+                    buttonText: MyStrings.viewBill,
+                    showButton: true,
                   button: CustomElevatedButton(
                     onPressed: () {
                       Get.toNamed(AppRoutes.procuredBill,
@@ -87,7 +67,7 @@ class Procured extends StatelessWidget {
                     buttonColor: MyColors.kPrimaryColor.withOpacity(0.3),
                     buttonText: MyStrings.viewBill,
                     textStyle: MyStyles.primary14500,
-                  ), showButton: true,
+                  ),
                 );
               }),
         ],

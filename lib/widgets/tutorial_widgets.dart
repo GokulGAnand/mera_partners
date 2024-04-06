@@ -1,9 +1,15 @@
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../routes/app_routes.dart';
 import '../utils/colors.dart';
 import '../utils/dimens.dart';
 import '../utils/strings.dart';
+import '../view/home/home_screen_ui.dart';
+import '../view/home/home_screen_ui.dart';
+import '../view/home/home_screen_ui.dart';
+import '../view/home/home_screen_ui.dart';
+import '../view/home/home_screen_ui.dart';
 import '../view_model/tutorial/tutorial_view_model.dart';
 import 'custom_button.dart';
 
@@ -101,6 +107,7 @@ class TutorialWidgets extends StatelessWidget {
                       if (!buttonPressed) {
                         print('Current Page: ${controller.page.value}');
                         if (controller.page.value == 3) {
+                          // Get.toNamed(AppRoutes.homeScreen);
                           Navigator.of(context).popUntil((route) => route.isFirst);
                         } else {
                           controller.indicator.jumpToPage(
