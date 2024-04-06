@@ -5,6 +5,7 @@ String? userId;
 String? uniqueUserId;
 String? documentStatus;
 bool? addressProofFront;
+bool? isDeposited = false;
 String? city;
 int? contactNo;
 String? token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVlZDI1YzQ4NTczZGM0ODBjZjg5YTkiLCJyb2xlIjoiREVBTEVSIiwiaWF0IjoxNzExNzA4NTE3LCJleHAiOjE3MTQzMDA1MTd9.hqPsjFWxlTDNUC5MioZaCHpsyjsgK5uNYuq5KwXOBrQ';

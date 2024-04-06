@@ -156,14 +156,6 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
                   const VerticalDivider(
                     color: MyColors.kPrimaryColor,
                   ),
-                  // Obx(() {
-                  //   return Expanded(
-                  //       child: Text(
-                  //     numberFormat.format(bidValue.value),
-                  //     textAlign: TextAlign.center,
-                  //     style: MyStyles.black18700,
-                  //   ));
-                  // }),
                   Expanded(child: Obx(() =>BidTextFormField(
                     controller: widget.amountController!.value,
                     keyboardType: const TextInputType.numberWithOptions(decimal: false),

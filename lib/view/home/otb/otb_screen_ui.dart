@@ -27,6 +27,7 @@ class OTBScreen extends StatelessWidget {
                       // padding: const EdgeInsets.all(8),
                       itemBuilder: (context, item, index) {
                         return CustomCarDetailCard(
+                          carId: item.sId ?? '',
                           onCarTapped: () {
                             Get.toNamed(AppRoutes.carDetailsScreen);
                           },

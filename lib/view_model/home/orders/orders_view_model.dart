@@ -42,4 +42,23 @@ class OrderScreenViewModel extends GetxController {
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
   }
+
+  void acceptOrRejectOffer(String status, String carId) async {
+    try {
+      ProgressBar.instance.showProgressbar(Get.context!);
+      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.status + carId), body: jsonEncode({ "status": status }));
+
+      if (response.statusCode == 200) {
+        ProgressBar.instance.stopProgressBar(Get.context!);
+        log(response.body.toString());
+      } else {
+        ProgressBar.instance.stopProgressBar(Get.context!);
+        CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);
+      }
+    } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
+      log(e.toString());
+      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? MyStrings.unableToConnect);
+    }
+  }
 }

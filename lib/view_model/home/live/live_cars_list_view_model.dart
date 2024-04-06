@@ -58,10 +58,10 @@ class LiveCarsListViewModel extends GetxController {
 
   void placeBid(amount, carId) async {
     try {
-      socketService?.sendSocketRequest("bidInfo", {"amount": amount, "carId": carId});
+      socketService?.sendSocketRequest("bidInfo", {"amount": int.parse(amount), "carId": carId});
       log(amount+' bid amount');
       log(carId+' car id');
-      var response = await http.post(Uri.parse(EndPoints.socketUrl+EndPoints.auction+EndPoints.bid), headers: globals.jsonHeaders, body: jsonEncode({"amount": amount, "carId": carId}));
+      var response = await http.post(Uri.parse(EndPoints.socketUrl+EndPoints.auction+EndPoints.bid), headers: globals.jsonHeaders, body: jsonEncode({"amount": int.parse(amount), "carId": carId}));
       log(response.body);
       String message = json.decode(response.body)['message'];
       if(response.statusCode == 200){
@@ -77,12 +77,12 @@ class LiveCarsListViewModel extends GetxController {
 
   void placeAutoBid(autoBidLimit, carId) async {
     try {
-      socketService?.sendSocketRequest("bidInfo", {"autoBidLimit": autoBidLimit, "carId": carId});
+      socketService?.sendSocketRequest("bidInfo", {"autoBidLimit": int.parse(autoBidLimit), "carId": carId});
       log(jsonEncode({"autoBidLimit": autoBidLimit, "carId": carId}));
       log(Uri.parse(EndPoints.socketUrl+EndPoints.auction+EndPoints.bid).toString());
       var response = await http.post(Uri.parse(EndPoints.socketUrl+EndPoints.auction+EndPoints.bid),
           headers: globals.jsonHeaders,
-          body: jsonEncode({"autoBidLimit": autoBidLimit, "carId": carId}));
+          body: jsonEncode({"autoBidLimit": int.parse(autoBidLimit), "carId": carId}));
       log(response.body);
       String message = json.decode(response.body)['message'];
       if(response.statusCode == 200){

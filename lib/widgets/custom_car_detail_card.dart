@@ -1,13 +1,18 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/widgets/custom_slider.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
+import 'package:evaluator_app/widgets/progressbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:evaluator_app/utils/globals.dart' as globals;
+import '../service/endpoints.dart';
+import '../service/exception_error_util.dart';
 import '../utils/colors.dart';
 import '../utils/dimens.dart';
 import '../utils/enum.dart';
@@ -15,6 +20,7 @@ import '../utils/images.dart';
 import '../utils/strings.dart';
 import '../utils/styles.dart';
 import 'custom_button.dart';
+import 'package:http/http.dart' as http;
 
 /// ignore: must_be_immutable
 class CustomCarDetailCard extends StatefulWidget {
@@ -30,6 +36,7 @@ class CustomCarDetailCard extends StatefulWidget {
   final String fuelType;
   final String? criticalIssue;
   final String id;
+  final String carId;
   final String fmv;
   final String kmDriven;
   final String ownerShip;
@@ -46,7 +53,7 @@ class CustomCarDetailCard extends StatefulWidget {
   final DateTime? bidStartTime;
   final DateTime? bidEndTime;
   Duration duration = Duration.zero;
-  Timer? _timer;
+  Timer? timer;
 
   showPendingDialog() {
     showDialog(
@@ -115,7 +122,7 @@ class CustomCarDetailCard extends StatefulWidget {
     required this.onCarTapped,
     this.bidStartTime,
     this.bidEndTime,
-    required this.statusColor,
+    required this.statusColor, required this.carId,
   });
 
   @override
@@ -125,12 +132,12 @@ class CustomCarDetailCard extends StatefulWidget {
 class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
 
   void startTimer() {
-    widget._timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    widget.timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (widget.duration.inSeconds == 0) {
         timer.cancel();
       } else {
         setState(() {
-          widget.duration = widget.duration - Duration(seconds: 1);
+          widget.duration = widget.duration - const Duration(seconds: 1);
         });
       }
     });
@@ -138,7 +145,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
 
   @override
   void initState() {
-    widget.duration = Duration(minutes: 20);
+    widget.duration = const Duration(minutes: 20);
     super.initState();
     startTimer();
   }
@@ -146,6 +153,26 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  /// Like Feature API integration
+  void updateLikedCar() async {
+    try {
+      ProgressBar.instance.showProgressbar(Get.context!);
+      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.status+widget.carId), body: jsonEncode({"status":"LikedCar"}));
+
+      if (response.statusCode == 200) {
+        ProgressBar.instance.stopProgressBar(Get.context!);
+        log(response.body.toString());
+      } else {
+        ProgressBar.instance.stopProgressBar(Get.context!);
+        CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);
+      }
+    } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
+      log(e.toString());
+      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? MyStrings.unableToConnect);
+    }
   }
 
   @override
@@ -221,7 +248,9 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                               size: 16,
                             ),
                             onTap: () {
+                              updateLikedCar();
                               widget.isFavourite!.value == true ? widget.isFavourite!.value = false : widget.isFavourite!.value = true;
+
                             },
                           ),
                         ),

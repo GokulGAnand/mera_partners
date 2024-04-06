@@ -87,10 +87,12 @@ class LoginScreenViewModel extends GetxController {
             globals.userName = userInfoResponse.value.data?.first.fullname;
           }
           globals.contactNo = userInfoResponse.value.data?.first.contactNo;
+          globals.phoneNum = userInfoResponse.value.data?.first.contactNo.toString();
           globals.token = userInfoResponse.value.meta?.access;
           globals.userId = userInfoResponse.value.data?.first.userId;
           globals.uniqueUserId = userInfoResponse.value.data?.first.sId;
           globals.documentStatus = userInfoResponse.value.data?.first.isDocumentsVerified;
+          globals.isDeposited = userInfoResponse.value.data?.first.isDeposited;
           globals.addressProofFront = userInfoResponse.value.data?.first.addressProofFront != null ? true : false;
           if (userInfoResponse.value.data?.first.isDocumentsVerified != null && userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.SUBMITTED.name && userInfoResponse.value.data?.first.isDeposited != null && userInfoResponse.value.data?.first.isDeposited == true) {
             Get.toNamed(AppRoutes.homeScreen);

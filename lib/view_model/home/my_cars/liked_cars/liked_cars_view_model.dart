@@ -9,44 +9,24 @@ import '../../../../service/exception_error_util.dart';
 import '../../../../widgets/custom_toast.dart';
 import '../../../../widgets/progressbar.dart';
 
-class BidCarsListViewModel extends GetxController{
+class LikedCarsListViewModel extends GetxController{
 
-  var bidCarsResponse = CarListResponse().obs;
-
-  List<int> bid = [
-    2000,
-    5000,
-    10000
-  ];
+  var carListResponse = CarListResponse().obs;
   RxInt bidValue = 172000.obs;
-
-  //declare pagination controller
-  // final PagingController<int,Data> infinitePagingController=PagingController(firstPageKey: 1);
-  // int limit = 10;
 
   @override
   void onInit() {
-    // infinitePagingController.addPageRequestListener((pageKey) {
-      getCarData();
-    // });
+    getCarData();
     super.onInit();
   }
 
   void getCarData()async {
     try {
       var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE'),headers: globals.headers);
-      // var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&page=$pageKey&limit=$limit'),headers: globals.headers);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        bidCarsResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
+        carListResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
         log(response.body);
-        // final isLastPage = bidCarsResponse.value.data!.length < limit;
-        // if (isLastPage) {
-        //   infinitePagingController.appendLastPage(bidCarsResponse.value.data!);
-        // } else {
-        //   final nextPageKey = pageKey + 1;
-        //   infinitePagingController.appendPage(bidCarsResponse.value.data!, nextPageKey);
-        // }
       }else{
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());
