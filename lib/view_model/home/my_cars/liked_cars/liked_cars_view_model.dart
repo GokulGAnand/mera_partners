@@ -22,7 +22,9 @@ class LikedCarsListViewModel extends GetxController{
 
   void getCarData()async {
     try {
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE'),headers: globals.headers);
+      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LikedCar').toString());
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LikedCar'),headers: globals.headers);
+      log(response.body);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         carListResponse.value = CarListResponse.fromJson(jsonDecode(response.body));

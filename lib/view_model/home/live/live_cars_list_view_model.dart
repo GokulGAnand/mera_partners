@@ -104,13 +104,13 @@ class LiveCarsListViewModel extends GetxController {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body);
         liveCarsResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
-        final isLastPage = liveCarsResponse.value.data!.length < limit;
-        if (isLastPage) {
-          infinitePagingController.appendLastPage(liveCarsResponse.value.data!);
-        } else {
-          // final nextPageKey = pageKey + 1;
-          // infinitePagingController.appendPage(liveCarsResponse.value.data!, nextPageKey);
-        }
+        // final isLastPage = liveCarsResponse.value.data!.length < limit;
+        // if (isLastPage) {
+        //   infinitePagingController.appendLastPage(liveCarsResponse.value.data!);
+        // } else {
+        //   final nextPageKey = pageKey + 1;
+        //   infinitePagingController.appendPage(liveCarsResponse.value.data!, nextPageKey);
+        // }
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());

@@ -158,18 +158,20 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
   /// Like Feature API integration
   void updateLikedCar() async {
     try {
-      ProgressBar.instance.showProgressbar(Get.context!);
-      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.status+widget.carId), body: jsonEncode({"status":"LikedCar"}));
-
+      // ProgressBar.instance.showProgressbar(Get.context!);
+      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/${widget.carId}').toString());
+      log(jsonEncode({"status":"LikedCar"}));
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/${widget.carId}'),headers: globals.headers, body: jsonEncode({"status":"LikedCar"}));
+      log(response.body.toString());
       if (response.statusCode == 200) {
-        ProgressBar.instance.stopProgressBar(Get.context!);
-        log(response.body.toString());
+        // ProgressBar.instance.stopProgressBar(Get.context!);
+        CustomToast.instance.showMsg(MyStrings.success);
       } else {
-        ProgressBar.instance.stopProgressBar(Get.context!);
+        // ProgressBar.instance.stopProgressBar(Get.context!);
         CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);
       }
     } catch (e) {
-      ProgressBar.instance.stopProgressBar(Get.context!);
+      // ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? MyStrings.unableToConnect);
     }

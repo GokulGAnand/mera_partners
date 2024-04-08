@@ -63,7 +63,7 @@ class Data {
   String? transmission;
   num? statusValues;
   List<LeaderBoard>? leaderBoard;
-  String? winner;
+  List<String>? winner;
   Front? front;
   Front? frontLeft;
   Front? frontRight;
@@ -140,7 +140,9 @@ class Data {
         leaderBoard!.add(LeaderBoard.fromJson(v));
       });
     }
-    winner = json['winner'];
+    if (json['winner'] != null && json['winner'] is List) {
+      winner = (json['winner'] as List).cast<String>();
+    }
     front = json['front'] != null ? Front.fromJson(json['front']) : null;
     frontLeft = json['frontLeft'] != null
         ? Front.fromJson(json['frontLeft'])

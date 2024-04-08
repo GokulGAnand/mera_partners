@@ -7,6 +7,8 @@ import 'package:evaluator_app/widgets/negotiation_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../utils/constants.dart';
+
 class Negotiation extends StatefulWidget {
   const Negotiation({super.key});
 
@@ -83,7 +85,7 @@ class _NegotiationState extends State<Negotiation> {
           GridView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: 3,
+              itemCount: orderScreenViewModel.carListResponse.value.data?.length ?? 0,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 22,
@@ -147,7 +149,12 @@ class _NegotiationState extends State<Negotiation> {
                           Get.toNamed(AppRoutes.carDetailsScreen);
                         }
                       },
-                      showButton: true, carModel: '', carName: '', carID: '', imageURL: '', finalPrice: '',
+                      showButton: true,
+                      carModel: orderScreenViewModel.carListResponse.value.data?[index].model ?? '',
+                      carName: orderScreenViewModel.carListResponse.value.data?[index].variant ?? '',
+                      carID: orderScreenViewModel.carListResponse.value.data?[index].uniqueId.toString() ?? '',
+                      imageURL: orderScreenViewModel.carListResponse.value.data?[index].front?.url ?? '',
+                      finalPrice: Constants.numberFormat.format(orderScreenViewModel.carListResponse.value.data?[index].highestBid),
                     );
                   });
               }),
