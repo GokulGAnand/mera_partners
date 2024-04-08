@@ -1,3 +1,4 @@
+import 'package:evaluator_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../utils/dimens.dart';
@@ -21,9 +22,15 @@ class ProcuredBillScreen extends StatelessWidget {
     final String? finalPrice = arguments?['finalPrice'];
     final String? carModel = arguments?['carModel'];
     final String? carName = arguments?['carName'];
-    print('Final Price: $finalPrice');
-    print('Car Model: $carModel');
-    print('Car Name: $carName');
+    final String? totalPayment = finalPrice; // Assigning finalPrice to totalPayment as per your existing code
+    final String additionalCharges = '5000'; // Example value for additional charges
+    final String gst = '50'; // Example value for GST
+
+    // Calculate total amount
+    final num totalAmount = (int.tryParse(totalPayment ?? '0') ?? 0) +
+        (int.tryParse(additionalCharges) ?? 0) +
+        (int.tryParse(gst) ?? 0);
+
 
     return Scaffold(
       backgroundColor: MyColors.lightBlue1,
@@ -77,11 +84,11 @@ class ProcuredBillScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                           Text(finalPrice?? '', style: MyStyles.black16400),
+                          Text(totalPayment ?? '', style: MyStyles.black16400),
                           SizedBox(height: Dimens.standard_10),
-                          const Text('₹5000', style: MyStyles.black16400),
+                          Text(additionalCharges, style: MyStyles.black16400),
                           SizedBox(height: Dimens.standard_10),
-                          const Text('₹50', style: MyStyles.black16400),
+                          Text(gst, style: MyStyles.black16400),
                         ],
                       ),
                     ],
@@ -99,11 +106,11 @@ class ProcuredBillScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: Dimens.standard_10),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(MyStrings.totalAmount, style: MyStyles.black16700),
-                      Text('₹1,98,500', style: MyStyles.blue16W700),
+                      Text(Constants.numberFormat.format(totalAmount), style: MyStyles.blue16W700),
                     ],
                   ),
                 ],
@@ -122,7 +129,7 @@ class ProcuredBillScreen extends StatelessWidget {
               const Text(MyStrings.transfer, style: MyStyles.subTitleBlackStyle),
             ],
           ),
-          SizedBox(height: Dimens.standard_10),
+          SizedBox(height: Dimens.standard_16),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

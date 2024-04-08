@@ -5,6 +5,10 @@ import '../routes/app_routes.dart';
 import '../utils/colors.dart';
 import '../utils/dimens.dart';
 import '../utils/strings.dart';
+import '../view/home/bids/bids_screen.dart';
+import '../view/home/bids/bids_screen.dart';
+import '../view/home/bids/bids_screen.dart';
+import '../view/home/bids/bids_screen.dart';
 import '../view/home/home_screen_ui.dart';
 import '../view/home/home_screen_ui.dart';
 import '../view/home/home_screen_ui.dart';
@@ -107,8 +111,8 @@ class TutorialWidgets extends StatelessWidget {
                       if (!buttonPressed) {
                         print('Current Page: ${controller.page.value}');
                         if (controller.page.value == 3) {
-                          // Get.toNamed(AppRoutes.homeScreen);
-                          Navigator.of(context).popUntil((route) => route.isFirst);
+                            // Get.toNamed(AppRoutes.bidsScreen);
+                           Navigator.of(context).popUntil((route) => route.isFirst);
                         } else {
                           controller.indicator.jumpToPage(
                             controller.page.value.toInt() + 1,

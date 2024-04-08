@@ -26,6 +26,9 @@ import 'package:evaluator_app/view/onboarding/onboarding_screen_ui.dart';
 import 'package:evaluator_app/view/procured_bill/procured_bill_screen.dart';
 import 'package:get/get.dart';
 
+import '../view/procured_bill/bindings/procured_bill_screen_bindings.dart';
+import '../view_model/procured_bill/procured_bill_view_model.dart';
+
 class AppRoutes {
   static const splashScreen = '/splash_screen';
   static const documentScreen = '/document_screen_ui';
@@ -46,6 +49,8 @@ class AppRoutes {
   static const String procuredBill = '/procured_bill_screen_ui';
   static const String aboutUsScreen = '/about_us_screen_ui';
   static const String privacyPolicyScreen = '/privacy_policy_screen_ui';
+  static const String procuredBillScreen = '/procured_bill_screen';
+
 
   List<GetPage> pages = [
     GetPage(name: onboardingScreen, page: () => OnboardingScreen(),
@@ -108,5 +113,9 @@ class AppRoutes {
       bindings: [
       AccountBinding(),
     ]),
+    GetPage(name: procuredBillScreen, page: () =>  ProcuredBillScreen(),
+        bindings: [
+          ProcuredBillScreenBinding(),
+        ]),
   ];
 }
