@@ -57,9 +57,9 @@ class OnBoardingWidgets extends StatelessWidget {
                   onPressed: () {
                     log('Current Page: ${controller.page.value}');
                     if (controller.page.value == 2) {
-                      if (globals.documentStatus != null && globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name) {
+                      if (globals.documentStatus != null && globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name && globals.isDeposited == true) {
                         Get.toNamed(AppRoutes.homeScreen);
-                      }else if(globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name || (globals.addressProofFront == null && globals.addressProofFront == false)){
+                      }else if(globals.documentStatus?.toUpperCase() == DocumentStatus.SUBMITTED.name || (globals.addressProofFront == null && globals.addressProofFront == false) || globals.isDeposited == false){
                         Get.toNamed(AppRoutes.documentScreen);
                       }else{
                         Get.toNamed(AppRoutes.documentScreen);

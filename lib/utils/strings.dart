@@ -110,7 +110,7 @@ class MyStrings {
   static const String rearDefogger  = "Rear defogger";
   // static const String resumeReport = "Resume Report";
   // static const String delete = "Delete";
-  // static const String success = "Success";
+  static const String success = "Success";
   // static const String specialComments =  "Special Comments";
   // static const String monthAndYearOfManufacture = "Month & Year of Manufacturing";
   // static const String rc = "RC";

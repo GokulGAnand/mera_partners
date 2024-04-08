@@ -1,17 +1,18 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:evaluator_app/model/response/live/live_cars_list_response.dart';
 import 'package:get/get.dart';
-import '../../../service/endpoints.dart';
-import '../../../service/exception_error_util.dart';
-import '../../../widgets/custom_toast.dart';
-import '../../../widgets/progressbar.dart';
 import 'package:http/http.dart' as http;
 import 'package:evaluator_app/utils/globals.dart' as globals;
+import '../../../../model/response/live/live_cars_list_response.dart';
+import '../../../../service/endpoints.dart';
+import '../../../../service/exception_error_util.dart';
+import '../../../../widgets/custom_toast.dart';
+import '../../../../widgets/progressbar.dart';
 
-class MyCarsScreenViewModel extends GetxController {
+class LikedCarsListViewModel extends GetxController{
 
   var carListResponse = CarListResponse().obs;
+  RxInt bidValue = 172000.obs;
 
   @override
   void onInit() {
@@ -38,5 +39,4 @@ class MyCarsScreenViewModel extends GetxController {
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
   }
-  
 }

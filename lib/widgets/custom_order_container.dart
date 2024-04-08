@@ -178,7 +178,7 @@ class CustomOrderContainer extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Final: ₹$finalPrice",
+                    "Your bid: $finalPrice",
                     style: MyStyles.primary14700,
                   ),
                   const SizedBox(

@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:evaluator_app/model/response/live/live_cars_list_response.dart';
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/constants.dart';
@@ -7,7 +6,6 @@ import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/widgets/custom_bid_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../../view_model/home/live/live_cars_list_view_model.dart';
 import '../../../widgets/custom_car_detail_card.dart';
 import 'package:evaluator_app/utils/globals.dart' as globals;
@@ -34,6 +32,7 @@ class LiveCarsListScreen extends StatelessWidget {
                         Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.liveCarsResponse.value.data?[index].sId);
                       },
                       isOtb: false,
+                              carId: controller.liveCarsResponse.value.data?[index].sId ?? '',
                       isScheduled: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == 'scheduled' ? true : false,
                       imageUrl: controller.liveCarsResponse.value.data?[index].rearRight?.url ?? '',
                       carLocation: controller.liveCarsResponse.value.data?[index].vehicleLocation ?? '',
@@ -58,7 +57,7 @@ class LiveCarsListScreen extends StatelessWidget {
                       rating: ((controller.liveCarsResponse.value.data?[index].engineStar ?? 0 + (controller.liveCarsResponse.value.data?[index].exteriorStar ?? 0) + (controller.liveCarsResponse.value.data?[index].interiorAndElectricalStar ?? 0) + (controller.liveCarsResponse.value.data?[index].testDriveStar ?? 0)) / 4),
                       fuelType: controller.liveCarsResponse.value.data?[index].fuelType ?? '',
                       id: controller.liveCarsResponse.value.data?[index].uniqueId.toString() ?? '',
-                      fmv: controller.liveCarsResponse.value.data?[index].realValue.toString() ?? 'x',
+                      fmv: controller.liveCarsResponse.value.data?[index].realValue != null ? controller.liveCarsResponse.value.data![index].realValue.toString() : '0',
                       kmDriven: controller.liveCarsResponse.value.data?[index].odometerReading != null ? controller.liveCarsResponse.value.data![index].odometerReading.toString() : '0',
                       ownerShip: controller.liveCarsResponse.value.data?[index].ownershipNumber ?? '',
                       transmission: controller.liveCarsResponse.value.data?[index].transmission ?? '',

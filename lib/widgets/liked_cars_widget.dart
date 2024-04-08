@@ -1,32 +1,58 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'package:evaluator_app/utils/globals.dart' as globals;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import '../routes/app_routes.dart';
+import '../service/endpoints.dart';
+import '../service/exception_error_util.dart';
 import '../utils/colors.dart';
 import '../utils/dimens.dart';
 import '../utils/strings.dart';
 import '../utils/styles.dart';
-import '../utils/svg.dart';
 import 'custom_button.dart';
 import 'custom_toast.dart';
 
 class LikedCarsWidget extends StatelessWidget {
   final String imageUrl;
   final String status;
-  final String name;
+  final String variant;
   final String model;
   final String id;
+  final String carId;
   final String bidAmount;
+  late final Rx<bool>? isFavourite = true.obs;
 
-  const LikedCarsWidget({super.key,
+  LikedCarsWidget({super.key,
     required this.imageUrl,
     required this.status,
-    required this.name,
+    required this.variant,
     required this.model,
     required this.id,
     required this.bidAmount,
+    required this.carId,
   });
+
+  /// Like Feature API integration
+  void updateLikedCar() async {
+    //todo - change status data
+    try {
+      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId').toString());
+      log(jsonEncode({"status":"LikedCar"}));
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'),headers: globals.headers, body: jsonEncode({"status":"LikedCar"}));
+      log(response.body.toString());
+      if (response.statusCode == 200) {
+        CustomToast.instance.showMsg(MyStrings.success);
+      } else {
+        CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);
+      }
+    } catch (e) {
+      log(e.toString());
+      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? MyStrings.unableToConnect);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,16 +104,35 @@ class LikedCarsWidget extends StatelessWidget {
                 Positioned(
                   top: 10,
                   right: 10,
-                  child: CircleAvatar(
-                    radius: 14,
-                    backgroundColor: Colors.white,
-                    child: SvgPicture.asset(
-                      MySvg.liked,
-                      width: 18,
+                  child: Container(
+                    width: 23,
+                    height: 23,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: const ShapeDecoration(color: Colors.white, shape: OvalBorder(), shadows: [
+                      BoxShadow(
+                        color: MyColors.greyShadow,
+                        blurRadius: 8,
+                        offset: Offset(0, 3),
+                        spreadRadius: 2,
+                      )
+                    ]),
+                    child: Obx(
+                          () => GestureDetector(
+                        child: Icon(
+                          isFavourite!.value ? Icons.favorite : Icons.favorite_border,
+                          color: isFavourite!.value ? MyColors.red : MyColors.grey,
+                          size: 16,
+                        ),
+                        onTap: () {
+                          updateLikedCar();
+                          isFavourite!.value == true ? isFavourite!.value = false : isFavourite!.value = true;
+
+                        },
+                      ),
                     ),
                   ),
                 ),
-      
+
               ],
             ),
             Padding(
@@ -109,7 +154,7 @@ class LikedCarsWidget extends StatelessWidget {
                   ),
                     const SizedBox(height: Dimens.standard_8),
                   Text(
-                    name,
+                    variant,
                     style: MyStyles.black12400,
                   ),
                    const SizedBox(height: Dimens.standard_8),

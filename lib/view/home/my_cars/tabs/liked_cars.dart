@@ -1,14 +1,9 @@
-import 'package:evaluator_app/routes/app_routes.dart';
-import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/strings.dart';
-import 'package:evaluator_app/utils/styles.dart';
-import 'package:evaluator_app/utils/svg.dart';
-import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
+import '../../../../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 import '../../../../widgets/liked_cars_widget.dart';
+
+final BidCarsListViewModel controller = Get.isRegistered<BidCarsListViewModel>() ? Get.find<BidCarsListViewModel>() : Get.put(BidCarsListViewModel());
 
 class LikedCars extends StatelessWidget {
   const LikedCars({super.key});
@@ -22,7 +17,7 @@ class LikedCars extends StatelessWidget {
         ),
         Expanded(
           child: GridView.builder(
-              itemCount: 3,
+              itemCount: controller.carListResponse.value.data?.length ?? 0,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 22,
@@ -30,13 +25,14 @@ class LikedCars extends StatelessWidget {
                 mainAxisExtent: 315,
               ),
               itemBuilder: (context, index) {
-               return const LikedCarsWidget(
-                 bidAmount: '650000',
-                 id: '73423642 ',
-                 imageUrl: '',
-                 model: '110 PS RXZ 4X2 AMT',
-                 name: '2016 Duster',
-                 status: 'Live',
+               return LikedCarsWidget(
+                 bidAmount: controller.carListResponse.value.data?[index].highestBid.toString() ?? '',
+                 id: controller.carListResponse.value.data?[index].uniqueId.toString() ?? '',
+                 carId: controller.carListResponse.value.data?[index].sId ?? '',
+                 imageUrl: controller.carListResponse.value.data?[index].front?.url ?? '',
+                 model: controller.carListResponse.value.data?[index].model ?? '',
+                 variant: controller.carListResponse.value.data?[index].variant ?? '',
+                 status: controller.carListResponse.value.data?[index].status ?? '',
                );
               }),
         ),
