@@ -1,3 +1,4 @@
+import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
@@ -58,17 +59,22 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                       validator: null),
                   )),
                 const SizedBox(width: 15,),
-                Container(
-                  width: 50,
-                  height: 44,
-                  margin: const EdgeInsets.only(bottom: 8),
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: MyColors.kPrimaryColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: MyColors.kPrimaryColor.withOpacity(0.1))
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.notificationScreen);
+                  },
+                  child: Container(
+                    width: 50,
+                    height: 44,
+                    margin: const EdgeInsets.only(bottom: 8),
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: MyColors.kPrimaryColor.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: MyColors.kPrimaryColor.withOpacity(0.1))
+                    ),
+                    child: SvgPicture.asset(MySvg.notification),
                   ),
-                  child: SvgPicture.asset(MySvg.notification),
                 )
               ],
             ),

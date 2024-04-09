@@ -51,6 +51,7 @@ class OrderScreenViewModel extends GetxController {
           body: jsonEncode({ "status": status }));
 
       if (response.statusCode == 200) {
+        CustomToast.instance.showMsg(MyStrings.success);
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
       } else {

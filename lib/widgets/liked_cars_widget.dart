@@ -166,7 +166,7 @@ class LikedCarsWidget extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: GestureDetector(
                       onTap: () {
-                        Clipboard.setData(const ClipboardData(text: ''));
+                        Clipboard.setData(ClipboardData(text: id));
                         CustomToast.instance.showMsg('Text copied to clipboard');
                       },
                       child: Row(

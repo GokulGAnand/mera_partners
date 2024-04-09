@@ -223,12 +223,19 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                       Container(
                                         width: 58,
                                         height: 58,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(5),
-                                            image: DecorationImage(
-                                                image: NetworkImage(
-                                                   carDetailsScreenViewModel.imageList[index]["imageList"][0].value),
-                                                fit: BoxFit.fill)),
+                                        child: Image.network(carDetailsScreenViewModel.imageList[index]["imageList"][0].value, fit: BoxFit.cover,
+                                            errorBuilder: (context, error, stackTrace) {
+                                              return SvgPicture.asset(MyImages.loadingCar);
+                                            }, frameBuilder:
+                                                (context, child, frame, wasSynchronouslyLoaded) {
+                                              return child;
+                                            }, loadingBuilder: (context, child, loadingProgress) {
+                                              if (loadingProgress == null) {
+                                                return child;
+                                              } else {
+                                                return SvgPicture.asset(MyImages.loadingCar);
+                                              }
+                                            }),
                                       ),
                                       (carDetailsScreenViewModel.imageList[index]["title"]== MyStrings.engine)
                                           ? Positioned(
@@ -1044,12 +1051,19 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         Container(
                           width: 75,
                           height: 68,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              image: const DecorationImage(
-                                  image: NetworkImage(
-                                      "https://bucketkeracars.s3.ap-south-1.amazonaws.com/frontLeft-1710562433850-IMG_20240315_104745.jpg"),
-                                  fit: BoxFit.fill)),
+                          child: Image.network(carDetailsScreenViewModel.imageList[index]["imageList"][0].value, fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return SvgPicture.asset(MyImages.loadingCar);
+                              }, frameBuilder:
+                                  (context, child, frame, wasSynchronouslyLoaded) {
+                                return child;
+                              }, loadingBuilder: (context, child, loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                } else {
+                                  return SvgPicture.asset(MyImages.loadingCar);
+                                }
+                              }),
                         )
                       ],
                     ),

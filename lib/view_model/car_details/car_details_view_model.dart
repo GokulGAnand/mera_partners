@@ -411,6 +411,8 @@ class CarDetailsScreenViewModel extends GetxController {
       var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.evaluation}/${EndPoints.report}$id'),
       headers: globals.headers
       );
+      log('ranjitha');
+      log(response.body);
       if (response.statusCode == 200) {
         // ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body);

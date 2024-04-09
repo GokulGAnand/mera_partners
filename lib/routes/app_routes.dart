@@ -1,4 +1,3 @@
-
 import 'package:mera_partners/view/car_details/binding/car_details_binding.dart';
 import 'package:mera_partners/view/car_details/car_details_screen_ui.dart';
 import 'package:mera_partners/view/gallery/binding/gallery_binding.dart';
@@ -16,6 +15,7 @@ import 'package:mera_partners/view/home/binding/home_binding.dart';
 import 'package:mera_partners/view/home/home_screen_ui.dart';
 import 'package:mera_partners/view/home/my_cars/binding/my_cars_binding.dart';
 import 'package:mera_partners/view/home/my_cars/my_cars_screen.dart';
+import 'package:mera_partners/view/home/notification/notification_screen_ui.dart';
 import 'package:mera_partners/view/home/orders/binding/orders_binding.dart';
 import 'package:mera_partners/view/home/orders/orders_screen.dart';
 import 'package:mera_partners/view/login/binding/login_binding.dart';
@@ -48,6 +48,7 @@ class AppRoutes {
   static const String aboutUsScreen = '/about_us_screen_ui';
   static const String privacyPolicyScreen = '/privacy_policy_screen_ui';
   static const String procuredBillScreen = '/procured_bill_screen';
+  static const String notificationScreen = '/notification_screen_ui';
 
 
   List<GetPage> pages = [
@@ -115,5 +116,7 @@ class AppRoutes {
         bindings: [
           ProcuredBillScreenBinding(),
         ]),
+    GetPage(name: notificationScreen, page: () =>  const NotificationScreen(),
+        bindings: []),
   ];
 }

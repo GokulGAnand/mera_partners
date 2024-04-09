@@ -6,7 +6,6 @@ import 'package:mera_partners/widgets/custom_order_container.dart';
 import 'package:mera_partners/widgets/negotiation_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../../utils/constants.dart';
 
 class Negotiation extends StatefulWidget {
@@ -17,7 +16,7 @@ class Negotiation extends StatefulWidget {
 }
 
 class _NegotiationState extends State<Negotiation> {
-  OrderScreenViewModel orderScreenViewModel =
+  OrderScreenViewModel controller =
       Get.isRegistered<OrderScreenViewModel>()
           ? Get.find<OrderScreenViewModel>()
           : Get.put(OrderScreenViewModel());
@@ -34,19 +33,19 @@ class _NegotiationState extends State<Negotiation> {
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount:
-                    orderScreenViewModel.negotiationOrdersCategory.length,
+                    controller.negotiationOrdersCategory.length,
                 itemBuilder: (context, index) {
                   return Obx(() {
                     return GestureDetector(
                       onTap: () {
-                        for (var element in orderScreenViewModel.negotiationOrdersCategory) {
+                        for (var element in controller.negotiationOrdersCategory) {
                           element["isClick"].value = false;
                         }
-                        orderScreenViewModel
+                        controller
                             .negotiationOrdersCategory[index]["isClick"]
                             .value = true;
-                        orderScreenViewModel.isNegotiation.value =
-                            !orderScreenViewModel.isNegotiation.value;
+                        controller.isNegotiation.value =
+                            !controller.isNegotiation.value;
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -54,7 +53,7 @@ class _NegotiationState extends State<Negotiation> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             color: MyColors.kPrimaryColor.withOpacity(
-                                (orderScreenViewModel
+                                (controller
                                         .negotiationOrdersCategory[index]
                                             ["isClick"]
                                         .value)
@@ -63,11 +62,11 @@ class _NegotiationState extends State<Negotiation> {
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(color: MyColors.kPrimaryColor)),
                         child: Text(
-                          orderScreenViewModel.negotiationOrdersCategory[index]
+                          controller.negotiationOrdersCategory[index]
                               ["title"],
                           // textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: (orderScreenViewModel
+                            color: (controller
                                     .negotiationOrdersCategory[index]["isClick"]
                                     .value)
                                 ? Colors.white
@@ -85,7 +84,7 @@ class _NegotiationState extends State<Negotiation> {
           GridView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: orderScreenViewModel.carListResponse.value.data?.length ?? 0,
+              itemCount: controller.carListResponse.value.data?.length ?? 0,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 22,
@@ -97,7 +96,7 @@ class _NegotiationState extends State<Negotiation> {
                   () {
                     return CustomOrderContainer(
                       backgroundBlackOpacity: Obx(() {
-                        if (orderScreenViewModel.isNegotiation.value) {
+                        if (controller.isNegotiation.value) {
                           return Container(
                             width: double.infinity,
                             height: 107,
@@ -123,25 +122,27 @@ class _NegotiationState extends State<Negotiation> {
                               color: MyColors.black3.withOpacity(0.4)),
                         );
                       }),
-                      dealStatus: (orderScreenViewModel.isNegotiation.value)?"timer":"deal lost",
-                      buttonStatus: (orderScreenViewModel.isNegotiation.value)?"completed":"view details",
-                      buttonText:  (orderScreenViewModel.isNegotiation.value)?MyStrings.viewOffer:MyStrings.viewDetail,
+                      dealStatus: (controller.isNegotiation.value)?"timer":"deal lost",
+                      buttonStatus: (controller.isNegotiation.value)?"completed":"view details",
+                      buttonText:  (controller.isNegotiation.value)?MyStrings.viewOffer:MyStrings.viewDetail,
                       onPressed: (){
-                        if (orderScreenViewModel.isNegotiation.value) {
+                        if (controller.isNegotiation.value) {
                            showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
                                 context: context,
                                 builder: (context) {
                                   return NegotiationBottomSheet(
-                                    biddedAmount: orderScreenViewModel.carListResponse.value.data?[index].highestBid ?? 0,
+                                    biddedAmount: controller.carListResponse.value.data?[index].highestBid ?? 0,
                                     //todo - change the negotiation amount
-                                    negotiatedAmount: orderScreenViewModel.carListResponse.value.data?[index].highestBid ?? 0,
+                                    negotiatedAmount: controller.carListResponse.value.data?[index].highestBid ?? 0,
                                     onAcceptPressed: () {
-                                      orderScreenViewModel.acceptOrRejectOffer('accept','');
+                                      controller.acceptOrRejectOffer('accept',controller.carListResponse.value.data?[index].sId ?? '');
+                                      Get.back();
                                     },
                                     onRejectPressed: () {
-                                      orderScreenViewModel.acceptOrRejectOffer('reject','');
+                                      controller.acceptOrRejectOffer('reject',controller.carListResponse.value.data?[index].sId ?? '');
+                                      Get.back();
                                     },
                                   );
                                 });
@@ -150,11 +151,11 @@ class _NegotiationState extends State<Negotiation> {
                         }
                       },
                       showButton: true,
-                      carModel: orderScreenViewModel.carListResponse.value.data?[index].model ?? '',
-                      carName: orderScreenViewModel.carListResponse.value.data?[index].variant ?? '',
-                      carID: orderScreenViewModel.carListResponse.value.data?[index].uniqueId.toString() ?? '',
-                      imageURL: orderScreenViewModel.carListResponse.value.data?[index].front?.url ?? '',
-                      finalPrice: Constants.numberFormat.format(orderScreenViewModel.carListResponse.value.data?[index].highestBid),
+                      carModel: controller.carListResponse.value.data?[index].model ?? '',
+                      carName: controller.carListResponse.value.data?[index].variant ?? '',
+                      carID: controller.carListResponse.value.data?[index].uniqueId.toString() ?? '',
+                      imageURL: controller.carListResponse.value.data?[index].front?.url ?? '',
+                      finalPrice: Constants.numberFormat.format(controller.carListResponse.value.data?[index].highestBid),
                     );
                   });
               }),

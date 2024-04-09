@@ -20,21 +20,20 @@ class AboutUsScreen extends StatelessWidget {
                 TextSpan(
                   children: [
                     TextSpan(
-                      text: 'What is Lorem Ipsum?\n\n',
+                      text: 'About MeraCars\n\n',
                       style: MyStyles.grey14500,
                     ),
                     TextSpan(
                       text:
-                          'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n\n',
+                          'MeraCars, a venture under the umbrella of Teamtach Media Private Limited, is revolutionizing the way second-hand cars are bought and sold. With our cutting-edge app, we have streamlined the process of bidding for pre-owned vehicles, catering specifically to both established and emerging car dealers.\n\n',
                       style: MyStyles.subtitle12400,
                     ),
+                    // TextSpan(
+                    //   text: 'Why do we use it?\n\n',
+                    //   style: MyStyles.grey14500,
+                    // ),
                     TextSpan(
-                      text: 'Why do we use it?\n\n',
-                      style: MyStyles.grey14500,
-                    ),
-                    TextSpan(
-                      text:
-                          'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\n\n',
+                      text:'At MeraCars, we understand the challenges faced by dealers in sourcing quality used cars at competitive prices. Our platform offers a solution that brings transparency, efficiency, and convenience to the bidding process. Through our intuitive app, dealers can access a vast inventory of pre-owned vehicles, submit bids, and secure deals seamlessly, all from the palm of their hand.',
                       style: MyStyles.subtitle12400,
                     ),
                   ],

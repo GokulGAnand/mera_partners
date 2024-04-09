@@ -36,7 +36,7 @@ class Procured extends StatelessWidget {
                     buttonStatus: "view details",
                     carModel: controller.liveCarsResponse.value.data?[index].model ?? '',
                     finalPrice: controller.liveCarsResponse.value.data?[index].highestBid.toString() ?? '',
-                    carName: controller.liveCarsResponse.value.data?[index].make ?? '',
+                    carName: controller.liveCarsResponse.value.data?[index].variant ?? '',
                     carID: controller.liveCarsResponse.value.data?[index].uniqueId?.toString() ?? '',
                     imageURL: controller.liveCarsResponse.value.data?[index].frontLeft?.url ?? '',
                     dealStatus: "deal won",

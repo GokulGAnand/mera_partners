@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
@@ -7,6 +8,7 @@ import 'package:mera_partners/view/home/my_cars/tabs/liked_cars.dart';
 import 'package:mera_partners/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../../routes/app_routes.dart';
 
 class MyCarsScreen extends StatefulWidget {
   const MyCarsScreen({super.key});
@@ -51,17 +53,22 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                 const SizedBox(
                   width: 15,
                 ),
-                Container(
-                  width: 50,
-                  height: 44,
-                  margin: const EdgeInsets.only(bottom: 8),
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: MyColors.kPrimaryColor.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                          color: MyColors.kPrimaryColor.withOpacity(0.1))),
-                  child: SvgPicture.asset(MySvg.notification),
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.notificationScreen);
+                  },
+                  child: Container(
+                    width: 50,
+                    height: 44,
+                    margin: const EdgeInsets.only(bottom: 8),
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: MyColors.kPrimaryColor.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: MyColors.kPrimaryColor.withOpacity(0.1))
+                    ),
+                    child: SvgPicture.asset(MySvg.notification),
+                  ),
                 )
               ],
             ),
@@ -86,7 +93,7 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                 controller: tabController,
                 children: [
                   BidCarsListScreen(),
-                  const LikedCars()
+                  const Center(child: LikedCars(),)
                 ],
               ),
             ),
