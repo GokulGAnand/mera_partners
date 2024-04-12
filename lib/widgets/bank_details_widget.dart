@@ -1,4 +1,4 @@
-import 'package:evaluator_app/utils/styles.dart';
+import 'package:mera_partners/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as clipboard;
 import '../utils/colors.dart';

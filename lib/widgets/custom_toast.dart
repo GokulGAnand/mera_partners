@@ -1,6 +1,6 @@
-import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/images.dart';
-import 'package:evaluator_app/utils/styles.dart';
+import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/images.dart';
+import 'package:mera_partners/utils/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 

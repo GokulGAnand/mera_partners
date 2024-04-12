@@ -1,4 +1,4 @@
-import 'package:evaluator_app/utils/strings.dart';
+import 'package:mera_partners/utils/strings.dart';
 
 class ValidateInput {
   static String? validateRequiredFields(String? value) {

@@ -1,6 +1,6 @@
-# evaluator_app
+# mera_partners
 
-A new Flutter project.
+Mera Partners
 
 ## Getting Started
 

@@ -1,12 +1,12 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/strings.dart';
-import 'package:evaluator_app/utils/styles.dart';
-import 'package:evaluator_app/utils/svg.dart';
-import 'package:evaluator_app/widgets/custom_button.dart';
-import 'package:evaluator_app/widgets/custom_text_form_field.dart';
-import 'package:evaluator_app/widgets/custom_toast.dart';
+import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/strings.dart';
+import 'package:mera_partners/utils/styles.dart';
+import 'package:mera_partners/utils/svg.dart';
+import 'package:mera_partners/widgets/custom_button.dart';
+import 'package:mera_partners/widgets/custom_text_form_field.dart';
+import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';

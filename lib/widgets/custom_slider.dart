@@ -1,11 +1,12 @@
 import 'dart:async';
 
-import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/images.dart';
+import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+/// ignore: must_be_immutable
 class CustomSlider extends StatelessWidget {
   CustomSlider(
       {required this.sliderImage,

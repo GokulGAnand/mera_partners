@@ -1,4 +1,5 @@
-import 'package:evaluator_app/utils/styles.dart';
+import 'dart:developer';
+import 'package:mera_partners/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../utils/colors.dart';
@@ -7,6 +8,7 @@ import '../utils/strings.dart';
 import '../view_model/tutorial/tutorial_view_model.dart';
 import 'custom_button.dart';
 
+/// ignore: must_be_immutable
 class TutorialWidgets extends StatelessWidget {
   final String? image;
   final String? title;
@@ -58,7 +60,7 @@ class TutorialWidgets extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 5),
                   child: Text.rich(
                     TextSpan(
-                        text: '${subtitle}',
+                        text: '$subtitle',
                         style: MyStyles.black15400,
                         children: [
                           TextSpan(
@@ -99,7 +101,7 @@ class TutorialWidgets extends StatelessWidget {
                       () => CustomElevatedButton(
                     onPressed: () {
                       if (!buttonPressed) {
-                        print('Current Page: ${controller.page.value}');
+                        log('Current Page: ${controller.page.value}');
                         if (controller.page.value == 3) {
                           Navigator.of(context).pop();
                         } else {

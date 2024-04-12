@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../utils/dimens.dart';
 import '../../../../view_model/home/orders/rc_transfer_view_model.dart';
-import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/strings.dart';
-import 'package:evaluator_app/utils/styles.dart';
-import 'package:evaluator_app/widgets/custom_button.dart';
-import 'package:evaluator_app/widgets/custom_order_container.dart';
+import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/strings.dart';
+import 'package:mera_partners/utils/styles.dart';
+import 'package:mera_partners/widgets/custom_button.dart';
+import 'package:mera_partners/widgets/custom_order_container.dart';
 
 class RcTransfer extends StatelessWidget {
-  RcTransfer({Key? key});
+  RcTransfer({super.key,});
 
   final RcTransferViewModel controller = Get.isRegistered<RcTransferViewModel>()
       ? Get.find<RcTransferViewModel>()

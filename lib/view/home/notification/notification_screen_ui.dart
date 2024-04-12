@@ -1,4 +1,4 @@
-import 'package:evaluator_app/utils/strings.dart';
+import 'package:mera_partners/utils/strings.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widgets/custom_appbar.dart';
@@ -20,7 +20,7 @@ class NotificationScreen extends StatelessWidget {
 
       ),
      body: ListView.builder(
-       itemCount: 5,
+       itemCount: 1,
        itemBuilder: (context, index) {
          return  const NotificationWidget(title: MyStrings.title1, subtitle: MyStrings.offer, image: '');
        },

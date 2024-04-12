@@ -1,12 +1,13 @@
-import 'package:evaluator_app/routes/app_routes.dart';
-import 'package:evaluator_app/utils/strings.dart';
-import 'package:evaluator_app/widgets/custom_order_container.dart';
+import 'dart:developer';
+import 'package:mera_partners/routes/app_routes.dart';
+import 'package:mera_partners/utils/strings.dart';
+import 'package:mera_partners/widgets/custom_order_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../../utils/dimens.dart';
 import '../../../../view_model/orders/procured_view_model.dart';
 
+/// ignore: must_be_immutable
 class Procured extends StatelessWidget {
    Procured({super.key});
    ProcuredScreenViewModel controller = Get.isRegistered<ProcuredScreenViewModel>()
@@ -35,14 +36,14 @@ class Procured extends StatelessWidget {
                     buttonStatus: "view details",
                     carModel: controller.liveCarsResponse.value.data?[index].model ?? '',
                     finalPrice: controller.liveCarsResponse.value.data?[index].highestBid.toString() ?? '',
-                    carName: controller.liveCarsResponse.value.data?[index].make ?? '',
+                    carName: controller.liveCarsResponse.value.data?[index].variant ?? '',
                     carID: controller.liveCarsResponse.value.data?[index].uniqueId?.toString() ?? '',
                     imageURL: controller.liveCarsResponse.value.data?[index].frontLeft?.url ?? '',
                     dealStatus: "deal won",
                     buttonText: MyStrings.viewBill,
                     showButton: true,
                     onPressed: () {
-                      print("View Bill button pressed.");
+                      log("View Bill button pressed.");
                       Get.toNamed(AppRoutes.procuredBillScreen,
                         arguments: {
                           'finalPrice': controller.liveCarsResponse.value.data?[index].highestBid.toString(),

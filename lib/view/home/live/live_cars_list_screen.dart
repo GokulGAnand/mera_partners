@@ -1,14 +1,14 @@
 import 'dart:developer';
-import 'package:evaluator_app/routes/app_routes.dart';
-import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/constants.dart';
-import 'package:evaluator_app/utils/strings.dart';
-import 'package:evaluator_app/widgets/custom_bid_bottom_sheet.dart';
+import 'package:mera_partners/routes/app_routes.dart';
+import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/constants.dart';
+import 'package:mera_partners/utils/strings.dart';
+import 'package:mera_partners/widgets/custom_bid_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../view_model/home/live/live_cars_list_view_model.dart';
 import '../../../widgets/custom_car_detail_card.dart';
-import 'package:evaluator_app/utils/globals.dart' as globals;
+import 'package:mera_partners/utils/globals.dart' as globals;
 
 /// ignore: must_be_immutable
 class LiveCarsListScreen extends StatelessWidget {
@@ -36,16 +36,15 @@ class LiveCarsListScreen extends StatelessWidget {
                       isScheduled: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == 'scheduled' ? true : false,
                       imageUrl: controller.liveCarsResponse.value.data?[index].rearRight?.url ?? '',
                       carLocation: controller.liveCarsResponse.value.data?[index].vehicleLocation ?? '',
-                      bidStatus: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() != MyStrings.live.toLowerCase() ? RxString(MyStrings.scheduledBid) : globals.uniqueUserId != null && globals.uniqueUserId == controller.liveCarsResponse.value.data?[index].winner ? RxString(MyStrings.youAreLeading)
-                          : globals.uniqueUserId != null && globals.uniqueUserId != controller.liveCarsResponse.value.data?[index].winner && controller.liveCarsResponse.value.data?[index].leaderBoard != null && controller.liveCarsResponse.value.data![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
+                      bidStatus: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() != MyStrings.live.toLowerCase() ? RxString(MyStrings.scheduledBid) : globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].winner != null && controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) ? RxString(MyStrings.youAreLeading)
+                          : globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].winner != null && !controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) && controller.liveCarsResponse.value.data?[index].leaderBoard != null && controller.liveCarsResponse.value.data![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
                           ? RxString(MyStrings.youAreLoosing) :
                       RxString(MyStrings.highestBid),
                               statusColor: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() != MyStrings.live.toLowerCase()
                                   ? MyColors.black
-                                  : (globals.uniqueUserId != null && globals.uniqueUserId == controller.liveCarsResponse.value.data?[index].winner)
+                                  : (globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].winner != null && controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!))
                                   ? MyColors.green
-                                  : (globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].leaderBoard != null &&
-                                  globals.uniqueUserId != controller.liveCarsResponse.value.data?[index].winner &&
+                                  : (globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].leaderBoard != null && controller.liveCarsResponse.value.data?[index].winner != null && !controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) &&
                                   controller.liveCarsResponse.value.data![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId))
                                   ? MyColors.red
                                   : MyColors.kPrimaryColor,

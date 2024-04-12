@@ -1,33 +1,31 @@
-
-import 'package:evaluator_app/view/car_details/binding/car_details_binding.dart';
-import 'package:evaluator_app/view/car_details/car_details_screen_ui.dart';
-import 'package:evaluator_app/view/gallery/binding/gallery_binding.dart';
-import 'package:evaluator_app/view/gallery/gallery_screen.dart';
-import 'package:evaluator_app/view/gallery/image_view_screen.dart';
-import 'package:evaluator_app/view/document/binding/document_screen_binding.dart';
-import 'package:evaluator_app/view/document/document_screen_ui.dart';
-import 'package:evaluator_app/view/home/account/about_us/about_us_screen.dart';
-import 'package:evaluator_app/view/home/account/account_screen_ui.dart';
-import 'package:evaluator_app/view/home/account/binding/account_binding.dart';
-import 'package:evaluator_app/view/home/account/privacy_policy/privacy_policy_screen.dart';
-import 'package:evaluator_app/view/home/bids/bids_screen.dart';
-import 'package:evaluator_app/view/home/bids/binding/bids_binding.dart';
-import 'package:evaluator_app/view/home/binding/home_binding.dart';
-import 'package:evaluator_app/view/home/home_screen_ui.dart';
-import 'package:evaluator_app/view/home/my_cars/binding/my_cars_binding.dart';
-import 'package:evaluator_app/view/home/my_cars/my_cars_screen.dart';
-import 'package:evaluator_app/view/home/orders/binding/orders_binding.dart';
-import 'package:evaluator_app/view/home/orders/orders_screen.dart';
-import 'package:evaluator_app/view/login/binding/login_binding.dart';
-import 'package:evaluator_app/view/login/login_screen_ui.dart';
-import 'package:evaluator_app/view/login/otp_screen_ui.dart';
-import 'package:evaluator_app/view/onboarding/bindings/onboarding_screen_bindings.dart';
-import 'package:evaluator_app/view/onboarding/onboarding_screen_ui.dart';
-import 'package:evaluator_app/view/procured_bill/procured_bill_screen.dart';
+import 'package:mera_partners/view/car_details/binding/car_details_binding.dart';
+import 'package:mera_partners/view/car_details/car_details_screen_ui.dart';
+import 'package:mera_partners/view/gallery/binding/gallery_binding.dart';
+import 'package:mera_partners/view/gallery/gallery_screen.dart';
+import 'package:mera_partners/view/gallery/image_view_screen.dart';
+import 'package:mera_partners/view/document/binding/document_screen_binding.dart';
+import 'package:mera_partners/view/document/document_screen_ui.dart';
+import 'package:mera_partners/view/home/account/about_us/about_us_screen.dart';
+import 'package:mera_partners/view/home/account/account_screen_ui.dart';
+import 'package:mera_partners/view/home/account/binding/account_binding.dart';
+import 'package:mera_partners/view/home/account/privacy_policy/privacy_policy_screen.dart';
+import 'package:mera_partners/view/home/bids/bids_screen.dart';
+import 'package:mera_partners/view/home/bids/binding/bids_binding.dart';
+import 'package:mera_partners/view/home/binding/home_binding.dart';
+import 'package:mera_partners/view/home/home_screen_ui.dart';
+import 'package:mera_partners/view/home/my_cars/binding/my_cars_binding.dart';
+import 'package:mera_partners/view/home/my_cars/my_cars_screen.dart';
+import 'package:mera_partners/view/home/notification/notification_screen_ui.dart';
+import 'package:mera_partners/view/home/orders/binding/orders_binding.dart';
+import 'package:mera_partners/view/home/orders/orders_screen.dart';
+import 'package:mera_partners/view/login/binding/login_binding.dart';
+import 'package:mera_partners/view/login/login_screen_ui.dart';
+import 'package:mera_partners/view/login/otp_screen_ui.dart';
+import 'package:mera_partners/view/onboarding/bindings/onboarding_screen_bindings.dart';
+import 'package:mera_partners/view/onboarding/onboarding_screen_ui.dart';
+import 'package:mera_partners/view/procured_bill/procured_bill_screen.dart';
 import 'package:get/get.dart';
-
 import '../view/procured_bill/bindings/procured_bill_screen_bindings.dart';
-import '../view_model/procured_bill/procured_bill_view_model.dart';
 
 class AppRoutes {
   static const splashScreen = '/splash_screen';
@@ -50,6 +48,7 @@ class AppRoutes {
   static const String aboutUsScreen = '/about_us_screen_ui';
   static const String privacyPolicyScreen = '/privacy_policy_screen_ui';
   static const String procuredBillScreen = '/procured_bill_screen';
+  static const String notificationScreen = '/notification_screen_ui';
 
 
   List<GetPage> pages = [
@@ -117,5 +116,7 @@ class AppRoutes {
         bindings: [
           ProcuredBillScreenBinding(),
         ]),
+    GetPage(name: notificationScreen, page: () =>  const NotificationScreen(),
+        bindings: []),
   ];
 }

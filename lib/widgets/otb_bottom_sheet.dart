@@ -1,9 +1,9 @@
-import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/images.dart';
-import 'package:evaluator_app/utils/strings.dart';
-import 'package:evaluator_app/utils/styles.dart';
-import 'package:evaluator_app/utils/svg.dart';
-import 'package:evaluator_app/widgets/custom_button.dart';
+import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/images.dart';
+import 'package:mera_partners/utils/strings.dart';
+import 'package:mera_partners/utils/styles.dart';
+import 'package:mera_partners/utils/svg.dart';
+import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';

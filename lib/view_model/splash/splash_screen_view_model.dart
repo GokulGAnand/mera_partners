@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:evaluator_app/routes/app_routes.dart';
+import 'package:mera_partners/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class SplashScreenViewModel extends GetxController{

@@ -1,7 +1,7 @@
-import 'package:evaluator_app/utils/dimens.dart';
-import 'package:evaluator_app/utils/strings.dart';
-import 'package:evaluator_app/utils/styles.dart';
-import 'package:evaluator_app/widgets/custom_appbar.dart';
+import 'package:mera_partners/utils/dimens.dart';
+import 'package:mera_partners/utils/strings.dart';
+import 'package:mera_partners/utils/styles.dart';
+import 'package:mera_partners/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 
 class PrivacyPolicyScreen extends StatelessWidget {

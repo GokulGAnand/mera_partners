@@ -8,7 +8,7 @@ import '../../../service/exception_error_util.dart';
 import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
 import 'package:http/http.dart'as http;
-import 'package:evaluator_app/utils/globals.dart' as globals;
+import 'package:mera_partners/utils/globals.dart' as globals;
 
 
 class RcTransferViewModel extends GetxController{

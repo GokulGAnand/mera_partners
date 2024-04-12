@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:evaluator_app/model/response/live/live_cars_list_response.dart';
+import 'package:mera_partners/model/response/live/live_cars_list_response.dart';
 import 'package:get/get.dart';
 import '../../../service/endpoints.dart';
 import '../../../service/exception_error_util.dart';
 import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
 import 'package:http/http.dart' as http;
-import 'package:evaluator_app/utils/globals.dart' as globals;
+import 'package:mera_partners/utils/globals.dart' as globals;
 
 class MyCarsScreenViewModel extends GetxController {
 

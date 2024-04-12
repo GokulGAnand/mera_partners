@@ -1,7 +1,7 @@
-import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/dimens.dart';
-import 'package:evaluator_app/utils/styles.dart';
-import 'package:evaluator_app/utils/svg.dart';
+import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/dimens.dart';
+import 'package:mera_partners/utils/styles.dart';
+import 'package:mera_partners/utils/svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/get_core.dart';

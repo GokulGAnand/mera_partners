@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:evaluator_app/utils/globals.dart' as globals;
+import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -166,7 +166,7 @@ class LikedCarsWidget extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: GestureDetector(
                       onTap: () {
-                        Clipboard.setData(const ClipboardData(text: ''));
+                        Clipboard.setData(ClipboardData(text: id));
                         CustomToast.instance.showMsg('Text copied to clipboard');
                       },
                       child: Row(

@@ -1,9 +1,10 @@
-import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/strings.dart';
-import 'package:evaluator_app/utils/styles.dart';
-import 'package:evaluator_app/utils/svg.dart';
-import 'package:evaluator_app/view_model/home/otb/otb_view_model.dart';
-import 'package:evaluator_app/widgets/custom_text_form_field.dart';
+import 'package:mera_partners/routes/app_routes.dart';
+import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/strings.dart';
+import 'package:mera_partners/utils/styles.dart';
+import 'package:mera_partners/utils/svg.dart';
+import 'package:mera_partners/view_model/home/otb/otb_view_model.dart';
+import 'package:mera_partners/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -58,17 +59,22 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                       validator: null),
                   )),
                 const SizedBox(width: 15,),
-                Container(
-                  width: 50,
-                  height: 44,
-                  margin: const EdgeInsets.only(bottom: 8),
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: MyColors.kPrimaryColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: MyColors.kPrimaryColor.withOpacity(0.1))
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.notificationScreen);
+                  },
+                  child: Container(
+                    width: 50,
+                    height: 44,
+                    margin: const EdgeInsets.only(bottom: 8),
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: MyColors.kPrimaryColor.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: MyColors.kPrimaryColor.withOpacity(0.1))
+                    ),
+                    child: SvgPicture.asset(MySvg.notification),
                   ),
-                  child: SvgPicture.asset(MySvg.notification),
                 )
               ],
             ),

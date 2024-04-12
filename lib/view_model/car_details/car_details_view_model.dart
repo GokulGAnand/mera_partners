@@ -1,18 +1,17 @@
 import 'dart:convert';
 import 'dart:developer';
-
-import 'package:evaluator_app/model/response/car_details/car_details_response.dart';
-import 'package:evaluator_app/model/response/car_details/report_response.dart';
-import 'package:evaluator_app/service/endpoints.dart';
-import 'package:evaluator_app/service/exception_error_util.dart';
-import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/strings.dart';
-import 'package:evaluator_app/widgets/custom_toast.dart';
+import 'package:mera_partners/model/response/car_details/car_details_response.dart';
+import 'package:mera_partners/model/response/car_details/report_response.dart';
+import 'package:mera_partners/service/endpoints.dart';
+import 'package:mera_partners/service/exception_error_util.dart';
+import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/strings.dart';
+import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 import 'package:http/http.dart' as http;
-import 'package:evaluator_app/utils/globals.dart' as globals;
+import 'package:mera_partners/utils/globals.dart' as globals;
 
 class CarDetailsScreenViewModel extends GetxController {
 

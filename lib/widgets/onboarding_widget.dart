@@ -1,14 +1,14 @@
 import 'dart:developer';
-import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/strings.dart';
-import 'package:evaluator_app/utils/styles.dart';
-import 'package:evaluator_app/widgets/custom_button.dart';
+import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/strings.dart';
+import 'package:mera_partners/utils/styles.dart';
+import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../routes/app_routes.dart';
 import '../utils/enum.dart';
 import '../view_model/onboarding/onboarding_view_model.dart';
-import 'package:evaluator_app/utils/globals.dart' as globals;
+import 'package:mera_partners/utils/globals.dart' as globals;
 
 class OnBoardingWidgets extends StatelessWidget {
   final String? image;

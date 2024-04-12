@@ -1,16 +1,17 @@
 import 'package:dotted_border/dotted_border.dart';
-import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/strings.dart';
-import 'package:evaluator_app/utils/styles.dart';
-import 'package:evaluator_app/utils/svg.dart';
-import 'package:evaluator_app/widgets/custom_button.dart';
+import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/strings.dart';
+import 'package:mera_partners/utils/styles.dart';
+import 'package:mera_partners/utils/svg.dart';
+import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'custom_toast.dart';
 
 class CustomOrderContainer extends StatelessWidget {
-  CustomOrderContainer({
+  const CustomOrderContainer({
+    super.key,
     this.backgroundBlackOpacity,
     required this.showButton,
     this.button,
@@ -159,7 +160,7 @@ class CustomOrderContainer extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: GestureDetector(
                       onTap: () {
-                        Clipboard.setData(const ClipboardData(text: ''));
+                        Clipboard.setData(ClipboardData(text: carID));
                         CustomToast.instance
                             .showMsg('Text copied to clipboard');
                       },
@@ -198,7 +199,7 @@ class CustomOrderContainer extends StatelessWidget {
                             : Colors.transparent,
                         padding: EdgeInsets.zero,
                         radius: const Radius.circular(6),
-                        dashPattern: [3, 3],
+                        dashPattern: const [3, 3],
                         child: CustomElevatedButton(
                           onPressed:
                           (onPressed != null) ? onPressed : () {},

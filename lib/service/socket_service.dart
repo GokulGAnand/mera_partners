@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:evaluator_app/model/response/live/live_cars_list_response.dart';
-import 'package:evaluator_app/view_model/home/live/live_cars_list_view_model.dart';
-import 'package:evaluator_app/widgets/custom_toast.dart';
+import 'package:mera_partners/model/response/live/live_cars_list_response.dart';
+import 'package:mera_partners/view_model/home/live/live_cars_list_view_model.dart';
+import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import '../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 
 class SocketService {
   static IO.Socket? socket;
@@ -31,7 +32,9 @@ class SocketService {
         List<Data> carList = parseCarDataList(data);
         Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data = carList;
         Get.find<LiveCarsListViewModel>().updateBid(carList);
-        Get.find<LiveCarsListViewModel>().liveCarsResponse.refresh(); // Manually trigger UI update
+        Get.find<LiveCarsListViewModel>().liveCarsResponse.refresh();
+        Get.find<BidCarsListViewModel>().bidCarsResponse.value.data = carList;
+        Get.find<BidCarsListViewModel>().bidCarsResponse.refresh(); // Manually trigger UI update
       }
     });
 

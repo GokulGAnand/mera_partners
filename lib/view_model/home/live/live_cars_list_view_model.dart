@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:evaluator_app/service/socket_service.dart';
-import 'package:evaluator_app/utils/strings.dart';
+import 'package:mera_partners/service/socket_service.dart';
+import 'package:mera_partners/utils/strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:evaluator_app/utils/globals.dart' as globals;
+import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../../model/response/live/live_cars_list_response.dart';
 import '../../../service/endpoints.dart';

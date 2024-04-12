@@ -1,7 +1,7 @@
-import 'package:evaluator_app/routes/app_routes.dart';
-import 'package:evaluator_app/utils/styles.dart';
-import 'package:evaluator_app/widgets/custom_appbar.dart';
-import 'package:evaluator_app/widgets/custom_dialog.dart';
+import 'package:mera_partners/routes/app_routes.dart';
+import 'package:mera_partners/utils/styles.dart';
+import 'package:mera_partners/widgets/custom_appbar.dart';
+import 'package:mera_partners/widgets/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utils/dimens.dart';

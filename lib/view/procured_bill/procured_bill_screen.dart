@@ -1,4 +1,4 @@
-import 'package:evaluator_app/utils/constants.dart';
+import 'package:mera_partners/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../utils/dimens.dart';
@@ -10,7 +10,7 @@ import '../../widgets/bank_details_bottom_sheet.dart';
 import '../../widgets/custom_button.dart';
 
 class ProcuredBillScreen extends StatelessWidget {
-  ProcuredBillScreen({Key? key}) : super(key: key);
+  ProcuredBillScreen({super.key});
 
   final ProcuredBillScreenViewModel viewModel = Get.isRegistered<ProcuredBillScreenViewModel>()
       ? Get.find<ProcuredBillScreenViewModel>()
@@ -23,8 +23,8 @@ class ProcuredBillScreen extends StatelessWidget {
     final String? carModel = arguments?['carModel'];
     final String? carName = arguments?['carName'];
     final String? totalPayment = finalPrice; // Assigning finalPrice to totalPayment as per your existing code
-    final String additionalCharges = '5000'; // Example value for additional charges
-    final String gst = '50'; // Example value for GST
+    const String additionalCharges = '5000'; // Example value for additional charges
+    const String gst = '50'; // Example value for GST
 
     // Calculate total amount
     final num totalAmount = (int.tryParse(totalPayment ?? '0') ?? 0) +
@@ -86,9 +86,9 @@ class ProcuredBillScreen extends StatelessWidget {
                         children: [
                           Text(totalPayment ?? '', style: MyStyles.black16400),
                           SizedBox(height: Dimens.standard_10),
-                          Text(additionalCharges, style: MyStyles.black16400),
+                          const Text(additionalCharges, style: MyStyles.black16400),
                           SizedBox(height: Dimens.standard_10),
-                          Text(gst, style: MyStyles.black16400),
+                          const Text(gst, style: MyStyles.black16400),
                         ],
                       ),
                     ],
@@ -109,7 +109,7 @@ class ProcuredBillScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(MyStrings.totalAmount, style: MyStyles.black16700),
+                      const Text(MyStrings.totalAmount, style: MyStyles.black16700),
                       Text(Constants.numberFormat.format(totalAmount), style: MyStyles.blue16W700),
                     ],
                   ),

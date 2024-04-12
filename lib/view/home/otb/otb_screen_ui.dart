@@ -1,5 +1,5 @@
-import 'package:evaluator_app/model/response/live/live_cars_list_response.dart';
-import 'package:evaluator_app/utils/colors.dart';
+import 'package:mera_partners/model/response/live/live_cars_list_response.dart';
+import 'package:mera_partners/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';

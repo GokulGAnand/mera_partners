@@ -1,16 +1,15 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/constants.dart';
-import 'package:evaluator_app/utils/strings.dart';
-import 'package:evaluator_app/utils/styles.dart';
-import 'package:evaluator_app/utils/svg.dart';
-import 'package:evaluator_app/widgets/custom_button.dart';
+import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/constants.dart';
+import 'package:mera_partners/utils/strings.dart';
+import 'package:mera_partners/utils/styles.dart';
+import 'package:mera_partners/utils/svg.dart';
+import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class NegotiationBottomSheet extends StatelessWidget {
   const NegotiationBottomSheet({required this.biddedAmount, required this.negotiatedAmount, super.key, required this.onAcceptPressed, required this.onRejectPressed});

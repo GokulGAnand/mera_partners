@@ -1,7 +1,7 @@
-import 'package:evaluator_app/view/home/account/account_screen_ui.dart';
-import 'package:evaluator_app/view/home/bids/bids_screen.dart';
-import 'package:evaluator_app/view/home/my_cars/my_cars_screen.dart';
-import 'package:evaluator_app/view/home/orders/orders_screen.dart';
+import 'package:mera_partners/view/home/account/account_screen_ui.dart';
+import 'package:mera_partners/view/home/bids/bids_screen.dart';
+import 'package:mera_partners/view/home/my_cars/my_cars_screen.dart';
+import 'package:mera_partners/view/home/orders/orders_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

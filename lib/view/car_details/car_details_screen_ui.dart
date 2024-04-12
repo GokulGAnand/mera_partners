@@ -1,25 +1,24 @@
 import 'dart:developer';
 
-import 'package:evaluator_app/routes/app_routes.dart';
-import 'package:evaluator_app/utils/colors.dart';
-import 'package:evaluator_app/utils/constants.dart';
-import 'package:evaluator_app/utils/images.dart';
-import 'package:evaluator_app/utils/strings.dart';
-import 'package:evaluator_app/utils/styles.dart';
-import 'package:evaluator_app/utils/svg.dart';
-import 'package:evaluator_app/view_model/car_details/car_details_view_model.dart';
-import 'package:evaluator_app/view_model/home/live/live_cars_list_view_model.dart';
-import 'package:evaluator_app/widgets/custom_bid_bottom_sheet.dart';
-import 'package:evaluator_app/widgets/custom_button.dart';
-import 'package:evaluator_app/widgets/custom_slider.dart';
+import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
+import 'package:mera_partners/routes/app_routes.dart';
+import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/constants.dart';
+import 'package:mera_partners/utils/images.dart';
+import 'package:mera_partners/utils/strings.dart';
+import 'package:mera_partners/utils/styles.dart';
+import 'package:mera_partners/utils/svg.dart';
+import 'package:mera_partners/view_model/car_details/car_details_view_model.dart';
+import 'package:mera_partners/view_model/home/live/live_cars_list_view_model.dart';
+import 'package:mera_partners/widgets/custom_bid_bottom_sheet.dart';
+import 'package:mera_partners/widgets/custom_button.dart';
+import 'package:mera_partners/widgets/custom_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:video_player/video_player.dart';
-import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
 import 'dart:math' as math;
-import 'package:evaluator_app/utils/globals.dart' as globals;
-
+import 'package:mera_partners/utils/globals.dart' as globals;
+import 'package:video_player/video_player.dart';
 
 class CarDetailsScreen extends StatefulWidget {
   const CarDetailsScreen({super.key});
@@ -1202,12 +1201,19 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         Container(
                           width: 75,
                           height: 68,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              image: const DecorationImage(
-                                  image: NetworkImage(
-                                      "https://bucketkeracars.s3.ap-south-1.amazonaws.com/frontLeft-1710562433850-IMG_20240315_104745.jpg"),
-                                  fit: BoxFit.fill)),
+                          child: Image.network(carDetailsScreenViewModel.imageList[index]["imageList"][0].value, fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return SvgPicture.asset(MyImages.loadingCar);
+                              }, frameBuilder:
+                                  (context, child, frame, wasSynchronouslyLoaded) {
+                                return child;
+                              }, loadingBuilder: (context, child, loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                } else {
+                                  return SvgPicture.asset(MyImages.loadingCar);
+                                }
+                              }),
                         )
                       ],
                     ),

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:evaluator_app/utils/globals.dart' as globals;
+import 'package:mera_partners/utils/globals.dart' as globals;
 import '../../../../model/response/live/live_cars_list_response.dart';
 import '../../../../service/endpoints.dart';
 import '../../../../service/exception_error_util.dart';

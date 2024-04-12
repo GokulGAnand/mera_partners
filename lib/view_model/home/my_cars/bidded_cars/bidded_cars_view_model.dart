@@ -1,26 +1,24 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:evaluator_app/utils/globals.dart' as globals;
+import 'package:mera_partners/utils/globals.dart' as globals;
 import '../../../../model/response/live/live_cars_list_response.dart';
 import '../../../../service/endpoints.dart';
 import '../../../../service/exception_error_util.dart';
+import '../../../../service/socket_service.dart';
 import '../../../../utils/strings.dart';
 import '../../../../widgets/custom_toast.dart';
 import '../../../../widgets/progressbar.dart';
 
 class BidCarsListViewModel extends GetxController{
 
+  Rx<TextEditingController> autoBidController = TextEditingController().obs;
+  Rx<TextEditingController> bidController = TextEditingController().obs;
   var bidCarsResponse = CarListResponse().obs;
   var carListResponse = CarListResponse().obs;
-
-  List<int> bid = [
-    2000,
-    5000,
-    10000
-  ];
-  RxInt bidValue = 172000.obs;
+  SocketService? socketService;
 
   //declare pagination controller
   // final PagingController<int,Data> infinitePagingController=PagingController(firstPageKey: 1);
@@ -28,6 +26,20 @@ class BidCarsListViewModel extends GetxController{
 
   @override
   void onInit() {
+    bidController.value.addListener(() {
+      if (bidController.value.text.length > 3) {
+        bidController.value.selection = TextSelection.fromPosition(
+          TextPosition(offset: bidController.value.text.length - 3),
+        );
+      }
+    });
+    autoBidController.value.addListener(() {
+      if (autoBidController.value.text.length > 3) {
+        autoBidController.value.selection = TextSelection.fromPosition(
+          TextPosition(offset: autoBidController.value.text.length - 3),
+        );
+      }
+    });
     // infinitePagingController.addPageRequestListener((pageKey) {
       getCarData();
       getLikedCarData();
@@ -52,6 +64,46 @@ class BidCarsListViewModel extends GetxController{
     } catch (e) {
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? MyStrings.unableToConnect);
+    }
+  }
+
+  void placeBid(amount, carId) async {
+    try {
+      socketService?.sendSocketRequest("bidInfo", {"amount": int.parse(amount), "carId": carId});
+      log(amount+' bid amount');
+      log(carId+' car id');
+      var response = await http.post(Uri.parse(EndPoints.socketUrl+EndPoints.auction+EndPoints.bid), headers: globals.jsonHeaders, body: jsonEncode({"amount": int.parse(amount), "carId": carId}));
+      log(response.body);
+      String message = json.decode(response.body)['message'];
+      if(response.statusCode == 200){
+        CustomToast.instance.showMsgWithIcon(MyStrings.bidPlaced, null);
+      }else{
+        CustomToast.instance.showMsg(message);
+      }
+    } catch (e) {
+      CustomToast.instance.showMsg(MyStrings.unableToConnect);
+      log(e.toString());
+    }
+  }
+
+  void placeAutoBid(autoBidLimit, carId) async {
+    try {
+      socketService?.sendSocketRequest("bidInfo", {"autoBidLimit": int.parse(autoBidLimit), "carId": carId});
+      log(jsonEncode({"autoBidLimit": autoBidLimit, "carId": carId}));
+      log(Uri.parse(EndPoints.socketUrl+EndPoints.auction+EndPoints.bid).toString());
+      var response = await http.post(Uri.parse(EndPoints.socketUrl+EndPoints.auction+EndPoints.bid),
+          headers: globals.jsonHeaders,
+          body: jsonEncode({"autoBidLimit": int.parse(autoBidLimit), "carId": carId}));
+      log(response.body);
+      String message = json.decode(response.body)['message'];
+      if(response.statusCode == 200){
+        CustomToast.instance.showMsgWithIcon(MyStrings.bidPlaced, null);
+      }else{
+        CustomToast.instance.showMsg(message);
+      }
+    } catch (e) {
+      CustomToast.instance.showMsg(MyStrings.unableToConnect);
+      log(e.toString());
     }
   }
 

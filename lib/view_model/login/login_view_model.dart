@@ -1,19 +1,19 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'package:evaluator_app/model/response/user_data/user_info_response.dart';
-import 'package:evaluator_app/service/endpoints.dart';
-import 'package:evaluator_app/service/exception_error_util.dart';
-import 'package:evaluator_app/utils/constants.dart';
-import 'package:evaluator_app/utils/enum.dart';
-import 'package:evaluator_app/utils/shared_pref_manager.dart';
-import 'package:evaluator_app/utils/strings.dart';
-import 'package:evaluator_app/widgets/custom_toast.dart';
-import 'package:evaluator_app/widgets/progressbar.dart';
+import 'package:mera_partners/model/response/user_data/user_info_response.dart';
+import 'package:mera_partners/service/endpoints.dart';
+import 'package:mera_partners/service/exception_error_util.dart';
+import 'package:mera_partners/utils/constants.dart';
+import 'package:mera_partners/utils/enum.dart';
+import 'package:mera_partners/utils/shared_pref_manager.dart';
+import 'package:mera_partners/utils/strings.dart';
+import 'package:mera_partners/widgets/custom_toast.dart';
+import 'package:mera_partners/widgets/progressbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:evaluator_app/utils/globals.dart' as globals;
+import 'package:mera_partners/utils/globals.dart' as globals;
 import '../../routes/app_routes.dart';
 
 class LoginScreenViewModel extends GetxController {

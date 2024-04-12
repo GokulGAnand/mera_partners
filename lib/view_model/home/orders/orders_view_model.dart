@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:evaluator_app/utils/strings.dart';
+import 'package:mera_partners/utils/strings.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:evaluator_app/utils/globals.dart' as globals;
+import 'package:mera_partners/utils/globals.dart' as globals;
 import '../../../model/response/live/live_cars_list_response.dart';
 import '../../../service/endpoints.dart';
 import '../../../service/exception_error_util.dart';
@@ -46,9 +46,12 @@ class OrderScreenViewModel extends GetxController {
   void acceptOrRejectOffer(String status, String carId) async {
     try {
       ProgressBar.instance.showProgressbar(Get.context!);
-      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.status + carId), body: jsonEncode({ "status": status }));
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'),
+          headers: globals.jsonHeaders,
+          body: jsonEncode({ "status": status }));
 
       if (response.statusCode == 200) {
+        CustomToast.instance.showMsg(MyStrings.success);
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
       } else {

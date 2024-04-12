@@ -1,6 +1,6 @@
 import 'dart:developer';
-import 'package:evaluator_app/utils/images.dart';
-import 'package:evaluator_app/utils/strings.dart';
+import 'package:mera_partners/utils/images.dart';
+import 'package:mera_partners/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../utils/colors.dart';
