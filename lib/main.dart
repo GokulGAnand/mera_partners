@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/colors.dart';
-import 'package:mera_partners/view/home/home_screen_ui.dart';
 import 'package:mera_partners/view/login/binding/login_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -44,9 +43,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       getPages: AppRoutes().pages,
-      // initialRoute: AppRoutes.loginScreen,
-      // initialBinding: LoginBinding(),
-       home: const HomeScreen(),
+      initialRoute: AppRoutes.loginScreen,
+      initialBinding: LoginBinding(),
+      //  home: ProcuredBillScreen(),
     );
   }
 }
