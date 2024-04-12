@@ -45,9 +45,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       getPages: AppRoutes().pages,
-      initialRoute: AppRoutes.loginScreen,
-      initialBinding: LoginBinding(),
-      //  home: ProcuredBillScreen(),
+      // initialRoute: AppRoutes.loginScreen,
+      // initialBinding: LoginBinding(),
+       home: const HomeScreen(),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/images.dart';
+import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
 import 'package:evaluator_app/view_model/gallery/gallery_view_model.dart';
@@ -25,15 +26,15 @@ class _GalleryScreenState extends State<GalleryScreen> {
   @override
   void initState() {
     for(int i=0; i<galleryScreenViewModel.imagesList.length; i++){
-      if(Get.arguments == galleryScreenViewModel.imagesList[i]["title"]){
-        for (var element in galleryScreenViewModel.imagesList) {element["isClick"].value = false;}
-        galleryScreenViewModel.imagesList[i]["isClick"].value = true;
+      if(galleryScreenViewModel.imagesList[i]["isClick"].value == true){
+        // for (var element in galleryScreenViewModel.imagesList) {element["isClick"].value = false;}
+        // galleryScreenViewModel.imagesList[i]["isClick"].value = true;
         galleryScreenViewModel.imageIndex.value = i;
       }
     }
-    Future.delayed(const Duration(seconds: 3)).then((value) {
+    // Future.delayed(const Duration(seconds: 3)).then((value) {
       galleryScreenViewModel.showLoading.value = false;
-    });
+    // });
     super.initState();
   }
 
@@ -59,13 +60,14 @@ class _GalleryScreenState extends State<GalleryScreen> {
                           return GestureDetector(
                             onTap: (){
                               galleryScreenViewModel.imageIndex.value = index;
+                              setState(() {});
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(right: 12.0),
                               child: Row(
                                 children: [
                                   Text(
-                                    "${galleryScreenViewModel.imagesList[index]["title"]}${(index==0)?" (${galleryScreenViewModel.imagesList[index]["images"].length})":""}",
+                                    "${galleryScreenViewModel.imagesList[index]["title"]}${(galleryScreenViewModel.imagesList[index]["title"] == MyStrings.exterior)?" (${galleryScreenViewModel.imagesList[index]["images"].length})":""}",
                                     style: TextStyle(
                                     color: (galleryScreenViewModel.imageIndex.value == index)?MyColors.kPrimaryColor:MyColors.black,
                                     fontSize: 14,
@@ -74,7 +76,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                                     ),
                                   ),
                                   
-                                  (index==3)?Padding(
+                                  (galleryScreenViewModel.imagesList[index]["title"] == MyStrings.damage)?Padding(
                                     padding: const EdgeInsets.only(left: 4.0),
                                     child: CircleAvatar(
                                       radius: 9,
@@ -122,21 +124,31 @@ class _GalleryScreenState extends State<GalleryScreen> {
                     }
                     return GestureDetector(
                       onTap: (){
-                        Get.toNamed(AppRoutes.imageViewScreen, arguments: galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["title"]);
+                        Get.toNamed(AppRoutes.imageViewScreen, arguments: 
+                        {"title": galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["title"],
+                          "image_title" : galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].title,
+                          "image" : galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].value
+                        },
+                        );
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 15.0),
                         child: Stack(
                           children: [
-                            Container(
-                                  width: double.infinity,
-                                  height: 216,
-                                  decoration: const BoxDecoration(
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                              "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
-                                          fit: BoxFit.fill)),
-                                ),
+                            AspectRatio(
+                              aspectRatio: 16/9,
+                              child: Image.network(galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].value.toString(),
+                              fit: BoxFit.fill,),
+                              ),
+                            // Container(
+                            //       width: double.infinity,
+                            //       height: 216,
+                            //       decoration: BoxDecoration(
+                            //           image: DecorationImage(
+                            //               image: NetworkImage(
+                            //                   galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["imageList"][index].value.toString()),
+                            //               fit: BoxFit.fill)),
+                            //     ),
                             Positioned(
                               bottom: 8,
                               left: 8,
@@ -147,7 +159,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                                   borderRadius: BorderRadius.circular(6),
                                 ),
                                 child: Text(
-                                  galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].toString(),
+                                  galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].title.toString(),
                                   style: MyStyles.black12500,
                                 ),
                               ),

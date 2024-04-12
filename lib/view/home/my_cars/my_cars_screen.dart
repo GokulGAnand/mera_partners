@@ -86,7 +86,7 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                 controller: tabController,
                 children: [
                   BidCarsListScreen(),
-                  LikedCars()
+                  const LikedCars()
                 ],
               ),
             ),

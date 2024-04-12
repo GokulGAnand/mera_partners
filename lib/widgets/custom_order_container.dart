@@ -101,7 +101,7 @@ class CustomOrderContainer extends StatelessWidget {
                         ? MyColors.green3
                         : MyColors.warning,
                     gradient: (dealStatus == "timer")
-                        ? LinearGradient(
+                        ? const LinearGradient(
                       begin: Alignment(-0.5, 0.00),
                       end: Alignment(2, 0),
                       colors: [
@@ -159,13 +159,13 @@ class CustomOrderContainer extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: GestureDetector(
                       onTap: () {
-                        Clipboard.setData(ClipboardData(text: ''));
+                        Clipboard.setData(const ClipboardData(text: ''));
                         CustomToast.instance
                             .showMsg('Text copied to clipboard');
                       },
                       child: Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.copy_rounded,
                             size: 16,
                           ),
@@ -197,7 +197,7 @@ class CustomOrderContainer extends StatelessWidget {
                             ? MyColors.yellow2
                             : Colors.transparent,
                         padding: EdgeInsets.zero,
-                        radius: Radius.circular(6),
+                        radius: const Radius.circular(6),
                         dashPattern: [3, 3],
                         child: CustomElevatedButton(
                           onPressed:
@@ -214,7 +214,7 @@ class CustomOrderContainer extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(6),
                               side: (buttonStatus == "view details")
-                                  ? BorderSide(
+                                  ? const BorderSide(
                                   color: MyColors.kPrimaryColor)
                                   : BorderSide.none,
                             ),

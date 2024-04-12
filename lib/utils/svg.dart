@@ -13,7 +13,10 @@ class MySvg {
   static const info = "${svgRoot}info.svg";
   static const notification = "${svgRoot}notification.svg";
   static const arrowBack = "${svgRoot}arrow_back.svg";
+  static const arrowUp = "${svgRoot}arrow_up.svg";
+  static const arrowDown = "${svgRoot}arrow_down.svg";
   static const distance = "${svgRoot}distance.svg";
+  static const like = "${svgRoot}like.svg";
   static const liked = "${svgRoot}liked.svg";
   static const carTag = "${svgRoot}car_tag.svg";
   static const warning = "${svgRoot}warning.svg";

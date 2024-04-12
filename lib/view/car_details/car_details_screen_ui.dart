@@ -1,20 +1,25 @@
-import 'package:dotted_border/dotted_border.dart';
+import 'dart:developer';
+
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/utils/colors.dart';
+import 'package:evaluator_app/utils/constants.dart';
 import 'package:evaluator_app/utils/images.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/utils/styles.dart';
 import 'package:evaluator_app/utils/svg.dart';
 import 'package:evaluator_app/view_model/car_details/car_details_view_model.dart';
+import 'package:evaluator_app/view_model/home/live/live_cars_list_view_model.dart';
+import 'package:evaluator_app/widgets/custom_bid_bottom_sheet.dart';
 import 'package:evaluator_app/widgets/custom_button.dart';
 import 'package:evaluator_app/widgets/custom_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
+import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
 import 'dart:math' as math;
+import 'package:evaluator_app/utils/globals.dart' as globals;
+
 
 class CarDetailsScreen extends StatefulWidget {
   const CarDetailsScreen({super.key});
@@ -30,18 +35,23 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
           ? Get.find<CarDetailsScreenViewModel>()
           : Get.put(CarDetailsScreenViewModel());
 
+  LiveCarsListViewModel liveCarListViewModel = 
+      Get.isRegistered<LiveCarsListViewModel>() 
+          ? Get.find<LiveCarsListViewModel>() : 
+          Get.put(LiveCarsListViewModel());
+
   @override
   void initState() {
     carDetailsScreenViewModel.exteriorTabController =
-        TabController(length: 2, vsync: this);
+        TabController(length: (carDetailsScreenViewModel.exteriorIssue.isEmpty)?1:2, vsync: this);
     carDetailsScreenViewModel.interiorElectricalTabController =
-        TabController(length: 2, vsync: this);
+        TabController(length: (carDetailsScreenViewModel.interiorAndElectricalIssue.isEmpty)?1:2, vsync: this);
     carDetailsScreenViewModel.engineTabController =
-        TabController(length: 2, vsync: this);
+        TabController(length: (carDetailsScreenViewModel.engineIssue.isEmpty)?1:2, vsync: this);
     carDetailsScreenViewModel.acTabController =
-        TabController(length: 2, vsync: this);
+        TabController(length: (carDetailsScreenViewModel.airConditionIssue.isEmpty)?1:2, vsync: this);
     carDetailsScreenViewModel.testDriveTabController =
-        TabController(length: 2, vsync: this);
+        TabController(length: (carDetailsScreenViewModel.testDriveIssue.isEmpty)?1:2, vsync: this);
     super.initState();
   }
 
@@ -52,339 +62,395 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
   }
 
   Widget page1() {
-    return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
+    return Obx(
+      () {
+        return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomSlider(
-                  sliderImage: carDetailsScreenViewModel.sliderImage, 
-                  pageSliderController: carDetailsScreenViewModel.pageSliderController, 
-                  activePage: carDetailsScreenViewModel.activePage,
-                  height: 258,),
-                (carDetailsScreenViewModel.carStatus != "")?Container(
+                Stack(
+                  children: [
+                    CustomSlider(
+                      sliderImage: carDetailsScreenViewModel.sliderImage, 
+                      pageSliderController: carDetailsScreenViewModel.pageSliderController, 
+                      activePage: carDetailsScreenViewModel.activePage,
+                      height: 258,),
+                    (carDetailsScreenViewModel.carStatus != "")?Container(
+                      width: double.infinity,
+                      height: 258,
+                      padding: const EdgeInsets.all(32),
+                      decoration: BoxDecoration(
+                        color: MyColors.black3.withOpacity(0.7),),
+                      child: Image.asset((carDetailsScreenViewModel.carStatus == "bid won")?MyImages.bidWon
+                      :(carDetailsScreenViewModel.carStatus == "bid closed")?MyImages.bidClosed
+                      :MyImages.carSold),
+                    ): const SizedBox(),
+                    Positioned(
+                        left: 12,
+                        top: 12,
+                        child: InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: SvgPicture.asset(MySvg.arrowBack))),
+                    Positioned(
+                      left: 12,
+                      bottom: 12,
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(MySvg.distance),
+                          const SizedBox(
+                            width: 2,
+                          ),
+                          Text(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.vehicleLocation.toString(), style: MyStyles.white11400)
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                Container(
                   width: double.infinity,
-                  height: 258,
-                  padding: const EdgeInsets.all(32),
+                  height: 37,
+                  padding: const EdgeInsets.only(left: 12),
                   decoration: BoxDecoration(
-                    color: MyColors.black3.withOpacity(0.7),),
-                  child: Image.asset((carDetailsScreenViewModel.carStatus == "bid won")?MyImages.bidWon
-                  :(carDetailsScreenViewModel.carStatus == "bid closed")?MyImages.bidClosed
-                  :MyImages.carSold),
-                ): const SizedBox(),
-                Positioned(
-                    left: 12,
-                    top: 12,
-                    child: InkWell(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: SvgPicture.asset(MySvg.arrowBack))),
-                Positioned(
-                  left: 12,
-                  bottom: 12,
+                    color: (carDetailsScreenViewModel.carStatus == "bid won")?MyColors.green4
+                    :(carDetailsScreenViewModel.carStatus == "bid closed")? MyColors.grey4
+                    :(carDetailsScreenViewModel.carStatus == "car sold")? MyColors.yellow
+                    :null,
+                    gradient: (carDetailsScreenViewModel.carStatus != "")?null
+                    :LinearGradient(
+                      end: const Alignment(2.00, 0.00),
+                      begin: const Alignment(-1, 0),
+                      colors: [
+                        carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() != MyStrings.live.toLowerCase() 
+                        ? MyColors.black3
+                        : globals.uniqueUserId != null && globals.uniqueUserId == carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner 
+                        ? MyColors.green
+                        : globals.uniqueUserId != null && globals.uniqueUserId != carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
+                        ? MyColors.warning
+                        : MyColors.kPrimaryColor, 
+                      MyColors.black5],
+                    ),
+                  ),
                   child: Row(
                     children: [
-                      SvgPicture.asset(MySvg.distance),
-                      const SizedBox(
-                        width: 2,
+                      Text(
+                        (carDetailsScreenViewModel.carStatus == "bid won") 
+                        ? MyStrings.bidWon 
+                        :(carDetailsScreenViewModel.carStatus == "bid closed")
+                        ? MyStrings.bidClosed
+                        :(carDetailsScreenViewModel.carStatus == "car sold")
+                        ? MyStrings.carSold
+                        :carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() != MyStrings.live.toLowerCase() 
+                        ? MyStrings.scheduledBid
+                        : globals.uniqueUserId != null && globals.uniqueUserId == carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner 
+                        ? MyStrings.youAreLeading
+                        : globals.uniqueUserId != null && globals.uniqueUserId != carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
+                        ? MyStrings.youAreLoosing
+                        : MyStrings.highestBid,
+                        // (carDetailsScreenViewModel.carStatus == "bid won") ? MyStrings.bidWon 
+                        // :(carDetailsScreenViewModel.carStatus == "bid closed")? MyStrings.bidClosed
+                        // :(carDetailsScreenViewModel.carStatus == "car sold")? MyStrings.carSold
+                        // :MyStrings.highestBid,
+                        textAlign: TextAlign.center,
+                        style: (carDetailsScreenViewModel.carStatus == "bid closed")? MyStyles.pageTitleStyle
+                        :(carDetailsScreenViewModel.carStatus == "car sold")? MyStyles.pageTitleStyle
+                        :MyStyles.whiteTitleStyle,
                       ),
-                      Text(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.vehicleLocation.toString(), style: MyStyles.white11400)
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() && globals.uniqueUserId != null && globals.uniqueUserId == carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner 
+                      ? Padding(
+                        padding: const EdgeInsets.only(left: 8.0, right: 5.0),
+                        child: SvgPicture.asset(MySvg.arrowUp, width: 14,),
+                      )
+                      : carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() && globals.uniqueUserId != null && globals.uniqueUserId != carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
+                      ? Padding(
+                        padding: const EdgeInsets.only(left: 8.0, right: 5.0),
+                        child: SvgPicture.asset(MySvg.arrowDown, width: 14,),
+                      )
+                      :const SizedBox(),
+                      Text(
+                        // (carDetailsScreenViewModel.carStatus == "")? 
+                        // '₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid.toString()}': 
+                        // '',
+                        carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() 
+                        ? Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid).toString()
+                        : "",
+                        textAlign: TextAlign.center,
+                        style: MyStyles.white16700,
+                      )
                     ],
                   ),
-                )
-              ],
-            ),
-            Container(
-              width: double.infinity,
-              height: 37,
-              padding: const EdgeInsets.only(left: 12),
-              decoration: BoxDecoration(
-                color: (carDetailsScreenViewModel.carStatus == "bid won")?MyColors.green4
-                :(carDetailsScreenViewModel.carStatus == "bid closed")? MyColors.grey4
-                :(carDetailsScreenViewModel.carStatus == "car sold")? MyColors.yellow
-                :null,
-                gradient: (carDetailsScreenViewModel.carStatus != "")?null
-                :const LinearGradient(
-                  end: Alignment(2.00, 0.00),
-                  begin: Alignment(-1, 0),
-                  colors: [MyColors.kPrimaryColor, MyColors.black5],
                 ),
-              ),
-              child: Row(
-                children: [
-                  Text(
-                    (carDetailsScreenViewModel.carStatus == "bid won") ? MyStrings.bidWon 
-                    :(carDetailsScreenViewModel.carStatus == "bid closed")? MyStrings.bidClosed
-                    :(carDetailsScreenViewModel.carStatus == "car sold")? MyStrings.carSold
-                    :MyStrings.highestBid,
-                    textAlign: TextAlign.center,
-                    style: (carDetailsScreenViewModel.carStatus == "bid closed")? MyStyles.pageTitleStyle
-                    :(carDetailsScreenViewModel.carStatus == "car sold")? MyStyles.pageTitleStyle
-                    :MyStyles.whiteTitleStyle,
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    (carDetailsScreenViewModel.carStatus == "")? '₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid.toString()}': '',
-                    textAlign: TextAlign.center,
-                    style: MyStyles.white16700,
-                  )
-                ],
-              ),
-            ),
-            Container(
-              color: MyColors.white,
-              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    dense: true,
-                    title: Text(
-                      carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.model.toString(),
-                      style: MyStyles.selectedTabBarTitleStyle,
-                    ),
-                    subtitle: Text(
-                      carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.variant.toString(),
-                      style: MyStyles.black16700,
-                    ),
-                    trailing: SvgPicture.asset(
-                      MySvg.liked,
-                      width: 23,
-                    ),
-                  ),
-                  // const SizedBox(height: 8,),
-                  Container(
-                    height: 20,
-                    color: MyColors.lightBlue,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                    ),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: IntrinsicHeight(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.fuelType != null)...[
-                              Text(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.fuelType!.capitalize.toString(), style: MyStyles.regular12),
-                              const SizedBox(width: 6),
-                            ],
-                            if(carDetailsScreenViewModel.reportResponse.value.data!.odometerReading != null)...[
-                              const Text('|', style: MyStyles.regular12),
-                              const SizedBox(width: 6),
-                              Text(carDetailsScreenViewModel.reportResponse.value.data!.odometerReading.toString() + ' KM', style: MyStyles.regular12),
-                              const SizedBox(width: 6),
-                            ],
-                            if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.ownershipNumber != null)...[
-                              const Text('|', style: MyStyles.regular12),
-                              const SizedBox(width: 6),
-                              Text(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.ownershipNumber!.capitalize.toString(), style: MyStyles.regular12),
-                              const SizedBox(width: 6),
-                            ],
-                            if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.transmission != null)...[
-                              const Text('|', style: MyStyles.regular12),
-                              const SizedBox(width: 6),
-                              Text(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.transmission!.capitalize.toString(), style: MyStyles.regular12),
-                              const SizedBox(width: 6),
-                            ],
-                          ],
+                Container(
+                  color: MyColors.white,
+                  padding: const EdgeInsets.only(left: 16, right: 16, bottom: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        dense: true,
+                        title: Text(
+                          carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.model.toString(),
+                          style: MyStyles.selectedTabBarTitleStyle,
+                        ),
+                        subtitle: Text(
+                          carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.variant.toString(),
+                          style: MyStyles.black16700,
+                        ),
+                        trailing: InkWell(
+                          onTap: () async{
+                            carDetailsScreenViewModel.isLike.value = !carDetailsScreenViewModel.isLike.value;
+                            await carDetailsScreenViewModel.updateLikedCar();
+                          },
+                          child: SvgPicture.asset(
+                            (carDetailsScreenViewModel.isLike.value == false)?MySvg.like:MySvg.liked,
+                            width: 23,
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  SizedBox(
-                    height: 90,
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: carDetailsScreenViewModel.imageList.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Get.toNamed(AppRoutes.galleryScreen,
-                                  arguments:
-                                      carDetailsScreenViewModel.imageList[index]);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Column(
-                                children: [
-                                  Stack(
-                                    alignment: Alignment.bottomCenter,
+                      // const SizedBox(height: 8,),
+                      Container(
+                        height: 20,
+                        color: MyColors.lightBlue,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                        ),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: IntrinsicHeight(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.fuelType != null)...[
+                                  Text(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.fuelType!.capitalize.toString(), style: MyStyles.regular12),
+                                  const SizedBox(width: 6),
+                                ],
+                                if(carDetailsScreenViewModel.reportResponse.value.data!.odometerReading != null)...[
+                                  const Text('|', style: MyStyles.regular12),
+                                  const SizedBox(width: 6),
+                                  Text('${carDetailsScreenViewModel.reportResponse.value.data!.odometerReading} KM', style: MyStyles.regular12),
+                                  const SizedBox(width: 6),
+                                ],
+                                if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.ownershipNumber != null)...[
+                                  const Text('|', style: MyStyles.regular12),
+                                  const SizedBox(width: 6),
+                                  Text(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.ownershipNumber!.capitalize.toString(), style: MyStyles.regular12),
+                                  const SizedBox(width: 6),
+                                ],
+                                if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.transmission != null)...[
+                                  const Text('|', style: MyStyles.regular12),
+                                  const SizedBox(width: 6),
+                                  Text(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.transmission!.capitalize.toString(), style: MyStyles.regular12),
+                                  const SizedBox(width: 6),
+                                ],
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      SizedBox(
+                        height: 90,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: carDetailsScreenViewModel.imageList.length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  for (var element in carDetailsScreenViewModel.imageList) {element["isClick"].value = false;}
+                                  carDetailsScreenViewModel.imageList[index]["isClick"].value = true;
+                                  Get.toNamed(AppRoutes.galleryScreen,
+                                      arguments:
+                                          carDetailsScreenViewModel.imageList);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: Column(
                                     children: [
+                                      Stack(
+                                        alignment: Alignment.bottomCenter,
+                                        children: [
+                                          const SizedBox(
+                                            width: 62,
+                                            height: 62,
+                                          ),
+                                          Container(
+                                            width: 58,
+                                            height: 58,
+                                            child: Image.network(carDetailsScreenViewModel.imageList[index]["images"][0].value, fit: BoxFit.cover,
+                                            errorBuilder: (context, error, stackTrace) {
+                                              return SvgPicture.asset(MyImages.loadingCar);
+                                            }, frameBuilder:
+                                                (context, child, frame, wasSynchronouslyLoaded) {
+                                              return child;
+                                            }, loadingBuilder: (context, child, loadingProgress) {
+                                              if (loadingProgress == null) {
+                                                return child;
+                                              } else {
+                                                return SvgPicture.asset(MyImages.loadingCar);
+                                              }
+                                            }),
+                                          ),
+                                          (carDetailsScreenViewModel.imageList[index]["title"]== MyStrings.damage)
+                                              ? Positioned(
+                                                  right: 0,
+                                                  top: 0,
+                                                  child: CircleAvatar(
+                                                    radius: 8,
+                                                    backgroundColor: MyColors.red2,
+                                                    child: Text(
+                                                      '${carDetailsScreenViewModel.imageList[index]["images"].length}',
+                                                      style: MyStyles.white8700,
+                                                    ),
+                                                  ),
+                                                )
+                                              : const SizedBox()
+                                        ],
+                                      ),
                                       const SizedBox(
-                                        width: 62,
-                                        height: 62,
+                                        height: 5,
                                       ),
-                                      Container(
-                                        width: 58,
-                                        height: 58,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(5),
-                                            image: DecorationImage(
-                                                image: NetworkImage(
-                                                   carDetailsScreenViewModel.imageList[index]["imageList"][0].value),
-                                                fit: BoxFit.fill)),
-                                      ),
-                                      (carDetailsScreenViewModel.imageList[index]["title"]== MyStrings.engine)
-                                          ? Positioned(
-                                              right: 0,
-                                              top: 0,
-                                              child: CircleAvatar(
-                                                radius: 8,
-                                                backgroundColor: MyColors.red2,
-                                                child: Text(
-                                                  '${carDetailsScreenViewModel.imageList[index]["imageList"].length}',
-                                                  style: MyStyles.white8700,
-                                                ),
-                                              ),
-                                            )
-                                          : const SizedBox()
+                                      Text(
+                                        carDetailsScreenViewModel.imageList[index]["title"],
+                                        style: MyStyles.black12400,
+                                      )
                                     ],
                                   ),
+                                ),
+                              );
+                            }),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Row(
+                        children: [
+                          SvgPicture.asset(MySvg.carTag),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Text.rich(
+                            TextSpan(
+                              children: [
+                                const TextSpan(
+                                  text: MyStrings.fmv,
+                                  style: MyStyles.subTitleGreayStyle,
+                                ),
+                                TextSpan(
+                                  text: "  ${Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue ?? 0)}",
+                                  style: MyStyles.grey14700,
+                                ),
+                              ],
+                            ),
+                            textAlign: TextAlign.center,
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 12,
+                  width: double.infinity,
+                  color: MyColors.lightBlue1,
+                ),
+                Container(
+                  width: double.infinity,
+                  color: MyColors.white,
+                  padding:
+                      const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 20),
+                  margin: const EdgeInsets.only(top: 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        MyStrings.criticalIssue,
+                        style: MyStyles.black14700,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      (carDetailsScreenViewModel.criticalIssue.isEmpty)?
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text("Not any Critical Issue", style: MyStyles.subtitle12400,),
+                      )
+                      :Wrap(
+                        children: [
+                          for (int i = 0; i < carDetailsScreenViewModel.criticalIssue.length; i++) ...[
+                            Padding(
+                              padding: const EdgeInsets.only(right: 12.0, top: 12),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SvgPicture.asset(MySvg.warning),
                                   const SizedBox(
-                                    height: 5,
+                                    width: 5,
                                   ),
                                   Text(
-                                    carDetailsScreenViewModel.imageList[index]["title"],
-                                    style: MyStyles.black12400,
+                                    carDetailsScreenViewModel.criticalIssue[i],
+                                    style: MyStyles.red2_12700,
                                   )
                                 ],
                               ),
                             ),
-                          );
-                        }),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Row(
-                    children: [
-                      SvgPicture.asset(MySvg.carTag),
-                      const SizedBox(
-                        width: 8,
+                          ]
+                        ],
                       ),
-                      Text.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: MyStrings.fmv,
-                              style: MyStyles.subTitleGreayStyle,
-                            ),
-                            TextSpan(
-                              text: '  ₹${(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue ?? 0).toString()}',
-                              style: MyStyles.grey14700,
-                            ),
-                          ],
-                        ),
-                        textAlign: TextAlign.center,
+                      const SizedBox(height: 15),
+                      Text(
+                        carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.specialComments ?? '',
+                        style: MyStyles.black12400,
                       )
                     ],
-                  )
-                ],
-              ),
-            ),
-            Container(
-              height: 12,
-              width: double.infinity,
-              color: MyColors.lightBlue1,
-            ),
-            Container(
-              width: double.infinity,
-              color: MyColors.white,
-              padding:
-                  const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 20),
-              margin: const EdgeInsets.only(top: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    MyStrings.criticalIssue,
-                    style: MyStyles.black14700,
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  (carDetailsScreenViewModel.criticalIssue.isEmpty)?
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: const Text("Not any Critical Issue", style: MyStyles.subtitle12400,),
-                  )
-                  :Wrap(
-                    children: [
-                      for (int i = 0; i < carDetailsScreenViewModel.criticalIssue.length; i++) ...[
-                        Padding(
-                          padding: const EdgeInsets.only(right: 12.0, top: 12),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SvgPicture.asset(MySvg.warning),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                carDetailsScreenViewModel.criticalIssue[i],
-                                style: MyStyles.red2_12700,
-                              )
-                            ],
-                          ),
-                        ),
-                      ]
-                    ],
-                  ),
-                  const SizedBox(height: 15),
-                  const Text(
-                    'Front left door is fully damaged due to a major \naccident,customer says they will fix',
-                    style: MyStyles.black12400,
-                  )
-                ],
-              ),
-            ),
-            // inspectionReport(),
-            // Container(
-            //   width: double.infinity,
-            //   padding: const EdgeInsets.all(10),
-            //   margin: const EdgeInsets.all(15),
-            //   decoration: BoxDecoration(
-            //       color: Colors.white, borderRadius: BorderRadius.circular(8)),
-            //   child: const Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       Text(
-            //         MyStrings.documents,
-            //         style: MyStyles.black12700,
-            //       ),
-            //       Row(
-            //         children: [
-            //           Expanded(
-            //             child: Text(
-            //               "RC Availability",
-            //               textAlign: TextAlign.left,
-            //               style: MyStyles.black12400,
-            //             ),
-            //           ),
-            //           Expanded(
-            //             child: Text("Yes. Original",
-            //                 textAlign: TextAlign.left,
-            //                 style: MyStyles.black12400),
-            //           ),
-            //         ],
-            //       )
-            //     ],
-            //   ),
-            // ),
-            // const SizedBox(
-            //   height: 50,
-            // ),
-          ],
-        );
+                ),
+                // inspectionReport(),
+                // Container(
+                //   width: double.infinity,
+                //   padding: const EdgeInsets.all(10),
+                //   margin: const EdgeInsets.all(15),
+                //   decoration: BoxDecoration(
+                //       color: Colors.white, borderRadius: BorderRadius.circular(8)),
+                //   child: const Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       Text(
+                //         MyStrings.documents,
+                //         style: MyStyles.black12700,
+                //       ),
+                //       Row(
+                //         children: [
+                //           Expanded(
+                //             child: Text(
+                //               "RC Availability",
+                //               textAlign: TextAlign.left,
+                //               style: MyStyles.black12400,
+                //             ),
+                //           ),
+                //           Expanded(
+                //             child: Text("Yes. Original",
+                //                 textAlign: TextAlign.left,
+                //                 style: MyStyles.black12400),
+                //           ),
+                //         ],
+                //       )
+                //     ],
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 50,
+                // ),
+              ],
+            );
+      }
+    );
   }
 
   List<Widget> page2() {
@@ -396,13 +462,13 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
         key: carDetailsScreenViewModel.documentKey,
         width: double.infinity,
         padding: const EdgeInsets.all(10),
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               MyStrings.documents,
               style: MyStyles.black12700,
             ),
@@ -424,7 +490,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                 )),
               ),
             ),
-            Text(
+            const Text(
               MyStrings.otherInformation,
               style: MyStyles.black12700,
             ),
@@ -446,7 +512,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                 )),
               ),
             ),
-            Text(
+            const Text(
               MyStrings.regAndFitness,
               style: MyStyles.black12700,
             ),
@@ -537,7 +603,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
 
   Widget showListData(List<Master> list){
     return ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: list.length,
                   itemBuilder: (context, index){
@@ -571,33 +637,61 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
       width: double.infinity,
       height: 134,
       padding: const EdgeInsets.all(20),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
-            begin: Alignment(-1, 0),
-            end: Alignment(2.00, 0.00),
-            colors: <Color>[MyColors.kPrimaryColor, MyColors.black5]),
+            begin: const Alignment(-1, 0),
+            end: const Alignment(2.00, 0.00),
+            colors: <Color>[
+              carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() != MyStrings.live.toLowerCase() 
+                    ? MyColors.black3
+                    : globals.uniqueUserId != null && globals.uniqueUserId == carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner 
+                    ? MyColors.green
+                    : globals.uniqueUserId != null && globals.uniqueUserId != carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
+                    ? MyColors.warning
+                    : MyColors.kPrimaryColor, 
+              MyColors.black5]),
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "2016 Duster",
+            carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.model.toString(),
             style: MyStyles.white14500,
           ),
-          SizedBox(
+          const SizedBox(
             height: 3,
           ),
           Text(
-            "110 PS RXZ 4X2 AMT",
+            carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.variant.toString(),
             style: MyStyles.white16700,
           ),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
-          Text(
-            "₹19,99,999",
-            style: MyStyles.titleStyle,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() && globals.uniqueUserId != null && globals.uniqueUserId == carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner 
+                  ? Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: SvgPicture.asset(MySvg.arrowUp,),
+                  )
+                  : carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() && globals.uniqueUserId != null && globals.uniqueUserId != carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
+                  ? Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: SvgPicture.asset(MySvg.arrowDown,),
+                  )
+                  :const SizedBox(),
+              Text(
+                carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() 
+                        ? Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid).toString()
+                : carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.scheduled.toLowerCase()
+                ? MyStrings.scheduledBid
+                :"",
+                style: MyStyles.titleStyle,
+              ),
+            ],
           )
         ],
       ),
@@ -640,7 +734,36 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                 child: SizedBox(
                   height: 47,
                   child: CustomElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      liveCarListViewModel.autoBidController.value.clear();
+                        showModalBottomSheet(
+                            isScrollControlled: true,
+                            enableDrag: true,
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (context) {
+                              return CustomBidBottomSheet(
+                                amountController: liveCarListViewModel.autoBidController,
+                                isAutoBid: true,
+                                bidValue: RxInt(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toInt()),
+                                stepRate: carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 99999
+                                    ? RxInt(2000)
+                                    : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 100000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 299999)
+                                    ? RxInt(4000)
+                                    : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 300000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 499999)
+                                    ? RxInt(7000)
+                                    : RxInt(10000),
+                                onAutoBidPressed: () {
+                                  try {
+                                    liveCarListViewModel.placeAutoBid(liveCarListViewModel.autoBidController.value.text, carDetailsScreenViewModel.reportResponse.value.data!.sId);
+                                    Navigator.of(context).pop();
+                                  } catch (e) {
+                                    log(e.toString());
+                                  }
+                                },
+                              );
+                            });
+                    },
                     buttonStyle: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.all(2),
                         backgroundColor:
@@ -663,7 +786,35 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                 child: SizedBox(
                   height: 47,
                   child: CustomElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      liveCarListViewModel.bidController.value.clear();
+                        showModalBottomSheet(
+                            enableDrag: true,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (context) {
+                              return CustomBidBottomSheet(
+                                amountController: liveCarListViewModel.bidController,
+                                bidValue: RxInt(carDetailsScreenViewModel.reportResponse.value.data?.allCarInfo!.highestBid!.toInt() ?? 0),
+                                stepRate: carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 99999
+                                    ? RxInt(2000)
+                                    : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 100000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 299999)
+                                    ? RxInt(4000)
+                                    : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 300000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 499999)
+                                    ? RxInt(7000)
+                                    : RxInt(10000),
+                                onBidPressed: () {
+                                  try {
+                                    liveCarListViewModel.placeBid(liveCarListViewModel.bidController.value.text, carDetailsScreenViewModel.reportResponse.value.data?.sId);
+                                    Navigator.of(context).pop();
+                                  } catch (e) {
+                                    log(e.toString());
+                                  }
+                                },
+                              );
+                            });
+                    },
                     buttonStyle: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.all(2),
                         backgroundColor: MyColors.kPrimaryColor,
@@ -819,7 +970,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
       Function()? onTap) {
     return Container(
       key: scrollGlobalKey,
-      height: height,
+      // height: height,
       width: double.infinity,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -905,19 +1056,23 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             indicatorWeight: 4,
             dividerColor: MyColors.grey.withOpacity(0.25),
             dividerHeight: 2,
-            tabs: [
+            tabs: (issueList.isNotEmpty)?[
               Tab(text: "View ${(issueList.isEmpty)?'':issueList.length} Issues"),
-              Tab(text: "Other Parts"),
+              const Tab(text: "Other Parts"),
+            ]
+            :[
+              const Tab(text: "Other Parts"),
             ],
           ),
-          Flexible(
-            child: TabBarView(
-              controller: tabController,
-              children: [
-                viewIssue(issueList, showMore, onTap),
-                otherIssue(otherPartsList),
-              ],
-            ),
+          AutoScaleTabBarView(
+            controller: tabController,
+            children: (issueList.isNotEmpty)?[
+              viewIssue(issueList, showMore, onTap),
+              otherIssue(otherPartsList),
+            ]
+            :[
+              otherIssue(otherPartsList),
+            ],
           ),
         ],
       ),
@@ -925,7 +1080,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
   }
 
   Widget viewIssue(RxList<Master> list, RxBool showMore, Function()? onTap) {
-    return (list.length == 0)?
+    return (list.isEmpty)?
     const SizedBox()
     :ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
@@ -974,10 +1129,10 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 height: 12,
                               ),
                               GridView.builder(
-                                physics: NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: (list[index].listValue == null)?1:list[index].listValue!.length,
-                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
                                   crossAxisSpacing: 8,
                                   mainAxisSpacing: 8,
@@ -985,7 +1140,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                   itemBuilder: (context, i){
                                     return Container(
                                       alignment: Alignment.center,
-                                      margin: EdgeInsets.only(right: 6),
+                                      margin: const EdgeInsets.only(right: 6),
                                       decoration: BoxDecoration(
                                         color: list[index].color,
                                         borderRadius: BorderRadius.circular(4)
@@ -1135,7 +1290,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
     return Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: otherPartsList.length,
         itemBuilder: (context, index) {
@@ -1186,8 +1341,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
       body: SafeArea(
         child: Obx(
           () {
-            if(carDetailsScreenViewModel.reportResponse.value.data == null){
-              return Center(child: CircularProgressIndicator(color: MyColors.kPrimaryColor,));
+            if(carDetailsScreenViewModel.reportResponse.value.data == null || carDetailsScreenViewModel.carDetailsResponse.value.data == null){
+              return const Center(child: CircularProgressIndicator(color: MyColors.kPrimaryColor,));
             }
             return CustomScrollView(
                 controller: carDetailsScreenViewModel.scrollController,

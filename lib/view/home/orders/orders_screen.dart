@@ -87,7 +87,7 @@ class _OrdersScreenState extends State<OrdersScreen>
               child: TabBarView(
                 controller: tabController,
                 children:  [
-                  Center(child: Negotiation()),
+                  const Center(child: Negotiation()),
                   Center(child: Procured()),
                   Center(child: RcTransfer()),
                 ],

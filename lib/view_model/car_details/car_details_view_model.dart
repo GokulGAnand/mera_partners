@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:evaluator_app/model/response/car_details/car_details_response.dart';
 import 'package:evaluator_app/model/response/car_details/report_response.dart';
 import 'package:evaluator_app/service/endpoints.dart';
 import 'package:evaluator_app/service/exception_error_util.dart';
 import 'package:evaluator_app/utils/colors.dart';
 import 'package:evaluator_app/utils/strings.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
-import 'package:evaluator_app/widgets/progressbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
@@ -106,6 +106,7 @@ class CarDetailsScreenViewModel extends GetxController {
     //     'https://bucketkeracars.s3.ap-south-1.amazonaws.com/startVideo-1710486615054-a5a565fa-745c-45bf-abd0-703cf2957f51827885497507968836.mp4'))
     //   ..initialize().then((_) {});
     getReport();
+    getCarDetails();
     super.onInit();
   }
 
@@ -148,7 +149,9 @@ class CarDetailsScreenViewModel extends GetxController {
   // var features = <Master>[].obs;
   // var allImages = <Master>[].obs;
   var interiorAndElectrical = <Master>[].obs;
+
   var reportResponse = ReportResponse().obs;
+  var carDetailsResponse = CarDetailsResponse().obs;
   // List<DashBoardClass> dashboard = [];
   // List<String> imageUrls = [];
 
@@ -170,9 +173,9 @@ class CarDetailsScreenViewModel extends GetxController {
       if(redListData.contains(reportResponse.value.data!.allCarInfo!.carCondition.toString().toLowerCase())){
         criticalIssue.add(reportResponse.value.data!.allCarInfo!.carCondition.toString().toLowerCase());
       }
-      if(redListData.contains(reportResponse.value.data!.allCarInfo!.specialComments.toString().toLowerCase())){
-        criticalIssue.add(reportResponse.value.data!.allCarInfo!.specialComments.toString().toLowerCase());
-      }
+      // if(redListData.contains(reportResponse.value.data!.allCarInfo!.specialComments.toString().toLowerCase())){
+      //   criticalIssue.add(reportResponse.value.data!.allCarInfo!.specialComments.toString().toLowerCase());
+      // }
     for(int i=0; i<exterior.length; i++){
       if(goodListData.contains(exterior[i].value.toString().toLowerCase())){
         exteriorOtherParts.add(exterior[i]);
@@ -343,17 +346,17 @@ class CarDetailsScreenViewModel extends GetxController {
         }
       }
     }
-    log("exterior other parts: ${exteriorOtherParts}");
-    log("interior other parts: ${interiorAndElectricalOtherParts}");
-    log("engine other parts: ${engineOtherParts}");
-    log("air other parts: ${airConditionOtherParts}");
-    log("test other parts: ${testDriveOtherParts}");
+    log("exterior other parts: $exteriorOtherParts");
+    log("interior other parts: $interiorAndElectricalOtherParts");
+    log("engine other parts: $engineOtherParts");
+    log("air other parts: $airConditionOtherParts");
+    log("test other parts: $testDriveOtherParts");
 
-    log("exterior issue: ${exteriorIssue}");
-    log("interior issue: ${interiorAndElectricalIssue}");
-    log("engine issue: ${engineIssue}");
-    log("air issue: ${airConditionIssue}");
-    log("test issue: ${testDriveIssue}");
+    log("exterior issue: $exteriorIssue");
+    log("interior issue: $interiorAndElectricalIssue");
+    log("engine issue: $engineIssue");
+    log("air issue: $airConditionIssue");
+    log("test issue: $testDriveIssue");
   }
 
 
@@ -385,7 +388,7 @@ class CarDetailsScreenViewModel extends GetxController {
       if(reportResponse.value.data!.allCarInfo!.dashboardImage != null) Master(title: MyStrings.dashboardImage, value: reportResponse.value.data!.allCarInfo!.dashboardImage!.url ?? ''),
       if(reportResponse.value.data!.allCarInfo!.frontSeatImage != null) Master(title: MyStrings.frontSeatImage, value: reportResponse.value.data!.allCarInfo!.frontSeatImage!.url ?? ''),
       if(reportResponse.value.data!.allCarInfo!.rearSeatImage != null) Master(title: MyStrings.rearSeatImage, value: reportResponse.value.data!.allCarInfo!.rearSeatImage!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.rearViewMirror != null) Master(title: MyStrings.insideRearViewMirror, value: reportResponse.value.data!.allCarInfo!.rearViewMirror!.url ?? ''),
+      // if(reportResponse.value.data!.allCarInfo!.rearViewMirror != null) Master(title: MyStrings.insideRearViewMirror, value: reportResponse.value.data!.allCarInfo!.rearViewMirror!.url ?? ''),
       if(reportResponse.value.data!.allCarInfo!.interiorView != null) Master(title: MyStrings.interiorViewFromBootDashboard, value: reportResponse.value.data!.allCarInfo!.interiorView!.url ?? ''),
       if(reportResponse.value.data!.allCarInfo!.powerWindowDriverImage != null) Master(title: MyStrings.powerWindowDriverImage, value: reportResponse.value.data!.allCarInfo!.powerWindowDriverImage!.url ?? ''),
       if(reportResponse.value.data!.allCarInfo!.pushWindowDriverImage != null) Master(title: MyStrings.pushWindowDriverImage, value: reportResponse.value.data!.allCarInfo!.pushWindowDriverImage!.url ?? ''),
@@ -393,24 +396,23 @@ class CarDetailsScreenViewModel extends GetxController {
     engineImages.value = [
       if(reportResponse.value.data!.allCarInfo!.engineCompartment != null) Master(title: MyStrings.engineCompartmentImage, value: reportResponse.value.data!.allCarInfo!.engineCompartment!.url ?? '')
     ];
-    
     Map<String, dynamic> mainObject = reportResponse.value.data!.allCarInfo!.toJson();
     mainObject.forEach((key, value) {
       if (value is Map<String, dynamic> && value.containsKey('url') && value['url'] != null && value.containsValue('damaged')) {
         damageImages.add(value['url']);
       }
     });
-    if(exteriorImages.isNotEmpty) imageList.add({"title":MyStrings.exterior, "imageList": exteriorImages});
-    if(interiorImages.isNotEmpty) imageList.add({"title":MyStrings.interior, "imageList": interiorImages});
-    if(engineImages.isNotEmpty) imageList.add({"title":MyStrings.engine, "imageList": engineImages});
-    if(damageImages.isNotEmpty) imageList.add({"title":MyStrings.damage, "imageList": damageImages});
+    if(exteriorImages.isNotEmpty) imageList.add({"title":MyStrings.exterior, "isClick": false.obs, "images": exteriorImages});
+    if(interiorImages.isNotEmpty) imageList.add({"title":MyStrings.interior, "isClick": false.obs, "images": interiorImages});
+    if(engineImages.isNotEmpty) imageList.add({"title":MyStrings.engine, "isClick": false.obs, "images": engineImages});
+    if(damageImages.isNotEmpty) imageList.add({"title":MyStrings.damage, "isClick": false.obs, "images": damageImages});
   }
 
   void getReport() async {
     // ProgressBar.instance.showProgressbar(Get.context!);
     try {
-      log(Uri.parse(EndPoints.baseUrl + EndPoints.evaluation + '/' + EndPoints.report + '$id').toString());
-      var response = await http.get(Uri.parse(EndPoints.baseUrl + EndPoints.evaluation + '/' + EndPoints.report + '$id'), 
+      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.evaluation}/${EndPoints.report}$id').toString());
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.evaluation}/${EndPoints.report}$id'), 
       headers: globals.headers
       );
       if (response.statusCode == 200) {
@@ -618,6 +620,57 @@ class CarDetailsScreenViewModel extends GetxController {
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
   }  
+
+  void getCarDetails() async {
+    try {
+      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}/$id').toString());
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}/$id'), headers: globals.headers);
+      log("get car details"+response.statusCode.toString() + response.body);
+      if (response.statusCode == 200) {
+        // ProgressBar.instance.stopProgressBar(Get.context!);
+        // log("get car details"+response.body);
+        carDetailsResponse.value = CarDetailsResponse.fromJson(jsonDecode(response.body));
+        // final isLastPage = liveCarsResponse.value.data!.length < limit;
+        // if (isLastPage) {
+        //   infinitePagingController.appendLastPage(liveCarsResponse.value.data!);
+        // } else {
+        //   final nextPageKey = pageKey + 1;
+        //   infinitePagingController.appendPage(liveCarsResponse.value.data!, nextPageKey);
+        // }
+      } else {
+        // ProgressBar.instance.stopProgressBar(Get.context!);
+        log(response.reasonPhrase.toString());
+      }
+    } catch (e) {
+      // ProgressBar.instance.stopProgressBar(Get.context!);
+      log(e.toString());
+      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
+    }
+  }
+
+  RxBool isLike = false.obs;
+  /// Like Feature API integration
+  Future<void> updateLikedCar() async {
+    try {
+      // ProgressBar.instance.showProgressbar(Get.context!);
+      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/${id}').toString());
+      log(jsonEncode({"status":"LikedCar"}));
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/${id}'),headers: globals.headers, body: jsonEncode({"status":"LikedCar"}));
+      log(response.body.toString());
+      if (response.statusCode == 200) {
+        // ProgressBar.instance.stopProgressBar(Get.context!);
+        CustomToast.instance.showMsg(MyStrings.success);
+      } else {
+        // ProgressBar.instance.stopProgressBar(Get.context!);
+        CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);
+      }
+    } catch (e) {
+      // ProgressBar.instance.stopProgressBar(Get.context!);
+      log(e.toString());
+      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? MyStrings.unableToConnect);
+    }
+  }
+
 }
 
 class Item {

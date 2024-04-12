@@ -369,6 +369,7 @@ class MyStrings {
   static const String live = "LIVE";
   static const String otb = "OTB";
   static const String rating = "Rating";
+  static const String scheduled = "SCHEDULED";
   static const String scheduledBid = "Scheduled bid";
 
   ///my cars

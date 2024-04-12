@@ -5,7 +5,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:evaluator_app/routes/app_routes.dart';
 import 'package:evaluator_app/widgets/custom_slider.dart';
 import 'package:evaluator_app/widgets/custom_toast.dart';
-import 'package:evaluator_app/widgets/progressbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
