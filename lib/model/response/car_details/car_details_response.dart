@@ -50,18 +50,18 @@ class Data {
     final int? highestBid;
     final int? totalBidder;
     final String? status;
+    final String? winner;
     final DateTime? createdAt;
     final DateTime? updatedAt;
     final Front? front;
     final Front? frontLeft;
     final Front? frontRight;
-    final Front? frontWithHoodOpen;
     final Front? rear;
-    final Front? rearBootOpen;
-    final Front? rearLeft;
     final Front? rearRight;
-    final List<LeaderBoard>? leaderBoard;
-    final String? winner;
+    final DateTime? bidEndTime;
+    final DateTime? bidStartTime;
+    final int? realValue;
+    final List<dynamic>? leaderBoard;
 
     Data({
         this.id,
@@ -77,18 +77,18 @@ class Data {
         this.highestBid,
         this.totalBidder,
         this.status,
+        this.winner,
         this.createdAt,
         this.updatedAt,
         this.front,
         this.frontLeft,
         this.frontRight,
-        this.frontWithHoodOpen,
         this.rear,
-        this.rearBootOpen,
-        this.rearLeft,
         this.rearRight,
+        this.bidEndTime,
+        this.bidStartTime,
+        this.realValue,
         this.leaderBoard,
-        this.winner,
     });
 
     factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -105,18 +105,18 @@ class Data {
         highestBid: json["highestBid"],
         totalBidder: json["totalBidder"],
         status: json["status"],
+        winner: json["winner"],
         createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
         updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
         front: json["front"] == null ? null : Front.fromJson(json["front"]),
         frontLeft: json["frontLeft"] == null ? null : Front.fromJson(json["frontLeft"]),
         frontRight: json["frontRight"] == null ? null : Front.fromJson(json["frontRight"]),
-        frontWithHoodOpen: json["frontWithHoodOpen"] == null ? null : Front.fromJson(json["frontWithHoodOpen"]),
         rear: json["rear"] == null ? null : Front.fromJson(json["rear"]),
-        rearBootOpen: json["rearBootOpen"] == null ? null : Front.fromJson(json["rearBootOpen"]),
-        rearLeft: json["rearLeft"] == null ? null : Front.fromJson(json["rearLeft"]),
         rearRight: json["rearRight"] == null ? null : Front.fromJson(json["rearRight"]),
-        leaderBoard: json["leaderBoard"] == null ? [] : List<LeaderBoard>.from(json["leaderBoard"]!.map((x) => LeaderBoard.fromJson(x))),
-        winner: json["winner"],
+        bidEndTime: json["bidEndTime"] == null ? null : DateTime.parse(json["bidEndTime"]),
+        bidStartTime: json["bidStartTime"] == null ? null : DateTime.parse(json["bidStartTime"]),
+        realValue: json["realValue"],
+        leaderBoard: json["leaderBoard"] == null ? [] : List<dynamic>.from(json["leaderBoard"]!.map((x) => x)),
     );
 
     Map<String, dynamic> toJson() => {
@@ -133,18 +133,18 @@ class Data {
         "highestBid": highestBid,
         "totalBidder": totalBidder,
         "status": status,
+        "winner": winner,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "front": front?.toJson(),
         "frontLeft": frontLeft?.toJson(),
         "frontRight": frontRight?.toJson(),
-        "frontWithHoodOpen": frontWithHoodOpen?.toJson(),
         "rear": rear?.toJson(),
-        "rearBootOpen": rearBootOpen?.toJson(),
-        "rearLeft": rearLeft?.toJson(),
         "rearRight": rearRight?.toJson(),
-        "leaderBoard": leaderBoard == null ? [] : List<dynamic>.from(leaderBoard!.map((x) => x.toJson())),
-        "winner": winner,
+        "bidEndTime": bidEndTime?.toIso8601String(),
+        "bidStartTime": bidStartTime?.toIso8601String(),
+        "realValue": realValue,
+        "leaderBoard": leaderBoard == null ? [] : List<dynamic>.from(leaderBoard!.map((x) => x)),
     };
 }
 
@@ -173,38 +173,6 @@ class Front {
         "url": url,
         "condition": condition,
         "remarks": remarks,
-    };
-}
-
-class LeaderBoard {
-    final int? amount;
-    final String? userId;
-    final bool? isAutobid;
-    final int? autoBidLimit;
-    final String? id;
-
-    LeaderBoard({
-        this.amount,
-        this.userId,
-        this.isAutobid,
-        this.autoBidLimit,
-        this.id,
-    });
-
-    factory LeaderBoard.fromJson(Map<String, dynamic> json) => LeaderBoard(
-        amount: json["amount"],
-        userId: json["userId"],
-        isAutobid: json["isAutobid"],
-        autoBidLimit: json["autoBidLimit"],
-        id: json["_id"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "amount": amount,
-        "userId": userId,
-        "isAutobid": isAutobid,
-        "autoBidLimit": autoBidLimit,
-        "_id": id,
     };
 }
 

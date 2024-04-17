@@ -720,9 +720,16 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
               const SizedBox(
                 width: 5,
               ),
-              const Text(
-                "24min 06sec",
-                style: MyStyles.green2_14700,
+              Obx(
+                () {
+                  if(carDetailsScreenViewModel.duration.value != null){
+                    return Text(
+                      carDetailsScreenViewModel.formatDuration(carDetailsScreenViewModel.duration.value!),
+                      style: MyStyles.green2_14700,
+                    );
+                  }
+                  return const SizedBox();
+                }
               ),
             ],
           ),

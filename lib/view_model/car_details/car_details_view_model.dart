@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:intl/intl.dart';
 import 'package:mera_partners/model/response/car_details/car_details_response.dart';
 import 'package:mera_partners/model/response/car_details/report_response.dart';
 import 'package:mera_partners/service/endpoints.dart';
@@ -24,6 +26,32 @@ class CarDetailsScreenViewModel extends GetxController {
   //bid won
   //bid closed
   //car sold 
+
+  Rxn<Duration> duration = new Rxn();
+
+  void startTimer() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (duration.value!.inSeconds == 0) {
+        timer.cancel();
+      } else {
+          duration.value = duration.value! - const Duration(seconds: 1);
+      }
+    });
+  }
+
+  String formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    String hour = duration.inHours.toString();
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    if(duration.inHours == 0){
+      return "${twoDigitMinutes}min ${twoDigitSeconds}sec";
+    } else if (duration.inHours < 10){
+      hour = twoDigits(duration.inHours);
+      return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
+    }
+    return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
+  }
 
   Rx<PageController> pageSliderController = PageController(initialPage: 0, viewportFraction: 1).obs;
   var activePage = 0.obs;
@@ -636,6 +664,16 @@ class CarDetailsScreenViewModel extends GetxController {
         //   final nextPageKey = pageKey + 1;
         //   infinitePagingController.appendPage(liveCarsResponse.value.data!, nextPageKey);
         // }
+
+        var start = DateTime.now();
+        var end = carDetailsResponse.value.data![0].bidEndTime!;
+        if(start.isBefore(end)) {
+          Duration diff = end.difference(start);
+          duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+          startTimer();
+        }
+        
+        
       } else {
         // ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());
