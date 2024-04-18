@@ -80,12 +80,22 @@ class LoginScreenViewModel extends GetxController {
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(context);
         log(response.body.toString());
-        SharedPrefManager.instance.setStringAsync(Constants.phoneNum, mobileController.value.text);
         userInfoResponse.value = UserInfoResponse.fromJson(jsonDecode(response.body));
         if (userInfoResponse.value.data != null) {
           if (userInfoResponse.value.data?.first.fullname != null) {
             globals.userName = userInfoResponse.value.data?.first.fullname;
+            SharedPrefManager.instance.setStringAsync(Constants.userName, userInfoResponse.value.data!.first.fullname.toString());
           }
+          
+          SharedPrefManager.instance.setStringAsync(Constants.phoneNum, mobileController.value.text);
+          SharedPrefManager.instance.setStringAsync(Constants.contactNo, userInfoResponse.value.data!.first.contactNo.toString());
+          SharedPrefManager.instance.setStringAsync(Constants.token, userInfoResponse.value.meta!.access.toString());
+          SharedPrefManager.instance.setStringAsync(Constants.userId, userInfoResponse.value.data!.first.userId.toString());
+          SharedPrefManager.instance.setStringAsync(Constants.uniqueUserId, userInfoResponse.value.data!.first.sId.toString());
+          SharedPrefManager.instance.setStringAsync(Constants.documentStatus, userInfoResponse.value.data!.first.isDocumentsVerified.toString());
+          SharedPrefManager.instance.setBoolAsync(Constants.isDeposited, userInfoResponse.value.data!.first.isDeposited ?? false);
+          SharedPrefManager.instance.setBoolAsync(Constants.addressProofFront, userInfoResponse.value.data?.first.addressProofFront != null ? true : false);
+
           globals.contactNo = userInfoResponse.value.data?.first.contactNo;
           globals.phoneNum = userInfoResponse.value.data?.first.contactNo.toString();
           globals.token = userInfoResponse.value.meta?.access;
@@ -94,6 +104,7 @@ class LoginScreenViewModel extends GetxController {
           globals.documentStatus = userInfoResponse.value.data?.first.isDocumentsVerified;
           globals.isDeposited = userInfoResponse.value.data?.first.isDeposited;
           globals.addressProofFront = userInfoResponse.value.data?.first.addressProofFront != null ? true : false;
+          
           if (userInfoResponse.value.data?.first.isDocumentsVerified != null && userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.SUBMITTED.name && userInfoResponse.value.data?.first.isDeposited != null && userInfoResponse.value.data?.first.isDeposited == true) {
             Get.toNamed(AppRoutes.homeScreen);
           }  else if (userInfoResponse.value.data?.first.isDocumentsVerified?.toLowerCase() == DocumentStatus.NOTSUBMITTED.name.toLowerCase() || userInfoResponse.value.data?.first.addressProofFront == null) {
