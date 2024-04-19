@@ -25,6 +25,7 @@ import 'package:mera_partners/view/onboarding/bindings/onboarding_screen_binding
 import 'package:mera_partners/view/onboarding/onboarding_screen_ui.dart';
 import 'package:mera_partners/view/procured_bill/procured_bill_screen.dart';
 import 'package:get/get.dart';
+import '../view/home/notification/binding/notification_screen_binding.dart';
 import '../view/procured_bill/bindings/procured_bill_screen_bindings.dart';
 
 class AppRoutes {
@@ -116,7 +117,9 @@ class AppRoutes {
         bindings: [
           ProcuredBillScreenBinding(),
         ]),
-    GetPage(name: notificationScreen, page: () =>  const NotificationScreen(),
-        bindings: const []),
+    GetPage(name: notificationScreen, page: () =>  NotificationScreen(),
+        bindings: [
+          NotificationScreenBinding(),
+        ]),
   ];
 }

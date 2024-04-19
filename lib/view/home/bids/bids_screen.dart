@@ -21,16 +21,8 @@ class BidsScreen extends StatefulWidget {
 
 class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateMixin{
   late TabController tabController;
-  var count = '';
-  var otbCount = '';
   @override
   void initState() {
-    if(Get.isRegistered<LiveCarsListViewModel>()){
-      count = Get.find<LiveCarsListViewModel>().liveCarsResponse.value.count.toString();
-    }
-    if(Get.isRegistered<OTBCarsListViewModel>()){
-      count = Get.find<OTBCarsListViewModel>().carsListResponse.value.count.toString();
-    }
     tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
@@ -78,22 +70,22 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                 )
               ],
             ),
-            TabBar(
-                    controller: tabController,
-                    labelStyle: MyStyles.selectedTabBarTitleStyle,
-                    labelColor: MyColors.black,
-                    unselectedLabelStyle: MyStyles.selectedTabBarTitleStyle,
-                    unselectedLabelColor: MyColors.grey.withOpacity(0.5),
-                    indicatorColor: MyColors.kPrimaryColor,
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    indicatorWeight: 4,
-                    dividerColor: MyColors.grey.withOpacity(0.25),
-                    dividerHeight: 2,
-                    tabs: [
-                      Tab(text: '${MyStrings.live}($count)'),
-                      Tab(text: '${MyStrings.otb}($count)'),
-                    ],
-                  ),
+            Obx(() => TabBar(
+              controller: tabController,
+              labelStyle: MyStyles.selectedTabBarTitleStyle,
+              labelColor: MyColors.black,
+              unselectedLabelStyle: MyStyles.selectedTabBarTitleStyle,
+              unselectedLabelColor: MyColors.grey.withOpacity(0.5),
+              indicatorColor: MyColors.kPrimaryColor,
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicatorWeight: 4,
+              dividerColor: MyColors.grey.withOpacity(0.25),
+              dividerHeight: 2,
+              tabs: [
+                Tab(text: '${MyStrings.live}(${Get.find<LiveCarsListViewModel>().liveCarsResponse.value.count ?? '0'})',),
+                Tab(text: '${MyStrings.otb}(${Get.find<OTBCarsListViewModel>().carsListResponse.value.count ?? '0'})',),
+              ],
+            ),),
                   Expanded(
                     child: TabBarView(
                       controller: tabController,

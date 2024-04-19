@@ -16,4 +16,5 @@ class EndPoints {
   static String bid = 'bid';
   static String report = 'report/';
   static String evaluation = 'evaluation';
+  static String notification = 'notification/';
 }

@@ -53,6 +53,7 @@ class CustomCarDetailCard extends StatefulWidget {
   final DateTime? bidEndTime;
   Duration duration = Duration.zero;
   Timer? timer;
+  String? scheduleTime;
 
   showPendingDialog() {
     showDialog(
@@ -143,11 +144,29 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
     });
   }
 
+  String _formatTime(DateTime dateTime) {
+    String period = dateTime.hour < 12 ? "AM" : "PM";
+    int hour = dateTime.hour;
+    if (hour == 0) hour = 12;
+    return "$hour:${dateTime.minute.toString().padLeft(2, '0')} $period";
+  }
+
+  String _formatDateTime(DateTime dateTime) {
+    return "${dateTime.day}/${dateTime.month}/${dateTime.year} ${_formatTime(dateTime)}";
+  }
+
   @override
   void initState() {
     widget.duration = const Duration(minutes: 20);
     super.initState();
     startTimer();
+    if (widget.bidStartTime!.day == DateTime.now().day) {
+      widget.scheduleTime = "Scheduled for today ${_formatTime(widget.bidStartTime!)}:${widget.bidStartTime?.second}";
+    } else if (widget.bidStartTime?.day == DateTime.now().day + 1) {
+      widget.scheduleTime = "Scheduled for tomorrow ${widget.bidStartTime?.hour}:${widget.bidStartTime?.minute}";
+    } else {
+      widget.scheduleTime = "Scheduled for ${_formatDateTime(widget.bidStartTime!)}";
+    }
   }
 
   @override
@@ -204,16 +223,25 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
           // shape: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
           child: SizedBox(
             width: double.maxFinite,
-            height: MediaQuery.of(context).size.height * 0.6,
+            height: 480,
             child: Column(
               children: [
                 Stack(
                   children: [
-                    CustomSlider(
-                      sliderImage: widget.images,
-                      pageSliderController: widget.pageController,
-                      activePage: widget.activePage,
-                      showBlackOpacity: true,
+                    GestureDetector(
+                      onHorizontalDragStart: (details) {
+                        widget.activePage++;
+                        widget.pageController.value.animateTo(
+                          widget.activePage.toDouble(),
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.linear,);
+                      },
+                      child: CustomSlider(
+                        sliderImage: widget.images,
+                        pageSliderController: widget.pageController,
+                        activePage: widget.activePage,
+                        showBlackOpacity: true,
+                      ),
                     ),
                     Positioned(
                       bottom: 8,
@@ -571,7 +599,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                             disabledBackgroundColor: MyColors.lightBlue,
                           ),
                           onPressed: null,
-                          buttonText: 'Scheduled for tomorrow, 6:00 PM'),
+                          buttonText: widget.scheduleTime ?? 'Scheduled'),
                     ),
                   ),
               ],

@@ -39,7 +39,7 @@ class CustomSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Obx(() => SizedBox(
       height: height,
       child: Stack(
         children: [
@@ -59,17 +59,17 @@ class CustomSlider extends StatelessWidget {
                     },
                     child: Image.network(sliderImage[index], fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
-                      return SvgPicture.asset(MyImages.loadingCar);
-                    }, frameBuilder:
+                          return SvgPicture.asset(MyImages.loadingCar);
+                        }, frameBuilder:
                             (context, child, frame, wasSynchronouslyLoaded) {
-                      return child;
-                    }, loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      } else {
-                        return SvgPicture.asset(MyImages.loadingCar);
-                      }
-                    }));
+                          return child;
+                        }, loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          } else {
+                            return SvgPicture.asset(MyImages.loadingCar);
+                          }
+                        }));
               },
               itemCount: sliderImage.length,
             ),
@@ -99,14 +99,14 @@ class CustomSlider extends StatelessWidget {
             bottom: 12,
             left: MediaQuery.of(context).size.width * 0.39,
             child: Obx(
-              () => SizedBox(
+                  () => SizedBox(
                 width: 41,
                 height: 4.56,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(
                     5,
-                    (index) => GestureDetector(
+                        (index) => GestureDetector(
                       child: Container(
                         margin: const EdgeInsets.only(left: 2.0),
                         child: Icon(
@@ -125,6 +125,6 @@ class CustomSlider extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ));
   }
 }
