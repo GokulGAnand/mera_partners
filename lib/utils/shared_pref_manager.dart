@@ -14,6 +14,16 @@ class SharedPrefManager {
     return prefs.setString(type, value);
   }
 
+  Future<bool?> getBoolAsync(String type) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(type);
+  }
+
+  Future<bool> setBoolAsync(String type, bool value) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setBool(type, value);
+  }
+
   Future<bool> removeStringAsync(String type) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.remove(type);
