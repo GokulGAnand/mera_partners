@@ -203,7 +203,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         trailing: InkWell(
                           onTap: () async{
                             carDetailsScreenViewModel.isLike.value = !carDetailsScreenViewModel.isLike.value;
-                            await carDetailsScreenViewModel.updateLikedCar();
+                            await carDetailsScreenViewModel.updateLikedCar(carDetailsScreenViewModel.isLike.value ? false : true);
+
                           },
                           child: SvgPicture.asset(
                             (carDetailsScreenViewModel.isLike.value == false)?MySvg.like:MySvg.liked,
