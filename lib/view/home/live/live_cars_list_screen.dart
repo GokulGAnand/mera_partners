@@ -27,7 +27,9 @@ class LiveCarsListScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   itemBuilder: (context, index) {
                     return Obx(
-                            () =>CustomCarDetailCard(
+                            () {
+                              if((controller.searchController.text.isEmpty && controller.searchList.isEmpty) || controller.searchList.contains(controller.liveCarsResponse.value.data?[index].sId)){
+                                return CustomCarDetailCard(
                       onCarTapped: () {
                         Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.liveCarsResponse.value.data?[index].sId);
                       },
@@ -126,7 +128,13 @@ class LiveCarsListScreen extends StatelessWidget {
                               );
                             });
                       },
-                    ));
+                    );
+                              } else {
+                                return const SizedBox();
+                              }
+                      
+                            }
+                    );
                   },
                 )
               : const Center(

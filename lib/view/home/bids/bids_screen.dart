@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:flutter/widgets.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/strings.dart';
@@ -20,6 +23,16 @@ class BidsScreen extends StatefulWidget {
 }
 
 class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateMixin{
+
+  LiveCarsListViewModel liveCarListViewModel = 
+      Get.isRegistered<LiveCarsListViewModel>() 
+          ? Get.find<LiveCarsListViewModel>() : 
+          Get.put(LiveCarsListViewModel());
+  
+  OTBCarsListViewModel otbCarsListViewModel = Get.isRegistered<OTBCarsListViewModel>() 
+          ? Get.find<OTBCarsListViewModel>() : 
+          Get.put(OTBCarsListViewModel());
+
   late TabController tabController;
   var count = '';
   var otbCount = '';
@@ -49,7 +62,29 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                   child: SizedBox(
                     height: 50,
                     child: CustomTextFormField(
-                      controller: TextEditingController(), 
+                      controller: (tabController.index ==0)? liveCarListViewModel.searchController 
+                                  :otbCarsListViewModel.searchController, 
+                      onChange: (value){
+                        if(tabController.index == 0){
+                          liveCarListViewModel.searchList.clear();
+                          for(int i=0; i<liveCarListViewModel.liveCarsResponse.value.data!.length; i++){
+                            if(liveCarListViewModel.liveCarsResponse.value.data![i].model!.contains(liveCarListViewModel.searchController.text) || 
+                              liveCarListViewModel.liveCarsResponse.value.data![i].model!.toLowerCase().contains(liveCarListViewModel.searchController.text)){
+                              liveCarListViewModel.searchList.add(liveCarListViewModel.liveCarsResponse.value.data![i].sId.toString());
+                              log(liveCarListViewModel.searchList.toString());
+                            }
+                          }
+                        } else {
+                          otbCarsListViewModel.searchList.clear();
+                          for(int i=0; i<otbCarsListViewModel.carsListResponse.value.data!.length; i++){
+                            if(otbCarsListViewModel.carsListResponse.value.data![i].model!.contains(otbCarsListViewModel.searchController.text) || 
+                              otbCarsListViewModel.carsListResponse.value.data![i].model!.toLowerCase().contains(otbCarsListViewModel.searchController.text)){
+                              otbCarsListViewModel.searchList.add(otbCarsListViewModel.carsListResponse.value.data![i].sId.toString());
+                              log(otbCarsListViewModel.searchList.toString());
+                            }
+                          }
+                        }
+                      },
                       prefixIcon: const Icon(Icons.search),
                       borderColor: MyColors.kPrimaryColor.withOpacity(0.1),
                       focusedBorderColor: MyColors.kPrimaryColor,

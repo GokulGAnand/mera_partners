@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mera_partners/utils/globals.dart' as globals;
@@ -11,6 +12,10 @@ import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
 
 class OTBCarsListViewModel extends GetxController {
+
+  TextEditingController searchController = TextEditingController();
+  RxList<String> searchList = <String>[].obs;
+
   var carsListResponse = CarListResponse().obs;
 
 

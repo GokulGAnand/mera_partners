@@ -14,6 +14,9 @@ import '../../../../widgets/progressbar.dart';
 
 class BidCarsListViewModel extends GetxController{
 
+  TextEditingController searchController = TextEditingController();
+  RxList<String> searchList = <String>[].obs;
+
   Rx<TextEditingController> autoBidController = TextEditingController().obs;
   Rx<TextEditingController> bidController = TextEditingController().obs;
   var bidCarsResponse = CarListResponse().obs;

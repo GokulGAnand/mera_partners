@@ -1,6 +1,7 @@
 
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../model/response/live/live_cars_list_response.dart';
 import '../../service/endpoints.dart';
@@ -13,6 +14,10 @@ import 'package:http/http.dart'as http;
 
 
 class ProcuredScreenViewModel extends GetxController{
+
+  TextEditingController searchController = TextEditingController();
+  RxList<Data> searchList = <Data>[].obs;
+  
   var liveCarsResponse = CarListResponse().obs;
   @override
   void onInit() {
@@ -27,6 +32,7 @@ class ProcuredScreenViewModel extends GetxController{
         log("Response sv : ${response.body}" );
         ProgressBar.instance.stopProgressBar(Get.context!);
         liveCarsResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
+        searchList.value =  CarListResponse.fromJson(jsonDecode(response.body)).data!;
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());

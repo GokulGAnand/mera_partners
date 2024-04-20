@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/strings.dart';
@@ -5,6 +8,7 @@ import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/utils/svg.dart';
 import 'package:mera_partners/view/home/my_cars/tabs/bidded_cars/bidded_cars_screen_ui.dart';
 import 'package:mera_partners/view/home/my_cars/tabs/liked_cars.dart';
+import 'package:mera_partners/view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 import 'package:mera_partners/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -19,6 +23,12 @@ class MyCarsScreen extends StatefulWidget {
 
 class _MyCarsScreenState extends State<MyCarsScreen>
     with SingleTickerProviderStateMixin {
+
+  BidCarsListViewModel bidCarsListViewModel = 
+  Get.isRegistered<BidCarsListViewModel>() 
+        ? Get.find<BidCarsListViewModel>() : 
+        Get.put(BidCarsListViewModel());
+
   late TabController tabController;
   @override
   void initState() {
@@ -40,7 +50,21 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                     child: SizedBox(
                   height: 50,
                   child: CustomTextFormField(
-                      controller: TextEditingController(),
+                      controller: (tabController.index == 0)?bidCarsListViewModel.searchController : TextEditingController(),
+                      onChange: (value){
+                        if(tabController.index == 0){
+                          bidCarsListViewModel.searchList.clear();
+                          for(int i=0; i<bidCarsListViewModel.bidCarsResponse.value.data!.length; i++){
+                            if(bidCarsListViewModel.bidCarsResponse.value.data![i].model!.contains(bidCarsListViewModel.searchController.text) || 
+                              bidCarsListViewModel.bidCarsResponse.value.data![i].model!.toLowerCase().contains(bidCarsListViewModel.searchController.text)){
+                              bidCarsListViewModel.searchList.add(bidCarsListViewModel.bidCarsResponse.value.data![i].sId.toString());
+                              log(bidCarsListViewModel.searchList.toString());
+                            }
+                          }
+                        } else {
+
+                        }
+                      },
                       prefixIcon: const Icon(Icons.search),
                       borderColor: MyColors.kPrimaryColor.withOpacity(0.1),
                       focusedBorderColor: MyColors.kPrimaryColor,

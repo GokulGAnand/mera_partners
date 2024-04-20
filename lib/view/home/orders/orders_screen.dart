@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/strings.dart';
@@ -6,6 +8,7 @@ import 'package:mera_partners/utils/svg.dart';
 import 'package:mera_partners/view/home/orders/tabs/negotiation.dart';
 import 'package:mera_partners/view/home/orders/tabs/procured.dart';
 import 'package:mera_partners/view/home/orders/tabs/rc_transfer.dart';
+import 'package:mera_partners/view_model/orders/procured_view_model.dart';
 import 'package:mera_partners/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -21,6 +24,11 @@ class OrdersScreen extends StatefulWidget {
 
 class _OrdersScreenState extends State<OrdersScreen>
     with SingleTickerProviderStateMixin {
+
+  ProcuredScreenViewModel procuredScreenViewModel = Get.isRegistered<ProcuredScreenViewModel>()
+      ? Get.find<ProcuredScreenViewModel>()
+      : Get.put(ProcuredScreenViewModel());
+      
   late TabController tabController;
   @override
   void initState() {
@@ -42,7 +50,27 @@ class _OrdersScreenState extends State<OrdersScreen>
                     child: SizedBox(
                   height: 50,
                   child: CustomTextFormField(
-                      controller: TextEditingController(),
+                      controller: (tabController.index == 0)?TextEditingController()
+                      :(tabController.index == 1)?procuredScreenViewModel.searchController
+                      :TextEditingController(),
+                      onChange: (value){
+                        if(tabController.index == 0){
+
+                        }else if(tabController.index == 1){
+                          log(procuredScreenViewModel.searchController.text);
+                          log(procuredScreenViewModel.liveCarsResponse.value.data!.length.toString());
+                          procuredScreenViewModel.searchList.clear();
+                          for(int i=0; i<procuredScreenViewModel.liveCarsResponse.value.data!.length; i++){
+                            if(procuredScreenViewModel.liveCarsResponse.value.data![i].model!.contains(procuredScreenViewModel.searchController.text) || 
+                              procuredScreenViewModel.liveCarsResponse.value.data![i].model!.toLowerCase().contains(procuredScreenViewModel.searchController.text)){
+                              procuredScreenViewModel.searchList.add(procuredScreenViewModel.liveCarsResponse.value.data![i]);
+                              log(procuredScreenViewModel.searchList.toString());
+                            }
+                          }
+                        } else {
+
+                        }
+                      },
                       prefixIcon: const Icon(Icons.search),
                       borderColor: MyColors.kPrimaryColor.withOpacity(0.1),
                       focusedBorderColor: MyColors.kPrimaryColor,
@@ -85,6 +113,9 @@ class _OrdersScreenState extends State<OrdersScreen>
               indicatorWeight: 4,
               dividerColor: MyColors.grey.withOpacity(0.25),
               dividerHeight: 2,
+              onTap: (val){
+                setState(() {});
+              },
               tabs: const [
                 Tab(text: MyStrings.negotiation),
                 Tab(text: MyStrings.procured),
