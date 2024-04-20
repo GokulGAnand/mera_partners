@@ -13,6 +13,7 @@ import 'package:mera_partners/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../routes/app_routes.dart';
+import '../../../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 
 class MyCarsScreen extends StatefulWidget {
   const MyCarsScreen({super.key});
@@ -30,6 +31,7 @@ class _MyCarsScreenState extends State<MyCarsScreen>
         Get.put(BidCarsListViewModel());
 
   late TabController tabController;
+  BidCarsListViewModel controller =  Get.isRegistered<BidCarsListViewModel>()?Get.find<BidCarsListViewModel>():Get.put(BidCarsListViewModel());
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
@@ -56,7 +58,10 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                           bidCarsListViewModel.searchList.clear();
                           for(int i=0; i<bidCarsListViewModel.bidCarsResponse.value.data!.length; i++){
                             if(bidCarsListViewModel.bidCarsResponse.value.data![i].model!.contains(bidCarsListViewModel.searchController.text) || 
-                              bidCarsListViewModel.bidCarsResponse.value.data![i].model!.toLowerCase().contains(bidCarsListViewModel.searchController.text)){
+                              bidCarsListViewModel.bidCarsResponse.value.data![i].model!.toLowerCase().contains(bidCarsListViewModel.searchController.text) ||
+                              bidCarsListViewModel.bidCarsResponse.value.data![i].make!.contains(bidCarsListViewModel.searchController.text) ||
+                              bidCarsListViewModel.bidCarsResponse.value.data![i].make!.toLowerCase().contains(bidCarsListViewModel.searchController.text) ||
+                              bidCarsListViewModel.bidCarsResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(bidCarsListViewModel.searchController.text)){
                               bidCarsListViewModel.searchList.add(bidCarsListViewModel.bidCarsResponse.value.data![i].sId.toString());
                               log(bidCarsListViewModel.searchList.toString());
                             }
@@ -96,7 +101,7 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                 )
               ],
             ),
-            TabBar(
+            Obx(() => TabBar(
               controller: tabController,
               labelStyle: MyStyles.selectedTabBarTitleStyle,
               labelColor: MyColors.black,
@@ -107,11 +112,11 @@ class _MyCarsScreenState extends State<MyCarsScreen>
               indicatorWeight: 4,
               dividerColor: MyColors.grey.withOpacity(0.25),
               dividerHeight: 2,
-              tabs: const [
-                Tab(text: MyStrings.biddedCars),
-                Tab(text: MyStrings.likedCars),
+              tabs: [
+                Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.biddedCars}(${Get.find<BidCarsListViewModel>().bidCarsResponse.value.count ?? '0'})':MyStrings.biddedCars,),
+                Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.likedCars}(${Get.find<BidCarsListViewModel>().carListResponse.value.count ?? '0'})':MyStrings.likedCars,),
               ],
-            ),
+            ),),
             Expanded(
               child: TabBarView(
                 controller: tabController,

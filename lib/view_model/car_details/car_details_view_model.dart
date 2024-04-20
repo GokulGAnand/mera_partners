@@ -687,12 +687,12 @@ class CarDetailsScreenViewModel extends GetxController {
 
   RxBool isLike = false.obs;
   /// Like Feature API integration
-  Future<void> updateLikedCar() async {
+  Future<void> updateLikedCar(bool like) async {
     try {
       // ProgressBar.instance.showProgressbar(Get.context!);
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$id').toString());
-      log(jsonEncode({"status":"LikedCar"}));
-      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$id'),headers: globals.headers, body: jsonEncode({"status":"LikedCar"}));
+      log(jsonEncode({"status": like ==true ?"LikedCar": "Unlike"}));
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$id'),headers: globals.headers, body: jsonEncode({"status": like==true ?"LikedCar":"Unlike"}));
       log(response.body.toString());
       if (response.statusCode == 200) {
         // ProgressBar.instance.stopProgressBar(Get.context!);

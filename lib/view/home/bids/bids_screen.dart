@@ -34,16 +34,8 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
           Get.put(OTBCarsListViewModel());
 
   late TabController tabController;
-  var count = '';
-  var otbCount = '';
   @override
   void initState() {
-    if(Get.isRegistered<LiveCarsListViewModel>()){
-      count = Get.find<LiveCarsListViewModel>().liveCarsResponse.value.count.toString();
-    }
-    if(Get.isRegistered<OTBCarsListViewModel>()){
-      count = Get.find<OTBCarsListViewModel>().carsListResponse.value.count.toString();
-    }
     tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
@@ -69,7 +61,10 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                           liveCarListViewModel.searchList.clear();
                           for(int i=0; i<liveCarListViewModel.liveCarsResponse.value.data!.length; i++){
                             if(liveCarListViewModel.liveCarsResponse.value.data![i].model!.contains(liveCarListViewModel.searchController.text) || 
-                              liveCarListViewModel.liveCarsResponse.value.data![i].model!.toLowerCase().contains(liveCarListViewModel.searchController.text)){
+                              liveCarListViewModel.liveCarsResponse.value.data![i].model!.toLowerCase().contains(liveCarListViewModel.searchController.text) ||
+                              liveCarListViewModel.liveCarsResponse.value.data![i].make!.contains(liveCarListViewModel.searchController.text) ||
+                              liveCarListViewModel.liveCarsResponse.value.data![i].make!.toLowerCase().contains(liveCarListViewModel.searchController.text) ||
+                              liveCarListViewModel.liveCarsResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(liveCarListViewModel.searchController.text)){
                               liveCarListViewModel.searchList.add(liveCarListViewModel.liveCarsResponse.value.data![i].sId.toString());
                               log(liveCarListViewModel.searchList.toString());
                             }
@@ -78,7 +73,10 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                           otbCarsListViewModel.searchList.clear();
                           for(int i=0; i<otbCarsListViewModel.carsListResponse.value.data!.length; i++){
                             if(otbCarsListViewModel.carsListResponse.value.data![i].model!.contains(otbCarsListViewModel.searchController.text) || 
-                              otbCarsListViewModel.carsListResponse.value.data![i].model!.toLowerCase().contains(otbCarsListViewModel.searchController.text)){
+                              otbCarsListViewModel.carsListResponse.value.data![i].model!.toLowerCase().contains(otbCarsListViewModel.searchController.text) ||
+                              otbCarsListViewModel.carsListResponse.value.data![i].make!.contains(otbCarsListViewModel.searchController.text) ||
+                              otbCarsListViewModel.carsListResponse.value.data![i].make!.toLowerCase().contains(otbCarsListViewModel.searchController.text) ||
+                              otbCarsListViewModel.carsListResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(otbCarsListViewModel.searchController.text)){
                               otbCarsListViewModel.searchList.add(otbCarsListViewModel.carsListResponse.value.data![i].sId.toString());
                               log(otbCarsListViewModel.searchList.toString());
                             }
@@ -113,22 +111,22 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                 )
               ],
             ),
-            TabBar(
-                    controller: tabController,
-                    labelStyle: MyStyles.selectedTabBarTitleStyle,
-                    labelColor: MyColors.black,
-                    unselectedLabelStyle: MyStyles.selectedTabBarTitleStyle,
-                    unselectedLabelColor: MyColors.grey.withOpacity(0.5),
-                    indicatorColor: MyColors.kPrimaryColor,
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    indicatorWeight: 4,
-                    dividerColor: MyColors.grey.withOpacity(0.25),
-                    dividerHeight: 2,
-                    tabs: [
-                      Tab(text: '${MyStrings.live}($count)'),
-                      Tab(text: '${MyStrings.otb}($count)'),
-                    ],
-                  ),
+            Obx(() => TabBar(
+              controller: tabController,
+              labelStyle: MyStyles.selectedTabBarTitleStyle,
+              labelColor: MyColors.black,
+              unselectedLabelStyle: MyStyles.selectedTabBarTitleStyle,
+              unselectedLabelColor: MyColors.grey.withOpacity(0.5),
+              indicatorColor: MyColors.kPrimaryColor,
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicatorWeight: 4,
+              dividerColor: MyColors.grey.withOpacity(0.25),
+              dividerHeight: 2,
+              tabs: [
+                Tab(text: '${MyStrings.live}(${Get.find<LiveCarsListViewModel>().liveCarsResponse.value.count ?? '0'})',),
+                Tab(text: '${MyStrings.otb}(${Get.find<OTBCarsListViewModel>().carsListResponse.value.count ?? '0'})',),
+              ],
+            ),),
                   Expanded(
                     child: TabBarView(
                       controller: tabController,

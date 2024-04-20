@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mera_partners/utils/globals.dart' as globals;
+import '../../../../model/response/like/like_response.dart';
 import '../../../../model/response/live/live_cars_list_response.dart';
+import '../../../../model/response/user_data/user_info_response.dart';
 import '../../../../service/endpoints.dart';
 import '../../../../service/exception_error_util.dart';
 import '../../../../service/socket_service.dart';
@@ -22,9 +24,11 @@ class BidCarsListViewModel extends GetxController{
   var bidCarsResponse = CarListResponse().obs;
   var carListResponse = CarListResponse().obs;
   SocketService? socketService;
+  var likeResponse = LikedCarResponse().obs;
+
 
   //declare pagination controller
-  // final PagingController<int,Data> infinitePagingController=PagingController(firstPageKey: 1);
+  // final PagingController<int,Data> infinitePagingController=PagingController(firstPageKy: 1);
   // int limit = 10;
 
   @override
@@ -52,14 +56,16 @@ class BidCarsListViewModel extends GetxController{
 
 
   /// Like Feature API integration
-  void updateLikedCar(String carId) async {
+  void updateLikedCar(String carId,bool like) async {
     //todo - change status data
     try {
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId').toString());
-      log(jsonEncode({"status":"LikedCar"}));
-      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'),headers: globals.headers, body: jsonEncode({"status":"LikedCar"}));
+      log(jsonEncode({"status": like==true ?"LikedCar": "Unlike"}));
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'),headers: globals.headers, body: jsonEncode({"status": like==true ?"LikedCar": "Unlike"}));
       log(response.body.toString());
       if (response.statusCode == 200) {
+        Get.find<BidCarsListViewModel>().getLikedCarData();
+        Get.find<BidCarsListViewModel>().likeResponse.refresh();
         CustomToast.instance.showMsg(MyStrings.success);
       } else {
         CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);
@@ -135,25 +141,27 @@ class BidCarsListViewModel extends GetxController{
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
-  }
-
-  void getLikedCarData()async {
+  }  
+  
+  void getLikedCarData() async {
     try {
-      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE').toString());
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE'),headers: globals.headers);
-      log(response.body);
+      log('API URL: ${Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}')}');
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'), headers: globals.headers);
+      log('API Response Body: ${response.body}');
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        carListResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
-        log(response.body);
-      }else{
+        likeResponse.value = LikedCarResponse.fromJson(jsonDecode(response.body));
+        print('API Response svvs: ${response.body}');
+      } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        log(response.reasonPhrase.toString());
+        print('API Error: ${response.reasonPhrase}');
       }
     } catch (e) {
       ProgressBar.instance.stopProgressBar(Get.context!);
-      log(e.toString());
+      print('Exception occurred: $e');
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
   }
+
+
 }

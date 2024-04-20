@@ -62,7 +62,10 @@ class _OrdersScreenState extends State<OrdersScreen>
                           procuredScreenViewModel.searchList.clear();
                           for(int i=0; i<procuredScreenViewModel.liveCarsResponse.value.data!.length; i++){
                             if(procuredScreenViewModel.liveCarsResponse.value.data![i].model!.contains(procuredScreenViewModel.searchController.text) || 
-                              procuredScreenViewModel.liveCarsResponse.value.data![i].model!.toLowerCase().contains(procuredScreenViewModel.searchController.text)){
+                              procuredScreenViewModel.liveCarsResponse.value.data![i].model!.toLowerCase().contains(procuredScreenViewModel.searchController.text) ||
+                              procuredScreenViewModel.liveCarsResponse.value.data![i].make!.contains(procuredScreenViewModel.searchController.text) ||
+                              procuredScreenViewModel.liveCarsResponse.value.data![i].make!.toLowerCase().contains(procuredScreenViewModel.searchController.text) ||
+                              procuredScreenViewModel.liveCarsResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(procuredScreenViewModel.searchController.text)){
                               procuredScreenViewModel.searchList.add(procuredScreenViewModel.liveCarsResponse.value.data![i]);
                               log(procuredScreenViewModel.searchList.toString());
                             }

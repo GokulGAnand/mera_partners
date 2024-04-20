@@ -3,8 +3,7 @@ import 'package:get/get.dart';
 import '../../../../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 import '../../../../widgets/liked_cars_widget.dart';
 
-final BidCarsListViewModel controller = Get.isRegistered<BidCarsListViewModel>() ? Get.find<BidCarsListViewModel>() : Get.put(BidCarsListViewModel());
-
+final BidCarsListViewModel controller = Get.put(BidCarsListViewModel());
 class LikedCars extends StatelessWidget {
   const LikedCars({super.key});
 
@@ -17,7 +16,7 @@ class LikedCars extends StatelessWidget {
         ),
         Expanded(
           child: GridView.builder(
-              itemCount: controller.carListResponse.value.data?.length ?? 0,
+              itemCount: controller.likeResponse.value.data?[0].likedCars?.length ??0,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 22,
@@ -26,13 +25,13 @@ class LikedCars extends StatelessWidget {
               ),
               itemBuilder: (context, index) {
                return LikedCarsWidget(
-                 bidAmount: controller.carListResponse.value.data?[index].highestBid.toString() ?? '',
-                 id: controller.carListResponse.value.data?[index].uniqueId.toString() ?? '',
-                 carId: controller.carListResponse.value.data?[index].sId ?? '',
-                 imageUrl: controller.carListResponse.value.data?[index].front?.url ?? '',
-                 model: controller.carListResponse.value.data?[index].model ?? '',
-                 variant: controller.carListResponse.value.data?[index].variant ?? '',
-                 status: controller.carListResponse.value.data?[index].status ?? '',
+                 bidAmount: controller.likeResponse.value.data![0].likedCars?[index].highestBid.toString() ?? '',
+                 id: controller.likeResponse.value.data![0].likedCars?[index].uniqueId.toString() ?? '',
+                 carId: controller.likeResponse.value.data![0].likedCars?[index].sId.toString() ?? '',
+                 imageUrl: controller.likeResponse.value.data![0].likedCars?[index].frontLeft?.url ?? '',
+                 model: controller.likeResponse.value.data![0].likedCars?[index].model.toString() ?? '',
+                 variant: controller.likeResponse.value.data![0].likedCars?[index].variant.toString() ?? '',
+                 status: controller.likeResponse.value.data![0].likedCars?[index].status.toString() ?? ''
                );
               }),
         ),

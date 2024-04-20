@@ -12,10 +12,12 @@ import '../utils/colors.dart';
 import '../utils/dimens.dart';
 import '../utils/strings.dart';
 import '../utils/styles.dart';
+import '../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 import 'custom_button.dart';
 import 'custom_toast.dart';
 
 class LikedCarsWidget extends StatelessWidget {
+  final BidCarsListViewModel bidCarsListViewModel = Get.find<BidCarsListViewModel>();
   final String imageUrl;
   final String status;
   final String variant;
@@ -36,14 +38,17 @@ class LikedCarsWidget extends StatelessWidget {
   });
 
   /// Like Feature API integration
-  void updateLikedCar() async {
+  void updateLikedCar(bool like) async {
     //todo - change status data
     try {
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId').toString());
-      log(jsonEncode({"status":"LikedCar"}));
-      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'),headers: globals.headers, body: jsonEncode({"status":"LikedCar"}));
+      log(jsonEncode({"status": like== true?"LikedCar" :"Unlike"}));
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'),headers: globals.headers, body: jsonEncode({"status": like== true? "LikedCar" :"Unlike"}));
       log(response.body.toString());
       if (response.statusCode == 200) {
+        print('checking: ${bidCarsListViewModel.likeResponse}');
+        Get.find<BidCarsListViewModel>().getLikedCarData();
+        Get.find<BidCarsListViewModel>().likeResponse.refresh();
         CustomToast.instance.showMsg(MyStrings.success);
       } else {
         CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);
@@ -53,6 +58,8 @@ class LikedCarsWidget extends StatelessWidget {
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? MyStrings.unableToConnect);
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -124,15 +131,15 @@ class LikedCarsWidget extends StatelessWidget {
                           size: 16,
                         ),
                         onTap: () {
-                          updateLikedCar();
+                          print("Tapping like button");
+                          updateLikedCar(isFavourite!.value ? false : true);
                           isFavourite!.value == true ? isFavourite!.value = false : isFavourite!.value = true;
-
+                          print("Like status: ${isFavourite!.value}");
                         },
                       ),
                     ),
                   ),
                 ),
-
               ],
             ),
             Padding(
@@ -157,7 +164,7 @@ class LikedCarsWidget extends StatelessWidget {
                     variant,
                     style: MyStyles.black12400,
                   ),
-                   const SizedBox(height: Dimens.standard_8),
+                   // const SizedBox(height: Dimens.standard_8),
                   Text(
                     model,
                     style: MyStyles.black14700,

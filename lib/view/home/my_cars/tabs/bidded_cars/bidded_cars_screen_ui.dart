@@ -1,6 +1,4 @@
 import 'dart:developer';
-
-import 'package:flutter/widgets.dart';
 import 'package:mera_partners/utils/constants.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
