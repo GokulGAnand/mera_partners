@@ -4,9 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mera_partners/utils/globals.dart' as globals;
-import '../../../../model/response/like/like_response.dart';
 import '../../../../model/response/live/live_cars_list_response.dart';
-import '../../../../model/response/user_data/user_info_response.dart';
+import '../../../../model/response/user_data/user_car_details_response.dart';
 import '../../../../service/endpoints.dart';
 import '../../../../service/exception_error_util.dart';
 import '../../../../service/socket_service.dart';
@@ -24,8 +23,7 @@ class BidCarsListViewModel extends GetxController{
   var bidCarsResponse = CarListResponse().obs;
   var carListResponse = CarListResponse().obs;
   SocketService? socketService;
-  var likeResponse = LikedCarResponse().obs;
-
+  var likeResponse = UserResponse().obs;
 
   //declare pagination controller
   // final PagingController<int,Data> infinitePagingController=PagingController(firstPageKy: 1);
@@ -48,20 +46,19 @@ class BidCarsListViewModel extends GetxController{
       }
     });
     // infinitePagingController.addPageRequestListener((pageKey) {
-      getCarData();
-      getLikedCarData();
+    getCarData();
+    getLikedCarData();
     // });
     super.onInit();
   }
 
-
   /// Like Feature API integration
-  void updateLikedCar(String carId,bool like) async {
+  void updateLikedCar(String carId, bool like) async {
     //todo - change status data
     try {
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId').toString());
-      log(jsonEncode({"status": like==true ?"LikedCar": "Unlike"}));
-      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'),headers: globals.headers, body: jsonEncode({"status": like==true ?"LikedCar": "Unlike"}));
+      log(jsonEncode({"status": like == true ? "LikedCar" : "Unlike"}));
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'), headers: globals.headers, body: jsonEncode({"status": like == true ? "LikedCar" : "Unlike"}));
       log(response.body.toString());
       if (response.statusCode == 200) {
         Get.find<BidCarsListViewModel>().getLikedCarData();
@@ -79,14 +76,14 @@ class BidCarsListViewModel extends GetxController{
   void placeBid(amount, carId) async {
     try {
       socketService?.sendSocketRequest("bidInfo", {"amount": int.parse(amount), "carId": carId});
-      log(amount+' bid amount');
-      log(carId+' car id');
-      var response = await http.post(Uri.parse(EndPoints.socketUrl+EndPoints.auction+EndPoints.bid), headers: globals.jsonHeaders, body: jsonEncode({"amount": int.parse(amount), "carId": carId}));
+      log(amount + ' bid amount');
+      log(carId + ' car id');
+      var response = await http.post(Uri.parse(EndPoints.socketUrl + EndPoints.auction + EndPoints.bid), headers: globals.jsonHeaders, body: jsonEncode({"amount": int.parse(amount), "carId": carId}));
       log(response.body);
       String message = json.decode(response.body)['message'];
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         CustomToast.instance.showMsgWithIcon(MyStrings.bidPlaced, null);
-      }else{
+      } else {
         CustomToast.instance.showMsg(message);
       }
     } catch (e) {
@@ -99,15 +96,13 @@ class BidCarsListViewModel extends GetxController{
     try {
       socketService?.sendSocketRequest("bidInfo", {"autoBidLimit": int.parse(autoBidLimit), "carId": carId});
       log(jsonEncode({"autoBidLimit": autoBidLimit, "carId": carId}));
-      log(Uri.parse(EndPoints.socketUrl+EndPoints.auction+EndPoints.bid).toString());
-      var response = await http.post(Uri.parse(EndPoints.socketUrl+EndPoints.auction+EndPoints.bid),
-          headers: globals.jsonHeaders,
-          body: jsonEncode({"autoBidLimit": int.parse(autoBidLimit), "carId": carId}));
+      log(Uri.parse(EndPoints.socketUrl + EndPoints.auction + EndPoints.bid).toString());
+      var response = await http.post(Uri.parse(EndPoints.socketUrl + EndPoints.auction + EndPoints.bid), headers: globals.jsonHeaders, body: jsonEncode({"autoBidLimit": int.parse(autoBidLimit), "carId": carId}));
       log(response.body);
       String message = json.decode(response.body)['message'];
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         CustomToast.instance.showMsgWithIcon(MyStrings.bidPlaced, null);
-      }else{
+      } else {
         CustomToast.instance.showMsg(message);
       }
     } catch (e) {
@@ -116,10 +111,10 @@ class BidCarsListViewModel extends GetxController{
     }
   }
 
-  void getCarData()async {
+  void getCarData() async {
     //todo change query parameter
     try {
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE'),headers: globals.headers);
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE'), headers: globals.headers);
       // var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&page=$pageKey&limit=$limit'),headers: globals.headers);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
@@ -132,7 +127,7 @@ class BidCarsListViewModel extends GetxController{
         //   final nextPageKey = pageKey + 1;
         //   infinitePagingController.appendPage(bidCarsResponse.value.data!, nextPageKey);
         // }
-      }else{
+      } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());
       }
@@ -141,16 +136,16 @@ class BidCarsListViewModel extends GetxController{
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
-  }  
-  
+  }
+
   void getLikedCarData() async {
     try {
-      log('API URL: ${Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}')}');
+      print('API URL: ${Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}')}');
       var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'), headers: globals.headers);
-      log('API Response Body: ${response.body}');
+      print('API Response Body: ${response.body}');
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        likeResponse.value = LikedCarResponse.fromJson(jsonDecode(response.body));
+        likeResponse.value = UserResponse.fromJson(jsonDecode(response.body));
         print('API Response svvs: ${response.body}');
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
@@ -162,6 +157,4 @@ class BidCarsListViewModel extends GetxController{
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
   }
-
-
 }

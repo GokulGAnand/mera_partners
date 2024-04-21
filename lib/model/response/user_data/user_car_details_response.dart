@@ -2,7 +2,37 @@ class UserResponse {
   String? status;
   String? message;
   List<Data>? data;
-  List<LikedCars>? biddedCars;
+  Meta? meta;
+
+  UserResponse({this.status, this.message, this.data, this.meta});
+
+  UserResponse.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    message = json['message'];
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
+      });
+    }
+    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    if (this.meta != null) {
+      data['meta'] = this.meta!.toJson();
+    }
+    return data;
+  }
+}
+
+class Data {
   String? sId;
   String? userId;
   bool? isBlocked;
@@ -27,14 +57,11 @@ class UserResponse {
   String? orderId;
   String? paymentId;
   List<LostDeal>? lostDeal;
-  Meta? meta;
+  List<LikedCars>? likedCars;
+  List<BiddedCars>? biddedCars;
 
-  UserResponse(
-      {this.status,
-        this.message,
-        this.data,
-        this.biddedCars,
-        this.sId,
+  Data(
+      {this.sId,
         this.userId,
         this.isBlocked,
         this.role,
@@ -58,23 +85,10 @@ class UserResponse {
         this.orderId,
         this.paymentId,
         this.lostDeal,
-        this.meta});
+        this.likedCars,
+        this.biddedCars});
 
-  UserResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
-      });
-    }
-    if (json['biddedCars'] != null) {
-      biddedCars = <LikedCars>[];
-      json['biddedCars'].forEach((v) {
-        biddedCars!.add(new LikedCars.fromJson(v));
-      });
-    }
+  Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     userId = json['userId'];
     isBlocked = json['isBlocked'];
@@ -116,19 +130,22 @@ class UserResponse {
         lostDeal!.add(new LostDeal.fromJson(v));
       });
     }
-    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
+    if (json['likedCars'] != null) {
+      likedCars = <LikedCars>[];
+      json['likedCars'].forEach((v) {
+        likedCars!.add(new LikedCars.fromJson(v));
+      });
+    }
+    if (json['biddedCars'] != null) {
+      biddedCars = <BiddedCars>[];
+      json['biddedCars'].forEach((v) {
+        biddedCars!.add(new BiddedCars.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    if (this.biddedCars != null) {
-      data['biddedCars'] = this.biddedCars!.map((v) => v.toJson()).toList();
-    }
     data['_id'] = this.sId;
     data['userId'] = this.userId;
     data['isBlocked'] = this.isBlocked;
@@ -167,31 +184,82 @@ class UserResponse {
     if (this.lostDeal != null) {
       data['lostDeal'] = this.lostDeal!.map((v) => v.toJson()).toList();
     }
-    if (this.meta != null) {
-      data['meta'] = this.meta!.toJson();
+    if (this.likedCars != null) {
+      data['likedCars'] = this.likedCars!.map((v) => v.toJson()).toList();
+    }
+    if (this.biddedCars != null) {
+      data['biddedCars'] = this.biddedCars!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Data {
-  List<LikedCars>? likedCars;
+class AddressProofBack {
+  String? name;
+  String? url;
+  String? type;
 
-  Data({this.likedCars});
+  AddressProofBack({this.name, this.url, this.type});
 
-  Data.fromJson(Map<String, dynamic> json) {
-    if (json['likedCars'] != null) {
-      likedCars = <LikedCars>[];
-      json['likedCars'].forEach((v) {
-        likedCars!.add(new LikedCars.fromJson(v));
-      });
-    }
+  AddressProofBack.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    url = json['url'];
+    type = json['type'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.likedCars != null) {
-      data['likedCars'] = this.likedCars!.map((v) => v.toJson()).toList();
+    data['name'] = this.name;
+    data['url'] = this.url;
+    data['type'] = this.type;
+    return data;
+  }
+}
+
+class LostDeal {
+  String? sId;
+  int? uniqueId;
+  String? make;
+  String? model;
+  String? variant;
+  int? highestBid;
+  String? status;
+  FrontLeft? frontLeft;
+
+  LostDeal(
+      {this.sId,
+        this.uniqueId,
+        this.make,
+        this.model,
+        this.variant,
+        this.highestBid,
+        this.frontLeft,
+        this.status});
+
+  LostDeal.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    uniqueId = json['uniqueId'];
+    make = json['make'];
+    model = json['model'];
+    variant = json['variant'];
+    highestBid = json['highestBid'];
+    status = json['status'];
+    frontLeft = json['frontLeft'] != null
+        ? new FrontLeft.fromJson(json['frontLeft'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['uniqueId'] = this.uniqueId;
+    data['make'] = this.make;
+    data['model'] = this.model;
+    data['variant'] = this.variant;
+    data['highestBid'] = this.highestBid;
+    data['status'] = this.status;
+    if (this.frontLeft != null) {
+      data['frontLeft'] = this.frontLeft!.toJson();
     }
     return data;
   }
@@ -271,54 +339,56 @@ class FrontLeft {
   }
 }
 
-class AddressProofBack {
-  String? name;
-  String? url;
-  String? type;
-
-  AddressProofBack({this.name, this.url, this.type});
-
-  AddressProofBack.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    url = json['url'];
-    type = json['type'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['url'] = this.url;
-    data['type'] = this.type;
-    return data;
-  }
-}
-
-class LostDeal {
+class BiddedCars {
   String? sId;
   int? uniqueId;
   String? make;
   String? model;
   String? variant;
+  String? maskedRegNumber;
+  String? vehicleLocation;
+  String? ownershipNumber;
+  String? fuelType;
+  String? qcStatus;
   int? highestBid;
+  int? totalBidder;
   String? status;
+  String? createdAt;
+  String? winner;
 
-  LostDeal(
+  BiddedCars(
       {this.sId,
         this.uniqueId,
         this.make,
         this.model,
         this.variant,
+        this.maskedRegNumber,
+        this.vehicleLocation,
+        this.ownershipNumber,
+        this.fuelType,
+        this.qcStatus,
         this.highestBid,
-        this.status});
+        this.totalBidder,
+        this.status,
+        this.createdAt,
+        this.winner});
 
-  LostDeal.fromJson(Map<String, dynamic> json) {
+  BiddedCars.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     uniqueId = json['uniqueId'];
     make = json['make'];
     model = json['model'];
     variant = json['variant'];
+    maskedRegNumber = json['maskedRegNumber'];
+    vehicleLocation = json['vehicleLocation'];
+    ownershipNumber = json['ownershipNumber'];
+    fuelType = json['fuelType'];
+    qcStatus = json['qcStatus'];
     highestBid = json['highestBid'];
+    totalBidder = json['totalBidder'];
     status = json['status'];
+    createdAt = json['createdAt'];
+    winner = json['winner'];
   }
 
   Map<String, dynamic> toJson() {
@@ -328,8 +398,16 @@ class LostDeal {
     data['make'] = this.make;
     data['model'] = this.model;
     data['variant'] = this.variant;
+    data['maskedRegNumber'] = this.maskedRegNumber;
+    data['vehicleLocation'] = this.vehicleLocation;
+    data['ownershipNumber'] = this.ownershipNumber;
+    data['fuelType'] = this.fuelType;
+    data['qcStatus'] = this.qcStatus;
     data['highestBid'] = this.highestBid;
+    data['totalBidder'] = this.totalBidder;
     data['status'] = this.status;
+    data['createdAt'] = this.createdAt;
+    data['winner'] = this.winner;
     return data;
   }
 }
