@@ -10,9 +10,9 @@ import '../../../../view_model/home/orders/procured_cars_view_model.dart';
 /// ignore: must_be_immutable
 class Procured extends StatelessWidget {
    Procured({super.key});
-   ProcuredViewModel controller = Get.isRegistered<ProcuredViewModel>()
-      ? Get.find<ProcuredViewModel>()
-      : Get.put(ProcuredViewModel());
+   ProcuredScreenViewModel controller = Get.isRegistered<ProcuredScreenViewModel>()
+      ? Get.find<ProcuredScreenViewModel>()
+      : Get.put(ProcuredScreenViewModel());
 
   @override
   Widget build(BuildContext context) {

@@ -8,11 +8,11 @@ import 'package:mera_partners/utils/svg.dart';
 import 'package:mera_partners/view/home/orders/tabs/negotiation.dart';
 import 'package:mera_partners/view/home/orders/tabs/procured.dart';
 import 'package:mera_partners/view/home/orders/tabs/rc_transfer.dart';
-import 'package:mera_partners/view_model/orders/procured_view_model.dart';
 import 'package:mera_partners/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../routes/app_routes.dart';
+import '../../../view_model/home/orders/procured_cars_view_model.dart';
 
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key});
