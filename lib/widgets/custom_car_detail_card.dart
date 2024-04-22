@@ -41,7 +41,7 @@ class CustomCarDetailCard extends StatefulWidget {
   final String ownerShip;
   final String transmission;
   late final Rx<bool>? isFavourite = false.obs;
-  final bool? isOtb;
+  final RxBool? isOtb;
   final bool? isScheduled;
   final Function()? autoBid;
   final Function()? bid;
@@ -51,7 +51,7 @@ class CustomCarDetailCard extends StatefulWidget {
   var activePage = 0.obs;
   final DateTime? bidStartTime;
   final DateTime? bidEndTime;
-  Duration duration = Duration.zero;
+  Rxn<Duration> duration = Rxn();
   Timer? timer;
   String? scheduleTime;
 
@@ -133,15 +133,27 @@ class CustomCarDetailCard extends StatefulWidget {
 class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
 
   void startTimer() {
-    widget.timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (widget.duration.inSeconds == 0) {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (widget.duration.value!.inSeconds == 0) {
         timer.cancel();
       } else {
-        setState(() {
-          widget.duration = widget.duration - const Duration(seconds: 1);
-        });
+        widget.duration.value = widget.duration.value! - const Duration(seconds: 1);
       }
     });
+  }
+
+  String formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    String hour = duration.inHours.toString();
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    if(duration.inHours == 0){
+      return "${twoDigitMinutes}min ${twoDigitSeconds}sec";
+    } else if (duration.inHours < 10){
+      hour = twoDigits(duration.inHours);
+      return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
+    }
+    return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
   }
 
   String _formatTime(DateTime dateTime) {
@@ -151,21 +163,36 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
     return "$hour:${dateTime.minute.toString().padLeft(2, '0')} $period";
   }
 
-  String _formatDateTime(DateTime dateTime) {
-    return "${dateTime.day}/${dateTime.month}/${dateTime.year} ${_formatTime(dateTime)}";
+  String _formatDateTime(DateTime? dateTime) {
+    return dateTime != null ? "${dateTime.day}/${dateTime.month}/${dateTime.year} ${_formatTime(dateTime)}":"";
   }
 
   @override
   void initState() {
-    widget.duration = const Duration(minutes: 20);
+    var start = DateTime.now();
+    var end = widget.bidEndTime ?? DateTime.now();
+    if (widget.isScheduled == false) {
+      Duration diff = end.difference(start);
+      widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+
+      if(start.isBefore(end)) {
+        startTimer();
+      }
+    }else{
+      Duration diff = widget.bidStartTime!.difference(start);
+      widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+
+      if(start.isAfter(widget.bidStartTime!)) {
+        startTimer();
+      }
+    }
     super.initState();
-    startTimer();
-    if (widget.bidStartTime!.day == DateTime.now().day) {
-      widget.scheduleTime = "Scheduled for today ${_formatTime(widget.bidStartTime!)}:${widget.bidStartTime?.second}";
+    if (widget.bidStartTime?.day == DateTime.now().day) {
+      widget.scheduleTime = "Scheduled for today ${_formatTime(widget.bidStartTime!)}";
     } else if (widget.bidStartTime?.day == DateTime.now().day + 1) {
       widget.scheduleTime = "Scheduled for tomorrow ${widget.bidStartTime?.hour}:${widget.bidStartTime?.minute}";
     } else {
-      widget.scheduleTime = "Scheduled for ${_formatDateTime(widget.bidStartTime!)}";
+      widget.scheduleTime = "Scheduled for ${_formatDateTime(widget.bidStartTime)}";
     }
   }
 
@@ -278,10 +305,10 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                               size: 16,
                             ),
                             onTap: () {
-                              print("Tapping like button2");
+                              log("Tapping like button2");
                               updateLikedCar(widget.isFavourite!.value ? false : true);
                               widget.isFavourite!.value == true ? widget.isFavourite!.value = false : widget.isFavourite!.value = true;
-                              print("Like status2: ${widget.isFavourite!.value}");
+                              log("Like status2: ${widget.isFavourite!.value}");
                             },
                           ),
                         ),
@@ -289,7 +316,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                     ),
                   ],
                 ),
-                Container(
+                Obx(() => Container(
                   height: 37,
                   clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
@@ -304,14 +331,15 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       const SizedBox(
                         width: 12,
                       ),
-                      Obx(() =>Text(widget.isOtb == true ? MyStrings.closingPrice : widget.bidStatus.value, style: MyStyles.whiteTitleStyle)),
+                      Obx(() =>Text(widget.isOtb?.value == true ? MyStrings.closingPrice : widget.bidStatus.value, style: MyStyles.whiteTitleStyle)),
                       const SizedBox(
                         width: 15,
                       ),
-                      if (widget.bidAmount.isNotEmpty && widget.isScheduled == false) Obx(() =>Text(widget.bidAmount.value, textAlign: TextAlign.center, style: MyStyles.white16700)),
+                      if (widget.bidAmount.isNotEmpty && widget.isScheduled == false)
+                        Obx(() =>Text(globals.documentStatus == DocumentStatus.VERIFIED.name?widget.bidAmount.value: widget.bidAmount.value.replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ','), textAlign: TextAlign.center, style: MyStyles.white16700)),
                     ],
                   ),
-                ),
+                ),),
                 const SizedBox(
                   height: 10,
                 ),
@@ -449,35 +477,37 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            widget.duration.inMinutes >= 10 ? MyStrings.acceptingBids:
-                            widget.duration.inMinutes < 10 ? MyStrings.bidEndsIn : MyStrings.lastCall,
+                          if(widget.duration.value != null)
+                          Obx(() => Text(
+                            widget.duration.value!.inMinutes >= 10 ? MyStrings.acceptingBids:
+                            widget.duration.value!.inMinutes < 10 ? MyStrings.bidEndsIn : MyStrings.lastCall,
                             style: TextStyle(
-                              color: widget.duration.inMinutes >= 10 ? MyColors.green : widget.duration.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                              color: widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
                               fontSize: 12,
                               fontFamily: 'DM Sans',
                               fontWeight: FontWeight.w500,
                             ),
-                          ),
+                          ),),
                           const SizedBox(
                             height: 1,
                           ),
-                          Row(
+                          if(widget.duration.value != null)
+                          Obx(() => Row(
                             children: [
                               Icon(
                                 Icons.timer_sharp,
-                                color: widget.duration.inMinutes >= 10 ? MyColors.green : widget.duration.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                                color: widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
                                 size: 14,
                               ),
-                              Text( widget._formatDuration( widget.duration ), style: TextStyle(
-                                color: widget.duration.inMinutes >= 10 ? MyColors.green : widget.duration.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                              Text(formatDuration( widget.duration.value! ), style: TextStyle(
+                                color: widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
                                 fontSize: 14,
                                 fontFamily: 'DM Sans',
                                 fontWeight: FontWeight.w700,
                                 height: 0,
                               )),
                             ],
-                          ),
+                          ),)
                         ],
                       ),
                       Column(
@@ -518,7 +548,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                                 TextSpan(
                                   children: [
                                     const TextSpan(text: 'FMV  ', style: MyStyles.subTitleGreayStyle),
-                                    TextSpan(text: '₹${widget.fmv}', style: MyStyles.grey14700),
+                                    TextSpan(text: globals.documentStatus == DocumentStatus.VERIFIED.name ? '₹${widget.fmv}' : '₹${widget.fmv.replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}', style: MyStyles.grey14700),
                                   ],
                                 ),
                                 textAlign: TextAlign.center,
@@ -533,7 +563,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                 const SizedBox(
                   height: 16,
                 ),
-                if ((widget.isOtb == null || widget.isOtb != true) && widget.isScheduled == false)
+                if ((widget.isOtb == null || widget.isOtb?.value != true) && widget.isScheduled == false)
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0, right: 12),
                     child: Row(
@@ -570,7 +600,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       ],
                     ),
                   ),
-                if (widget.isOtb == true)
+                if (widget.isOtb?.value == true)
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0, right: 12),
                     child: CustomElevatedButton(

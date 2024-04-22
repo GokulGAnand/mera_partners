@@ -263,6 +263,14 @@ class MyStyles {
     height: 0,
   );
 
+  static const greyShade14500 = TextStyle(
+    color: MyColors.grey,
+    fontSize: 14,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
+    height: 0,
+  );
+
   static const black14700 = TextStyle(
     color: MyColors.black,
     fontSize: 14,

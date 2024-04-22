@@ -33,7 +33,7 @@ class LiveCarsListScreen extends StatelessWidget {
                       onCarTapped: () {
                         Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.liveCarsResponse.value.data?[index].sId);
                       },
-                      isOtb: false,
+                      isOtb: false.obs,
                               carId: controller.liveCarsResponse.value.data?[index].sId ?? '',
                       isScheduled: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == 'scheduled' ? true : false,
                       imageUrl: controller.liveCarsResponse.value.data?[index].rearRight?.url ?? '',
