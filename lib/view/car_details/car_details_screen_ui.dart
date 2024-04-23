@@ -41,16 +41,16 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
 
   @override
   void initState() {
-    carDetailsScreenViewModel.exteriorTabController =
-        TabController(length: (carDetailsScreenViewModel.exteriorIssue.isEmpty)?1:2, vsync: this);
-    carDetailsScreenViewModel.interiorElectricalTabController =
-        TabController(length: (carDetailsScreenViewModel.interiorAndElectricalIssue.isEmpty)?1:2, vsync: this);
-    carDetailsScreenViewModel.engineTabController =
-        TabController(length: (carDetailsScreenViewModel.engineIssue.isEmpty)?1:2, vsync: this);
-    carDetailsScreenViewModel.acTabController =
-        TabController(length: (carDetailsScreenViewModel.airConditionIssue.isEmpty)?1:2, vsync: this);
-    carDetailsScreenViewModel.testDriveTabController =
-        TabController(length: (carDetailsScreenViewModel.testDriveIssue.isEmpty)?1:2, vsync: this);
+    // carDetailsScreenViewModel.exteriorTabController =
+    //     TabController(length: (carDetailsScreenViewModel.exteriorIssue.isEmpty)?1:2, vsync: this);
+    // carDetailsScreenViewModel.interiorElectricalTabController =
+    //     TabController(length: (carDetailsScreenViewModel.interiorAndElectricalIssue.isEmpty)?1:2, vsync: this);
+    // carDetailsScreenViewModel.engineTabController =
+    //     TabController(length: (carDetailsScreenViewModel.engineIssue.isEmpty)?1:2, vsync: this);
+    // carDetailsScreenViewModel.acTabController =
+    //     TabController(length: (carDetailsScreenViewModel.airConditionIssue.isEmpty)?1:2, vsync: this);
+    // carDetailsScreenViewModel.testDriveTabController =
+    //     TabController(length: (carDetailsScreenViewModel.testDriveIssue.isEmpty)?1:2, vsync: this);
     super.initState();
   }
 
@@ -703,7 +703,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
   Widget bottomSheetWidget() {
     return Container(
       width: double.infinity,
-      height: 111,
+      height: (carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase() )? 
+      65:111,
       color: Colors.white,
       padding: const EdgeInsets.all(12),
       child: Column(
@@ -737,7 +738,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
           const SizedBox(
             height: 8,
           ),
-          Row(
+          (carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase() )?
+          const SizedBox()
+          :Row(
             children: [
               Expanded(
                 child: SizedBox(
@@ -1075,8 +1078,10 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
           ),
           AutoScaleTabBarView(
             controller: tabController,
-            children: (issueList.isNotEmpty)?[
+            children: (issueList.isNotEmpty)?
+            [
               viewIssue(issueList, showMore, onTap),
+              // Text("view"),
               otherIssue(otherPartsList),
             ]
             :[
@@ -1134,31 +1139,31 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 12,
+                              if(list[index].listValue != null) Padding(
+                                padding: const EdgeInsets.only(top: 12.0),
+                                child: GridView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: list[index].listValue!.length,
+                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 8,
+                                    mainAxisSpacing: 8,
+                                    mainAxisExtent: 30), 
+                                    itemBuilder: (context, i){
+                                      return Container(
+                                        alignment: Alignment.center,
+                                        margin: const EdgeInsets.only(right: 6),
+                                        decoration: BoxDecoration(
+                                          color: list[index].color,
+                                          borderRadius: BorderRadius.circular(4)
+                                        ),
+                                        child: Text(
+                                          list[index].listValue![i].capitalize.toString(),
+                                        style: MyStyles.white12500,),
+                                      );
+                                    }),
                               ),
-                              GridView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: (list[index].listValue == null)?1:list[index].listValue!.length,
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 8,
-                                  mainAxisSpacing: 8,
-                                  mainAxisExtent: 30), 
-                                  itemBuilder: (context, i){
-                                    return Container(
-                                      alignment: Alignment.center,
-                                      margin: const EdgeInsets.only(right: 6),
-                                      decoration: BoxDecoration(
-                                        color: list[index].color,
-                                        borderRadius: BorderRadius.circular(4)
-                                      ),
-                                      child: Text(
-                                        list[index].listValue![i].capitalize.toString(),
-                                      style: MyStyles.white12500,),
-                                    );
-                                  }),
                               // Row(
                               //   children: [
                               //     Expanded(
@@ -1205,40 +1210,41 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                             ],
                           ),
                         ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        SizedBox(
-                          width: 75,
-                          height: 68,
-                          child: Image.network(carDetailsScreenViewModel.imageList[index]["imageList"][0].value, fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return SvgPicture.asset(MyImages.loadingCar);
-                              }, frameBuilder:
-                                  (context, child, frame, wasSynchronouslyLoaded) {
-                                return child;
-                              }, loadingBuilder: (context, child, loadingProgress) {
-                                if (loadingProgress == null) {
-                                  return child;
-                                } else {
+                        if(carDetailsScreenViewModel.imageList[index]["imageList"] != null) Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: SizedBox(
+                            width: 75,
+                            height: 68,
+                            child: Image.network(carDetailsScreenViewModel.imageList[index]["imageList"][0].value, fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
                                   return SvgPicture.asset(MyImages.loadingCar);
-                                }
-                              }),
+                                }, frameBuilder:
+                                    (context, child, frame, wasSynchronouslyLoaded) {
+                                  return child;
+                                }, loadingBuilder: (context, child, loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  } else {
+                                    return SvgPicture.asset(MyImages.loadingCar);
+                                  }
+                                }),
+                          ),
                         )
                       ],
                     ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      list[index].remarks!.capitalize.toString(),
-                      style: MyStyles.black12400,
+                    if(list[index].remarks != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        list[index].remarks!.capitalize.toString(),
+                        style: MyStyles.black12400,
+                      ),
                     ),
                   ],
                 ),
               );
             }
-            if (index != 0 && index != 1 && index == list.length) {
+            if (index != 0 && index != 1 && index != 2 && index == list.length) {
               return Obx(() {
                 return Padding(
                   padding:
@@ -1360,6 +1366,16 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             if(carDetailsScreenViewModel.reportResponse.value.data == null || carDetailsScreenViewModel.carDetailsResponse.value.data == null){
               return const Center(child: CircularProgressIndicator(color: MyColors.kPrimaryColor,));
             }
+            carDetailsScreenViewModel.exteriorTabController =
+        TabController(length: (carDetailsScreenViewModel.exteriorIssue.isEmpty)?1:2, vsync: this);
+    carDetailsScreenViewModel.interiorElectricalTabController =
+        TabController(length: (carDetailsScreenViewModel.interiorAndElectricalIssue.isEmpty)?1:2, vsync: this);
+    carDetailsScreenViewModel.engineTabController =
+        TabController(length: (carDetailsScreenViewModel.engineIssue.isEmpty)?1:2, vsync: this);
+    carDetailsScreenViewModel.acTabController =
+        TabController(length: (carDetailsScreenViewModel.airConditionIssue.isEmpty)?1:2, vsync: this);
+    carDetailsScreenViewModel.testDriveTabController =
+        TabController(length: (carDetailsScreenViewModel.testDriveIssue.isEmpty)?1:2, vsync: this);
             return CustomScrollView(
                 controller: carDetailsScreenViewModel.scrollController,
                 slivers: <Widget>[
