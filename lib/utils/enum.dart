@@ -3,3 +3,8 @@ enum DocumentStatus{
   SUBMITTED,
   NOTSUBMITTED
 }
+
+enum CarStatus{
+  live,
+  scheduled,
+}

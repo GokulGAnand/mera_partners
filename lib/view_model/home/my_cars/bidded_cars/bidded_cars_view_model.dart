@@ -21,7 +21,6 @@ class BidCarsListViewModel extends GetxController{
   Rx<TextEditingController> autoBidController = TextEditingController().obs;
   Rx<TextEditingController> bidController = TextEditingController().obs;
   var bidCarsResponse = UserResponse().obs;
-  var carListResponse = CarListResponse().obs;
   SocketService? socketService;
   var likeResponse = UserResponse().obs;
 
@@ -114,7 +113,7 @@ class BidCarsListViewModel extends GetxController{
   void getCarData() async {
     //todo change query parameter
     try {
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'), headers: globals.headers);
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'), headers: globals.jsonHeaders);
       log(response.body);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
@@ -145,7 +144,6 @@ class BidCarsListViewModel extends GetxController{
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         likeResponse.value = UserResponse.fromJson(jsonDecode(response.body));
-        print('API Response svvs: ${response.body}');
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
         print('API Error: ${response.reasonPhrase}');
