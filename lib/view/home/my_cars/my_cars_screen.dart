@@ -111,7 +111,7 @@ class _MyCarsScreenState extends State<MyCarsScreen>
               dividerHeight: 2,
               tabs: [
                 Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.biddedCars}(${Get.find<BidCarsListViewModel>().bidCarsResponse.value.count ?? '0'})':MyStrings.biddedCars,),
-                Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.likedCars}(${Get.find<BidCarsListViewModel>().carListResponse.value.count ?? '0'})':MyStrings.likedCars,),
+                Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.likedCars}(${Get.find<BidCarsListViewModel>().likeResponse.value.data?[0].likedCars?.length ?? '0'})':MyStrings.likedCars,),
               ],
             ),),
             Expanded(

@@ -46,6 +46,9 @@ class OTBScreen extends StatelessWidget {
                           kmDriven: item.odometerReading != null ? item.odometerReading.toString() : '0',
                           ownerShip: item.ownershipNumber ?? '',
                           transmission: item.transmission ?? '',
+                          isScheduled: false.obs,
+                          bidStartTime: DateTime.parse(item.bidStartTime ?? DateTime.now().toString()),
+                          bidEndTime: DateTime.parse(item.bidEndTime ?? DateTime.now().toString()),
                           images: [
                             item.frontLeft?.url ?? '',
                             item.front?.url ?? '',

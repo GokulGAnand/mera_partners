@@ -42,7 +42,7 @@ class CustomCarDetailCard extends StatefulWidget {
   final String transmission;
   late final Rx<bool>? isFavourite = false.obs;
   final RxBool? isOtb;
-  final bool? isScheduled;
+  RxBool? isScheduled = false.obs;
   final Function()? autoBid;
   final Function()? bid;
   final Function()? otbTapped;
@@ -90,13 +90,6 @@ class CustomCarDetailCard extends StatefulWidget {
     );
   }
 
-  String _formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, '0');
-    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-    return "$twoDigitMinutes:$twoDigitSeconds";
-  }
-
   CustomCarDetailCard({
     super.key,
     required this.imageUrl,
@@ -118,7 +111,7 @@ class CustomCarDetailCard extends StatefulWidget {
     this.bid,
     this.isOtb,
     this.otbTapped,
-    this.isScheduled = false,
+    this.isScheduled,
     required this.onCarTapped,
     this.bidStartTime,
     this.bidEndTime,
@@ -171,7 +164,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
   void initState() {
     var start = DateTime.now();
     var end = widget.bidEndTime ?? DateTime.now();
-    if (widget.isScheduled == false) {
+    if (widget.isScheduled?.value == false) {
       Duration diff = end.difference(start);
       widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
 
@@ -207,7 +200,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
       // ProgressBar.instance.showProgressbar(Get.context!);
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/${widget.carId}').toString());
       log(jsonEncode({"status": like ==true ?"LikedCar":"Unlike"}));
-      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/${widget.carId}'),headers: globals.headers, body: jsonEncode({"status": like==true?"LikedCar":"Unlike"}));
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/${widget.carId}'),headers: globals.jsonHeaders, body: jsonEncode({"status": like==true?"LikedCar":"Unlike"}));
       log(response.body.toString());
       if (response.statusCode == 200) {
         // ProgressBar.instance.stopProgressBar(Get.context!);
@@ -335,7 +328,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       const SizedBox(
                         width: 15,
                       ),
-                      if (widget.bidAmount.isNotEmpty && widget.isScheduled == false)
+                      if (widget.bidAmount.isNotEmpty && widget.isScheduled?.value == false)
                         Obx(() =>Text(globals.documentStatus == DocumentStatus.VERIFIED.name?widget.bidAmount.value: widget.bidAmount.value.replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ','), textAlign: TextAlign.center, style: MyStyles.white16700)),
                     ],
                   ),
@@ -479,10 +472,10 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                         children: [
                           if(widget.duration.value != null)
                           Obx(() => Text(
-                            widget.duration.value!.inMinutes >= 10 ? MyStrings.acceptingBids:
-                            widget.duration.value!.inMinutes < 10 ? MyStrings.bidEndsIn : MyStrings.lastCall,
+                            widget.isScheduled?.value == true ? MyStrings.yetToStart : widget.duration.value!.inMinutes >= 10 ? MyStrings.acceptingBids:
+                            widget.duration.value!.inMinutes <= 10 ? MyStrings.bidEndsIn : MyStrings.lastCall,
                             style: TextStyle(
-                              color: widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                              color: widget.isScheduled?.value == true ? MyColors.kPrimaryColor : widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
                               fontSize: 12,
                               fontFamily: 'DM Sans',
                               fontWeight: FontWeight.w500,
@@ -496,11 +489,11 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                             children: [
                               Icon(
                                 Icons.timer_sharp,
-                                color: widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                                color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
                                 size: 14,
                               ),
                               Text(formatDuration( widget.duration.value! ), style: TextStyle(
-                                color: widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                                color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
                                 fontSize: 14,
                                 fontFamily: 'DM Sans',
                                 fontWeight: FontWeight.w700,
@@ -563,7 +556,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                 const SizedBox(
                   height: 16,
                 ),
-                if ((widget.isOtb == null || widget.isOtb?.value != true) && widget.isScheduled == false)
+                if ((widget.isOtb == null || widget.isOtb?.value != true) && widget.isScheduled?.value == false)
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0, right: 12),
                     child: Row(
@@ -612,7 +605,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                               },
                         buttonText: MyStrings.oneTouchBuy),
                   ),
-                if (widget.isScheduled == true)
+                if (widget.isScheduled?.value == true)
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0, right: 12),
                     child: DottedBorder(
