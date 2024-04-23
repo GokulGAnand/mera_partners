@@ -1,6 +1,4 @@
 import 'dart:developer';
-
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/strings.dart';
@@ -13,7 +11,6 @@ import 'package:mera_partners/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../routes/app_routes.dart';
-import '../../../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 
 class MyCarsScreen extends StatefulWidget {
   const MyCarsScreen({super.key});

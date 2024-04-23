@@ -114,11 +114,10 @@ class BidCarsListViewModel extends GetxController{
   void getCarData() async {
     //todo change query parameter
     try {
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE'), headers: globals.headers);
-      // var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&page=$pageKey&limit=$limit'),headers: globals.headers);
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'), headers: globals.headers);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        bidCarsResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
+        // bidCarsResponse.value = UserResponse.fromJson(jsonDecode(response.body));
         log(response.body);
         // final isLastPage = bidCarsResponse.value.data!.length < limit;
         // if (isLastPage) {

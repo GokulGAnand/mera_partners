@@ -12,6 +12,7 @@ import 'package:mera_partners/utils/globals.dart' as globals;
 
 /// ignore: must_be_immutable
 class BidCarsListScreen extends StatelessWidget {
+  BidCarsListScreen({super.key});
 
   BidCarsListViewModel controller = Get.isRegistered<BidCarsListViewModel>() ? Get.find<BidCarsListViewModel>() : Get.put(BidCarsListViewModel());
 
@@ -32,7 +33,7 @@ class BidCarsListScreen extends StatelessWidget {
                           onCarTapped: () {
                             Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.bidCarsResponse.value.data?[index].sId);
                           },
-                          isOtb: false,
+                          isOtb: false.obs,
                           carId: controller.bidCarsResponse.value.data?[index].sId ?? '',
                           isScheduled: controller.bidCarsResponse.value.data?[index].status?.toLowerCase() == 'scheduled' ? true : false,
                           imageUrl: controller.bidCarsResponse.value.data?[index].rearRight?.url ?? '',
