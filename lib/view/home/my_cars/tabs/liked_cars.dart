@@ -15,25 +15,33 @@ class LikedCars extends StatelessWidget {
           height: 12,
         ),
         Expanded(
-          child: GridView.builder(
-              itemCount: controller.likeResponse.value.data?[0].likedCars?.length ??0,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 22,
-                mainAxisSpacing: 18,
-                mainAxisExtent: 315,
-              ),
-              itemBuilder: (context, index) {
-               return LikedCarsWidget(
-                 bidAmount: controller.likeResponse.value.data![0].likedCars?[index].highestBid.toString() ?? '',
-                 id: controller.likeResponse.value.data![0].likedCars?[index].uniqueId.toString() ?? '',
-                 carId: controller.likeResponse.value.data![0].likedCars?[index].sId.toString() ?? '',
-                 imageUrl: controller.likeResponse.value.data![0].likedCars?[index].frontLeft?.url ?? '',
-                 model: controller.likeResponse.value.data![0].likedCars?[index].model.toString() ?? '',
-                 variant: controller.likeResponse.value.data![0].likedCars?[index].variant.toString() ?? '',
-                 status: controller.likeResponse.value.data![0].likedCars?[index].status.toString() ?? ''
-               );
-              }),
+          child: Obx(
+            () {
+              return GridView.builder(
+                  itemCount: controller.likedCarsearchList.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 22,
+                    mainAxisSpacing: 18,
+                    mainAxisExtent: 315,
+                  ),
+                  itemBuilder: (context, index) {
+                   return Obx(
+                     () {
+                       return LikedCarsWidget(
+                         bidAmount: controller.likedCarsearchList[index].highestBid.toString() ?? '',
+                         id: controller.likedCarsearchList[index].uniqueId.toString() ?? '',
+                         carId: controller.likedCarsearchList[index].sId.toString() ?? '',
+                         imageUrl: controller.likedCarsearchList[index].frontLeft?.url ?? '',
+                         model: controller.likedCarsearchList[index].model.toString() ?? '',
+                         variant: controller.likedCarsearchList[index].variant.toString() ?? '',
+                         status: controller.likedCarsearchList[index].status.toString() ?? ''
+                       );
+                     }
+                   );
+                  });
+            }
+          ),
         ),
       ],
     );

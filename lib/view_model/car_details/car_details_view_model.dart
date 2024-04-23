@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:intl/intl.dart';
 import 'package:mera_partners/model/response/car_details/car_details_response.dart';
 import 'package:mera_partners/model/response/car_details/report_response.dart';
+import 'package:mera_partners/model/response/user_data/user_car_details_response.dart';
 import 'package:mera_partners/service/endpoints.dart';
 import 'package:mera_partners/service/exception_error_util.dart';
 import 'package:mera_partners/utils/colors.dart';
@@ -134,6 +135,7 @@ class CarDetailsScreenViewModel extends GetxController {
     //   ..initialize().then((_) {});
     getReport();
     getCarDetails();
+    getLikedCarData();
     super.onInit();
   }
 
@@ -700,7 +702,8 @@ class CarDetailsScreenViewModel extends GetxController {
       // ProgressBar.instance.showProgressbar(Get.context!);
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$id').toString());
       log(jsonEncode({"status": like ==true ?"LikedCar": "Unlike"}));
-      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$id'),headers: globals.headers, body: jsonEncode({"status": like==true ?"LikedCar":"Unlike"}));
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$id'),
+      headers: globals.jsonHeaders, body: jsonEncode({"status": like==true ?"LikedCar":"Unlike"}));
       log(response.body.toString());
       if (response.statusCode == 200) {
         // ProgressBar.instance.stopProgressBar(Get.context!);
@@ -713,6 +716,32 @@ class CarDetailsScreenViewModel extends GetxController {
       // ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? MyStrings.unableToConnect);
+    }
+  }
+
+  var likeResponse = UserResponse().obs;
+  void getLikedCarData() async {
+    try {
+      print('API URL: ${Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}')}');
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'), headers: globals.headers);
+      print('API Response Body: ${response.body}');
+      if (response.statusCode == 200) {
+        // ProgressBar.instance.stopProgressBar(Get.context!);
+        likeResponse.value = UserResponse.fromJson(jsonDecode(response.body));
+        for(int i=0; i<likeResponse.value.data![0].likedCars!.length; i++){
+          if(likeResponse.value.data![0].likedCars![i].sId == id){
+            isLike.value = true;
+          }
+        }
+        print('API Response svvs: ${response.body}');
+      } else {
+        // ProgressBar.instance.stopProgressBar(Get.context!);
+        print('API Error: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      // ProgressBar.instance.stopProgressBar(Get.context!);
+      print('Exception occurred: $e');
+      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
   }
 

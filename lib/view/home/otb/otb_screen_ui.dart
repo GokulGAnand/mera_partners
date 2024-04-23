@@ -27,50 +27,57 @@ class OTBScreen extends StatelessWidget {
                       // itemCount: controller.carsListResponse.value.data?.length,
                       // padding: const EdgeInsets.all(8),
                       itemBuilder: (context, item, index) {
-                        return CustomCarDetailCard(
-                          carId: item.sId ?? '',
-                          onCarTapped: () {
-                            Get.toNamed(AppRoutes.carDetailsScreen);
-                          },
-                          isOtb: true.obs,
-                          imageUrl: item.rearRight?.url ?? '',
-                          carLocation: item.vehicleLocation ?? '',
-                          bidStatus: RxString(item.status ?? ''),
-                          bidAmount: Constants.numberFormat.format(item.highestBid).toString().obs,
-                          carModel: item.model ?? '',
-                          carVariant: item.variant ?? '',
-                          rating: ((item.engineStar ?? 0 + (item.exteriorStar ?? 0) + (item.interiorAndElectricalStar ?? 0) + (item.testDriveStar ?? 0)) / 4),
-                          fuelType: item.fuelType ?? '',
-                          id: item.uniqueId.toString(),
-                          fmv: item.realValue != null ? item.realValue.toString() : '0',
-                          kmDriven: item.odometerReading != null ? item.odometerReading.toString() : '0',
-                          ownerShip: item.ownershipNumber ?? '',
-                          transmission: item.transmission ?? '',
-                          images: [
-                            item.frontLeft?.url ?? '',
-                            item.front?.url ?? '',
-                            item.frontRight?.url ?? '',
-                            item.rear?.url ?? '',
-                            item.engineCompartment?.url ?? '',
-                          ],
-                          otbTapped: () {
-                            showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                context: context,
-                                builder: (context) {
-                                  return OTBBottomSheet(
-                                    // otbPrice: 10,
-                                    //todo
-                                    otbPrice: item.realValue ?? 0,
-                                    onPressed: () {
-                                      
-                                    },
-                                  );
-                                });
-                          },
-                          statusColor: MyColors.kPrimaryColor,
-                        );
+                        return Obx(
+                          () {
+                            if((controller.searchController.text.isEmpty && controller.searchList.isEmpty) || controller.searchList.contains(controller.carsListResponse.value.data?[index].sId)){
+                            return CustomCarDetailCard(
+                              carId: item.sId ?? '',
+                              onCarTapped: () {
+                                Get.toNamed(AppRoutes.carDetailsScreen);
+                              },
+                              isOtb: true.obs,
+                              imageUrl: item.rearRight?.url ?? '',
+                              carLocation: item.vehicleLocation ?? '',
+                              bidStatus: RxString(item.status ?? ''),
+                              bidAmount: Constants.numberFormat.format(item.highestBid).toString().obs,
+                              carModel: item.model ?? '',
+                              carVariant: item.variant ?? '',
+                              rating: ((item.engineStar ?? 0 + (item.exteriorStar ?? 0) + (item.interiorAndElectricalStar ?? 0) + (item.testDriveStar ?? 0)) / 4),
+                              fuelType: item.fuelType ?? '',
+                              id: item.uniqueId.toString(),
+                              fmv: item.realValue != null ? item.realValue.toString() : '0',
+                              kmDriven: item.odometerReading != null ? item.odometerReading.toString() : '0',
+                              ownerShip: item.ownershipNumber ?? '',
+                              transmission: item.transmission ?? '',
+                              images: [
+                                item.frontLeft?.url ?? '',
+                                item.front?.url ?? '',
+                                item.frontRight?.url ?? '',
+                                item.rear?.url ?? '',
+                                item.engineCompartment?.url ?? '',
+                              ],
+                              otbTapped: () {
+                                showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    context: context,
+                                    builder: (context) {
+                                      return OTBBottomSheet(
+                                        // otbPrice: 10,
+                                        //todo
+                                        otbPrice: item.realValue ?? 0,
+                                        onPressed: () {
+                                          
+                                        },
+                                      );
+                                    });
+                              },
+                              statusColor: MyColors.kPrimaryColor,
+                            );
+                            }
+                        return const SizedBox();
+                          }
+                      );
                       },
                     ),
             ),

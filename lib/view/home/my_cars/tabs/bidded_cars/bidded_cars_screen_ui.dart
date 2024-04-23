@@ -28,7 +28,7 @@ class BidCarsListScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return Obx(
                             () {
-                              if((controller.searchController.text.isEmpty && controller.searchList.isEmpty) || controller.searchList.contains(controller.bidCarsResponse.value.data?[index].sId)){
+                              if((controller.bidCarsearchController.value.text.isEmpty && controller.bidCarsearchList.isEmpty) || controller.bidCarsearchList.contains(controller.bidCarsResponse.value.data?[index].sId)){
                               return CustomCarDetailCard(
                           onCarTapped: () {
                             Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.bidCarsResponse.value.data?[index].sId);

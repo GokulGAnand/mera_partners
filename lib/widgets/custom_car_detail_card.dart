@@ -207,7 +207,8 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
       // ProgressBar.instance.showProgressbar(Get.context!);
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/${widget.carId}').toString());
       log(jsonEncode({"status": like ==true ?"LikedCar":"Unlike"}));
-      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/${widget.carId}'),headers: globals.headers, body: jsonEncode({"status": like==true?"LikedCar":"Unlike"}));
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/${widget.carId}'),
+      headers: globals.jsonHeaders, body: jsonEncode({"status": like==true?"LikedCar":"Unlike"}));
       log(response.body.toString());
       if (response.statusCode == 200) {
         // ProgressBar.instance.stopProgressBar(Get.context!);

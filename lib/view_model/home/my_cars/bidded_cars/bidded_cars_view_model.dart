@@ -15,8 +15,11 @@ import '../../../../widgets/progressbar.dart';
 
 class BidCarsListViewModel extends GetxController{
 
-  TextEditingController searchController = TextEditingController();
-  RxList<String> searchList = <String>[].obs;
+  TextEditingController bidCarsearchController = TextEditingController();
+  RxList<String> bidCarsearchList = <String>[].obs;
+
+  TextEditingController likedCarsearchController = TextEditingController();
+  RxList<LikedCars> likedCarsearchList = <LikedCars>[].obs;
 
   Rx<TextEditingController> autoBidController = TextEditingController().obs;
   Rx<TextEditingController> bidController = TextEditingController().obs;
@@ -58,7 +61,8 @@ class BidCarsListViewModel extends GetxController{
     try {
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId').toString());
       log(jsonEncode({"status": like == true ? "LikedCar" : "Unlike"}));
-      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'), headers: globals.headers, body: jsonEncode({"status": like == true ? "LikedCar" : "Unlike"}));
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'), 
+      headers: globals.jsonHeaders, body: jsonEncode({"status": like == true ? "LikedCar" : "Unlike"}));
       log(response.body.toString());
       if (response.statusCode == 200) {
         Get.find<BidCarsListViewModel>().getLikedCarData();
@@ -145,6 +149,7 @@ class BidCarsListViewModel extends GetxController{
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         likeResponse.value = UserResponse.fromJson(jsonDecode(response.body));
+        likedCarsearchList.value = UserResponse.fromJson(jsonDecode(response.body)).data![0].likedCars!;
         print('API Response svvs: ${response.body}');
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);

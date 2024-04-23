@@ -541,6 +541,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             carDetailsScreenViewModel.exteriorShowMore, () {
           carDetailsScreenViewModel.exteriorShowMore.value =
               !carDetailsScreenViewModel.exteriorShowMore.value;
+              setState(() {});
         }),
       ),
       Padding(
@@ -1282,7 +1283,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                             children: [
                               Text(
                                 (showMore.value == false)
-                                    ? '${4 - 2} ${MyStrings.otherIssues}'
+                                    ? '${list.length - 2} ${MyStrings.otherIssues}'
                                     : MyStrings.viewLessIssues,
                                 textAlign: TextAlign.center,
                                 style: MyStyles.red3_12700,
