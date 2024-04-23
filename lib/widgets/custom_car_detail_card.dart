@@ -41,8 +41,8 @@ class CustomCarDetailCard extends StatefulWidget {
   final String ownerShip;
   final String transmission;
   late final Rx<bool>? isFavourite = false.obs;
-  final bool? isOtb;
-  final bool? isScheduled;
+  final RxBool? isOtb;
+  RxBool? isScheduled = false.obs;
   final Function()? autoBid;
   final Function()? bid;
   final Function()? otbTapped;
@@ -51,8 +51,9 @@ class CustomCarDetailCard extends StatefulWidget {
   var activePage = 0.obs;
   final DateTime? bidStartTime;
   final DateTime? bidEndTime;
-  Duration duration = Duration.zero;
+  Rxn<Duration> duration = Rxn();
   Timer? timer;
+  String? scheduleTime;
 
   showPendingDialog() {
     showDialog(
@@ -89,13 +90,6 @@ class CustomCarDetailCard extends StatefulWidget {
     );
   }
 
-  String _formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, '0');
-    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-    return "$twoDigitMinutes:$twoDigitSeconds";
-  }
-
   CustomCarDetailCard({
     super.key,
     required this.imageUrl,
@@ -117,7 +111,7 @@ class CustomCarDetailCard extends StatefulWidget {
     this.bid,
     this.isOtb,
     this.otbTapped,
-    this.isScheduled = false,
+    this.isScheduled,
     required this.onCarTapped,
     this.bidStartTime,
     this.bidEndTime,
@@ -132,22 +126,67 @@ class CustomCarDetailCard extends StatefulWidget {
 class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
 
   void startTimer() {
-    widget.timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (widget.duration.inSeconds == 0) {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (widget.duration.value!.inSeconds == 0) {
         timer.cancel();
       } else {
-        setState(() {
-          widget.duration = widget.duration - const Duration(seconds: 1);
-        });
+        widget.duration.value = widget.duration.value! - const Duration(seconds: 1);
       }
     });
   }
 
+  String formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    String hour = duration.inHours.toString();
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    if(duration.inHours == 0){
+      return "${twoDigitMinutes}min ${twoDigitSeconds}sec";
+    } else if (duration.inHours < 10){
+      hour = twoDigits(duration.inHours);
+      return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
+    }
+    return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
+  }
+
+  String _formatTime(DateTime dateTime) {
+    String period = dateTime.hour < 12 ? "AM" : "PM";
+    int hour = dateTime.hour;
+    if (hour == 0) hour = 12;
+    return "$hour:${dateTime.minute.toString().padLeft(2, '0')} $period";
+  }
+
+  String _formatDateTime(DateTime? dateTime) {
+    return dateTime != null ? "${dateTime.day}/${dateTime.month}/${dateTime.year} ${_formatTime(dateTime)}":"";
+  }
+
   @override
   void initState() {
-    widget.duration = const Duration(minutes: 20);
+    var start = DateTime.now();
+    var end = widget.bidEndTime ?? DateTime.now();
+    if (widget.isScheduled?.value == false) {
+      Duration diff = end.difference(start);
+      widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+
+      if(start.isBefore(end)) {
+        startTimer();
+      }
+    }else{
+      Duration diff = widget.bidStartTime!.difference(start);
+      widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+
+      if(start.isAfter(widget.bidStartTime!)) {
+        startTimer();
+      }
+    }
     super.initState();
-    startTimer();
+    if (widget.bidStartTime?.day == DateTime.now().day) {
+      widget.scheduleTime = "Scheduled for today ${_formatTime(widget.bidStartTime!)}";
+    } else if (widget.bidStartTime?.day == DateTime.now().day + 1) {
+      widget.scheduleTime = "Scheduled for tomorrow ${widget.bidStartTime?.hour}:${widget.bidStartTime?.minute}";
+    } else {
+      widget.scheduleTime = "Scheduled for ${_formatDateTime(widget.bidStartTime)}";
+    }
   }
 
   @override
@@ -161,7 +200,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
       // ProgressBar.instance.showProgressbar(Get.context!);
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/${widget.carId}').toString());
       log(jsonEncode({"status": like ==true ?"LikedCar":"Unlike"}));
-      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/${widget.carId}'),headers: globals.headers, body: jsonEncode({"status": like==true?"LikedCar":"Unlike"}));
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/${widget.carId}'),headers: globals.jsonHeaders, body: jsonEncode({"status": like==true?"LikedCar":"Unlike"}));
       log(response.body.toString());
       if (response.statusCode == 200) {
         // ProgressBar.instance.stopProgressBar(Get.context!);
@@ -204,16 +243,25 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
           // shape: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
           child: SizedBox(
             width: double.maxFinite,
-            height: MediaQuery.of(context).size.height * 0.6,
+            height: 480,
             child: Column(
               children: [
                 Stack(
                   children: [
-                    CustomSlider(
-                      sliderImage: widget.images,
-                      pageSliderController: widget.pageController,
-                      activePage: widget.activePage,
-                      showBlackOpacity: true,
+                    GestureDetector(
+                      onHorizontalDragStart: (details) {
+                        widget.activePage++;
+                        widget.pageController.value.animateTo(
+                          widget.activePage.toDouble(),
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.linear,);
+                      },
+                      child: CustomSlider(
+                        sliderImage: widget.images,
+                        pageSliderController: widget.pageController,
+                        activePage: widget.activePage,
+                        showBlackOpacity: true,
+                      ),
                     ),
                     Positioned(
                       bottom: 8,
@@ -250,10 +298,10 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                               size: 16,
                             ),
                             onTap: () {
-                              print("Tapping like button2");
+                              log("Tapping like button2");
                               updateLikedCar(widget.isFavourite!.value ? false : true);
                               widget.isFavourite!.value == true ? widget.isFavourite!.value = false : widget.isFavourite!.value = true;
-                              print("Like status2: ${widget.isFavourite!.value}");
+                              log("Like status2: ${widget.isFavourite!.value}");
                             },
                           ),
                         ),
@@ -261,7 +309,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                     ),
                   ],
                 ),
-                Container(
+                Obx(() => Container(
                   height: 37,
                   clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
@@ -276,14 +324,15 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       const SizedBox(
                         width: 12,
                       ),
-                      Obx(() =>Text(widget.isOtb == true ? MyStrings.closingPrice : widget.bidStatus.value, style: MyStyles.whiteTitleStyle)),
+                      Obx(() =>Text(widget.isOtb?.value == true ? MyStrings.closingPrice : widget.bidStatus.value, style: MyStyles.whiteTitleStyle)),
                       const SizedBox(
                         width: 15,
                       ),
-                      if (widget.bidAmount.isNotEmpty && widget.isScheduled == false) Obx(() =>Text(widget.bidAmount.value, textAlign: TextAlign.center, style: MyStyles.white16700)),
+                      if (widget.bidAmount.isNotEmpty && widget.isScheduled?.value == false)
+                        Obx(() =>Text(globals.documentStatus == DocumentStatus.VERIFIED.name?widget.bidAmount.value: widget.bidAmount.value.replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ','), textAlign: TextAlign.center, style: MyStyles.white16700)),
                     ],
                   ),
-                ),
+                ),),
                 const SizedBox(
                   height: 10,
                 ),
@@ -421,35 +470,37 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            widget.duration.inMinutes >= 10 ? MyStrings.acceptingBids:
-                            widget.duration.inMinutes < 10 ? MyStrings.bidEndsIn : MyStrings.lastCall,
+                          if(widget.duration.value != null)
+                          Obx(() => Text(
+                            widget.isScheduled?.value == true ? MyStrings.yetToStart : widget.duration.value!.inMinutes >= 10 ? MyStrings.acceptingBids:
+                            widget.duration.value!.inMinutes <= 10 ? MyStrings.bidEndsIn : MyStrings.lastCall,
                             style: TextStyle(
-                              color: widget.duration.inMinutes >= 10 ? MyColors.green : widget.duration.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                              color: widget.isScheduled?.value == true ? MyColors.kPrimaryColor : widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
                               fontSize: 12,
                               fontFamily: 'DM Sans',
                               fontWeight: FontWeight.w500,
                             ),
-                          ),
+                          ),),
                           const SizedBox(
                             height: 1,
                           ),
-                          Row(
+                          if(widget.duration.value != null)
+                          Obx(() => Row(
                             children: [
                               Icon(
                                 Icons.timer_sharp,
-                                color: widget.duration.inMinutes >= 10 ? MyColors.green : widget.duration.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                                color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
                                 size: 14,
                               ),
-                              Text( widget._formatDuration( widget.duration ), style: TextStyle(
-                                color: widget.duration.inMinutes >= 10 ? MyColors.green : widget.duration.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                              Text(formatDuration( widget.duration.value! ), style: TextStyle(
+                                color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
                                 fontSize: 14,
                                 fontFamily: 'DM Sans',
                                 fontWeight: FontWeight.w700,
                                 height: 0,
                               )),
                             ],
-                          ),
+                          ),)
                         ],
                       ),
                       Column(
@@ -490,7 +541,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                                 TextSpan(
                                   children: [
                                     const TextSpan(text: 'FMV  ', style: MyStyles.subTitleGreayStyle),
-                                    TextSpan(text: '₹${widget.fmv}', style: MyStyles.grey14700),
+                                    TextSpan(text: globals.documentStatus == DocumentStatus.VERIFIED.name ? '₹${widget.fmv}' : '₹${widget.fmv.replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}', style: MyStyles.grey14700),
                                   ],
                                 ),
                                 textAlign: TextAlign.center,
@@ -505,7 +556,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                 const SizedBox(
                   height: 16,
                 ),
-                if ((widget.isOtb == null || widget.isOtb != true) && widget.isScheduled == false)
+                if ((widget.isOtb == null || widget.isOtb?.value != true) && widget.isScheduled?.value == false)
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0, right: 12),
                     child: Row(
@@ -542,7 +593,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       ],
                     ),
                   ),
-                if (widget.isOtb == true)
+                if (widget.isOtb?.value == true)
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0, right: 12),
                     child: CustomElevatedButton(
@@ -554,7 +605,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                               },
                         buttonText: MyStrings.oneTouchBuy),
                   ),
-                if (widget.isScheduled == true)
+                if (widget.isScheduled?.value == true)
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0, right: 12),
                     child: DottedBorder(
@@ -571,7 +622,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                             disabledBackgroundColor: MyColors.lightBlue,
                           ),
                           onPressed: null,
-                          buttonText: 'Scheduled for tomorrow, 6:00 PM'),
+                          buttonText: widget.scheduleTime ?? 'Scheduled'),
                     ),
                   ),
               ],

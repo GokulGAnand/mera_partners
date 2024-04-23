@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mera_partners/utils/images.dart';
+import 'package:mera_partners/utils/styles.dart';
+import '../utils/colors.dart';
 import '../utils/dimens.dart';
 
 class NotificationWidget extends StatelessWidget {
@@ -14,20 +17,31 @@ class NotificationWidget extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.image,
-    this.titleColor = Colors.grey,
-    this.subtitleColor = Colors.black,
+    this.titleColor = MyColors.grey,
+    this.subtitleColor = Colors.grey,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.fromLTRB(18.0,8,8,8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
+          image.isNotEmpty && (image.startsWith('http') || image.startsWith('https')) ? Container(
+            width: 35,
+            height: 35,
+            decoration: BoxDecoration(
+              color: MyColors.lightBlue,
+              borderRadius: BorderRadius.circular(35),
+              image: DecorationImage(
+                image: NetworkImage(image),
+                fit: BoxFit.fill,
+              ),
+            ),
+          ): CircleAvatar(
             radius: 20,
-            backgroundImage: AssetImage(image),
+            child: SvgPicture.asset(MyImages.notification1),
           ),
           const SizedBox(width:Dimens.standard_8),
           Expanded(
@@ -36,18 +50,12 @@ class NotificationWidget extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: titleColor,
-                  ),
+                  style: MyStyles.grey12400
                 ),
                 SizedBox(height: Dimens.standard_4),
                 Text(
                   subtitle,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: subtitleColor,
-                  ),
+                  style: MyStyles.greyShade14500
                 ),
               ],
             ),

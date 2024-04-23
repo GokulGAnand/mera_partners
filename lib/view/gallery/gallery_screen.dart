@@ -67,7 +67,8 @@ class _GalleryScreenState extends State<GalleryScreen> {
                               child: Row(
                                 children: [
                                   Text(
-                                    "${galleryScreenViewModel.imagesList[index]["title"]}${(galleryScreenViewModel.imagesList[index]["title"] == MyStrings.exterior)?" (${galleryScreenViewModel.imagesList[index]["images"].length})":""}",
+                                    "${galleryScreenViewModel.imagesList[index]["title"]}",
+                                    // "${galleryScreenViewModel.imagesList[index]["title"]}${(galleryScreenViewModel.imagesList[index]["title"] == MyStrings.exterior)?" (${galleryScreenViewModel.imagesList[index]["images"].length})":""}",
                                     style: TextStyle(
                                     color: (galleryScreenViewModel.imageIndex.value == index)?MyColors.kPrimaryColor:MyColors.black,
                                     fontSize: 14,

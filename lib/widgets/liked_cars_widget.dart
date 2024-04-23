@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter_svg/svg.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +11,7 @@ import '../service/endpoints.dart';
 import '../service/exception_error_util.dart';
 import '../utils/colors.dart';
 import '../utils/dimens.dart';
+import '../utils/images.dart';
 import '../utils/strings.dart';
 import '../utils/styles.dart';
 import '../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
@@ -43,7 +45,7 @@ class LikedCarsWidget extends StatelessWidget {
     try {
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId').toString());
       log(jsonEncode({"status": like== true?"LikedCar" :"Unlike"}));
-      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'),headers: globals.headers, body: jsonEncode({"status": like== true? "LikedCar" :"Unlike"}));
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'),headers: globals.jsonHeaders, body: jsonEncode({"status": like== true? "LikedCar" :"Unlike"}));
       log(response.body.toString());
       if (response.statusCode == 200) {
         print('checking: ${bidCarsListViewModel.likeResponse}');
@@ -80,19 +82,23 @@ class LikedCarsWidget extends StatelessWidget {
             Stack(
               alignment: Alignment.bottomCenter,
               children: [
-                Container(
+                SizedBox(
                   width: double.infinity,
                   height: 107,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8),
-                    ),
-                    image: DecorationImage(
-                      image: NetworkImage(imageUrl),
+                  child: Image.network(imageUrl,
                       fit: BoxFit.fill,
-                    ),
-                  ),
+                      errorBuilder: (context, error, stackTrace) {
+                        return SvgPicture.asset(MyImages.loadingCar);
+                      }, frameBuilder:
+                          (context, child, frame, wasSynchronouslyLoaded) {
+                        return child;
+                      }, loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        } else {
+                          return SvgPicture.asset(MyImages.loadingCar);
+                        }
+                      }),
                 ),
                 Container(
                   width: double.infinity,

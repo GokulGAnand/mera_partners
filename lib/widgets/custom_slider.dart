@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/images.dart';
 import 'package:flutter/material.dart';
@@ -21,25 +19,9 @@ class CustomSlider extends StatelessWidget {
   bool showBlackOpacity;
   double height;
 
-  Timer? carouselTimer;
-
-  Timer getTimer() {
-    return Timer.periodic(const Duration(seconds: 3), (timer) {
-      if (activePage.value == 5) {
-        activePage.value = 0;
-      }
-      pageSliderController.value.animateToPage(
-        activePage.value,
-        duration: const Duration(seconds: 1),
-        curve: Curves.easeInOutCirc,
-      );
-      activePage.value++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Obx(() => SizedBox(
       height: height,
       child: Stack(
         children: [
@@ -50,6 +32,11 @@ class CustomSlider extends StatelessWidget {
               controller: pageSliderController.value,
               onPageChanged: (index) {
                 activePage.value = index;
+                pageSliderController.value.animateToPage(
+                  activePage,
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.easeIn,
+                );
               },
               itemBuilder: (_, index) {
                 return AnimatedBuilder(
@@ -59,17 +46,17 @@ class CustomSlider extends StatelessWidget {
                     },
                     child: Image.network(sliderImage[index], fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
-                      return SvgPicture.asset(MyImages.loadingCar);
-                    }, frameBuilder:
+                          return SvgPicture.asset(MyImages.loadingCar);
+                        }, frameBuilder:
                             (context, child, frame, wasSynchronouslyLoaded) {
-                      return child;
-                    }, loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      } else {
-                        return SvgPicture.asset(MyImages.loadingCar);
-                      }
-                    }));
+                          return child;
+                        }, loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          } else {
+                            return SvgPicture.asset(MyImages.loadingCar);
+                          }
+                        }));
               },
               itemCount: sliderImage.length,
             ),
@@ -99,14 +86,19 @@ class CustomSlider extends StatelessWidget {
             bottom: 12,
             left: MediaQuery.of(context).size.width * 0.39,
             child: Obx(
-              () => SizedBox(
+                  () => SizedBox(
                 width: 41,
                 height: 4.56,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(
                     5,
-                    (index) => GestureDetector(
+                        (index) => GestureDetector(
+                          onTap: () => pageSliderController.value.animateToPage(
+                            index,
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.easeIn,
+                          ),
                       child: Container(
                         margin: const EdgeInsets.only(left: 2.0),
                         child: Icon(
@@ -125,6 +117,6 @@ class CustomSlider extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ));
   }
 }

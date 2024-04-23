@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mera_partners/utils/globals.dart' as globals;
@@ -11,6 +12,10 @@ import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
 
 class OTBCarsListViewModel extends GetxController {
+
+  TextEditingController searchController = TextEditingController();
+  RxList<String> searchList = <String>[].obs;
+
   var carsListResponse = CarListResponse().obs;
 
 
@@ -29,10 +34,10 @@ class OTBCarsListViewModel extends GetxController {
   void getCarData(int pageKey) async {
     try {
       var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=OTB&page=$pageKey&limit=$limit'), headers: globals.headers);
+      log(response.body);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         carsListResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
-        log(response.body);
         final isLastPage = carsListResponse.value.data!.length < limit;
         if (isLastPage) {
           infinitePagingController.appendLastPage(carsListResponse.value.data!);

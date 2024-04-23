@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/images.dart';
 import 'package:mera_partners/utils/strings.dart';
@@ -8,14 +9,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
 import '../utils/dimens.dart';
 
 class OTBBottomSheet extends StatelessWidget {
-  const OTBBottomSheet({super.key, required this.otbPrice, this.onPressed});
+  OTBBottomSheet({super.key, required this.otbPrice, this.onPressed, this.bidStartTime, this.bidEndTime});
 
   final int otbPrice;
   final void Function()? onPressed;
+  final DateTime? bidStartTime;
+  final DateTime? bidEndTime;
+  Rxn<Duration> duration = Rxn();
+
+  void startTimer() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (duration.value!.inSeconds == 0) {
+        timer.cancel();
+      } else {
+        duration.value = duration.value! - const Duration(seconds: 1);
+      }
+    });
+  }
+
+  String formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    String hour = duration.inHours.toString();
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    if(duration.inHours == 0){
+      return "${twoDigitMinutes}min ${twoDigitSeconds}sec";
+    } else if (duration.inHours < 10){
+      hour = twoDigits(duration.inHours);
+      return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
+    }
+    return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
+  }
 
   @override
   Widget build(BuildContext context) {

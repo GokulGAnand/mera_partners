@@ -14,6 +14,10 @@ import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
 
 class LiveCarsListViewModel extends GetxController {
+
+  TextEditingController searchController = TextEditingController();
+  RxList<String> searchList = <String>[].obs;
+
   var liveCarsResponse = CarListResponse().obs;
   SocketService? socketService;
   List<int> bid = [5000, 10000, 15000];

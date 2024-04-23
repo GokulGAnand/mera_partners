@@ -32,6 +32,7 @@ Future<bool> loadData() async{
     globals.isDeposited = await SharedPrefManager.instance.getBoolAsync(Constants.isDeposited);
     globals.addressProofFront = await SharedPrefManager.instance.getBoolAsync(Constants.addressProofFront);
     print(globals.token);
+    print(globals.uniqueUserId);
     return true;
   }
   return false;

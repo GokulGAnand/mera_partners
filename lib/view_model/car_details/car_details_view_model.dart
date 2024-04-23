@@ -430,8 +430,8 @@ class CarDetailsScreenViewModel extends GetxController {
       }
     });
     if(exteriorImages.isNotEmpty) imageList.add({"title":MyStrings.exterior, "isClick": false.obs, "images": exteriorImages});
-    if(interiorImages.isNotEmpty) imageList.add({"title":MyStrings.interior, "isClick": false.obs, "images": interiorImages});
     if(engineImages.isNotEmpty) imageList.add({"title":MyStrings.engine, "isClick": false.obs, "images": engineImages});
+    if(interiorImages.isNotEmpty) imageList.add({"title":MyStrings.interior, "isClick": false.obs, "images": interiorImages});
     if(damageImages.isNotEmpty) imageList.add({"title":MyStrings.damage, "isClick": false.obs, "images": damageImages});
   }
 
@@ -664,11 +664,19 @@ class CarDetailsScreenViewModel extends GetxController {
         //   final nextPageKey = pageKey + 1;
         //   infinitePagingController.appendPage(liveCarsResponse.value.data!, nextPageKey);
         // }
+        var startTime= carDetailsResponse.value.data![0].bidStartTime;
+        var endTime= carDetailsResponse.value.data![0].bidEndTime;
 
-        var start = DateTime.now();
-        var end = carDetailsResponse.value.data![0].bidEndTime!;
-        if(start.isBefore(end)) {
-          Duration diff = end.difference(start);
+        var start = DateTime(startTime!.year, startTime.month, startTime.day, startTime.hour, startTime.minute, startTime.second);
+        var now = DateTime.now();
+        var end = DateTime(endTime!.year, endTime.month, endTime.day, endTime.hour, endTime.minute, endTime.second);
+
+        if(now.isBefore(start)){
+          Duration diff = start.difference(now);
+          duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+          startTimer();
+        }else if(now.isBefore(end)) {
+          Duration diff = end.difference(now);
           duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
           startTimer();
         }
@@ -692,7 +700,7 @@ class CarDetailsScreenViewModel extends GetxController {
       // ProgressBar.instance.showProgressbar(Get.context!);
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$id').toString());
       log(jsonEncode({"status": like ==true ?"LikedCar": "Unlike"}));
-      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$id'),headers: globals.headers, body: jsonEncode({"status": like==true ?"LikedCar":"Unlike"}));
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$id'),headers: globals.jsonHeaders, body: jsonEncode({"status": like==true ?"LikedCar":"Unlike"}));
       log(response.body.toString());
       if (response.statusCode == 200) {
         // ProgressBar.instance.stopProgressBar(Get.context!);

@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:mera_partners/utils/constants.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
@@ -13,6 +12,7 @@ import 'package:mera_partners/utils/globals.dart' as globals;
 
 /// ignore: must_be_immutable
 class BidCarsListScreen extends StatelessWidget {
+  BidCarsListScreen({super.key});
 
   BidCarsListViewModel controller = Get.isRegistered<BidCarsListViewModel>() ? Get.find<BidCarsListViewModel>() : Get.put(BidCarsListViewModel());
 
@@ -27,13 +27,15 @@ class BidCarsListScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   itemBuilder: (context, index) {
                     return Obx(
-                            () =>CustomCarDetailCard(
+                            () {
+                              if((controller.searchController.text.isEmpty && controller.searchList.isEmpty) || controller.searchList.contains(controller.bidCarsResponse.value.data?[index].sId)){
+                              return CustomCarDetailCard(
                           onCarTapped: () {
                             Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.bidCarsResponse.value.data?[index].sId);
                           },
-                          isOtb: false,
+                          isOtb: false.obs,
                           carId: controller.bidCarsResponse.value.data?[index].sId ?? '',
-                          isScheduled: controller.bidCarsResponse.value.data?[index].status?.toLowerCase() == 'scheduled' ? true : false,
+                          isScheduled: controller.bidCarsResponse.value.data?[index].status?.toLowerCase() == 'scheduled' ? true.obs : false.obs,
                           imageUrl: controller.bidCarsResponse.value.data?[index].rearRight?.url ?? '',
                           carLocation: controller.bidCarsResponse.value.data?[index].vehicleLocation ?? '',
                           bidStatus: controller.bidCarsResponse.value.data?[index].status?.toLowerCase() != MyStrings.live.toLowerCase() ? RxString(MyStrings.scheduledBid) : globals.uniqueUserId != null && controller.bidCarsResponse.value.data?[index].winner != null && controller.bidCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) ? RxString(MyStrings.youAreLeading)
@@ -126,7 +128,13 @@ class BidCarsListScreen extends StatelessWidget {
                                   );
                                 });
                           },
-                        ));
+                        );
+                            
+                  } else {
+                    return const SizedBox();
+                  }
+                            }
+                        );
                   },
                 )
               : const Center(

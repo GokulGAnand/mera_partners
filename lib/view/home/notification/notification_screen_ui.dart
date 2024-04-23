@@ -1,37 +1,35 @@
+import 'package:get/get.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:flutter/material.dart';
-
+import 'package:mera_partners/view_model/home/notification/notification_view_model.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/notification_widget.dart';
 
 class NotificationScreen extends StatelessWidget {
-  const NotificationScreen({super.key,});
+  NotificationScreen({
+    super.key,
+  });
+
+  NotificationViewModel controller = Get.isRegistered<NotificationViewModel>() ? Get.find<NotificationViewModel>() : Get.put(NotificationViewModel());
 
   @override
   Widget build(BuildContext context) {
-
     final pixelRatio = MediaQuery.of(context).devicePixelRatio;
     final appBarHeight = 240 / pixelRatio;
 
     return Scaffold(
-      appBar: CustomAppBar(
-        title: MyStrings.notification,
-        appBarHeight: appBarHeight,
-
-      ),
-     body: ListView.builder(
-       itemCount: 1,
-       itemBuilder: (context, index) {
-         return  const NotificationWidget(title: MyStrings.title1, subtitle: MyStrings.offer, image: '');
-       },
-
-
-     )
-
-
-
-    );
+        appBar: CustomAppBar(
+          title: MyStrings.notification,
+          appBarHeight: appBarHeight,
+        ),
+        body: Obx(() => controller.notificationList.value.data != null ? controller.notificationList.value.data!.isNotEmpty ? ListView.builder(
+          itemCount: controller.notificationList.value.data?.length ?? 0,
+          padding: const EdgeInsets.only(top: 24),
+          itemBuilder: (context, index) {
+            return NotificationWidget(title: controller.notificationList.value.data?[index].title ?? '',
+                subtitle: controller.notificationList.value.data?[index].body ?? '',
+                image: controller.notificationList.value.data?[index].imageUrl ?? '');
+          },
+        ) : const Center(child: Text(MyStrings.noDataFound),) : const Center(child: CircularProgressIndicator(),)) );
   }
 }
-
-

@@ -373,8 +373,8 @@ class MyStrings {
   static const String scheduledBid = "Scheduled bid";
 
   ///my cars
-  static const String biddedCars = "Bidded Cars(4)";
-  static const String likedCars = "Liked Cars(4)";
+  static const String biddedCars = "Bidded Cars";
+  static const String likedCars = "Liked Cars";
   static const String viewDetail = 'View detail';
   static const String viewOffer = 'View Offer';
 
@@ -487,5 +487,6 @@ class MyStrings {
   static const String acceptingBids = 'Accepting bids';
   static const String bidEndsIn = 'Bid ends in';
   static const String lastCall = 'Last call';
+  static const String yetToStart = 'Yet to start';
 
 }

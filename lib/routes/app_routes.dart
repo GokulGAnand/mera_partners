@@ -16,7 +16,7 @@ import 'package:mera_partners/view/home/home_screen_ui.dart';
 import 'package:mera_partners/view/home/my_cars/binding/my_cars_binding.dart';
 import 'package:mera_partners/view/home/my_cars/my_cars_screen.dart';
 import 'package:mera_partners/view/home/notification/notification_screen_ui.dart';
-import 'package:mera_partners/view/home/orders/binding/orders_binding.dart';
+import 'package:mera_partners/view/home/orders/bindings/orders_binding.dart';
 import 'package:mera_partners/view/home/orders/orders_screen.dart';
 import 'package:mera_partners/view/login/binding/login_binding.dart';
 import 'package:mera_partners/view/login/login_screen_ui.dart';
@@ -25,6 +25,7 @@ import 'package:mera_partners/view/onboarding/bindings/onboarding_screen_binding
 import 'package:mera_partners/view/onboarding/onboarding_screen_ui.dart';
 import 'package:mera_partners/view/procured_bill/procured_bill_screen.dart';
 import 'package:get/get.dart';
+import '../view/home/notification/binding/notification_screen_binding.dart';
 import '../view/procured_bill/bindings/procured_bill_screen_bindings.dart';
 
 class AppRoutes {
@@ -116,7 +117,9 @@ class AppRoutes {
         bindings: [
           ProcuredBillScreenBinding(),
         ]),
-    GetPage(name: notificationScreen, page: () =>  const NotificationScreen(),
-        bindings: const []),
+    GetPage(name: notificationScreen, page: () =>  NotificationScreen(),
+        bindings: [
+          NotificationScreenBinding(),
+        ]),
   ];
 }
