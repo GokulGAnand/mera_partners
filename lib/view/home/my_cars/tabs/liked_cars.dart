@@ -4,8 +4,9 @@ import '../../../../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.d
 import '../../../../widgets/liked_cars_widget.dart';
 
 final BidCarsListViewModel controller = Get.put(BidCarsListViewModel());
+
 class LikedCars extends StatelessWidget {
-  const LikedCars({super.key});
+  const LikedCars({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +16,9 @@ class LikedCars extends StatelessWidget {
           height: 12,
         ),
         Expanded(
-          child: GridView.builder(
-              itemCount: controller.likeResponse.value.data?[0].likedCars?.length ??0,
+          child: Obx(
+                () => GridView.builder(
+              itemCount: controller.likeResponse.value.data?[0].likedCars?.length ?? 0,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 22,
@@ -24,16 +26,18 @@ class LikedCars extends StatelessWidget {
                 mainAxisExtent: 315,
               ),
               itemBuilder: (context, index) {
-               return LikedCarsWidget(
-                 bidAmount: controller.likeResponse.value.data![0].likedCars?[index].highestBid.toString() ?? '',
-                 id: controller.likeResponse.value.data![0].likedCars?[index].uniqueId.toString() ?? '',
-                 carId: controller.likeResponse.value.data![0].likedCars?[index].sId.toString() ?? '',
-                 imageUrl: controller.likeResponse.value.data![0].likedCars?[index].frontLeft?.url ?? '',
-                 model: controller.likeResponse.value.data![0].likedCars?[index].model.toString() ?? '',
-                 variant: controller.likeResponse.value.data![0].likedCars?[index].variant.toString() ?? '',
-                 status: controller.likeResponse.value.data![0].likedCars?[index].status.toString() ?? ''
-               );
-              }),
+                return LikedCarsWidget(
+                  bidAmount: controller.likeResponse.value.data![0].likedCars?[index].highestBid.toString() ?? '',
+                  id: controller.likeResponse.value.data![0].likedCars?[index].uniqueId.toString() ?? '',
+                  carId: controller.likeResponse.value.data![0].likedCars?[index].sId.toString() ?? '',
+                  imageUrl: controller.likeResponse.value.data![0].likedCars?[index].frontLeft?.url ?? '',
+                  model: controller.likeResponse.value.data![0].likedCars?[index].model.toString() ?? '',
+                  variant: controller.likeResponse.value.data![0].likedCars?[index].variant.toString() ?? '',
+                  status: controller.likeResponse.value.data![0].likedCars?[index].status.toString() ?? '',
+                );
+              },
+            ),
+          ),
         ),
       ],
     );
