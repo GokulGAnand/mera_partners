@@ -63,11 +63,12 @@ class OTBScreen extends StatelessWidget {
                                 context: context,
                                 builder: (context) {
                                   return OTBBottomSheet(
-                                    // otbPrice: 10,
+                                    bidStartTime: DateTime.parse(item.bidStartTime ?? DateTime.now().toString()),
+                                    bidEndTime: DateTime.parse(item.bidEndTime ?? DateTime.now().toString()),
                                     //todo
                                     otbPrice: item.realValue ?? 0,
                                     onPressed: () {
-                                      
+                                      controller.buyOTBCar(item.sId ?? '');
                                     },
                                   );
                                 });

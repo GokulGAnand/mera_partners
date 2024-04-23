@@ -46,6 +46,14 @@ class OTBBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var start = DateTime.now();
+    var end = bidEndTime ?? DateTime.now();
+    Duration diff = end.difference(start);
+    duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+
+    if(start.isBefore(end)) {
+      startTimer();
+    }
     NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
     return Container(
       height: MediaQuery.of(context).size.height * 0.35,
@@ -74,21 +82,22 @@ class OTBBottomSheet extends StatelessWidget {
               ],
             ),
           ),
-          Row(
+          Obx(() => Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SvgPicture.asset(
-                MySvg.timer,
-                width: 20,
-                color: MyColors.green2,
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              const Text(
-                "24min 06sec",
-                style: MyStyles.green2_18700,
-              ),
+              if(duration.value != null)
+                Icon(
+                  Icons.timer_sharp,
+                  color: duration.value!.inMinutes >= 10 ? MyColors.green : duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                  size: 14,
+                ),
+              Text(formatDuration( duration.value! ), style: TextStyle(
+                color: duration.value!.inMinutes >= 10 ? MyColors.green : duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                fontSize: 14,
+                fontFamily: 'DM Sans',
+                fontWeight: FontWeight.w700,
+                height: 0,
+              )),
               const Spacer(),
               InkWell(
                 onTap: () {
@@ -99,7 +108,7 @@ class OTBBottomSheet extends StatelessWidget {
                 ),
               ),
             ],
-          ),
+          ),),
           const SizedBox(
             height: 16,
           ),

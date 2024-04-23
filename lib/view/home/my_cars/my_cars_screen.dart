@@ -54,11 +54,11 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                         if(tabController.index == 0){
                           bidCarsListViewModel.searchList.clear();
                           for(int i=0; i<bidCarsListViewModel.bidCarsResponse.value.data!.length; i++){
-                            if(bidCarsListViewModel.bidCarsResponse.value.data![i].model!.contains(bidCarsListViewModel.searchController.text) || 
-                              bidCarsListViewModel.bidCarsResponse.value.data![i].model!.toLowerCase().contains(bidCarsListViewModel.searchController.text) ||
-                              bidCarsListViewModel.bidCarsResponse.value.data![i].make!.contains(bidCarsListViewModel.searchController.text) ||
-                              bidCarsListViewModel.bidCarsResponse.value.data![i].make!.toLowerCase().contains(bidCarsListViewModel.searchController.text) ||
-                              bidCarsListViewModel.bidCarsResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(bidCarsListViewModel.searchController.text)){
+                            if(bidCarsListViewModel.bidCarsResponse.value.data![0].biddedCars![i].model!.contains(bidCarsListViewModel.searchController.text) ||
+                              bidCarsListViewModel.bidCarsResponse.value.data![0].biddedCars![i].model!.toLowerCase().contains(bidCarsListViewModel.searchController.text) ||
+                              bidCarsListViewModel.bidCarsResponse.value.data![0].biddedCars![i].make!.contains(bidCarsListViewModel.searchController.text) ||
+                              bidCarsListViewModel.bidCarsResponse.value.data![0].biddedCars![i].make!.toLowerCase().contains(bidCarsListViewModel.searchController.text) ||
+                              bidCarsListViewModel.bidCarsResponse.value.data![0].biddedCars![i].uniqueId!.toString().toLowerCase().contains(bidCarsListViewModel.searchController.text)){
                               bidCarsListViewModel.searchList.add(bidCarsListViewModel.bidCarsResponse.value.data![i].sId.toString());
                               log(bidCarsListViewModel.searchList.toString());
                             }
@@ -110,7 +110,7 @@ class _MyCarsScreenState extends State<MyCarsScreen>
               dividerColor: MyColors.grey.withOpacity(0.25),
               dividerHeight: 2,
               tabs: [
-                Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.biddedCars}(${Get.find<BidCarsListViewModel>().bidCarsResponse.value.count ?? '0'})':MyStrings.biddedCars,),
+                Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.biddedCars}(${Get.find<BidCarsListViewModel>().bidCarsResponse.value.data?[0].biddedCars?.length ?? '0'})':MyStrings.biddedCars,),
                 Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.likedCars}(${Get.find<BidCarsListViewModel>().likeResponse.value.data?[0].likedCars?.length ?? '0'})':MyStrings.likedCars,),
               ],
             ),),
