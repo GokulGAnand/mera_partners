@@ -1,5 +1,5 @@
 // ignore_for_file: deprecated_member_use
-
+import 'dart:async';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
@@ -14,7 +14,11 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class CustomBidBottomSheet extends StatefulWidget {
-  CustomBidBottomSheet({required this.bidValue, this.isAutoBid = false, super.key, this.onBidPressed, this.amountController, this.stepRate, this.onAutoBidPressed});
+  CustomBidBottomSheet({required this.bidValue, this.isAutoBid = false, super.key, this.onBidPressed, this.amountController, this.stepRate, this.onAutoBidPressed,
+    this.bidStartTime,
+    this.bidEndTime,
+    this.isScheduled,
+  });
 
   final RxList<int> bid = [5000, 10000, 15000].obs;
   final RxInt bidValue;
@@ -24,6 +28,10 @@ class CustomBidBottomSheet extends StatefulWidget {
   final void Function()? onAutoBidPressed;
   final Rx<TextEditingController>? amountController;
   final amountFormFieldKey = GlobalKey<FormFieldState>();
+  final DateTime? bidStartTime;
+  final DateTime? bidEndTime;
+  Rxn<Duration> duration = Rxn();
+  RxBool? isScheduled = false.obs;
 
   void _onTextChanged() {
     // This will trigger an update in all Obx widgets that depend on `amountController`'s text.
@@ -36,15 +44,48 @@ class CustomBidBottomSheet extends StatefulWidget {
 
 class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
 
+  void startTimer() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (widget.duration.value!.inSeconds == 0) {
+        timer.cancel();
+      } else {
+        widget.duration.value = widget.duration.value! - const Duration(seconds: 1);
+      }
+    });
+  }
+
+  String formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    String hour = duration.inHours.toString();
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    if(duration.inHours == 0){
+      return "${twoDigitMinutes}min ${twoDigitSeconds}sec";
+    } else if (duration.inHours < 10){
+      hour = twoDigits(duration.inHours);
+      return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
+    }
+    return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
+  }
+
   @override
   void initState() {
+    var start = DateTime.now();
+    var end = widget.bidEndTime ?? DateTime.now();
     widget.amountController?.value.addListener(widget._onTextChanged);
+    Duration diff = end.difference(start);
+    widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+
+    if(start.isBefore(end)) {
+      startTimer();
+    }
     NumberFormat numberFormatter = NumberFormat.currency(locale: 'HI', name: '', decimalDigits: 0);
     if (widget.amountController != null && widget.amountController!.value.text.isEmpty){
       widget.amountController!.value.text = numberFormatter.format(widget.bidValue.value).toString();
     }
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
@@ -78,18 +119,19 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SvgPicture.asset(
-                  MySvg.timer,
-                  width: 20,
-                  color: MyColors.green2,
+                Icon(
+                  Icons.timer_sharp,
+                  color:  widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                  size: 14,
                 ),
-                const SizedBox(
-                  width: 5,
-                ),
-                const Text(
-                  "24min 06sec",
-                  style: MyStyles.green2_18700,
-                ),
+                const SizedBox(width: 5,),
+                Text(formatDuration( widget.duration.value! ), style: TextStyle(
+                  color: widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                  fontSize: 14,
+                  fontFamily: 'DM Sans',
+                  fontWeight: FontWeight.w700,
+                  height: 0,
+                )),
                 const Spacer(),
                 InkWell(
                   onTap: () {

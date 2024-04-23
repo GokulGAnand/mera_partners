@@ -1,5 +1,5 @@
 // ignore_for_file: deprecated_member_use
-
+import 'dart:async';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/constants.dart';
 import 'package:mera_partners/utils/strings.dart';
@@ -12,15 +12,50 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class NegotiationBottomSheet extends StatelessWidget {
-  const NegotiationBottomSheet({required this.biddedAmount, required this.negotiatedAmount, super.key, required this.onAcceptPressed, required this.onRejectPressed});
+  NegotiationBottomSheet({required this.biddedAmount, required this.negotiatedAmount, super.key, required this.onAcceptPressed, required this.onRejectPressed, this.bidStartTime, this.bidEndTime});
 
   final int biddedAmount;
   final int negotiatedAmount;
   final void Function() onAcceptPressed;
   final void Function() onRejectPressed;
+  final DateTime? bidStartTime;
+  final DateTime? bidEndTime;
+  Rxn<Duration> duration = Rxn();
+
+  void startTimer() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (duration.value!.inSeconds == 0) {
+        timer.cancel();
+      } else {
+        duration.value = duration.value! - const Duration(seconds: 1);
+      }
+    });
+  }
+
+  String formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    String hour = duration.inHours.toString();
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    if(duration.inHours == 0){
+      return "${twoDigitMinutes}min ${twoDigitSeconds}sec";
+    } else if (duration.inHours < 10){
+      hour = twoDigits(duration.inHours);
+      return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
+    }
+    return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
+  }
 
   @override
   Widget build(BuildContext context) {
+    var start = DateTime.now();
+    var end = bidEndTime ?? DateTime.now();
+    Duration diff = end.difference(start);
+    duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+
+    if(start.isBefore(end)) {
+      startTimer();
+    }
     return Container(
       height: 271,
       padding: const EdgeInsets.all(16.0),

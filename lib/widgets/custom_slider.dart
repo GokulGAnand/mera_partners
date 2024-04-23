@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/images.dart';
 import 'package:flutter/material.dart';
@@ -21,22 +19,6 @@ class CustomSlider extends StatelessWidget {
   bool showBlackOpacity;
   double height;
 
-  Timer? carouselTimer;
-
-  Timer getTimer() {
-    return Timer.periodic(const Duration(seconds: 3), (timer) {
-      if (activePage.value == 5) {
-        activePage.value = 0;
-      }
-      pageSliderController.value.animateToPage(
-        activePage.value,
-        duration: const Duration(seconds: 1),
-        curve: Curves.easeInOutCirc,
-      );
-      activePage.value++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Obx(() => SizedBox(
@@ -50,6 +32,11 @@ class CustomSlider extends StatelessWidget {
               controller: pageSliderController.value,
               onPageChanged: (index) {
                 activePage.value = index;
+                pageSliderController.value.animateToPage(
+                  activePage,
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.easeIn,
+                );
               },
               itemBuilder: (_, index) {
                 return AnimatedBuilder(
@@ -107,6 +94,11 @@ class CustomSlider extends StatelessWidget {
                   children: List.generate(
                     5,
                         (index) => GestureDetector(
+                          onTap: () => pageSliderController.value.animateToPage(
+                            index,
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.easeIn,
+                          ),
                       child: Container(
                         margin: const EdgeInsets.only(left: 2.0),
                         child: Icon(

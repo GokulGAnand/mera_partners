@@ -4,8 +4,9 @@ import '../../../../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.d
 import '../../../../widgets/liked_cars_widget.dart';
 
 final BidCarsListViewModel controller = Get.put(BidCarsListViewModel());
+
 class LikedCars extends StatelessWidget {
-  const LikedCars({super.key});
+  const LikedCars({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +30,13 @@ class LikedCars extends StatelessWidget {
                    return Obx(
                      () {
                        return LikedCarsWidget(
-                         bidAmount: controller.likedCarsearchList[index].highestBid.toString() ?? '',
-                         id: controller.likedCarsearchList[index].uniqueId.toString() ?? '',
-                         carId: controller.likedCarsearchList[index].sId.toString() ?? '',
+                         bidAmount: controller.likedCarsearchList[index].highestBid.toString(),
+                         id: controller.likedCarsearchList[index].uniqueId.toString(),
+                         carId: controller.likedCarsearchList[index].sId.toString(),
                          imageUrl: controller.likedCarsearchList[index].frontLeft?.url ?? '',
-                         model: controller.likedCarsearchList[index].model.toString() ?? '',
-                         variant: controller.likedCarsearchList[index].variant.toString() ?? '',
-                         status: controller.likedCarsearchList[index].status.toString() ?? ''
+                         model: controller.likedCarsearchList[index].model.toString(),
+                         variant: controller.likedCarsearchList[index].variant.toString(),
+                         status: controller.likedCarsearchList[index].status.toString()
                        );
                      }
                    );

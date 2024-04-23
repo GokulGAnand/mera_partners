@@ -35,7 +35,7 @@ class LiveCarsListScreen extends StatelessWidget {
                       },
                       isOtb: false.obs,
                               carId: controller.liveCarsResponse.value.data?[index].sId ?? '',
-                      isScheduled: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == 'scheduled' ? true : false,
+                      isScheduled: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == 'scheduled' ? true.obs : false.obs,
                       imageUrl: controller.liveCarsResponse.value.data?[index].rearRight?.url ?? '',
                       carLocation: controller.liveCarsResponse.value.data?[index].vehicleLocation ?? '',
                       bidStatus: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() != MyStrings.live.toLowerCase() ? RxString(MyStrings.scheduledBid) : globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].winner != null && controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) ? RxString(MyStrings.youAreLeading)

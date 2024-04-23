@@ -35,7 +35,7 @@ class BidCarsListScreen extends StatelessWidget {
                           },
                           isOtb: false.obs,
                           carId: controller.bidCarsResponse.value.data?[index].sId ?? '',
-                          isScheduled: controller.bidCarsResponse.value.data?[index].status?.toLowerCase() == 'scheduled' ? true : false,
+                          isScheduled: controller.bidCarsResponse.value.data?[index].status?.toLowerCase() == 'scheduled' ? true.obs : false.obs,
                           imageUrl: controller.bidCarsResponse.value.data?[index].rearRight?.url ?? '',
                           carLocation: controller.bidCarsResponse.value.data?[index].vehicleLocation ?? '',
                           bidStatus: controller.bidCarsResponse.value.data?[index].status?.toLowerCase() != MyStrings.live.toLowerCase() ? RxString(MyStrings.scheduledBid) : globals.uniqueUserId != null && controller.bidCarsResponse.value.data?[index].winner != null && controller.bidCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) ? RxString(MyStrings.youAreLeading)
