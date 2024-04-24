@@ -26,8 +26,8 @@ class ProcuredScreenViewModel extends GetxController{
 
   void getProcuredBill() async {
     try {
-      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}?status=PROCUREMENT').toString());
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}?status=PROCUREMENT'), headers: globals.headers);
+      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/?status=PROCUREMENT').toString());
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/?status=PROCUREMENT'), headers: globals.headers);
       if (response.statusCode == 200) {
         log("Response sv : ${response.body}");
         ProgressBar.instance.stopProgressBar(Get.context!);

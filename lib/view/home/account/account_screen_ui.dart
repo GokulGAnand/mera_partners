@@ -148,6 +148,20 @@ class _AccountScreenState extends State<AccountScreen> {
                     SvgPicture.asset(MySvg.arrowRight)
                   ],
                 ),
+              ), const SizedBox(height: 12,),
+              InkWell(
+                onTap: (){
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      MyStrings.deleteAccount,
+                      style: MyStyles.subTitleBlackStyle,
+                    ),
+                    SvgPicture.asset(MySvg.arrowRight)
+                  ],
+                ),
               ),
               const SizedBox(height: 20,),
               InkWell(

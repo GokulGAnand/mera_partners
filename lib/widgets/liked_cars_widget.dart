@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter_svg/svg.dart';
+import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +30,9 @@ class LikedCarsWidget extends StatelessWidget {
   final String carId;
   final String bidAmount;
   late final Rx<bool>? isFavourite = true.obs;
+  final DateTime? bidStartTime;
+  final DateTime? bidEndTime;
+  Rxn<Duration> duration = Rxn();
 
   LikedCarsWidget({super.key,
     required this.imageUrl,
@@ -36,8 +41,32 @@ class LikedCarsWidget extends StatelessWidget {
     required this.model,
     required this.id,
     required this.bidAmount,
-    required this.carId,
+    required this.carId, this.bidStartTime, this.bidEndTime,
   });
+
+  void startTimer() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (duration.value!.inSeconds == 0) {
+        timer.cancel();
+      } else {
+        duration.value = duration.value! - const Duration(seconds: 1);
+      }
+    });
+  }
+
+  String formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    String hour = duration.inHours.toString();
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    if(duration.inHours == 0){
+      return "${twoDigitMinutes}min ${twoDigitSeconds}sec";
+    } else if (duration.inHours < 10){
+      hour = twoDigits(duration.inHours);
+      return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
+    }
+    return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
+  }
 
   /// Like Feature API integration
   void updateLikedCar(bool like) async {
@@ -45,7 +74,8 @@ class LikedCarsWidget extends StatelessWidget {
     try {
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId').toString());
       log(jsonEncode({"status": like== true?"LikedCar" :"Unlike"}));
-      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'),headers: globals.jsonHeaders, body: jsonEncode({"status": like== true? "LikedCar" :"Unlike"}));
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'),
+      headers: globals.jsonHeaders, body: jsonEncode({"status": like== true? "LikedCar" :"Unlike"}));
       log(response.body.toString());
       if (response.statusCode == 200) {
         print('checking: ${bidCarsListViewModel.likeResponse}');
@@ -65,6 +95,13 @@ class LikedCarsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var start = DateTime.now();
+    var end = bidEndTime ?? DateTime.now();
+    Duration diff = end.difference(start);
+    duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+    if(start.isBefore(end)) {
+      startTimer();
+    }
     return SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
@@ -157,7 +194,7 @@ class LikedCarsWidget extends StatelessWidget {
                     height: 17,
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
-                      color: MyColors.green1,
+                      color: status.toLowerCase() == CarStatus.live.name ? MyColors.green3 : MyColors.black,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
@@ -196,15 +233,43 @@ class LikedCarsWidget extends StatelessWidget {
                       ),
                     ),
                   ),
+                  if(status.toLowerCase() == CarStatus.live.name)
                   const Text(
                     MyStrings.highestBid,
                     style: MyStyles.primary12500,
                   ),
+                  if(status.toLowerCase() == CarStatus.live.name)
                    SizedBox(height: Dimens.standard_2),
+                  if(status.toLowerCase() == CarStatus.live.name)
                   Text(
                     "₹$bidAmount",
                     style: MyStyles.primary16500,
                   ),
+                  if(status.toLowerCase() == CarStatus.scheduled.name)
+                      const Text(
+                        MyStrings.yetToStart,
+                        style: MyStyles.primary12500,
+                      ),
+                  if(status.toLowerCase() == CarStatus.scheduled.name)
+                    SizedBox(height: Dimens.standard_2),
+                  if(status.toLowerCase() == CarStatus.scheduled.name)
+                    if(duration.value != null)
+                      Obx(() => Row(
+                        children: [
+                          const Icon(
+                            Icons.timer_sharp,
+                            color: MyColors.kPrimaryColor,
+                            size: 14,
+                          ),
+                          Text(formatDuration( duration.value! ), style: const TextStyle(
+                            color: MyColors.kPrimaryColor,
+                            fontSize: 14,
+                            fontFamily: 'DM Sans',
+                            fontWeight: FontWeight.w700,
+                            height: 0,
+                          )),
+                        ],
+                      ),),
                    const SizedBox(height: Dimens.standard_8),
                   SizedBox(
                     height: 40,

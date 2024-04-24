@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mera_partners/view/home/my_cars/tabs/liked_cars.dart';
 import '../../../../utils/dimens.dart';
 import '../../../../view_model/home/orders/rc_transfer_view_model.dart';
 import 'package:mera_partners/utils/colors.dart';
@@ -22,7 +23,7 @@ class RcTransfer extends StatelessWidget {
         SizedBox(
           height: Dimens.standard_16,
         ),
-        GridView.builder(
+        (controller.liveCarsResponse.value.data != null) && controller.liveCarsResponse.value.data!.isNotEmpty ? GridView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: controller.liveCarsResponse.value.data?.length,
@@ -58,7 +59,7 @@ class RcTransfer extends StatelessWidget {
               showButton: false,
             );
           },
-        ),
+        ):const Center(child: Text(MyStrings.noDataFound),),
       ],
     );
   }

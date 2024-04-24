@@ -122,6 +122,9 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
               indicatorWeight: 4,
               dividerColor: MyColors.grey.withOpacity(0.25),
               dividerHeight: 2,
+              onTap: (val){
+                setState(() {});
+              },
               tabs: [
                 Tab(text: '${MyStrings.live}(${Get.find<LiveCarsListViewModel>().liveCarsResponse.value.count ?? '0'})',),
                 Tab(text: '${MyStrings.otb}(${Get.find<OTBCarsListViewModel>().carsListResponse.value.count ?? '0'})',),

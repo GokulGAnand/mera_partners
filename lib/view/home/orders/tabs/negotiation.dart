@@ -62,7 +62,7 @@ class _NegotiationState extends State<Negotiation> {
                   }),
             ),
             controller.isNegotiation.value
-                ? GridView.builder(
+                ? (controller.carListResponse.value.data != null) && controller.carListResponse.value.data!.isNotEmpty ? GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: controller.carListResponse.value.data?.length ?? 0,
@@ -132,7 +132,7 @@ class _NegotiationState extends State<Negotiation> {
                     );
                   });
                 })
-                : Obx(() => GridView.builder(
+                : (controller.lostDealsData.value.data != null) && controller.lostDealsData.value.data![0].lostDeal!.isNotEmpty ? Obx(() => GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: controller.lostDealsData.value.data?[0].lostDeal?.length ?? 0,
@@ -185,6 +185,8 @@ class _NegotiationState extends State<Negotiation> {
                     finalPrice: Constants.numberFormat.format(controller.lostDealsData.value.data?[0].lostDeal?[index].highestBid),
                   );
                 }),)
+                :const Center(child: Text(MyStrings.noDataFound),)
+                :const Center(child: Text(MyStrings.noDataFound),)
           ],
         )
     ));

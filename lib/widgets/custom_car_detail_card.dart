@@ -200,7 +200,8 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
       // ProgressBar.instance.showProgressbar(Get.context!);
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/${widget.carId}').toString());
       log(jsonEncode({"status": like ==true ?"LikedCar":"Unlike"}));
-      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/${widget.carId}'),headers: globals.jsonHeaders, body: jsonEncode({"status": like==true?"LikedCar":"Unlike"}));
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/${widget.carId}'),
+      headers: globals.jsonHeaders, body: jsonEncode({"status": like==true?"LikedCar":"Unlike"}));
       log(response.body.toString());
       if (response.statusCode == 200) {
         // ProgressBar.instance.stopProgressBar(Get.context!);
@@ -576,19 +577,19 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                                 borderRadius: BorderRadius.circular(6),
                               ),
                             ),
-                            onPressed: widget.autoBid,/*globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name ? widget.autoBid : () {
+                            onPressed: globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name ? widget.autoBid : () {
                                     widget.showPendingDialog();
-                                  },*/
+                                  },
                             buttonText: MyStrings.autoBid),
                         CustomElevatedButton(
                             buttonWidth: MediaQuery.of(context).size.width * 0.38,
                             buttonHeight: Dimens.defHeight,
-                            onPressed: widget.bid,
-                            /*globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name
-                                ? bid
+                            onPressed: /*widget.bid,*/
+                            globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name
+                                ? widget.bid
                                 : () {
-                                    showPendingDialog();
-                                  },*/
+                                    widget.showPendingDialog();
+                                  },
                             buttonText: MyStrings.bid),
                       ],
                     ),
@@ -598,11 +599,11 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                     padding: const EdgeInsets.only(left: 12.0, right: 12),
                     child: CustomElevatedButton(
                         buttonHeight: Dimens.defHeight,
-                        onPressed: globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name
+                        onPressed: widget.otbTapped/*globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name
                             ? widget.otbTapped
                             : () {
                                 widget.showPendingDialog();
-                              },
+                              }*/,
                         buttonText: MyStrings.oneTouchBuy),
                   ),
                 if (widget.isScheduled?.value == true)

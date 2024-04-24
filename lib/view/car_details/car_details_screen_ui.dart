@@ -203,7 +203,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         trailing: InkWell(
                           onTap: () async{
                             carDetailsScreenViewModel.isLike.value = !carDetailsScreenViewModel.isLike.value;
-                            await carDetailsScreenViewModel.updateLikedCar(carDetailsScreenViewModel.isLike.value ? false : true);
+                            await carDetailsScreenViewModel.updateLikedCar(carDetailsScreenViewModel.isLike.value);
 
                           },
                           child: SvgPicture.asset(
@@ -541,6 +541,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             carDetailsScreenViewModel.exteriorShowMore, () {
           carDetailsScreenViewModel.exteriorShowMore.value =
               !carDetailsScreenViewModel.exteriorShowMore.value;
+              setState(() {});
         }),
       ),
       Padding(
@@ -1282,7 +1283,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                             children: [
                               Text(
                                 (showMore.value == false)
-                                    ? '${4 - 2} ${MyStrings.otherIssues}'
+                                    ? '${list.length - 2} ${MyStrings.otherIssues}'
                                     : MyStrings.viewLessIssues,
                                 textAlign: TextAlign.center,
                                 style: MyStyles.red3_12700,
