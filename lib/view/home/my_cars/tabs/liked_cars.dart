@@ -28,7 +28,7 @@ class LikedCars extends StatelessWidget {
                    return Obx(
                      () {
                        return LikedCarsWidget(
-                         bidAmount: controller.likedCarsearchList[index].highestBid.toString(),
+                         bidAmount: controller.likedCarsearchList[index].highestBid != null ? controller.likedCarsearchList[index].highestBid.toString() : '0',
                          id: controller.likedCarsearchList[index].uniqueId.toString(),
                          carId: controller.likedCarsearchList[index].sId.toString(),
                          imageUrl: controller.likedCarsearchList[index].frontLeft?.url ?? '',
