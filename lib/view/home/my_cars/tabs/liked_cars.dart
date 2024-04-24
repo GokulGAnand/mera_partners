@@ -4,7 +4,7 @@ import '../../../../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.d
 import '../../../../widgets/liked_cars_widget.dart';
 
 class LikedCars extends StatelessWidget {
-  const LikedCars({Key? key}) : super(key: key);
+  const LikedCars({super.key});
 
   @override
   Widget build(BuildContext context) {

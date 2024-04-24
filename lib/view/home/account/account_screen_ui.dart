@@ -28,6 +28,38 @@ class _AccountScreenState extends State<AccountScreen> {
       Get.isRegistered<AccountScreenViewModel>()
           ? Get.find<AccountScreenViewModel>()
           : Get.put(AccountScreenViewModel());
+
+  showAlertDialog() {
+    showDialog(
+      context: Get.context!,
+      builder: (context) {
+        return AlertDialog(
+          content: const Text(
+            MyStrings.confirmDelete,
+            style: MyStyles.pageTitleStyle,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                accountScreenViewModel.deleteAccount();
+              },
+              child: Text(MyStrings.ok.toUpperCase()),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                MyStrings.cancel.toUpperCase(),
+                style: const TextStyle(color: MyColors.grey),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -151,6 +183,7 @@ class _AccountScreenState extends State<AccountScreen> {
               ), const SizedBox(height: 12,),
               InkWell(
                 onTap: (){
+                  showAlertDialog();
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

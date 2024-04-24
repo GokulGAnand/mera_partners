@@ -231,7 +231,7 @@ class MyStrings {
   // ///
   // static const String logoutConfirmMsg = "Are you sure want to sign out?";
   // static const String confirmDiscardChanges = "Are you sure want to discard changes?";
-  // static const String confirmDelete = "Are you sure want to delete?";
+  static const String confirmDelete = "Are you sure want to delete?";
   static const String engineCompartmentImage = "Engine Compartment Image";
   static const String engineSound = "Engine Sound";
   static const String smoke = "Smoke";
@@ -451,6 +451,7 @@ class MyStrings {
   static const String quotePriceDesc = 'Please state the price you are willing to offer';
   static const String confirmBuy = 'Confirm buy at ';
   static const String quotePriceAt = 'Quote Price at ';
+  static const String quotePrice = 'Quote Price';
   static const String otbBuyDesc = 'Purchase this car immediately at \nthe listed price';
 
   /// car details screen

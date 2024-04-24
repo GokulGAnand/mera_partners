@@ -15,7 +15,7 @@ class CustomSlider extends StatelessWidget {
       super.key});
   List<String> sliderImage;
   Rx<PageController> pageSliderController;
-  var activePage;
+  var activePage = 0.obs;
   bool showBlackOpacity;
   double height;
 
@@ -33,30 +33,28 @@ class CustomSlider extends StatelessWidget {
               onPageChanged: (index) {
                 activePage.value = index;
                 pageSliderController.value.animateToPage(
-                  activePage,
-                  duration: Duration(milliseconds: 300),
+                  activePage.value,
+                  duration: const Duration(milliseconds: 300),
                   curve: Curves.easeIn,
                 );
               },
               itemBuilder: (_, index) {
-                return AnimatedBuilder(
-                    animation: pageSliderController.value,
-                    builder: (ctx, child) {
-                      return child!;
+                return Image.network(sliderImage[index],
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return SvgPicture.asset(MyImages.loadingCar);
                     },
-                    child: Image.network(sliderImage[index], fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return SvgPicture.asset(MyImages.loadingCar);
-                        }, frameBuilder:
-                            (context, child, frame, wasSynchronouslyLoaded) {
-                          return child;
-                        }, loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          } else {
-                            return SvgPicture.asset(MyImages.loadingCar);
-                          }
-                        }));
+                    frameBuilder:
+                        (context, child, frame, wasSynchronouslyLoaded) {
+                      return child;
+                    },
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      } else {
+                        return SvgPicture.asset(MyImages.loadingCar);
+                      }
+                    });
               },
               itemCount: sliderImage.length,
             ),
@@ -96,7 +94,7 @@ class CustomSlider extends StatelessWidget {
                         (index) => GestureDetector(
                           onTap: () => pageSliderController.value.animateToPage(
                             index,
-                            duration: Duration(milliseconds: 300),
+                            duration: const Duration(milliseconds: 300),
                             curve: Curves.easeIn,
                           ),
                       child: Container(

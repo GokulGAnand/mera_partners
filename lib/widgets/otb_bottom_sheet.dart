@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../utils/dimens.dart';
 
+/// ignore: must_be_immutable
 class OTBBottomSheet extends StatelessWidget {
   OTBBottomSheet({super.key, required this.otbPrice, this.onPressed, this.bidStartTime, this.bidEndTime});
 
