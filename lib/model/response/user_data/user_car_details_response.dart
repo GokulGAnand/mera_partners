@@ -274,6 +274,25 @@ class LikedCars {
   int? highestBid;
   String? status;
   FrontLeft? frontLeft;
+  int? realValue;
+  String? monthAndYearOfManufacture;
+  num? odometerReading;
+  String? transmission;
+  num? statusValues;
+  List<LeaderBoard>? leaderBoard;
+  Front? front;
+  Front? frontRight;
+  Front? rearLeft;
+  Front? rear;
+  Front? rearRight;
+  num? engineStar;
+  num? exteriorStar;
+  num? testDriveStar;
+  num? interiorAndElectricalStar;
+  Front? engineCompartment;
+  String? bidEndTime;
+  String? bidStartTime;
+  String? winner;
 
   LikedCars(
       {this.sId,
@@ -283,7 +302,27 @@ class LikedCars {
         this.variant,
         this.highestBid,
         this.status,
-        this.frontLeft});
+        this.frontLeft,
+        this.winner,
+        this.realValue,
+        this.monthAndYearOfManufacture,
+        this.odometerReading,
+        this.transmission,
+        this.statusValues,
+        this.leaderBoard,
+        this.front,
+        this.frontRight,
+        this.rearLeft,
+        this.rear,
+        this.rearRight,
+        this.engineStar,
+        this.exteriorStar,
+        this.testDriveStar,
+        this.interiorAndElectricalStar,
+        this.engineCompartment,
+        this.bidEndTime,
+        this.bidStartTime
+      });
 
   LikedCars.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -355,6 +394,25 @@ class BiddedCars {
   String? status;
   String? createdAt;
   String? winner;
+  int? realValue;
+  String? monthAndYearOfManufacture;
+  num? odometerReading;
+  String? transmission;
+  num? statusValues;
+  List<LeaderBoard>? leaderBoard;
+  Front? front;
+  Front? frontLeft;
+  Front? frontRight;
+  Front? rearLeft;
+  Front? rear;
+  Front? rearRight;
+  num? engineStar;
+  num? exteriorStar;
+  num? testDriveStar;
+  num? interiorAndElectricalStar;
+  Front? engineCompartment;
+  String? bidEndTime;
+  String? bidStartTime;
 
   BiddedCars(
       {this.sId,
@@ -371,7 +429,27 @@ class BiddedCars {
         this.totalBidder,
         this.status,
         this.createdAt,
-        this.winner});
+        this.winner,
+        this.realValue,
+        this.monthAndYearOfManufacture,
+        this.odometerReading,
+        this.transmission,
+        this.statusValues,
+        this.leaderBoard,
+        this.front,
+        this.frontLeft,
+        this.frontRight,
+        this.rearLeft,
+        this.rear,
+        this.rearRight,
+        this.engineStar,
+        this.exteriorStar,
+        this.testDriveStar,
+        this.interiorAndElectricalStar,
+        this.engineCompartment,
+        this.bidEndTime,
+        this.bidStartTime
+      });
 
   BiddedCars.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -408,6 +486,53 @@ class BiddedCars {
     data['status'] = this.status;
     data['createdAt'] = this.createdAt;
     data['winner'] = this.winner;
+    return data;
+  }
+}
+
+class LeaderBoard {
+  num? amount;
+  String? userId;
+  bool? isAutobid;
+
+  LeaderBoard({this.amount, this.userId, this.isAutobid});
+
+  LeaderBoard.fromJson(Map<String, dynamic> json) {
+    amount = json['amount'];
+    userId = json['userId'];
+    isAutobid = json['isAutobid'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['amount'] = amount;
+    data['userId'] = userId;
+    data['isAutobid'] = isAutobid;
+    return data;
+  }
+}
+
+class Front {
+  String? name;
+  String? url;
+  List<String>? condition;
+  String? remarks;
+
+  Front({this.name, this.url, this.condition, this.remarks});
+
+  Front.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    url = json['url'];
+    condition = json['condition'].cast<String>();
+    remarks = json['remarks'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['url'] = url;
+    data['condition'] = condition;
+    data['remarks'] = remarks;
     return data;
   }
 }

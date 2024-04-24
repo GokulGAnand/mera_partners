@@ -21,6 +21,7 @@ class Procured extends StatelessWidget {
             SizedBox(
             height: Dimens.standard_16,
           ),
+          controller.searchList.isNotEmpty ?
           Obx(
             () {
               return GridView.builder(
@@ -62,7 +63,9 @@ class Procured extends StatelessWidget {
               
                   });
             }
-          )],
+          ):
+              const Center(child: Text(MyStrings.noDataFound),)
+        ],
     );
   }
 }

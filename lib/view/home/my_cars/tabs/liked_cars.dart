@@ -36,7 +36,9 @@ class LikedCars extends StatelessWidget {
                          imageUrl: controller.likedCarsearchList[index].frontLeft?.url ?? '',
                          model: controller.likedCarsearchList[index].model.toString(),
                          variant: controller.likedCarsearchList[index].variant.toString(),
-                         status: controller.likedCarsearchList[index].status.toString()
+                         status: controller.likedCarsearchList[index].status.toString(),
+                         bidStartTime: DateTime.parse(controller.likedCarsearchList[index].bidStartTime ?? DateTime.now().toString()),
+                         bidEndTime: DateTime.parse(controller.likedCarsearchList[index].bidEndTime ?? DateTime.now().toString()),
                        );
                      }
                    );

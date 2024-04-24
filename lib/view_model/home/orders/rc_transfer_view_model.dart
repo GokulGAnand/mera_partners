@@ -21,7 +21,7 @@ class RcTransferViewModel extends GetxController{
   }
   getRcTransfer() async {
     try {
-      String url = '${EndPoints.baseUrl}${EndPoints.status}?status=RCTRANSFER';
+      String url = '${EndPoints.baseUrl}${EndPoints.status}/?status=RCTRANSFER';
       if (globals.uniqueUserId != null) {
         url += '&winner=${globals.uniqueUserId}';
       }

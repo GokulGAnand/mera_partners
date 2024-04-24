@@ -8,6 +8,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../../model/response/live/live_cars_list_response.dart';
 import '../../../service/endpoints.dart';
 import '../../../service/exception_error_util.dart';
+import '../../../utils/strings.dart';
 import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
 
@@ -53,6 +54,27 @@ class OTBCarsListViewModel extends GetxController {
       ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
+    }
+  }
+
+  void buyOTBCar(String carId) async {
+    //todo
+    try {
+      ProgressBar.instance.showProgressbar(Get.context!);
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'), headers: globals.jsonHeaders, body: jsonEncode({"status": 'status'}));
+
+      if (response.statusCode == 200) {
+        CustomToast.instance.showMsg(MyStrings.success);
+        ProgressBar.instance.stopProgressBar(Get.context!);
+        log(response.body.toString());
+      } else {
+        ProgressBar.instance.stopProgressBar(Get.context!);
+        CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);
+      }
+    } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
+      log(e.toString());
+      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? MyStrings.unableToConnect);
     }
   }
 }

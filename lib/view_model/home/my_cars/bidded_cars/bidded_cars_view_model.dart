@@ -23,8 +23,7 @@ class BidCarsListViewModel extends GetxController{
 
   Rx<TextEditingController> autoBidController = TextEditingController().obs;
   Rx<TextEditingController> bidController = TextEditingController().obs;
-  var bidCarsResponse = CarListResponse().obs;
-  var carListResponse = CarListResponse().obs;
+  var bidCarsResponse = UserResponse().obs;
   SocketService? socketService;
   var likeResponse = UserResponse().obs;
 
@@ -118,11 +117,11 @@ class BidCarsListViewModel extends GetxController{
   void getCarData() async {
     //todo change query parameter
     try {
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'), headers: globals.headers);
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'), headers: globals.jsonHeaders);
+      log(response.body);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        // bidCarsResponse.value = UserResponse.fromJson(jsonDecode(response.body));
-        log(response.body);
+        bidCarsResponse.value = UserResponse.fromJson(jsonDecode(response.body));
         // final isLastPage = bidCarsResponse.value.data!.length < limit;
         // if (isLastPage) {
         //   infinitePagingController.appendLastPage(bidCarsResponse.value.data!);

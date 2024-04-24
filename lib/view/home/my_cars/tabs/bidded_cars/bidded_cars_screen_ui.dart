@@ -23,7 +23,7 @@ class BidCarsListScreen extends StatelessWidget {
         () => SafeArea(
           child: controller.bidCarsResponse.value.data != null
               ? ListView.builder(
-                  itemCount: controller.bidCarsResponse.value.data?.length,
+                  itemCount: controller.bidCarsResponse.value.data![0].biddedCars?.length,
                   padding: const EdgeInsets.all(8),
                   itemBuilder: (context, index) {
                     return Obx(
@@ -34,40 +34,40 @@ class BidCarsListScreen extends StatelessWidget {
                             Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.bidCarsResponse.value.data?[index].sId);
                           },
                           isOtb: false.obs,
-                          carId: controller.bidCarsResponse.value.data?[index].sId ?? '',
-                          isScheduled: controller.bidCarsResponse.value.data?[index].status?.toLowerCase() == 'scheduled' ? true.obs : false.obs,
-                          imageUrl: controller.bidCarsResponse.value.data?[index].rearRight?.url ?? '',
-                          carLocation: controller.bidCarsResponse.value.data?[index].vehicleLocation ?? '',
-                          bidStatus: controller.bidCarsResponse.value.data?[index].status?.toLowerCase() != MyStrings.live.toLowerCase() ? RxString(MyStrings.scheduledBid) : globals.uniqueUserId != null && controller.bidCarsResponse.value.data?[index].winner != null && controller.bidCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) ? RxString(MyStrings.youAreLeading)
-                              : globals.uniqueUserId != null && controller.bidCarsResponse.value.data?[index].winner != null && !controller.bidCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) && controller.bidCarsResponse.value.data?[index].leaderBoard != null && controller.bidCarsResponse.value.data![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
+                          carId: controller.bidCarsResponse.value.data?[0].sId ?? '',
+                          isScheduled: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == 'scheduled' ? true.obs : false.obs,
+                          imageUrl: controller.bidCarsResponse.value.data?[0].biddedCars![index].rearRight?.url ?? '',
+                          carLocation: controller.bidCarsResponse.value.data?[0].biddedCars![index].vehicleLocation ?? '',
+                          bidStatus: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() != MyStrings.live.toLowerCase() ? RxString(MyStrings.scheduledBid) : globals.uniqueUserId != null && controller.bidCarsResponse.value.data?[0].biddedCars![index].winner != null && controller.bidCarsResponse.value.data![0].biddedCars![index].winner!.contains(globals.uniqueUserId!) ? RxString(MyStrings.youAreLeading)
+                              : globals.uniqueUserId != null && controller.bidCarsResponse.value.data?[0].biddedCars![index].winner != null && !controller.bidCarsResponse.value.data![0].biddedCars![index].winner!.contains(globals.uniqueUserId!) && controller.bidCarsResponse.value.data?[0].biddedCars![index].leaderBoard != null && controller.bidCarsResponse.value.data![0].biddedCars![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
                               ? RxString(MyStrings.youAreLoosing) :
                           RxString(MyStrings.highestBid),
-                          statusColor: controller.bidCarsResponse.value.data?[index].status?.toLowerCase() != MyStrings.live.toLowerCase()
+                          statusColor: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() != MyStrings.live.toLowerCase()
                               ? MyColors.black
-                              : (globals.uniqueUserId != null && controller.bidCarsResponse.value.data?[index].winner != null && controller.bidCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!))
+                              : (globals.uniqueUserId != null && controller.bidCarsResponse.value.data?[0].biddedCars![index].winner != null && controller.bidCarsResponse.value.data![0].biddedCars![index].winner!.contains(globals.uniqueUserId!))
                               ? MyColors.green
-                              : (globals.uniqueUserId != null && controller.bidCarsResponse.value.data?[index].leaderBoard != null && controller.bidCarsResponse.value.data?[index].winner != null && !controller.bidCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) &&
-                              controller.bidCarsResponse.value.data![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId))
+                              : (globals.uniqueUserId != null && controller.bidCarsResponse.value.data?[0].biddedCars![index].leaderBoard != null && controller.bidCarsResponse.value.data?[0].biddedCars![index].winner != null && !controller.bidCarsResponse.value.data![0].biddedCars![index].winner!.contains(globals.uniqueUserId!) &&
+                              controller.bidCarsResponse.value.data![0].biddedCars![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId))
                               ? MyColors.red
                               : MyColors.kPrimaryColor,
-                          bidAmount: Constants.numberFormat.format(controller.bidCarsResponse.value.data?[index].highestBid).toString().obs,
-                          bidStartTime: DateTime.parse(controller.bidCarsResponse.value.data?[index].bidStartTime ?? DateTime.now().toString()),
-                          bidEndTime: DateTime.parse(controller.bidCarsResponse.value.data?[index].bidEndTime ?? DateTime.now().toString()),
-                          carModel: controller.bidCarsResponse.value.data?[index].model ?? '',
-                          carVariant: controller.bidCarsResponse.value.data?[index].variant ?? '',
-                          rating: ((controller.bidCarsResponse.value.data?[index].engineStar ?? 0 + (controller.bidCarsResponse.value.data?[index].exteriorStar ?? 0) + (controller.bidCarsResponse.value.data?[index].interiorAndElectricalStar ?? 0) + (controller.bidCarsResponse.value.data?[index].testDriveStar ?? 0)) / 4),
-                          fuelType: controller.bidCarsResponse.value.data?[index].fuelType ?? '',
-                          id: controller.bidCarsResponse.value.data?[index].uniqueId.toString() ?? '',
-                          fmv: controller.bidCarsResponse.value.data?[index].realValue != null ? controller.bidCarsResponse.value.data![index].realValue.toString() : '0',
-                          kmDriven: controller.bidCarsResponse.value.data?[index].odometerReading != null ? controller.bidCarsResponse.value.data![index].odometerReading.toString() : '0',
-                          ownerShip: controller.bidCarsResponse.value.data?[index].ownershipNumber ?? '',
-                          transmission: controller.bidCarsResponse.value.data?[index].transmission ?? '',
+                          bidAmount: Constants.numberFormat.format(controller.bidCarsResponse.value.data?[0].biddedCars![index].highestBid).toString().obs,
+                          bidStartTime: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()),
+                          bidEndTime: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()),
+                          carModel: controller.bidCarsResponse.value.data?[0].biddedCars![index].model ?? '',
+                          carVariant: controller.bidCarsResponse.value.data?[0].biddedCars![index].variant ?? '',
+                          rating: ((controller.bidCarsResponse.value.data?[0].biddedCars![index].engineStar ?? 0 + (controller.bidCarsResponse.value.data?[0].biddedCars![index].exteriorStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].interiorAndElectricalStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].testDriveStar ?? 0)) / 4),
+                          fuelType: controller.bidCarsResponse.value.data?[0].biddedCars![index].fuelType ?? '',
+                          id: controller.bidCarsResponse.value.data?[0].biddedCars![index].uniqueId.toString() ?? '',
+                          fmv: controller.bidCarsResponse.value.data?[0].biddedCars![index].realValue != null ? controller.bidCarsResponse.value.data![0].biddedCars![index].realValue.toString() : '0',
+                          kmDriven: controller.bidCarsResponse.value.data?[0].biddedCars![index].odometerReading != null ? controller.bidCarsResponse.value.data![0].biddedCars![index].odometerReading.toString() : '0',
+                          ownerShip: controller.bidCarsResponse.value.data?[0].biddedCars![index].ownershipNumber ?? '',
+                          transmission: controller.bidCarsResponse.value.data?[0].biddedCars![index].transmission ?? '',
                           images: [
-                            controller.bidCarsResponse.value.data?[index].frontLeft?.url ?? '',
-                            controller.bidCarsResponse.value.data?[index].front?.url ?? '',
-                            controller.bidCarsResponse.value.data?[index].frontRight?.url ?? '',
-                            controller.bidCarsResponse.value.data?[index].rear?.url ?? '',
-                            controller.bidCarsResponse.value.data?[index].engineCompartment?.url ?? '',
+                            controller.bidCarsResponse.value.data?[0].biddedCars![index].frontLeft?.url ?? '',
+                            controller.bidCarsResponse.value.data?[0].biddedCars![index].front?.url ?? '',
+                            controller.bidCarsResponse.value.data?[0].biddedCars![index].frontRight?.url ?? '',
+                            controller.bidCarsResponse.value.data?[0].biddedCars![index].rear?.url ?? '',
+                            controller.bidCarsResponse.value.data?[0].biddedCars![index].engineCompartment?.url ?? '',
                           ],
                           autoBid: () {
                             controller.autoBidController.value.clear();
@@ -80,12 +80,12 @@ class BidCarsListScreen extends StatelessWidget {
                                   return CustomBidBottomSheet(
                                     amountController: controller.autoBidController,
                                     isAutoBid: true,
-                                    bidValue: RxInt(controller.bidCarsResponse.value.data?[index].highestBid ?? 0),
-                                    stepRate: controller.bidCarsResponse.value.data![index].highestBid! <= 99999
+                                    bidValue: RxInt(controller.bidCarsResponse.value.data?[0].biddedCars![index].highestBid ?? 0),
+                                    stepRate: controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 99999
                                         ? RxInt(2000)
-                                        : (controller.bidCarsResponse.value.data![index].highestBid! >= 100000 && controller.bidCarsResponse.value.data![index].highestBid! <= 299999)
+                                        : (controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! >= 100000 && controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 299999)
                                         ? RxInt(4000)
-                                        : (controller.bidCarsResponse.value.data![index].highestBid! >= 300000 && controller.bidCarsResponse.value.data![index].highestBid! <= 499999)
+                                        : (controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! >= 300000 && controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 499999)
                                         ? RxInt(7000)
                                         : RxInt(10000),
                                     onAutoBidPressed: () {
@@ -109,12 +109,12 @@ class BidCarsListScreen extends StatelessWidget {
                                 builder: (context) {
                                   return CustomBidBottomSheet(
                                     amountController: controller.bidController,
-                                    bidValue: RxInt(controller.bidCarsResponse.value.data?[index].highestBid ?? 0),
-                                    stepRate: controller.bidCarsResponse.value.data![index].highestBid! <= 99999
+                                    bidValue: RxInt(controller.bidCarsResponse.value.data?[0].biddedCars![index].highestBid ?? 0),
+                                    stepRate: controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 99999
                                         ? RxInt(2000)
-                                        : (controller.bidCarsResponse.value.data![index].highestBid! >= 100000 && controller.bidCarsResponse.value.data![index].highestBid! <= 299999)
+                                        : (controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! >= 100000 && controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 299999)
                                         ? RxInt(4000)
-                                        : (controller.bidCarsResponse.value.data![index].highestBid! >= 300000 && controller.bidCarsResponse.value.data![index].highestBid! <= 499999)
+                                        : (controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! >= 300000 && controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 499999)
                                         ? RxInt(7000)
                                         : RxInt(10000),
                                     onBidPressed: () {
@@ -129,7 +129,7 @@ class BidCarsListScreen extends StatelessWidget {
                                 });
                           },
                         );
-                            
+
                   } else {
                     return const SizedBox();
                   }

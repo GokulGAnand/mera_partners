@@ -488,5 +488,6 @@ class MyStrings {
   static const String bidEndsIn = 'Bid ends in';
   static const String lastCall = 'Last call';
   static const String yetToStart = 'Yet to start';
+  static const String deleteAccount = 'Delete Account';
 
 }
