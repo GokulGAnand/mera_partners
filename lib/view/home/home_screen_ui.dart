@@ -10,6 +10,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -139,12 +141,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 label: "Account"),
           ],
           onTap: (index) {
-          if(index!=3){
+            print('Tapped index: $index');
+            if (index == 1) {
+              print('Index is 1');
+              if (Get.isRegistered<BidCarsListViewModel>()) {
+                print('BidCarsListViewModel is registered');
+                Get.delete<BidCarsListViewModel>();
+              } else {
+                print('BidCarsListViewModel is not registered');
+              }
               homeScreenViewModel.selectedIndex.value = index;
-            }else{
-
+            } else if (index != 3) {
+              print('Index is not 1 and not 3');
+              homeScreenViewModel.selectedIndex.value = index;
+            } else {
+              print('Index is 3');
             }
-            
           },
         );
       }),

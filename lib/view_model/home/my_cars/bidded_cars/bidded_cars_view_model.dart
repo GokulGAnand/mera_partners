@@ -144,7 +144,12 @@ class BidCarsListViewModel extends GetxController{
       print('API Response Body: ${response.body}');
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
+        likeResponse.value = UserResponse();
         likeResponse.value = UserResponse.fromJson(jsonDecode(response.body));
+        update();
+        refresh();
+        notifyChildrens();
+        likeResponse.refresh();
         print('API Response svvs: ${response.body}');
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
