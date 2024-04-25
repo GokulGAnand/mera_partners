@@ -129,13 +129,13 @@ class CarDetailsScreenViewModel extends GetxController {
 
   @override
   void onInit() {
-    scrollListener();
-    // videoController.value = VideoPlayerController.networkUrl(Uri.parse(
-    //     'https://bucketkeracars.s3.ap-south-1.amazonaws.com/startVideo-1710486615054-a5a565fa-745c-45bf-abd0-703cf2957f51827885497507968836.mp4'))
-    //   ..initialize().then((_) {});
-    getReport();
-    getCarDetails();
-    getLikedCarData();
+    // scrollListener();
+    // // videoController.value = VideoPlayerController.networkUrl(Uri.parse(
+    // //     'https://bucketkeracars.s3.ap-south-1.amazonaws.com/startVideo-1710486615054-a5a565fa-745c-45bf-abd0-703cf2957f51827885497507968836.mp4'))
+    // //   ..initialize().then((_) {});
+    // getReport();
+    // getCarDetails();
+    // getLikedCarData();
     super.onInit();
   }
 
@@ -450,11 +450,11 @@ class CarDetailsScreenViewModel extends GetxController {
         reportResponse.value = ReportResponse.fromJson(jsonDecode(response.body));
         if (reportResponse.value.data != null) {
           sliderImage.value = [
-            reportResponse.value.data!.allCarInfo!.frontLeft!.url ?? '',
-            reportResponse.value.data!.allCarInfo!.front!.url ?? '',
-            reportResponse.value.data!.allCarInfo!.frontRight!.url ?? '',
-            reportResponse.value.data!.allCarInfo!.rear!.url ?? '',
-            reportResponse.value.data!.allCarInfo!.engineCompartment!.url ?? '',
+            if(reportResponse.value.data!.allCarInfo!.frontLeft != null) reportResponse.value.data!.allCarInfo!.frontLeft!.url ?? '',
+            if(reportResponse.value.data!.allCarInfo!.front != null) reportResponse.value.data!.allCarInfo!.front!.url ?? '',
+            if(reportResponse.value.data!.allCarInfo!.frontRight != null) reportResponse.value.data!.allCarInfo!.frontRight!.url ?? '',
+            if(reportResponse.value.data!.allCarInfo!.rear != null) reportResponse.value.data!.allCarInfo!.rear!.url ?? '',
+            if(reportResponse.value.data!.allCarInfo!.engineCompartment != null) reportResponse.value.data!.allCarInfo!.engineCompartment!.url ?? '',
           ];
           ratingList.value = [
             Item(title: MyStrings.documents, rating: 0.0),

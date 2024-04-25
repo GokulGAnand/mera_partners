@@ -51,6 +51,10 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
     //     TabController(length: (carDetailsScreenViewModel.airConditionIssue.isEmpty)?1:2, vsync: this);
     // carDetailsScreenViewModel.testDriveTabController =
     //     TabController(length: (carDetailsScreenViewModel.testDriveIssue.isEmpty)?1:2, vsync: this);
+    carDetailsScreenViewModel.scrollListener();
+    carDetailsScreenViewModel.getReport();
+    carDetailsScreenViewModel.getCarDetails();
+    carDetailsScreenViewModel.getLikedCarData();
     super.initState();
   }
 
@@ -1211,12 +1215,12 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                             ],
                           ),
                         ),
-                        if(carDetailsScreenViewModel.imageList[index]["imageList"] != null) Padding(
+                        if(list[index].value!.startsWith("http") || list[index].value!.startsWith("https")) Padding(
                           padding: const EdgeInsets.only(left: 10.0),
                           child: SizedBox(
                             width: 75,
                             height: 68,
-                            child: Image.network(carDetailsScreenViewModel.imageList[index]["imageList"][0].value, fit: BoxFit.cover,
+                            child: Image.network(list[index].value.toString(), fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) {
                                   return SvgPicture.asset(MyImages.loadingCar);
                                 }, frameBuilder:
