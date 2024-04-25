@@ -5,7 +5,6 @@ import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/constants.dart';
 import 'package:mera_partners/utils/shared_pref_manager.dart';
 import 'package:mera_partners/view/home/binding/home_binding.dart';
-import 'package:mera_partners/view/home/home_screen_ui.dart';
 import 'package:mera_partners/view/login/binding/login_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -31,8 +30,10 @@ Future<bool> loadData() async{
     globals.documentStatus = await SharedPrefManager.instance.getStringAsync(Constants.documentStatus);
     globals.isDeposited = await SharedPrefManager.instance.getBoolAsync(Constants.isDeposited);
     globals.addressProofFront = await SharedPrefManager.instance.getBoolAsync(Constants.addressProofFront);
-    print(globals.token);
-    print(globals.uniqueUserId);
+    globals.userName = await SharedPrefManager.instance.getStringAsync(Constants.userName);
+    log(globals.token.toString());
+    log(globals.uniqueUserId.toString());
+    log(globals.userName.toString());
     return true;
   }
   return false;

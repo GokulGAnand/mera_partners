@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mera_partners/utils/globals.dart' as globals;
-import '../../../../model/response/live/live_cars_list_response.dart';
 import '../../../../model/response/user_data/user_car_details_response.dart';
 import '../../../../service/endpoints.dart';
 import '../../../../service/exception_error_util.dart';
@@ -60,7 +59,7 @@ class BidCarsListViewModel extends GetxController{
     try {
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId').toString());
       log(jsonEncode({"status": like == true ? "LikedCar" : "Unlike"}));
-      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'), 
+      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'),
       headers: globals.jsonHeaders, body: jsonEncode({"status": like == true ? "LikedCar" : "Unlike"}));
       log(response.body.toString());
       if (response.statusCode == 200) {
@@ -147,8 +146,13 @@ class BidCarsListViewModel extends GetxController{
       print('API Response Body: ${response.body}');
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
+        likeResponse.value = UserResponse();
         likeResponse.value = UserResponse.fromJson(jsonDecode(response.body));
         likedCarsearchList.value = UserResponse.fromJson(jsonDecode(response.body)).data![0].likedCars!;
+        update();
+        refresh();
+        notifyChildrens();
+        likeResponse.refresh();
         print('API Response svvs: ${response.body}');
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);

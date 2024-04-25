@@ -66,11 +66,9 @@ class OTBScreen extends StatelessWidget {
                                     context: context,
                                     builder: (context) {
                                       return OTBBottomSheet(
-                                        // otbPrice: 10,
-                                        //todo
-                                        otbPrice: item.realValue ?? 0,
+                                        otbPrice: item.highestBid ?? 0,
                                         onPressed: () {
-                                          
+                                          controller.buyOTBCar(item.sId ?? '', item.highestBid ?? 0);
                                         },
                                       );
                                     });

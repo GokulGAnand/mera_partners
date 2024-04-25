@@ -5,6 +5,7 @@ import 'package:mera_partners/view_model/home/notification/notification_view_mod
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/notification_widget.dart';
 
+/// ignore: must_be_immutable
 class NotificationScreen extends StatelessWidget {
   NotificationScreen({
     super.key,

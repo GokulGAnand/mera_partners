@@ -17,4 +17,5 @@ class EndPoints {
   static String report = 'report/';
   static String evaluation = 'evaluation';
   static String notification = 'notification/';
+  static String otb = 'otb';
 }

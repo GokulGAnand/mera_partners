@@ -18,6 +18,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'dart:math' as math;
 import 'package:mera_partners/utils/globals.dart' as globals;
+import 'package:mera_partners/widgets/quote_price_bottom_sheet.dart';
 import 'package:video_player/video_player.dart';
 
 class CarDetailsScreen extends StatefulWidget {
@@ -743,6 +744,16 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
           const SizedBox(
             height: 8,
           ),
+          if(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase())
+            TextButton(onPressed: () {
+              showModalBottomSheet(context: context, builder: (context) {
+                return QuotePriceBottomSheet(otbPrice: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0, quotePriceController: carDetailsScreenViewModel.quotePriceController.value,
+                  onPressed: () {
+                    carDetailsScreenViewModel.quotePrice(carDetailsScreenViewModel.id, carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0);
+                  },
+                );
+              },);
+            }, child: const Text(MyStrings.quotePrice)),
           (carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase() )?
           const SizedBox()
           :Row(
