@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'package:intl/intl.dart';
 import 'package:mera_partners/model/response/car_details/car_details_response.dart';
 import 'package:mera_partners/model/response/car_details/report_response.dart';
 import 'package:mera_partners/model/response/user_data/user_car_details_response.dart';
@@ -16,6 +15,8 @@ import 'package:video_player/video_player.dart';
 import 'package:http/http.dart' as http;
 import 'package:mera_partners/utils/globals.dart' as globals;
 
+import '../../widgets/progressbar.dart';
+
 class CarDetailsScreenViewModel extends GetxController {
 
   RxInt pageIndex = 0.obs;
@@ -28,7 +29,7 @@ class CarDetailsScreenViewModel extends GetxController {
   //bid closed
   //car sold 
 
-  Rxn<Duration> duration = new Rxn();
+  Rxn<Duration> duration = Rxn();
 
   void startTimer() {
     Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -126,6 +127,7 @@ class CarDetailsScreenViewModel extends GetxController {
   RxBool playVideo = false.obs;
 
   Rxn<VideoPlayerController> videoController = Rxn<VideoPlayerController>();
+  Rx<TextEditingController> quotePriceController = TextEditingController().obs;
 
   @override
   void onInit() {
@@ -722,9 +724,9 @@ class CarDetailsScreenViewModel extends GetxController {
   var likeResponse = UserResponse().obs;
   void getLikedCarData() async {
     try {
-      print('API URL: ${Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}')}');
+      log('API URL: ${Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}')}');
       var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'), headers: globals.headers);
-      print('API Response Body: ${response.body}');
+      log('API Response Body: ${response.body}');
       if (response.statusCode == 200) {
         // ProgressBar.instance.stopProgressBar(Get.context!);
         likeResponse.value = UserResponse.fromJson(jsonDecode(response.body));
@@ -733,15 +735,39 @@ class CarDetailsScreenViewModel extends GetxController {
             isLike.value = true;
           }
         }
-        print('API Response svvs: ${response.body}');
+        log('API Response svvs: ${response.body}');
       } else {
         // ProgressBar.instance.stopProgressBar(Get.context!);
-        print('API Error: ${response.reasonPhrase}');
+        log('API Error: ${response.reasonPhrase}');
       }
     } catch (e) {
       // ProgressBar.instance.stopProgressBar(Get.context!);
-      print('Exception occurred: $e');
+      log('Exception occurred: $e');
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
+    }
+  }
+
+  void quotePrice(String carId, num amount) async {
+    try {
+      ProgressBar.instance.showProgressbar(Get.context!);
+      var response = await http.post(Uri.parse('${EndPoints.baseUrl}${EndPoints.otb}'), headers: globals.jsonHeaders,
+          body: jsonEncode({
+            "carId": carId,
+            "amount": amount,
+          }));
+
+      if (response.statusCode == 200) {
+        CustomToast.instance.showMsg(MyStrings.success);
+        ProgressBar.instance.stopProgressBar(Get.context!);
+        log(response.body.toString());
+      } else {
+        ProgressBar.instance.stopProgressBar(Get.context!);
+        CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);
+      }
+    } catch (e) {
+      ProgressBar.instance.stopProgressBar(Get.context!);
+      log(e.toString());
+      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? MyStrings.unableToConnect);
     }
   }
 

@@ -13,6 +13,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+/// ignore: must_be_immutable
 class CustomBidBottomSheet extends StatefulWidget {
   CustomBidBottomSheet({required this.bidValue, this.isAutoBid = false, super.key, this.onBidPressed, this.amountController, this.stepRate, this.onAutoBidPressed,
     this.bidStartTime,

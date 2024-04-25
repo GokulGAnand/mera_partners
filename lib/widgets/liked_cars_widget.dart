@@ -20,6 +20,7 @@ import '../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 import 'custom_button.dart';
 import 'custom_toast.dart';
 
+/// ignore: must_be_immutable
 class LikedCarsWidget extends StatelessWidget {
   final BidCarsListViewModel bidCarsListViewModel = Get.find<BidCarsListViewModel>();
   final String imageUrl;
@@ -78,7 +79,7 @@ class LikedCarsWidget extends StatelessWidget {
       headers: globals.jsonHeaders, body: jsonEncode({"status": like== true? "LikedCar" :"Unlike"}));
       log(response.body.toString());
       if (response.statusCode == 200) {
-        print('checking: ${bidCarsListViewModel.likeResponse}');
+        log('checking: ${bidCarsListViewModel.likeResponse}');
         Get.find<BidCarsListViewModel>().getLikedCarData();
         Get.find<BidCarsListViewModel>().likeResponse.refresh();
         CustomToast.instance.showMsg(MyStrings.success);
@@ -174,10 +175,10 @@ class LikedCarsWidget extends StatelessWidget {
                           size: 16,
                         ),
                         onTap: () {
-                          print("Tapping like button");
+                          log("Tapping like button");
                           updateLikedCar(isFavourite!.value ? false : true);
                           isFavourite!.value == true ? isFavourite!.value = false : isFavourite!.value = true;
-                          print("Like status: ${isFavourite!.value}");
+                          log("Like status: ${isFavourite!.value}");
                         },
                       ),
                     ),

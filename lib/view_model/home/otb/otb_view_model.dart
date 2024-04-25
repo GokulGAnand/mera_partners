@@ -57,11 +57,14 @@ class OTBCarsListViewModel extends GetxController {
     }
   }
 
-  void buyOTBCar(String carId) async {
-    //todo
+  void buyOTBCar(String carId, num otbAmount) async {
     try {
       ProgressBar.instance.showProgressbar(Get.context!);
-      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'), headers: globals.jsonHeaders, body: jsonEncode({"status": 'status'}));
+      var response = await http.post(Uri.parse('${EndPoints.baseUrl}${EndPoints.otb}'), headers: globals.jsonHeaders,
+          body: jsonEncode({
+            "carId": carId,
+            "otb_amount": otbAmount,
+          }));
 
       if (response.statusCode == 200) {
         CustomToast.instance.showMsg(MyStrings.success);

@@ -26,10 +26,8 @@ class CustomSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // Capture horizontal drag gestures
       onHorizontalDragUpdate: (details) {
         if (details.delta.dx > 0) {
-          // Swiped to the right
           if (activePage.value > 0) {
             activePage.value--;
             pageSliderController.value.animateToPage(
@@ -39,7 +37,6 @@ class CustomSlider extends StatelessWidget {
             );
           }
         } else if (details.delta.dx < 0) {
-          // Swiped to the left
           if (activePage.value < sliderImage.length - 1) {
             activePage.value++;
             pageSliderController.value.animateToPage(

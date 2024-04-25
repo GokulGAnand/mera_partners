@@ -40,7 +40,7 @@ class Procured extends StatelessWidget {
                         return CustomOrderContainer(
                             buttonStatus: "view details",
                             carModel: controller.searchList[index].model ?? '',
-                            finalPrice: controller.searchList[index].highestBid.toString() ?? '',
+                            finalPrice: controller.searchList[index].highestBid != null ? controller.searchList[index].highestBid.toString() : '',
                             carName: controller.searchList[index].variant ?? '',
                             carID: controller.searchList[index].uniqueId?.toString() ?? '',
                             imageURL: controller.searchList[index].frontLeft?.url ?? '',
