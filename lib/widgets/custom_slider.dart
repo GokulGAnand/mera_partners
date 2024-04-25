@@ -1,112 +1,143 @@
-import 'package:mera_partners/utils/colors.dart';
-import 'package:mera_partners/utils/images.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
-/// ignore: must_be_immutable
+import '../utils/colors.dart';
+import '../utils/images.dart';
+
 class CustomSlider extends StatelessWidget {
-  CustomSlider(
-      {required this.sliderImage,
-      required this.pageSliderController,
-      required this.activePage,
-      this.showBlackOpacity = false,
-      this.height = 200,
-      super.key});
-  List<String> sliderImage;
-  Rx<PageController> pageSliderController;
-  var activePage;
-  bool showBlackOpacity;
-  double height;
+  CustomSlider({
+    Key? key,
+    required this.sliderImage,
+    required this.pageSliderController,
+    required this.activePage,
+    this.showBlackOpacity = false,
+    this.height = 200,
+  }) : super(key: key);
+
+  final List<String> sliderImage;
+  final Rx<PageController> pageSliderController;
+  final RxInt activePage;
+  final bool showBlackOpacity;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => SizedBox(
-      height: height,
-      child: Stack(
-        children: [
-          SizedBox(
-            width: double.infinity,
-            height: height,
-            child: PageView.builder(
-              controller: pageSliderController.value,
-              onPageChanged: (index) {
-                activePage.value = index;
-                pageSliderController.value.animateToPage(
-                  activePage,
-                  duration: Duration(milliseconds: 300),
-                  curve: Curves.easeIn,
-                );
-              },
-              itemBuilder: (_, index) {
-                return AnimatedBuilder(
-                    animation: pageSliderController.value,
-                    builder: (ctx, child) {
-                      return child!;
-                    },
-                    child: Image.network(sliderImage[index], fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return SvgPicture.asset(MyImages.loadingCar);
-                        }, frameBuilder:
-                            (context, child, frame, wasSynchronouslyLoaded) {
+    return GestureDetector(
+      // Capture horizontal drag gestures
+      onHorizontalDragUpdate: (details) {
+        if (details.delta.dx > 0) {
+          // Swiped to the right
+          if (activePage.value > 0) {
+            activePage.value--;
+            pageSliderController.value.animateToPage(
+              activePage.value,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeIn,
+            );
+          }
+        } else if (details.delta.dx < 0) {
+          // Swiped to the left
+          if (activePage.value < sliderImage.length - 1) {
+            activePage.value++;
+            pageSliderController.value.animateToPage(
+              activePage.value,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeIn,
+            );
+          }
+        }
+      },
+      child: Obx(() => SizedBox(
+        height: height,
+        child: Stack(
+          children: [
+            SizedBox(
+              width: double.infinity,
+              height: height,
+              child: PageView.builder(
+                controller: pageSliderController.value,
+                onPageChanged: (index) {
+                  activePage.value = index;
+                  pageSliderController.value.animateToPage(
+                    activePage.value,
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeIn,
+                  );
+                },
+                itemBuilder: (_, index) {
+                  return Image.network(sliderImage[index],
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return SvgPicture.asset(MyImages.loadingCar);
+                      }, frameBuilder:
+                          (context, child, frame, wasSynchronouslyLoaded) {
+                        return child;
+                      }, loadingBuilder:
+                          (context, child, loadingProgress) {
+                        if (loadingProgress == null) {
                           return child;
-                        }, loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          } else {
-                            return SvgPicture.asset(MyImages.loadingCar);
-                          }
-                        }));
-              },
-              itemCount: sliderImage.length,
+                        } else {
+                          return SvgPicture.asset(MyImages.loadingCar);
+                        }
+                      });
+                },
+                itemCount: sliderImage.length,
+              ),
             ),
-          ),
-          if (showBlackOpacity)
-            Positioned(
-              bottom: 0,
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: height,
-                decoration: ShapeDecoration(
-                  gradient: LinearGradient(
-                    begin: const Alignment(0.00, -0.00),
-                    end: const Alignment(0, 1),
-                    colors: [Colors.black.withOpacity(0), Colors.black],
-                  ),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8),
+            if (showBlackOpacity)
+              Positioned(
+                bottom: 0,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: height,
+                  decoration: ShapeDecoration(
+                    gradient: LinearGradient(
+                      begin: const Alignment(0.00, -0.00),
+                      end: const Alignment(0, 1),
+                      colors: [
+                        Colors.black.withOpacity(0),
+                        Colors.black
+                      ],
+                    ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          Positioned(
-            bottom: 12,
-            left: MediaQuery.of(context).size.width * 0.39,
-            child: Obx(
-                  () => SizedBox(
-                width: 41,
-                height: 4.56,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(
-                    5,
-                        (index) => GestureDetector(
-                          onTap: () => pageSliderController.value.animateToPage(
-                            index,
-                            duration: Duration(milliseconds: 300),
-                            curve: Curves.easeIn,
+            Positioned(
+              bottom: 12,
+              left: MediaQuery.of(context).size.width * 0.39,
+              child: Obx(
+                    () => SizedBox(
+                  width: 41,
+                  height: 4.56,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      5,
+                          (index) => GestureDetector(
+                        onTap: () => pageSliderController.value
+                            .animateToPage(
+                          index,
+                          duration: Duration(milliseconds: 300),
+                          curve: Curves.easeIn,
+                        ),
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 2.0),
+                          child: Icon(
+                            Icons.circle,
+                            size: 6.0,
+                            color: activePage.value == index
+                                ? MyColors.white
+                                : MyColors.grey,
                           ),
-                      child: Container(
-                        margin: const EdgeInsets.only(left: 2.0),
-                        child: Icon(
-                          Icons.circle,
-                          size: 6.0,
-                          color: activePage.value == index
-                              ? MyColors.white
-                              : MyColors.grey,
                         ),
                       ),
                     ),
@@ -114,9 +145,9 @@ class CustomSlider extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-    ));
+          ],
+        ),
+      )),
+    );
   }
 }
