@@ -22,43 +22,50 @@ class RcTransfer extends StatelessWidget {
         SizedBox(
           height: Dimens.standard_16,
         ),
-        (controller.liveCarsResponse.value.data != null) && controller.liveCarsResponse.value.data!.isNotEmpty ? GridView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: controller.liveCarsResponse.value.data?.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 22,
-            mainAxisSpacing: 18,
-            mainAxisExtent: 272,
-          ),
-          itemBuilder: (context, index) {
-            return CustomOrderContainer(
-              buttonStatus: "pending",
-              carID: controller.liveCarsResponse.value.data?[index].uniqueId?.toString() ?? '',
-              finalPrice: controller.liveCarsResponse.value.data?[index].highestBid.toString() ?? '',
-              carModel: controller.liveCarsResponse.value.data?[index].model ?? '',
-              carName: controller.liveCarsResponse.value.data?[index].make ?? '',
-              imageURL: controller.liveCarsResponse.value.data?[index].frontLeft?.url ?? '',
-              button: CustomElevatedButton(
-                onPressed: () {},
-                buttonStyle: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.all(2),
-                  backgroundColor: MyColors.green3,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
-                    side: BorderSide.none,
-                  ),
-                ),
-                buttonColor: MyColors.green3,
-                buttonText: MyStrings.completed,
-                textStyle: MyStyles.white14500,
+        Obx(
+          () {
+            if(controller.searchRcTransferList.isNotEmpty){
+              return GridView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: controller.searchRcTransferList.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 22,
+                mainAxisSpacing: 18,
+                mainAxisExtent: 272,
               ),
-              showButton: false,
+              itemBuilder: (context, index) {
+                return CustomOrderContainer(
+                  buttonStatus: "pending",
+                  carID: controller.searchRcTransferList[index].uniqueId?.toString() ?? '',
+                  finalPrice: controller.searchRcTransferList[index].highestBid.toString() ?? '',
+                  carModel: controller.searchRcTransferList[index].model ?? '',
+                  carName: controller.searchRcTransferList[index].make ?? '',
+                  imageURL: controller.searchRcTransferList[index].frontLeft?.url ?? '',
+                  button: CustomElevatedButton(
+                    onPressed: () {},
+                    buttonStyle: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(2),
+                      backgroundColor: MyColors.green3,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        side: BorderSide.none,
+                      ),
+                    ),
+                    buttonColor: MyColors.green3,
+                    buttonText: MyStrings.completed,
+                    textStyle: MyStyles.white14500,
+                  ),
+                  showButton: false,
+                );
+              },
             );
-          },
-        ):const Center(child: Text(MyStrings.noDataFound),),
+            }
+            return const Center(child: Text(MyStrings.noDataFound),);
+          }
+        )
       ],
     );
   }

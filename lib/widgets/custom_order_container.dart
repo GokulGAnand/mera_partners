@@ -60,7 +60,8 @@ class CustomOrderContainer extends StatelessWidget {
               children: [
                 Container(
                   width: double.infinity,
-                  height: showButton?107:200,
+                  height: 107,
+                  // height: showButton?107:200,
                   alignment: Alignment.bottomCenter,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(

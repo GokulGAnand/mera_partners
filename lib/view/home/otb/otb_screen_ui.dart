@@ -33,7 +33,7 @@ class OTBScreen extends StatelessWidget {
                             return CustomCarDetailCard(
                               carId: item.sId ?? '',
                               onCarTapped: () {
-                                Get.toNamed(AppRoutes.carDetailsScreen);
+                                Get.toNamed(AppRoutes.carDetailsScreen, arguments: item.sId);
                               },
                               isOtb: true.obs,
                               imageUrl: item.rearRight?.url ?? '',

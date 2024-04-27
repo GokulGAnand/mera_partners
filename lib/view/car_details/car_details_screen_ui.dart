@@ -4,12 +4,14 @@ import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/constants.dart';
+import 'package:mera_partners/utils/dimens.dart';
 import 'package:mera_partners/utils/images.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/utils/svg.dart';
 import 'package:mera_partners/view_model/car_details/car_details_view_model.dart';
 import 'package:mera_partners/view_model/home/live/live_cars_list_view_model.dart';
+import 'package:mera_partners/view_model/home/otb/otb_view_model.dart';
 import 'package:mera_partners/widgets/custom_bid_bottom_sheet.dart';
 import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:mera_partners/widgets/custom_slider.dart';
@@ -18,6 +20,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'dart:math' as math;
 import 'package:mera_partners/utils/globals.dart' as globals;
+import 'package:mera_partners/widgets/otb_bottom_sheet.dart';
 import 'package:mera_partners/widgets/quote_price_bottom_sheet.dart';
 import 'package:video_player/video_player.dart';
 
@@ -52,16 +55,18 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
     //     TabController(length: (carDetailsScreenViewModel.airConditionIssue.isEmpty)?1:2, vsync: this);
     // carDetailsScreenViewModel.testDriveTabController =
     //     TabController(length: (carDetailsScreenViewModel.testDriveIssue.isEmpty)?1:2, vsync: this);
-    carDetailsScreenViewModel.scrollListener();
-    carDetailsScreenViewModel.getReport();
-    carDetailsScreenViewModel.getCarDetails();
-    carDetailsScreenViewModel.getLikedCarData();
+    // carDetailsScreenViewModel.scrollListener();
+    // carDetailsScreenViewModel.getReport();
+    // carDetailsScreenViewModel.getCarDetails();
+    // carDetailsScreenViewModel.getLikedCarData();
     super.initState();
   }
 
   @override
   void dispose() {
-    carDetailsScreenViewModel.videoController.value!.pause();
+    if(carDetailsScreenViewModel.videoController.value != null){
+      carDetailsScreenViewModel.videoController.value!.pause();
+    }
     super.dispose();
   }
 
@@ -125,7 +130,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       end: const Alignment(2.00, 0.00),
                       begin: const Alignment(-1, 0),
                       colors: [
-                        carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase()
+                        carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase()
+                                  ? MyColors.kPrimaryColor
+                        :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase()
                                   ? MyColors.black
                                   : (globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!))
                                   ? MyColors.green
@@ -144,6 +151,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         ? MyStrings.bidClosed
                         :(carDetailsScreenViewModel.carStatus == "car sold")
                         ? MyStrings.carSold
+                        :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase() 
+                        ? MyStrings.closingPrice
                         :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase() 
                         ? MyStrings.scheduledBid
                         : globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) 
@@ -179,7 +188,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         // (carDetailsScreenViewModel.carStatus == "")? 
                         // '₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid.toString()}': 
                         // '',
-                        carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() 
+                        carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() ||
+                        carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
                         ? Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid).toString()
                         : "",
                         textAlign: TextAlign.center,
@@ -649,7 +659,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             begin: const Alignment(-1, 0),
             end: const Alignment(2.00, 0.00),
             colors: <Color>[
-              carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase()
+              carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase()?
+              MyColors.kPrimaryColor
+              :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase()
                                   ? MyColors.black
                                   : (globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!))
                                   ? MyColors.green
@@ -692,7 +704,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                   )
                   :const SizedBox(),
               Text(
-                carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() 
+                carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() ||
+                carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
                         ? Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid).toString()
                 : carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.scheduled.toLowerCase()
                 ? MyStrings.scheduledBid
@@ -707,160 +720,186 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
   }
 
   Widget bottomSheetWidget() {
-    return Container(
-      width: double.infinity,
-      height: (carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase() )? 
-      65:111,
-      color: Colors.white,
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+    return Obx(
+      () {
+        return Container(
+          width: double.infinity,
+          height: (carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() )
+          ?65
+          :(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase() )
+          ?142
+          :111,
+          color: Colors.white,
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                MySvg.timer,
-                width: 18,
-                // ignore: deprecated_member_use
-                color: MyColors.green2,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    MySvg.timer,
+                    width: 18,
+                    // ignore: deprecated_member_use
+                    color: MyColors.green2,
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                      if(carDetailsScreenViewModel.duration.value != null)
+                         Text(
+                          carDetailsScreenViewModel.formatDuration(carDetailsScreenViewModel.duration.value!),
+                          style: MyStyles.green2_14700,
+                        )
+                ],
               ),
               const SizedBox(
-                width: 5,
+                height: 8,
               ),
-              Obx(
-                () {
-                  if(carDetailsScreenViewModel.duration.value != null){
-                    return Text(
-                      carDetailsScreenViewModel.formatDuration(carDetailsScreenViewModel.duration.value!),
-                      style: MyStyles.green2_14700,
-                    );
-                  }
-                  return const SizedBox();
-                }
-              ),
+              if(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase())
+                Column(
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.only(left: 12.0, right: 12),
+                        child: CustomElevatedButton(
+                            buttonHeight: Dimens.defHeight,
+                            onPressed: (){
+                              showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        context: context,
+                                        builder: (context) {
+                                          return OTBBottomSheet(
+                                            otbPrice: carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toInt() ?? 0,
+                                            onPressed: () {
+                                              Get.find<OTBCarsListViewModel>().buyOTBCar(carDetailsScreenViewModel.reportResponse.value.data!.sId ?? '', carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toInt() ?? 0);
+                                            },
+                                          );
+                                        });
+                            },
+                            buttonText: MyStrings.oneTouchBuy),
+                      ),
+                      const SizedBox(height: 12,),
+                    InkWell(onTap: () {
+                      showModalBottomSheet(context: context, builder: (context) {
+                        return QuotePriceBottomSheet(otbPrice: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0, quotePriceController: carDetailsScreenViewModel.quotePriceController.value,
+                          onPressed: () {
+                            carDetailsScreenViewModel.quotePrice(carDetailsScreenViewModel.id, carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0);
+                          },
+                        );
+                      },);
+                    }, child: const Text(MyStrings.quotePrice, style: MyStyles.primary16500,)),
+                  ],
+                ),
+              (carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase() )?
+              const SizedBox()
+              :Row(
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: 47,
+                      child: CustomElevatedButton(
+                        onPressed: () {
+                          liveCarListViewModel.autoBidController.value.clear();
+                            showModalBottomSheet(
+                                isScrollControlled: true,
+                                enableDrag: true,
+                                backgroundColor: Colors.transparent,
+                                context: context,
+                                builder: (context) {
+                                  return CustomBidBottomSheet(
+                                    amountController: liveCarListViewModel.autoBidController,
+                                    isAutoBid: true,
+                                    bidValue: RxInt(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toInt()),
+                                    stepRate: carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 99999
+                                        ? RxInt(2000)
+                                        : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 100000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 299999)
+                                        ? RxInt(4000)
+                                        : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 300000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 499999)
+                                        ? RxInt(7000)
+                                        : RxInt(10000),
+                                    onAutoBidPressed: () {
+                                      try {
+                                        liveCarListViewModel.placeAutoBid(liveCarListViewModel.autoBidController.value.text, carDetailsScreenViewModel.reportResponse.value.data!.sId);
+                                        Navigator.of(context).pop();
+                                      } catch (e) {
+                                        log(e.toString());
+                                      }
+                                    },
+                                  );
+                                });
+                        },
+                        buttonStyle: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.all(2),
+                            backgroundColor:
+                                MyColors.kPrimaryColor.withOpacity(0.1),
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6),
+                                side: const BorderSide(
+                                    color: MyColors.kPrimaryColor))),
+                        buttonColor: MyColors.kPrimaryColor.withOpacity(0.3),
+                        buttonText: MyStrings.autoBid,
+                        textStyle: MyStyles.primary16500,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: SizedBox(
+                      height: 47,
+                      child: CustomElevatedButton(
+                        onPressed: () {
+                          liveCarListViewModel.bidController.value.clear();
+                            showModalBottomSheet(
+                                enableDrag: true,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                context: context,
+                                builder: (context) {
+                                  return CustomBidBottomSheet(
+                                    amountController: liveCarListViewModel.bidController,
+                                    bidValue: RxInt(carDetailsScreenViewModel.reportResponse.value.data?.allCarInfo!.highestBid!.toInt() ?? 0),
+                                    stepRate: carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 99999
+                                        ? RxInt(2000)
+                                        : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 100000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 299999)
+                                        ? RxInt(4000)
+                                        : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 300000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 499999)
+                                        ? RxInt(7000)
+                                        : RxInt(10000),
+                                    onBidPressed: () {
+                                      try {
+                                        liveCarListViewModel.placeBid(liveCarListViewModel.bidController.value.text, carDetailsScreenViewModel.reportResponse.value.data?.sId);
+                                        Navigator.of(context).pop();
+                                      } catch (e) {
+                                        log(e.toString());
+                                      }
+                                    },
+                                  );
+                                });
+                        },
+                        buttonStyle: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.all(2),
+                            backgroundColor: MyColors.kPrimaryColor,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6),
+                                side: const BorderSide(
+                                    color: MyColors.kPrimaryColor))),
+                        buttonColor: MyColors.kPrimaryColor.withOpacity(0.3),
+                        buttonText: MyStrings.bid,
+                        textStyle: MyStyles.whiteTitleStyle,
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
-          const SizedBox(
-            height: 8,
-          ),
-          if(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase())
-            TextButton(onPressed: () {
-              showModalBottomSheet(context: context, builder: (context) {
-                return QuotePriceBottomSheet(otbPrice: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0, quotePriceController: carDetailsScreenViewModel.quotePriceController.value,
-                  onPressed: () {
-                    carDetailsScreenViewModel.quotePrice(carDetailsScreenViewModel.id, carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0);
-                  },
-                );
-              },);
-            }, child: const Text(MyStrings.quotePrice)),
-          (carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase() )?
-          const SizedBox()
-          :Row(
-            children: [
-              Expanded(
-                child: SizedBox(
-                  height: 47,
-                  child: CustomElevatedButton(
-                    onPressed: () {
-                      liveCarListViewModel.autoBidController.value.clear();
-                        showModalBottomSheet(
-                            isScrollControlled: true,
-                            enableDrag: true,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (context) {
-                              return CustomBidBottomSheet(
-                                amountController: liveCarListViewModel.autoBidController,
-                                isAutoBid: true,
-                                bidValue: RxInt(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toInt()),
-                                stepRate: carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 99999
-                                    ? RxInt(2000)
-                                    : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 100000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 299999)
-                                    ? RxInt(4000)
-                                    : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 300000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 499999)
-                                    ? RxInt(7000)
-                                    : RxInt(10000),
-                                onAutoBidPressed: () {
-                                  try {
-                                    liveCarListViewModel.placeAutoBid(liveCarListViewModel.autoBidController.value.text, carDetailsScreenViewModel.reportResponse.value.data!.sId);
-                                    Navigator.of(context).pop();
-                                  } catch (e) {
-                                    log(e.toString());
-                                  }
-                                },
-                              );
-                            });
-                    },
-                    buttonStyle: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.all(2),
-                        backgroundColor:
-                            MyColors.kPrimaryColor.withOpacity(0.1),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6),
-                            side: const BorderSide(
-                                color: MyColors.kPrimaryColor))),
-                    buttonColor: MyColors.kPrimaryColor.withOpacity(0.3),
-                    buttonText: MyStrings.autoBid,
-                    textStyle: MyStyles.primary16500,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: SizedBox(
-                  height: 47,
-                  child: CustomElevatedButton(
-                    onPressed: () {
-                      liveCarListViewModel.bidController.value.clear();
-                        showModalBottomSheet(
-                            enableDrag: true,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (context) {
-                              return CustomBidBottomSheet(
-                                amountController: liveCarListViewModel.bidController,
-                                bidValue: RxInt(carDetailsScreenViewModel.reportResponse.value.data?.allCarInfo!.highestBid!.toInt() ?? 0),
-                                stepRate: carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 99999
-                                    ? RxInt(2000)
-                                    : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 100000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 299999)
-                                    ? RxInt(4000)
-                                    : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 300000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 499999)
-                                    ? RxInt(7000)
-                                    : RxInt(10000),
-                                onBidPressed: () {
-                                  try {
-                                    liveCarListViewModel.placeBid(liveCarListViewModel.bidController.value.text, carDetailsScreenViewModel.reportResponse.value.data?.sId);
-                                    Navigator.of(context).pop();
-                                  } catch (e) {
-                                    log(e.toString());
-                                  }
-                                },
-                              );
-                            });
-                    },
-                    buttonStyle: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.all(2),
-                        backgroundColor: MyColors.kPrimaryColor,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6),
-                            side: const BorderSide(
-                                color: MyColors.kPrimaryColor))),
-                    buttonColor: MyColors.kPrimaryColor.withOpacity(0.3),
-                    buttonText: MyStrings.bid,
-                    textStyle: MyStyles.whiteTitleStyle,
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
+        );
+      }
     );
   }
 
@@ -1066,7 +1105,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         height: 10,
                       ),
                       Text(
-                        carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.engineComment!,
+                        carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.engineComment ?? '',
                         style: MyStyles.black12400,
                       )
                     ],

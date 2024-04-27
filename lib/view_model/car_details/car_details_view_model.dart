@@ -131,13 +131,13 @@ class CarDetailsScreenViewModel extends GetxController {
 
   @override
   void onInit() {
-    // scrollListener();
-    // // videoController.value = VideoPlayerController.networkUrl(Uri.parse(
-    // //     'https://bucketkeracars.s3.ap-south-1.amazonaws.com/startVideo-1710486615054-a5a565fa-745c-45bf-abd0-703cf2957f51827885497507968836.mp4'))
-    // //   ..initialize().then((_) {});
-    // getReport();
-    // getCarDetails();
-    // getLikedCarData();
+    scrollListener();
+    // videoController.value = VideoPlayerController.networkUrl(Uri.parse(
+    //     'https://bucketkeracars.s3.ap-south-1.amazonaws.com/startVideo-1710486615054-a5a565fa-745c-45bf-abd0-703cf2957f51827885497507968836.mp4'))
+    //   ..initialize().then((_) {});
+    getReport();
+    getCarDetails();
+    getLikedCarData();
     super.onInit();
   }
 
@@ -448,7 +448,7 @@ class CarDetailsScreenViewModel extends GetxController {
       );
       if (response.statusCode == 200) {
         // ProgressBar.instance.stopProgressBar(Get.context!);
-        log(response.body);
+        // log(response.body);
         reportResponse.value = ReportResponse.fromJson(jsonDecode(response.body));
         if (reportResponse.value.data != null) {
           sliderImage.value = [
@@ -522,9 +522,9 @@ class CarDetailsScreenViewModel extends GetxController {
             Master(title: MyStrings.seatAdjustment, value: reportResponse.value.data!.allCarInfo!.seatAdjustment ?? ''),
             Master(title: MyStrings.suspensionSystem, listValue: reportResponse.value.data!.allCarInfo!.suspension),
             Master(title: MyStrings.brakes, value: reportResponse.value.data!.allCarInfo!.brakes ?? ''),
-            Master(title: MyStrings.clutchSystem, value: reportResponse.value.data!.allCarInfo!.clutchSystem ?? ''),
-            Master(title: MyStrings.transmissionAutomatic, listValue: reportResponse.value.data!.allCarInfo!.transmissionAutomatic),
-            Master(title: MyStrings.vehicleHorn, listValue: reportResponse.value.data!.allCarInfo!.vehicleHorn),
+            Master(title: MyStrings.clutchSystem, value: reportResponse.value.data!.allCarInfo!.seatAdjustment ?? ''),
+            Master(title: MyStrings.transmissionAutomatic, listValue: reportResponse.value.data!.allCarInfo!.transmissionAutomatic ?? []),
+            Master(title: MyStrings.vehicleHorn, listValue: reportResponse.value.data!.allCarInfo!.vehicleHorn ?? []),
           ];
           engine.value = [
             Master(title: MyStrings.engineSound, value: reportResponse.value.data!.allCarInfo!.engineSound ?? ''),
@@ -631,9 +631,9 @@ class CarDetailsScreenViewModel extends GetxController {
             Master(title: MyStrings.missingParts, value: reportResponse.value.data!.allCarInfo!.missingParts ?? ''),
           ];
           // extractUrls(reportResponse.value.data!.allCarInfo!.toJson());
-          if(reportResponse.value.data!.allCarInfo!.startVideo!.url != null){
+          if(reportResponse.value.data!.allCarInfo!.startVideo != null){
             videoController.value = VideoPlayerController.networkUrl(Uri.parse(
-            reportResponse.value.data!.allCarInfo!.startVideo!.url!))
+            reportResponse.value.data!.allCarInfo!.startVideo!.url ?? ''))
             ..initialize().then((_) {});
           }
           separateListData();
@@ -668,24 +668,24 @@ class CarDetailsScreenViewModel extends GetxController {
         //   final nextPageKey = pageKey + 1;
         //   infinitePagingController.appendPage(liveCarsResponse.value.data!, nextPageKey);
         // }
-        var startTime= carDetailsResponse.value.data![0].bidStartTime;
-        var endTime= carDetailsResponse.value.data![0].bidEndTime;
+        if(carDetailsResponse.value.data![0].bidStartTime != null && carDetailsResponse.value.data![0].bidEndTime != null){
+          var startTime= carDetailsResponse.value.data![0].bidStartTime;
+          var endTime= carDetailsResponse.value.data![0].bidEndTime;
 
-        var start = DateTime(startTime!.year, startTime.month, startTime.day, startTime.hour, startTime.minute, startTime.second);
-        var now = DateTime.now();
-        var end = DateTime(endTime!.year, endTime.month, endTime.day, endTime.hour, endTime.minute, endTime.second);
+          var start = DateTime(startTime!.year, startTime.month, startTime.day, startTime.hour, startTime.minute, startTime.second);
+          var now = DateTime.now();
+          var end = DateTime(endTime!.year, endTime.month, endTime.day, endTime.hour, endTime.minute, endTime.second);
 
-        if(now.isBefore(start)){
-          Duration diff = start.difference(now);
-          duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
-          startTimer();
-        }else if(now.isBefore(end)) {
-          Duration diff = end.difference(now);
-          duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
-          startTimer();
+          if(now.isBefore(start)){
+            Duration diff = start.difference(now);
+            duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+            startTimer();
+          }else if(now.isBefore(end)) {
+            Duration diff = end.difference(now);
+            duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+            startTimer();
+          }
         }
-        
-        
       } else {
         // ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());

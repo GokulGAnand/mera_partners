@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../model/response/live/live_cars_list_response.dart';
 import '../../../service/endpoints.dart';
@@ -12,6 +13,10 @@ import 'package:mera_partners/utils/globals.dart' as globals;
 
 
 class RcTransferViewModel extends GetxController{
+  
+  TextEditingController searchRcTransferController = TextEditingController();
+  RxList<Data> searchRcTransferList = <Data>[].obs;
+
   var liveCarsResponse = CarListResponse().obs;
 
   @override
@@ -32,6 +37,7 @@ class RcTransferViewModel extends GetxController{
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body);
         liveCarsResponse.value =CarListResponse.fromJson(jsonDecode(response.body));
+        searchRcTransferList.value = CarListResponse.fromJson(jsonDecode(response.body)).data!;
       }else{
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());
