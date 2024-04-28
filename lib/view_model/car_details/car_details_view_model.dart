@@ -14,7 +14,6 @@ import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 import 'package:http/http.dart' as http;
 import 'package:mera_partners/utils/globals.dart' as globals;
-
 import '../../widgets/progressbar.dart';
 
 class CarDetailsScreenViewModel extends GetxController {

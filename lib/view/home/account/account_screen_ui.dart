@@ -41,6 +41,13 @@ class _AccountScreenState extends State<AccountScreen> {
           actions: [
             TextButton(
               onPressed: () {
+                SharedPrefManager.instance.setStringAsync(Constants.userName, '');
+                SharedPrefManager.instance.setStringAsync(Constants.phoneNum, '');
+                SharedPrefManager.instance.setStringAsync(Constants.contactNo, '');
+                SharedPrefManager.instance.setStringAsync(Constants.token, '');
+                SharedPrefManager.instance.setStringAsync(Constants.userId, '');
+                SharedPrefManager.instance.setStringAsync(Constants.uniqueUserId, '');
+                SharedPrefManager.instance.setStringAsync(Constants.documentStatus, '');
                 accountScreenViewModel.deleteAccount();
               },
               child: Text(MyStrings.ok.toUpperCase()),
