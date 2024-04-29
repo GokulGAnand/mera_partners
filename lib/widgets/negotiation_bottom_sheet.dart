@@ -13,14 +13,14 @@ import 'package:get/get.dart';
 
 /// ignore: must_be_immutable
 class NegotiationBottomSheet extends StatelessWidget {
-  NegotiationBottomSheet({required this.biddedAmount, required this.negotiatedAmount, super.key, required this.onAcceptPressed, required this.onRejectPressed, this.bidStartTime, this.bidEndTime});
+  NegotiationBottomSheet({required this.biddedAmount, required this.negotiatedAmount, super.key, required this.onAcceptPressed, required this.onRejectPressed, this.negStartTime, this.negEndTime});
 
   final int biddedAmount;
   final int negotiatedAmount;
   final void Function() onAcceptPressed;
   final void Function() onRejectPressed;
-  final DateTime? bidStartTime;
-  final DateTime? bidEndTime;
+  final DateTime? negStartTime;
+  final DateTime? negEndTime;
   Rxn<Duration> duration = Rxn();
 
   void startTimer() {
@@ -50,7 +50,7 @@ class NegotiationBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var start = DateTime.now();
-    var end = bidEndTime ?? DateTime.now();
+    var end = negEndTime ?? DateTime.now();
     Duration diff = end.difference(start);
     duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
 
@@ -95,10 +95,10 @@ class NegotiationBottomSheet extends StatelessWidget {
               const SizedBox(
                 width: 5,
               ),
-              const Text(
-                "24min 06sec",
+              Obx(() => Text(
+                formatDuration( duration.value! ),
                 style: MyStyles.warningRed_18700,
-              ),
+              ),),
               const Spacer(),
               InkWell(
                 onTap: () {

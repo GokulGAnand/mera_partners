@@ -90,7 +90,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   backgroundImage: AssetImage(MyImages.profile),
                 ),
                 title: Text(
-                  globals.userName.toString(),
+                  globals.userName ?? '',
                   style: MyStyles.pageTitleStyle,
                 ),
                 subtitle: Text(

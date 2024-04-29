@@ -770,9 +770,10 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                         context: context,
                                         builder: (context) {
                                           return OTBBottomSheet(
-                                            otbPrice: carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toInt() ?? 0,
+                                            otbPrice: carDetailsScreenViewModel.reportResponse.value.data?.allCarInfo?.realValue?.toInt() ?? 0,
                                             onPressed: () {
-                                              Get.find<OTBCarsListViewModel>().buyOTBCar(carDetailsScreenViewModel.reportResponse.value.data!.sId ?? '', carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toInt() ?? 0);
+                                              Navigator.of(context).pop();
+                                              Get.find<OTBCarsListViewModel>().buyOTBCar(carDetailsScreenViewModel.reportResponse.value.data!.sId ?? '', carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue ?? 0);
                                             },
                                           );
                                         });
@@ -782,8 +783,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       const SizedBox(height: 12,),
                     InkWell(onTap: () {
                       showModalBottomSheet(context: context, builder: (context) {
-                        return QuotePriceBottomSheet(otbPrice: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0, quotePriceController: carDetailsScreenViewModel.quotePriceController.value,
+                        return QuotePriceBottomSheet(otbStartTime:carDetailsScreenViewModel.carDetailsResponse.value.data?[0].bidStartTime ?? DateTime.now(),otbEndTime:carDetailsScreenViewModel.carDetailsResponse.value.data?[0].bidEndTime ?? DateTime.now(),otbPrice: RxInt(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0), amountController: carDetailsScreenViewModel.quotePriceController,
                           onPressed: () {
+                            Navigator.of(context).pop();
                             carDetailsScreenViewModel.quotePrice(carDetailsScreenViewModel.id, carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0);
                           },
                         );

@@ -31,6 +31,7 @@ Future<bool> loadData() async{
     globals.isDeposited = await SharedPrefManager.instance.getBoolAsync(Constants.isDeposited);
     globals.addressProofFront = await SharedPrefManager.instance.getBoolAsync(Constants.addressProofFront);
     globals.userName = await SharedPrefManager.instance.getStringAsync(Constants.userName);
+    globals.isOnboarding = await SharedPrefManager.instance.getBoolAsync(Constants.isOnboarding);
     log(globals.token.toString());
     log(globals.uniqueUserId.toString());
     log(globals.userName.toString());

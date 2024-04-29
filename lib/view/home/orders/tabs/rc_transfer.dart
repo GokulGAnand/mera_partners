@@ -39,7 +39,7 @@ class RcTransfer extends StatelessWidget {
                 return CustomOrderContainer(
                   buttonStatus: "pending",
                   carID: controller.searchRcTransferList[index].uniqueId?.toString() ?? '',
-                  finalPrice: controller.searchRcTransferList[index].highestBid.toString() ?? '',
+                  finalPrice: controller.searchRcTransferList[index].highestBid != null ? controller.searchRcTransferList[index].highestBid.toString() : '',
                   carModel: controller.searchRcTransferList[index].model ?? '',
                   carName: controller.searchRcTransferList[index].make ?? '',
                   imageURL: controller.searchRcTransferList[index].frontLeft?.url ?? '',
@@ -59,6 +59,8 @@ class RcTransfer extends StatelessWidget {
                     textStyle: MyStyles.white14500,
                   ),
                   showButton: false,
+                  dealStatus: '',
+                  buttonText: '',
                 );
               },
             );
