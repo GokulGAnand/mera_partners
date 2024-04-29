@@ -55,7 +55,6 @@ class LoginScreenViewModel extends GetxController {
     try {
       ProgressBar.instance.showProgressbar(Get.context!);
       var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.login), body: {"contactNo": mobileController.value.text});
-
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());

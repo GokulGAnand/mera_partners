@@ -181,7 +181,7 @@ class DocumentScreenViewModel extends GetxController {
         ProgressBar.instance.stopProgressBar(Get.context!);
         createOrderResponse.value = CreateOrderResponse.fromJson(json.decode(response.body));
         var options = {
-          'key': 'rzp_test_zppMuXi3XdVVOB',
+          'key': 'rzp_live_ve07VuXvk32ht3',
           'name': 'Mera Cars',
           'currency': 'INR',
           'amount': createOrderResponse.value.data?.amount,
