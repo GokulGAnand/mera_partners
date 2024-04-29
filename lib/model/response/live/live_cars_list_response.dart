@@ -78,6 +78,7 @@ class Data {
   String? bidEndTime;
   String? bidStartTime;
   int? negotiationAmount;
+  int? finalPrice;
   String? negotiationStatus;
   String? negotiationEndTime;
   String? negotiationStartTime;
@@ -117,6 +118,7 @@ class Data {
         this.engineCompartment,
         this.bidEndTime,
         this.negotiationAmount,
+        this.finalPrice,
         this.negotiationStatus,
         this.bidStartTime,
         this.negotiationEndTime,
@@ -173,6 +175,7 @@ class Data {
         : null;
     bidEndTime = json['bidEndTime'];
     negotiationAmount = json['negotiation_amount'];
+    finalPrice = json['finalPrice'];
     negotiationStatus = json['negotiation_status'];
     negotiationStartTime = json['negotiation_startTime'];
     negotiationEndTime = json['negotiation_endTime'];
@@ -232,6 +235,7 @@ class Data {
     data['bidEndTime'] = bidEndTime;
     data['bidStartTime'] = bidStartTime;
     data['negotiation_amount'] = negotiationAmount;
+    data['finalPrice'] = finalPrice;
     data['negotiation_status'] = negotiationStatus;
     data['negotiation_startTime'] = negotiationStartTime;
     data['negotiation_endTime'] = negotiationEndTime;
