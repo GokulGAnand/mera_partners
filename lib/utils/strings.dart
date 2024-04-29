@@ -293,6 +293,11 @@ class MyStrings {
   static const String invalidMobileNumber = "Invalid mobile number";
   static const String invalidOTP = "Invalid OTP";
 
+  //Help
+  static const String help = "Help";
+  static const String callUs = "Call Us";
+  static const String mailUs = "Mail Us";
+
   ///Document Verification
   static const String documentVerification = "Document Verification";
   static const String skip = "Skip";

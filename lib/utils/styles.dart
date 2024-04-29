@@ -154,6 +154,12 @@ class MyStyles {
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w700,
   );
+  static const black16500 = TextStyle(
+    color: MyColors.black,
+    fontSize: 16,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
+  );
   static const blue16W700 =TextStyle(
       fontWeight: FontWeight.w700,
       fontSize: 16,
@@ -170,6 +176,11 @@ class MyStyles {
       color:  MyColors.subTitleColor
   );
   static const black18700 = TextStyle(
+      fontWeight: FontWeight.w700,
+      fontSize: 18,
+      color:  MyColors.black
+  );
+  static const subtitle18700 = TextStyle(
       fontWeight: FontWeight.w700,
       fontSize: 18,
       color:  MyColors.subTitleColor
@@ -336,6 +347,13 @@ class MyStyles {
     fontSize: 16,
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w500,
+  );
+
+  static const primary16700 = TextStyle(
+    color: MyColors.kPrimaryColor,
+    fontSize: 16,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w700,
   );
 
   static const black6_16500 = TextStyle(

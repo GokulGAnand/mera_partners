@@ -522,7 +522,7 @@ class CarDetailsScreenViewModel extends GetxController {
             Master(title: MyStrings.seatAdjustment, value: reportResponse.value.data!.allCarInfo!.seatAdjustment ?? ''),
             Master(title: MyStrings.suspensionSystem, listValue: reportResponse.value.data!.allCarInfo!.suspension),
             Master(title: MyStrings.brakes, value: reportResponse.value.data!.allCarInfo!.brakes ?? ''),
-            Master(title: MyStrings.clutchSystem, value: reportResponse.value.data!.allCarInfo!.seatAdjustment ?? ''),
+            Master(title: MyStrings.clutchSystem, value: reportResponse.value.data!.allCarInfo!.clutchSystem ?? ''),
             Master(title: MyStrings.transmissionAutomatic, listValue: reportResponse.value.data!.allCarInfo!.transmissionAutomatic ?? []),
             Master(title: MyStrings.vehicleHorn, listValue: reportResponse.value.data!.allCarInfo!.vehicleHorn ?? []),
           ];

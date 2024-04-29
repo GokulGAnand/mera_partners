@@ -808,6 +808,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 context: context,
                                 builder: (context) {
                                   return CustomBidBottomSheet(
+                                    bidStartTime: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime,
+                                    bidEndTime: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime,
                                     amountController: liveCarListViewModel.autoBidController,
                                     isAutoBid: true,
                                     bidValue: RxInt(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toInt()),
@@ -860,6 +862,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 context: context,
                                 builder: (context) {
                                   return CustomBidBottomSheet(
+                                    bidStartTime: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime,
+                                    bidEndTime: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime,
                                     amountController: liveCarListViewModel.bidController,
                                     bidValue: RxInt(carDetailsScreenViewModel.reportResponse.value.data?.allCarInfo!.highestBid!.toInt() ?? 0),
                                     stepRate: carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 99999
