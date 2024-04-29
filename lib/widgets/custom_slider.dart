@@ -1,21 +1,20 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-
 import '../utils/colors.dart';
 import '../utils/images.dart';
 
 class CustomSlider extends StatelessWidget {
-  CustomSlider({
-    Key? key,
+   const CustomSlider({
+    super.key,
     required this.sliderImage,
     required this.pageSliderController,
     required this.activePage,
     this.showBlackOpacity = false,
     this.height = 200,
-  }) : super(key: key);
+  });
 
   final List<String> sliderImage;
   final Rx<PageController> pageSliderController;
@@ -32,7 +31,7 @@ class CustomSlider extends StatelessWidget {
             activePage.value--;
             pageSliderController.value.animateToPage(
               activePage.value,
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               curve: Curves.easeIn,
             );
           }
@@ -41,7 +40,7 @@ class CustomSlider extends StatelessWidget {
             activePage.value++;
             pageSliderController.value.animateToPage(
               activePage.value,
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               curve: Curves.easeIn,
             );
           }
@@ -60,7 +59,7 @@ class CustomSlider extends StatelessWidget {
                   activePage.value = index;
                   pageSliderController.value.animateToPage(
                     activePage.value,
-                    duration: Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 300),
                     curve: Curves.easeIn,
                   );
                 },
@@ -123,7 +122,7 @@ class CustomSlider extends StatelessWidget {
                         onTap: () => pageSliderController.value
                             .animateToPage(
                           index,
-                          duration: Duration(milliseconds: 300),
+                          duration: const Duration(milliseconds: 300),
                           curve: Curves.easeIn,
                         ),
                         child: Container(
