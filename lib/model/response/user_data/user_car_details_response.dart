@@ -1,7 +1,7 @@
 class UserResponse {
   String? status;
   String? message;
-  List<Data>? data;
+  List<UserData>? data;
   Meta? meta;
 
   UserResponse({this.status, this.message, this.data, this.meta});
@@ -10,9 +10,9 @@ class UserResponse {
     status = json['status'];
     message = json['message'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <UserData>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new UserData.fromJson(v));
       });
     }
     meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
@@ -32,7 +32,7 @@ class UserResponse {
   }
 }
 
-class Data {
+class UserData {
   String? sId;
   String? userId;
   bool? isBlocked;
@@ -60,7 +60,7 @@ class Data {
   List<LikedCars>? likedCars;
   List<BiddedCars>? biddedCars;
 
-  Data(
+  UserData(
       {this.sId,
         this.userId,
         this.isBlocked,
@@ -88,7 +88,7 @@ class Data {
         this.likedCars,
         this.biddedCars});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  UserData.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     userId = json['userId'];
     isBlocked = json['isBlocked'];

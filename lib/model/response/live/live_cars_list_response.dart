@@ -77,6 +77,11 @@ class Data {
   Front? engineCompartment;
   String? bidEndTime;
   String? bidStartTime;
+  int? negotiationAmount;
+  int? finalPrice;
+  String? negotiationStatus;
+  String? negotiationEndTime;
+  String? negotiationStartTime;
 
   Data(
       {this.sId,
@@ -112,7 +117,12 @@ class Data {
         this.interiorAndElectricalStar,
         this.engineCompartment,
         this.bidEndTime,
-        this.bidStartTime});
+        this.negotiationAmount,
+        this.finalPrice,
+        this.negotiationStatus,
+        this.bidStartTime,
+        this.negotiationEndTime,
+        this.negotiationStartTime});
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -164,6 +174,11 @@ class Data {
         ? Front.fromJson(json['engineCompartment'])
         : null;
     bidEndTime = json['bidEndTime'];
+    negotiationAmount = json['negotiation_amount'];
+    finalPrice = json['finalPrice'];
+    negotiationStatus = json['negotiation_status'];
+    negotiationStartTime = json['negotiation_startTime'];
+    negotiationEndTime = json['negotiation_endTime'];
     bidStartTime = json['bidStartTime'];
   }
 
@@ -219,6 +234,11 @@ class Data {
     }
     data['bidEndTime'] = bidEndTime;
     data['bidStartTime'] = bidStartTime;
+    data['negotiation_amount'] = negotiationAmount;
+    data['finalPrice'] = finalPrice;
+    data['negotiation_status'] = negotiationStatus;
+    data['negotiation_startTime'] = negotiationStartTime;
+    data['negotiation_endTime'] = negotiationEndTime;
     return data;
   }
 }

@@ -61,11 +61,11 @@ class _NegotiationState extends State<Negotiation> {
                     });
                   }),
             ),
-            controller.isNegotiation.value
-                ? (controller.carListResponse.value.data != null) && controller.carListResponse.value.data!.isNotEmpty ? GridView.builder(
+               (controller.isNegotiation.value == true && (controller.carListResponse.value.data != null) && controller.carListResponse.value.data!.isNotEmpty)
+                 ?GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: controller.carListResponse.value.data?.length ?? 0,
+                itemCount: controller.searchNegotiationList.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 22,
@@ -75,9 +75,11 @@ class _NegotiationState extends State<Negotiation> {
                 itemBuilder: (context, index) {
                   return Obx(() {
                     return CustomOrderContainer(
-                      backgroundBlackOpacity: Obx(() {
-                        if (controller.isNegotiation.value) {
-                          return Container(
+                      negEndTime: DateTime.parse(controller.searchNegotiationList[index].negotiationEndTime ?? DateTime.now().toString()),
+                      negStartTime: DateTime.parse(controller.searchNegotiationList[index].negotiationStartTime ?? DateTime.now().toString()),
+                      backgroundBlackOpacity: 
+                        // if (controller.isNegotiation.value) {
+                          Container(
                             width: double.infinity,
                             height: 107,
                             decoration: BoxDecoration(
@@ -87,55 +89,61 @@ class _NegotiationState extends State<Negotiation> {
                                 colors: [MyColors.black3.withOpacity(0), MyColors.black3.withOpacity(0.7)],
                               ),
                             ),
-                          );
-                        }
-                        return Container(
-                          width: double.infinity,
-                          height: 107,
-                          decoration: BoxDecoration(borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)), color: MyColors.black3.withOpacity(0.4)),
-                        );
-                      }),
-                      dealStatus: (controller.isNegotiation.value) ? "timer" : "deal lost",
-                      buttonStatus: (controller.isNegotiation.value) ? "completed" : "view details",
-                      buttonText: (controller.isNegotiation.value) ? MyStrings.viewOffer : MyStrings.viewDetail,
+                          ),
+                        // }
+                        // return Container(
+                        //   width: double.infinity,
+                        //   height: 107,
+                        //   decoration: BoxDecoration(borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)), color: MyColors.black3.withOpacity(0.4)),
+                        // );
+                      // dealStatus: (controller.isNegotiation.value) ? "timer" : "deal lost",
+                      // buttonStatus: (controller.isNegotiation.value) ? "completed" : "view details",
+                      // buttonText: (controller.isNegotiation.value) ? MyStrings.viewOffer : MyStrings.viewDetail,
+                      dealStatus: "timer",
+                      buttonStatus: "completed",
+                      buttonText: MyStrings.viewOffer,
                       onPressed: () {
-                        if (controller.isNegotiation.value) {
+                        // if (controller.isNegotiation.value) {
                           showModalBottomSheet(
                               isScrollControlled: true,
                               backgroundColor: Colors.transparent,
                               context: context,
                               builder: (context) {
                                 return NegotiationBottomSheet(
-                                  biddedAmount: controller.carListResponse.value.data?[index].highestBid ?? 0,
-                                  //todo - change the negotiation amount
-                                  negotiatedAmount: controller.carListResponse.value.data?[index].highestBid ?? 0,
+                                  negEndTime: DateTime.parse(controller.searchNegotiationList[index].negotiationEndTime ?? DateTime.now().toString()),
+                                  negStartTime: DateTime.parse(controller.searchNegotiationList[index].negotiationStartTime ?? DateTime.now().toString()),
+                                  biddedAmount: controller.searchNegotiationList[index].highestBid ?? 0,
+                                  negotiatedAmount: controller.searchNegotiationList[index].negotiationAmount ?? 0,
                                   onAcceptPressed: () {
-                                    controller.acceptOrRejectOffer('accept', controller.carListResponse.value.data?[index].sId ?? '');
+                                    controller.acceptOrRejectOffer('accept', controller.searchNegotiationList[index].sId ?? '');
                                     Get.back();
                                   },
                                   onRejectPressed: () {
-                                    controller.acceptOrRejectOffer('reject', controller.carListResponse.value.data?[index].sId ?? '');
+                                    controller.acceptOrRejectOffer('reject', controller.searchNegotiationList[index].sId ?? '');
                                     Get.back();
                                   },
                                 );
                               });
-                        } else {
-                          Get.toNamed(AppRoutes.carDetailsScreen);
-                        }
+                        // } 
+                        // else {
+                        //   Get.toNamed(AppRoutes.carDetailsScreen);
+                        // }
                       },
                       showButton: true,
-                      carModel: controller.carListResponse.value.data?[index].model ?? '',
-                      carName: controller.carListResponse.value.data?[index].variant ?? '',
-                      carID: controller.carListResponse.value.data?[index].uniqueId.toString() ?? '',
-                      imageURL: controller.carListResponse.value.data?[index].front?.url ?? '',
-                      finalPrice: Constants.numberFormat.format(controller.carListResponse.value.data?[index].highestBid),
+                      carModel: controller.searchNegotiationList[index].model ?? '',
+                      carName: controller.searchNegotiationList[index].variant ?? '',
+                      carID: controller.searchNegotiationList[index].uniqueId != null ? controller.searchNegotiationList[index].uniqueId.toString() : '',
+                      imageURL: controller.searchNegotiationList[index].front?.url ?? '',
+                      finalPrice: Constants.numberFormat.format(controller.searchNegotiationList[index].highestBid),
                     );
                   });
                 })
-                : (controller.lostDealsData.value.data != null) && controller.lostDealsData.value.data![0].lostDeal!.isNotEmpty ? Obx(() => GridView.builder(
+                
+                :(controller.isNegotiation.value == false && controller.searchLostList.isNotEmpty)
+                   ?Obx(() => GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: controller.lostDealsData.value.data?[0].lostDeal?.length ?? 0,
+                itemCount: controller.searchLostList.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 22,
@@ -153,40 +161,39 @@ class _NegotiationState extends State<Negotiation> {
                     buttonStatus: "view details",
                     buttonText: MyStrings.viewDetail,
                     onPressed: () {
-                      if (controller.isNegotiation.value) {
-                        showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (context) {
-                              return NegotiationBottomSheet(
-                                biddedAmount: controller.carListResponse.value.data?[index].highestBid ?? 0,
-                                //todo - change the negotiation amount
-                                negotiatedAmount: controller.carListResponse.value.data?[index].highestBid ?? 0,
-                                onAcceptPressed: () {
-                                  controller.acceptOrRejectOffer('accept', controller.carListResponse.value.data?[index].sId ?? '');
-                                  Get.back();
-                                },
-                                onRejectPressed: () {
-                                  controller.acceptOrRejectOffer('reject', controller.carListResponse.value.data?[index].sId ?? '');
-                                  Get.back();
-                                },
-                              );
-                            });
-                      } else {
+                      // if (controller.isNegotiation.value) {
+                      //   showModalBottomSheet(
+                      //       isScrollControlled: true,
+                      //       backgroundColor: Colors.transparent,
+                      //       context: context,
+                      //       builder: (context) {
+                      //         return NegotiationBottomSheet(
+                      //           biddedAmount: controller.carListResponse.value.data?[index].highestBid ?? 0,
+                      //           //todo - change the negotiation amount
+                      //           negotiatedAmount: controller.carListResponse.value.data?[index].highestBid ?? 0,
+                      //           onAcceptPressed: () {
+                      //             controller.acceptOrRejectOffer('accept', controller.carListResponse.value.data?[index].sId ?? '');
+                      //             Get.back();
+                      //           },
+                      //           onRejectPressed: () {
+                      //             controller.acceptOrRejectOffer('reject', controller.carListResponse.value.data?[index].sId ?? '');
+                      //             Get.back();
+                      //           },
+                      //         );
+                      //       });
+                      // } else {
                         Get.toNamed(AppRoutes.carDetailsScreen);
-                      }
+                      // }
                     },
                     showButton: true,
-                    carModel: controller.lostDealsData.value.data?[0].lostDeal?[index].model ?? '',
-                    carName: controller.lostDealsData.value.data?[0].lostDeal?[index].variant ?? '',
-                    carID: controller.lostDealsData.value.data?[0].lostDeal?[index].uniqueId.toString() ?? '',
-                    imageURL: controller.lostDealsData.value.data?[0].lostDeal?[index].frontLeft?.url ?? '',
-                    finalPrice: Constants.numberFormat.format(controller.lostDealsData.value.data?[0].lostDeal?[index].highestBid),
+                    carModel: controller.searchLostList[index].model ?? '',
+                    carName: controller.searchLostList[index].variant ?? '',
+                    carID: controller.searchLostList[index].uniqueId.toString(),
+                    imageURL: controller.searchLostList[index].frontLeft?.url ?? '',
+                    finalPrice: Constants.numberFormat.format(controller.searchLostList[index].highestBid),
                   );
                 }),)
-                :const Center(child: Text(MyStrings.noDataFound),)
-                :const Center(child: Text(MyStrings.noDataFound),)
+                 :const Center(child: Text(MyStrings.noDataFound),)
           ],
         )
     ));

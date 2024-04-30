@@ -55,7 +55,6 @@ class LoginScreenViewModel extends GetxController {
     try {
       ProgressBar.instance.showProgressbar(Get.context!);
       var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.login), body: {"contactNo": mobileController.value.text});
-
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
@@ -104,8 +103,12 @@ class LoginScreenViewModel extends GetxController {
           globals.documentStatus = userInfoResponse.value.data?.first.isDocumentsVerified;
           globals.isDeposited = userInfoResponse.value.data?.first.isDeposited;
           globals.addressProofFront = userInfoResponse.value.data?.first.addressProofFront != null ? true : false;
-          
-          if (userInfoResponse.value.data?.first.isDocumentsVerified != null && userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.SUBMITTED.name && userInfoResponse.value.data?.first.isDeposited != null && userInfoResponse.value.data?.first.isDeposited == true) {
+
+          if(globals.isOnboarding == null || globals.isOnboarding == false){
+            SharedPrefManager.instance.setBoolAsync(Constants.isOnboarding, true);
+            Get.toNamed(AppRoutes.onboardingScreen);
+          }
+          else if (userInfoResponse.value.data?.first.isDocumentsVerified != null && userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.SUBMITTED.name && userInfoResponse.value.data?.first.isDeposited != null && userInfoResponse.value.data?.first.isDeposited == true) {
             Get.toNamed(AppRoutes.homeScreen);
           }  else if (userInfoResponse.value.data?.first.isDocumentsVerified?.toLowerCase() == DocumentStatus.NOTSUBMITTED.name.toLowerCase() || userInfoResponse.value.data?.first.addressProofFront == null) {
             Get.toNamed(AppRoutes.documentScreen);

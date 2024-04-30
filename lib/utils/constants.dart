@@ -14,5 +14,6 @@ class Constants {
   static const String documentStatus = 'documentStatus';
   static const String isDeposited = 'isDeposited';
   static const String addressProofFront = 'addressProofFront';
+  static const String isOnboarding = 'isOnboarding';
   static NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
 }

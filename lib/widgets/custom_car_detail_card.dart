@@ -40,7 +40,7 @@ class CustomCarDetailCard extends StatefulWidget {
   final String kmDriven;
   final String ownerShip;
   final String transmission;
-  late final Rx<bool>? isFavourite = false.obs;
+  final Rx<bool>? isFavourite;
   final RxBool? isOtb;
   RxBool? isScheduled = false.obs;
   final Function()? autoBid;
@@ -115,6 +115,7 @@ class CustomCarDetailCard extends StatefulWidget {
     required this.onCarTapped,
     this.bidStartTime,
     this.bidEndTime,
+    this.isFavourite,
     required this.statusColor, required this.carId,
 
   });
@@ -599,11 +600,11 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                     padding: const EdgeInsets.only(left: 12.0, right: 12),
                     child: CustomElevatedButton(
                         buttonHeight: Dimens.defHeight,
-                        onPressed: widget.otbTapped/*globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name
+                        onPressed: globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name
                             ? widget.otbTapped
                             : () {
                                 widget.showPendingDialog();
-                              }*/,
+                              },
                         buttonText: MyStrings.oneTouchBuy),
                   ),
                 if (widget.isScheduled?.value == true)

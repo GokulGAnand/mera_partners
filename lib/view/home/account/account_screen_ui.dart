@@ -41,6 +41,13 @@ class _AccountScreenState extends State<AccountScreen> {
           actions: [
             TextButton(
               onPressed: () {
+                SharedPrefManager.instance.removeStringAsync(Constants.userName);
+                SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
+                SharedPrefManager.instance.removeStringAsync(Constants.contactNo);
+                SharedPrefManager.instance.removeStringAsync(Constants.token);
+                SharedPrefManager.instance.removeStringAsync(Constants.userId);
+                SharedPrefManager.instance.removeStringAsync(Constants.uniqueUserId);
+                SharedPrefManager.instance.removeStringAsync(Constants.documentStatus);
                 accountScreenViewModel.deleteAccount();
               },
               child: Text(MyStrings.ok.toUpperCase()),
@@ -83,7 +90,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   backgroundImage: AssetImage(MyImages.profile),
                 ),
                 title: Text(
-                  globals.userName.toString(),
+                  globals.userName ?? '',
                   style: MyStyles.pageTitleStyle,
                 ),
                 subtitle: Text(
@@ -205,10 +212,17 @@ class _AccountScreenState extends State<AccountScreen> {
                     return CustomDialog(
                       title: MyStrings.logOutDesc,
                       okFun: () async{
-                        bool removeVal = await SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
-                        if(removeVal){
-                          Get.offAllNamed(AppRoutes.loginScreen);
-                        }
+                        SharedPrefManager.instance.removeStringAsync(Constants.userName);
+                        SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
+                        SharedPrefManager.instance.removeStringAsync(Constants.contactNo);
+                        SharedPrefManager.instance.removeStringAsync(Constants.token);
+                        SharedPrefManager.instance.removeStringAsync(Constants.userId);
+                        SharedPrefManager.instance.removeStringAsync(Constants.uniqueUserId);
+                        SharedPrefManager.instance.removeStringAsync(Constants.documentStatus);
+                        // bool removeVal = await SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
+                        // if(removeVal){
+                        Get.offAllNamed(AppRoutes.loginScreen);
+                        // }
                       },
                       cancelFun: (){
                         Get.back();

@@ -14,7 +14,6 @@ import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 import 'package:http/http.dart' as http;
 import 'package:mera_partners/utils/globals.dart' as globals;
-
 import '../../widgets/progressbar.dart';
 
 class CarDetailsScreenViewModel extends GetxController {
@@ -448,15 +447,15 @@ class CarDetailsScreenViewModel extends GetxController {
       );
       if (response.statusCode == 200) {
         // ProgressBar.instance.stopProgressBar(Get.context!);
-        log(response.body);
+        // log(response.body);
         reportResponse.value = ReportResponse.fromJson(jsonDecode(response.body));
         if (reportResponse.value.data != null) {
           sliderImage.value = [
-            reportResponse.value.data!.allCarInfo!.frontLeft!.url ?? '',
-            reportResponse.value.data!.allCarInfo!.front!.url ?? '',
-            reportResponse.value.data!.allCarInfo!.frontRight!.url ?? '',
-            reportResponse.value.data!.allCarInfo!.rear!.url ?? '',
-            reportResponse.value.data!.allCarInfo!.engineCompartment!.url ?? '',
+            if(reportResponse.value.data!.allCarInfo!.frontLeft != null) reportResponse.value.data!.allCarInfo!.frontLeft!.url ?? '',
+            if(reportResponse.value.data!.allCarInfo!.front != null) reportResponse.value.data!.allCarInfo!.front!.url ?? '',
+            if(reportResponse.value.data!.allCarInfo!.frontRight != null) reportResponse.value.data!.allCarInfo!.frontRight!.url ?? '',
+            if(reportResponse.value.data!.allCarInfo!.rear != null) reportResponse.value.data!.allCarInfo!.rear!.url ?? '',
+            if(reportResponse.value.data!.allCarInfo!.engineCompartment != null) reportResponse.value.data!.allCarInfo!.engineCompartment!.url ?? '',
           ];
           ratingList.value = [
             Item(title: MyStrings.documents, rating: 0.0),
@@ -523,8 +522,8 @@ class CarDetailsScreenViewModel extends GetxController {
             Master(title: MyStrings.suspensionSystem, listValue: reportResponse.value.data!.allCarInfo!.suspension),
             Master(title: MyStrings.brakes, value: reportResponse.value.data!.allCarInfo!.brakes ?? ''),
             Master(title: MyStrings.clutchSystem, value: reportResponse.value.data!.allCarInfo!.clutchSystem ?? ''),
-            Master(title: MyStrings.transmissionAutomatic, listValue: reportResponse.value.data!.allCarInfo!.transmissionAutomatic),
-            Master(title: MyStrings.vehicleHorn, listValue: reportResponse.value.data!.allCarInfo!.vehicleHorn),
+            Master(title: MyStrings.transmissionAutomatic, listValue: reportResponse.value.data!.allCarInfo!.transmissionAutomatic ?? []),
+            Master(title: MyStrings.vehicleHorn, listValue: reportResponse.value.data!.allCarInfo!.vehicleHorn ?? []),
           ];
           engine.value = [
             Master(title: MyStrings.engineSound, value: reportResponse.value.data!.allCarInfo!.engineSound ?? ''),
@@ -631,9 +630,9 @@ class CarDetailsScreenViewModel extends GetxController {
             Master(title: MyStrings.missingParts, value: reportResponse.value.data!.allCarInfo!.missingParts ?? ''),
           ];
           // extractUrls(reportResponse.value.data!.allCarInfo!.toJson());
-          if(reportResponse.value.data!.allCarInfo!.startVideo!.url != null){
+          if(reportResponse.value.data!.allCarInfo!.startVideo != null){
             videoController.value = VideoPlayerController.networkUrl(Uri.parse(
-            reportResponse.value.data!.allCarInfo!.startVideo!.url!))
+            reportResponse.value.data!.allCarInfo!.startVideo!.url ?? ''))
             ..initialize().then((_) {});
           }
           separateListData();
@@ -668,24 +667,24 @@ class CarDetailsScreenViewModel extends GetxController {
         //   final nextPageKey = pageKey + 1;
         //   infinitePagingController.appendPage(liveCarsResponse.value.data!, nextPageKey);
         // }
-        var startTime= carDetailsResponse.value.data![0].bidStartTime;
-        var endTime= carDetailsResponse.value.data![0].bidEndTime;
+        if(carDetailsResponse.value.data![0].bidStartTime != null && carDetailsResponse.value.data![0].bidEndTime != null){
+          var startTime= carDetailsResponse.value.data![0].bidStartTime;
+          var endTime= carDetailsResponse.value.data![0].bidEndTime;
 
-        var start = DateTime(startTime!.year, startTime.month, startTime.day, startTime.hour, startTime.minute, startTime.second);
-        var now = DateTime.now();
-        var end = DateTime(endTime!.year, endTime.month, endTime.day, endTime.hour, endTime.minute, endTime.second);
+          var start = DateTime(startTime!.year, startTime.month, startTime.day, startTime.hour, startTime.minute, startTime.second);
+          var now = DateTime.now();
+          var end = DateTime(endTime!.year, endTime.month, endTime.day, endTime.hour, endTime.minute, endTime.second);
 
-        if(now.isBefore(start)){
-          Duration diff = start.difference(now);
-          duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
-          startTimer();
-        }else if(now.isBefore(end)) {
-          Duration diff = end.difference(now);
-          duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
-          startTimer();
+          if(now.isBefore(start)){
+            Duration diff = start.difference(now);
+            duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+            startTimer();
+          }else if(now.isBefore(end)) {
+            Duration diff = end.difference(now);
+            duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+            startTimer();
+          }
         }
-        
-        
       } else {
         // ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());

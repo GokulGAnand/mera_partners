@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:mera_partners/model/response/user_data/user_car_details_response.dart';
@@ -12,6 +13,13 @@ import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
 
 class NegotiationViewModel extends GetxController {
+
+  TextEditingController searchNegotiationController = TextEditingController();
+  RxList<Data> searchNegotiationList = <Data>[].obs;
+
+  TextEditingController searchLostController = TextEditingController();
+  RxList<LostDeal> searchLostList = <LostDeal>[].obs;
+  
   var carListResponse = CarListResponse().obs;
   var lostDealsData = UserResponse().obs;
   RxBool isNegotiation = true.obs;
@@ -36,6 +44,7 @@ class NegotiationViewModel extends GetxController {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body);
         carListResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
+        searchNegotiationList.value = CarListResponse.fromJson(jsonDecode(response.body)).data!;
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());
@@ -55,6 +64,7 @@ class NegotiationViewModel extends GetxController {
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         lostDealsData.value = UserResponse.fromJson(jsonDecode(response.body));
+        searchLostList.value = UserResponse.fromJson(jsonDecode(response.body)).data![0].lostDeal ?? [];
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log('API Error: ${response.reasonPhrase}');

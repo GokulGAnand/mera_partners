@@ -20,7 +20,7 @@ void main() async {
 
 Future<bool> loadData() async{
   globals.token = await SharedPrefManager.instance.getStringAsync(Constants.token);
-  if(globals.token != null){
+  if(globals.token != null && globals.token.toString().isNotEmpty){
     globals.phoneNum = await SharedPrefManager.instance.getStringAsync(Constants.phoneNum);
     if(globals.phoneNum != null){
       globals.contactNo = int.parse(await SharedPrefManager.instance.getStringAsync(Constants.contactNo) ?? "0");
@@ -31,6 +31,7 @@ Future<bool> loadData() async{
     globals.isDeposited = await SharedPrefManager.instance.getBoolAsync(Constants.isDeposited);
     globals.addressProofFront = await SharedPrefManager.instance.getBoolAsync(Constants.addressProofFront);
     globals.userName = await SharedPrefManager.instance.getStringAsync(Constants.userName);
+    globals.isOnboarding = await SharedPrefManager.instance.getBoolAsync(Constants.isOnboarding);
     log(globals.token.toString());
     log(globals.uniqueUserId.toString());
     log(globals.userName.toString());

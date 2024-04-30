@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:mera_partners/utils/constants.dart';
 import '../../../../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 import '../../../../widgets/liked_cars_widget.dart';
 
@@ -28,7 +29,7 @@ class LikedCars extends StatelessWidget {
                    return Obx(
                      () {
                        return LikedCarsWidget(
-                         bidAmount: controller.likedCarsearchList[index].highestBid != null ? controller.likedCarsearchList[index].highestBid.toString() : '0',
+                         bidAmount: controller.likedCarsearchList[index].highestBid != null ? Constants.numberFormat.format(controller.likedCarsearchList[index].highestBid ?? 0) : '0',
                          id: controller.likedCarsearchList[index].uniqueId.toString(),
                          carId: controller.likedCarsearchList[index].sId.toString(),
                          imageUrl: controller.likedCarsearchList[index].frontLeft?.url ?? '',

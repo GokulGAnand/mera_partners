@@ -33,13 +33,14 @@ class OTBScreen extends StatelessWidget {
                             return CustomCarDetailCard(
                               carId: item.sId ?? '',
                               onCarTapped: () {
-                                Get.toNamed(AppRoutes.carDetailsScreen);
+                                Get.toNamed(AppRoutes.carDetailsScreen, arguments: item.sId);
                               },
+                              isFavourite: controller.likeResponse.value.data?[0].likedCars != null && (controller.likeResponse.value.data![0].likedCars!.isNotEmpty)? controller.likeResponse.value.data![0].likedCars!.any((element) => element.sId == controller.carsListResponse.value.data?[index].sId) ? true.obs : false.obs : false.obs,
                               isOtb: true.obs,
                               imageUrl: item.rearRight?.url ?? '',
                               carLocation: item.vehicleLocation ?? '',
                               bidStatus: RxString(item.status ?? ''),
-                              bidAmount: Constants.numberFormat.format(item.highestBid).toString().obs,
+                              bidAmount: Constants.numberFormat.format(item.realValue ?? 0).toString().obs,
                               carModel: item.model ?? '',
                               carVariant: item.variant ?? '',
                               rating: ((item.engineStar ?? 0 + (item.exteriorStar ?? 0) + (item.interiorAndElectricalStar ?? 0) + (item.testDriveStar ?? 0)) / 4),
@@ -66,9 +67,10 @@ class OTBScreen extends StatelessWidget {
                                     context: context,
                                     builder: (context) {
                                       return OTBBottomSheet(
-                                        otbPrice: item.highestBid ?? 0,
+                                        otbPrice: item.realValue ?? 0,
                                         onPressed: () {
-                                          controller.buyOTBCar(item.sId ?? '', item.highestBid ?? 0);
+                                          Navigator.of(context).pop();
+                                          controller.buyOTBCar(item.sId ?? '', item.realValue ?? 0);
                                         },
                                       );
                                     });

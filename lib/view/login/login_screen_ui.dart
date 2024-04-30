@@ -1,9 +1,11 @@
 import 'dart:developer';
+import 'package:flutter_svg/svg.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/dimens.dart';
 import 'package:mera_partners/utils/images.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
+import 'package:mera_partners/utils/svg.dart';
 import 'package:mera_partners/utils/validate_input.dart';
 import 'package:mera_partners/view_model/login/login_view_model.dart';
 import 'package:mera_partners/widgets/custom_button.dart';
@@ -11,6 +13,7 @@ import 'package:mera_partners/widgets/custom_text_form_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mera_partners/widgets/help_bottom_sheet.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,6 +29,38 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        actions: [
+          InkWell(
+            onTap: (){
+              showModalBottomSheet(
+                context: context, 
+                builder: (context){
+                  return HelpBottomSheet();
+                });
+            },
+            child: Container(
+              margin: EdgeInsets.only(right: 20),
+              padding: EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: MyColors.subTitleColor,width: 1)
+              ),
+              child: Row(
+                children: [
+                  SvgPicture.asset(MySvg.help),
+                  const SizedBox(width: 8,),
+                  Text(MyStrings.help, 
+                  style:MyStyles.black14700,),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           reverse: true,
