@@ -75,6 +75,8 @@ class _NegotiationState extends State<Negotiation> {
                 itemBuilder: (context, index) {
                   return Obx(() {
                     return CustomOrderContainer(
+                      negEndTime: DateTime.parse(controller.searchNegotiationList[index].negotiationEndTime ?? DateTime.now().toString()),
+                      negStartTime: DateTime.parse(controller.searchNegotiationList[index].negotiationStartTime ?? DateTime.now().toString()),
                       backgroundBlackOpacity: 
                         // if (controller.isNegotiation.value) {
                           Container(
@@ -108,9 +110,10 @@ class _NegotiationState extends State<Negotiation> {
                               context: context,
                               builder: (context) {
                                 return NegotiationBottomSheet(
+                                  negEndTime: DateTime.parse(controller.searchNegotiationList[index].negotiationEndTime ?? DateTime.now().toString()),
+                                  negStartTime: DateTime.parse(controller.searchNegotiationList[index].negotiationStartTime ?? DateTime.now().toString()),
                                   biddedAmount: controller.searchNegotiationList[index].highestBid ?? 0,
-                                  //todo - change the negotiation amount
-                                  negotiatedAmount: controller.searchNegotiationList[index].highestBid ?? 0,
+                                  negotiatedAmount: controller.searchNegotiationList[index].negotiationAmount ?? 0,
                                   onAcceptPressed: () {
                                     controller.acceptOrRejectOffer('accept', controller.searchNegotiationList[index].sId ?? '');
                                     Get.back();
@@ -129,7 +132,7 @@ class _NegotiationState extends State<Negotiation> {
                       showButton: true,
                       carModel: controller.searchNegotiationList[index].model ?? '',
                       carName: controller.searchNegotiationList[index].variant ?? '',
-                      carID: controller.searchNegotiationList[index].uniqueId.toString() ?? '',
+                      carID: controller.searchNegotiationList[index].uniqueId != null ? controller.searchNegotiationList[index].uniqueId.toString() : '',
                       imageURL: controller.searchNegotiationList[index].front?.url ?? '',
                       finalPrice: Constants.numberFormat.format(controller.searchNegotiationList[index].highestBid),
                     );

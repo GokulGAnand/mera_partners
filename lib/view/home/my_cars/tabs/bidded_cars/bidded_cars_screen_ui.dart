@@ -22,7 +22,7 @@ class BidCarsListScreen extends StatelessWidget {
       body: Obx(
         () => SafeArea(
           child: controller.bidCarsResponse.value.data != null
-              ? ListView.builder(
+              ? controller.bidCarsResponse.value.data![0].biddedCars != null && controller.bidCarsResponse.value.data![0].biddedCars!.isNotEmpty? ListView.builder(
                   itemCount: controller.bidCarsResponse.value.data![0].biddedCars?.length,
                   padding: const EdgeInsets.all(8),
                   itemBuilder: (context, index) {
@@ -34,7 +34,8 @@ class BidCarsListScreen extends StatelessWidget {
                             Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.bidCarsResponse.value.data?[index].sId);
                           },
                           isOtb: false.obs,
-                          carId: controller.bidCarsResponse.value.data?[0].sId ?? '',
+                                isFavourite: controller.likeResponse.value.data?[0].likedCars != null && (controller.likeResponse.value.data![0].likedCars!.isNotEmpty)? controller.likeResponse.value.data![0].likedCars!.any((element) => element.sId == controller.bidCarsResponse.value.data?[0].biddedCars![index].sId) ? true.obs : false.obs : false.obs,
+                                carId: controller.bidCarsResponse.value.data?[0].sId ?? '',
                           isScheduled: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == 'scheduled' ? true.obs : false.obs,
                           imageUrl: controller.bidCarsResponse.value.data?[0].biddedCars![index].rearRight?.url ?? '',
                           carLocation: controller.bidCarsResponse.value.data?[0].biddedCars![index].vehicleLocation ?? '',
@@ -136,7 +137,7 @@ class BidCarsListScreen extends StatelessWidget {
                             }
                         );
                   },
-                )
+                ) : const Center(child: Text(MyStrings.noDataFound),)
               : const Center(
                   child: CircularProgressIndicator(),
                 ),

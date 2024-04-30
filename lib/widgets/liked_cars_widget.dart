@@ -243,7 +243,7 @@ class LikedCarsWidget extends StatelessWidget {
                    SizedBox(height: Dimens.standard_2),
                   if(status.toLowerCase() == CarStatus.live.name)
                   Text(
-                    "₹$bidAmount",
+                    bidAmount,
                     style: MyStyles.primary16500,
                   ),
                   if(status.toLowerCase() == CarStatus.scheduled.name)

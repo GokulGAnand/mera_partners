@@ -16,7 +16,6 @@ class NotificationViewModel extends GetxController{
   }
   
   void getNotificationsList() async {
-    //todo change user id
     // var headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWJkZjAzNmNjMmUwYTc0YTQ1NzUzODYiLCJyb2xlIjoiREVBTEVSIiwiaWF0IjoxNzEzMzMxNzU3LCJleHAiOjE3MTU5MjM3NTd9.USTPvCBd2Sk8c3t6-jw8jC9OflidVS7idoCiADpfbIA'};
     try {
       var result = await http.get(Uri.parse(EndPoints.baseUrl+EndPoints.users+EndPoints.notification+globals.uniqueUserId!),headers: globals.headers);

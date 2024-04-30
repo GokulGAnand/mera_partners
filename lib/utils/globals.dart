@@ -6,6 +6,7 @@ String? uniqueUserId;
 String? documentStatus;
 bool? addressProofFront;
 bool? isDeposited = false;
+bool? isOnboarding;
 String? city;
 int? contactNo;
 String? token ;

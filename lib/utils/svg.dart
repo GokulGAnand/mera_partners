@@ -28,6 +28,8 @@ class MySvg {
   static const dealWon = "${svgRoot}deal_won.svg";
 
   static const call = "${svgRoot}call.svg";
+  static const mail = "${svgRoot}mail.svg";
+  static const help = "${svgRoot}help.svg";
   static const documentVerify = "${svgRoot}document_verify.svg";
   static const arrowRight = "${svgRoot}arrow_right.svg";
   static const logout = "${svgRoot}logout.svg";

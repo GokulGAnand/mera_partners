@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:mera_partners/view_model/home/live/live_cars_list_view_model.dart';
 import '../../../model/response/live/live_cars_list_response.dart';
+import '../../../model/response/user_data/user_car_details_response.dart';
 import '../../../service/endpoints.dart';
 import '../../../service/exception_error_util.dart';
 import '../../../utils/strings.dart';
@@ -18,6 +20,7 @@ class OTBCarsListViewModel extends GetxController {
   RxList<String> searchList = <String>[].obs;
 
   var carsListResponse = CarListResponse().obs;
+  var likeResponse = UserResponse().obs;
 
 
   //declare pagination controller
@@ -26,6 +29,7 @@ class OTBCarsListViewModel extends GetxController {
 
   @override
   void onInit() {
+    likeResponse.value = Get.find<LiveCarsListViewModel>().likeResponse.value;
     infinitePagingController.addPageRequestListener((pageKey) {
       getCarData(pageKey);
     });
@@ -38,6 +42,7 @@ class OTBCarsListViewModel extends GetxController {
       log(response.body);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
+        carsListResponse.value = CarListResponse();
         carsListResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
         final isLastPage = carsListResponse.value.data!.length < limit;
         if (isLastPage) {
@@ -67,6 +72,7 @@ class OTBCarsListViewModel extends GetxController {
           }));
 
       if (response.statusCode == 200) {
+        // getCarData(1);
         CustomToast.instance.showMsg(MyStrings.success);
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());

@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../../model/response/live/live_cars_list_response.dart';
+import '../../../model/response/user_data/user_car_details_response.dart';
 import '../../../service/endpoints.dart';
 import '../../../service/exception_error_util.dart';
 import '../../../widgets/custom_toast.dart';
@@ -26,11 +27,13 @@ class LiveCarsListViewModel extends GetxController {
   int limit = 10;
   Rx<TextEditingController> autoBidController = TextEditingController().obs;
   Rx<TextEditingController> bidController = TextEditingController().obs;
+  var likeResponse = UserResponse().obs;
 
 
   @override
   void onInit() async {
     getCarData();
+    getLikedCarData();
     // infinitePagingController.addPageRequestListener((pageKey) {
     //   getCarData(pageKey);
     // });
@@ -51,6 +54,22 @@ class LiveCarsListViewModel extends GetxController {
     });
 
     super.onInit();
+  }
+
+  void getLikedCarData() async {
+    try {
+      log('API URL: ${Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}')}');
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'), headers: globals.headers);
+      log('API Response Body: ${response.body}');
+      if (response.statusCode == 200) {
+        likeResponse.value = UserResponse.fromJson(jsonDecode(response.body));
+      } else {
+        log('API Error: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      log('Exception occurred: $e');
+      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
+    }
   }
 
   void updateBid(dynamic newData) {
