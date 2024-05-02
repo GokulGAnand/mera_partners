@@ -73,9 +73,11 @@ class LoginScreenViewModel extends GetxController {
   Future<void> verifyOTP(BuildContext context) async {
     try {
       ProgressBar.instance.showProgressbar(context);
+      var headers = {
+        'Content-Type': 'application/json'
+      };
       String otp = otpTextField1.value.text.toString() + otpTextField2.value.text.toString() + otpTextField3.value.text.toString() + otpTextField4.value.text.toString();
-      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.verifyOtp), body: {"contactNo": mobileController.value.text, "otp": otp});
-
+      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.verifyOtp), body: jsonEncode({"contactNo": int.parse(mobileController.value.text), "otp": int.parse(otp)}),headers: headers);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(context);
         log(response.body.toString());
@@ -108,7 +110,7 @@ class LoginScreenViewModel extends GetxController {
             SharedPrefManager.instance.setBoolAsync(Constants.isOnboarding, true);
             Get.toNamed(AppRoutes.onboardingScreen);
           }
-          else if (userInfoResponse.value.data?.first.isDocumentsVerified != null && userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.SUBMITTED.name && userInfoResponse.value.data?.first.isDeposited != null && userInfoResponse.value.data?.first.isDeposited == true) {
+          else if (userInfoResponse.value.data?.first.isDocumentsVerified != null && (userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.SUBMITTED.name || userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.VERIFIED.name) && userInfoResponse.value.data?.first.isDeposited != null && userInfoResponse.value.data?.first.isDeposited == true) {
             Get.toNamed(AppRoutes.homeScreen);
           }  else if (userInfoResponse.value.data?.first.isDocumentsVerified?.toLowerCase() == DocumentStatus.NOTSUBMITTED.name.toLowerCase() || userInfoResponse.value.data?.first.addressProofFront == null) {
             Get.toNamed(AppRoutes.documentScreen);
