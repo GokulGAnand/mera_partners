@@ -133,7 +133,7 @@ class _NegotiationState extends State<Negotiation> {
                       carModel: controller.searchNegotiationList[index].model ?? '',
                       carName: controller.searchNegotiationList[index].variant ?? '',
                       carID: controller.searchNegotiationList[index].uniqueId != null ? controller.searchNegotiationList[index].uniqueId.toString() : '',
-                      imageURL: controller.searchNegotiationList[index].front?.url ?? '',
+                      imageURL: controller.searchNegotiationList[index].front?.url ?? controller.searchNegotiationList[index].frontLeft?.url ?? controller.searchNegotiationList[index].frontRight?.url ?? '',
                       finalPrice: Constants.numberFormat.format(controller.searchNegotiationList[index].highestBid),
                     );
                   });

@@ -63,7 +63,8 @@ class Data {
   String? transmission;
   num? statusValues;
   List<LeaderBoard>? leaderBoard;
-  List<String>? winner;
+  // List<String>? winner;
+  String? winner;
   Front? front;
   Front? frontLeft;
   Front? frontRight;
@@ -144,15 +145,16 @@ class Data {
     odometerReading = json['odometerReading'];
     transmission = json['transmission'];
     statusValues = json['statusValues'];
+    winner = json['winner'];
     if (json['leaderBoard'] != null) {
       leaderBoard = <LeaderBoard>[];
       json['leaderBoard'].forEach((v) {
         leaderBoard!.add(LeaderBoard.fromJson(v));
       });
     }
-    if (json['winner'] != null && json['winner'] is List) {
-      winner = (json['winner'] as List).cast<String>();
-    }
+    // if (json['winner'] != null && json['winner'] is List) {
+    //   winner = (json['winner'] as List).cast<String>();
+    // }
     front = json['front'] != null ? Front.fromJson(json['front']) : null;
     frontLeft = json['frontLeft'] != null
         ? Front.fromJson(json['frontLeft'])

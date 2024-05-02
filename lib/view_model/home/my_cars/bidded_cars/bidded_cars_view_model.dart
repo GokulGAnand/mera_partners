@@ -84,6 +84,7 @@ class BidCarsListViewModel extends GetxController{
       log(response.body);
       String message = json.decode(response.body)['message'];
       if (response.statusCode == 200) {
+        getCarData();
         CustomToast.instance.showMsgWithIcon(MyStrings.bidPlaced, null);
       } else {
         CustomToast.instance.showMsg(message);
@@ -114,7 +115,6 @@ class BidCarsListViewModel extends GetxController{
   }
 
   void getCarData() async {
-    //todo change query parameter
     try {
       var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'), headers: globals.jsonHeaders);
       log(response.body);
