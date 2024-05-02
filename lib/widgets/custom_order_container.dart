@@ -155,6 +155,7 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                       const SizedBox(
                         width: 3,
                       ),
+                      widget.dealStatus == "timer"?
                       Obx(() => Text(
                         (widget.dealStatus == "timer")
                             ?  formatDuration( widget.duration.value! )
@@ -166,7 +167,18 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                             : (widget.dealStatus == "deal won")
                             ? MyStyles.whiteTitleStyle
                             : MyStyles.whiteTitleStyle,
-                      ),)
+                      ),) :  Text(
+                        (widget.dealStatus == "timer")
+                            ?  formatDuration( widget.duration.value! )
+                            : (widget.dealStatus == "deal won")
+                            ? MyStrings.dealWon
+                            : MyStrings.dealLost,
+                        style: (widget.dealStatus == "timer")
+                            ? MyStyles.white14700
+                            : (widget.dealStatus == "deal won")
+                            ? MyStyles.whiteTitleStyle
+                            : MyStyles.whiteTitleStyle,
+                      ),
                     ],
                   ),
                 ),

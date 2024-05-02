@@ -41,6 +41,7 @@ class _AccountScreenState extends State<AccountScreen> {
           actions: [
             TextButton(
               onPressed: () {
+                globals.clearData();
                 SharedPrefManager.instance.removeStringAsync(Constants.userName);
                 SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
                 SharedPrefManager.instance.removeStringAsync(Constants.contactNo);
@@ -212,6 +213,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     return CustomDialog(
                       title: MyStrings.logOutDesc,
                       okFun: () async{
+                        globals.clearData();
                         SharedPrefManager.instance.removeStringAsync(Constants.userName);
                         SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
                         SharedPrefManager.instance.removeStringAsync(Constants.contactNo);
