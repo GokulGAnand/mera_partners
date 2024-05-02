@@ -5,6 +5,7 @@ import 'package:mera_partners/utils/dimens.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/utils/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HelpBottomSheet extends StatelessWidget {
   const HelpBottomSheet({super.key});
@@ -42,9 +43,17 @@ class HelpBottomSheet extends StatelessWidget {
             style: MyStyles.black18700,
           ),
           const SizedBox(height: 15,),
-          helpDetails(MySvg.call, MyStrings.callUs, "+91 99999 99999"),
+          InkWell(
+              onTap: (){
+                _lauchCalllog();
+              },
+              child: helpDetails(MySvg.call, MyStrings.callUs, "+91 99999 99999")),
           Divider(color: MyColors.black.withOpacity(0.11),),
-          helpDetails(MySvg.mail, MyStrings.mailUs, "support@meracars.com"),
+          InkWell(
+              onTap: (){
+                _launchEmail();
+              },
+              child: helpDetails(MySvg.mail, MyStrings.mailUs, "support@meracars.com")),
         ],
       ),
     );
@@ -69,5 +78,24 @@ class HelpBottomSheet extends StatelessWidget {
               ],
             ),
           );
+  }
+  _lauchCalllog() async {
+    final phoneNumber = '+91 9999999999';
+    final url = 'tel:$phoneNumber';
+    if(await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchEmail() async {
+    final email = 'support@meracars.com';
+    final url = 'mailto:$email';
+    if(await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
