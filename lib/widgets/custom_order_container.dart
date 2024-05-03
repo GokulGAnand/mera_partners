@@ -11,6 +11,7 @@ import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import '../utils/images.dart';
 import 'custom_toast.dart';
 
 class CustomOrderContainer extends StatefulWidget {
@@ -97,16 +98,31 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                   height: 107,
                   // height: showButton?107:200,
                   alignment: Alignment.bottomCenter,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8),
-                    ),
-                    image: DecorationImage(
-                      image: NetworkImage(widget.imageURL),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
+                  // decoration: BoxDecoration(
+                  //   borderRadius: const BorderRadius.only(
+                  //     topLeft: Radius.circular(8),
+                  //     topRight: Radius.circular(8),
+                  //   ),
+                  //   image: DecorationImage(
+                  //     image: NetworkImage(widget.imageURL),
+                  //     fit: BoxFit.fill,
+                  //   ),
+                  // ),
+                  child: Image.network(widget.imageURL,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return SvgPicture.asset(MyImages.loadingCar);
+                      }, frameBuilder:
+                          (context, child, frame, wasSynchronouslyLoaded) {
+                        return child;
+                      }, loadingBuilder:
+                          (context, child, loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        } else {
+                          return SvgPicture.asset(MyImages.loadingCar);
+                        }
+                      }),
                 ),
                 (widget.backgroundBlackOpacity != null)
                     ? widget.backgroundBlackOpacity!
@@ -155,6 +171,7 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                       const SizedBox(
                         width: 3,
                       ),
+                      widget.dealStatus == "timer"?
                       Obx(() => Text(
                         (widget.dealStatus == "timer")
                             ?  formatDuration( widget.duration.value! )
@@ -166,7 +183,18 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                             : (widget.dealStatus == "deal won")
                             ? MyStyles.whiteTitleStyle
                             : MyStyles.whiteTitleStyle,
-                      ),)
+                      ),) :  Text(
+                        (widget.dealStatus == "timer")
+                            ?  formatDuration( widget.duration.value! )
+                            : (widget.dealStatus == "deal won")
+                            ? MyStrings.dealWon
+                            : MyStrings.dealLost,
+                        style: (widget.dealStatus == "timer")
+                            ? MyStyles.white14700
+                            : (widget.dealStatus == "deal won")
+                            ? MyStyles.whiteTitleStyle
+                            : MyStyles.whiteTitleStyle,
+                      ),
                     ],
                   ),
                 ),

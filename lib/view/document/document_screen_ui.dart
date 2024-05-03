@@ -14,6 +14,7 @@ import '../../utils/images.dart';
 import '../../view_model/document/document_screen_view_model.dart';
 import '../../widgets/image_picker_bottom_sheet.dart';
 import '../../widgets/progressbar.dart';
+import '../../widgets/show_logout_dialog.dart';
 
 /// ignore: must_be_immutable
 class DocumentScreen extends StatelessWidget {
@@ -526,10 +527,11 @@ class DocumentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     pages = [pageOne(), pageTwo(), pageThree(), pageFour()];
     return Obx(() => PopScope(
-          // canPop: false,
-          // onPopInvoked: (didPop) {
-          //   Methods.showConfirmDialog(context);
-          // },
+           canPop: false,
+           onPopInvoked: (didPop) {
+            // Methods.showConfirmDialog(context);
+             showLogoutDialog(context);
+           },
           child: Scaffold(
             key: _key,
             appBar: CustomAppBar(

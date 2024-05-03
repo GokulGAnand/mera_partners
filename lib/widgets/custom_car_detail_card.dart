@@ -222,7 +222,11 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
   Widget build(BuildContext context) {
     return Obx(
             () =>GestureDetector(
-      onTap: widget.onCarTapped,
+      onTap: globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name
+          ? widget.onCarTapped
+          : () {
+        widget.showPendingDialog();
+      },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 58.0, top: 8),
         child: Container(
