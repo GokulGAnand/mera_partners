@@ -35,7 +35,7 @@ class BidCarsListScreen extends StatelessWidget {
                           },
                           isOtb: false.obs,
                                 isFavourite: controller.likeResponse.value.data?[0].likedCars != null && (controller.likeResponse.value.data![0].likedCars!.isNotEmpty)? controller.likeResponse.value.data![0].likedCars!.any((element) => element.sId == controller.bidCarsResponse.value.data?[0].biddedCars![index].sId) ? true.obs : false.obs : false.obs,
-                                carId: controller.bidCarsResponse.value.data?[0].sId ?? '',
+                                carId: controller.bidCarsResponse.value.data?[0].biddedCars?[index].sId ?? '',
                           isScheduled: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == 'scheduled' ? true.obs : false.obs,
                           imageUrl: controller.bidCarsResponse.value.data?[0].biddedCars![index].rearRight?.url ?? '',
                           carLocation: controller.bidCarsResponse.value.data?[0].biddedCars![index].vehicleLocation ?? '',

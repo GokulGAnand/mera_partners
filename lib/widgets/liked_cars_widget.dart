@@ -105,6 +105,7 @@ class LikedCarsWidget extends StatelessWidget {
     }
     return SingleChildScrollView(
       child: Container(
+        height: 315,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
@@ -211,6 +212,8 @@ class LikedCarsWidget extends StatelessWidget {
                    // const SizedBox(height: Dimens.standard_8),
                   Text(
                     model,
+                    overflow:TextOverflow.ellipsis ,
+                    maxLines: 1,
                     style: MyStyles.black14700,
                   ),
                   Padding(
@@ -246,14 +249,14 @@ class LikedCarsWidget extends StatelessWidget {
                     bidAmount,
                     style: MyStyles.primary16500,
                   ),
-                  if(status.toLowerCase() == CarStatus.scheduled.name)
+                  if(status.toLowerCase() == CarStatus.scheduled.name || status.toLowerCase() == CarStatus.otb.name) //schedule & otb timer
                       const Text(
                         MyStrings.yetToStart,
                         style: MyStyles.primary12500,
                       ),
-                  if(status.toLowerCase() == CarStatus.scheduled.name)
+                  if(status.toLowerCase() == CarStatus.scheduled.name || status.toLowerCase() == CarStatus.otb.name)
                     SizedBox(height: Dimens.standard_2),
-                  if(status.toLowerCase() == CarStatus.scheduled.name)
+                  if(status.toLowerCase() == CarStatus.scheduled.name || status.toLowerCase() == CarStatus.otb.name)
                     if(duration.value != null)
                       Obx(() => Row(
                         children: [
