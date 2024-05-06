@@ -51,9 +51,12 @@ class Procured extends StatelessWidget {
                               log("View Bill button pressed.");
                               Get.toNamed(AppRoutes.procuredBillScreen,
                                 arguments: {
-                                  'finalPrice': controller.searchList[index].highestBid.toString(),
+                                  'finalPrice': controller.searchList[index].finalPrice != null ? controller.searchList[index].finalPrice.toString() : '0',
                                   'carModel': controller.searchList[index].model ?? '',
-                                  'carName': controller.searchList[index].make ?? '',
+                                  'carName': controller.searchList[index].variant ?? '',
+                                  'gst' : controller.searchList[index].gst != null ? controller.searchList[index].gst.toString() : '0',
+                                  'serviceFees' : controller.searchList[index].serviceFees != null ? controller.searchList[index].serviceFees.toString() : '0',
+                                  'totalAmount' : controller.searchList[index].totalAmount != null ? controller.searchList[index].totalAmount.toString() : '0',
                                 },
                         
                               );

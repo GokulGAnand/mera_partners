@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../utils/colors.dart';
 import '../../../../utils/dimens.dart';
+import '../../../../utils/styles.dart';
 import '../../../../view_model/home/orders/rc_transfer_view_model.dart';
-import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/strings.dart';
-import 'package:mera_partners/utils/styles.dart';
-import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:mera_partners/widgets/custom_order_container.dart';
+import '../../../../widgets/custom_button.dart';
 
 class RcTransfer extends StatelessWidget {
   RcTransfer({super.key,});
