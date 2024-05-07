@@ -1,9 +1,8 @@
 import 'dart:async';
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/utils/svg.dart';
@@ -11,12 +10,12 @@ import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import '../utils/images.dart';
 import 'custom_toast.dart';
 
 class CustomOrderContainer extends StatefulWidget {
-  CustomOrderContainer({super.key, this.button, required this.dealStatus, this.backgroundBlackOpacity, required this.buttonText, required this.buttonStatus, required this.carModel, required this.carName, required this.carID, required this.imageURL, required this.finalPrice, this.onPressed, required this.showButton, this.negStartTime, this.negEndTime});
+  CustomOrderContainer({super.key, required this.dealStatus, this.backgroundBlackOpacity, required this.buttonText, required this.buttonStatus, required this.carModel, required this.carName, required this.carID, required this.imageURL, required this.finalPrice, this.onPressed, required this.showButton, this.negStartTime, this.negEndTime});
 
-  final Widget? button;
   final String dealStatus;
   final Widget? backgroundBlackOpacity;
   final String buttonText;
@@ -95,18 +94,22 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                 Container(
                   width: double.infinity,
                   height: 107,
-                  // height: showButton?107:200,
                   alignment: Alignment.bottomCenter,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8),
-                    ),
-                    image: DecorationImage(
-                      image: NetworkImage(widget.imageURL),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
+                  child: Image.network(widget.imageURL,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return SvgPicture.asset(MyImages.loadingCar);
+                      }, frameBuilder:
+                          (context, child, frame, wasSynchronouslyLoaded) {
+                        return child;
+                      }, loadingBuilder:
+                          (context, child, loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        } else {
+                          return SvgPicture.asset(MyImages.loadingCar);
+                        }
+                      }),
                 ),
                 (widget.backgroundBlackOpacity != null)
                     ? widget.backgroundBlackOpacity!
@@ -124,14 +127,14 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                     ),
                   ),
                 ),
-                (widget.dealStatus.isEmpty || (["timer", "deal won", "deal lost"].contains(widget.dealStatus) == false))
+                (widget.dealStatus.isEmpty)
                     ? const SizedBox()
                     : Container(
                   height: 25,
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
-                    color: (widget.dealStatus == "deal won") ? MyColors.green3 : MyColors.warning,
-                    gradient: (widget.dealStatus == "timer")
+                    color: (widget.dealStatus.toLowerCase() != OrderStatus.dealLost.name) ? MyColors.green3 : MyColors.warning,
+                    gradient: (widget.dealStatus == OrderStatus.dealLost.name)
                         ? const LinearGradient(
                       begin: Alignment(-0.5, 0.00),
                       end: Alignment(2, 0),
@@ -145,9 +148,9 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                   child: Row(
                     children: [
                       SvgPicture.asset(
-                        (widget.dealStatus == "timer")
+                        (widget.dealStatus == OrderStatus.negotiation.name)
                             ? MySvg.timer
-                            : (widget.dealStatus == "deal won")
+                            : (widget.dealStatus == OrderStatus.procurement.name)
                             ? MySvg.dealWon
                             : MySvg.dealLost,
                         width: 18,
@@ -155,27 +158,27 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                       const SizedBox(
                         width: 3,
                       ),
-                      widget.dealStatus == "timer"?
+                      widget.dealStatus == OrderStatus.negotiation.name?
                       Obx(() => Text(
-                        (widget.dealStatus == "timer")
+                        (widget.dealStatus == OrderStatus.negotiation.name)
                             ?  formatDuration( widget.duration.value! )
-                            : (widget.dealStatus == "deal won")
+                            : (widget.dealStatus == OrderStatus.procurement.name)
                             ? MyStrings.dealWon
                             : MyStrings.dealLost,
-                        style: (widget.dealStatus == "timer")
+                        style: (widget.dealStatus == OrderStatus.negotiation.name)
                             ? MyStyles.white14700
-                            : (widget.dealStatus == "deal won")
+                            : (widget.dealStatus == OrderStatus.procurement.name)
                             ? MyStyles.whiteTitleStyle
                             : MyStyles.whiteTitleStyle,
                       ),) :  Text(
-                        (widget.dealStatus == "timer")
+                        (widget.dealStatus == OrderStatus.negotiation.name)
                             ?  formatDuration( widget.duration.value! )
-                            : (widget.dealStatus == "deal won")
+                            : (widget.dealStatus == OrderStatus.procurement.name)
                             ? MyStrings.dealWon
                             : MyStrings.dealLost,
-                        style: (widget.dealStatus == "timer")
+                        style: (widget.dealStatus == OrderStatus.negotiation.name)
                             ? MyStyles.white14700
-                            : (widget.dealStatus == "deal won")
+                            : (widget.dealStatus == OrderStatus.procurement.name)
                             ? MyStyles.whiteTitleStyle
                             : MyStyles.whiteTitleStyle,
                       ),
@@ -229,10 +232,10 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                   if (widget.showButton)
                     SizedBox(
                       height: 40,
-                      child: (widget.buttonStatus.isEmpty || (["completed", "view details", "pending"].contains(widget.buttonStatus) == false))
+                      child: (widget.buttonStatus.isEmpty)
                           ? null
                           : DottedBorder(
-                        color: (widget.buttonStatus.toLowerCase() == "pending") ? MyColors.yellow2 : Colors.transparent,
+                        color: (widget.buttonStatus.toLowerCase() == Status.pending.name) ? MyColors.yellow2 : Colors.transparent,
                         padding: EdgeInsets.zero,
                         radius: const Radius.circular(6),
                         dashPattern: const [3, 3],
@@ -240,26 +243,26 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                           onPressed: (widget.onPressed != null) ? widget.onPressed : () {},
                           buttonStyle: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.all(2),
-                            backgroundColor: (widget.buttonStatus.toLowerCase() == "view" || widget.buttonStatus == "view details")
+                            backgroundColor: (widget.buttonStatus.toLowerCase() == Status.view.name)
                                 ? MyColors.kPrimaryColor.withOpacity(0.1)
-                                : (widget.buttonStatus.toLowerCase() == "pending")
+                                : (widget.buttonStatus.toLowerCase() == Status.pending.name)
                                 ? MyColors.yellow.withOpacity(0.5)
                                 : MyColors.green3,
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(6),
-                              side: (widget.buttonStatus.toLowerCase() == "view" || widget.buttonStatus == "view details") ? const BorderSide(color: MyColors.kPrimaryColor) : BorderSide.none,
+                              side: (widget.buttonStatus.toLowerCase() == Status.view.name) ? const BorderSide(color: MyColors.kPrimaryColor) : BorderSide.none,
                             ),
                           ),
-                          buttonColor: (widget.buttonStatus.toLowerCase() == "view" || widget.buttonStatus == "view details")
+                          buttonColor: (widget.buttonStatus.toLowerCase() == Status.view.name)
                               ? MyColors.kPrimaryColor.withOpacity(0.3)
-                              : (widget.buttonStatus.toLowerCase() == "pending")
+                              : (widget.buttonStatus.toLowerCase() == Status.pending.name)
                               ? MyColors.yellow
                               : MyColors.green3,
                           buttonText: widget.buttonText,
-                          textStyle: (widget.buttonStatus.toLowerCase() == "view" || widget.buttonStatus == "view details")
+                          textStyle: (widget.buttonStatus.toLowerCase() == Status.view.name)
                               ? MyStyles.primary16500
-                              : (widget.buttonStatus.toLowerCase() == "pending")
+                              : (widget.buttonStatus.toLowerCase() == Status.pending.name)
                               ? MyStyles.black6_16500
                               : MyStyles.whiteTitleStyle,
                         ),

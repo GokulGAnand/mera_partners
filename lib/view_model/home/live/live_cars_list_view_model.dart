@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/material.dart';
 import 'package:mera_partners/service/socket_service.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:flutter/cupertino.dart';
@@ -54,6 +55,22 @@ class LiveCarsListViewModel extends GetxController {
     });
 
     super.onInit();
+  }
+
+  void showAlertDialog(/*Data car*/) {
+    Get.dialog(
+      AlertDialog(
+        title: Text("Auto Bid Limit Reached"),
+        content: Text("The auto bid limit has been reached or exceeded"),
+        actions: [
+          TextButton(
+            child: Text("OK"),
+            onPressed: () => Get.back(),
+          ),
+        ],
+      ),
+      barrierDismissible: false,
+    );
   }
 
   void getLikedCarData() async {

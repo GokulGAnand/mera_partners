@@ -55,13 +55,14 @@ class LoginScreenViewModel extends GetxController {
     try {
       ProgressBar.instance.showProgressbar(Get.context!);
       var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.login), body: {"contactNo": mobileController.value.text});
+      String? message = json.decode(response.body)['message'];
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
         Get.toNamed(AppRoutes.otpScreen);
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        CustomToast.instance.showMsg(MyStrings.invalidMobileNumber);
+        CustomToast.instance.showMsg(message ?? MyStrings.invalidMobileNumber);
       }
     } catch (e) {
       ProgressBar.instance.stopProgressBar(Get.context!);

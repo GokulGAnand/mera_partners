@@ -63,7 +63,8 @@ class Data {
   String? transmission;
   num? statusValues;
   List<LeaderBoard>? leaderBoard;
-  List<String>? winner;
+  // List<String>? winner;
+  String? winner;
   Front? front;
   Front? frontLeft;
   Front? frontRight;
@@ -82,6 +83,10 @@ class Data {
   String? negotiationStatus;
   String? negotiationEndTime;
   String? negotiationStartTime;
+  String? procurementStatus;
+  num? gst;
+  num? serviceFees;
+  num? totalAmount;
 
   Data(
       {this.sId,
@@ -122,7 +127,12 @@ class Data {
         this.negotiationStatus,
         this.bidStartTime,
         this.negotiationEndTime,
-        this.negotiationStartTime});
+        this.negotiationStartTime,
+        this.procurementStatus,
+        this.gst,
+        this.serviceFees,
+        this.totalAmount,
+      });
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -144,15 +154,16 @@ class Data {
     odometerReading = json['odometerReading'];
     transmission = json['transmission'];
     statusValues = json['statusValues'];
+    winner = json['winner'];
     if (json['leaderBoard'] != null) {
       leaderBoard = <LeaderBoard>[];
       json['leaderBoard'].forEach((v) {
         leaderBoard!.add(LeaderBoard.fromJson(v));
       });
     }
-    if (json['winner'] != null && json['winner'] is List) {
-      winner = (json['winner'] as List).cast<String>();
-    }
+    // if (json['winner'] != null && json['winner'] is List) {
+    //   winner = (json['winner'] as List).cast<String>();
+    // }
     front = json['front'] != null ? Front.fromJson(json['front']) : null;
     frontLeft = json['frontLeft'] != null
         ? Front.fromJson(json['frontLeft'])
@@ -180,6 +191,10 @@ class Data {
     negotiationStartTime = json['negotiation_startTime'];
     negotiationEndTime = json['negotiation_endTime'];
     bidStartTime = json['bidStartTime'];
+    procurementStatus = json['procurement_status'];
+    gst = json['gst'];
+    serviceFees = json['serviceFees'];
+    totalAmount = json['totalAmount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -235,10 +250,14 @@ class Data {
     data['bidEndTime'] = bidEndTime;
     data['bidStartTime'] = bidStartTime;
     data['negotiation_amount'] = negotiationAmount;
+    data['procurement_status'] = procurementStatus;
     data['finalPrice'] = finalPrice;
     data['negotiation_status'] = negotiationStatus;
     data['negotiation_startTime'] = negotiationStartTime;
     data['negotiation_endTime'] = negotiationEndTime;
+    data['gst'] = gst;
+    data['serviceFees'] = serviceFees;
+    data['totalAmount'] = totalAmount;
     return data;
   }
 }
