@@ -228,7 +228,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
         widget.showPendingDialog();
       },
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 58.0, top: 8),
+        padding: const EdgeInsets.only(bottom: 20.0, top: 8),
         child: Container(
           // elevation: 5,
           // color: MyColors.white,
@@ -285,8 +285,8 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       top: 5,
                       right: 5,
                       child: Container(
-                        width: 23,
-                        height: 23,
+                        width: 30,
+                        height: 30,
                         clipBehavior: Clip.antiAlias,
                         decoration: const ShapeDecoration(color: Colors.white, shape: OvalBorder(), shadows: [
                           BoxShadow(
@@ -301,7 +301,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                             child: Icon(
                               widget.isFavourite!.value ? Icons.favorite : Icons.favorite_border,
                               color: widget.isFavourite!.value ? MyColors.red : MyColors.grey,
-                              size: 16,
+                              size: 18.38,
                             ),
                             onTap: () {
                               log("Tapping like button2");

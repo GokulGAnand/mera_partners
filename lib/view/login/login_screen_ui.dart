@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/dimens.dart';
@@ -89,7 +90,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: Dimens.standard_20,
                       ),
-                      CustomTextFormField(labelText: MyStrings.mobileNo, keyboardType: TextInputType.number, controller: loginScreenViewModel.mobileController, validator: (value) => ValidateInput.validateMobile(value)),
+                      CustomTextFormField(labelText: MyStrings.mobileNo, keyboardType: TextInputType.number,
+                          controller: loginScreenViewModel.mobileController,
+                          inputFormatter: [
+                            FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                            LengthLimitingTextInputFormatter(10)
+                          ],
+                          validator: (value) => ValidateInput.validateMobile(value)),
                       SizedBox(
                         height: Dimens.standard_20,
                       ),
