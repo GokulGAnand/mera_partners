@@ -42,7 +42,7 @@ class NegotiationViewModel extends GetxController {
       var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/?status=NEGOTIATION'), headers: globals.headers);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        log(response.body);
+        log("Negotiation Response\n${response.body}");
         carListResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
         searchNegotiationList.value = CarListResponse.fromJson(jsonDecode(response.body)).data!;
       } else {

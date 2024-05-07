@@ -5,6 +5,7 @@ import 'package:mera_partners/view_model/home/live/live_cars_list_view_model.dar
 import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:mera_partners/utils/globals.dart' as globals;
 
 class SocketService {
   static IO.Socket? socket;
@@ -35,6 +36,17 @@ class SocketService {
         //todo changes
         // Get.find<BidCarsListViewModel>().bidCarsResponse.value.data = carList;
         // Get.find<BidCarsListViewModel>().bidCarsResponse.refresh(); // Manually trigger UI update
+
+        if ((Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data != null) && Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data!.isNotEmpty) {
+          for (int i = 0; i < Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data!.length; i++) {
+            num highestBid = Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data![i].highestBid ?? 0;
+            if ((Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data![i].leaderBoard != null) && Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data![i].leaderBoard!.isNotEmpty) {
+              if (Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data![i].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && highestBid >= element.autoBidLimit!)) {
+                Get.find<LiveCarsListViewModel>().showAlertDialog();
+              }
+            }
+          }
+        }
       }
     });
 

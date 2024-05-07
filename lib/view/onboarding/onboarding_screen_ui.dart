@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../utils/colors.dart';
 import '../../view_model/onboarding/onboarding_view_model.dart';
 import '../../widgets/onboarding_widget.dart';
+import '../../widgets/show_logout_dialog.dart';
 
 /// ignore: must_be_immutable
 class OnboardingScreen extends  GetView<OnboardingScreenViewModel> {
@@ -17,29 +18,38 @@ class OnboardingScreen extends  GetView<OnboardingScreenViewModel> {
   @override
 
   Widget build(BuildContext context) {
-    return Stack(children: [
-      PageView(
-        controller: controller.indicator,
-        onPageChanged: ((value) {
-          controller.page.value = value;
-          log(controller.page.value.toString());
-        }),
-        children: const [
-          // start page onboarding
-          OnBoardingWidgets(image: MyImages.onboarding1, title: MyStrings.bidFromAnyWhere, subtitle: MyStrings.subtitle1, values: 1),
-          OnBoardingWidgets(
-            image: MyImages.onboarding2,
-            title: MyStrings.detailedInspection,
-            subtitle: MyStrings.subtitle1,
-            values: 3,
+    return Stack(
+        children: [
+      PopScope(
+        canPop: false,
+        onPopInvoked: (bool didPop) {
+          // if (didPop) {
+          //   return;         // }
+          showLogoutDialog(context);
+        },
+          child: PageView(
+            controller: controller.indicator,
+            onPageChanged: ((value) {
+              controller.page.value = value;
+              log(controller.page.value.toString());
+            }),
+            children: const [
+              // start page onboarding
+              OnBoardingWidgets(image: MyImages.onboarding1, title: MyStrings.bidFromAnyWhere, subtitle: MyStrings.subtitle1, values: 1),
+              OnBoardingWidgets(
+                image: MyImages.onboarding2,
+                title: MyStrings.detailedInspection,
+                subtitle: MyStrings.subtitle1,
+                values: 3,
+              ),
+              OnBoardingWidgets(
+                image: MyImages.onboarding3,
+                title: MyStrings.easyDocumentTransfer,
+                subtitle: MyStrings.subtitle1,
+                values: 3,
+              ),
+            ],
           ),
-          OnBoardingWidgets(
-            image: MyImages.onboarding3,
-            title: MyStrings.easyDocumentTransfer,
-            subtitle: MyStrings.subtitle1,
-            values: 3,
-          ),
-        ],
       ),
       Obx(
         () => Align(

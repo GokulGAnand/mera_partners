@@ -53,27 +53,6 @@ class BidCarsListViewModel extends GetxController{
     super.onInit();
   }
 
-  /// Like Feature API integration
-  void updateLikedCar(String carId, bool like) async {
-    //todo - change status data
-    try {
-      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId').toString());
-      log(jsonEncode({"status": like == true ? "LikedCar" : "Unlike"}));
-      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'),
-      headers: globals.jsonHeaders, body: jsonEncode({"status": like == true ? "LikedCar" : "Unlike"}));
-      log(response.body.toString());
-      if (response.statusCode == 200) {
-        Get.find<BidCarsListViewModel>().getLikedCarData();
-        Get.find<BidCarsListViewModel>().likeResponse.refresh();
-        CustomToast.instance.showMsg(MyStrings.success);
-      } else {
-        CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);
-      }
-    } catch (e) {
-      log(e.toString());
-      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? MyStrings.unableToConnect);
-    }
-  }
 
   void placeBid(amount, carId) async {
     try {
@@ -84,6 +63,7 @@ class BidCarsListViewModel extends GetxController{
       log(response.body);
       String message = json.decode(response.body)['message'];
       if (response.statusCode == 200) {
+        getCarData();
         CustomToast.instance.showMsgWithIcon(MyStrings.bidPlaced, null);
       } else {
         CustomToast.instance.showMsg(message);
@@ -114,7 +94,6 @@ class BidCarsListViewModel extends GetxController{
   }
 
   void getCarData() async {
-    //todo change query parameter
     try {
       var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'), headers: globals.jsonHeaders);
       log(response.body);
@@ -152,8 +131,9 @@ class BidCarsListViewModel extends GetxController{
         update();
         refresh();
         notifyChildrens();
+        // getLikedCarData();
         likeResponse.refresh();
-        print('API Response svvs: ${response.body}');
+        print('API Response otb: ${response.body}');
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
         print('API Error: ${response.reasonPhrase}');

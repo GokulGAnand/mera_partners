@@ -1,5 +1,6 @@
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/view_model/home/orders/negotiation_cars_view_model.dart';
 import 'package:mera_partners/widgets/custom_order_container.dart';
@@ -90,19 +91,10 @@ class _NegotiationState extends State<Negotiation> {
                               ),
                             ),
                           ),
-                        // }
-                        // return Container(
-                        //   width: double.infinity,
-                        //   height: 107,
-                        //   decoration: BoxDecoration(borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)), color: MyColors.black3.withOpacity(0.4)),
-                        // );
-                      // dealStatus: (controller.isNegotiation.value) ? "timer" : "deal lost",
-                      // buttonStatus: (controller.isNegotiation.value) ? "completed" : "view details",
-                      // buttonText: (controller.isNegotiation.value) ? MyStrings.viewOffer : MyStrings.viewDetail,
-                      dealStatus: "timer",
-                      buttonStatus: "completed",
-                      buttonText: MyStrings.viewOffer,
-                      onPressed: () {
+                      dealStatus: OrderStatus.negotiation.name,
+                      buttonStatus: controller.searchNegotiationList[index].negotiationStatus == Status.pending.name ? Status.pending.name : Status.view.name,
+                      buttonText: controller.searchNegotiationList[index].negotiationStatus == Status.pending.name ? Status.pending.name : MyStrings.viewOffer,
+                      onPressed: controller.searchNegotiationList[index].negotiationStatus?.toLowerCase() == Status.pending.name ? () => null : () {
                         // if (controller.isNegotiation.value) {
                           showModalBottomSheet(
                               isScrollControlled: true,
@@ -133,7 +125,7 @@ class _NegotiationState extends State<Negotiation> {
                       carModel: controller.searchNegotiationList[index].model ?? '',
                       carName: controller.searchNegotiationList[index].variant ?? '',
                       carID: controller.searchNegotiationList[index].uniqueId != null ? controller.searchNegotiationList[index].uniqueId.toString() : '',
-                      imageURL: controller.searchNegotiationList[index].front?.url ?? '',
+                      imageURL: controller.searchNegotiationList[index].front?.url ?? controller.searchNegotiationList[index].frontLeft?.url ?? controller.searchNegotiationList[index].frontRight?.url ?? '',
                       finalPrice: Constants.numberFormat.format(controller.searchNegotiationList[index].highestBid),
                     );
                   });
@@ -157,33 +149,11 @@ class _NegotiationState extends State<Negotiation> {
                       height: 107,
                       decoration: BoxDecoration(borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)), color: MyColors.black3.withOpacity(0.4)),
                     ),
-                    dealStatus: "deal lost",
-                    buttonStatus: "view details",
+                    dealStatus: OrderStatus.dealLost.name,
+                    buttonStatus: Status.view.name,
                     buttonText: MyStrings.viewDetail,
                     onPressed: () {
-                      // if (controller.isNegotiation.value) {
-                      //   showModalBottomSheet(
-                      //       isScrollControlled: true,
-                      //       backgroundColor: Colors.transparent,
-                      //       context: context,
-                      //       builder: (context) {
-                      //         return NegotiationBottomSheet(
-                      //           biddedAmount: controller.carListResponse.value.data?[index].highestBid ?? 0,
-                      //           //todo - change the negotiation amount
-                      //           negotiatedAmount: controller.carListResponse.value.data?[index].highestBid ?? 0,
-                      //           onAcceptPressed: () {
-                      //             controller.acceptOrRejectOffer('accept', controller.carListResponse.value.data?[index].sId ?? '');
-                      //             Get.back();
-                      //           },
-                      //           onRejectPressed: () {
-                      //             controller.acceptOrRejectOffer('reject', controller.carListResponse.value.data?[index].sId ?? '');
-                      //             Get.back();
-                      //           },
-                      //         );
-                      //       });
-                      // } else {
-                        Get.toNamed(AppRoutes.carDetailsScreen);
-                      // }
+                      Get.toNamed(AppRoutes.carDetailsScreen);
                     },
                     showButton: true,
                     carModel: controller.searchLostList[index].model ?? '',

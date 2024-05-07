@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/colors.dart';

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../utils/constants.dart';
 import '../../../../utils/dimens.dart';
+import '../../../../utils/enum.dart';
 import '../../../../view_model/home/orders/rc_transfer_view_model.dart';
-import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/strings.dart';
-import 'package:mera_partners/utils/styles.dart';
-import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:mera_partners/widgets/custom_order_container.dart';
 
 class RcTransfer extends StatelessWidget {
@@ -37,30 +36,15 @@ class RcTransfer extends StatelessWidget {
               ),
               itemBuilder: (context, index) {
                 return CustomOrderContainer(
-                  buttonStatus: "pending",
+                  buttonStatus: Status.completed.name,
                   carID: controller.searchRcTransferList[index].uniqueId?.toString() ?? '',
-                  finalPrice: controller.searchRcTransferList[index].highestBid != null ? controller.searchRcTransferList[index].highestBid.toString() : '',
+                  finalPrice: controller.searchRcTransferList[index].highestBid != null ? Constants.numberFormat.format(controller.searchRcTransferList[index].highestBid) : '',
                   carModel: controller.searchRcTransferList[index].model ?? '',
                   carName: controller.searchRcTransferList[index].make ?? '',
                   imageURL: controller.searchRcTransferList[index].frontLeft?.url ?? '',
-                  button: CustomElevatedButton(
-                    onPressed: () {},
-                    buttonStyle: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(2),
-                      backgroundColor: MyColors.green3,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        side: BorderSide.none,
-                      ),
-                    ),
-                    buttonColor: MyColors.green3,
-                    buttonText: MyStrings.completed,
-                    textStyle: MyStyles.white14500,
-                  ),
-                  showButton: false,
+                  showButton: true,
                   dealStatus: '',
-                  buttonText: '',
+                  buttonText: MyStrings.completed,
                 );
               },
             );
