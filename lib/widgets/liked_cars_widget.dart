@@ -105,6 +105,7 @@ class LikedCarsWidget extends StatelessWidget {
     }
     return SingleChildScrollView(
       child: Container(
+        height: 315,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),

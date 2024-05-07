@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:mera_partners/routes/app_routes.dart';
+import 'package:mera_partners/service/notification_service.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/constants.dart';
 import 'package:mera_partners/utils/shared_pref_manager.dart';
@@ -13,6 +14,7 @@ import 'package:mera_partners/utils/globals.dart' as globals;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService().initNotification();
   getPermission();
   bool isLoginAlready = await loadData();
   runApp(MyApp(isLoginAlready: isLoginAlready));
