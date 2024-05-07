@@ -9,3 +9,15 @@ enum CarStatus{
   scheduled,
   otb
 }
+
+enum Status{
+  view,
+  pending
+}
+
+enum OrderStatus{
+  negotiation,
+  procurement,
+  dealLost,
+  rcTransfer
+}

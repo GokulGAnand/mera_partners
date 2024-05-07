@@ -62,7 +62,7 @@ class BidCarsListScreen extends StatelessWidget {
                               bidEndTime: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()),
                               carModel: controller.bidCarsResponse.value.data?[0].biddedCars![index].model ?? '',
                               carVariant: controller.bidCarsResponse.value.data?[0].biddedCars![index].variant ?? '',
-                              rating: ((controller.bidCarsResponse.value.data?[0].biddedCars![index].engineStar ?? 0 + (controller.bidCarsResponse.value.data?[0].biddedCars![index].exteriorStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].interiorAndElectricalStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].testDriveStar ?? 0)) / 4),
+                              rating: ((controller.bidCarsResponse.value.data?[0].biddedCars![index].engineStar ?? 0 + (controller.bidCarsResponse.value.data?[0].biddedCars![index].exteriorStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].interiorAndElectricalStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].testDriveStar ?? 0)) / 4).roundToDouble(),
                               fuelType: controller.bidCarsResponse.value.data?[0].biddedCars![index].fuelType ?? '',
                               id: controller.bidCarsResponse.value.data?[0].biddedCars![index].uniqueId.toString() ?? '',
                               fmv: controller.bidCarsResponse.value.data?[0].biddedCars![index].realValue != null ? controller.bidCarsResponse.value.data![0].biddedCars![index].realValue.toString() : '0',

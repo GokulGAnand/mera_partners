@@ -43,7 +43,7 @@ class OTBScreen extends StatelessWidget {
                               bidAmount: Constants.numberFormat.format(item.realValue ?? 0).toString().obs,
                               carModel: item.model ?? '',
                               carVariant: item.variant ?? '',
-                              rating: ((item.engineStar ?? 0 + (item.exteriorStar ?? 0) + (item.interiorAndElectricalStar ?? 0) + (item.testDriveStar ?? 0)) / 4),
+                              rating: ((item.engineStar ?? 0 + (item.exteriorStar ?? 0) + (item.interiorAndElectricalStar ?? 0) + (item.testDriveStar ?? 0)) / 4).roundToDouble(),
                               fuelType: item.fuelType ?? '',
                               id: item.uniqueId.toString(),
                               fmv: item.realValue != null ? item.realValue.toString() : '0',

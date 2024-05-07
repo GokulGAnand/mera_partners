@@ -22,14 +22,17 @@ class ProcuredBillScreen extends StatelessWidget {
     final String? finalPrice = arguments?['finalPrice'];
     final String? carModel = arguments?['carModel'];
     final String? carName = arguments?['carName'];
+    final String? gstAmount = arguments?['gst'];
+    final String? serviceFees = arguments?['serviceFees'];
+    final String? totalAmount = arguments?['totalAmount'];
     final String? totalPayment = finalPrice; // Assigning finalPrice to totalPayment as per your existing code
-    const String additionalCharges = '5000'; // Example value for additional charges
-    const String gst = '50'; // Example value for GST
+    final String additionalCharges = serviceFees ?? ''; // Example value for additional charges
+    final String gst = gstAmount ?? ''; // Example value for GST
 
     // Calculate total amount
-    final num totalAmount = (int.tryParse(totalPayment ?? '0') ?? 0) +
-        (int.tryParse(additionalCharges) ?? 0) +
-        (int.tryParse(gst) ?? 0);
+    // final num totalAmount = (int.tryParse(totalPayment ?? '0') ?? 0) +
+    //     (int.tryParse(additionalCharges) ?? 0) +
+    //     (int.tryParse(gst) ?? 0);
 
 
     return Scaffold(
@@ -86,9 +89,9 @@ class ProcuredBillScreen extends StatelessWidget {
                         children: [
                           Text(totalPayment ?? '', style: MyStyles.black16400),
                           SizedBox(height: Dimens.standard_10),
-                          const Text(additionalCharges, style: MyStyles.black16400),
+                          Text(additionalCharges, style: MyStyles.black16400),
                           SizedBox(height: Dimens.standard_10),
-                          const Text(gst, style: MyStyles.black16400),
+                          Text(gst, style: MyStyles.black16400),
                         ],
                       ),
                     ],
@@ -110,7 +113,7 @@ class ProcuredBillScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(MyStrings.totalAmount, style: MyStyles.black16700),
-                      Text(Constants.numberFormat.format(totalAmount), style: MyStyles.blue16W700),
+                      Text(Constants.numberFormat.format(int.tryParse(totalAmount ?? '0') ?? 0), style: MyStyles.blue16W700),
                     ],
                   ),
                 ],
