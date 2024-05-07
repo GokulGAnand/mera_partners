@@ -12,7 +12,8 @@ enum CarStatus{
 
 enum Status{
   view,
-  pending
+  pending,
+  completed
 }
 
 enum OrderStatus{

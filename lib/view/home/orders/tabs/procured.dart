@@ -1,5 +1,7 @@
 import 'dart:developer';
 import 'package:mera_partners/routes/app_routes.dart';
+import 'package:mera_partners/utils/constants.dart';
+import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/widgets/custom_order_container.dart';
 import 'package:flutter/material.dart';
@@ -38,16 +40,16 @@ class Procured extends StatelessWidget {
                     return Obx(
                       () {
                         return CustomOrderContainer(
-                            buttonStatus: "view details",
+                            buttonStatus: controller.searchList[index].procurementStatus ?? Status.pending.name,
                             carModel: controller.searchList[index].model ?? '',
-                            finalPrice: controller.searchList[index].highestBid != null ? controller.searchList[index].highestBid.toString() : '',
+                            finalPrice: controller.searchList[index].highestBid != null ? Constants.numberFormat.format(controller.searchList[index].highestBid) : '',
                             carName: controller.searchList[index].variant ?? '',
                             carID: controller.searchList[index].uniqueId?.toString() ?? '',
                             imageURL: controller.searchList[index].frontLeft?.url ?? '',
-                            dealStatus: "deal won",
-                            buttonText: MyStrings.viewBill,
+                            dealStatus: OrderStatus.procurement.name,
+                            buttonText: controller.searchList[index].procurementStatus  == Status.pending.name ? Status.pending.name : MyStrings.viewBill,
                             showButton: true,
-                            onPressed: () {
+                            onPressed: (controller.searchList[index].procurementStatus == null || controller.searchList[index].procurementStatus == "" || controller.searchList[index].procurementStatus?.toLowerCase() == Status.pending.name) ? null : () {
                               log("View Bill button pressed.");
                               Get.toNamed(AppRoutes.procuredBillScreen,
                                 arguments: {

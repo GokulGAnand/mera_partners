@@ -1,3 +1,4 @@
+import 'package:mera_partners/utils/extension.dart';
 import 'package:mera_partners/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -114,6 +115,9 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
             : Container(),
         TextFormField(
           key: widget.key,
+          onTapOutside: (event) {
+            context.dismissKeyBoard();
+          },
           style: widget.textFieldStyle,
           inputFormatters: widget.inputFormatter,
           controller: widget.controller,

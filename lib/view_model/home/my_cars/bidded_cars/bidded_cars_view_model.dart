@@ -131,7 +131,7 @@ class BidCarsListViewModel extends GetxController{
         update();
         refresh();
         notifyChildrens();
-        getLikedCarData();
+        // getLikedCarData();
         likeResponse.refresh();
         print('API Response otb: ${response.body}');
       } else {
