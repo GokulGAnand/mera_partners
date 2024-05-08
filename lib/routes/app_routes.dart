@@ -18,6 +18,7 @@ import 'package:mera_partners/view/home/my_cars/my_cars_screen.dart';
 import 'package:mera_partners/view/home/my_cars/tabs/bidded_cars/bidded_cars_screen_ui.dart';
 import 'package:mera_partners/view/home/my_cars/tabs/liked_cars.dart';
 import 'package:mera_partners/view/home/notification/notification_screen_ui.dart';
+import 'package:mera_partners/view/home/orders/bindings/negotiation_cars_binding.dart';
 import 'package:mera_partners/view/home/orders/bindings/orders_binding.dart';
 import 'package:mera_partners/view/home/orders/orders_screen.dart';
 import 'package:mera_partners/view/login/binding/login_binding.dart';
@@ -76,6 +77,7 @@ class AppRoutes {
     GetPage(name: homeScreen, page: () => const HomeScreen(),
       bindings: [
       HomeBinding(),
+        NegotiationCarsBinding(),
     ]), 
     GetPage(name: bidsScreen, page: () => const BidsScreen(),
       bindings: [

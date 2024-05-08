@@ -17,7 +17,7 @@ class Negotiation extends StatefulWidget {
 }
 
 class _NegotiationState extends State<Negotiation> {
-  NegotiationViewModel controller = Get.isRegistered<NegotiationViewModel>() ? Get.find<NegotiationViewModel>() : Get.put(NegotiationViewModel());
+  NegotiationViewModel controller = Get.put(NegotiationViewModel());
 
   @override
   Widget build(BuildContext context) {

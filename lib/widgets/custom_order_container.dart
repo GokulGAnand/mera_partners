@@ -6,11 +6,14 @@ import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/utils/svg.dart';
+import 'package:mera_partners/view_model/home/orders/negotiation_cars_view_model.dart';
 import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import '../utils/images.dart';
+import '../view_model/home/orders/procured_cars_view_model.dart';
+import '../view_model/home/orders/rc_transfer_view_model.dart';
 import 'custom_toast.dart';
 
 class CustomOrderContainer extends StatefulWidget {
@@ -41,6 +44,16 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
     Timer.periodic(const Duration(seconds: 1), (timer) {
       if (widget.duration.value!.inSeconds == 0) {
         timer.cancel();
+        if (Get.isRegistered<NegotiationViewModel>()) {
+          Get.find<NegotiationViewModel>().getNegotiationCarsData();
+          Get.find<NegotiationViewModel>().getLostDeal();
+        }
+        if(Get.isRegistered<ProcuredScreenViewModel>()){
+          Get.find<ProcuredScreenViewModel>().getProcuredBill();
+        }
+        if(Get.isRegistered<RcTransferViewModel>()){
+          Get.find<RcTransferViewModel>().getRcTransfer();
+        }
       } else {
         widget.duration.value = widget.duration.value! - const Duration(seconds: 1);
       }
