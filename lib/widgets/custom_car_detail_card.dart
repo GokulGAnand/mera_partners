@@ -158,7 +158,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
   }
 
   String _formatDateTime(DateTime? dateTime) {
-    return dateTime != null ? "${dateTime.day}/${dateTime.month}/${dateTime.year} ${_formatTime(dateTime)}":"";
+    return dateTime != null ? "${dateTime.day}/${dateTime.month} ${_formatTime(dateTime)}":"";
   }
 
   @override
