@@ -18,6 +18,8 @@ import '../service/endpoints.dart';
 import '../utils/enum.dart';
 import '../utils/strings.dart';
 import '../utils/styles.dart';
+import '../view_model/home/live/live_cars_list_view_model.dart';
+import '../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 import 'custom_button.dart';
 import 'package:http/http.dart' as http;
 
@@ -205,6 +207,12 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
       headers: globals.jsonHeaders, body: jsonEncode({"status": like==true?"LikedCar":"Unlike"}));
       log(response.body.toString());
       if (response.statusCode == 200) {
+        if (Get.isRegistered<BidCarsListViewModel>()) {
+          Get.find<BidCarsListViewModel>().getLikedCarData();
+        }
+        if (Get.isRegistered<LiveCarsListViewModel>()) {
+          Get.find<LiveCarsListViewModel>().getLikedCarData();
+        }
         // ProgressBar.instance.stopProgressBar(Get.context!);
         CustomToast.instance.showMsg(MyStrings.success);
       } else {
