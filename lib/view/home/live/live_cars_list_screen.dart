@@ -99,7 +99,7 @@ class LiveCarsListScreen extends StatelessWidget {
                       width: 1,
                     ),
               controller.liveCarsResponse.value.data != null
-                  ? Expanded(
+                  ? controller.liveCarsResponse.value.data!.isNotEmpty ? Expanded(
                       child: ListView.builder(
                       itemCount: controller.liveCarsResponse.value.data?.length,
                       padding: const EdgeInsets.all(8),
@@ -218,7 +218,9 @@ class LiveCarsListScreen extends StatelessWidget {
                           }
                         });
                       },
-                    ))
+                    )): const Center(
+                child: Text(MyStrings.noDataFound),
+              )
                   : const Expanded(
                       child: Center(
                         child: CircularProgressIndicator(),

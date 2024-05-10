@@ -303,7 +303,7 @@ class BidTextFormFieldState extends State<BidTextFormField> {
           labelText: widget.labelText,
           hintStyle: TextStyle(color: widget.hintTextColor ?? MyColors.grey, fontSize: 16, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400
           ),
-          contentPadding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.15),
+          contentPadding: EdgeInsets.only(left: widget.controller.text.length > 5 ? MediaQuery.of(context).size.width * 0.10 : MediaQuery.of(context).size.width * 0.15),
           border: InputBorder.none,
           labelStyle: widget.labelStyle ?? TextStyle(height: widget.labelHeight ?? 0.5, color: widget.labelColor ?? MyColors.black, fontSize: 15, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal),
           prefixIcon: widget.prefixIcon,

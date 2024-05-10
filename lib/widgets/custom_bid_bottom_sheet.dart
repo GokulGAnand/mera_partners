@@ -120,12 +120,14 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                if(widget.duration.value != null)
                 Icon(
                   Icons.timer_sharp,
                   color:  widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
                   size: 14,
                 ),
                 const SizedBox(width: 5,),
+                if(widget.duration.value != null)
                 Text(formatDuration( widget.duration.value! ), style: TextStyle(
                   color: widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
                   fontSize: 14,
@@ -202,7 +204,7 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
                   Expanded(child: Obx(() =>BidTextFormField(
                     controller: widget.amountController!.value,
                     keyboardType: const TextInputType.numberWithOptions(decimal: false),
-                    inputFormatter: [FilteringTextInputFormatter.digitsOnly,],
+                    inputFormatter: [FilteringTextInputFormatter.digitsOnly,LengthLimitingTextInputFormatter(8)],
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Value cannot be empty";

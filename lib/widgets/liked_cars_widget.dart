@@ -200,7 +200,7 @@ class LikedCarsWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      status.toLowerCase() == CarStatus.live.name || status.toLowerCase() == CarStatus.scheduled.name ? status : MyStrings.bidClosed,
+                      status.toLowerCase() == CarStatus.live.name || status.toLowerCase() == CarStatus.scheduled.name || status.toLowerCase() == CarStatus.otb.name ? status : MyStrings.bidClosed,
                       style: MyStyles.white12500,
                     ),
                   ),
@@ -237,14 +237,14 @@ class LikedCarsWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if(status.toLowerCase() == CarStatus.live.name || status.toLowerCase() != CarStatus.scheduled.name)
+                  if(status.toLowerCase() == CarStatus.live.name || (status.toLowerCase() != CarStatus.scheduled.name && status.toLowerCase() != CarStatus.otb.name))
                   const Text(
                     MyStrings.highestBid,
                     style: MyStyles.primary12500,
                   ),
-                  if(status.toLowerCase() == CarStatus.live.name || status.toLowerCase() != CarStatus.scheduled.name)
+                  if(status.toLowerCase() == CarStatus.live.name || (status.toLowerCase() != CarStatus.scheduled.name && status.toLowerCase() != CarStatus.otb.name))
                    SizedBox(height: Dimens.standard_2),
-                  if(status.toLowerCase() == CarStatus.live.name || status.toLowerCase() != CarStatus.scheduled.name)
+                  if(status.toLowerCase() == CarStatus.live.name || (status.toLowerCase() != CarStatus.scheduled.name && status.toLowerCase() != CarStatus.otb.name))
                   Text(
                     bidAmount,
                     style: MyStyles.primary16500,
