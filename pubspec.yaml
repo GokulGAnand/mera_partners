@@ -89,3 +89,4 @@ flutter:
       fonts:
         - asset: assets/fonts/DMSans_18pt-Regular.ttf
         - asset: assets/fonts/DMSans_18pt-Medium.ttf
+        - asset: assets/fonts/Roboto-MediumItalic.ttf
