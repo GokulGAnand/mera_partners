@@ -17,14 +17,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    splashScreenViewModel.loadData().then((value){
+    splashScreenViewModel.loadData().then((value) async{
       splashScreenViewModel.isLoginAlready = value;
+      await splashScreenViewModel.getUserData();
     });
     Timer(const Duration(seconds: 3), () {
       if(splashScreenViewModel.isLoginAlready){
-        Get.toNamed(AppRoutes.homeScreen);
+        Get.offNamed(AppRoutes.homeScreen);
       } else {
-        Get.toNamed(AppRoutes.loginScreen);
+        Get.offNamed(AppRoutes.loginScreen);
       }
     });
     super.initState();
