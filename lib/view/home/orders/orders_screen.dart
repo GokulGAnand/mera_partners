@@ -14,7 +14,7 @@ import 'package:mera_partners/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../routes/app_routes.dart';
-import '../../../view_model/home/orders/procured_cars_view_model.dart';
+import '../../../view_model/home/orders/procured_bill_view_model.dart';
 
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key});

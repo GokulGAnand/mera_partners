@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import '../utils/images.dart';
-import '../view_model/home/orders/procured_cars_view_model.dart';
+import '../view_model/home/orders/procured_bill_view_model.dart';
 import '../view_model/home/orders/rc_transfer_view_model.dart';
 import 'custom_toast.dart';
 

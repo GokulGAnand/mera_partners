@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:http/http.dart' as http;
-import '../../../model/response/live/live_cars_list_response.dart';
-import '../../../service/endpoints.dart';
-import '../../../service/exception_error_util.dart';
-import '../../../widgets/custom_toast.dart';
-import '../../../widgets/progressbar.dart';
-
+import 'package:url_launcher/url_launcher.dart';
+import '../../../../model/response/live/live_cars_list_response.dart';
+import '../../../../service/endpoints.dart';
+import '../../../../service/exception_error_util.dart';
+import '../../../../widgets/custom_toast.dart';
+import '../../../../widgets/progressbar.dart';
 
 class ProcuredScreenViewModel extends GetxController{
 
@@ -22,6 +22,15 @@ class ProcuredScreenViewModel extends GetxController{
   void onInit() {
     getProcuredBill();
     super.onInit();
+  }
+
+  launchCaller() async {
+    Uri url = Uri(scheme: "tel", path: "1234567890");
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   void getProcuredBill() async {

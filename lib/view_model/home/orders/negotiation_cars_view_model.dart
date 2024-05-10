@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:mera_partners/model/response/user_data/user_car_details_response.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
+import 'package:mera_partners/view_model/home/orders/procured_bill_view_model.dart';
+import 'package:mera_partners/view_model/home/orders/rc_transfer_view_model.dart';
 import '../../../model/response/live/live_cars_list_response.dart';
 import '../../../service/endpoints.dart';
 import '../../../service/exception_error_util.dart';
@@ -85,6 +87,14 @@ class NegotiationViewModel extends GetxController {
         CustomToast.instance.showMsg(MyStrings.success);
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
+        getNegotiationCarsData();
+        getLostDeal();
+        if(Get.isRegistered<ProcuredScreenViewModel>()){
+          Get.find<ProcuredScreenViewModel>().getProcuredBill();
+        }
+        if(Get.isRegistered<RcTransferViewModel>()){
+          Get.find<RcTransferViewModel>().getRcTransfer();
+        }
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
         CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);

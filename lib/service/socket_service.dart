@@ -16,7 +16,7 @@ class SocketService {
 
   connectToSocket() {
     //todo change url
-    socket = IO.io('ws://13.201.64.137:8080', <String, dynamic>{
+    socket = IO.io('ws://test.meracars.com', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
     });

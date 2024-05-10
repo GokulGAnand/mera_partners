@@ -5,16 +5,16 @@ import '../../utils/dimens.dart';
 import '../../utils/colors.dart';
 import '../../utils/strings.dart';
 import '../../utils/styles.dart';
-import '../../view_model/procured_bill/procured_bill_view_model.dart';
+import '../../view_model/home/orders/procured_bill_view_model.dart';
 import '../../widgets/bank_details_bottom_sheet.dart';
 import '../../widgets/custom_button.dart';
 
 class ProcuredBillScreen extends StatelessWidget {
   ProcuredBillScreen({super.key});
 
-  final ProcuredBillScreenViewModel viewModel = Get.isRegistered<ProcuredBillScreenViewModel>()
-      ? Get.find<ProcuredBillScreenViewModel>()
-      : Get.put(ProcuredBillScreenViewModel());
+  final ProcuredScreenViewModel viewModel = Get.isRegistered<ProcuredScreenViewModel>()
+      ? Get.find<ProcuredScreenViewModel>()
+      : Get.put(ProcuredScreenViewModel());
 
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:mera_partners/service/socket_service.dart';
 import 'package:mera_partners/utils/strings.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mera_partners/utils/globals.dart' as globals;
@@ -22,17 +22,31 @@ class LiveCarsListViewModel extends GetxController {
 
   var liveCarsResponse = CarListResponse().obs;
   SocketService? socketService;
-  List<int> bid = [5000, 10000, 15000];
-  RxInt bidValue = 172000.obs;
   final PagingController<int, Data> infinitePagingController = PagingController(firstPageKey: 1);
   int limit = 10;
   Rx<TextEditingController> autoBidController = TextEditingController().obs;
   Rx<TextEditingController> bidController = TextEditingController().obs;
   var likeResponse = UserResponse().obs;
+  late CountdownTimerController timerController;
+  int? endTime;
 
+  void onEnd() {
+    if (timerController.isRunning) {
+      timerController.disposeTimer();
+    }
+  }
+
+  @override
+  void dispose() {
+    timerController.dispose();
+    super.dispose();
+  }
 
   @override
   void onInit() async {
+    // var duration = DateTime.now().difference(DateTime.parse(negotiationData.value?[0].negotiationEndTime ?? "2024-05-08T02:35:38.00Z"));
+    // endTime = DateTime.now().millisecondsSinceEpoch + Duration(seconds: duration.inSeconds).inMilliseconds;
+    // timerController = CountdownTimerController(endTime: endTime??0, onEnd: onEnd);
     getCarData();
     getLikedCarData();
     // infinitePagingController.addPageRequestListener((pageKey) {
