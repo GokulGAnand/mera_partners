@@ -71,7 +71,6 @@ class LikedCarsWidget extends StatelessWidget {
 
   /// Like Feature API integration
   void updateLikedCar(bool like) async {
-    //todo - change status data
     try {
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId').toString());
       log(jsonEncode({"status": like== true?"LikedCar" :"Unlike"}));

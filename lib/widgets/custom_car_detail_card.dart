@@ -18,6 +18,7 @@ import '../service/endpoints.dart';
 import '../utils/enum.dart';
 import '../utils/strings.dart';
 import '../utils/styles.dart';
+import '../utils/svg.dart';
 import '../view_model/home/live/live_cars_list_view_model.dart';
 import '../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 import 'custom_button.dart';
@@ -342,6 +343,16 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       const SizedBox(
                         width: 15,
                       ),
+                      if(widget.bidStatus.value == MyStrings.youAreLeading)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0, right: 5.0),
+                          child: SvgPicture.asset(MySvg.arrowUp, width: 14,),
+                        ),
+                      if(widget.bidStatus.value == MyStrings.youAreLoosing)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0, right: 5.0),
+                          child: SvgPicture.asset(MySvg.arrowDown, width: 14,),
+                        ),
                       if (widget.bidAmount.isNotEmpty && widget.isScheduled?.value == false)
                         Obx(() =>Text(globals.documentStatus == DocumentStatus.VERIFIED.name?widget.bidAmount.value: widget.bidAmount.value.replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ','), textAlign: TextAlign.center, style: MyStyles.white16700)),
                     ],
