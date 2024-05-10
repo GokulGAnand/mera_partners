@@ -38,6 +38,7 @@ class UserData {
   bool? isBlocked;
   String? role;
   int? contactNo;
+  bool? isDeactivate;
   bool? isDeposited;
   int? depositedAmount;
   String? isDocumentsVerified;
@@ -66,6 +67,7 @@ class UserData {
         this.isBlocked,
         this.role,
         this.contactNo,
+        this.isDeactivate,
         this.isDeposited,
         this.depositedAmount,
         this.isDocumentsVerified,
@@ -94,6 +96,7 @@ class UserData {
     isBlocked = json['isBlocked'];
     role = json['role'];
     contactNo = json['contactNo'];
+    isDeactivate = json['isDeactivate'];
     isDeposited = json['isDeposited'];
     depositedAmount = json['depositedAmount'];
     isDocumentsVerified = json['isDocumentsVerified'];
@@ -151,6 +154,7 @@ class UserData {
     data['isBlocked'] = this.isBlocked;
     data['role'] = this.role;
     data['contactNo'] = this.contactNo;
+    data['isDeactivate'] = this.isDeactivate;
     data['isDeposited'] = this.isDeposited;
     data['depositedAmount'] = this.depositedAmount;
     data['isDocumentsVerified'] = this.isDocumentsVerified;

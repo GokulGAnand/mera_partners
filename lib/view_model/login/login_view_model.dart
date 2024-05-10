@@ -107,7 +107,7 @@ class LoginScreenViewModel extends GetxController {
           globals.isDeposited = userInfoResponse.value.data?.first.isDeposited;
           globals.addressProofFront = userInfoResponse.value.data?.first.addressProofFront != null ? true : false;
 
-          if(globals.isOnboarding == null || globals.isOnboarding == false){
+          if((globals.isOnboarding == null || globals.isOnboarding == false) && globals.isDeposited == false){
             SharedPrefManager.instance.setBoolAsync(Constants.isOnboarding, true);
             Get.toNamed(AppRoutes.onboardingScreen);
           }
