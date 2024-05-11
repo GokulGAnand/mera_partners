@@ -112,9 +112,11 @@ class LoginScreenViewModel extends GetxController {
             Get.toNamed(AppRoutes.onboardingScreen);
           } else if (userInfoResponse.value.data?.first.isDocumentsVerified != null && (userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.SUBMITTED.name || userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.VERIFIED.name) && userInfoResponse.value.data?.first.isDeposited != null && userInfoResponse.value.data?.first.isDeposited == true) {
             Get.toNamed(AppRoutes.homeScreen);
-          }  else if (userInfoResponse.value.data?.first.isDocumentsVerified?.toLowerCase() == DocumentStatus.NOTSUBMITTED.name.toLowerCase() || userInfoResponse.value.data?.first.addressProofFront == null) {
-            Get.toNamed(AppRoutes.documentScreen);
-          } else if (userInfoResponse.value.data?.first.fullname == null) {
+          }  else if(userInfoResponse.value.data?.first.isDocumentsVerified != null && (userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.VERIFIED.name || userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.SUBMITTED.name) && userInfoResponse.value.data?.first.isDeposited == false ){
+            Get.toNamed(AppRoutes.documentScreen,arguments: 3);
+          }else if(userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.NOTSUBMITTED.name){
+            Get.toNamed(AppRoutes.documentScreen,arguments: 0);
+          }else if (userInfoResponse.value.data?.first.fullname == null) {
             Get.toNamed(AppRoutes.onboardingScreen);
           } else {
             Get.toNamed(AppRoutes.documentScreen);

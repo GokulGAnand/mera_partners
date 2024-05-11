@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:mera_partners/model/response/user_data/user_car_details_response.dart';
-import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/service/endpoints.dart';
 import 'package:mera_partners/service/exception_error_util.dart';
 import 'package:mera_partners/utils/constants.dart';
