@@ -51,10 +51,9 @@ class NotificationService {
               AndroidNotificationAction(
                 'dismiss', // ID of the action
                 'Dismiss', // Label of the action
-                showsUserInterface: false,
+                showsUserInterface: true,
                 cancelNotification: true,
                 titleColor: MyColors.subTitleColor
-                
               ),
             ],
             ),

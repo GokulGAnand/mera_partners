@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:mera_partners/model/response/live/live_cars_list_response.dart';
+import 'package:mera_partners/service/notification_service.dart';
 import 'package:mera_partners/view_model/home/live/live_cars_list_view_model.dart';
 import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:get/get.dart';
@@ -42,6 +43,7 @@ class SocketService {
             num highestBid = Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data![i].highestBid ?? 0;
             if ((Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data![i].leaderBoard != null) && Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data![i].leaderBoard!.isNotEmpty) {
               if (Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data![i].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && highestBid >= element.autoBidLimit!)) {
+                NotificationService().showAutoBidNotification();
                 Get.find<LiveCarsListViewModel>().showAlertDialog();
               }
             }
