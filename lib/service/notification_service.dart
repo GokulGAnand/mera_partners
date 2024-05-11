@@ -24,9 +24,9 @@ class NotificationService {
               (NotificationResponse notificationResponse) async {});
   }
 
-  notificationDetails() {
+  notificationDetails(bool isNegotiation, {Duration? negotiationTimer}) {
     DateTime currentTime = DateTime.now();
-            DateTime whenTimer = currentTime.add(Duration(minutes: 5));
+    DateTime whenTimer = currentTime.add(negotiationTimer ?? Duration(seconds: 0));
     return NotificationDetails(
         android: AndroidNotificationDetails('channelId', 'channelName',
         icon: '@drawable/mera_cars_notification',
@@ -36,15 +36,15 @@ class NotificationService {
             ticker: 'ticker',
             enableVibration: true,
             playSound: true,
-            ongoing: true,
             channelShowBadge: true,
             autoCancel: false,
             color: Colors.blue,
-             onlyAlertOnce: true,
-            when: whenTimer.millisecondsSinceEpoch,
-            timeoutAfter: whenTimer.difference(currentTime).inMilliseconds,
-            usesChronometer: true,
-            chronometerCountDown: true,
+            onlyAlertOnce: true,
+            ongoing: (isNegotiation)?true:false,
+            when: (isNegotiation)?whenTimer.millisecondsSinceEpoch:null,
+            timeoutAfter: (isNegotiation)?whenTimer.difference(currentTime).inMilliseconds:null,
+            usesChronometer: (isNegotiation)?true:false,
+            chronometerCountDown: (isNegotiation)?true:false,
             visibility: NotificationVisibility.public,
             // largeIcon: DrawableResourceAndroidBitmap('@drawable/mera_cars_notification'),
             actions: <AndroidNotificationAction>[
@@ -56,20 +56,38 @@ class NotificationService {
                 titleColor: MyColors.subTitleColor
                 
               ),
-              // AndroidNotificationAction(
-              //   'no_action', // ID of the action
-              //   'No',  // Label of the action
-              //   showsUserInterface: true,
-              // ),
             ],
             ),
         iOS: DarwinNotificationDetails());
   }
 
   Future showNotification(
-      {int id = 0, String? title, String? body, String? payLoad}) async {
-        print("show");
+      {int id = 0, String? title, String? body, String? payLoad, bool isNegotiation = false, Duration? negotiationTimer}) async {
     return notificationsPlugin.show(
-        id, title, body, await notificationDetails(), payload: 'item x');
+        id, title, body, await notificationDetails(isNegotiation, negotiationTimer: negotiationTimer), payload: 'item x');
+  }
+
+  Future<void> showNegotiationNotification(Duration negotiationTimer) async {
+    try{
+      await showNotification(
+        title: "⏱️ Negotiation ends in 15:20:23", 
+        body: "      You got a final offer for Renault duster", 
+        isNegotiation: true,
+        negotiationTimer: negotiationTimer,
+        );
+    } catch(e) {
+      throw(e);
+    }
+  }
+
+  Future<void> showAutoBidNotification() async {
+    try{
+      await showNotification(
+        title: "⏱️ Autobid limit reached", 
+        body: "      Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet ", 
+        isNegotiation: false);
+    } catch(e){
+      throw(e);
+    }
   }
 }

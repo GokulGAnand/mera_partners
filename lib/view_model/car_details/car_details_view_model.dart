@@ -130,13 +130,13 @@ class CarDetailsScreenViewModel extends GetxController {
 
   @override
   void onInit() {
-    scrollListener();
+    // scrollListener();
     // videoController.value = VideoPlayerController.networkUrl(Uri.parse(
     //     'https://bucketkeracars.s3.ap-south-1.amazonaws.com/startVideo-1710486615054-a5a565fa-745c-45bf-abd0-703cf2957f51827885497507968836.mp4'))
     //   ..initialize().then((_) {});
-    getReport();
-    getCarDetails();
-    getLikedCarData();
+    // getReport();
+    // getCarDetails();
+    // getLikedCarData();
     super.onInit();
   }
 

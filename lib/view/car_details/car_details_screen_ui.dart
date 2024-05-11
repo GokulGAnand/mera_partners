@@ -55,10 +55,10 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
     //     TabController(length: (carDetailsScreenViewModel.airConditionIssue.isEmpty)?1:2, vsync: this);
     // carDetailsScreenViewModel.testDriveTabController =
     //     TabController(length: (carDetailsScreenViewModel.testDriveIssue.isEmpty)?1:2, vsync: this);
-    // carDetailsScreenViewModel.scrollListener();
-    // carDetailsScreenViewModel.getReport();
-    // carDetailsScreenViewModel.getCarDetails();
-    // carDetailsScreenViewModel.getLikedCarData();
+    carDetailsScreenViewModel.scrollListener();
+    carDetailsScreenViewModel.getReport();
+    carDetailsScreenViewModel.getCarDetails();
+    carDetailsScreenViewModel.getLikedCarData();
     super.initState();
   }
 
