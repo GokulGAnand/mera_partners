@@ -12,7 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationService().initNotification();
   getPermission();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 Future getPermission() async {

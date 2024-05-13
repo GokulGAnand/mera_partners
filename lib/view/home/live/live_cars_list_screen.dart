@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/constants.dart';
+import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/widgets/custom_bid_bottom_sheet.dart';
@@ -116,6 +117,7 @@ class LiveCarsListScreen extends StatelessWidget {
                                       : false.obs
                                   : false.obs,
                               isOtb: false.obs,
+                              scheduleTime: Constants.getScheduledStatus(DateTime.parse(controller.liveCarsResponse.value.data?[index].bidStartTime ?? DateTime.now().toString()).toLocal()),
                               carId: controller.liveCarsResponse.value.data?[index].sId ?? '',
                               isScheduled: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == 'scheduled' ? true.obs : false.obs,
                               imageUrl: controller.liveCarsResponse.value.data?[index].rearRight?.url ?? '',
@@ -135,8 +137,10 @@ class LiveCarsListScreen extends StatelessWidget {
                                           ? MyColors.red
                                           : MyColors.kPrimaryColor,
                               bidAmount: Constants.numberFormat.format(controller.liveCarsResponse.value.data?[index].highestBid).toString().obs,
-                              bidStartTime: DateTime.parse(controller.liveCarsResponse.value.data?[index].bidStartTime ?? DateTime.now().toString()),
-                              bidEndTime: DateTime.parse(controller.liveCarsResponse.value.data?[index].bidEndTime ?? DateTime.now().toString()),
+                              endTime: Rx(Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime!).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds),
+                              timerController: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidStartTime!).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds ?? 0, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime!).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds ?? 0, onEnd:() {},).obs,
+                              bidStartTime: DateTime.parse(controller.liveCarsResponse.value.data?[index].bidStartTime ?? DateTime.now().toString()).toLocal(),
+                              bidEndTime: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime!).toLocal(),
                               carModel: controller.liveCarsResponse.value.data?[index].model ?? '',
                               carVariant: controller.liveCarsResponse.value.data?[index].variant ?? '',
                               rating: ((controller.liveCarsResponse.value.data?[index].engineStar ?? 0 + (controller.liveCarsResponse.value.data?[index].exteriorStar ?? 0) + (controller.liveCarsResponse.value.data?[index].interiorAndElectricalStar ?? 0) + (controller.liveCarsResponse.value.data?[index].testDriveStar ?? 0)) / 4).roundToDouble(),
