@@ -99,6 +99,7 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
         ],
       ),
       child: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
         child: Column(
           children: [
             Stack(
@@ -209,9 +210,12 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                     widget.carName,
                     style: MyStyles.black12400,
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.00),
                   Text(
+                    //extra added
                     widget.carModel,
+                    overflow:TextOverflow.ellipsis ,
+                    maxLines: 1,
                     style: MyStyles.black14700,
                   ),
                   Padding(
@@ -228,7 +232,7 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                             size: 16,
                           ),
                           Text(
-                            widget.carID,
+                            MyStrings.id+widget.carID,
                             style: MyStyles.subtitle12400,
                           ),
                         ],
@@ -236,7 +240,9 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                     ),
                   ),
                   Text(
-                    "Your bid: ${widget.finalPrice}",
+                    widget.dealStatus == OrderStatus.procurement.name || widget.dealStatus == OrderStatus.rcTransfer.name || widget.dealStatus.isEmpty
+                        ?   MyStrings.yFinal+widget.finalPrice
+                        : MyStrings.yBid+widget.finalPrice,
                     style: MyStyles.primary14700,
                   ),
                   const SizedBox(

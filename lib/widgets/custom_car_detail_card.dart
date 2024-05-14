@@ -288,8 +288,8 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       top: 5,
                       right: 5,
                       child: Container(
-                        width: 30,
-                        height: 30,
+                        width: 39,
+                        height: 39,
                         clipBehavior: Clip.antiAlias,
                         decoration: const ShapeDecoration(color: Colors.white, shape: OvalBorder(), shadows: [
                           BoxShadow(
@@ -304,7 +304,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                             child: Icon(
                               widget.isFavourite!.value ? Icons.favorite : Icons.favorite_border,
                               color: widget.isFavourite!.value ? MyColors.red : MyColors.grey,
-                              size: 18.38,
+                              size: 23,
                             ),
                             onTap: () {
                               log("Tapping like button2");

@@ -266,6 +266,9 @@ class MyStrings {
   static const String negotiationDesc = 'Accept the offer before the timer ends';
   static const String reject = 'Reject';
   static const String accept = 'Accept';
+  static const String id = 'ID:';
+  static const String yFinal = 'Final: ';
+  static const String yBid = 'Your Bid: ';
 
   ///account screen
   static const String customerSupport = 'Customer Support';

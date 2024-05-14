@@ -67,6 +67,7 @@ class LikedCarsWidget extends StatelessWidget {
       return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
     }
     return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
+
   }
 
   /// Like Feature API integration
@@ -156,8 +157,8 @@ class LikedCarsWidget extends StatelessWidget {
                   top: 10,
                   right: 10,
                   child: Container(
-                    width: 23,
-                    height: 23,
+                    width: 28,
+                    height: 28,
                     clipBehavior: Clip.antiAlias,
                     decoration: const ShapeDecoration(color: Colors.white, shape: OvalBorder(), shadows: [
                       BoxShadow(
@@ -172,7 +173,7 @@ class LikedCarsWidget extends StatelessWidget {
                         child: Icon(
                           isFavourite!.value ? Icons.favorite : Icons.favorite_border,
                           color: isFavourite!.value ? MyColors.red : MyColors.grey,
-                          size: 16,
+                          size: 18,
                         ),
                         onTap: () {
                           log("Tapping like button");
