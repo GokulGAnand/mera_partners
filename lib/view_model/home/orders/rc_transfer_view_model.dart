@@ -27,9 +27,9 @@ class RcTransferViewModel extends GetxController{
   getRcTransfer() async {
     try {
       String url = '${EndPoints.baseUrl}${EndPoints.status}/?status=RCTRANSFER';
-      if (globals.uniqueUserId != null) {
-        url += '&winner=${globals.uniqueUserId}';
-      }
+      // if (globals.uniqueUserId != null) {
+      //   url += '&winner=${globals.uniqueUserId}';
+      // }
       log(Uri.parse(url).toString());
       var response = await http.get(Uri.parse(url), headers: globals.headers);
       if (response.statusCode == 200) {

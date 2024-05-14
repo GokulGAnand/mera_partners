@@ -19,7 +19,9 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     splashScreenViewModel.loadData().then((value) async{
       splashScreenViewModel.isLoginAlready = value;
-      await splashScreenViewModel.getUserData();
+      if(splashScreenViewModel.isLoginAlready == true){
+        await splashScreenViewModel.getUserData();
+      }
     });
     Timer(const Duration(seconds: 3), () {
       if(splashScreenViewModel.isLoginAlready){

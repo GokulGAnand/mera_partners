@@ -16,4 +16,26 @@ class Constants {
   static const String addressProofFront = 'addressProofFront';
   static const String isOnboarding = 'isOnboarding';
   static NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
+  static const tenMinutes = 600000;
+
+  static String formatTime(DateTime dateTime) {
+    String period = dateTime.hour < 12 ? "AM" : "PM";
+    int hour = dateTime.hour;
+    if (hour == 0) hour = 12;
+    return "$hour:${dateTime.minute.toString().padLeft(2, '0')} $period";
+  }
+
+  static String formatDateTime(DateTime? dateTime) {
+    return dateTime != null ? "${dateTime.day}/${dateTime.month} ${formatTime(dateTime)}":"";
+  }
+
+  static String getScheduledStatus(DateTime? bidStartTime){
+    if (bidStartTime?.day == DateTime.now().day) {
+      return "Scheduled for today ${formatTime(bidStartTime ?? DateTime.now())}";
+    } else if (bidStartTime?.day == DateTime.now().day + 1) {
+      return "Scheduled for tomorrow ${bidStartTime?.hour}:${bidStartTime?.minute}";
+    } else {
+      return "Scheduled for ${formatDateTime(bidStartTime)}";
+    }
+  }
 }

@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:mera_partners/utils/constants.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
@@ -9,6 +10,8 @@ import 'package:mera_partners/widgets/custom_car_detail_card.dart';
 import '../../../../../routes/app_routes.dart';
 import '../../../../../utils/colors.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
+
+import '../../../../../utils/enum.dart';
 
 /// ignore: must_be_immutable
 class BidCarsListScreen extends StatelessWidget {
@@ -31,7 +34,7 @@ class BidCarsListScreen extends StatelessWidget {
                           if ((controller.bidCarsearchController.value.text.isEmpty && controller.bidCarsearchList.isEmpty) || controller.bidCarsearchList.contains(controller.bidCarsResponse.value.data?[index].sId)) {
                             return CustomCarDetailCard(
                               onCarTapped: () {
-                                Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.bidCarsResponse.value.data?[index].sId);
+                                Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.bidCarsResponse.value.data?[0].biddedCars![index].sId);
                               },
                               isOtb: false.obs,
                               isFavourite: controller.likeResponse.value.data?[0].likedCars != null && (controller.likeResponse.value.data![0].likedCars!.isNotEmpty)
@@ -40,6 +43,7 @@ class BidCarsListScreen extends StatelessWidget {
                                       : false.obs
                                   : false.obs,
                               carId: controller.bidCarsResponse.value.data?[0].biddedCars?[index].sId ?? '',
+                              scheduleTime: Constants.getScheduledStatus(DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()).toLocal()),
                               isScheduled: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == 'scheduled' ? true.obs : false.obs,
                               imageUrl: controller.bidCarsResponse.value.data?[0].biddedCars![index].rearRight?.url ?? '',
                               carLocation: controller.bidCarsResponse.value.data?[0].biddedCars![index].vehicleLocation ?? '',
@@ -58,8 +62,10 @@ class BidCarsListScreen extends StatelessWidget {
                                           ? MyColors.red
                                           : MyColors.kPrimaryColor,
                               bidAmount: Constants.numberFormat.format(controller.bidCarsResponse.value.data?[0].biddedCars![index].highestBid).toString().obs,
-                              bidStartTime: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()),
-                              bidEndTime: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()),
+                              bidStartTime: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()).toLocal(),
+                              bidEndTime: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal(),
+                              endTime: Rx(Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds),
+                              timerController: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds ?? 0, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds ?? 0, onEnd:() {},).obs,
                               carModel: controller.bidCarsResponse.value.data?[0].biddedCars![index].model ?? '',
                               carVariant: controller.bidCarsResponse.value.data?[0].biddedCars![index].variant ?? '',
                               rating: ((controller.bidCarsResponse.value.data?[0].biddedCars![index].engineStar ?? 0 + (controller.bidCarsResponse.value.data?[0].biddedCars![index].exteriorStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].interiorAndElectricalStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].testDriveStar ?? 0)) / 4).roundToDouble(),

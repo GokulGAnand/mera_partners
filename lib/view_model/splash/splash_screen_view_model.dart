@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:mera_partners/model/response/user_data/user_car_details_response.dart';
-import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/service/endpoints.dart';
 import 'package:mera_partners/service/exception_error_util.dart';
 import 'package:mera_partners/utils/constants.dart';
@@ -18,6 +17,8 @@ class SplashScreenViewModel extends GetxController {
   Future<bool> loadData() async {
     globals.token =
         await SharedPrefManager.instance.getStringAsync(Constants.token);
+    globals.isOnboarding =
+          await SharedPrefManager.instance.getBoolAsync(Constants.isOnboarding);
     if (globals.token != null && globals.token.toString().isNotEmpty) {
       globals.phoneNum =
           await SharedPrefManager.instance.getStringAsync(Constants.phoneNum);
@@ -38,8 +39,6 @@ class SplashScreenViewModel extends GetxController {
           .getBoolAsync(Constants.addressProofFront);
       globals.userName =
           await SharedPrefManager.instance.getStringAsync(Constants.userName);
-      globals.isOnboarding =
-          await SharedPrefManager.instance.getBoolAsync(Constants.isOnboarding);
       log(globals.token.toString());
       log(globals.uniqueUserId.toString());
       log(globals.userName.toString());

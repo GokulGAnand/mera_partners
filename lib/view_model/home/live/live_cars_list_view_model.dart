@@ -74,11 +74,11 @@ class LiveCarsListViewModel extends GetxController {
   void showAlertDialog(/*Data car*/) {
     Get.dialog(
       AlertDialog(
-        title: Text("Auto Bid Limit Reached"),
-        content: Text("The auto bid limit has been reached or exceeded"),
+        title: const Text("Auto Bid Limit Reached"),
+        content: const Text("The auto bid limit has been reached or exceeded"),
         actions: [
           TextButton(
-            child: Text("OK"),
+            child: Text(MyStrings.ok.toUpperCase()),
             onPressed: () => Get.back(),
           ),
         ],

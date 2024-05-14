@@ -1,7 +1,9 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
+import 'package:flutter_countdown_timer/current_remaining_time.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/service/exception_error_util.dart';
 import 'package:mera_partners/utils/colors.dart';
@@ -18,6 +20,7 @@ import '../service/endpoints.dart';
 import '../utils/enum.dart';
 import '../utils/strings.dart';
 import '../utils/styles.dart';
+import '../utils/svg.dart';
 import '../view_model/home/live/live_cars_list_view_model.dart';
 import '../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 import 'custom_button.dart';
@@ -53,9 +56,18 @@ class CustomCarDetailCard extends StatefulWidget {
   var activePage = 0.obs;
   final DateTime? bidStartTime;
   final DateTime? bidEndTime;
-  Rxn<Duration> duration = Rxn();
-  Timer? timer;
-  String? scheduleTime;
+  final Rx<int>? endTime;
+  Rx<int> auctionTime = 0.obs;
+  final Rx<CountdownTimerController>? timerController;
+  // Rxn<Duration> duration = Rxn();
+  // Timer? timer;
+  final String? scheduleTime;
+
+  onEnd(){
+    if(timerController!.value.isRunning){
+      timerController?.value.disposeTimer();
+    }
+  }
 
   showPendingDialog() {
     showDialog(
@@ -118,7 +130,7 @@ class CustomCarDetailCard extends StatefulWidget {
     this.bidStartTime,
     this.bidEndTime,
     this.isFavourite,
-    required this.statusColor, required this.carId,
+    required this.statusColor, required this.carId, this.endTime, this.timerController, this.scheduleTime,
 
   });
 
@@ -128,72 +140,55 @@ class CustomCarDetailCard extends StatefulWidget {
 
 class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
 
-  void startTimer() {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (widget.duration.value!.inSeconds == 0) {
-        timer.cancel();
-      } else {
-        widget.duration.value = widget.duration.value! - const Duration(seconds: 1);
-      }
-    });
-  }
-
-  String formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, '0');
-    String hour = duration.inHours.toString();
-    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-    if(duration.inHours == 0){
-      return "${twoDigitMinutes}min ${twoDigitSeconds}sec";
-    } else if (duration.inHours < 10){
-      hour = twoDigits(duration.inHours);
-      return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
-    }
-    return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
-  }
-
-  String _formatTime(DateTime dateTime) {
-    String period = dateTime.hour < 12 ? "AM" : "PM";
-    int hour = dateTime.hour;
-    if (hour == 0) hour = 12;
-    return "$hour:${dateTime.minute.toString().padLeft(2, '0')} $period";
-  }
-
-  String _formatDateTime(DateTime? dateTime) {
-    return dateTime != null ? "${dateTime.day}/${dateTime.month} ${_formatTime(dateTime)}":"";
-  }
+  // void startTimer() {
+  //   Timer.periodic(const Duration(seconds: 1), (timer) {
+  //     if (widget.duration.value!.inSeconds == 0) {
+  //       timer.cancel();
+  //     } else {
+  //       widget.duration.value = widget.duration.value! - const Duration(seconds: 1);
+  //     }
+  //   });
+  // }
+  //
+  // String formatDuration(Duration duration) {
+  //   String twoDigits(int n) => n.toString().padLeft(2, '0');
+  //   String hour = duration.inHours.toString();
+  //   String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+  //   String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+  //   if(duration.inHours == 0){
+  //     return "${twoDigitMinutes}min ${twoDigitSeconds}sec";
+  //   } else if (duration.inHours < 10){
+  //     hour = twoDigits(duration.inHours);
+  //     return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
+  //   }
+  //   return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
+  // }
 
   @override
   void initState() {
-    var start = DateTime.now();
-    var end = widget.bidEndTime ?? DateTime.now();
-    if (widget.isScheduled?.value == false) {
-      Duration diff = end.difference(start);
-      widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
-
-      if(start.isBefore(end)) {
-        startTimer();
-      }
-    }else{
-      Duration diff = widget.bidStartTime!.difference(start);
-      widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
-
-      if(start.isAfter(widget.bidStartTime!)) {
-        startTimer();
-      }
-    }
+    // var start = DateTime.now();
+    // var end = widget.bidEndTime ?? DateTime.now();
+    // if (widget.isScheduled?.value == false) {
+    //   Duration diff = end.difference(start);
+    //   widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+    //
+    //   if(start.isBefore(end)) {
+    //     startTimer();
+    //   }
+    // }else{
+    //   Duration diff = widget.bidStartTime!.difference(start);
+    //   widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+    //
+    //   if(start.isAfter(widget.bidStartTime!)) {
+    //     startTimer();
+    //   }
+    // }
     super.initState();
-    if (widget.bidStartTime?.day == DateTime.now().day) {
-      widget.scheduleTime = "Scheduled for today ${_formatTime(widget.bidStartTime!)}";
-    } else if (widget.bidStartTime?.day == DateTime.now().day + 1) {
-      widget.scheduleTime = "Scheduled for tomorrow ${widget.bidStartTime?.hour}:${widget.bidStartTime?.minute}";
-    } else {
-      widget.scheduleTime = "Scheduled for ${_formatDateTime(widget.bidStartTime)}";
-    }
   }
 
   @override
   void dispose() {
+    widget.timerController!.value.dispose();
     super.dispose();
   }
 
@@ -342,6 +337,16 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       const SizedBox(
                         width: 15,
                       ),
+                      if(widget.bidStatus.value == MyStrings.youAreLeading)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0, right: 5.0),
+                          child: SvgPicture.asset(MySvg.arrowUp, width: 14,),
+                        ),
+                      if(widget.bidStatus.value == MyStrings.youAreLoosing)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0, right: 5.0),
+                          child: SvgPicture.asset(MySvg.arrowDown, width: 14,),
+                        ),
                       if (widget.bidAmount.isNotEmpty && widget.isScheduled?.value == false)
                         Obx(() =>Text(globals.documentStatus == DocumentStatus.VERIFIED.name?widget.bidAmount.value: widget.bidAmount.value.replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ','), textAlign: TextAlign.center, style: MyStyles.white16700)),
                     ],
@@ -484,12 +489,11 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if(widget.duration.value != null)
                           Obx(() => Text(
-                            widget.isScheduled?.value == true ? MyStrings.yetToStart : widget.duration.value!.inMinutes >= 10 ? MyStrings.acceptingBids:
-                            widget.duration.value!.inMinutes <= 10 ? MyStrings.bidEndsIn : MyStrings.lastCall,
+                            widget.isScheduled?.value == true ? MyStrings.yetToStart : widget.auctionTime.value >= 10 ? MyStrings.acceptingBids:
+                            widget.auctionTime.value <= 10 ? MyStrings.bidEndsIn : MyStrings.lastCall,
                             style: TextStyle(
-                              color: widget.isScheduled?.value == true ? MyColors.kPrimaryColor : widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                              color: widget.isScheduled?.value == true ? MyColors.kPrimaryColor : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
                               fontSize: 12,
                               fontFamily: 'DM Sans',
                               fontWeight: FontWeight.w500,
@@ -498,21 +502,38 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                           const SizedBox(
                             height: 1,
                           ),
-                          if(widget.duration.value != null)
                           Obx(() => Row(
                             children: [
                               Icon(
                                 Icons.timer_sharp,
-                                color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                                color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
                                 size: 14,
                               ),
-                              Text(formatDuration( widget.duration.value! ), style: TextStyle(
-                                color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
-                                fontSize: 14,
-                                fontFamily: 'DM Sans',
-                                fontWeight: FontWeight.w700,
-                                height: 0,
-                              )),
+                              Obx(() => CountdownTimer(
+                                controller: widget.timerController?.value,
+                                widgetBuilder: (_, CurrentRemainingTime? time) {
+                                  if (time == null) {
+                                    return const Text('');
+                                  }
+                                  // if(time.min != null){
+                                  //   widget.auctionTime.value = time.min ?? 0;
+                                  // }
+                                  return Text('${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
+                                    color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                                    fontSize: 14,
+                                    fontFamily: 'DM Sans',
+                                    fontWeight: FontWeight.w700,
+                                    height: 0,
+                                  ));
+                                },
+                              ),)
+                              // Text(formatDuration( widget.duration.value! ), style: TextStyle(
+                              //   color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                              //   fontSize: 14,
+                              //   fontFamily: 'DM Sans',
+                              //   fontWeight: FontWeight.w700,
+                              //   height: 0,
+                              // )),
                             ],
                           ),)
                         ],

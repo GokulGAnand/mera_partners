@@ -530,13 +530,32 @@ class DocumentScreen extends StatelessWidget {
            canPop: false,
            onPopInvoked: (didPop) {
             // Methods.showConfirmDialog(context);
-             showLogoutDialog(context);
+             if(viewModel.activePage.value == 0){
+               showLogoutDialog(context);
+             }else{
+               viewModel.pageController.value.animateToPage(
+                 viewModel.activePage.value - 1,
+                 duration: const Duration(milliseconds: 300),
+                 curve: Curves.linear,
+               );
+             }
            },
           child: Scaffold(
             key: _key,
             appBar: CustomAppBar(
               title: MyStrings.documentVerification,
               subTitle: MyStrings.documentDesc,
+              onBackPressed: () {
+                if(viewModel.activePage.value == 0){
+                  showLogoutDialog(context);
+                }else{
+                  viewModel.pageController.value.animateToPage(
+                    viewModel.activePage.value - 1,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.linear,
+                  );
+                }
+              },
               actions: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 10),
