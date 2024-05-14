@@ -7,7 +7,7 @@ import 'package:mera_partners/widgets/custom_order_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../utils/dimens.dart';
-import '../../../../view_model/home/orders/procured_cars_view_model.dart';
+import '../../../../view_model/home/orders/procured_bill_view_model.dart';
 
 /// ignore: must_be_immutable
 class Procured extends StatelessWidget {

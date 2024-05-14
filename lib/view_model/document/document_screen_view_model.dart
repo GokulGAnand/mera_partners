@@ -23,6 +23,7 @@ class DocumentScreenViewModel extends GetxController {
   final GlobalKey<FormState> page4Key = GlobalKey<FormState>();
   final Rx<PageController> pageController = PageController(initialPage: 0).obs;
   var activePage = 0.obs;
+  var page = Get.arguments;
 
   Rx<TextEditingController> fullNameController = TextEditingController().obs;
   Rx<TextEditingController> phoneNumberController = TextEditingController(text: globals.phoneNum).obs;
@@ -46,6 +47,8 @@ class DocumentScreenViewModel extends GetxController {
 
   @override
   void onInit() {
+    pageController.value = PageController(initialPage: page ?? 0);
+    activePage.value = page ?? 0;
     if (Get.isRegistered<LoginScreenViewModel>()) {
       if (Get.find<LoginScreenViewModel>().userInfoResponse.value.data != null) {
         userInfoResponse.value = Get.find<LoginScreenViewModel>().userInfoResponse.value;
@@ -149,7 +152,7 @@ class DocumentScreenViewModel extends GetxController {
       if (cancelledCheque.value != null && !cancelledCheque.value!.path.startsWith('http') && !cancelledCheque.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('canceledCheque', cancelledCheque.value!.path, contentType: MediaType('image', cancelledCheque.value!.path.split('.').last)));
       }
-      request.headers.addAll(globals.headers);
+      request.headers.addAll(globals.jsonHeaders);
       log(request.fields.toString());
       log(request.toString());
 
@@ -163,6 +166,7 @@ class DocumentScreenViewModel extends GetxController {
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());
+        CustomToast.instance.showMsg(MyStrings.unableToConnect);
         return false;
       }
     } catch (e) {

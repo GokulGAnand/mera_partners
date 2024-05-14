@@ -545,13 +545,32 @@ class DocumentScreen extends StatelessWidget {
            canPop: false,
            onPopInvoked: (didPop) {
             // Methods.showConfirmDialog(context);
-             showLogoutDialog(context);
+             if(viewModel.activePage.value == 0){
+               showLogoutDialog(context);
+             }else{
+               viewModel.pageController.value.animateToPage(
+                 viewModel.activePage.value - 1,
+                 duration: const Duration(milliseconds: 300),
+                 curve: Curves.linear,
+               );
+             }
            },
           child: Scaffold(
             key: _key,
             appBar: CustomAppBar(
               title: MyStrings.documentVerification,
               subTitle: MyStrings.documentDesc,
+              onBackPressed: () {
+                if(viewModel.activePage.value == 0){
+                  showLogoutDialog(context);
+                }else{
+                  viewModel.pageController.value.animateToPage(
+                    viewModel.activePage.value - 1,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.linear,
+                  );
+                }
+              },
               actions: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 10),
@@ -610,6 +629,7 @@ class DocumentScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                     child: PageView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
                       controller: viewModel.pageController.value,
                       onPageChanged: (int page) {
                         viewModel.activePage.value = page;

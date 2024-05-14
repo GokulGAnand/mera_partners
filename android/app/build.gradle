@@ -31,10 +31,15 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace "com.meracars.mera_partners"
-    compileSdk flutter.compileSdkVersion
+    compileSdk 34
     ndkVersion flutter.ndkVersion
 
+    defaultConfig {
+        multiDexEnabled true
+    }
+
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -57,6 +62,7 @@ android {
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
 
     signingConfigs {
@@ -85,4 +91,5 @@ flutter {
 dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.google.android.material:material:1.13.0-alpha01'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
 }

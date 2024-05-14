@@ -12,12 +12,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
     required this.title,
     this.appBarHeight = 150,
     this.showBackIcon = true,
-    super.key, this.subTitle, this.actions});
+    super.key, this.subTitle, this.actions, this.onBackPressed});
   final String title;
   final String? subTitle;
   final double? appBarHeight;
   final List<Widget>? actions;
   final bool showBackIcon;
+  final void Function()? onBackPressed;
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -26,7 +27,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
           elevation: 0,
           actions: actions,
           leading: (showBackIcon)?GestureDetector(
-            onTap: (){
+            onTap: onBackPressed ?? (){
               Get.back();
             },
             child:Padding(

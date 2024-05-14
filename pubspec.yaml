@@ -53,6 +53,8 @@ dependencies:
   infinite_scroll_pagination: ^4.0.0
   socket_io_client: ^2.0.3+1
   autoscale_tabbarview: ^1.0.2
+  flutter_countdown_timer: ^4.1.0
+  flutter_local_notifications: ^17.1.0
 
 dev_dependencies:
   flutter_test:
@@ -87,3 +89,4 @@ flutter:
       fonts:
         - asset: assets/fonts/DMSans_18pt-Regular.ttf
         - asset: assets/fonts/DMSans_18pt-Medium.ttf
+        - asset: assets/fonts/Roboto-MediumItalic.ttf

@@ -1,44 +1,18 @@
 import 'dart:developer';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:mera_partners/routes/app_routes.dart';
+import 'package:mera_partners/service/notification_service.dart';
 import 'package:mera_partners/utils/colors.dart';
-import 'package:mera_partners/utils/constants.dart';
-import 'package:mera_partners/utils/shared_pref_manager.dart';
-import 'package:mera_partners/view/document/document_screen_ui.dart';
-import 'package:mera_partners/view/home/binding/home_binding.dart';
-import 'package:mera_partners/view/login/binding/login_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:mera_partners/view/splash/binding/splash_screen_binding.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:mera_partners/utils/globals.dart' as globals;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService().initNotification();
   getPermission();
-  bool isLoginAlready = await loadData();
-  runApp(MyApp(isLoginAlready: isLoginAlready));
-}
-
-Future<bool> loadData() async{
-  globals.token = await SharedPrefManager.instance.getStringAsync(Constants.token);
-  if(globals.token != null && globals.token.toString().isNotEmpty){
-    globals.phoneNum = await SharedPrefManager.instance.getStringAsync(Constants.phoneNum);
-    if(globals.phoneNum != null){
-      globals.contactNo = int.parse(await SharedPrefManager.instance.getStringAsync(Constants.contactNo) ?? "0");
-    }
-    globals.userId = await SharedPrefManager.instance.getStringAsync(Constants.userId);
-    globals.uniqueUserId = await SharedPrefManager.instance.getStringAsync(Constants.uniqueUserId);
-    globals.documentStatus = await SharedPrefManager.instance.getStringAsync(Constants.documentStatus);
-    globals.isDeposited = await SharedPrefManager.instance.getBoolAsync(Constants.isDeposited);
-    globals.addressProofFront = await SharedPrefManager.instance.getBoolAsync(Constants.addressProofFront);
-    globals.userName = await SharedPrefManager.instance.getStringAsync(Constants.userName);
-    globals.isOnboarding = await SharedPrefManager.instance.getBoolAsync(Constants.isOnboarding);
-    log(globals.token.toString());
-    log(globals.uniqueUserId.toString());
-    log(globals.userName.toString());
-    return true;
-  }
-  return false;
+  runApp(const MyApp());
 }
 
 Future getPermission() async {
@@ -58,10 +32,7 @@ Future getPermission() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({
-    this.isLoginAlready = false,
-    super.key});
-  final bool isLoginAlready;
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -72,10 +43,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: MyColors.kPrimaryColor),
         useMaterial3: true,
       ),
-      //home: DocumentScreen(),
       getPages: AppRoutes().pages,
-      initialRoute: (isLoginAlready)?AppRoutes.homeScreen:AppRoutes.loginScreen,
-      initialBinding: (isLoginAlready)?HomeBinding():LoginBinding(),
+      initialRoute:AppRoutes.splashScreen,
+      initialBinding: SplashScreenBinding(),
     );
   }
 }

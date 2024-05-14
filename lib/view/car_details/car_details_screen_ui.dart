@@ -4,6 +4,7 @@ import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/constants.dart';
 import 'package:mera_partners/utils/dimens.dart';
+import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/utils/images.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
@@ -54,10 +55,10 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
     //     TabController(length: (carDetailsScreenViewModel.airConditionIssue.isEmpty)?1:2, vsync: this);
     // carDetailsScreenViewModel.testDriveTabController =
     //     TabController(length: (carDetailsScreenViewModel.testDriveIssue.isEmpty)?1:2, vsync: this);
-    // carDetailsScreenViewModel.scrollListener();
-    // carDetailsScreenViewModel.getReport();
-    // carDetailsScreenViewModel.getCarDetails();
-    // carDetailsScreenViewModel.getLikedCarData();
+    carDetailsScreenViewModel.scrollListener();
+    carDetailsScreenViewModel.getReport();
+    carDetailsScreenViewModel.getCarDetails();
+    carDetailsScreenViewModel.getLikedCarData();
     super.initState();
   }
 
@@ -189,8 +190,14 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         // '',
                         carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() ||
                         carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
-                        ? Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid).toString()
-                        : "",
+                        // ? Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid).toString()
+                        // : "",
+                        ?globals.documentStatus == DocumentStatus.VERIFIED.name ? 
+                                  '₹${Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid)}' 
+                                  :(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid != null)
+                                  ?'₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
+                                  :'₹${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
+                                  : "",
                         textAlign: TextAlign.center,
                         style: MyStyles.white16700,
                       )
@@ -354,11 +361,15 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                             TextSpan(
                               children: [
                                 const TextSpan(
-                                  text: MyStrings.fmv,
+                                  text: MyStrings.fmv+"  ",
                                   style: MyStyles.subTitleGreayStyle,
                                 ),
                                 TextSpan(
-                                  text: "  ${Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue ?? 0)}",
+                                  text: globals.documentStatus == DocumentStatus.VERIFIED.name ? 
+                                  '₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue}' 
+                                  :(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue != null)
+                                  ?'₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
+                                  :'₹${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}',
                                   style: MyStyles.grey14700,
                                 ),
                               ],
@@ -705,7 +716,12 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
               Text(
                 carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() ||
                 carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
-                        ? Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid).toString()
+                        // ? Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid).toString()
+                        ?globals.documentStatus == DocumentStatus.VERIFIED.name ? 
+                                  '₹${Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid)}' 
+                                  :(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid != null)
+                                  ?'₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
+                                  :'₹${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
                 : carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.scheduled.toLowerCase()
                 ? MyStrings.scheduledBid
                 :"",

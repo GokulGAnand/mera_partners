@@ -18,6 +18,7 @@ import 'package:mera_partners/view/home/my_cars/my_cars_screen.dart';
 import 'package:mera_partners/view/home/my_cars/tabs/bidded_cars/bidded_cars_screen_ui.dart';
 import 'package:mera_partners/view/home/my_cars/tabs/liked_cars.dart';
 import 'package:mera_partners/view/home/notification/notification_screen_ui.dart';
+import 'package:mera_partners/view/home/orders/bindings/negotiation_cars_binding.dart';
 import 'package:mera_partners/view/home/orders/bindings/orders_binding.dart';
 import 'package:mera_partners/view/home/orders/orders_screen.dart';
 import 'package:mera_partners/view/login/binding/login_binding.dart';
@@ -27,6 +28,8 @@ import 'package:mera_partners/view/onboarding/bindings/onboarding_screen_binding
 import 'package:mera_partners/view/onboarding/onboarding_screen_ui.dart';
 import 'package:mera_partners/view/procured_bill/procured_bill_screen.dart';
 import 'package:get/get.dart';
+import 'package:mera_partners/view/splash/binding/splash_screen_binding.dart';
+import 'package:mera_partners/view/splash/splash_screen_ui.dart';
 import '../view/home/notification/binding/notification_screen_binding.dart';
 import '../view/procured_bill/bindings/procured_bill_screen_bindings.dart';
 
@@ -57,6 +60,10 @@ class AppRoutes {
 
 
   List<GetPage> pages = [
+    GetPage(name: splashScreen, page: () => const SplashScreen(),
+      bindings: [
+      SplashScreenBinding(),
+    ]),
     GetPage(name: onboardingScreen, page: () => OnboardingScreen(),
       bindings: [
       OnboardingBinding(),
@@ -76,6 +83,7 @@ class AppRoutes {
     GetPage(name: homeScreen, page: () => const HomeScreen(),
       bindings: [
       HomeBinding(),
+        NegotiationCarsBinding(),
     ]), 
     GetPage(name: bidsScreen, page: () => const BidsScreen(),
       bindings: [
