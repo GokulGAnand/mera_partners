@@ -92,9 +92,9 @@ class _NegotiationState extends State<Negotiation> {
                             ),
                           ),
                       dealStatus: OrderStatus.negotiation.name,
-                      buttonStatus: controller.searchNegotiationList[index].negotiationStatus == Status.pending.name ? Status.pending.name : Status.view.name,
-                      buttonText: controller.searchNegotiationList[index].negotiationStatus == Status.pending.name ? Status.pending.name : MyStrings.viewOffer,
-                      onPressed: controller.searchNegotiationList[index].negotiationStatus?.toLowerCase() == Status.pending.name ? () => null : () {
+                      buttonStatus: controller.searchNegotiationList[index].negotiationStatus == Status.pending.name || controller.searchNegotiationList[index].negotiationStatus!.isEmpty ? Status.pending.name : Status.view.name,
+                      buttonText: controller.searchNegotiationList[index].negotiationStatus == Status.pending.name || controller.searchNegotiationList[index].negotiationStatus!.isEmpty ? Status.pending.name : MyStrings.viewOffer,
+                      onPressed: controller.searchNegotiationList[index].negotiationStatus?.toLowerCase() == Status.pending.name || controller.searchNegotiationList[index].negotiationStatus!.isEmpty ? () => null : () {
                         // if (controller.isNegotiation.value) {
                           showModalBottomSheet(
                               isScrollControlled: true,
@@ -153,7 +153,7 @@ class _NegotiationState extends State<Negotiation> {
                     buttonStatus: Status.view.name,
                     buttonText: MyStrings.viewDetail,
                     onPressed: () {
-                      Get.toNamed(AppRoutes.carDetailsScreen);
+                      Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.searchLostList[index].sId.toString());
                     },
                     showButton: true,
                     carModel: controller.searchLostList[index].model ?? '',

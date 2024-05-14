@@ -29,8 +29,8 @@ class LiveCarsListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var negotiationData = CarListResponse().data.obs;
     var duration = DateTime.now().difference(DateTime.parse(negotiationData.value?[0].negotiationEndTime ?? DateTime.now().toString()));
-    controller.endTime = DateTime.now().millisecondsSinceEpoch + Duration(seconds: duration.inSeconds).inMilliseconds;
-    controller.timerController = CountdownTimerController(endTime: controller.endTime??0, onEnd: controller.onEnd);
+    controller.endTime?.value = DateTime.now().millisecondsSinceEpoch + Duration(seconds: duration.inSeconds).inMilliseconds;
+    controller.timerController = CountdownTimerController(endTime: controller.endTime?.value ?? 0, onEnd: controller.onEnd).obs;
     return Scaffold(
       body: Obx(
         () {
@@ -40,11 +40,11 @@ class LiveCarsListScreen extends StatelessWidget {
           return SafeArea(
               child: Column(
             children: [
-              (negotiationData.value != null) && (negotiationData.value!.isNotEmpty/* && negotiationData.value?[0].negotiationStatus?.toLowerCase() == OrderStatus.negotiation.name*/)
+              (negotiationData.value != null) && (negotiationData.value!.isNotEmpty && negotiationData.value?[0].negotiationStatus?.toLowerCase() == Status.view.name)
                   ? SizedBox(
                 height: 80,
                 child: ListView.builder(
-                  itemCount: negotiationData.value?.length ?? 0,
+                  itemCount: /*negotiationData.value?.length ?? */1,
                   padding: const EdgeInsets.only(left: 8,right: 8,top: 16),
                   itemBuilder: (context, index) {
                   return Container(
@@ -66,7 +66,7 @@ class LiveCarsListScreen extends StatelessWidget {
                             ),
                           ),
                           title: Text(
-                            "Negotiation for ${negotiationData.value![index].model??''} ${negotiationData.value![index].variant??''} ",
+                            "Negotiation for ${negotiationData.value![0].model??''} ${negotiationData.value![0].variant??''} ",
                             overflow: TextOverflow.ellipsis,
                             style: MyStyles.white14500,
                           ),
@@ -83,7 +83,7 @@ class LiveCarsListScreen extends StatelessWidget {
                                 size: 14,
                               ),
                               CountdownTimer(
-                                controller: controller.timerController,
+                                controller: controller.timerController?.value,
                                 widgetBuilder: (_, CurrentRemainingTime? time) {
                                   if (time == null) {
                                     return const Text('');
@@ -137,10 +137,10 @@ class LiveCarsListScreen extends StatelessWidget {
                                           ? MyColors.red
                                           : MyColors.kPrimaryColor,
                               bidAmount: Constants.numberFormat.format(controller.liveCarsResponse.value.data?[index].highestBid).toString().obs,
-                              endTime: Rx(Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime!).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds),
-                              timerController: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidStartTime!).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds ?? 0, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime!).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds ?? 0, onEnd:() {},).obs,
+                              endTime: Rx(Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds),
+                              timerController: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds ?? 0, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds ?? 0, onEnd:() {},).obs,
                               bidStartTime: DateTime.parse(controller.liveCarsResponse.value.data?[index].bidStartTime ?? DateTime.now().toString()).toLocal(),
-                              bidEndTime: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime!).toLocal(),
+                              bidEndTime: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal(),
                               carModel: controller.liveCarsResponse.value.data?[index].model ?? '',
                               carVariant: controller.liveCarsResponse.value.data?[index].variant ?? '',
                               rating: ((controller.liveCarsResponse.value.data?[index].engineStar ?? 0 + (controller.liveCarsResponse.value.data?[index].exteriorStar ?? 0) + (controller.liveCarsResponse.value.data?[index].interiorAndElectricalStar ?? 0) + (controller.liveCarsResponse.value.data?[index].testDriveStar ?? 0)) / 4).roundToDouble(),

@@ -279,7 +279,7 @@ class LikedCarsWidget extends StatelessWidget {
                     height: 40,
                     child: CustomElevatedButton(
                       onPressed: () {
-                        Get.toNamed(AppRoutes.carDetailsScreen);
+                        Get.toNamed(AppRoutes.carDetailsScreen, arguments: carId);
                       },
                       buttonStyle: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.all(2),

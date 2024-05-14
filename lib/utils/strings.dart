@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class MyStrings {
   static const String regAndFitness = "Reg and Fitness";
   static const String manufacturingDate = "Manufacturing date ";
@@ -366,5 +368,8 @@ class MyStrings {
   static const String lastCall = 'Last call';
   static const String yetToStart = 'Yet to start';
   static const String deleteAccount = 'Delete Account';
+
+
+  static String rupeesSymbol = '₹';
 
 }
