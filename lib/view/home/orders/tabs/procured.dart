@@ -40,14 +40,14 @@ class Procured extends StatelessWidget {
                     return Obx(
                       () {
                         return CustomOrderContainer(
-                            buttonStatus: controller.searchList[index].procurementStatus ?? Status.pending.name,
+                            buttonStatus: controller.searchList[index].procurementStatus == null || controller.searchList[index].procurementStatus  == Status.pending.name || controller.searchList[index].procurementStatus!.isEmpty ? Status.pending.name : Status.view.name,
                             carModel: controller.searchList[index].model ?? '',
                             finalPrice: controller.searchList[index].highestBid != null ? Constants.numberFormat.format(controller.searchList[index].highestBid) : '',
                             carName: controller.searchList[index].variant ?? '',
                             carID: controller.searchList[index].uniqueId?.toString() ?? '',
                             imageURL: controller.searchList[index].frontLeft?.url ?? '',
                             dealStatus: OrderStatus.procurement.name,
-                            buttonText: controller.searchList[index].procurementStatus  == Status.pending.name ? Status.pending.name : MyStrings.viewBill,
+                            buttonText: controller.searchList[index].procurementStatus == null || controller.searchList[index].procurementStatus  == Status.pending.name || controller.searchList[index].procurementStatus!.isEmpty ? Status.pending.name : MyStrings.viewBill,
                             showButton: true,
                             onPressed: (controller.searchList[index].procurementStatus == null || controller.searchList[index].procurementStatus == "" || controller.searchList[index].procurementStatus?.toLowerCase() == Status.pending.name) ? null : () {
                               log("View Bill button pressed.");

@@ -192,8 +192,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
                         // ? Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid).toString()
                         // : "",
-                        ?globals.documentStatus == DocumentStatus.VERIFIED.name ? 
-                                  '₹${Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid)}' 
+                        ?globals.documentStatus == DocumentStatus.VERIFIED.name ?
+                        Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid ?? 0)
                                   :(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid != null)
                                   ?'₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
                                   :'₹${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
@@ -717,8 +717,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                 carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() ||
                 carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
                         // ? Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid).toString()
-                        ?globals.documentStatus == DocumentStatus.VERIFIED.name ? 
-                                  '₹${Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid)}' 
+                        ?globals.documentStatus == DocumentStatus.VERIFIED.name ?
+                Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid ?? 0)
                                   :(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid != null)
                                   ?'₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
                                   :'₹${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'

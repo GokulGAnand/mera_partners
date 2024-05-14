@@ -61,7 +61,7 @@ class Data {
     final DateTime? bidEndTime;
     final DateTime? bidStartTime;
     final int? realValue;
-    final List<dynamic>? leaderBoard;
+    final List<LeaderBoard>? leaderBoard;
 
     Data({
         this.id,
@@ -116,7 +116,7 @@ class Data {
         bidEndTime: json["bidEndTime"] == null ? null : DateTime.parse(json["bidEndTime"]),
         bidStartTime: json["bidStartTime"] == null ? null : DateTime.parse(json["bidStartTime"]),
         realValue: json["realValue"],
-        leaderBoard: json["leaderBoard"] == null ? [] : List<dynamic>.from(json["leaderBoard"]!.map((x) => x)),
+        leaderBoard: json["leaderBoard"] == null ? [] : List<LeaderBoard>.from(json["leaderBoard"]!.map((x) => LeaderBoard.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -144,8 +144,55 @@ class Data {
         "bidEndTime": bidEndTime?.toIso8601String(),
         "bidStartTime": bidStartTime?.toIso8601String(),
         "realValue": realValue,
-        "leaderBoard": leaderBoard == null ? [] : List<dynamic>.from(leaderBoard!.map((x) => x)),
+        "leaderBoard": leaderBoard == null ? [] : List<dynamic>.from(leaderBoard!.map((x) => x.toJson())),
     };
+}
+
+class LeaderBoard {
+  num? amount;
+  String? userId;
+  String? sId;
+  String? fullname;
+  String? uniqueId;
+  num? autoBidLimit;
+  num? contactNo;
+  bool? isRejected;
+  bool? isAutobid;
+
+  LeaderBoard({this.amount, this.userId, this.isAutobid,
+    this.uniqueId,
+    this.autoBidLimit,
+    this.contactNo,
+    this.isRejected,
+    this.sId,
+    this.fullname,
+  });
+
+  LeaderBoard.fromJson(Map<String, dynamic> json) {
+    amount = json['amount'];
+    userId = json['userId'];
+    isAutobid = json['isAutobid'];
+    sId = json['_id'];
+    fullname = json['fullname'];
+    uniqueId = json['uniqueId'];
+    autoBidLimit = json['autoBidLimit'];
+    contactNo = json['contactNo'];
+    isRejected = json['isRejected'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['amount'] = amount;
+    data['userId'] = userId;
+    data['isAutobid'] = isAutobid;
+    data['_id'] = sId;
+    data['fullname'] = fullname;
+    data['uniqueId'] = uniqueId;
+    data['autoBidLimit'] = autoBidLimit;
+    data['contactNo'] = contactNo;
+    data['isRejected'] = isRejected;
+    return data;
+  }
 }
 
 class Front {

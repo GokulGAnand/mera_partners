@@ -288,8 +288,8 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       top: 5,
                       right: 5,
                       child: Container(
-                        width: 30,
-                        height: 30,
+                        width: 39,
+                        height: 39,
                         clipBehavior: Clip.antiAlias,
                         decoration: const ShapeDecoration(color: Colors.white, shape: OvalBorder(), shadows: [
                           BoxShadow(
@@ -304,7 +304,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                             child: Icon(
                               widget.isFavourite!.value ? Icons.favorite : Icons.favorite_border,
                               color: widget.isFavourite!.value ? MyColors.red : MyColors.grey,
-                              size: 18.38,
+                              size: 23,
                             ),
                             onTap: () {
                               log("Tapping like button2");
@@ -514,9 +514,11 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                                   if (time == null) {
                                     return const Text('');
                                   }
-                                  // if(time.min != null){
-                                  //   widget.auctionTime.value = time.min ?? 0;
-                                  // }
+                                  if(time.min != null){
+                                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                                      widget.auctionTime.value = time.min ?? 0;
+                                    });
+                                  }
                                   return Text('${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
                                     color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
                                     fontSize: 14,
