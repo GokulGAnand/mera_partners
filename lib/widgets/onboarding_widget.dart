@@ -32,13 +32,14 @@ class OnBoardingWidgets extends StatelessWidget {
               height: screenSize.height * 0.1,
             ),
             Container(
-              height: screenSize.height * 0.3,
+              //height: screenSize.height * 0.3,
+              height: screenSize.height * 0.36,
               decoration: BoxDecoration(
                 image: DecorationImage(image: AssetImage(image ?? ''), fit: BoxFit.values[values]),
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, screenSize.height * 0.25, screenSize.width * 0.1, 0),
+              padding: EdgeInsets.fromLTRB(0, screenSize.height * 0.2, screenSize.width * 0.1, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
