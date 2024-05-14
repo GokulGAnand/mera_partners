@@ -58,7 +58,7 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                         if(tabController.index == 0){
                           liveCarListViewModel.searchList.clear();
                           for(int i=0; i<liveCarListViewModel.liveCarsResponse.value.data!.length; i++){
-                            if(liveCarListViewModel.liveCarsResponse.value.data![i].model!.contains(liveCarListViewModel.searchController.text) || 
+                            if(liveCarListViewModel.liveCarsResponse.value.data![i].model!.contains(liveCarListViewModel.searchController.text) ||
                               liveCarListViewModel.liveCarsResponse.value.data![i].model!.toLowerCase().contains(liveCarListViewModel.searchController.text) ||
                               liveCarListViewModel.liveCarsResponse.value.data![i].make!.contains(liveCarListViewModel.searchController.text) ||
                               liveCarListViewModel.liveCarsResponse.value.data![i].make!.toLowerCase().contains(liveCarListViewModel.searchController.text) ||

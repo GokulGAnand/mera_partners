@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/widgets/custom_appbar.dart';
@@ -38,6 +39,11 @@ class DocumentScreen extends StatelessWidget {
                   labelText: "${MyStrings.fullName}*",
                   helperText: "${MyStrings.enterFullName}*",
                   validator: ValidateInput.validateRequiredFields,
+
+                  keyboardType: TextInputType.text,
+                  inputFormatter: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))
+                  ],
                 ),
                 const SizedBox(
                   height: Dimens.spaceWidth,
@@ -76,6 +82,10 @@ class DocumentScreen extends StatelessWidget {
                   labelText: '${MyStrings.pinCode}*',
                   helperText: '${MyStrings.enterPinCode}*',
                   validator: ValidateInput.validateRequiredFields,
+                  keyboardType: TextInputType.number,
+                  inputFormatter: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
+                  ],
                 ),
                 const SizedBox(
                   height: Dimens.spaceWidth,
@@ -85,6 +95,10 @@ class DocumentScreen extends StatelessWidget {
                   labelText: '${MyStrings.district}*',
                   helperText: '${MyStrings.enterDistrict}*',
                   validator: ValidateInput.validateRequiredFields,
+                  keyboardType: TextInputType.text,
+                  inputFormatter: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))
+                  ],
                 ),
               ],
             ),
@@ -143,6 +157,7 @@ class DocumentScreen extends StatelessWidget {
           height: 70,
           child: Center(
             child: CustomElevatedButton(
+
               onPressed: () {
                 if (viewModel.page2Key.currentState!.validate()) {
                   viewModel.page2Key.currentState!.save();

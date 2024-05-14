@@ -4,6 +4,7 @@ import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/constants.dart';
 import 'package:mera_partners/utils/shared_pref_manager.dart';
+import 'package:mera_partners/view/document/document_screen_ui.dart';
 import 'package:mera_partners/view/home/binding/home_binding.dart';
 import 'package:mera_partners/view/login/binding/login_binding.dart';
 import 'package:flutter/material.dart';
@@ -71,6 +72,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: MyColors.kPrimaryColor),
         useMaterial3: true,
       ),
+      //home: DocumentScreen(),
       getPages: AppRoutes().pages,
       initialRoute: (isLoginAlready)?AppRoutes.homeScreen:AppRoutes.loginScreen,
       initialBinding: (isLoginAlready)?HomeBinding():LoginBinding(),

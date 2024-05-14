@@ -426,8 +426,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(widget.fuelType, style: MyStyles.regular12),
-                            const SizedBox(width: 6),
-                            const Text('|', style: MyStyles.regular12),
+                            const SizedBox(width: 6),                            const Text('|', style: MyStyles.regular12),
                             const SizedBox(width: 6),
                             Text('${widget.kmDriven} KM', style: MyStyles.regular12),
                             const SizedBox(width: 6),
@@ -514,6 +513,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                         children: [
                           SizedBox(
                             height: 14,
+                            //height: MediaQuery.of(context).size.height*0.038,
                             child: Row(
                               children: [
                                 GestureDetector(
