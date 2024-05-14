@@ -153,7 +153,7 @@ class _NegotiationState extends State<Negotiation> {
                     buttonStatus: Status.view.name,
                     buttonText: MyStrings.viewDetail,
                     onPressed: () {
-                      Get.toNamed(AppRoutes.carDetailsScreen);
+                      Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.searchLostList[index].sId.toString());
                     },
                     showButton: true,
                     carModel: controller.searchLostList[index].model ?? '',
