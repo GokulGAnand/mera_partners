@@ -92,9 +92,9 @@ class _NegotiationState extends State<Negotiation> {
                             ),
                           ),
                       dealStatus: OrderStatus.negotiation.name,
-                      buttonStatus: controller.searchNegotiationList[index].negotiationStatus == Status.pending.name ? Status.pending.name : Status.view.name,
-                      buttonText: controller.searchNegotiationList[index].negotiationStatus == Status.pending.name ? Status.pending.name : MyStrings.viewOffer,
-                      onPressed: controller.searchNegotiationList[index].negotiationStatus?.toLowerCase() == Status.pending.name ? () => null : () {
+                      buttonStatus: controller.searchNegotiationList[index].negotiationStatus == Status.pending.name || controller.searchNegotiationList[index].negotiationStatus!.isEmpty ? Status.pending.name : Status.view.name,
+                      buttonText: controller.searchNegotiationList[index].negotiationStatus == Status.pending.name || controller.searchNegotiationList[index].negotiationStatus!.isEmpty ? Status.pending.name : MyStrings.viewOffer,
+                      onPressed: controller.searchNegotiationList[index].negotiationStatus?.toLowerCase() == Status.pending.name || controller.searchNegotiationList[index].negotiationStatus!.isEmpty ? () => null : () {
                         // if (controller.isNegotiation.value) {
                           showModalBottomSheet(
                               isScrollControlled: true,

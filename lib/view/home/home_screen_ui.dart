@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:mera_partners/view_model/home/orders/negotiation_cars_view_model.dart';
+import 'package:mera_partners/view_model/home/orders/procured_bill_view_model.dart';
+import 'package:mera_partners/view_model/home/orders/rc_transfer_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 import '../../widgets/show_logout_dialog.dart';
@@ -146,6 +148,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   homeScreenViewModel.selectedIndex.value = index;
                   if (Get.isRegistered<NegotiationViewModel>()) {
                     Get.delete<NegotiationViewModel>();
+                  }
+                  if (Get.isRegistered<ProcuredScreenViewModel>()) {
+                    Get.delete<ProcuredScreenViewModel>();
+                  }
+                  if (Get.isRegistered<RcTransferViewModel>()) {
+                    Get.delete<RcTransferViewModel>();
                   }
                 } else if (index != 3) {
                   homeScreenViewModel.selectedIndex.value = index;

@@ -87,11 +87,11 @@ class ProcuredBillScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(totalPayment ?? '', style: MyStyles.black16400),
+                          Text(Constants.numberFormat.format(int.tryParse(totalAmount ?? '0') ?? 0), style: MyStyles.black16400),
                           SizedBox(height: Dimens.standard_10),
-                          Text(additionalCharges, style: MyStyles.black16400),
+                          Text(Constants.numberFormat.format(int.tryParse(additionalCharges ?? '0') ?? 0), style: MyStyles.black16400),
                           SizedBox(height: Dimens.standard_10),
-                          Text(gst, style: MyStyles.black16400),
+                          Text(Constants.numberFormat.format(int.tryParse(gst ?? '0') ?? 0), style: MyStyles.black16400),
                         ],
                       ),
                     ],

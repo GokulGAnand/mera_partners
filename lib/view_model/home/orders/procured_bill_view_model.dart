@@ -38,7 +38,7 @@ class ProcuredScreenViewModel extends GetxController{
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/?status=PROCUREMENT').toString());
       var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/?status=PROCUREMENT'), headers: globals.headers);
       if (response.statusCode == 200) {
-        log("Response sv : ${response.body}");
+        log("Response Procured : ${response.body}");
         ProgressBar.instance.stopProgressBar(Get.context!);
         liveCarsResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
         searchList.value =  CarListResponse.fromJson(jsonDecode(response.body)).data!;

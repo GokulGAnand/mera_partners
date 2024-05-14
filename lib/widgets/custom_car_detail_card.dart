@@ -514,9 +514,11 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                                   if (time == null) {
                                     return const Text('');
                                   }
-                                  // if(time.min != null){
-                                  //   widget.auctionTime.value = time.min ?? 0;
-                                  // }
+                                  if(time.min != null){
+                                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                                      widget.auctionTime.value = time.min ?? 0;
+                                    });
+                                  }
                                   return Text('${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
                                     color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
                                     fontSize: 14,

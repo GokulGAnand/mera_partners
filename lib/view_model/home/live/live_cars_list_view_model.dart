@@ -27,18 +27,18 @@ class LiveCarsListViewModel extends GetxController {
   Rx<TextEditingController> autoBidController = TextEditingController().obs;
   Rx<TextEditingController> bidController = TextEditingController().obs;
   var likeResponse = UserResponse().obs;
-  late CountdownTimerController timerController;
-  int? endTime;
+  Rx<CountdownTimerController>? timerController;
+  Rx<int>? endTime;
 
   void onEnd() {
-    if (timerController.isRunning) {
-      timerController.disposeTimer();
+    if (timerController!.value.isRunning) {
+      timerController?.value.disposeTimer();
     }
   }
 
   @override
   void dispose() {
-    timerController.dispose();
+    timerController?.value.dispose();
     super.dispose();
   }
 
