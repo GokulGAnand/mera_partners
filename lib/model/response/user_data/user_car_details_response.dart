@@ -12,21 +12,21 @@ class UserResponse {
     if (json['data'] != null) {
       data = <UserData>[];
       json['data'].forEach((v) {
-        data!.add(new UserData.fromJson(v));
+        data!.add(UserData.fromJson(v));
       });
     }
-    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
+    meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    if (this.meta != null) {
-      data['meta'] = this.meta!.toJson();
+    if (meta != null) {
+      data['meta'] = meta!.toJson();
     }
     return data;
   }
@@ -103,96 +103,96 @@ class UserData {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     addressProofBack = json['addressProofBack'] != null
-        ? new AddressProofBack.fromJson(json['addressProofBack'])
+        ? AddressProofBack.fromJson(json['addressProofBack'])
         : null;
     addressProofFront = json['addressProofFront'] != null
-        ? new AddressProofBack.fromJson(json['addressProofFront'])
+        ? AddressProofBack.fromJson(json['addressProofFront'])
         : null;
     businessAddress = json['businessAddress'];
     businessName = json['businessName'];
     canceledCheque = json['canceledCheque'] != null
-        ? new AddressProofBack.fromJson(json['canceledCheque'])
+        ? AddressProofBack.fromJson(json['canceledCheque'])
         : null;
     district = json['district'];
     fullname = json['fullname'];
     panCard = json['panCard'] != null
-        ? new AddressProofBack.fromJson(json['panCard'])
+        ? AddressProofBack.fromJson(json['panCard'])
         : null;
     pincode = json['pincode'];
     shopPicture = json['shopPicture'] != null
-        ? new AddressProofBack.fromJson(json['shopPicture'])
+        ? AddressProofBack.fromJson(json['shopPicture'])
         : null;
     visitingCard = json['visitingCard'] != null
-        ? new AddressProofBack.fromJson(json['visitingCard'])
+        ? AddressProofBack.fromJson(json['visitingCard'])
         : null;
     orderId = json['order_id'];
     paymentId = json['payment_id'];
     if (json['lostDeal'] != null) {
       lostDeal = <LostDeal>[];
       json['lostDeal'].forEach((v) {
-        lostDeal!.add(new LostDeal.fromJson(v));
+        lostDeal!.add(LostDeal.fromJson(v));
       });
     }
     if (json['likedCars'] != null) {
       likedCars = <LikedCars>[];
       json['likedCars'].forEach((v) {
-        likedCars!.add(new LikedCars.fromJson(v));
+        likedCars!.add(LikedCars.fromJson(v));
       });
     }
     if (json['biddedCars'] != null) {
       biddedCars = <BiddedCars>[];
       json['biddedCars'].forEach((v) {
-        biddedCars!.add(new BiddedCars.fromJson(v));
+        biddedCars!.add(BiddedCars.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['userId'] = this.userId;
-    data['isBlocked'] = this.isBlocked;
-    data['role'] = this.role;
-    data['contactNo'] = this.contactNo;
-    data['isDeactivate'] = this.isDeactivate;
-    data['isDeposited'] = this.isDeposited;
-    data['depositedAmount'] = this.depositedAmount;
-    data['isDocumentsVerified'] = this.isDocumentsVerified;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    if (this.addressProofBack != null) {
-      data['addressProofBack'] = this.addressProofBack!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['userId'] = userId;
+    data['isBlocked'] = isBlocked;
+    data['role'] = role;
+    data['contactNo'] = contactNo;
+    data['isDeactivate'] = isDeactivate;
+    data['isDeposited'] = isDeposited;
+    data['depositedAmount'] = depositedAmount;
+    data['isDocumentsVerified'] = isDocumentsVerified;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    if (addressProofBack != null) {
+      data['addressProofBack'] = addressProofBack!.toJson();
     }
-    if (this.addressProofFront != null) {
-      data['addressProofFront'] = this.addressProofFront!.toJson();
+    if (addressProofFront != null) {
+      data['addressProofFront'] = addressProofFront!.toJson();
     }
-    data['businessAddress'] = this.businessAddress;
-    data['businessName'] = this.businessName;
-    if (this.canceledCheque != null) {
-      data['canceledCheque'] = this.canceledCheque!.toJson();
+    data['businessAddress'] = businessAddress;
+    data['businessName'] = businessName;
+    if (canceledCheque != null) {
+      data['canceledCheque'] = canceledCheque!.toJson();
     }
-    data['district'] = this.district;
-    data['fullname'] = this.fullname;
-    if (this.panCard != null) {
-      data['panCard'] = this.panCard!.toJson();
+    data['district'] = district;
+    data['fullname'] = fullname;
+    if (panCard != null) {
+      data['panCard'] = panCard!.toJson();
     }
-    data['pincode'] = this.pincode;
-    if (this.shopPicture != null) {
-      data['shopPicture'] = this.shopPicture!.toJson();
+    data['pincode'] = pincode;
+    if (shopPicture != null) {
+      data['shopPicture'] = shopPicture!.toJson();
     }
-    if (this.visitingCard != null) {
-      data['visitingCard'] = this.visitingCard!.toJson();
+    if (visitingCard != null) {
+      data['visitingCard'] = visitingCard!.toJson();
     }
-    data['order_id'] = this.orderId;
-    data['payment_id'] = this.paymentId;
-    if (this.lostDeal != null) {
-      data['lostDeal'] = this.lostDeal!.map((v) => v.toJson()).toList();
+    data['order_id'] = orderId;
+    data['payment_id'] = paymentId;
+    if (lostDeal != null) {
+      data['lostDeal'] = lostDeal!.map((v) => v.toJson()).toList();
     }
-    if (this.likedCars != null) {
-      data['likedCars'] = this.likedCars!.map((v) => v.toJson()).toList();
+    if (likedCars != null) {
+      data['likedCars'] = likedCars!.map((v) => v.toJson()).toList();
     }
-    if (this.biddedCars != null) {
-      data['biddedCars'] = this.biddedCars!.map((v) => v.toJson()).toList();
+    if (biddedCars != null) {
+      data['biddedCars'] = biddedCars!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -203,7 +203,7 @@ class AddressProofBack {
   String? url;
   String? type;
 
-  AddressProofBack({this.name, this.url, this.type});
+  AddressProofBack({this.name, url, this.type});
 
   AddressProofBack.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -212,10 +212,10 @@ class AddressProofBack {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['url'] = this.url;
-    data['type'] = this.type;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['url'] = url;
+    data['type'] = type;
     return data;
   }
 }
@@ -249,21 +249,21 @@ class LostDeal {
     highestBid = json['highestBid'];
     status = json['status'];
     frontLeft = json['frontLeft'] != null
-        ? new FrontLeft.fromJson(json['frontLeft'])
+        ? FrontLeft.fromJson(json['frontLeft'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['uniqueId'] = this.uniqueId;
-    data['make'] = this.make;
-    data['model'] = this.model;
-    data['variant'] = this.variant;
-    data['highestBid'] = this.highestBid;
-    data['status'] = this.status;
-    if (this.frontLeft != null) {
-      data['frontLeft'] = this.frontLeft!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['uniqueId'] = uniqueId;
+    data['make'] = make;
+    data['model'] = model;
+    data['variant'] = variant;
+    data['highestBid'] = highestBid;
+    data['status'] = status;
+    if (frontLeft != null) {
+      data['frontLeft'] = frontLeft!.toJson();
     }
     return data;
   }
@@ -337,21 +337,21 @@ class LikedCars {
     highestBid = json['highestBid'];
     status = json['status'];
     frontLeft = json['frontLeft'] != null
-        ? new FrontLeft.fromJson(json['frontLeft'])
+        ? FrontLeft.fromJson(json['frontLeft'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['uniqueId'] = this.uniqueId;
-    data['make'] = this.make;
-    data['model'] = this.model;
-    data['variant'] = this.variant;
-    data['highestBid'] = this.highestBid;
-    data['status'] = this.status;
-    if (this.frontLeft != null) {
-      data['frontLeft'] = this.frontLeft!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['uniqueId'] = uniqueId;
+    data['make'] = make;
+    data['model'] = model;
+    data['variant'] = variant;
+    data['highestBid'] = highestBid;
+    data['status'] = status;
+    if (frontLeft != null) {
+      data['frontLeft'] = frontLeft!.toJson();
     }
     return data;
   }
@@ -373,11 +373,11 @@ class FrontLeft {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['url'] = this.url;
-    data['condition'] = this.condition;
-    data['remarks'] = this.remarks;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['url'] = url;
+    data['condition'] = condition;
+    data['remarks'] = remarks;
     return data;
   }
 }
@@ -474,22 +474,22 @@ class BiddedCars {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['uniqueId'] = this.uniqueId;
-    data['make'] = this.make;
-    data['model'] = this.model;
-    data['variant'] = this.variant;
-    data['maskedRegNumber'] = this.maskedRegNumber;
-    data['vehicleLocation'] = this.vehicleLocation;
-    data['ownershipNumber'] = this.ownershipNumber;
-    data['fuelType'] = this.fuelType;
-    data['qcStatus'] = this.qcStatus;
-    data['highestBid'] = this.highestBid;
-    data['totalBidder'] = this.totalBidder;
-    data['status'] = this.status;
-    data['createdAt'] = this.createdAt;
-    data['winner'] = this.winner;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['uniqueId'] = uniqueId;
+    data['make'] = make;
+    data['model'] = model;
+    data['variant'] = variant;
+    data['maskedRegNumber'] = maskedRegNumber;
+    data['vehicleLocation'] = vehicleLocation;
+    data['ownershipNumber'] = ownershipNumber;
+    data['fuelType'] = fuelType;
+    data['qcStatus'] = qcStatus;
+    data['highestBid'] = highestBid;
+    data['totalBidder'] = totalBidder;
+    data['status'] = status;
+    data['createdAt'] = createdAt;
+    data['winner'] = winner;
     return data;
   }
 }
@@ -553,9 +553,9 @@ class Meta {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['access'] = this.access;
-    data['refresh'] = this.refresh;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['access'] = access;
+    data['refresh'] = refresh;
     return data;
   }
 }

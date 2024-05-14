@@ -54,8 +54,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   SvgPicture.asset(MySvg.help),
                   const SizedBox(width: 8,),
-                  Text(MyStrings.help, 
-                  style:MyStyles.black14700,),
+                  const Text(MyStrings.help,
+                  style:MyStyles.black18700,),
                 ],
               ),
             ),
@@ -64,6 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
           reverse: true,
           child: Form(
             key: loginScreenViewModel.loginForm,
@@ -78,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       const Text(
                         MyStrings.login,
-                        style: MyStyles.blackBold28,
+                        style: MyStyles.blackBold28500,
                       ),
                       SizedBox(
                         height: Dimens.standard_20,
@@ -161,7 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     );
                                   },
                                 text: MyStrings.termsCondition,
-                                style: const TextStyle(decoration: TextDecoration.underline, fontWeight: FontWeight.w500)),
+                                style: const TextStyle(decoration: TextDecoration.underline, fontWeight: FontWeight.w500,color: MyColors.blue3),),
                           ],
                         ),
                       ),

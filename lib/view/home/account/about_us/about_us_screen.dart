@@ -25,7 +25,7 @@ class AboutUsScreen extends StatelessWidget {
                     ),
                     TextSpan(
                       text:
-                          'MeraCars, a venture under the umbrella of Teamtach Media Private Limited, is revolutionizing the way second-hand cars are bought and sold. With our cutting-edge app, we have streamlined the process of bidding for pre-owned vehicles, catering specifically to both established and emerging car dealers.\n\n',
+                          'MeraCars, a venture under the umbrella of Teamtech Media Private Limited, is revolutionizing the way second-hand cars are bought and sold. With our cutting-edge app, we have streamlined the process of bidding for pre-owned vehicles, catering specifically to both established and emerging car dealers.\n\n',
                       style: MyStyles.subtitle12400,
                     ),
                     // TextSpan(
