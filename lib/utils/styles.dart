@@ -59,6 +59,13 @@ class MyStyles {
     fontWeight: FontWeight.w700,
     height: 0,
   );
+  static const blackBold28500 = TextStyle(
+    color: MyColors.black,
+    fontSize: 28,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
+    height: 0,
+  );
   static const blackBold20 = TextStyle(
     color: MyColors.black,
     fontSize: 20,
