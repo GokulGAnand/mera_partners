@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
-import 'dart:async';
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
+import 'package:flutter_countdown_timer/current_remaining_time.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
@@ -18,7 +20,7 @@ class CustomBidBottomSheet extends StatefulWidget {
   CustomBidBottomSheet({required this.bidValue, this.isAutoBid = false, super.key, this.onBidPressed, this.amountController, this.stepRate, this.onAutoBidPressed,
     this.bidStartTime,
     this.bidEndTime,
-    this.isScheduled,
+    this.isScheduled, this.timerController,
   });
 
   final RxList<int> bid = [5000, 10000, 15000].obs;
@@ -33,6 +35,14 @@ class CustomBidBottomSheet extends StatefulWidget {
   final DateTime? bidEndTime;
   Rxn<Duration> duration = Rxn();
   RxBool? isScheduled = false.obs;
+  Rx<int> auctionTime = 0.obs;
+  final Rx<CountdownTimerController>? timerController;
+
+  onEnd(){
+    if(timerController!.value.isRunning){
+      timerController?.value.disposeTimer();
+    }
+  }
 
   void _onTextChanged() {
     // This will trigger an update in all Obx widgets that depend on `amountController`'s text.
@@ -45,46 +55,28 @@ class CustomBidBottomSheet extends StatefulWidget {
 
 class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
 
-  void startTimer() {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (widget.duration.value!.inSeconds == 0) {
-        timer.cancel();
-      } else {
-        widget.duration.value = widget.duration.value! - const Duration(seconds: 1);
-      }
-    });
-  }
-
-  String formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, '0');
-    String hour = duration.inHours.toString();
-    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-    if(duration.inHours == 0){
-      return "${twoDigitMinutes}min ${twoDigitSeconds}sec";
-    } else if (duration.inHours < 10){
-      hour = twoDigits(duration.inHours);
-      return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
-    }
-    return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
-  }
-
   @override
   void initState() {
-    var start = DateTime.now();
-    var end = widget.bidEndTime ?? DateTime.now();
+    // var start = DateTime.now();
+    // var end = widget.bidEndTime ?? DateTime.now();
     widget.amountController?.value.addListener(widget._onTextChanged);
-    Duration diff = end.difference(start);
-    widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
-
-    if(start.isBefore(end)) {
-      startTimer();
-    }
+    // Duration diff = end.difference(start);
+    // widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+    //
+    // if(start.isBefore(end)) {
+    //   startTimer();
+    // }
     NumberFormat numberFormatter = NumberFormat.currency(locale: 'HI', name: '', decimalDigits: 0);
     if (widget.amountController != null && widget.amountController!.value.text.isEmpty){
       widget.amountController!.value.text = numberFormatter.format(widget.bidValue.value).toString();
     }
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    widget.timerController!.value.dispose();
+    super.dispose();
   }
 
   @override
@@ -117,24 +109,37 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
                 ],
               ),
             ),
-            Row(
+            Obx(() => Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                if(widget.duration.value != null)
                 Icon(
                   Icons.timer_sharp,
-                  color:  widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                  color:  widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime < 10 ? MyColors.orange : MyColors.red,
                   size: 14,
                 ),
-                const SizedBox(width: 5,),
-                if(widget.duration.value != null)
-                Text(formatDuration( widget.duration.value! ), style: TextStyle(
-                  color: widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
-                  fontSize: 14,
-                  fontFamily: 'DM Sans',
-                  fontWeight: FontWeight.w700,
-                  height: 0,
-                )),
+                const SizedBox(
+                  width: 5,
+                ),
+                Obx(() => CountdownTimer(
+                  controller: widget.timerController?.value,
+                  widgetBuilder: (_, CurrentRemainingTime? time) {
+                    if (time == null) {
+                      return const Text('');
+                    }
+                    if(time.min != null){
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        widget.auctionTime.value = time.min ?? 0;
+                      });
+                    }
+                    return Text(time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
+                      color: widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                      fontSize: 14,
+                      fontFamily: 'DM Sans',
+                      fontWeight: FontWeight.w700,
+                      height: 0,
+                    ));
+                  },
+                ),),
                 const Spacer(),
                 InkWell(
                   onTap: () {
@@ -145,7 +150,7 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
                   ),
                 ),
               ],
-            ),
+            ),),
             const SizedBox(
               height: 16,
             ),

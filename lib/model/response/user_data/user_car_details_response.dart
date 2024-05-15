@@ -296,6 +296,8 @@ class LikedCars {
   Front? engineCompartment;
   String? bidEndTime;
   String? bidStartTime;
+  String? otbEndTime;
+  String? otbStartTime;
   String? winner;
 
   LikedCars(
@@ -325,7 +327,9 @@ class LikedCars {
         this.interiorAndElectricalStar,
         this.engineCompartment,
         this.bidEndTime,
-        this.bidStartTime
+        this.bidStartTime,
+        this.otbEndTime,
+        this.otbStartTime
       });
 
   LikedCars.fromJson(Map<String, dynamic> json) {
@@ -336,6 +340,10 @@ class LikedCars {
     variant = json['variant'];
     highestBid = json['highestBid'];
     status = json['status'];
+    bidEndTime = json['bidEndTime'];
+    bidStartTime = json['bidStartTime'];
+    otbStartTime = json['otbStartTime'];
+    otbEndTime = json['otbEndTime'];
     frontLeft = json['frontLeft'] != null
         ? FrontLeft.fromJson(json['frontLeft'])
         : null;
@@ -349,6 +357,10 @@ class LikedCars {
     data['model'] = model;
     data['variant'] = variant;
     data['highestBid'] = highestBid;
+    data['bidEndTime'] = bidEndTime;
+    data['bidStartTime'] = bidStartTime;
+    data['otbEndTime'] = otbEndTime;
+    data['otbStartTime'] = otbStartTime;
     data['status'] = status;
     if (frontLeft != null) {
       data['frontLeft'] = frontLeft!.toJson();
@@ -471,6 +483,8 @@ class BiddedCars {
     status = json['status'];
     createdAt = json['createdAt'];
     winner = json['winner'];
+    bidEndTime = json['bidEndTime'];
+    bidStartTime = json['bidStartTime'];
   }
 
   Map<String, dynamic> toJson() {
@@ -490,6 +504,8 @@ class BiddedCars {
     data['status'] = status;
     data['createdAt'] = createdAt;
     data['winner'] = winner;
+    data['bidEndTime'] = bidEndTime;
+    data['bidStartTime'] = bidStartTime;
     return data;
   }
 }

@@ -17,7 +17,7 @@ class HelpBottomSheet extends StatelessWidget {
 
     return Container(
       height: 210,
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
         color: Colors.white,
@@ -80,8 +80,8 @@ class HelpBottomSheet extends StatelessWidget {
           );
   }
   _lauchCalllog() async {
-    final phoneNumber = '+91 9999999999';
-    final url = 'tel:$phoneNumber';
+    const phoneNumber = '+91 9999999999';
+    const url = 'tel:$phoneNumber';
     if(await canLaunch(url)) {
       await launch(url);
     } else {
@@ -90,8 +90,8 @@ class HelpBottomSheet extends StatelessWidget {
   }
 
   _launchEmail() async {
-    final email = 'support@meracars.com';
-    final url = 'mailto:$email';
+    const email = 'support@meracars.com';
+    const url = 'mailto:$email';
     if(await canLaunch(url)) {
       await launch(url);
     } else {

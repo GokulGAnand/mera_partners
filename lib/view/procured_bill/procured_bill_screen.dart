@@ -37,161 +37,164 @@ class ProcuredBillScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: MyColors.lightBlue1,
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 20),
-            child: Container(
-              color: MyColors.white,
-              child: ListTile(
-                tileColor: null, // Set tileColor to null
-                leading: GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: const Icon(Icons.arrow_back, color: MyColors.black, size: 24),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only( top: 20,bottom: 20),
+              child: Container(
+                color: MyColors.white,
+                child: ListTile(
+                  tileColor: null, // Set tileColor to null
+                  leading: GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: const Icon(Icons.arrow_back, color: MyColors.black, size: 24),
+                  ),
+                  title: Text(carName ?? '', style: MyStyles.selectedTabBarTitleStyle),
+                  subtitle:  Text(carModel?? '', style: MyStyles.black16700),
                 ),
-                title: Text(carName ?? '', style: MyStyles.selectedTabBarTitleStyle),
-                subtitle:  Text(carModel?? '', style: MyStyles.black16700),
               ),
             ),
-          ),
-          Divider(
-            color: MyColors.lightBlue1,
-            height: Dimens.standard_1,
-          ),
-          Container(
-            color: MyColors.white,
-            height: MediaQuery.of(context).size.height * 0.26,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 50, left: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: Dimens.standard_20),
-                  const Text(MyStrings.billSummary, style: MyStyles.pageTitleStyle),
-                  SizedBox(height: Dimens.standard_10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(MyStrings.totalPayment, style: MyStyles.black16400),
-                          SizedBox(height: Dimens.standard_10),
-                          const Text(MyStrings.additionalCharges, style: MyStyles.black16400),
-                          SizedBox(height: Dimens.standard_10),
-                          const Text(MyStrings.gst, style: MyStyles.black16400),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(Constants.numberFormat.format(int.tryParse(totalAmount ?? '0') ?? 0), style: MyStyles.black16400),
-                          SizedBox(height: Dimens.standard_10),
-                          Text(Constants.numberFormat.format(int.tryParse(additionalCharges ?? '0') ?? 0), style: MyStyles.black16400),
-                          SizedBox(height: Dimens.standard_10),
-                          Text(Constants.numberFormat.format(int.tryParse(gst ?? '0') ?? 0), style: MyStyles.black16400),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: Dimens.standard_15),
-                  Row(
-                    children: List.generate(
-                      100 ~/ 1,
-                          (index) => Expanded(
-                        child: Container(
-                          color: index % 2 == 0 ? Colors.transparent : Colors.grey,
-                          height: 1,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: Dimens.standard_10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(MyStrings.totalAmount, style: MyStyles.black16700),
-                      Text(Constants.numberFormat.format(int.tryParse(totalAmount ?? '0') ?? 0), style: MyStyles.blue16W700),
-                    ],
-                  ),
-                ],
-              ),
+            Divider(
+              color: MyColors.lightBlue1,
+              height: Dimens.standard_1,
             ),
-          ),
-          SizedBox(height: Dimens.standard_10),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(width: Dimens.standard_20),
-              const Padding(
-                padding: EdgeInsets.only(top: 2.5, right: 6),
-                child: Icon(Icons.info_outline, color: MyColors.black, size: 16),
-              ),
-              const Text(MyStrings.transfer, style: MyStyles.subTitleBlackStyle),
-            ],
-          ),
-          SizedBox(height: Dimens.standard_16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(width: Dimens.standard_20),
-              const Text(
-                MyStrings.needHelp,
-                style: MyStyles.pageTitleStyle,
-              ),
-            ],
-          ),
-          SizedBox(height: Dimens.standard_10),
-          Row(
-            children: [
-              SizedBox(width: Dimens.standard_20),
-              InkWell(
-                onTap: () async {
-                  await viewModel.launchCaller();
-                },
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: MyColors.kPrimaryColor, width: 2),
-                    color: MyColors.lightBlue,
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 6),
-                    child: Stack(
+            Container(
+              color: MyColors.white,
+              height: MediaQuery.of(context).size.height * 0.26,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 50, left: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: Dimens.standard_20),
+                    const Text(MyStrings.billSummary, style: MyStyles.pageTitleStyle),
+                    SizedBox(height: Dimens.standard_10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 15),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              MyStrings.customerSupport,
-                              style: MyStyles.kPrimary16500,
-                            ),
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(MyStrings.totalPayment, style: MyStyles.black16400),
+                            SizedBox(height: Dimens.standard_10),
+                            const Text(MyStrings.additionalCharges, style: MyStyles.black16400),
+                            SizedBox(height: Dimens.standard_10),
+                            const Text(MyStrings.gst, style: MyStyles.black16400),
+                          ],
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 6),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Icon(
-                              Icons.call,
-                              color: MyColors.kPrimaryColor,
-                              size: 17,
-                            ),
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(Constants.numberFormat.format(int.tryParse(totalAmount ?? '0') ?? 0), style: MyStyles.black16400),
+                            SizedBox(height: Dimens.standard_10),
+                            Text(Constants.numberFormat.format(int.tryParse(additionalCharges ?? '0') ?? 0), style: MyStyles.black16400),
+                            SizedBox(height: Dimens.standard_10),
+                             Text(Constants.numberFormat.format(int.tryParse(gst ?? '0') ?? 0), style: MyStyles.black16400),
+                          ],
                         ),
                       ],
                     ),
-                  ),
+                    SizedBox(height: Dimens.standard_15),
+                    Row(
+                      children: List.generate(
+                        100 ~/ 1,
+                            (index) => Expanded(
+                          child: Container(
+                            color: index % 2 == 0 ? Colors.transparent : Colors.grey,
+                            height: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: Dimens.standard_10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(MyStrings.totalAmount, style: MyStyles.black16700),
+                        Text(Constants.numberFormat.format(int.tryParse(totalAmount ?? '0') ?? 0), style: MyStyles.blue16W700),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ],
+            ),
+            SizedBox(height: Dimens.standard_10),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(width: Dimens.standard_20),
+                const Padding(
+                  padding: EdgeInsets.only(top: 2.5, right: 6),
+                  child: Icon(Icons.info_outline, color: MyColors.black, size: 16),
+                ),
+                const Text(MyStrings.transfer, style: MyStyles.subTitleBlackStyle),
+              ],
+            ),
+            SizedBox(height: Dimens.standard_16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: Dimens.standard_20),
+                const Text(
+                  MyStrings.needHelp,
+                  style: MyStyles.pageTitleStyle,
+                ),
+              ],
+            ),
+            SizedBox(height: Dimens.standard_10),
+            Row(
+              children: [
+                SizedBox(width: Dimens.standard_20),
+                InkWell(
+                  onTap: () async {
+                    await viewModel.launchCaller();
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(color: MyColors.kPrimaryColor, width: 2),
+                      color: MyColors.lightBlue,
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 6),
+                      child: Stack(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 15),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                MyStrings.customerSupport,
+                                style: MyStyles.kPrimary16500,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 6),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Icon(
+                                Icons.call,
+                                color: MyColors.kPrimaryColor,
+                                size: 17,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: SizedBox(
         height: 70,

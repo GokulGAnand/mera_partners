@@ -488,6 +488,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          if(widget.auctionTime.value != 0 && widget.timerController?.value != null)
                           Obx(() => Text(
                             widget.isScheduled?.value == true ? MyStrings.yetToStart : widget.auctionTime.value >= 10 ? MyStrings.acceptingBids:
                             widget.auctionTime.value <= 10 ? MyStrings.bidEndsIn : MyStrings.lastCall,
@@ -503,6 +504,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                           ),
                           Obx(() => Row(
                             children: [
+                              if(widget.auctionTime.value != 0 && widget.timerController?.value != null)
                               Icon(
                                 Icons.timer_sharp,
                                 color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
@@ -519,7 +521,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                                       widget.auctionTime.value = time.min ?? 0;
                                     });
                                   }
-                                  return Text('${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
+                                  return Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
                                     color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
                                     fontSize: 14,
                                     fontFamily: 'DM Sans',

@@ -47,38 +47,42 @@ class _OtpScreenState extends State<OtpScreen> {
     return Scaffold(
       appBar: const CustomAppBar(title: MyStrings.otpVerification),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: Dimens.padding16,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(left: 16.0,top: 28),
+              child: Text(
                 MyStrings.otpDesc,
                 style: MyStyles.subTitleGreayStyle,
               ),
-              SizedBox(
-                height: Dimens.standard_10,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                      child: otpField(
-                          loginScreenViewModel.otpTextField1, true, false)),
-                  Expanded(
-                      child: otpField(
-                          loginScreenViewModel.otpTextField2, false, false)),
-                  Expanded(
-                      child: otpField(
-                          loginScreenViewModel.otpTextField3, false, false)),
-                  Expanded(
-                      child: otpField(
-                          loginScreenViewModel.otpTextField4, false, true)),
-                ],
-              ),
-              SizedBox(
-                height: Dimens.standard_10,
-              ),
-              Obx(() {
+            ),
+            SizedBox(
+              height: Dimens.standard_10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                    child: otpField(
+                        loginScreenViewModel.otpTextField1, true, false)),
+                Expanded(
+                    child: otpField(
+                        loginScreenViewModel.otpTextField2, false, false)),
+                Expanded(
+                    child: otpField(
+                        loginScreenViewModel.otpTextField3, false, false)),
+                Expanded(
+                    child: otpField(
+                        loginScreenViewModel.otpTextField4, false, true)),
+              ],
+            ),
+            SizedBox(
+              height: Dimens.standard_10,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: Obx(() {
                 if (loginScreenViewModel.resend.value == true) {
                   return GestureDetector(
                     onTap: () async {
@@ -105,8 +109,8 @@ class _OtpScreenState extends State<OtpScreen> {
                   ],
                 );
               }),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: Obx(() {
