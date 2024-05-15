@@ -804,7 +804,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                           timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime != null ? CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: 0).obs,
                           otbStartTime:carDetailsScreenViewModel.carDetailsResponse.value.data?[0].bidStartTime ?? DateTime.now(),
                           otbEndTime:carDetailsScreenViewModel.carDetailsResponse.value.data?[0].bidEndTime ?? DateTime.now(),
-                          otbPrice: RxInt(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0),
+                          otbPrice: RxInt(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].realValue ?? 0),
                           amountController: carDetailsScreenViewModel.quotePriceController,
                           onPressed: () {
                             Navigator.of(context).pop();

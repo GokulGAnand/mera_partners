@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/utils/svg.dart';
@@ -123,7 +124,7 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                 setState(() {});
               },
               tabs: [
-                Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.biddedCars}(${Get.find<BidCarsListViewModel>().bidCarsResponse.value.data?[0].biddedCars?.length ?? '0'})':MyStrings.biddedCars,),
+                Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.biddedCars}(${Get.find<BidCarsListViewModel>().bidCarsResponse.value.data?[0].biddedCars?.where((car) => car.status == CarStatus.live.name).length ?? '0'})':MyStrings.biddedCars,),
                 Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.likedCars}(${Get.find<BidCarsListViewModel>().likeResponse.value.data?[0].likedCars?.length ?? '0'})':MyStrings.likedCars,),
               ],
             ),),
