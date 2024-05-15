@@ -223,6 +223,7 @@ class DocumentScreen extends StatelessWidget {
                       padding: Dimens.suffixPadding,
                       child: viewModel.aadhaarFront.value == null
                           ? Image.asset(MyImages.upload)
+                          // ? Icon(Icons.file_upload_outlined)
                           : const Icon(
                               Icons.done_rounded,
                               color: MyColors.green,
