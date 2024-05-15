@@ -27,6 +27,7 @@ class OnBoardingWidgets extends StatelessWidget {
       body: Container(
         color: MyColors.white,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               height: screenSize.height * 0.1,
@@ -39,7 +40,8 @@ class OnBoardingWidgets extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, screenSize.height * 0.2, screenSize.width * 0.1, 0),
+              //padding: EdgeInsets.fromLTRB(screenSize.width * 0.02, screenSize.height * 0.2, screenSize.width * 0.1, 0),
+              padding: EdgeInsets.fromLTRB(screenSize.width * 0.05, screenSize.height * 0.2, 0, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

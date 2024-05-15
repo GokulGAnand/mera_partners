@@ -139,7 +139,7 @@ class LiveCarsListScreen extends StatelessWidget {
                                           : MyColors.kPrimaryColor,
                               bidAmount: Constants.numberFormat.format(controller.liveCarsResponse.value.data?[index].highestBid).toString().obs,
                               endTime: Rx(Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds),
-                              timerController: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds ?? 0, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds ?? 0, onEnd:() {},).obs,
+                              timerController: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs,
                               bidStartTime: DateTime.parse(controller.liveCarsResponse.value.data?[index].bidStartTime ?? DateTime.now().toString()).toLocal(),
                               bidEndTime: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal(),
                               carModel: controller.liveCarsResponse.value.data?[index].model ?? '',
@@ -167,6 +167,7 @@ class LiveCarsListScreen extends StatelessWidget {
                                     context: context,
                                     builder: (context) {
                                       return CustomBidBottomSheet(
+                                        timerController: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs,
                                         amountController: controller.autoBidController,
                                         isAutoBid: true,
                                         bidValue: RxInt(controller.liveCarsResponse.value.data?[index].highestBid ?? 0),
@@ -197,6 +198,7 @@ class LiveCarsListScreen extends StatelessWidget {
                                     context: context,
                                     builder: (context) {
                                       return CustomBidBottomSheet(
+                                        timerController: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs,
                                         amountController: controller.bidController,
                                         bidValue: RxInt(controller.liveCarsResponse.value.data?[index].highestBid ?? 0),
                                         stepRate: controller.liveCarsResponse.value.data![index].highestBid! <= 99999

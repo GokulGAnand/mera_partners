@@ -1,3 +1,4 @@
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/enum.dart';
@@ -102,6 +103,7 @@ class _NegotiationState extends State<Negotiation> {
                               context: context,
                               builder: (context) {
                                 return NegotiationBottomSheet(
+                                  timerController: controller.searchNegotiationList[index].negotiationEndTime != null ? CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.searchNegotiationList[index].negotiationEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: 0).obs,
                                   negEndTime: DateTime.parse(controller.searchNegotiationList[index].negotiationEndTime ?? DateTime.now().toString()),
                                   negStartTime: DateTime.parse(controller.searchNegotiationList[index].negotiationStartTime ?? DateTime.now().toString()),
                                   biddedAmount: controller.searchNegotiationList[index].highestBid ?? 0,

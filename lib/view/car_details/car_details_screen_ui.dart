@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/constants.dart';
@@ -193,7 +194,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         // ? Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid).toString()
                         // : "",
                         ?globals.documentStatus == DocumentStatus.VERIFIED.name ?
-                        Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid ?? 0)
+                        Constants.numberFormat.format(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase() ? carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue ?? 0 : carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid ?? 0)
                                   :(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid != null)
                                   ?'₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
                                   :'₹${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
@@ -785,6 +786,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                         context: context,
                                         builder: (context) {
                                           return OTBBottomSheet(
+                                            timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime != null ? CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: 0).obs,
                                             otbPrice: carDetailsScreenViewModel.reportResponse.value.data?.allCarInfo?.realValue?.toInt() ?? 0,
                                             onPressed: () {
                                               Navigator.of(context).pop();
@@ -798,7 +800,12 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       const SizedBox(height: 12,),
                     InkWell(onTap: () {
                       showModalBottomSheet(context: context, builder: (context) {
-                        return QuotePriceBottomSheet(otbStartTime:carDetailsScreenViewModel.carDetailsResponse.value.data?[0].bidStartTime ?? DateTime.now(),otbEndTime:carDetailsScreenViewModel.carDetailsResponse.value.data?[0].bidEndTime ?? DateTime.now(),otbPrice: RxInt(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0), amountController: carDetailsScreenViewModel.quotePriceController,
+                        return QuotePriceBottomSheet(
+                          timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime != null ? CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: 0).obs,
+                          otbStartTime:carDetailsScreenViewModel.carDetailsResponse.value.data?[0].bidStartTime ?? DateTime.now(),
+                          otbEndTime:carDetailsScreenViewModel.carDetailsResponse.value.data?[0].bidEndTime ?? DateTime.now(),
+                          otbPrice: RxInt(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].realValue ?? 0),
+                          amountController: carDetailsScreenViewModel.quotePriceController,
                           onPressed: () {
                             Navigator.of(context).pop();
                             carDetailsScreenViewModel.quotePrice(carDetailsScreenViewModel.id, carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0);
@@ -825,7 +832,11 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 context: context,
                                 builder: (context) {
                                   return CustomBidBottomSheet(
-                                    bidStartTime: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime,
+                                    timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status?.toLowerCase() == CarStatus.scheduled.name
+                                        ?carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime != null ?
+                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null
+                                        : carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime != null ?
+                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null,                                    bidStartTime: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime,
                                     bidEndTime: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime,
                                     amountController: liveCarListViewModel.autoBidController,
                                     isAutoBid: true,
@@ -879,6 +890,11 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 context: context,
                                 builder: (context) {
                                   return CustomBidBottomSheet(
+                                    timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status?.toLowerCase() == CarStatus.scheduled.name
+                                        ?carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime != null ?
+                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null
+                                        : carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime != null ?
+                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null,
                                     bidStartTime: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime,
                                     bidEndTime: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime,
                                     amountController: liveCarListViewModel.bidController,
