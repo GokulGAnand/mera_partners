@@ -100,7 +100,8 @@ class LiveCarsListScreen extends StatelessWidget {
                       width: 1,
                     ),
               controller.liveCarsResponse.value.data != null
-                  ? controller.liveCarsResponse.value.data!.isNotEmpty ? Expanded(
+                  ? ((controller.searchList.isNotEmpty || (controller.searchList.isEmpty && controller.searchController.text.isEmpty)) && controller.liveCarsResponse.value.data!.isNotEmpty)
+                  ? Expanded(
                       child: ListView.builder(
                       itemCount: controller.liveCarsResponse.value.data?.length,
                       padding: const EdgeInsets.all(8),

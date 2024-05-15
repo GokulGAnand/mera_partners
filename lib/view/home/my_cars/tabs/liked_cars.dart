@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:mera_partners/utils/constants.dart';
+import 'package:mera_partners/utils/strings.dart';
 import '../../../../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 import '../../../../widgets/liked_cars_widget.dart';
 
@@ -17,6 +18,9 @@ class LikedCars extends StatelessWidget {
         Expanded(
           child: Obx(
             () {
+              if(controller.likedCarsearchList.isEmpty){
+                return const Center(child: Text(MyStrings.noDataFound),);
+              }
               return GridView.builder(
                   itemCount: controller.likedCarsearchList.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

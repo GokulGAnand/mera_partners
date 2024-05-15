@@ -100,6 +100,13 @@ class BidCarsListViewModel extends GetxController{
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         bidCarsResponse.value = UserResponse.fromJson(jsonDecode(response.body));
+        bidCarsResponse.value.data![0].biddedCars!.clear();
+        Rx<UserResponse> tempBidCarResponse = UserResponse.fromJson(jsonDecode(response.body)).obs;
+        for(int i=0; i<tempBidCarResponse.value.data![0].biddedCars!.length; i++){
+          if(tempBidCarResponse.value.data![0].biddedCars![i].status == MyStrings.live){
+            bidCarsResponse.value.data![0].biddedCars!.add(tempBidCarResponse.value.data![0].biddedCars![i]);
+          }
+        }
         // final isLastPage = bidCarsResponse.value.data!.length < limit;
         // if (isLastPage) {
         //   infinitePagingController.appendLastPage(bidCarsResponse.value.data!);

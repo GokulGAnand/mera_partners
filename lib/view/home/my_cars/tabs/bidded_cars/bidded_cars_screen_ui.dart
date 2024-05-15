@@ -25,13 +25,13 @@ class BidCarsListScreen extends StatelessWidget {
       body: Obx(
         () => SafeArea(
           child: controller.bidCarsResponse.value.data != null
-              ? controller.bidCarsResponse.value.data![0].biddedCars != null && controller.bidCarsResponse.value.data![0].biddedCars!.isNotEmpty
+              ? ((controller.bidCarsearchList.isNotEmpty || (controller.bidCarsearchList.isEmpty && controller.bidCarsearchController.text.isEmpty)) && controller.bidCarsResponse.value.data![0].biddedCars!.isNotEmpty)
                   ? ListView.builder(
                       itemCount: controller.bidCarsResponse.value.data![0].biddedCars?.length,
                       padding: const EdgeInsets.all(8),
                       itemBuilder: (context, index) {
                         return Obx(() {
-                          if ((controller.bidCarsearchController.value.text.isEmpty && controller.bidCarsearchList.isEmpty) || controller.bidCarsearchList.contains(controller.bidCarsResponse.value.data?[index].sId)) {
+                          if (((controller.bidCarsearchController.value.text.isEmpty && controller.bidCarsearchList.isEmpty) || controller.bidCarsearchList.contains(controller.bidCarsResponse.value.data?[index].sId)) && controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == MyStrings.live.toLowerCase()) {
                             return CustomCarDetailCard(
                               onCarTapped: () {
                                 Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.bidCarsResponse.value.data?[0].biddedCars![index].sId);
