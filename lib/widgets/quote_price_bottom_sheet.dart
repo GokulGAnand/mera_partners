@@ -1,5 +1,7 @@
-import 'dart:async';
 import 'package:flutter/services.dart';
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
+import 'package:flutter_countdown_timer/current_remaining_time.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
@@ -16,7 +18,7 @@ import 'custom_toast.dart';
 
 /// ignore: must_be_immutable
 class QuotePriceBottomSheet extends StatefulWidget {
-  QuotePriceBottomSheet({super.key, required this.otbPrice, this.onPressed, this.amountController, this.otbStartTime, this.otbEndTime, this.minQuotePrice});
+  QuotePriceBottomSheet({super.key, required this.otbPrice, this.onPressed, this.amountController, this.otbStartTime, this.otbEndTime, this.minQuotePrice, this.timerController});
 
   final RxInt otbPrice;
   final RxInt? minQuotePrice;
@@ -24,7 +26,14 @@ class QuotePriceBottomSheet extends StatefulWidget {
   final Rx<TextEditingController>? amountController;
   final DateTime? otbStartTime;
   final DateTime? otbEndTime;
-  Rxn<Duration> duration = Rxn();
+  Rx<int> auctionTime = 0.obs;
+  final Rx<CountdownTimerController>? timerController;
+
+  onEnd(){
+    if(timerController!.value.isRunning){
+      timerController?.value.disposeTimer();
+    }
+  }
 
   @override
   State<QuotePriceBottomSheet> createState() => _QuotePriceBottomSheetState();
@@ -35,15 +44,12 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
   @override
   void initState() {
     widget.minQuotePrice?.value = widget.otbPrice.value > 50000 ? widget.otbPrice.value - 50000 : 0;
-    var start = DateTime.now();
-    var end = widget.otbEndTime ?? DateTime.now();
+    // var start = DateTime.now();
+    // var end = widget.otbEndTime ?? DateTime.now();
     widget.amountController?.value.addListener(_onTextChanged);
-    Duration diff = end.difference(start);
-    widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+    // Duration diff = end.difference(start);
+    // widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
 
-    if(start.isBefore(end)) {
-      startTimer();
-    }
     NumberFormat numberFormatter = NumberFormat.currency(locale: 'HI', name: '', decimalDigits: 0);
     if (widget.amountController != null && widget.amountController!.value.text.isEmpty){
       widget.amountController!.value.text = numberFormatter.format(widget.otbPrice.value).toString();
@@ -57,35 +63,17 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
     widget.amountController?.refresh();
   }
 
-  void startTimer() {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (widget.duration.value!.inSeconds == 0) {
-        timer.cancel();
-      } else {
-        widget.duration.value = widget.duration.value! - const Duration(seconds: 1);
-      }
-    });
-  }
-
-  String formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, '0');
-    String hour = duration.inHours.toString();
-    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-    if(duration.inHours == 0){
-      return "${twoDigitMinutes}min ${twoDigitSeconds}sec";
-    } else if (duration.inHours < 10){
-      hour = twoDigits(duration.inHours);
-      return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
-    }
-    return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
+  @override
+  void dispose() {
+    widget.timerController!.value.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
     return Container(
-      height: MediaQuery.of(context).size.height * 0.45,
+      height: MediaQuery.of(context).size.height * 0.55,
       padding: const EdgeInsets.all(16.0),
       decoration: const BoxDecoration(
         color: MyColors.white,
@@ -111,26 +99,45 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
               ],
             ),
           ),
-          Row(
+          Obx(() => Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              if(widget.duration.value != null)
               Icon(
                 Icons.timer_sharp,
-                color:  widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
+                color:  widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime < 10 ? MyColors.orange : MyColors.red,
                 size: 14,
               ),
               const SizedBox(
                 width: 5,
               ),
-              if(widget.duration.value != null)
-              Text(formatDuration( widget.duration.value! ), style: TextStyle(
-                color: widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
-                fontSize: 14,
-                fontFamily: 'DM Sans',
-                fontWeight: FontWeight.w700,
-                height: 0,
-              )),
+              Obx(() => CountdownTimer(
+                controller: widget.timerController?.value,
+                widgetBuilder: (_, CurrentRemainingTime? time) {
+                  if (time == null) {
+                    return const Text('');
+                  }
+                  if(time.min != null){
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      widget.auctionTime.value = time.min ?? 0;
+                    });
+                  }
+                  return Text(time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
+                    color: widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                    fontSize: 14,
+                    fontFamily: 'DM Sans',
+                    fontWeight: FontWeight.w700,
+                    height: 0,
+                  ));
+                },
+              ),),
+              // if(widget.duration.value != null)
+              // Text(formatDuration( widget.duration.value! ), style: TextStyle(
+              //   color: widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
+              //   fontSize: 14,
+              //   fontFamily: 'DM Sans',
+              //   fontWeight: FontWeight.w700,
+              //   height: 0,
+              // )),
               const Spacer(),
               InkWell(
                 onTap: () {
@@ -141,7 +148,7 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
                 ),
               ),
             ],
-          ),
+          ),),
           const SizedBox(
             height: 16,
           ),
@@ -164,22 +171,26 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
             height: 54,
             margin: const EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(color: MyColors.lightBlue, borderRadius: BorderRadius.circular(4), border: Border.all(color: MyColors.kPrimaryColor)),
-            child: Expanded(
-              child:
-            BidTextFormField(
-              controller: widget.amountController!.value,
-              keyboardType: const TextInputType.numberWithOptions(decimal: false),
-              inputFormatter: [FilteringTextInputFormatter.digitsOnly,LengthLimitingTextInputFormatter(8)],
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "Value cannot be empty";
-                } else if ((int.tryParse(value) ?? 0) < widget.minQuotePrice!.value) {
-                  return "Quoted price exceeds the maximum allowed difference from OTB price";
-                }
-                return null;
-              },
-              borderColor: MyColors.kPrimaryColor,
-            ),),
+            child: Row(
+              children: [
+                Expanded(
+                  child:
+                  BidTextFormField(
+                    controller: widget.amountController!.value,
+                    keyboardType: const TextInputType.numberWithOptions(decimal: false),
+                    inputFormatter: [FilteringTextInputFormatter.digitsOnly,LengthLimitingTextInputFormatter(8)],
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Value cannot be empty";
+                      } else if ((int.tryParse(value) ?? 0) < widget.minQuotePrice!.value) {
+                        return "Quoted price exceeds the maximum allowed difference from OTB price";
+                      }
+                      return null;
+                    },
+                    borderColor: MyColors.kPrimaryColor,
+                  ),),
+              ],
+            )
           ),
           const SizedBox(
             height: 8,

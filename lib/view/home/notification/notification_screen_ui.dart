@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
+import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:mera_partners/view_model/home/notification/notification_view_model.dart';
-import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/notification_widget.dart';
 
 /// ignore: must_be_immutable
@@ -16,13 +16,24 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pixelRatio = MediaQuery.of(context).devicePixelRatio;
-    final appBarHeight = 240 / pixelRatio;
+    //final appBarHeight = 240 / pixelRatio;
+    final appBarHeight = 150 / pixelRatio;
 
     return Scaffold(
-        appBar: CustomAppBar(
-          title: MyStrings.notification,
-          appBarHeight: appBarHeight,
+        // appBar: CustomAppBar(
+        //    title: MyStrings.notification,
+        //   appBarHeight: appBarHeight,
+        // ),
+      appBar: AppBar(
+        title: Text(MyStrings.notification,
+          style: TextStyle(color: Colors.white,
+          fontWeight: FontWeight.w600
+          ),
         ),
+        toolbarHeight: appBarHeight,
+        backgroundColor: MyColors.kPrimaryColor,
+        iconTheme: IconThemeData(color: Colors.white),
+      ),
         body: Obx(() => (controller.notificationList.value.data != null) && controller.notificationList.value.data!.isNotEmpty ? ListView.builder(
           itemCount: controller.notificationList.value.data?.length ?? 0,
           padding: const EdgeInsets.only(top: 24),

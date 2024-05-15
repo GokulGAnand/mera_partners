@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class MyStrings {
   static const String regAndFitness = "Reg and Fitness";

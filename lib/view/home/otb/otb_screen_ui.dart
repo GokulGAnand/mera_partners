@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../../routes/app_routes.dart';
 import '../../../utils/constants.dart';
-import '../../../utils/enum.dart';
 import '../../../view_model/home/otb/otb_view_model.dart';
 import '../../../widgets/custom_car_detail_card.dart';
 import '../../../widgets/otb_bottom_sheet.dart';
@@ -56,8 +55,8 @@ class OTBScreen extends StatelessWidget {
                               isScheduled: false.obs,
                               bidStartTime: DateTime.parse(item.bidStartTime ?? DateTime.now().toString()).toLocal(),
                               bidEndTime: DateTime.parse(item.bidEndTime ?? DateTime.now().toString()).toLocal(),
-                              endTime: Rx(Duration(seconds: DateTime.parse(item.bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds),
-                              timerController: item.status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(item.bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds ?? 0, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(item.bidEndTime  ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds ?? 0, onEnd:() {},).obs,
+                              endTime: Rx(Duration(seconds: DateTime.parse(item.otbEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds),
+                              timerController: CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(item.otbEndTime  ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs,
                               images: [
                                 item.frontLeft?.url ?? '',
                                 item.front?.url ?? '',
@@ -72,6 +71,7 @@ class OTBScreen extends StatelessWidget {
                                     context: context,
                                     builder: (context) {
                                       return OTBBottomSheet(
+                                        timerController: item.otbEndTime != null ? CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(item.otbEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: 0).obs,
                                         otbPrice: item.realValue ?? 0,
                                         onPressed: () {
                                           Navigator.of(context).pop();

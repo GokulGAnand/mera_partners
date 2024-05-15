@@ -60,6 +60,8 @@ class Data {
     final Front? rearRight;
     final DateTime? bidEndTime;
     final DateTime? bidStartTime;
+    final DateTime? otbEndTime;
+    final DateTime? otbStartTime;
     final int? realValue;
     final List<LeaderBoard>? leaderBoard;
 
@@ -87,6 +89,8 @@ class Data {
         this.rearRight,
         this.bidEndTime,
         this.bidStartTime,
+        this.otbEndTime,
+        this.otbStartTime,
         this.realValue,
         this.leaderBoard,
     });
@@ -115,6 +119,8 @@ class Data {
         rearRight: json["rearRight"] == null ? null : Front.fromJson(json["rearRight"]),
         bidEndTime: json["bidEndTime"] == null ? null : DateTime.parse(json["bidEndTime"]),
         bidStartTime: json["bidStartTime"] == null ? null : DateTime.parse(json["bidStartTime"]),
+        otbEndTime: json["otbEndTime"] == null ? null : DateTime.parse(json["otbEndTime"]),
+        otbStartTime: json["otbStartTime"] == null ? null : DateTime.parse(json["otbStartTime"]),
         realValue: json["realValue"],
         leaderBoard: json["leaderBoard"] == null ? [] : List<LeaderBoard>.from(json["leaderBoard"]!.map((x) => LeaderBoard.fromJson(x))),
     );
@@ -143,6 +149,8 @@ class Data {
         "rearRight": rearRight?.toJson(),
         "bidEndTime": bidEndTime?.toIso8601String(),
         "bidStartTime": bidStartTime?.toIso8601String(),
+        "otbEndTime": otbEndTime?.toIso8601String(),
+        "otbStartTime": otbStartTime?.toIso8601String(),
         "realValue": realValue,
         "leaderBoard": leaderBoard == null ? [] : List<dynamic>.from(leaderBoard!.map((x) => x.toJson())),
     };
