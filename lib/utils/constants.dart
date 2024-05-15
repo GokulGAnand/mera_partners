@@ -31,11 +31,11 @@ class Constants {
 
   static String getScheduledStatus(DateTime? bidStartTime){
     if (bidStartTime?.day == DateTime.now().day) {
-      return "Scheduled for today ${formatTime(bidStartTime ?? DateTime.now())}";
+      return "Scheduled for today, ${formatTime(bidStartTime ?? DateTime.now())}";
     } else if (bidStartTime?.day == DateTime.now().day + 1) {
-      return "Scheduled for tomorrow ${bidStartTime?.hour}:${bidStartTime?.minute}";
+      return "Scheduled for tomorrow, ${bidStartTime?.hour}:${bidStartTime?.minute}";
     } else {
-      return "Scheduled for ${formatDateTime(bidStartTime)}";
+      return "Scheduled for, ${formatDateTime(bidStartTime)}";
     }
   }
 }
