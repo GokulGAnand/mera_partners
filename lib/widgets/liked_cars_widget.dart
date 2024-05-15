@@ -254,11 +254,11 @@ class LikedCarsWidget extends StatelessWidget {
                     if(status.toLowerCase() == CarStatus.scheduled.name || status.toLowerCase() == CarStatus.otb.name)
                       SizedBox(height: Dimens.standard_2),
                     if(status.toLowerCase() == CarStatus.scheduled.name || status.toLowerCase() == CarStatus.otb.name)
-                      Obx(() => Row(
+                      Row(
                         children: [
                           Icon(
                             Icons.timer_sharp,
-                            color:  auctionTime.value >= 10 ? MyColors.green : auctionTime < 10 ? MyColors.orange : MyColors.red,
+                            color:  status.toLowerCase() == CarStatus.scheduled.name ? MyColors.kPrimaryColor : auctionTime.value >= 10 ? MyColors.green : auctionTime < 10 ? MyColors.orange : MyColors.red,
                             size: 14,
                           ),
                           Obx(() => CountdownTimer(
@@ -272,8 +272,8 @@ class LikedCarsWidget extends StatelessWidget {
                                   auctionTime.value = time.min ?? 0;
                                 });
                               }
-                              return Text(time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                                color: auctionTime.value >= 10 ? MyColors.green : auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                              return Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
+                                color: status.toLowerCase() == CarStatus.scheduled.name ? MyColors.kPrimaryColor : auctionTime.value >= 10 ? MyColors.green : auctionTime.value < 10 ? MyColors.orange : MyColors.red,
                                 fontSize: 14,
                                 fontFamily: 'DM Sans',
                                 fontWeight: FontWeight.w700,
@@ -282,7 +282,7 @@ class LikedCarsWidget extends StatelessWidget {
                             },
                           ),),
                         ],
-                      ),),
+                      ),
                      const SizedBox(height: Dimens.standard_8),
                     SizedBox(
                       height: 40,
