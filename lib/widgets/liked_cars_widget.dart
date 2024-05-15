@@ -1,6 +1,8 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
+import 'package:flutter_countdown_timer/current_remaining_time.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
@@ -34,6 +36,14 @@ class LikedCarsWidget extends StatelessWidget {
   final DateTime? bidStartTime;
   final DateTime? bidEndTime;
   Rxn<Duration> duration = Rxn();
+  Rx<int> auctionTime = 0.obs;
+  final Rx<CountdownTimerController>? timerController;
+
+  onEnd(){
+    if(timerController!.value.isRunning){
+      timerController?.value.disposeTimer();
+    }
+  }
 
   LikedCarsWidget({super.key,
     required this.imageUrl,
@@ -42,33 +52,8 @@ class LikedCarsWidget extends StatelessWidget {
     required this.model,
     required this.id,
     required this.bidAmount,
-    required this.carId, this.bidStartTime, this.bidEndTime,
+    required this.carId, this.bidStartTime, this.bidEndTime, this.timerController,
   });
-
-  void startTimer() {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (duration.value!.inSeconds == 0) {
-        timer.cancel();
-      } else {
-        duration.value = duration.value! - const Duration(seconds: 1);
-      }
-    });
-  }
-
-  String formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, '0');
-    String hour = duration.inHours.toString();
-    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-    if(duration.inHours == 0){
-      return "${twoDigitMinutes}min ${twoDigitSeconds}sec";
-    } else if (duration.inHours < 10){
-      hour = twoDigits(duration.inHours);
-      return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
-    }
-    return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
-
-  }
 
   /// Like Feature API integration
   void updateLikedCar(bool like) async {
@@ -96,13 +81,13 @@ class LikedCarsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var start = DateTime.now();
-    var end = bidEndTime ?? DateTime.now();
-    Duration diff = end.difference(start);
-    duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
-    if(start.isBefore(end)) {
-      startTimer();
-    }
+    // var start = DateTime.now();
+    // var end = bidEndTime ?? DateTime.now();
+    // Duration diff = end.difference(start);
+    // duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+    // if(start.isBefore(end)) {
+    //   startTimer();
+    // }
     return SingleChildScrollView(
       child: Container(
         height: 315,
@@ -257,21 +242,33 @@ class LikedCarsWidget extends StatelessWidget {
                   if(status.toLowerCase() == CarStatus.scheduled.name || status.toLowerCase() == CarStatus.otb.name)
                     SizedBox(height: Dimens.standard_2),
                   if(status.toLowerCase() == CarStatus.scheduled.name || status.toLowerCase() == CarStatus.otb.name)
-                    if(duration.value != null)
                       Obx(() => Row(
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.timer_sharp,
-                            color: MyColors.kPrimaryColor,
+                            color:  auctionTime.value >= 10 ? MyColors.green : auctionTime < 10 ? MyColors.orange : MyColors.red,
                             size: 14,
                           ),
-                          Text(formatDuration( duration.value! ), style: const TextStyle(
-                            color: MyColors.kPrimaryColor,
-                            fontSize: 14,
-                            fontFamily: 'DM Sans',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
-                          )),
+                          Obx(() => CountdownTimer(
+                            controller: timerController?.value,
+                            widgetBuilder: (_, CurrentRemainingTime? time) {
+                              if (time == null) {
+                                return const Text('');
+                              }
+                              if(time.min != null){
+                                WidgetsBinding.instance.addPostFrameCallback((_) {
+                                  auctionTime.value = time.min ?? 0;
+                                });
+                              }
+                              return Text(time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
+                                color: auctionTime.value >= 10 ? MyColors.green : auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                                fontSize: 14,
+                                fontFamily: 'DM Sans',
+                                fontWeight: FontWeight.w700,
+                                height: 0,
+                              ));
+                            },
+                          ),),
                         ],
                       ),),
                    const SizedBox(height: Dimens.standard_8),

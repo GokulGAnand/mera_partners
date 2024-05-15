@@ -3,7 +3,6 @@ import 'package:mera_partners/utils/images.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mera_partners/utils/svg.dart';
 import '../../utils/colors.dart';
 import '../../view_model/onboarding/onboarding_view_model.dart';
 import '../../widgets/onboarding_widget.dart';

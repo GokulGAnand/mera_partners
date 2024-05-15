@@ -32,7 +32,7 @@ class BidCarsListScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return Obx(() {
                           if ((controller.bidCarsearchController.value.text.isEmpty && controller.bidCarsearchList.isEmpty) || controller.bidCarsearchList.contains(controller.bidCarsResponse.value.data?[index].sId)) {
-                            return CustomCarDetailCard(
+                            return controller.bidCarsResponse.value.data?[0].biddedCars?[index].status?.toLowerCase() ==  CarStatus.live.name ? CustomCarDetailCard(
                               onCarTapped: () {
                                 Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.bidCarsResponse.value.data?[0].biddedCars![index].sId);
                               },
@@ -65,7 +65,7 @@ class BidCarsListScreen extends StatelessWidget {
                               bidStartTime: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()).toLocal(),
                               bidEndTime: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal(),
                               endTime: Rx(Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds),
-                              timerController: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds ?? 0, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds ?? 0, onEnd:() {},).obs,
+                              timerController: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs,
                               carModel: controller.bidCarsResponse.value.data?[0].biddedCars![index].model ?? '',
                               carVariant: controller.bidCarsResponse.value.data?[0].biddedCars![index].variant ?? '',
                               rating: ((controller.bidCarsResponse.value.data?[0].biddedCars![index].engineStar ?? 0 + (controller.bidCarsResponse.value.data?[0].biddedCars![index].exteriorStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].interiorAndElectricalStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].testDriveStar ?? 0)) / 4).roundToDouble(),
@@ -91,6 +91,7 @@ class BidCarsListScreen extends StatelessWidget {
                                     context: context,
                                     builder: (context) {
                                       return CustomBidBottomSheet(
+                                        timerController: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs,
                                         amountController: controller.autoBidController,
                                         isAutoBid: true,
                                         bidValue: RxInt(controller.bidCarsResponse.value.data?[0].biddedCars![index].highestBid ?? 0),
@@ -121,6 +122,7 @@ class BidCarsListScreen extends StatelessWidget {
                                     context: context,
                                     builder: (context) {
                                       return CustomBidBottomSheet(
+                                        timerController: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs,
                                         amountController: controller.bidController,
                                         bidValue: RxInt(controller.bidCarsResponse.value.data?[0].biddedCars![index].highestBid ?? 0),
                                         stepRate: controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 99999
@@ -141,7 +143,7 @@ class BidCarsListScreen extends StatelessWidget {
                                       );
                                     });
                               },
-                            );
+                            ):SizedBox();
                           } else {
                             return const SizedBox();
                           }

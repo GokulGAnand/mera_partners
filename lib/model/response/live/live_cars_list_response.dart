@@ -78,6 +78,8 @@ class Data {
   Front? engineCompartment;
   String? bidEndTime;
   String? bidStartTime;
+  String? otbEndTime;
+  String? otbStartTime;
   int? negotiationAmount;
   int? finalPrice;
   String? negotiationStatus;
@@ -122,6 +124,8 @@ class Data {
         this.interiorAndElectricalStar,
         this.engineCompartment,
         this.bidEndTime,
+        this.otbEndTime,
+        this.otbStartTime,
         this.negotiationAmount,
         this.finalPrice,
         this.negotiationStatus,
@@ -185,6 +189,8 @@ class Data {
         ? Front.fromJson(json['engineCompartment'])
         : null;
     bidEndTime = json['bidEndTime'];
+    otbEndTime = json['otbEndTime'];
+    otbStartTime = json['otbStartTime'];
     negotiationAmount = json['negotiation_amount'];
     finalPrice = json['finalPrice'];
     negotiationStatus = json['negotiation_status'];
@@ -248,6 +254,8 @@ class Data {
       data['engineCompartment'] = engineCompartment!.toJson();
     }
     data['bidEndTime'] = bidEndTime;
+    data['otbEndTime'] = otbEndTime;
+    data['otbStartTime'] = otbStartTime;
     data['bidStartTime'] = bidStartTime;
     data['negotiation_amount'] = negotiationAmount;
     data['procurement_status'] = procurementStatus;

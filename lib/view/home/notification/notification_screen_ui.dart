@@ -3,7 +3,6 @@ import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:mera_partners/view_model/home/notification/notification_view_model.dart';
-import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/notification_widget.dart';
 
 /// ignore: must_be_immutable
