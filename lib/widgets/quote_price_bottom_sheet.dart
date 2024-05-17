@@ -49,7 +49,6 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
     // Duration diff = end.difference(start);
     // widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
 
-    NumberFormat numberFormatter = NumberFormat.currency(locale: 'HI', name: '', decimalDigits: 0);
     if (widget.amountController.value.text.isEmpty){
       // widget.amountController.value.text = numberFormatter.format(widget.otbPrice.value).toString();
       widget.amountController.value.text = widget.otbPrice.value.toString();
