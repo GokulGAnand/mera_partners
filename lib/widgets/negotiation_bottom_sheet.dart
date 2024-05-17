@@ -10,7 +10,6 @@ import 'package:mera_partners/utils/svg.dart';
 import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 /// ignore: must_be_immutable
