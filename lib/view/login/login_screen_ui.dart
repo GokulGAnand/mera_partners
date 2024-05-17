@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/dimens.dart';
 import 'package:mera_partners/utils/images.dart';

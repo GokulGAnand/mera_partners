@@ -4,7 +4,7 @@ import 'package:mera_partners/utils/svg.dart';
 import 'package:mera_partners/view/tutorial/tutorial_screen_ui.dart';
 import 'package:mera_partners/view_model/home/home_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mera_partners/view_model/home/orders/negotiation_cars_view_model.dart';
 import 'package:mera_partners/view_model/home/orders/procured_bill_view_model.dart';

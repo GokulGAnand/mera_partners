@@ -17,7 +17,7 @@ import 'package:mera_partners/widgets/custom_bid_bottom_sheet.dart';
 import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:mera_partners/widgets/custom_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'dart:math' as math;
 import 'package:mera_partners/utils/globals.dart' as globals;

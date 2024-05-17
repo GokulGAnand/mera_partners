@@ -9,7 +9,7 @@ import 'package:mera_partners/utils/svg.dart';
 import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:mera_partners/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../utils/constants.dart';

@@ -2,7 +2,7 @@ import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/utils/svg.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
