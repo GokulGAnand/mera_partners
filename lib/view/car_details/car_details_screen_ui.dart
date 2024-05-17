@@ -995,10 +995,13 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                   // }
                                 },
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                                  padding: const EdgeInsets.symmetric(horizontal: 20),
                                   decoration: BoxDecoration(
                                     color: (carDetailsScreenViewModel.inspectionIndex.value == index)?MyColors.blue2:Colors.transparent,
-                                    borderRadius: BorderRadius.circular(8)
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(8),
+                                        topRight: Radius.circular(8)
+                                    )
                                   ),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,

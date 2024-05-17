@@ -162,3 +162,38 @@ class ImagePickerSheet extends StatelessWidget {
     );
   }
 }
+
+void _showFullScreenImage(BuildContext context, File? imageFile, String? imageUrl) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(3)),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+              if (imageFile != null)
+                Image.file(imageFile)
+              else if (imageUrl != null)
+                Image.network(imageUrl)
+              else
+                Text('No image available'),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
