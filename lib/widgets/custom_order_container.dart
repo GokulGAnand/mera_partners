@@ -10,7 +10,7 @@ import 'package:mera_partners/view_model/home/orders/negotiation_cars_view_model
 import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../utils/images.dart';
 import '../view_model/home/orders/procured_bill_view_model.dart';
 import '../view_model/home/orders/rc_transfer_view_model.dart';
