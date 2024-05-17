@@ -12,7 +12,6 @@ int? contactNo;
 String? token ;
 String? carId;
 String? phoneNum;
-String? password;
 var headers = {'Authorization': 'Bearer $token'};
 var jsonHeaders = {'Authorization': 'Bearer $token','Content-Type': 'application/json',};
 
@@ -29,5 +28,4 @@ void clearData(){
   token = null;
   carId = null;
   phoneNum = null;
-  password = null;
 }
