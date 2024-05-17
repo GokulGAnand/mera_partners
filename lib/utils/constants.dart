@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:intl/intl.dart';
 
 class Constants {
@@ -31,11 +32,18 @@ class Constants {
 
   static String getScheduledStatus(DateTime? bidStartTime){
     if (bidStartTime?.day == DateTime.now().day) {
-      return "Scheduled for today ${formatTime(bidStartTime ?? DateTime.now())}";
+      return "Scheduled for today, ${formatTime(bidStartTime ?? DateTime.now())}";
     } else if (bidStartTime?.day == DateTime.now().day + 1) {
-      return "Scheduled for tomorrow ${bidStartTime?.hour}:${bidStartTime?.minute}";
+      return "Scheduled for tomorrow, ${bidStartTime?.hour}:${bidStartTime?.minute}";
     } else {
-      return "Scheduled for ${formatDateTime(bidStartTime)}";
+      return "Scheduled for, ${formatDateTime(bidStartTime)}";
     }
+  }
+
+  static num calculateMinQuote(num amount){
+    num tenPercent = amount * 0.10;
+    num minQuote = amount - tenPercent;
+    log('minQuotePrice=$minQuote');
+    return minQuote;
   }
 }

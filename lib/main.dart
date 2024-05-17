@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/service/notification_service.dart';
 import 'package:mera_partners/utils/colors.dart';
@@ -10,6 +11,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   await NotificationService().initNotification();
   getPermission();
   runApp(const MyApp());

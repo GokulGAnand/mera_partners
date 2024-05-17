@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/utils/svg.dart';
@@ -9,7 +10,7 @@ import 'package:mera_partners/view/home/my_cars/tabs/liked_cars.dart';
 import 'package:mera_partners/view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 import 'package:mera_partners/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../routes/app_routes.dart';
 
 class MyCarsScreen extends StatefulWidget {
@@ -123,7 +124,7 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                 setState(() {});
               },
               tabs: [
-                Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.biddedCars}(${Get.find<BidCarsListViewModel>().bidCarsResponse.value.data?[0].biddedCars?.length ?? '0'})':MyStrings.biddedCars,),
+                Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.biddedCars}(${Get.find<BidCarsListViewModel>().bidCarsResponse.value.data?[0].biddedCars?.where((car) => car.status == CarStatus.live.name).length ?? '0'})':MyStrings.biddedCars,),
                 Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.likedCars}(${Get.find<BidCarsListViewModel>().likeResponse.value.data?[0].likedCars?.length ?? '0'})':MyStrings.likedCars,),
               ],
             ),),

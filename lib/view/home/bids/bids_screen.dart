@@ -7,7 +7,7 @@ import 'package:mera_partners/utils/svg.dart';
 import 'package:mera_partners/view_model/home/otb/otb_view_model.dart';
 import 'package:mera_partners/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../../view_model/home/live/live_cars_list_view_model.dart';
 import '../live/live_cars_list_screen.dart';

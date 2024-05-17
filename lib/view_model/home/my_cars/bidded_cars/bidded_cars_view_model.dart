@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
 import '../../../../model/response/user_data/user_car_details_response.dart';
 import '../../../../service/endpoints.dart';
@@ -100,6 +101,13 @@ class BidCarsListViewModel extends GetxController{
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         bidCarsResponse.value = UserResponse.fromJson(jsonDecode(response.body));
+        bidCarsResponse.value.data![0].biddedCars!.clear();
+        Rx<UserResponse> tempBidCarResponse = UserResponse.fromJson(jsonDecode(response.body)).obs;
+        for(int i=0; i<tempBidCarResponse.value.data![0].biddedCars!.length; i++){
+          if(tempBidCarResponse.value.data![0].biddedCars![i].status == CarStatus.live.name){
+            bidCarsResponse.value.data![0].biddedCars!.add(tempBidCarResponse.value.data![0].biddedCars![i]);
+          }
+        }
         // final isLastPage = bidCarsResponse.value.data!.length < limit;
         // if (isLastPage) {
         //   infinitePagingController.appendLastPage(bidCarsResponse.value.data!);
