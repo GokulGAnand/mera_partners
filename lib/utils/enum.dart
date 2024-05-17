@@ -22,3 +22,11 @@ enum OrderStatus{
   dealLost,
   rcTransfer
 }
+
+enum Inspection{
+  exterior,
+  interiorelectrical,
+  engine,
+  ac,
+  testdrive
+}
