@@ -799,6 +799,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       ),
                       const SizedBox(height: 12,),
                     InkWell(onTap: () {
+                      carDetailsScreenViewModel.quotePriceController.value.clear();
                       showModalBottomSheet(context: context, builder: (context) {
                         return QuotePriceBottomSheet(
                           timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime != null ? CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: 0).obs,
@@ -806,6 +807,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                           otbEndTime:carDetailsScreenViewModel.carDetailsResponse.value.data?[0].bidEndTime ?? DateTime.now(),
                           otbPrice: RxInt(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].realValue ?? 0),
                           amountController: carDetailsScreenViewModel.quotePriceController,
+                          minQuotePrice: RxNum(Constants.calculateMinQuote(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].realValue ?? 0)),
                           onPressed: () {
                             Navigator.of(context).pop();
                             carDetailsScreenViewModel.quotePrice(carDetailsScreenViewModel.id, carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0);

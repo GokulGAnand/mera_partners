@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "28440160509",
+    "project_id": "merapartners-35393",
+    "storage_bucket": "merapartners-35393.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28440160509:android:b0ec850c56fe4dff857694",
+        "android_client_info": {
+          "package_name": "com.meracars.mera_partners"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPQOxfwkXM-y_oBZifWbOnoifOBK-75jc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

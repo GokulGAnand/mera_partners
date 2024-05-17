@@ -756,7 +756,7 @@ class CarDetailsScreenViewModel extends GetxController {
           }));
 
       if (response.statusCode == 200) {
-        CustomToast.instance.showMsg(MyStrings.success);
+        CustomToast.instance.showMsgWithIcon("${MyStrings.quotePrice} ${MyStrings.success}",null);
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
       } else {

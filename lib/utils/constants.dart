@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:intl/intl.dart';
 
 class Constants {
@@ -37,5 +38,12 @@ class Constants {
     } else {
       return "Scheduled for, ${formatDateTime(bidStartTime)}";
     }
+  }
+
+  static num calculateMinQuote(num amount){
+    num tenPercent = amount * 0.10;
+    num minQuote = amount - tenPercent;
+    log('minQuotePrice=$minQuote');
+    return minQuote;
   }
 }
