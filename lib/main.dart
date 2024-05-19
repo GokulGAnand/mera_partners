@@ -20,8 +20,7 @@ void main() async {
   await NotificationService().initNotification();
   getPermission();
   await PushNotifications.init();
-  final fcmToken = await FirebaseMessaging.instance.getToken();
-  log('"ranjitha"$fcmToken');
+  await PushNotifications.getDeviceToken();
   runApp(const MyApp());
 }
 

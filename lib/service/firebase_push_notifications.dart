@@ -1,6 +1,12 @@
+import 'dart:convert';
 import 'dart:developer';
-
+import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:mera_partners/service/endpoints.dart';
+import 'package:mera_partners/utils/globals.dart' as globals;
+
+import '../utils/constants.dart';
+import '../utils/shared_pref_manager.dart';
 
 class PushNotifications {
   static final _firebaseMessaging = FirebaseMessaging.instance;
@@ -25,7 +31,10 @@ class PushNotifications {
       // get the device fcm token
       token = await _firebaseMessaging.getToken();
       log("for android device token: $token");
-      saveToken(token: token!);
+      if (token != null && token.isNotEmpty) {
+        SharedPrefManager.instance.setStringAsync(Constants.fcmToken, token);
+        globals.fcmToken = token;
+      }
       return token;
     } catch (e) {
       log("failed to get device token");
@@ -40,6 +49,22 @@ class PushNotifications {
   }
 
   static saveToken({required String token}) async {
+    try {
+      var headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer ${globals.token}'};
+      var request = http.Request('POST', Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.setFCM + (globals.uniqueUserId ?? '')));
+      request.body = json.encode({"fcmToken": token});
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        log("fcm token successfully saved");
+      } else {
+        log(response.reasonPhrase.toString());
+      }
+    } catch (e) {
+      log(e.toString());
+    }
     // bool isUserLoggedin = await AuthService.isLoggedIn();
     // print("User is logged in $isUserLoggedin");
     // if (isUserLoggedin) {

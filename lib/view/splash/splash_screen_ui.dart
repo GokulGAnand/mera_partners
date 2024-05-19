@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'package:mera_partners/service/firebase_push_notifications.dart';
 import 'package:mera_partners/utils/images.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mera_partners/view_model/splash/splash_screen_view_model.dart';
 import '../../routes/app_routes.dart';
+import 'package:mera_partners/utils/globals.dart' as globals;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,6 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
       splashScreenViewModel.isLoginAlready = value;
       if(splashScreenViewModel.isLoginAlready == true){
         await splashScreenViewModel.getUserData();
+        PushNotifications.saveToken(token: (globals.fcmToken ?? ''));
       }
     });
     Timer(const Duration(seconds: 3), () {
