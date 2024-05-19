@@ -406,7 +406,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       (carDetailsScreenViewModel.criticalIssue.isEmpty)?
                       const Padding(
                         padding: EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text("Not any Critical Issue", style: MyStyles.subtitle12400,),
+                        child: Text("No Critical Issue", style: MyStyles.subtitle12400,),
                       )
                       :Wrap(
                         children: [

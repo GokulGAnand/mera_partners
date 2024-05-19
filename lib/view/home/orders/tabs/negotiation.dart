@@ -77,6 +77,7 @@ class _NegotiationState extends State<Negotiation> {
                 itemBuilder: (context, index) {
                   return Obx(() {
                     return CustomOrderContainer(
+                      timerController: controller.searchNegotiationList[index].negotiationEndTime != null ? CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.searchNegotiationList[index].negotiationEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:controller.onEnd,).obs : CountdownTimerController(endTime: 0).obs,
                       negEndTime: DateTime.parse(controller.searchNegotiationList[index].negotiationEndTime ?? DateTime.now().toString()),
                       negStartTime: DateTime.parse(controller.searchNegotiationList[index].negotiationStartTime ?? DateTime.now().toString()),
                       backgroundBlackOpacity: 

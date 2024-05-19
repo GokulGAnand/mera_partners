@@ -286,17 +286,17 @@ class BidTextFormFieldState extends State<BidTextFormField> {
       maxLines: widget.maxLines,
       minLines: widget.minLines,
       maxLength: widget.maxLength,
-      textInputAction: widget.inputAction,
+      textInputAction: null,
       focusNode: myFocusNode,
       onChanged: widget.onChange,
       validator: widget.validator,
       onSaved: widget.onSave,
       onTap: widget.onClick,
-      onEditingComplete: () {
-        final formatter = NumberFormat("#,###");
-        String newText = formatter.format(int.tryParse(widget.controller.text) ?? 0);
-        widget.controller.text = newText;
-      },
+      // onEditingComplete: () {
+      //   final formatter = NumberFormat("#,###");
+      //   String newText = formatter.format(int.tryParse(widget.controller.text) ?? 0);
+      //   widget.controller.text = newText;
+      // },
       decoration: InputDecoration(
           helperStyle: const TextStyle(color: MyColors.black),
           hintText: widget.helperText,
