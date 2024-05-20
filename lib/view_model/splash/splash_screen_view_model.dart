@@ -15,30 +15,19 @@ class SplashScreenViewModel extends GetxController {
   bool isLoginAlready = false;
 
   Future<bool> loadData() async {
-    globals.token =
-        await SharedPrefManager.instance.getStringAsync(Constants.token);
-    globals.isOnboarding =
-          await SharedPrefManager.instance.getBoolAsync(Constants.isOnboarding);
+    globals.token = await SharedPrefManager.instance.getStringAsync(Constants.token);
+    globals.isOnboarding = await SharedPrefManager.instance.getBoolAsync(Constants.isOnboarding);
     if (globals.token != null && globals.token.toString().isNotEmpty) {
-      globals.phoneNum =
-          await SharedPrefManager.instance.getStringAsync(Constants.phoneNum);
+      globals.phoneNum = await SharedPrefManager.instance.getStringAsync(Constants.phoneNum);
       if (globals.phoneNum != null) {
-        globals.contactNo = int.parse(await SharedPrefManager.instance
-                .getStringAsync(Constants.contactNo) ??
-            "0");
+        globals.contactNo = int.parse(await SharedPrefManager.instance.getStringAsync(Constants.contactNo) ?? "0");
       }
-      globals.userId =
-          await SharedPrefManager.instance.getStringAsync(Constants.userId);
-      globals.uniqueUserId = await SharedPrefManager.instance
-          .getStringAsync(Constants.uniqueUserId);
-      globals.documentStatus = await SharedPrefManager.instance
-          .getStringAsync(Constants.documentStatus);
-      globals.isDeposited =
-          await SharedPrefManager.instance.getBoolAsync(Constants.isDeposited);
-      globals.addressProofFront = await SharedPrefManager.instance
-          .getBoolAsync(Constants.addressProofFront);
-      globals.userName =
-          await SharedPrefManager.instance.getStringAsync(Constants.userName);
+      globals.userId = await SharedPrefManager.instance.getStringAsync(Constants.userId);
+      globals.uniqueUserId = await SharedPrefManager.instance.getStringAsync(Constants.uniqueUserId);
+      globals.documentStatus = await SharedPrefManager.instance.getStringAsync(Constants.documentStatus);
+      globals.isDeposited = await SharedPrefManager.instance.getBoolAsync(Constants.isDeposited);
+      globals.addressProofFront = await SharedPrefManager.instance.getBoolAsync(Constants.addressProofFront);
+      globals.userName = await SharedPrefManager.instance.getStringAsync(Constants.userName);
       globals.fcmToken = await SharedPrefManager.instance.getStringAsync(Constants.fcmToken);
       log(globals.token.toString());
       log(globals.uniqueUserId.toString());
@@ -49,19 +38,16 @@ class SplashScreenViewModel extends GetxController {
   }
 
   var userResponse = UserResponse().obs;
+
   Future<void> getUserData() async {
     try {
       log('API URL: ${Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}')}');
-      var response = await http.get(
-          Uri.parse(
-              '${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'),
-          headers: globals.headers);
+      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'), headers: globals.headers);
       log('API Response Body: ${response.body}');
       if (response.statusCode == 200) {
         // ProgressBar.instance.stopProgressBar(Get.context!);
         userResponse.value = UserResponse.fromJson(jsonDecode(response.body));
-        log("isDeactivate: " +
-            userResponse.value.data![0].isDeactivate.toString());
+        log("isDeactivate: ${userResponse.value.data![0].isDeactivate}");
         if (userResponse.value.data![0].isDeactivate == true) {
           globals.clearData();
           SharedPrefManager.instance.removeStringAsync(Constants.userName);
@@ -82,8 +68,7 @@ class SplashScreenViewModel extends GetxController {
     } catch (e) {
       // ProgressBar.instance.stopProgressBar(Get.context!);
       log('Exception occurred: $e');
-      CustomToast.instance
-          .showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
+      CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
   }
 }

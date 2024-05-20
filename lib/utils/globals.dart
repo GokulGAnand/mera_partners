@@ -29,4 +29,6 @@ void clearData(){
   token = null;
   carId = null;
   phoneNum = null;
+  headers = {};
+  jsonHeaders = {};
 }
