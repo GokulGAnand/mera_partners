@@ -104,8 +104,8 @@ class BidCarsListViewModel extends GetxController{
         bidCarsResponse.value.data![0].biddedCars!.clear();
         Rx<UserResponse> tempBidCarResponse = UserResponse.fromJson(jsonDecode(response.body)).obs;
         for(int i=0; i<tempBidCarResponse.value.data![0].biddedCars!.length; i++){
-          if(tempBidCarResponse.value.data![0].biddedCars![i].status == CarStatus.live.name){
-            bidCarsResponse.value.data![0].biddedCars!.add(tempBidCarResponse.value.data![0].biddedCars![i]);
+          if(tempBidCarResponse.value.data?[0].biddedCars?[i].status?.toLowerCase() == CarStatus.live.name){
+            bidCarsResponse.value.data?[0].biddedCars?.add(tempBidCarResponse.value.data![0].biddedCars![i]);
           }
         }
         // final isLastPage = bidCarsResponse.value.data!.length < limit;

@@ -71,6 +71,17 @@ class LoginScreenViewModel extends GetxController {
     }
   }
 
+  clearData(){
+    SharedPrefManager.instance.removeStringAsync(Constants.userName);
+    SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
+    SharedPrefManager.instance.removeStringAsync(Constants.contactNo);
+    SharedPrefManager.instance.removeStringAsync(Constants.token);
+    SharedPrefManager.instance.removeStringAsync(Constants.fcmToken);
+    SharedPrefManager.instance.removeStringAsync(Constants.userId);
+    SharedPrefManager.instance.removeStringAsync(Constants.uniqueUserId);
+    SharedPrefManager.instance.removeStringAsync(Constants.documentStatus);
+  }
+
   Future<void> verifyOTP(BuildContext context) async {
     try {
       ProgressBar.instance.showProgressbar(context);
@@ -80,6 +91,8 @@ class LoginScreenViewModel extends GetxController {
       String otp = otpTextField1.value.text.toString() + otpTextField2.value.text.toString() + otpTextField3.value.text.toString() + otpTextField4.value.text.toString();
       var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.verifyOtp), body: jsonEncode({"contactNo": int.parse(mobileController.value.text), "otp": int.parse(otp)}),headers: headers);
       if (response.statusCode == 200) {
+        clearData();
+        globals.clearData();
         ProgressBar.instance.stopProgressBar(context);
         log(response.body.toString());
         userInfoResponse.value = UserInfoResponse.fromJson(jsonDecode(response.body));
@@ -106,6 +119,8 @@ class LoginScreenViewModel extends GetxController {
           globals.documentStatus = userInfoResponse.value.data?.first.isDocumentsVerified;
           globals.isDeposited = userInfoResponse.value.data?.first.isDeposited;
           globals.addressProofFront = userInfoResponse.value.data?.first.addressProofFront != null ? true : false;
+          globals.headers = {'Authorization': 'Bearer ${globals.token}'};
+          globals.jsonHeaders = {'Content-Type': 'application/json','Authorization': 'Bearer ${globals.token}',};
 
           if((globals.isOnboarding == null || globals.isOnboarding == false) && globals.isDeposited == false){
             SharedPrefManager.instance.setBoolAsync(Constants.isOnboarding, true);
