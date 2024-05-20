@@ -270,47 +270,50 @@ class BidTextFormFieldState extends State<BidTextFormField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      key: widget.key,
-      style: widget.textFieldStyle,
-      inputFormatters: widget.inputFormatter,
-      controller: widget.controller,
-      keyboardType: widget.keyboardType,
-      cursorColor: widget.cursorColor,
-      showCursor: widget.showCursor,
-      obscureText: widget.isPwdType,
-      obscuringCharacter: '*',
-      enabled: widget.isEnabled,
-      readOnly:  widget.isReadonly,
-      textCapitalization: widget.textCapitalization,
-      maxLines: widget.maxLines,
-      minLines: widget.minLines,
-      maxLength: widget.maxLength,
-      textInputAction: widget.inputAction,
-      focusNode: myFocusNode,
-      onChanged: widget.onChange,
-      validator: widget.validator,
-      onSaved: widget.onSave,
-      onTap: widget.onClick,
-      onEditingComplete: () {
-        final formatter = NumberFormat("#,###");
-        String newText = formatter.format(int.tryParse(widget.controller.text) ?? 0);
-        widget.controller.text = newText;
-      },
-      decoration: InputDecoration(
-          helperStyle: const TextStyle(color: MyColors.black),
-          hintText: widget.helperText,
-          labelText: widget.labelText,
-          hintStyle: TextStyle(color: widget.hintTextColor ?? MyColors.grey, fontSize: 16, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400
-          ),
-          contentPadding: EdgeInsets.only(left: widget.controller.text.length > 5 ? MediaQuery.of(context).size.width * 0.10 : MediaQuery.of(context).size.width * 0.15),
-          border: InputBorder.none,
-          labelStyle: widget.labelStyle ?? TextStyle(height: widget.labelHeight ?? 0.5, color: widget.labelColor ?? MyColors.black, fontSize: 15, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal),
-          prefixIcon: widget.prefixIcon,
-          suffixIcon: widget.suffixIcon,
-          prefixText: widget.prefixText ?? '₹ ',
-          suffixStyle: MyStyles.subtitle18700,
-          prefixStyle: MyStyles.subtitle18700,
+    return SizedBox(
+      width: MediaQuery.of(context).size.height * 0.9,
+      child: TextFormField(
+        key: widget.key,
+        style: widget.textFieldStyle,
+        inputFormatters: widget.inputFormatter,
+        controller: widget.controller,
+        keyboardType: widget.keyboardType,
+        cursorColor: widget.cursorColor,
+        showCursor: widget.showCursor,
+        obscureText: widget.isPwdType,
+        obscuringCharacter: '*',
+        enabled: widget.isEnabled,
+        readOnly:  widget.isReadonly,
+        textCapitalization: widget.textCapitalization,
+        maxLines: widget.maxLines,
+        minLines: widget.minLines,
+        maxLength: widget.maxLength,
+        textInputAction: widget.inputAction,
+        focusNode: myFocusNode,
+        onChanged: widget.onChange,
+        validator: widget.validator,
+        onSaved: widget.onSave,
+        onTap: widget.onClick,
+        onEditingComplete: () {
+          final formatter = NumberFormat("#,###");
+          String newText = formatter.format(int.tryParse(widget.controller.text) ?? 0);
+          widget.controller.text = newText;
+        },
+        decoration: InputDecoration(
+            helperStyle: const TextStyle(color: MyColors.black),
+            hintText: widget.helperText,
+            labelText: widget.labelText,
+            hintStyle: TextStyle(color: widget.hintTextColor ?? MyColors.grey, fontSize: 16, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400
+            ),
+            contentPadding: EdgeInsets.only(left: widget.controller.text.length > 5 ? MediaQuery.of(context).size.width * 0.10 : MediaQuery.of(context).size.width * 0.15),
+            border: InputBorder.none,
+            labelStyle: widget.labelStyle ?? TextStyle(height: widget.labelHeight ?? 0.5, color: widget.labelColor ?? MyColors.black, fontSize: 15, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal),
+            prefixIcon: widget.prefixIcon,
+            suffixIcon: widget.suffixIcon,
+            prefixText: widget.prefixText ?? '₹ ',
+            suffixStyle: MyStyles.subtitle18700,
+            prefixStyle: MyStyles.subtitle18700,
+        ),
       ),
     );
   }
