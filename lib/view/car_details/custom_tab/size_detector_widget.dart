@@ -14,16 +14,17 @@ class SizeDetectorWidget extends StatefulWidget {
   final bool showViewIssue;
 
   const SizeDetectorWidget({
-    Key? key,
+    super.key,
     required this.child,
     required this.onSizeDetect,
     required this.onTap,
     required this.listLength,
     required this.showMore,
     required this.showViewIssue,
-  }) : super(key: key);
+  });
 
   @override
+  // ignore: library_private_types_in_public_api
   _SizeDetectorWidgetState createState() => _SizeDetectorWidgetState();
 }
 
