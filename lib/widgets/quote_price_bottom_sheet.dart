@@ -72,7 +72,7 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
   Widget build(BuildContext context) {
     NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
     return Container(
-      height: MediaQuery.of(context).size.height * 0.55,
+      height: MediaQuery.of(context).size.height < 900 ? MediaQuery.of(context).size.height * 0.65: MediaQuery.of(context).size.height * 0.55,
       padding: const EdgeInsets.all(16.0),
       decoration: const BoxDecoration(
         color: MyColors.white,
