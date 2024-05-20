@@ -1,4 +1,4 @@
-import 'dart:async';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
@@ -88,14 +88,22 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 1),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
-            color: MyColors.subTitleColor.withOpacity(0.15),
-            blurRadius: 15.0,
-          ),
+              color: MyColors.subTitleColor.withOpacity(0.1),
+              offset: const Offset(0, 4),
+              blurRadius: 6,
+              spreadRadius: 0
+          ),BoxShadow(
+              color: MyColors.subTitleColor.withOpacity(0.1),
+              offset: const Offset(0, 10),
+              blurRadius: 15,
+              spreadRadius: 0
+          )
         ],
       ),
       child: SingleChildScrollView(
