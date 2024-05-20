@@ -83,7 +83,7 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
   Widget build(BuildContext context) {
     NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
     return Container(
-        height: (widget.isAutoBid) ? MediaQuery.of(context).size.height * 0.65 : MediaQuery.of(context).size.height * 0.55,
+         height: (widget.isAutoBid) ? MediaQuery.of(context).size.height * 0.65 : MediaQuery.of(context).size.height * 0.55,
         padding: const EdgeInsets.all(16.0),
         decoration: const BoxDecoration(
           color: MyColors.white,
@@ -115,7 +115,7 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
                 Icon(
                   Icons.timer_sharp,
                   color:  widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime < 10 ? MyColors.orange : MyColors.red,
-                  size: 14,
+                  size: 20,
                 ),
                 const SizedBox(
                   width: 5,

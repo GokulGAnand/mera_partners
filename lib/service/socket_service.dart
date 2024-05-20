@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:mera_partners/model/response/live/live_cars_list_response.dart';
 import 'package:mera_partners/service/notification_service.dart';
+import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/view_model/home/live/live_cars_list_view_model.dart';
+import 'package:mera_partners/view_model/home/otb/otb_view_model.dart';
 import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -27,13 +29,36 @@ class SocketService {
       return parsed.map<Data>((json) => Data.fromJson(json)).toList();
     }
 
+    void filterCars(List<Data> carList){
+      List<Data> liveCarsList = <Data> [];
+      List<Data> otbCarsList = <Data> [];
+      for(int i=0;i<carList.length;i++){
+        if(carList[i].status?.toLowerCase() == CarStatus.live.name || carList[i].status?.toLowerCase() == CarStatus.scheduled.name){
+          liveCarsList.add(carList[i]);
+        }
+        else if(carList[i].status?.toLowerCase() == CarStatus.otb.name){
+          otbCarsList.add(carList[i]);
+        }
+      }
+      Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data = liveCarsList;
+      Get.find<LiveCarsListViewModel>().updateBid(liveCarsList);
+      Get.find<LiveCarsListViewModel>().liveCarsResponse.refresh();
+      ///OTB data update
+      if (Get.isRegistered<OTBCarsListViewModel>()) {
+        // Get.find<OTBCarsListViewModel>().carsListResponse.value.data = otbCarsList;
+        // Get.find<OTBCarsListViewModel>().updateCars(otbCarsList);
+        // Get.find<OTBCarsListViewModel>().carsListResponse.refresh();
+        Get.find<OTBCarsListViewModel>().infinitePagingController.refresh();
+      }else{
+        Get.put(OTBCarsListViewModel());
+      }
+    }
+
     socket?.on('getBidInfo', (data) {
       log('Received message: $data');
       if (data != null) {
         List<Data> carList = parseCarDataList(data);
-        Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data = carList;
-        Get.find<LiveCarsListViewModel>().updateBid(carList);
-        Get.find<LiveCarsListViewModel>().liveCarsResponse.refresh();
+        filterCars(carList);
         //todo changes
         // Get.find<BidCarsListViewModel>().bidCarsResponse.value.data = carList;
         // Get.find<BidCarsListViewModel>().bidCarsResponse.refresh(); // Manually trigger UI update

@@ -303,22 +303,26 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                             width: 62,
                                             height: 62,
                                           ),
-                                          SizedBox(
-                                            width: 58,
-                                            height: 58,
-                                            child: Image.network(carDetailsScreenViewModel.imageList[index]["images"][0].value, fit: BoxFit.cover,
-                                            errorBuilder: (context, error, stackTrace) {
-                                              return SvgPicture.asset(MyImages.loadingCar);
-                                            }, frameBuilder:
-                                                (context, child, frame, wasSynchronouslyLoaded) {
-                                              return child;
-                                            }, loadingBuilder: (context, child, loadingProgress) {
-                                              if (loadingProgress == null) {
-                                                return child;
-                                              } else {
+                                          ClipRRect(
+                                            // as per the design
+                                            borderRadius: BorderRadius.circular(8),
+                                            child: SizedBox(
+                                              width: 58,
+                                              height: 58,
+                                              child: Image.network(carDetailsScreenViewModel.imageList[index]["images"][0].value, fit: BoxFit.cover,
+                                              errorBuilder: (context, error, stackTrace) {
                                                 return SvgPicture.asset(MyImages.loadingCar);
-                                              }
-                                            }),
+                                              }, frameBuilder:
+                                                  (context, child, frame, wasSynchronouslyLoaded) {
+                                                return child;
+                                              }, loadingBuilder: (context, child, loadingProgress) {
+                                                if (loadingProgress == null) {
+                                                  return child;
+                                                } else {
+                                                  return SvgPicture.asset(MyImages.loadingCar);
+                                                }
+                                              }),
+                                            ),
                                           ),
                                           (carDetailsScreenViewModel.imageList[index]["title"]== MyStrings.damage)
                                               ? Positioned(
@@ -406,7 +410,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       (carDetailsScreenViewModel.criticalIssue.isEmpty)?
                       const Padding(
                         padding: EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text("Not any Critical Issue", style: MyStyles.subtitle12400,),
+                        child: Text("No Critical Issue", style: MyStyles.subtitle12400,),
                       )
                       :Wrap(
                         children: [
