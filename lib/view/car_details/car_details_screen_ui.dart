@@ -666,7 +666,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
   Widget sliverAppBarTitle() {
     return Container(
       width: double.infinity,
-      height: 134,
+      height: 136,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -948,7 +948,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
   Widget inspectionReport() {
     return Container(
       color: MyColors.lightBlue1,
-      padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+      padding: const EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -963,7 +963,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             children: [
               Container(
                 width: double.infinity,
-                height: 66,
+                height: 70,
                 decoration: const BoxDecoration(
                   color: MyColors.white,
                   borderRadius: BorderRadius.only(
@@ -984,7 +984,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
               Obx(
                 () {
                   return SizedBox(
-                    height: 66,
+                    height: 70,
                     child: ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
