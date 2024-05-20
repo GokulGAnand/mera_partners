@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:intl/intl.dart';
 
 class Constants {
@@ -15,6 +16,7 @@ class Constants {
   static const String isDeposited = 'isDeposited';
   static const String addressProofFront = 'addressProofFront';
   static const String isOnboarding = 'isOnboarding';
+  static const String fcmToken = 'fcmToken';
   static NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
   static const tenMinutes = 600000;
 
@@ -37,5 +39,12 @@ class Constants {
     } else {
       return "Scheduled for, ${formatDateTime(bidStartTime)}";
     }
+  }
+
+  static num calculateMinQuote(num amount){
+    num tenPercent = amount * 0.10;
+    num minQuote = amount - tenPercent;
+    log('minQuotePrice=$minQuote');
+    return minQuote;
   }
 }

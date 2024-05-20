@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/colors.dart';
@@ -10,6 +9,7 @@ import 'package:mera_partners/utils/images.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/utils/svg.dart';
+import 'package:mera_partners/view/car_details/custom_tab/autoscale_tabbar_view.dart';
 import 'package:mera_partners/view_model/car_details/car_details_view_model.dart';
 import 'package:mera_partners/view_model/home/live/live_cars_list_view_model.dart';
 import 'package:mera_partners/view_model/home/otb/otb_view_model.dart';
@@ -17,7 +17,7 @@ import 'package:mera_partners/widgets/custom_bid_bottom_sheet.dart';
 import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:mera_partners/widgets/custom_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'dart:math' as math;
 import 'package:mera_partners/utils/globals.dart' as globals;
@@ -410,7 +410,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       (carDetailsScreenViewModel.criticalIssue.isEmpty)?
                       const Padding(
                         padding: EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text("Not any Critical Issue", style: MyStyles.subtitle12400,),
+                        child: Text("No Critical Issue", style: MyStyles.subtitle12400,),
                       )
                       :Wrap(
                         children: [
@@ -571,7 +571,6 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             carDetailsScreenViewModel.exteriorShowMore, () {
           carDetailsScreenViewModel.exteriorShowMore.value =
               !carDetailsScreenViewModel.exteriorShowMore.value;
-              setState(() {});
         }),
       ),
       Padding(
@@ -803,6 +802,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       ),
                       const SizedBox(height: 12,),
                     InkWell(onTap: () {
+                      carDetailsScreenViewModel.quotePriceController.value.clear();
                       showModalBottomSheet(context: context, builder: (context) {
                         return QuotePriceBottomSheet(
                           timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime != null ? CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: 0).obs,
@@ -810,6 +810,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                           otbEndTime:carDetailsScreenViewModel.carDetailsResponse.value.data?[0].bidEndTime ?? DateTime.now(),
                           otbPrice: RxInt(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].realValue ?? 0),
                           amountController: carDetailsScreenViewModel.quotePriceController,
+                          minQuotePrice: RxNum(Constants.calculateMinQuote(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].realValue ?? 0)),
                           onPressed: () {
                             Navigator.of(context).pop();
                             carDetailsScreenViewModel.quotePrice(carDetailsScreenViewModel.id, carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0);
@@ -999,10 +1000,13 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                   // }
                                 },
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                                  padding: const EdgeInsets.symmetric(horizontal: 20),
                                   decoration: BoxDecoration(
                                     color: (carDetailsScreenViewModel.inspectionIndex.value == index)?MyColors.blue2:Colors.transparent,
-                                    borderRadius: BorderRadius.circular(8)
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(8),
+                                        topRight: Radius.circular(8)
+                                    )
                                   ),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -1093,7 +1097,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
               style: MyStyles.black14700,
             ),
           ),
-          (title.toLowerCase() == "engine")
+          (title.toLowerCase() == Inspection.engine.name)
               ? Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Column(
@@ -1174,9 +1178,12 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
           ),
           AutoScaleTabBarView(
             controller: tabController,
+            onTap: onTap!,
+            listLength: issueList.length,
+            showMore: showMore,
             children: (issueList.isNotEmpty)?
             [
-              viewIssue(issueList, showMore, onTap),
+              viewIssue(issueList, showMore, onTap, isExterior: (title.toLowerCase() == Inspection.exterior.name)?true:false),
               // Text("view"),
               otherIssue(otherPartsList),
             ]
@@ -1189,219 +1196,280 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
     );
   }
 
-  Widget viewIssue(RxList<Master> list, RxBool showMore, Function()? onTap) {
+  Widget viewIssue(RxList<Master> list, RxBool showMore, Function()? onTap, {bool isExterior = false}) {
     return (list.isEmpty)?
     const SizedBox()
-    :ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: ((list.length == 1) ? list.length : list.length+1), //length+1
-          itemBuilder: (context, index) {
-            return Obx((){
-              if (index < 2 || (showMore.value == true && index != list.length)) {
-              return Container(
-                width: double.infinity,
-                // height: 142,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                margin: const EdgeInsets.only(top: 10),
-                decoration: BoxDecoration(
-                    color: MyColors.containerBG,
-                    borderRadius: BorderRadius.circular(6)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+    :Column(
+      children: [
+        ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: list.length, //length+1
+              itemBuilder: (context, index) {
+                return Obx((){
+                  if (index < 2 || (showMore.value == true && index != list.length)) {
+                  return Container(
+                    width: double.infinity,
+                    // height: 142,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    margin: const EdgeInsets.only(top: 10),
+                    decoration: BoxDecoration(
+                        color: MyColors.containerBG,
+                        borderRadius: BorderRadius.circular(6)),
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Row(
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Column(
                                 children: [
-                                  CircleAvatar(
-                                    radius: 10,
-                                    backgroundColor: list[index].color,
-                                    child: SvgPicture.asset(
-                                      MySvg.carCrash,
-                                    ),
+                                  Row(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 10,
+                                        backgroundColor: list[index].color,
+                                        child: SvgPicture.asset(
+                                          MySvg.carCrash,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 6,
+                                      ),
+                                      Text(
+                                        list[index].title.capitalize.toString(),
+                                        style: MyStyles.black12500,
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(
-                                    width: 6,
+                                  if(list[index].listValue != null) Padding(
+                                    padding: const EdgeInsets.only(top: 12.0),
+                                    child: GridView.builder(
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: list[index].listValue!.length,
+                                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 8,
+                                        mainAxisSpacing: 8,
+                                        mainAxisExtent: 30), 
+                                        itemBuilder: (context, i){
+                                          return Container(
+                                            alignment: Alignment.center,
+                                            margin: const EdgeInsets.only(right: 6),
+                                            decoration: BoxDecoration(
+                                              color: list[index].color,
+                                              borderRadius: BorderRadius.circular(4)
+                                            ),
+                                            child: Text(
+                                              list[index].listValue![i].capitalize.toString(),
+                                            style: MyStyles.white12500,),
+                                          );
+                                        }),
                                   ),
-                                  Text(
-                                    list[index].title.capitalize.toString(),
-                                    style: MyStyles.black12500,
-                                  ),
+                                  // Row(
+                                  //   children: [
+                                  //     Expanded(
+                                  //       child: SizedBox(
+                                  //         height: 40,
+                                  //         child: CustomElevatedButton(
+                                  //             onPressed: () {},
+                                  //             buttonStyle: ElevatedButton.styleFrom(
+                                  //                 padding: const EdgeInsets.all(2),
+                                  //                 backgroundColor: MyColors.warning,
+                                  //                 elevation: 0,
+                                  //                 shape: RoundedRectangleBorder(
+                                  //                     borderRadius:
+                                  //                         BorderRadius.circular(
+                                  //                             6))),
+                                  //             buttonColor: MyColors.warning,
+                                  //             buttonText: MyStrings.damaged,
+                                  //             textStyle: MyStyles.white12500),
+                                  //       ),
+                                  //     ),
+                                  //     const SizedBox(
+                                  //       width: 8,
+                                  //     ),
+                                  //     Expanded(
+                                  //       child: SizedBox(
+                                  //         height: 40,
+                                  //         child: CustomElevatedButton(
+                                  //           onPressed: () {},
+                                  //           buttonStyle: ElevatedButton.styleFrom(
+                                  //               padding: const EdgeInsets.all(2),
+                                  //               backgroundColor: MyColors.warning,
+                                  //               elevation: 0,
+                                  //               shape: RoundedRectangleBorder(
+                                  //                   borderRadius:
+                                  //                       BorderRadius.circular(6))),
+                                  //           buttonColor: MyColors.warning,
+                                  //           buttonText: MyStrings.repaired,
+                                  //           textStyle: MyStyles.white12500,
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //   ],
+                                  // )
                                 ],
                               ),
-                              if(list[index].listValue != null) Padding(
-                                padding: const EdgeInsets.only(top: 12.0),
-                                child: GridView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: list[index].listValue!.length,
-                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    crossAxisSpacing: 8,
-                                    mainAxisSpacing: 8,
-                                    mainAxisExtent: 30), 
-                                    itemBuilder: (context, i){
-                                      return Container(
-                                        alignment: Alignment.center,
-                                        margin: const EdgeInsets.only(right: 6),
-                                        decoration: BoxDecoration(
-                                          color: list[index].color,
-                                          borderRadius: BorderRadius.circular(4)
-                                        ),
-                                        child: Text(
-                                          list[index].listValue![i].capitalize.toString(),
-                                        style: MyStyles.white12500,),
-                                      );
+                            ),
+                            if(list[index].value!.startsWith("http") || list[index].value!.startsWith("https")) Padding(
+                              padding: const EdgeInsets.only(left: 10.0),
+                              child: SizedBox(
+                                width: 75,
+                                height: 68,
+                                child: Image.network(list[index].value.toString(), fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return SvgPicture.asset(MyImages.loadingCar);
+                                    }, frameBuilder:
+                                        (context, child, frame, wasSynchronouslyLoaded) {
+                                      return child;
+                                    }, loadingBuilder: (context, child, loadingProgress) {
+                                      if (loadingProgress == null) {
+                                        return child;
+                                      } else {
+                                        return SvgPicture.asset(MyImages.loadingCar);
+                                      }
                                     }),
                               ),
-                              // Row(
-                              //   children: [
-                              //     Expanded(
-                              //       child: SizedBox(
-                              //         height: 40,
-                              //         child: CustomElevatedButton(
-                              //             onPressed: () {},
-                              //             buttonStyle: ElevatedButton.styleFrom(
-                              //                 padding: const EdgeInsets.all(2),
-                              //                 backgroundColor: MyColors.warning,
-                              //                 elevation: 0,
-                              //                 shape: RoundedRectangleBorder(
-                              //                     borderRadius:
-                              //                         BorderRadius.circular(
-                              //                             6))),
-                              //             buttonColor: MyColors.warning,
-                              //             buttonText: MyStrings.damaged,
-                              //             textStyle: MyStyles.white12500),
-                              //       ),
-                              //     ),
-                              //     const SizedBox(
-                              //       width: 8,
-                              //     ),
-                              //     Expanded(
-                              //       child: SizedBox(
-                              //         height: 40,
-                              //         child: CustomElevatedButton(
-                              //           onPressed: () {},
-                              //           buttonStyle: ElevatedButton.styleFrom(
-                              //               padding: const EdgeInsets.all(2),
-                              //               backgroundColor: MyColors.warning,
-                              //               elevation: 0,
-                              //               shape: RoundedRectangleBorder(
-                              //                   borderRadius:
-                              //                       BorderRadius.circular(6))),
-                              //           buttonColor: MyColors.warning,
-                              //           buttonText: MyStrings.repaired,
-                              //           textStyle: MyStyles.white12500,
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   ],
-                              // )
-                            ],
+                            )
+                          ],
+                        ),
+                        if(list[index].remarks != null)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            list[index].remarks!.capitalize.toString(),
+                            style: MyStyles.black12400,
                           ),
                         ),
-                        if(list[index].value!.startsWith("http") || list[index].value!.startsWith("https")) Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: SizedBox(
-                            width: 75,
-                            height: 68,
-                            child: Image.network(list[index].value.toString(), fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return SvgPicture.asset(MyImages.loadingCar);
-                                }, frameBuilder:
-                                    (context, child, frame, wasSynchronouslyLoaded) {
-                                  return child;
-                                }, loadingBuilder: (context, child, loadingProgress) {
-                                  if (loadingProgress == null) {
-                                    return child;
-                                  } else {
-                                    return SvgPicture.asset(MyImages.loadingCar);
-                                  }
-                                }),
-                          ),
-                        )
                       ],
                     ),
-                    if(list[index].remarks != null)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        list[index].remarks!.capitalize.toString(),
-                        style: MyStyles.black12400,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-            if (index != 0 && index != 1 && index != 2 && index == list.length) {
-              return Obx(() {
-                return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  child: Column(
-                    children: [
-                      const ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        dense: true,
-                        minLeadingWidth: 0,
-                        horizontalTitleGap: 8,
-                        leading: CircleAvatar(
-                          backgroundColor: MyColors.black3,
-                          radius: 14,
-                          child: Text(
-                            MyStrings.na,
-                            textAlign: TextAlign.center,
-                            style: MyStyles.white8700,
-                          ),
-                        ),
-                        title: Text(
-                          MyStrings.notAvailable,
-                          style: MyStyles.black12500,
-                        ),
-                        subtitle: Text(
-                          'Sunroof,Airbag, etc...',
-                          style: MyStyles.black12400,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: onTap,
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Row(
-                            children: [
-                              Text(
-                                (showMore.value == false)
-                                    ? '${list.length - 2} ${MyStrings.otherIssues}'
-                                    : MyStrings.viewLessIssues,
+                  );
+                }
+                // if (index != 0 && index != 1 && index != 2 && index == list.length) {
+                  // return Obx(() {
+                  //   return Padding(
+                  //     padding:
+                  //         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  //     child: Column(
+                  //       children: [
+                  //         const ListTile(
+                  //           contentPadding: EdgeInsets.zero,
+                  //           dense: true,
+                  //           minLeadingWidth: 0,
+                  //           horizontalTitleGap: 8,
+                  //           leading: CircleAvatar(
+                  //             backgroundColor: MyColors.black3,
+                  //             radius: 14,
+                  //             child: Text(
+                  //               MyStrings.na,
+                  //               textAlign: TextAlign.center,
+                  //               style: MyStyles.white8700,
+                  //             ),
+                  //           ),
+                  //           title: Text(
+                  //             MyStrings.notAvailable,
+                  //             style: MyStyles.black12500,
+                  //           ),
+                  //           subtitle: Text(
+                  //             'Sunroof,Airbag, etc...',
+                  //             style: MyStyles.black12400,
+                  //           ),
+                  //         ),
+                  //         GestureDetector(
+                  //           onTap: onTap,
+                  //           child: Padding(
+                  //             padding: const EdgeInsets.all(12.0),
+                  //             child: Row(
+                  //               children: [
+                  //                 Text(
+                  //                   (showMore.value == false)
+                  //                       ? '${list.length - 2} ${MyStrings.otherIssues}'
+                  //                       : MyStrings.viewLessIssues,
+                  //                   textAlign: TextAlign.center,
+                  //                   style: MyStyles.red3_12700,
+                  //                 ),
+                  //                 Icon(
+                  //                   (showMore.value == false)
+                  //                       ? Icons.arrow_drop_down_rounded
+                  //                       : Icons.arrow_drop_up_rounded,
+                  //                   size: 25,
+                  //                   color: MyColors.red3,
+                  //                 )
+                  //               ],
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   );
+                  // });
+                // }
+                return const SizedBox();
+                });
+        }),
+        (!isExterior)?
+        const SizedBox()
+        :Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      child: Column(
+                        children: [
+                          const ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            dense: true,
+                            minLeadingWidth: 0,
+                            horizontalTitleGap: 8,
+                            leading: CircleAvatar(
+                              backgroundColor: MyColors.black3,
+                              radius: 14,
+                              child: Text(
+                                MyStrings.na,
                                 textAlign: TextAlign.center,
-                                style: MyStyles.red3_12700,
+                                style: MyStyles.white8700,
                               ),
-                              Icon(
-                                (showMore.value == false)
-                                    ? Icons.arrow_drop_down_rounded
-                                    : Icons.arrow_drop_up_rounded,
-                                size: 25,
-                                color: MyColors.red3,
-                              )
-                            ],
+                            ),
+                            title: Text(
+                              MyStrings.notAvailable,
+                              style: MyStyles.black12500,
+                            ),
+                            subtitle: Text(
+                              'Sunroof,Airbag, etc...',
+                              style: MyStyles.black12400,
+                            ),
                           ),
-                        ),
+                          // GestureDetector(
+                          //   onTap: onTap,
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.all(12.0),
+                          //     child: Row(
+                          //       children: [
+                          //         Text(
+                          //           (showMore.value == false)
+                          //               ? '${list.length - 2} ${MyStrings.otherIssues}'
+                          //               : MyStrings.viewLessIssues,
+                          //           textAlign: TextAlign.center,
+                          //           style: MyStyles.red3_12700,
+                          //         ),
+                          //         Icon(
+                          //           (showMore.value == false)
+                          //               ? Icons.arrow_drop_down_rounded
+                          //               : Icons.arrow_drop_up_rounded,
+                          //           size: 25,
+                          //           color: MyColors.red3,
+                          //         )
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
+                        ],
                       ),
-                    ],
-                  ),
-                );
-              });
-            }
-            return const SizedBox();
-            });
-    });
+                    )
+      ],
+    );
   }
 
   Widget otherIssue(RxList<Master> otherPartsList) {

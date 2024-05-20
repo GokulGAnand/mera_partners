@@ -9,7 +9,7 @@ import 'package:mera_partners/utils/svg.dart';
 import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:mera_partners/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../utils/constants.dart';
@@ -18,12 +18,12 @@ import 'custom_toast.dart';
 
 /// ignore: must_be_immutable
 class QuotePriceBottomSheet extends StatefulWidget {
-  QuotePriceBottomSheet({super.key, required this.otbPrice, this.onPressed, this.amountController, this.otbStartTime, this.otbEndTime, this.minQuotePrice, this.timerController});
+  QuotePriceBottomSheet({super.key, required this.otbPrice, this.onPressed, required this.amountController, this.otbStartTime, this.otbEndTime, required this.minQuotePrice, this.timerController});
 
   final RxInt otbPrice;
-  final RxInt? minQuotePrice;
+  final RxNum minQuotePrice;
   final void Function()? onPressed;
-  final Rx<TextEditingController>? amountController;
+  final Rx<TextEditingController> amountController;
   final DateTime? otbStartTime;
   final DateTime? otbEndTime;
   Rx<int> auctionTime = 0.obs;
@@ -43,16 +43,15 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
 
   @override
   void initState() {
-    widget.minQuotePrice?.value = widget.otbPrice.value > 50000 ? widget.otbPrice.value - 50000 : 0;
     // var start = DateTime.now();
     // var end = widget.otbEndTime ?? DateTime.now();
-    widget.amountController?.value.addListener(_onTextChanged);
+    widget.amountController.value.addListener(_onTextChanged);
     // Duration diff = end.difference(start);
     // widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
 
-    NumberFormat numberFormatter = NumberFormat.currency(locale: 'HI', name: '', decimalDigits: 0);
-    if (widget.amountController != null && widget.amountController!.value.text.isEmpty){
-      widget.amountController!.value.text = numberFormatter.format(widget.otbPrice.value).toString();
+    if (widget.amountController.value.text.isEmpty){
+      // widget.amountController.value.text = numberFormatter.format(widget.otbPrice.value).toString();
+      widget.amountController.value.text = widget.otbPrice.value.toString();
     }
     super.initState();
   }
@@ -60,7 +59,7 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
 
   void _onTextChanged() {
     // This will trigger an update in all Obx widgets that depend on `amountController`'s text.
-    widget.amountController?.refresh();
+    widget.amountController.refresh();
   }
 
   @override
@@ -160,7 +159,7 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
             height: 12,
           ),
           Text(
-            '${MyStrings.minQuotePrice} ${Constants.numberFormat.format(widget.minQuotePrice?.value ?? 0)}',
+            '${MyStrings.minQuotePrice} ${Constants.numberFormat.format(widget.minQuotePrice.value)}',
             style: MyStyles.blue14500,
           ),
           const SizedBox(
@@ -176,13 +175,13 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
                 Expanded(
                   child:
                   BidTextFormField(
-                    controller: widget.amountController!.value,
+                    controller: widget.amountController.value,
                     keyboardType: const TextInputType.numberWithOptions(decimal: false),
                     inputFormatter: [FilteringTextInputFormatter.digitsOnly,LengthLimitingTextInputFormatter(8)],
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Value cannot be empty";
-                      } else if ((int.tryParse(value) ?? 0) < widget.minQuotePrice!.value) {
+                      } else if ((int.tryParse(value) ?? 0) < widget.minQuotePrice.value) {
                         return "Quoted price exceeds the maximum allowed difference from OTB price";
                       }
                       return null;
@@ -210,16 +209,16 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
           ),
           // Obx(() {return
           Obx(() => CustomElevatedButton(
-            onPressed: (widget.amountController!.value.text.isEmpty || ((int.tryParse(widget.amountController!.value.text) ?? 0) < widget.otbPrice.value)) ?() {
-              int priceDifference = (int.tryParse(widget.amountController!.value.text) ?? 0) - widget.otbPrice.value;
-              if(widget.amountController!.value.text.isEmpty){
+            onPressed: (widget.amountController.value.text.isEmpty || ((int.tryParse(widget.amountController.value.text) ?? 0) < (widget.minQuotePrice.value))) ?() {
+              int price = (int.tryParse(widget.amountController.value.text) ?? 0);
+              if(widget.amountController.value.text.isEmpty){
                 CustomToast.instance.showMsg("Quote price cannot be empty");
               }
-              else if (priceDifference > widget.minQuotePrice!.value) {
-                CustomToast.instance.showMsg('Quoted price exceeds the maximum allowed difference from OTB price');
+              else if (price < (widget.minQuotePrice.value)) {
+                CustomToast.instance.showMsg('Quoted price should not be less than minimum quote price');
               }
             }:widget.onPressed,
-            buttonText: (MyStrings.quotePriceAt) + numberFormat.format(int.tryParse(widget.amountController?.value.text??'0') ?? 0),
+            buttonText: (MyStrings.quotePriceAt) + numberFormat.format(int.tryParse(widget.amountController.value.text) ?? 0),
             textStyle: MyStyles.white14700,
           ),)
           // })

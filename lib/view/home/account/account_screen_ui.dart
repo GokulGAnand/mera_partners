@@ -12,7 +12,7 @@ import 'package:mera_partners/view_model/home/account/account_view_model.dart';
 import 'package:mera_partners/widgets/custom_appbar.dart';
 import 'package:mera_partners/widgets/custom_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
 
@@ -46,6 +46,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
                 SharedPrefManager.instance.removeStringAsync(Constants.contactNo);
                 SharedPrefManager.instance.removeStringAsync(Constants.token);
+                SharedPrefManager.instance.removeStringAsync(Constants.fcmToken);
                 SharedPrefManager.instance.removeStringAsync(Constants.userId);
                 SharedPrefManager.instance.removeStringAsync(Constants.uniqueUserId);
                 SharedPrefManager.instance.removeStringAsync(Constants.documentStatus);
@@ -218,6 +219,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
                         SharedPrefManager.instance.removeStringAsync(Constants.contactNo);
                         SharedPrefManager.instance.removeStringAsync(Constants.token);
+                        SharedPrefManager.instance.removeStringAsync(Constants.fcmToken);
                         SharedPrefManager.instance.removeStringAsync(Constants.userId);
                         SharedPrefManager.instance.removeStringAsync(Constants.uniqueUserId);
                         SharedPrefManager.instance.removeStringAsync(Constants.documentStatus);

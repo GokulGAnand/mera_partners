@@ -38,6 +38,19 @@ class NegotiationViewModel extends GetxController {
     super.onInit();
   }
 
+  void onEnd(){
+    if (Get.isRegistered<NegotiationViewModel>()) {
+      Get.find<NegotiationViewModel>().getNegotiationCarsData();
+      Get.find<NegotiationViewModel>().getLostDeal();
+    }
+    if(Get.isRegistered<ProcuredScreenViewModel>()){
+      Get.find<ProcuredScreenViewModel>().getProcuredBill();
+    }
+    if(Get.isRegistered<RcTransferViewModel>()){
+      Get.find<RcTransferViewModel>().getRcTransfer();
+    }
+  }
+
   void getNegotiationCarsData() async {
     try {
       log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/?status=NEGOTIATION').toString());

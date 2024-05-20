@@ -36,6 +36,14 @@ class OTBCarsListViewModel extends GetxController {
     super.onInit();
   }
 
+  void updateCars(dynamic newData) {
+    carsListResponse.value.data = newData;
+    infinitePagingController.refresh();
+    update();
+    refresh();
+    notifyChildrens();
+  }
+
   void getCarData(int pageKey) async {
     try {
       var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=OTB&page=$pageKey&limit=$limit'), headers: globals.headers);
@@ -72,7 +80,6 @@ class OTBCarsListViewModel extends GetxController {
           }));
 
       if (response.statusCode == 200) {
-        // getCarData(1);
         CustomToast.instance.showMsg(MyStrings.success);
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());

@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/constants.dart';
@@ -100,7 +100,8 @@ class LiveCarsListScreen extends StatelessWidget {
                       width: 1,
                     ),
               controller.liveCarsResponse.value.data != null
-                  ? controller.liveCarsResponse.value.data!.isNotEmpty ? Expanded(
+                  ? ((controller.searchList.isNotEmpty || (controller.searchList.isEmpty && controller.searchController.text.isEmpty)) && controller.liveCarsResponse.value.data!.isNotEmpty)
+                  ? Expanded(
                       child: ListView.builder(
                       itemCount: controller.liveCarsResponse.value.data?.length,
                       padding: const EdgeInsets.all(8),
