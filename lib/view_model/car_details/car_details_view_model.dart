@@ -161,6 +161,7 @@ class CarDetailsScreenViewModel extends GetxController {
   "weak breaks", "gear not engaged", "drum scratch", "alloy wheel missing", "needs replacement", "deployed", "not satisfactory",
   "abs ebd sensor damaged", "abs ebd module damaged"];
 
+  String notAvailable = "";
   var sliderImage = <String>[].obs;
   var criticalIssue = <String>[].obs;
   var ratingList = <Item>[].obs;
@@ -627,8 +628,9 @@ class CarDetailsScreenViewModel extends GetxController {
             Master(title: MyStrings.fuelLid, listValue: reportResponse.value.data!.allCarInfo?.fuelLid?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
             Master(title: MyStrings.firewall, listValue: reportResponse.value.data!.allCarInfo?.firewall?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
             Master(title: MyStrings.fullBodyRepaint, value: reportResponse.value.data!.allCarInfo?.fullBodyRepaint ?? ''),
-            Master(title: MyStrings.missingParts, value: reportResponse.value.data!.allCarInfo!.missingParts ?? ''),
+            // Master(title: MyStrings.missingParts, value: reportResponse.value.data!.allCarInfo!.missingParts ?? ''),
           ];
+          notAvailable = reportResponse.value.data!.allCarInfo!.missingParts.toString();
           // extractUrls(reportResponse.value.data!.allCarInfo!.toJson());
           if(reportResponse.value.data!.allCarInfo!.startVideo != null){
             videoController.value = VideoPlayerController.networkUrl(Uri.parse(

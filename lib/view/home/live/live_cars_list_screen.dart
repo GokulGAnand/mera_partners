@@ -225,9 +225,11 @@ class LiveCarsListScreen extends StatelessWidget {
                           }
                         });
                       },
-                    )): const Center(
-                child: Text(MyStrings.noDataFound),
-              )
+                    )): Expanded(
+                      child: const Center(
+                                      child: Text(MyStrings.noDataFound),
+                                    ),
+                    )
                   : const Expanded(
                       child: Center(
                         child: CircularProgressIndicator(),

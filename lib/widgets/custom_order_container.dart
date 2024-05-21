@@ -1,4 +1,3 @@
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
@@ -273,6 +272,7 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                         color: (widget.buttonStatus.toLowerCase() == Status.pending.name) ? MyColors.yellow2 : Colors.transparent,
                         padding: EdgeInsets.zero,
                         radius: const Radius.circular(6),
+                        borderType: BorderType.RRect,
                         dashPattern: const [3, 3],
                         child: CustomElevatedButton(
                           onPressed: (widget.onPressed != null) ? widget.onPressed : () {},

@@ -366,7 +366,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                             TextSpan(
                               children: [
                                 const TextSpan(
-                                  text: MyStrings.fmv+"  ",
+                                  text: "${MyStrings.fmv}  ",
                                   style: MyStyles.subTitleGreayStyle,
                                 ),
                                 TextSpan(
@@ -666,7 +666,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
   Widget sliverAppBarTitle() {
     return Container(
       width: double.infinity,
-      height: 134,
+      height: 136,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -694,7 +694,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             style: MyStyles.white14500,
           ),
           const SizedBox(
-            height: 3,
+            height: 2,
           ),
           Text(
             carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.variant.toString(),
@@ -803,7 +803,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       const SizedBox(height: 12,),
                     InkWell(onTap: () {
                       carDetailsScreenViewModel.quotePriceController.value.clear();
-                      showModalBottomSheet(context: context, builder: (context) {
+                      showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context, builder: (context) {
                         return QuotePriceBottomSheet(
                           timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime != null ? CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: 0).obs,
                           otbStartTime:carDetailsScreenViewModel.carDetailsResponse.value.data?[0].bidStartTime ?? DateTime.now(),
@@ -813,7 +815,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                           minQuotePrice: RxNum(Constants.calculateMinQuote(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].realValue ?? 0)),
                           onPressed: () {
                             Navigator.of(context).pop();
-                            carDetailsScreenViewModel.quotePrice(carDetailsScreenViewModel.id, carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0);
+                            carDetailsScreenViewModel.quotePrice(carDetailsScreenViewModel.id, int.tryParse(carDetailsScreenViewModel.quotePriceController.value.text) ?? 0);
                           },
                         );
                       },);
@@ -948,7 +950,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
   Widget inspectionReport() {
     return Container(
       color: MyColors.lightBlue1,
-      padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+      padding: const EdgeInsets.only(top: 7.0, left: 15.0, right: 15.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -963,7 +965,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             children: [
               Container(
                 width: double.infinity,
-                height: 66,
+                height: 70,
                 decoration: const BoxDecoration(
                   color: MyColors.white,
                   borderRadius: BorderRadius.only(
@@ -984,7 +986,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
               Obx(
                 () {
                   return SizedBox(
-                    height: 66,
+                    height: 70,
                     child: ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
@@ -1003,7 +1005,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                   padding: const EdgeInsets.symmetric(horizontal: 20),
                                   decoration: BoxDecoration(
                                     color: (carDetailsScreenViewModel.inspectionIndex.value == index)?MyColors.blue2:Colors.transparent,
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(8),
                                         topRight: Radius.circular(8)
                                     )
@@ -1269,49 +1271,6 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                           );
                                         }),
                                   ),
-                                  // Row(
-                                  //   children: [
-                                  //     Expanded(
-                                  //       child: SizedBox(
-                                  //         height: 40,
-                                  //         child: CustomElevatedButton(
-                                  //             onPressed: () {},
-                                  //             buttonStyle: ElevatedButton.styleFrom(
-                                  //                 padding: const EdgeInsets.all(2),
-                                  //                 backgroundColor: MyColors.warning,
-                                  //                 elevation: 0,
-                                  //                 shape: RoundedRectangleBorder(
-                                  //                     borderRadius:
-                                  //                         BorderRadius.circular(
-                                  //                             6))),
-                                  //             buttonColor: MyColors.warning,
-                                  //             buttonText: MyStrings.damaged,
-                                  //             textStyle: MyStyles.white12500),
-                                  //       ),
-                                  //     ),
-                                  //     const SizedBox(
-                                  //       width: 8,
-                                  //     ),
-                                  //     Expanded(
-                                  //       child: SizedBox(
-                                  //         height: 40,
-                                  //         child: CustomElevatedButton(
-                                  //           onPressed: () {},
-                                  //           buttonStyle: ElevatedButton.styleFrom(
-                                  //               padding: const EdgeInsets.all(2),
-                                  //               backgroundColor: MyColors.warning,
-                                  //               elevation: 0,
-                                  //               shape: RoundedRectangleBorder(
-                                  //                   borderRadius:
-                                  //                       BorderRadius.circular(6))),
-                                  //           buttonColor: MyColors.warning,
-                                  //           buttonText: MyStrings.repaired,
-                                  //           textStyle: MyStyles.white12500,
-                                  //         ),
-                                  //       ),
-                                  //     ),
-                                  //   ],
-                                  // )
                                 ],
                               ),
                             ),
@@ -1349,81 +1308,22 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                     ),
                   );
                 }
-                // if (index != 0 && index != 1 && index != 2 && index == list.length) {
-                  // return Obx(() {
-                  //   return Padding(
-                  //     padding:
-                  //         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  //     child: Column(
-                  //       children: [
-                  //         const ListTile(
-                  //           contentPadding: EdgeInsets.zero,
-                  //           dense: true,
-                  //           minLeadingWidth: 0,
-                  //           horizontalTitleGap: 8,
-                  //           leading: CircleAvatar(
-                  //             backgroundColor: MyColors.black3,
-                  //             radius: 14,
-                  //             child: Text(
-                  //               MyStrings.na,
-                  //               textAlign: TextAlign.center,
-                  //               style: MyStyles.white8700,
-                  //             ),
-                  //           ),
-                  //           title: Text(
-                  //             MyStrings.notAvailable,
-                  //             style: MyStyles.black12500,
-                  //           ),
-                  //           subtitle: Text(
-                  //             'Sunroof,Airbag, etc...',
-                  //             style: MyStyles.black12400,
-                  //           ),
-                  //         ),
-                  //         GestureDetector(
-                  //           onTap: onTap,
-                  //           child: Padding(
-                  //             padding: const EdgeInsets.all(12.0),
-                  //             child: Row(
-                  //               children: [
-                  //                 Text(
-                  //                   (showMore.value == false)
-                  //                       ? '${list.length - 2} ${MyStrings.otherIssues}'
-                  //                       : MyStrings.viewLessIssues,
-                  //                   textAlign: TextAlign.center,
-                  //                   style: MyStyles.red3_12700,
-                  //                 ),
-                  //                 Icon(
-                  //                   (showMore.value == false)
-                  //                       ? Icons.arrow_drop_down_rounded
-                  //                       : Icons.arrow_drop_up_rounded,
-                  //                   size: 25,
-                  //                   color: MyColors.red3,
-                  //                 )
-                  //               ],
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   );
-                  // });
-                // }
                 return const SizedBox();
                 });
         }),
-        (!isExterior)?
+        (!isExterior || carDetailsScreenViewModel.notAvailable=="")?
         const SizedBox()
         :Padding(
                       padding:
                           const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                       child: Column(
                         children: [
-                          const ListTile(
+                          ListTile(
                             contentPadding: EdgeInsets.zero,
                             dense: true,
                             minLeadingWidth: 0,
                             horizontalTitleGap: 8,
-                            leading: CircleAvatar(
+                            leading: const CircleAvatar(
                               backgroundColor: MyColors.black3,
                               radius: 14,
                               child: Text(
@@ -1432,39 +1332,15 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 style: MyStyles.white8700,
                               ),
                             ),
-                            title: Text(
+                            title: const Text(
                               MyStrings.notAvailable,
                               style: MyStyles.black12500,
                             ),
                             subtitle: Text(
-                              'Sunroof,Airbag, etc...',
+                              carDetailsScreenViewModel.notAvailable,
                               style: MyStyles.black12400,
                             ),
                           ),
-                          // GestureDetector(
-                          //   onTap: onTap,
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.all(12.0),
-                          //     child: Row(
-                          //       children: [
-                          //         Text(
-                          //           (showMore.value == false)
-                          //               ? '${list.length - 2} ${MyStrings.otherIssues}'
-                          //               : MyStrings.viewLessIssues,
-                          //           textAlign: TextAlign.center,
-                          //           style: MyStyles.red3_12700,
-                          //         ),
-                          //         Icon(
-                          //           (showMore.value == false)
-                          //               ? Icons.arrow_drop_down_rounded
-                          //               : Icons.arrow_drop_up_rounded,
-                          //           size: 25,
-                          //           color: MyColors.red3,
-                          //         )
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
                         ],
                       ),
                     )

@@ -13,7 +13,7 @@ class SizedPageView extends StatefulWidget {
   final RxBool showMore;
 
   const SizedPageView({
-    Key? key,
+    super.key,
     required this.children,
     required this.pageController,
     required this.dragStartBehavior,
@@ -21,9 +21,10 @@ class SizedPageView extends StatefulWidget {
     required this.onTap,
     required this.listLength,
     required this.showMore,
-  }) : super(key: key);
+  });
 
   @override
+  // ignore: library_private_types_in_public_api
   _SizedPageViewState createState() => _SizedPageViewState();
 }
 
@@ -41,12 +42,12 @@ class _SizedPageViewState extends State<SizedPageView>
     _heights = List.generate(widget.children.length, (index) => 0.0);
 
     widget.pageController.addListener(() {
-      final _newIndex = widget.pageController.page?.round();
-      if (_currentIndex != _newIndex) {
+      final newIndex = widget.pageController.page?.round();
+      if (_currentIndex != newIndex) {
         if (!mounted) {
           return;
         }
-        setState(() => _currentIndex = _newIndex!);
+        setState(() => _currentIndex = newIndex!);
       }
     });
   }
