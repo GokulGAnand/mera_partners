@@ -259,7 +259,7 @@ class DocumentScreen extends StatelessWidget {
                         prefixIcon: Padding(
                           padding: Dimens.suffixPadding,
                           child: viewModel.aadhaarBack.value == null
-                              ? Icon(Icons.file_upload_outlined)
+                              ? const Icon(Icons.file_upload_outlined)
                               : const Icon(
                                   Icons.done_rounded,
                                   color: MyColors.green,
@@ -297,7 +297,7 @@ class DocumentScreen extends StatelessWidget {
                       prefixIcon: Padding(
                         padding: Dimens.suffixPadding,
                         child: viewModel.panCard.value == null
-                            ? Icon(Icons.file_upload_outlined)
+                            ? const Icon(Icons.file_upload_outlined)
                             : const Icon(
                                 Icons.done_rounded,
                                 color: MyColors.green,
@@ -393,7 +393,7 @@ class DocumentScreen extends StatelessWidget {
                       prefixIcon: Padding(
                         padding: Dimens.suffixPadding,
                         child: viewModel.shopImage.value == null
-                            ? Icon(Icons.file_upload_outlined)
+                            ? const Icon(Icons.file_upload_outlined)
                             : const Icon(
                                 Icons.done_rounded,
                                 color: MyColors.green,
@@ -433,7 +433,7 @@ class DocumentScreen extends StatelessWidget {
                       prefixIcon: Padding(
                         padding: Dimens.suffixPadding,
                         child: viewModel.visitingCard.value == null
-                            ? Icon(Icons.file_upload_outlined)
+                            ? const Icon(Icons.file_upload_outlined)
                             : const Icon(
                                 Icons.done_rounded,
                                 color: MyColors.green,
@@ -473,7 +473,7 @@ class DocumentScreen extends StatelessWidget {
                       prefixIcon: Padding(
                         padding: Dimens.suffixPadding,
                         child: viewModel.cancelledCheque.value == null
-                            ? Icon(Icons.file_upload_outlined)
+                            ? const Icon(Icons.file_upload_outlined)
                             : const Icon(
                                 Icons.done_rounded,
                                 color: MyColors.green,
