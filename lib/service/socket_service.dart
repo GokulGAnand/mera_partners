@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:mera_partners/model/response/live/live_cars_list_response.dart';
 import 'package:mera_partners/service/notification_service.dart';
 import 'package:mera_partners/utils/enum.dart';
+import 'package:mera_partners/view_model/car_details/car_details_view_model.dart';
 import 'package:mera_partners/view_model/home/live/live_cars_list_view_model.dart';
 import 'package:mera_partners/view_model/home/otb/otb_view_model.dart';
 import 'package:mera_partners/widgets/custom_toast.dart';
@@ -33,6 +34,13 @@ class SocketService {
       List<Data> liveCarsList = <Data> [];
       List<Data> otbCarsList = <Data> [];
       for(int i=0;i<carList.length;i++){
+        if(Get.isRegistered<CarDetailsScreenViewModel>()){
+          if(Get.find<CarDetailsScreenViewModel>().carDetailsResponse.value.data?[0].sId == carList[i].sId){
+            Get.find<CarDetailsScreenViewModel>().carDetailsResponse.value.data?[0] = carList[i];
+            Get.find<CarDetailsScreenViewModel>().updateCarData(carList[i]);
+            Get.find<CarDetailsScreenViewModel>().carDetailsResponse.refresh();
+          }
+        }
         if(carList[i].status?.toLowerCase() == CarStatus.live.name || carList[i].status?.toLowerCase() == CarStatus.scheduled.name){
           liveCarsList.add(carList[i]);
         }

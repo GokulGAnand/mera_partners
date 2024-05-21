@@ -117,94 +117,94 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                     )
                   ],
                 ),
-                Container(
+                Obx(() => Container(
                   width: double.infinity,
                   height: 37,
                   padding: const EdgeInsets.only(left: 12),
                   decoration: BoxDecoration(
                     color: (carDetailsScreenViewModel.carStatus == "bid won")?MyColors.green4
-                    :(carDetailsScreenViewModel.carStatus == "bid closed")? MyColors.grey4
-                    :(carDetailsScreenViewModel.carStatus == "car sold")? MyColors.yellow
-                    :null,
+                        :(carDetailsScreenViewModel.carStatus == "bid closed")? MyColors.grey4
+                        :(carDetailsScreenViewModel.carStatus == "car sold")? MyColors.yellow
+                        :null,
                     gradient: (carDetailsScreenViewModel.carStatus != "")?null
-                    :LinearGradient(
+                        :LinearGradient(
                       end: const Alignment(2.00, 0.00),
                       begin: const Alignment(-1, 0),
                       colors: [
                         carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase()
-                                  ? MyColors.kPrimaryColor
-                        :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase()
-                                  ? MyColors.black
-                                  : (globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!))
-                                  ? MyColors.green
-                                  : (globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId))
-                                  ? MyColors.red
-                                  : MyColors.kPrimaryColor,
-                      MyColors.black5],
+                            ? MyColors.kPrimaryColor
+                            :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase()
+                            ? MyColors.black
+                            : (globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!))
+                            ? MyColors.green
+                            : (globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId))
+                            ? MyColors.red
+                            : MyColors.kPrimaryColor,
+                        MyColors.black5],
                     ),
                   ),
                   child: Row(
                     children: [
                       Text(
-                        (carDetailsScreenViewModel.carStatus == "bid won") 
-                        ? MyStrings.bidWon 
-                        :(carDetailsScreenViewModel.carStatus == "bid closed")
-                        ? MyStrings.bidClosed
-                        :(carDetailsScreenViewModel.carStatus == "car sold")
-                        ? MyStrings.carSold
-                        :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase() 
-                        ? MyStrings.closingPrice
-                        :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase() 
-                        ? MyStrings.scheduledBid
-                        : globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) 
-                        ? MyStrings.youAreLeading
-                          : globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
-                          ? MyStrings.youAreLoosing 
-                          :MyStrings.highestBid,
-                        
-                        // (carDetailsScreenViewModel.carStatus == "bid won") ? MyStrings.bidWon 
+                        (carDetailsScreenViewModel.carStatus == "bid won")
+                            ? MyStrings.bidWon
+                            :(carDetailsScreenViewModel.carStatus == "bid closed")
+                            ? MyStrings.bidClosed
+                            :(carDetailsScreenViewModel.carStatus == "car sold")
+                            ? MyStrings.carSold
+                            :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase()
+                            ? MyStrings.closingPrice
+                            :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase()
+                            ? MyStrings.scheduledBid
+                            : globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!)
+                            ? MyStrings.youAreLeading
+                            : globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
+                            ? MyStrings.youAreLoosing
+                            :MyStrings.highestBid,
+
+                        // (carDetailsScreenViewModel.carStatus == "bid won") ? MyStrings.bidWon
                         // :(carDetailsScreenViewModel.carStatus == "bid closed")? MyStrings.bidClosed
                         // :(carDetailsScreenViewModel.carStatus == "car sold")? MyStrings.carSold
                         // :MyStrings.highestBid,
                         textAlign: TextAlign.center,
                         style: (carDetailsScreenViewModel.carStatus == "bid closed")? MyStyles.pageTitleStyle
-                        :(carDetailsScreenViewModel.carStatus == "car sold")? MyStyles.pageTitleStyle
-                        :MyStyles.whiteTitleStyle,
+                            :(carDetailsScreenViewModel.carStatus == "car sold")? MyStyles.pageTitleStyle
+                            :MyStyles.whiteTitleStyle,
                       ),
                       const SizedBox(
                         width: 8,
                       ),
                       globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!)
-                      ? Padding(
+                          ? Padding(
                         padding: const EdgeInsets.only(left: 8.0, right: 5.0),
                         child: SvgPicture.asset(MySvg.arrowUp, width: 14,),
                       )
-                      :globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
-                      ? Padding(
+                          :globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
+                          ? Padding(
                         padding: const EdgeInsets.only(left: 8.0, right: 5.0),
                         child: SvgPicture.asset(MySvg.arrowDown, width: 14,),
                       )
-                      :const SizedBox(),
+                          :const SizedBox(),
                       Text(
-                        // (carDetailsScreenViewModel.carStatus == "")? 
-                        // '₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid.toString()}': 
+                        // (carDetailsScreenViewModel.carStatus == "")?
+                        // '₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid.toString()}':
                         // '',
                         carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() ||
-                        carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
+                            carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
                         // ? Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid).toString()
                         // : "",
-                        ?globals.documentStatus == DocumentStatus.VERIFIED.name ?
+                            ?globals.documentStatus == DocumentStatus.VERIFIED.name ?
                         Constants.numberFormat.format(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase() ? carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue ?? 0 : carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid ?? 0)
-                                  :(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid != null)
-                                  ?'₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
-                                  :'₹${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
-                                  : "",
+                            :(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid != null)
+                            ?'₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
+                            :'₹${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
+                            : "",
                         textAlign: TextAlign.center,
                         style: MyStyles.white16700,
                       )
                     ],
                   ),
-                ),
+                ),),
                 Container(
                   color: MyColors.white,
                   padding: const EdgeInsets.only(left: 16, right: 16, bottom: 20),
@@ -789,7 +789,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                         context: context,
                                         builder: (context) {
                                           return OTBBottomSheet(
-                                            timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime != null ? CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: 0).obs,
+                                            timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime != null ? CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: 0).obs,
                                             otbPrice: carDetailsScreenViewModel.reportResponse.value.data?.allCarInfo?.realValue?.toInt() ?? 0,
                                             onPressed: () {
                                               Navigator.of(context).pop();
@@ -807,9 +807,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         isScrollControlled: true,
                         context: context, builder: (context) {
                         return QuotePriceBottomSheet(
-                          timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime != null ? CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: 0).obs,
-                          otbStartTime:carDetailsScreenViewModel.carDetailsResponse.value.data?[0].bidStartTime ?? DateTime.now(),
-                          otbEndTime:carDetailsScreenViewModel.carDetailsResponse.value.data?[0].bidEndTime ?? DateTime.now(),
+                          timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime != null ? CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: 0).obs,
+                          otbStartTime:DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].bidStartTime ?? DateTime.now().toString()),
+                          otbEndTime:DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].bidEndTime ?? DateTime.now().toString()),
                           otbPrice: RxInt(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].realValue ?? 0),
                           amountController: carDetailsScreenViewModel.quotePriceController,
                           minQuotePrice: RxNum(Constants.calculateMinQuote(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].realValue ?? 0)),
@@ -841,10 +841,11 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                   return CustomBidBottomSheet(
                                     timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status?.toLowerCase() == CarStatus.scheduled.name
                                         ?carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime != null ?
-                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null
+                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null
                                         : carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime != null ?
-                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null,                                    bidStartTime: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime,
-                                    bidEndTime: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime,
+                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null,
+                                    bidStartTime: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()),
+                                    bidEndTime: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime ?? DateTime.now().toString()),
                                     amountController: liveCarListViewModel.autoBidController,
                                     isAutoBid: true,
                                     bidValue: RxInt(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toInt()),
@@ -899,11 +900,11 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                   return CustomBidBottomSheet(
                                     timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status?.toLowerCase() == CarStatus.scheduled.name
                                         ?carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime != null ?
-                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null
+                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null
                                         : carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime != null ?
-                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null,
-                                    bidStartTime: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime,
-                                    bidEndTime: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime,
+                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null,
+                                    bidStartTime: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()),
+                                    bidEndTime: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime ?? DateTime.now().toString()),
                                     amountController: liveCarListViewModel.bidController,
                                     bidValue: RxInt(carDetailsScreenViewModel.reportResponse.value.data?.allCarInfo!.highestBid!.toInt() ?? 0),
                                     stepRate: carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 99999

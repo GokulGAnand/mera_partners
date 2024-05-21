@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:mera_partners/service/endpoints.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
-
 import '../utils/constants.dart';
 import '../utils/shared_pref_manager.dart';
 

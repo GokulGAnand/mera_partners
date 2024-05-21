@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'package:mera_partners/model/response/car_details/car_details_response.dart';
 import 'package:mera_partners/model/response/car_details/report_response.dart';
+import 'package:mera_partners/model/response/live/live_cars_list_response.dart';
 import 'package:mera_partners/model/response/user_data/user_car_details_response.dart';
 import 'package:mera_partners/service/endpoints.dart';
 import 'package:mera_partners/service/exception_error_util.dart';
@@ -182,7 +182,7 @@ class CarDetailsScreenViewModel extends GetxController {
   var interiorAndElectrical = <Master>[].obs;
 
   var reportResponse = ReportResponse().obs;
-  var carDetailsResponse = CarDetailsResponse().obs;
+  var carDetailsResponse = CarListResponse().obs;
   // List<DashBoardClass> dashboard = [];
   // List<String> imageUrls = [];
 
@@ -651,7 +651,14 @@ class CarDetailsScreenViewModel extends GetxController {
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
-  }  
+  }
+
+  void updateCarData(dynamic newData) {
+    carDetailsResponse.value.data?[0] = newData;
+    update();
+    refresh();
+    notifyChildrens();
+  }
 
   void getCarDetails() async {
     try {
@@ -661,7 +668,7 @@ class CarDetailsScreenViewModel extends GetxController {
       if (response.statusCode == 200) {
         // ProgressBar.instance.stopProgressBar(Get.context!);
         // log("get car details"+response.body);
-        carDetailsResponse.value = CarDetailsResponse.fromJson(jsonDecode(response.body));
+        carDetailsResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
         // final isLastPage = liveCarsResponse.value.data!.length < limit;
         // if (isLastPage) {
         //   infinitePagingController.appendLastPage(liveCarsResponse.value.data!);
@@ -670,12 +677,12 @@ class CarDetailsScreenViewModel extends GetxController {
         //   infinitePagingController.appendPage(liveCarsResponse.value.data!, nextPageKey);
         // }
         if(carDetailsResponse.value.data![0].bidStartTime != null && carDetailsResponse.value.data![0].bidEndTime != null){
-          var startTime= carDetailsResponse.value.data![0].bidStartTime;
-          var endTime= carDetailsResponse.value.data![0].bidEndTime;
+          var startTime= DateTime.parse(carDetailsResponse.value.data![0].bidStartTime!);
+          var endTime= DateTime.parse(carDetailsResponse.value.data![0].bidEndTime!);
 
-          var start = DateTime(startTime!.year, startTime.month, startTime.day, startTime.hour, startTime.minute, startTime.second);
+          var start = DateTime(startTime.year, startTime.month, startTime.day, startTime.hour, startTime.minute, startTime.second);
           var now = DateTime.now();
-          var end = DateTime(endTime!.year, endTime.month, endTime.day, endTime.hour, endTime.minute, endTime.second);
+          var end = DateTime(endTime.year, endTime.month, endTime.day, endTime.hour, endTime.minute, endTime.second);
 
           if(now.isBefore(start)){
             Duration diff = start.difference(now);
