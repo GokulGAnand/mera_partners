@@ -10,6 +10,7 @@ import '../../../model/response/live/live_cars_list_response.dart';
 import '../../../model/response/user_data/user_car_details_response.dart';
 import '../../../service/endpoints.dart';
 import '../../../service/exception_error_util.dart';
+import '../../../utils/images.dart';
 import '../../../utils/strings.dart';
 import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
@@ -34,6 +35,14 @@ class OTBCarsListViewModel extends GetxController {
       getCarData(pageKey);
     });
     super.onInit();
+  }
+
+  void updateCars(dynamic newData) {
+    carsListResponse.value.data = newData;
+    infinitePagingController.refresh();
+    update();
+    refresh();
+    notifyChildrens();
   }
 
   void getCarData(int pageKey) async {
@@ -72,8 +81,7 @@ class OTBCarsListViewModel extends GetxController {
           }));
 
       if (response.statusCode == 200) {
-        // getCarData(1);
-        CustomToast.instance.showMsg(MyStrings.success);
+        CustomToast.instance.showMsgWithIcon(MyStrings.success,Image.asset(MyImages.car));
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
       } else {

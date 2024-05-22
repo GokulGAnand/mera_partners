@@ -551,7 +551,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           SizedBox(
-                            height: 14,
+                            height: MediaQuery.of(context).size.height * 0.02,
                             //height: MediaQuery.of(context).size.height*0.038,
                             child: Row(
                               children: [

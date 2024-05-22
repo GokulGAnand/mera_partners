@@ -32,6 +32,7 @@ class LikedCarsWidget extends StatelessWidget {
   final String id;
   final String carId;
   final String bidAmount;
+  final String otbPrice;
   late final Rx<bool>? isFavourite = true.obs;
   final DateTime? bidStartTime;
   final DateTime? bidEndTime;
@@ -52,7 +53,7 @@ class LikedCarsWidget extends StatelessWidget {
     required this.model,
     required this.id,
     required this.bidAmount,
-    required this.carId, this.bidStartTime, this.bidEndTime, this.timerController,
+    required this.carId, this.bidStartTime, this.bidEndTime, this.timerController, required this.otbPrice,
   });
 
   /// Like Feature API integration
@@ -246,14 +247,27 @@ class LikedCarsWidget extends StatelessWidget {
                       bidAmount,
                       style: MyStyles.primary16500,
                     ),
-                    if(status.toLowerCase() == CarStatus.scheduled.name || status.toLowerCase() == CarStatus.otb.name) //schedule & otb timer
+                    ///OTB
+                    if(status.toLowerCase() == CarStatus.otb.name)
+                    const Text(
+                      MyStrings.closingPrice,
+                      style: MyStyles.primary12500,
+                    ),
+                    if(status.toLowerCase() == CarStatus.otb.name)
+                     SizedBox(height: Dimens.standard_2),
+                    if(status.toLowerCase() == CarStatus.otb.name)
+                    Text(
+                      otbPrice,
+                      style: MyStyles.primary16500,
+                    ),
+                    if(status.toLowerCase() == CarStatus.scheduled.name) //schedule & otb timer
                         const Text(
                           MyStrings.yetToStart,
                           style: MyStyles.primary12500,
                         ),
-                    if(status.toLowerCase() == CarStatus.scheduled.name || status.toLowerCase() == CarStatus.otb.name)
+                    if(status.toLowerCase() == CarStatus.scheduled.name)
                       SizedBox(height: Dimens.standard_2),
-                    if(status.toLowerCase() == CarStatus.scheduled.name || status.toLowerCase() == CarStatus.otb.name)
+                    if(status.toLowerCase() == CarStatus.scheduled.name)
                       Row(
                         children: [
                           Icon(

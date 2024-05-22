@@ -46,6 +46,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
                 SharedPrefManager.instance.removeStringAsync(Constants.contactNo);
                 SharedPrefManager.instance.removeStringAsync(Constants.token);
+                SharedPrefManager.instance.removeStringAsync(Constants.fcmToken);
                 SharedPrefManager.instance.removeStringAsync(Constants.userId);
                 SharedPrefManager.instance.removeStringAsync(Constants.uniqueUserId);
                 SharedPrefManager.instance.removeStringAsync(Constants.documentStatus);
@@ -218,6 +219,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
                         SharedPrefManager.instance.removeStringAsync(Constants.contactNo);
                         SharedPrefManager.instance.removeStringAsync(Constants.token);
+                        SharedPrefManager.instance.removeStringAsync(Constants.fcmToken);
                         SharedPrefManager.instance.removeStringAsync(Constants.userId);
                         SharedPrefManager.instance.removeStringAsync(Constants.uniqueUserId);
                         SharedPrefManager.instance.removeStringAsync(Constants.documentStatus);

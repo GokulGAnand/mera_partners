@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/colors.dart';
@@ -10,6 +9,7 @@ import 'package:mera_partners/utils/images.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/utils/svg.dart';
+import 'package:mera_partners/view/car_details/custom_tab/autoscale_tabbar_view.dart';
 import 'package:mera_partners/view_model/car_details/car_details_view_model.dart';
 import 'package:mera_partners/view_model/home/live/live_cars_list_view_model.dart';
 import 'package:mera_partners/view_model/home/otb/otb_view_model.dart';
@@ -117,94 +117,94 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                     )
                   ],
                 ),
-                Container(
+                Obx(() => Container(
                   width: double.infinity,
                   height: 37,
                   padding: const EdgeInsets.only(left: 12),
                   decoration: BoxDecoration(
                     color: (carDetailsScreenViewModel.carStatus == "bid won")?MyColors.green4
-                    :(carDetailsScreenViewModel.carStatus == "bid closed")? MyColors.grey4
-                    :(carDetailsScreenViewModel.carStatus == "car sold")? MyColors.yellow
-                    :null,
+                        :(carDetailsScreenViewModel.carStatus == "bid closed")? MyColors.grey4
+                        :(carDetailsScreenViewModel.carStatus == "car sold")? MyColors.yellow
+                        :null,
                     gradient: (carDetailsScreenViewModel.carStatus != "")?null
-                    :LinearGradient(
+                        :LinearGradient(
                       end: const Alignment(2.00, 0.00),
                       begin: const Alignment(-1, 0),
                       colors: [
                         carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase()
-                                  ? MyColors.kPrimaryColor
-                        :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase()
-                                  ? MyColors.black
-                                  : (globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!))
-                                  ? MyColors.green
-                                  : (globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId))
-                                  ? MyColors.red
-                                  : MyColors.kPrimaryColor,
-                      MyColors.black5],
+                            ? MyColors.kPrimaryColor
+                            :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase()
+                            ? MyColors.black
+                            : (globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!))
+                            ? MyColors.green
+                            : (globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId))
+                            ? MyColors.red
+                            : MyColors.kPrimaryColor,
+                        MyColors.black5],
                     ),
                   ),
-                  child: Row(
+                  child: Obx(() => Row(
                     children: [
                       Text(
-                        (carDetailsScreenViewModel.carStatus == "bid won") 
-                        ? MyStrings.bidWon 
-                        :(carDetailsScreenViewModel.carStatus == "bid closed")
-                        ? MyStrings.bidClosed
-                        :(carDetailsScreenViewModel.carStatus == "car sold")
-                        ? MyStrings.carSold
-                        :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase() 
-                        ? MyStrings.closingPrice
-                        :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase() 
-                        ? MyStrings.scheduledBid
-                        : globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) 
-                        ? MyStrings.youAreLeading
-                          : globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
-                          ? MyStrings.youAreLoosing 
-                          :MyStrings.highestBid,
-                        
-                        // (carDetailsScreenViewModel.carStatus == "bid won") ? MyStrings.bidWon 
+                        (carDetailsScreenViewModel.carStatus == "bid won")
+                            ? MyStrings.bidWon
+                            :(carDetailsScreenViewModel.carStatus == "bid closed")
+                            ? MyStrings.bidClosed
+                            :(carDetailsScreenViewModel.carStatus == "car sold")
+                            ? MyStrings.carSold
+                            :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase()
+                            ? MyStrings.closingPrice
+                            :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase()
+                            ? MyStrings.scheduledBid
+                            : globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!)
+                            ? MyStrings.youAreLeading
+                            : globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
+                            ? MyStrings.youAreLoosing
+                            :MyStrings.highestBid,
+
+                        // (carDetailsScreenViewModel.carStatus == "bid won") ? MyStrings.bidWon
                         // :(carDetailsScreenViewModel.carStatus == "bid closed")? MyStrings.bidClosed
                         // :(carDetailsScreenViewModel.carStatus == "car sold")? MyStrings.carSold
                         // :MyStrings.highestBid,
                         textAlign: TextAlign.center,
                         style: (carDetailsScreenViewModel.carStatus == "bid closed")? MyStyles.pageTitleStyle
-                        :(carDetailsScreenViewModel.carStatus == "car sold")? MyStyles.pageTitleStyle
-                        :MyStyles.whiteTitleStyle,
+                            :(carDetailsScreenViewModel.carStatus == "car sold")? MyStyles.pageTitleStyle
+                            :MyStyles.whiteTitleStyle,
                       ),
                       const SizedBox(
                         width: 8,
                       ),
-                      globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!)
-                      ? Padding(
+                      globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == CarStatus.live.name && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!)
+                          ? Padding(
                         padding: const EdgeInsets.only(left: 8.0, right: 5.0),
                         child: SvgPicture.asset(MySvg.arrowUp, width: 14,),
                       )
-                      :globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
-                      ? Padding(
+                          :globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == CarStatus.live.name && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
+                          ? Padding(
                         padding: const EdgeInsets.only(left: 8.0, right: 5.0),
                         child: SvgPicture.asset(MySvg.arrowDown, width: 14,),
                       )
-                      :const SizedBox(),
-                      Text(
-                        // (carDetailsScreenViewModel.carStatus == "")? 
-                        // '₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid.toString()}': 
+                          :const SizedBox(),
+                      Obx(() => Text(
+                        // (carDetailsScreenViewModel.carStatus == "")?
+                        // '₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid.toString()}':
                         // '',
                         carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() ||
-                        carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
+                            carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
                         // ? Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid).toString()
                         // : "",
-                        ?globals.documentStatus == DocumentStatus.VERIFIED.name ?
-                        Constants.numberFormat.format(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase() ? carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue ?? 0 : carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid ?? 0)
-                                  :(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid != null)
-                                  ?'₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
-                                  :'₹${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
-                                  : "",
+                            ?globals.documentStatus == DocumentStatus.VERIFIED.name ?
+                        Constants.numberFormat.format(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase() ? (carDetailsScreenViewModel.carDetailsResponse.value.data?[0].realValue ?? 0) : (carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0))
+                            :(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid != null)
+                            ?'₹${carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
+                            :'₹${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
+                            : "",
                         textAlign: TextAlign.center,
                         style: MyStyles.white16700,
-                      )
+                      ),)
                     ],
-                  ),
-                ),
+                  ),)
+                ),),
                 Container(
                   color: MyColors.white,
                   padding: const EdgeInsets.only(left: 16, right: 16, bottom: 20),
@@ -252,10 +252,10 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                   Text(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.fuelType!.capitalize.toString(), style: MyStyles.regular12),
                                   const SizedBox(width: 6),
                                 ],
-                                if(carDetailsScreenViewModel.reportResponse.value.data!.odometerReading != null)...[
+                                if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo?.odometerReading != null)...[
                                   const Text('|', style: MyStyles.regular12),
                                   const SizedBox(width: 6),
-                                  Text('${carDetailsScreenViewModel.reportResponse.value.data!.odometerReading} KM', style: MyStyles.regular12),
+                                  Text('${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo?.odometerReading} KM', style: MyStyles.regular12),
                                   const SizedBox(width: 6),
                                 ],
                                 if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.ownershipNumber != null)...[
@@ -303,22 +303,26 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                             width: 62,
                                             height: 62,
                                           ),
-                                          SizedBox(
-                                            width: 58,
-                                            height: 58,
-                                            child: Image.network(carDetailsScreenViewModel.imageList[index]["images"][0].value, fit: BoxFit.cover,
-                                            errorBuilder: (context, error, stackTrace) {
-                                              return SvgPicture.asset(MyImages.loadingCar);
-                                            }, frameBuilder:
-                                                (context, child, frame, wasSynchronouslyLoaded) {
-                                              return child;
-                                            }, loadingBuilder: (context, child, loadingProgress) {
-                                              if (loadingProgress == null) {
-                                                return child;
-                                              } else {
+                                          ClipRRect(
+                                            // as per the design
+                                            borderRadius: BorderRadius.circular(8),
+                                            child: SizedBox(
+                                              width: 58,
+                                              height: 58,
+                                              child: Image.network(carDetailsScreenViewModel.imageList[index]["images"][0].value, fit: BoxFit.cover,
+                                              errorBuilder: (context, error, stackTrace) {
                                                 return SvgPicture.asset(MyImages.loadingCar);
-                                              }
-                                            }),
+                                              }, frameBuilder:
+                                                  (context, child, frame, wasSynchronouslyLoaded) {
+                                                return child;
+                                              }, loadingBuilder: (context, child, loadingProgress) {
+                                                if (loadingProgress == null) {
+                                                  return child;
+                                                } else {
+                                                  return SvgPicture.asset(MyImages.loadingCar);
+                                                }
+                                              }),
+                                            ),
                                           ),
                                           (carDetailsScreenViewModel.imageList[index]["title"]== MyStrings.damage)
                                               ? Positioned(
@@ -362,7 +366,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                             TextSpan(
                               children: [
                                 const TextSpan(
-                                  text: MyStrings.fmv+"  ",
+                                  text: "${MyStrings.fmv}  ",
                                   style: MyStyles.subTitleGreayStyle,
                                 ),
                                 TextSpan(
@@ -406,7 +410,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       (carDetailsScreenViewModel.criticalIssue.isEmpty)?
                       const Padding(
                         padding: EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text("Not any Critical Issue", style: MyStyles.subtitle12400,),
+                        child: Text("No Critical Issue", style: MyStyles.subtitle12400,),
                       )
                       :Wrap(
                         children: [
@@ -567,7 +571,6 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             carDetailsScreenViewModel.exteriorShowMore, () {
           carDetailsScreenViewModel.exteriorShowMore.value =
               !carDetailsScreenViewModel.exteriorShowMore.value;
-              setState(() {});
         }),
       ),
       Padding(
@@ -663,7 +666,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
   Widget sliverAppBarTitle() {
     return Container(
       width: double.infinity,
-      height: 134,
+      height: 136,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -691,7 +694,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             style: MyStyles.white14500,
           ),
           const SizedBox(
-            height: 3,
+            height: 2,
           ),
           Text(
             carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.variant.toString(),
@@ -703,12 +706,12 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!)
+              globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == CarStatus.live.name && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!)
                   ? Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: SvgPicture.asset(MySvg.arrowUp,),
                   )
-                  :globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
+                  :globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == CarStatus.live.name && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
                   ? Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: SvgPicture.asset(MySvg.arrowDown,),
@@ -719,9 +722,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                 carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
                         // ? Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid).toString()
                         ?globals.documentStatus == DocumentStatus.VERIFIED.name ?
-                Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid ?? 0)
-                                  :(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid != null)
-                                  ?'₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
+                Constants.numberFormat.format(carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid ?? 0)
+                                  :(carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid != null)
+                                  ?'₹${carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
                                   :'₹${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
                 : carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.scheduled.toLowerCase()
                 ? MyStrings.scheduledBid
@@ -786,7 +789,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                         context: context,
                                         builder: (context) {
                                           return OTBBottomSheet(
-                                            timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime != null ? CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: 0).obs,
+                                            timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime != null ? CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: 0).obs,
                                             otbPrice: carDetailsScreenViewModel.reportResponse.value.data?.allCarInfo?.realValue?.toInt() ?? 0,
                                             onPressed: () {
                                               Navigator.of(context).pop();
@@ -800,17 +803,19 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       const SizedBox(height: 12,),
                     InkWell(onTap: () {
                       carDetailsScreenViewModel.quotePriceController.value.clear();
-                      showModalBottomSheet(context: context, builder: (context) {
+                      showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context, builder: (context) {
                         return QuotePriceBottomSheet(
-                          timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime != null ? CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: 0).obs,
-                          otbStartTime:carDetailsScreenViewModel.carDetailsResponse.value.data?[0].bidStartTime ?? DateTime.now(),
-                          otbEndTime:carDetailsScreenViewModel.carDetailsResponse.value.data?[0].bidEndTime ?? DateTime.now(),
+                          timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime != null ? CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].otbEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: 0).obs,
+                          otbStartTime:DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].bidStartTime ?? DateTime.now().toString()),
+                          otbEndTime:DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].bidEndTime ?? DateTime.now().toString()),
                           otbPrice: RxInt(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].realValue ?? 0),
                           amountController: carDetailsScreenViewModel.quotePriceController,
                           minQuotePrice: RxNum(Constants.calculateMinQuote(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].realValue ?? 0)),
                           onPressed: () {
                             Navigator.of(context).pop();
-                            carDetailsScreenViewModel.quotePrice(carDetailsScreenViewModel.id, carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0);
+                            carDetailsScreenViewModel.quotePrice(carDetailsScreenViewModel.id, int.tryParse(carDetailsScreenViewModel.quotePriceController.value.text) ?? 0);
                           },
                         );
                       },);
@@ -836,18 +841,19 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                   return CustomBidBottomSheet(
                                     timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status?.toLowerCase() == CarStatus.scheduled.name
                                         ?carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime != null ?
-                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null
+                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null
                                         : carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime != null ?
-                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null,                                    bidStartTime: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime,
-                                    bidEndTime: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime,
+                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null,
+                                    bidStartTime: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()),
+                                    bidEndTime: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime ?? DateTime.now().toString()),
                                     amountController: liveCarListViewModel.autoBidController,
                                     isAutoBid: true,
-                                    bidValue: RxInt(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toInt()),
-                                    stepRate: carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 99999
+                                    bidValue: RxInt(carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid!.toInt()),
+                                    stepRate: carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! <= 99999
                                         ? RxInt(2000)
-                                        : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 100000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 299999)
+                                        : (carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! >= 100000 && carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! <= 299999)
                                         ? RxInt(4000)
-                                        : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 300000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 499999)
+                                        : (carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! >= 300000 && carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! <= 499999)
                                         ? RxInt(7000)
                                         : RxInt(10000),
                                     onAutoBidPressed: () {
@@ -894,18 +900,18 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                   return CustomBidBottomSheet(
                                     timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status?.toLowerCase() == CarStatus.scheduled.name
                                         ?carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime != null ?
-                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null
+                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null
                                         : carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime != null ?
-                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime!.toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null,
-                                    bidStartTime: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime,
-                                    bidEndTime: carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime,
+                                    CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null,
+                                    bidStartTime: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()),
+                                    bidEndTime: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime ?? DateTime.now().toString()),
                                     amountController: liveCarListViewModel.bidController,
-                                    bidValue: RxInt(carDetailsScreenViewModel.reportResponse.value.data?.allCarInfo!.highestBid!.toInt() ?? 0),
-                                    stepRate: carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 99999
+                                    bidValue: RxInt(carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid!.toInt() ?? 0),
+                                    stepRate: carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! <= 99999
                                         ? RxInt(2000)
-                                        : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 100000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 299999)
+                                        : (carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! >= 100000 && carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! <= 299999)
                                         ? RxInt(4000)
-                                        : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 300000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 499999)
+                                        : (carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! >= 300000 && carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! <= 499999)
                                         ? RxInt(7000)
                                         : RxInt(10000),
                                     onBidPressed: () {
@@ -945,7 +951,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
   Widget inspectionReport() {
     return Container(
       color: MyColors.lightBlue1,
-      padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+      padding: const EdgeInsets.only(top: 7.0, left: 15.0, right: 15.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -960,7 +966,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             children: [
               Container(
                 width: double.infinity,
-                height: 66,
+                height: 70,
                 decoration: const BoxDecoration(
                   color: MyColors.white,
                   borderRadius: BorderRadius.only(
@@ -981,7 +987,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
               Obx(
                 () {
                   return SizedBox(
-                    height: 66,
+                    height: 70,
                     child: ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
@@ -1000,7 +1006,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                   padding: const EdgeInsets.symmetric(horizontal: 20),
                                   decoration: BoxDecoration(
                                     color: (carDetailsScreenViewModel.inspectionIndex.value == index)?MyColors.blue2:Colors.transparent,
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(8),
                                         topRight: Radius.circular(8)
                                     )
@@ -1094,7 +1100,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
               style: MyStyles.black14700,
             ),
           ),
-          (title.toLowerCase() == "engine")
+          (title.toLowerCase() == Inspection.engine.name)
               ? Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Column(
@@ -1175,9 +1181,12 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
           ),
           AutoScaleTabBarView(
             controller: tabController,
+            onTap: onTap!,
+            listLength: issueList.length,
+            showMore: showMore,
             children: (issueList.isNotEmpty)?
             [
-              viewIssue(issueList, showMore, onTap),
+              viewIssue(issueList, showMore, onTap, isExterior: (title.toLowerCase() == Inspection.exterior.name)?true:false),
               // Text("view"),
               otherIssue(otherPartsList),
             ]
@@ -1190,219 +1199,154 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
     );
   }
 
-  Widget viewIssue(RxList<Master> list, RxBool showMore, Function()? onTap) {
+  Widget viewIssue(RxList<Master> list, RxBool showMore, Function()? onTap, {bool isExterior = false}) {
     return (list.isEmpty)?
     const SizedBox()
-    :ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: ((list.length == 1) ? list.length : list.length+1), //length+1
-          itemBuilder: (context, index) {
-            return Obx((){
-              if (index < 2 || (showMore.value == true && index != list.length)) {
-              return Container(
-                width: double.infinity,
-                // height: 142,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                margin: const EdgeInsets.only(top: 10),
-                decoration: BoxDecoration(
-                    color: MyColors.containerBG,
-                    borderRadius: BorderRadius.circular(6)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+    :Column(
+      children: [
+        ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: list.length, //length+1
+              itemBuilder: (context, index) {
+                return Obx((){
+                  if (index < 2 || (showMore.value == true && index != list.length)) {
+                  return Container(
+                    width: double.infinity,
+                    // height: 142,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    margin: const EdgeInsets.only(top: 10),
+                    decoration: BoxDecoration(
+                        color: MyColors.containerBG,
+                        borderRadius: BorderRadius.circular(6)),
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Row(
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Column(
                                 children: [
-                                  CircleAvatar(
-                                    radius: 10,
-                                    backgroundColor: list[index].color,
-                                    child: SvgPicture.asset(
-                                      MySvg.carCrash,
-                                    ),
+                                  Row(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 10,
+                                        backgroundColor: list[index].color,
+                                        child: SvgPicture.asset(
+                                          MySvg.carCrash,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 6,
+                                      ),
+                                      Text(
+                                        list[index].title.capitalize.toString(),
+                                        style: MyStyles.black12500,
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(
-                                    width: 6,
-                                  ),
-                                  Text(
-                                    list[index].title.capitalize.toString(),
-                                    style: MyStyles.black12500,
+                                  if(list[index].listValue != null) Padding(
+                                    padding: const EdgeInsets.only(top: 12.0),
+                                    child: GridView.builder(
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: list[index].listValue!.length,
+                                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 8,
+                                        mainAxisSpacing: 8,
+                                        mainAxisExtent: 30), 
+                                        itemBuilder: (context, i){
+                                          return Container(
+                                            alignment: Alignment.center,
+                                            margin: const EdgeInsets.only(right: 6),
+                                            decoration: BoxDecoration(
+                                              color: list[index].color,
+                                              borderRadius: BorderRadius.circular(4)
+                                            ),
+                                            child: Text(
+                                              list[index].listValue![i].capitalize.toString(),
+                                            style: MyStyles.white12500,),
+                                          );
+                                        }),
                                   ),
                                 ],
                               ),
-                              if(list[index].listValue != null) Padding(
-                                padding: const EdgeInsets.only(top: 12.0),
-                                child: GridView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: list[index].listValue!.length,
-                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    crossAxisSpacing: 8,
-                                    mainAxisSpacing: 8,
-                                    mainAxisExtent: 30), 
-                                    itemBuilder: (context, i){
-                                      return Container(
-                                        alignment: Alignment.center,
-                                        margin: const EdgeInsets.only(right: 6),
-                                        decoration: BoxDecoration(
-                                          color: list[index].color,
-                                          borderRadius: BorderRadius.circular(4)
-                                        ),
-                                        child: Text(
-                                          list[index].listValue![i].capitalize.toString(),
-                                        style: MyStyles.white12500,),
-                                      );
+                            ),
+                            if(list[index].value!.startsWith("http") || list[index].value!.startsWith("https")) Padding(
+                              padding: const EdgeInsets.only(left: 10.0),
+                              child: SizedBox(
+                                width: 75,
+                                height: 68,
+                                child: Image.network(list[index].value.toString(), fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return SvgPicture.asset(MyImages.loadingCar);
+                                    }, frameBuilder:
+                                        (context, child, frame, wasSynchronouslyLoaded) {
+                                      return child;
+                                    }, loadingBuilder: (context, child, loadingProgress) {
+                                      if (loadingProgress == null) {
+                                        return child;
+                                      } else {
+                                        return SvgPicture.asset(MyImages.loadingCar);
+                                      }
                                     }),
                               ),
-                              // Row(
-                              //   children: [
-                              //     Expanded(
-                              //       child: SizedBox(
-                              //         height: 40,
-                              //         child: CustomElevatedButton(
-                              //             onPressed: () {},
-                              //             buttonStyle: ElevatedButton.styleFrom(
-                              //                 padding: const EdgeInsets.all(2),
-                              //                 backgroundColor: MyColors.warning,
-                              //                 elevation: 0,
-                              //                 shape: RoundedRectangleBorder(
-                              //                     borderRadius:
-                              //                         BorderRadius.circular(
-                              //                             6))),
-                              //             buttonColor: MyColors.warning,
-                              //             buttonText: MyStrings.damaged,
-                              //             textStyle: MyStyles.white12500),
-                              //       ),
-                              //     ),
-                              //     const SizedBox(
-                              //       width: 8,
-                              //     ),
-                              //     Expanded(
-                              //       child: SizedBox(
-                              //         height: 40,
-                              //         child: CustomElevatedButton(
-                              //           onPressed: () {},
-                              //           buttonStyle: ElevatedButton.styleFrom(
-                              //               padding: const EdgeInsets.all(2),
-                              //               backgroundColor: MyColors.warning,
-                              //               elevation: 0,
-                              //               shape: RoundedRectangleBorder(
-                              //                   borderRadius:
-                              //                       BorderRadius.circular(6))),
-                              //           buttonColor: MyColors.warning,
-                              //           buttonText: MyStrings.repaired,
-                              //           textStyle: MyStyles.white12500,
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   ],
-                              // )
-                            ],
+                            )
+                          ],
+                        ),
+                        if(list[index].remarks != null)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            list[index].remarks!.capitalize.toString(),
+                            style: MyStyles.black12400,
                           ),
                         ),
-                        if(list[index].value!.startsWith("http") || list[index].value!.startsWith("https")) Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: SizedBox(
-                            width: 75,
-                            height: 68,
-                            child: Image.network(list[index].value.toString(), fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return SvgPicture.asset(MyImages.loadingCar);
-                                }, frameBuilder:
-                                    (context, child, frame, wasSynchronouslyLoaded) {
-                                  return child;
-                                }, loadingBuilder: (context, child, loadingProgress) {
-                                  if (loadingProgress == null) {
-                                    return child;
-                                  } else {
-                                    return SvgPicture.asset(MyImages.loadingCar);
-                                  }
-                                }),
-                          ),
-                        )
                       ],
                     ),
-                    if(list[index].remarks != null)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        list[index].remarks!.capitalize.toString(),
-                        style: MyStyles.black12400,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-            if (index != 0 && index != 1 && index != 2 && index == list.length) {
-              return Obx(() {
-                return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  child: Column(
-                    children: [
-                      const ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        dense: true,
-                        minLeadingWidth: 0,
-                        horizontalTitleGap: 8,
-                        leading: CircleAvatar(
-                          backgroundColor: MyColors.black3,
-                          radius: 14,
-                          child: Text(
-                            MyStrings.na,
-                            textAlign: TextAlign.center,
-                            style: MyStyles.white8700,
-                          ),
-                        ),
-                        title: Text(
-                          MyStrings.notAvailable,
-                          style: MyStyles.black12500,
-                        ),
-                        subtitle: Text(
-                          'Sunroof,Airbag, etc...',
-                          style: MyStyles.black12400,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: onTap,
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Row(
-                            children: [
-                              Text(
-                                (showMore.value == false)
-                                    ? '${list.length - 2} ${MyStrings.otherIssues}'
-                                    : MyStrings.viewLessIssues,
+                  );
+                }
+                return const SizedBox();
+                });
+        }),
+        (!isExterior || carDetailsScreenViewModel.notAvailable=="")?
+        const SizedBox()
+        :Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      child: Column(
+                        children: [
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            dense: true,
+                            minLeadingWidth: 0,
+                            horizontalTitleGap: 8,
+                            leading: const CircleAvatar(
+                              backgroundColor: MyColors.black3,
+                              radius: 14,
+                              child: Text(
+                                MyStrings.na,
                                 textAlign: TextAlign.center,
-                                style: MyStyles.red3_12700,
+                                style: MyStyles.white8700,
                               ),
-                              Icon(
-                                (showMore.value == false)
-                                    ? Icons.arrow_drop_down_rounded
-                                    : Icons.arrow_drop_up_rounded,
-                                size: 25,
-                                color: MyColors.red3,
-                              )
-                            ],
+                            ),
+                            title: const Text(
+                              MyStrings.notAvailable,
+                              style: MyStyles.black12500,
+                            ),
+                            subtitle: Text(
+                              carDetailsScreenViewModel.notAvailable,
+                              style: MyStyles.black12400,
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                );
-              });
-            }
-            return const SizedBox();
-            });
-    });
+                    )
+      ],
+    );
   }
 
   Widget otherIssue(RxList<Master> otherPartsList) {

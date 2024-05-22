@@ -124,7 +124,7 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                 setState(() {});
               },
               tabs: [
-                Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.biddedCars}(${Get.find<BidCarsListViewModel>().bidCarsResponse.value.data?[0].biddedCars?.where((car) => car.status == CarStatus.live.name).length ?? '0'})':MyStrings.biddedCars,),
+                Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.biddedCars}(${Get.find<BidCarsListViewModel>().bidCarsResponse.value.data?[0].biddedCars?.where((car) => car.status?.toLowerCase() == CarStatus.live.name).length ?? '0'})':MyStrings.biddedCars,),
                 Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.likedCars}(${Get.find<BidCarsListViewModel>().likeResponse.value.data?[0].likedCars?.length ?? '0'})':MyStrings.likedCars,),
               ],
             ),),

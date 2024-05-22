@@ -1,3 +1,4 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/services.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/styles.dart';
@@ -39,11 +40,8 @@ class DocumentScreen extends StatelessWidget {
                   labelText: "${MyStrings.fullName}*",
                   helperText: "${MyStrings.enterFullName}*",
                   validator: ValidateInput.validateRequiredFields,
-
                   keyboardType: TextInputType.text,
-                  inputFormatter: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))
-                  ],
+                  inputFormatter: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))],
                 ),
                 const SizedBox(
                   height: Dimens.spaceWidth,
@@ -83,9 +81,7 @@ class DocumentScreen extends StatelessWidget {
                   helperText: '${MyStrings.enterPinCode}*',
                   validator: ValidateInput.validateRequiredFields,
                   keyboardType: TextInputType.number,
-                  inputFormatter: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
-                  ],
+                  inputFormatter: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
                 ),
                 const SizedBox(
                   height: Dimens.spaceWidth,
@@ -96,9 +92,7 @@ class DocumentScreen extends StatelessWidget {
                   helperText: '${MyStrings.enterDistrict}*',
                   validator: ValidateInput.validateRequiredFields,
                   keyboardType: TextInputType.text,
-                  inputFormatter: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))
-                  ],
+                  inputFormatter: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))],
                 ),
               ],
             ),
@@ -150,14 +144,13 @@ class DocumentScreen extends StatelessWidget {
     );
   }
 
-  Widget pageTwo() {
+  Widget pageTwo(BuildContext context) {
     return Obx(
       () => Scaffold(
         bottomNavigationBar: SizedBox(
           height: 70,
           child: Center(
             child: CustomElevatedButton(
-
               onPressed: () {
                 if (viewModel.page2Key.currentState!.validate()) {
                   viewModel.page2Key.currentState!.save();
@@ -204,7 +197,6 @@ class DocumentScreen extends StatelessWidget {
                   onTap: () async {
                     showModalBottomSheet<void>(
                       context: Get.context!,
-                      // isDismissible: false,
                       builder: (BuildContext context) {
                         return ImagePickerSheet(
                           image: viewModel.aadhaarFront,
@@ -212,22 +204,28 @@ class DocumentScreen extends StatelessWidget {
                       },
                     );
                   },
-                  child: CustomTextFormField(
-                    labelText: MyStrings.aadhaarCardFront,
-                    helperText: MyStrings.additionalInfo,
-                    controller: TextEditingController(),
-                    validator: viewModel.aadhaarFront.value == null ? ValidateInput.validateRequiredFields : null,
-                    isEnabled: false,
-                    showCursor: false,
-                    prefixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: viewModel.aadhaarFront.value == null
-                          ? Image.asset(MyImages.upload)
-                          // ? Icon(Icons.file_upload_outlined)
-                          : const Icon(
-                              Icons.done_rounded,
-                              color: MyColors.green,
-                            ),
+                  child: DottedBorder(
+                    color: MyColors.grey2,
+                    padding: const EdgeInsets.all(8),
+                    radius: const Radius.circular(6),
+                    borderType: BorderType.RRect,
+                    dashPattern: const [3, 3],
+                    child: BidTextFormField(
+                      labelText: MyStrings.aadhaarCardFront,
+                      helperText: MyStrings.additionalInfo,
+                      controller: TextEditingController(),
+                      validator: viewModel.panCard.value == null ? ValidateInput.validateRequiredFields : null,
+                      isEnabled: false,
+                      showCursor: false,
+                      prefixIcon: Padding(
+                        padding: Dimens.suffixPadding,
+                        child: viewModel.panCard.value == null
+                            ? Image.asset(MyImages.upload)
+                            : const Icon(
+                                Icons.done_rounded,
+                                color: MyColors.green,
+                              ),
+                      ),
                     ),
                   ),
                 ),
@@ -235,35 +233,40 @@ class DocumentScreen extends StatelessWidget {
                   height: Dimens.spaceWidth,
                 ),
                 GestureDetector(
-                  onTap: () async {
-                    showModalBottomSheet<void>(
-                      context: Get.context!,
-                      // isDismissible: false,
-                      builder: (BuildContext context) {
-                        return ImagePickerSheet(
-                          image: viewModel.aadhaarBack,
-                        );
-                      },
-                    );
-                  },
-                  child: CustomTextFormField(
-                    labelText: MyStrings.aadhaarCardBack,
-                    helperText: MyStrings.additionalInfo,
-                    controller: TextEditingController(),
-                    validator: viewModel.aadhaarBack.value == null ? ValidateInput.validateRequiredFields : null,
-                    isEnabled: false,
-                    showCursor: false,
-                    prefixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: viewModel.aadhaarBack.value == null
-                          ? Icon(Icons.file_upload_outlined)
-                          : const Icon(
-                              Icons.done_rounded,
-                              color: MyColors.green,
-                            ),
-                    ),
-                  ),
-                ),
+                    onTap: () async {
+                      showModalBottomSheet<void>(
+                        context: Get.context!,
+                        builder: (BuildContext context) {
+                          return ImagePickerSheet(
+                            image: viewModel.aadhaarBack,
+                          );
+                        },
+                      );
+                    },
+                    child: DottedBorder(
+                      color: MyColors.grey2,
+                      padding: const EdgeInsets.all(8),
+                      radius: const Radius.circular(6),
+                      borderType: BorderType.RRect,
+                      dashPattern: const [3, 3],
+                      child: BidTextFormField(
+                        labelText: MyStrings.aadhaarCardBack,
+                        helperText: MyStrings.additionalInfo,
+                        controller: TextEditingController(),
+                        validator: viewModel.aadhaarBack.value == null ? ValidateInput.validateRequiredFields : null,
+                        isEnabled: false,
+                        showCursor: false,
+                        prefixIcon: Padding(
+                          padding: Dimens.suffixPadding,
+                          child: viewModel.aadhaarBack.value == null
+                              ? const Icon(Icons.file_upload_outlined)
+                              : const Icon(
+                                  Icons.done_rounded,
+                                  color: MyColors.green,
+                                ),
+                        ),
+                      ),
+                    )),
                 const SizedBox(
                   height: Dimens.spaceWidth,
                 ),
@@ -271,7 +274,6 @@ class DocumentScreen extends StatelessWidget {
                   onTap: () async {
                     showModalBottomSheet<void>(
                       context: Get.context!,
-                      // isDismissible: false,
                       builder: (BuildContext context) {
                         return ImagePickerSheet(
                           image: viewModel.panCard,
@@ -279,24 +281,31 @@ class DocumentScreen extends StatelessWidget {
                       },
                     );
                   },
-                  child: CustomTextFormField(
-                    labelText: MyStrings.panCard,
-                    helperText: MyStrings.additionalInfo,
-                    controller: TextEditingController(),
-                    validator: viewModel.panCard.value == null ? ValidateInput.validateRequiredFields : null,
-                    isEnabled: false,
-                    showCursor: false,
-                    prefixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: viewModel.panCard.value == null
-                          ? Icon(Icons.file_upload_outlined)
-                          : const Icon(
-                              Icons.done_rounded,
-                              color: MyColors.green,
-                            ),
+                  child: DottedBorder(
+                    color: MyColors.grey2,
+                    padding: const EdgeInsets.all(8),
+                    radius: const Radius.circular(6),
+                    borderType: BorderType.RRect,
+                    dashPattern: const [3, 3],
+                    child: BidTextFormField(
+                      labelText: MyStrings.panCard,
+                      helperText: MyStrings.additionalInfo,
+                      controller: TextEditingController(),
+                      validator: viewModel.panCard.value == null ? ValidateInput.validateRequiredFields : null,
+                      isEnabled: false,
+                      showCursor: false,
+                      prefixIcon: Padding(
+                        padding: Dimens.suffixPadding,
+                        child: viewModel.panCard.value == null
+                            ? const Icon(Icons.file_upload_outlined)
+                            : const Icon(
+                                Icons.done_rounded,
+                                color: MyColors.green,
+                              ),
+                      ),
                     ),
                   ),
-                ),
+                )
               ],
             ),
           ),
@@ -305,7 +314,7 @@ class DocumentScreen extends StatelessWidget {
     );
   }
 
-  Widget pageThree() {
+  Widget pageThree(BuildContext context) {
     return Obx(
       () => Scaffold(
         bottomNavigationBar: SizedBox(
@@ -368,21 +377,28 @@ class DocumentScreen extends StatelessWidget {
                       },
                     );
                   },
-                  child: CustomTextFormField(
-                    labelText: MyStrings.shopImage,
-                    helperText: MyStrings.additionalInfo,
-                    controller: TextEditingController(),
-                    validator: (p0) => null,
-                    isEnabled: false,
-                    showCursor: false,
-                    prefixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: viewModel.shopImage.value == null
-                          ? Icon(Icons.file_upload_outlined)
-                          : const Icon(
-                              Icons.done_rounded,
-                              color: MyColors.green,
-                            ),
+                  child: DottedBorder(
+                    color: MyColors.grey2,
+                    padding: const EdgeInsets.all(8),
+                    radius: const Radius.circular(6),
+                    borderType: BorderType.RRect,
+                    dashPattern: const [3, 3],
+                    child: BidTextFormField(
+                      labelText: MyStrings.shopImage,
+                      helperText: MyStrings.additionalInfo,
+                      controller: TextEditingController(),
+                      validator: (p0) => null,
+                      isEnabled: false,
+                      showCursor: false,
+                      prefixIcon: Padding(
+                        padding: Dimens.suffixPadding,
+                        child: viewModel.shopImage.value == null
+                            ? const Icon(Icons.file_upload_outlined)
+                            : const Icon(
+                                Icons.done_rounded,
+                                color: MyColors.green,
+                              ),
+                      ),
                     ),
                   ),
                 ),
@@ -401,21 +417,28 @@ class DocumentScreen extends StatelessWidget {
                       },
                     );
                   },
-                  child: CustomTextFormField(
-                    labelText: MyStrings.visitingCard,
-                    helperText: MyStrings.additionalInfo,
-                    controller: TextEditingController(),
-                    validator: (p0) => null,
-                    isEnabled: false,
-                    showCursor: false,
-                    prefixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: viewModel.visitingCard.value == null
-                          ? Icon(Icons.file_upload_outlined)
-                          : const Icon(
-                              Icons.done_rounded,
-                              color: MyColors.green,
-                            ),
+                  child: DottedBorder(
+                    color: MyColors.grey2,
+                    padding: const EdgeInsets.all(8),
+                    radius: const Radius.circular(6),
+                    borderType: BorderType.RRect,
+                    dashPattern: const [3, 3],
+                    child: BidTextFormField(
+                      labelText: MyStrings.visitingCard,
+                      helperText: MyStrings.additionalInfo,
+                      controller: TextEditingController(),
+                      validator: (p0) => null,
+                      isEnabled: false,
+                      showCursor: false,
+                      prefixIcon: Padding(
+                        padding: Dimens.suffixPadding,
+                        child: viewModel.visitingCard.value == null
+                            ? const Icon(Icons.file_upload_outlined)
+                            : const Icon(
+                                Icons.done_rounded,
+                                color: MyColors.green,
+                              ),
+                      ),
                     ),
                   ),
                 ),
@@ -434,24 +457,31 @@ class DocumentScreen extends StatelessWidget {
                       },
                     );
                   },
-                  child: CustomTextFormField(
-                    labelText: MyStrings.cancelledChequeOrPassBook,
-                    helperText: MyStrings.additionalInfo,
-                    controller: TextEditingController(),
-                    validator: viewModel.cancelledCheque.value == null ? ValidateInput.validateRequiredFields : null,
-                    isEnabled: false,
-                    showCursor: false,
-                    prefixIcon: Padding(
-                      padding: Dimens.suffixPadding,
-                      child: viewModel.cancelledCheque.value == null
-                          ? Icon(Icons.file_upload_outlined)
-                          : const Icon(
-                              Icons.done_rounded,
-                              color: MyColors.green,
-                            ),
+                  child: DottedBorder(
+                    color: MyColors.grey2,
+                    padding: const EdgeInsets.all(8),
+                    radius: const Radius.circular(6),
+                    borderType: BorderType.RRect,
+                    dashPattern: const [3, 3],
+                    child: BidTextFormField(
+                      labelText: MyStrings.cancelledChequeOrPassBook,
+                      helperText: MyStrings.additionalInfo,
+                      controller: TextEditingController(),
+                      validator: viewModel.cancelledCheque.value == null ? ValidateInput.validateRequiredFields : null,
+                      isEnabled: false,
+                      showCursor: false,
+                      prefixIcon: Padding(
+                        padding: Dimens.suffixPadding,
+                        child: viewModel.cancelledCheque.value == null
+                            ? const Icon(Icons.file_upload_outlined)
+                            : const Icon(
+                                Icons.done_rounded,
+                                color: MyColors.green,
+                              ),
+                      ),
                     ),
                   ),
-                ),
+                )
               ],
             ),
           ),
@@ -541,30 +571,30 @@ class DocumentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    pages = [pageOne(), pageTwo(), pageThree(), pageFour()];
+    pages = [pageOne(), pageTwo(context), pageThree(context), pageFour()];
     return Obx(() => PopScope(
-           canPop: false,
-           onPopInvoked: (didPop) {
+          canPop: false,
+          onPopInvoked: (didPop) {
             // Methods.showConfirmDialog(context);
-             if(viewModel.activePage.value == 0){
-               showLogoutDialog(context);
-             }else{
-               viewModel.pageController.value.animateToPage(
-                 viewModel.activePage.value - 1,
-                 duration: const Duration(milliseconds: 300),
-                 curve: Curves.linear,
-               );
-             }
-           },
+            if (viewModel.activePage.value == 0) {
+              showLogoutDialog(context);
+            } else {
+              viewModel.pageController.value.animateToPage(
+                viewModel.activePage.value - 1,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.linear,
+              );
+            }
+          },
           child: Scaffold(
             key: _key,
             appBar: CustomAppBar(
               title: MyStrings.documentVerification,
               subTitle: MyStrings.documentDesc,
               onBackPressed: () {
-                if(viewModel.activePage.value == 0){
+                if (viewModel.activePage.value == 0) {
                   showLogoutDialog(context);
-                }else{
+                } else {
                   viewModel.pageController.value.animateToPage(
                     viewModel.activePage.value - 1,
                     duration: const Duration(milliseconds: 300),

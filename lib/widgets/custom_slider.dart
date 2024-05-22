@@ -114,7 +114,9 @@ class CustomSlider extends StatelessWidget {
                 ),
               Positioned(
                 bottom: 12,
-                left: MediaQuery.of(context).size.width * 0.39,
+                // left: MediaQuery.of(context).size.width * 0.39,
+                left: 0,
+                right: 0,
                 child: Obx(
                       () => SizedBox(
                     width: 41,

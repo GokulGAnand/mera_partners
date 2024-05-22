@@ -1,5 +1,7 @@
-import 'dart:async';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
+import 'package:flutter_countdown_timer/current_remaining_time.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:get/get.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/enum.dart';
@@ -17,7 +19,7 @@ import '../view_model/home/orders/rc_transfer_view_model.dart';
 import 'custom_toast.dart';
 
 class CustomOrderContainer extends StatefulWidget {
-  CustomOrderContainer({super.key, required this.dealStatus, this.backgroundBlackOpacity, required this.buttonText, required this.buttonStatus, required this.carModel, required this.carName, required this.carID, required this.imageURL, required this.finalPrice, this.onPressed, required this.showButton, this.negStartTime, this.negEndTime});
+  CustomOrderContainer({super.key, required this.dealStatus, this.backgroundBlackOpacity, required this.buttonText, required this.buttonStatus, required this.carModel, required this.carName, required this.carID, required this.imageURL, required this.finalPrice, this.onPressed, required this.showButton, this.negStartTime, this.negEndTime, this.timerController});
 
   final String dealStatus;
   final Widget? backgroundBlackOpacity;
@@ -32,33 +34,30 @@ class CustomOrderContainer extends StatefulWidget {
   final bool showButton;
   final DateTime? negStartTime;
   final DateTime? negEndTime;
-  Rxn<Duration> duration = Rxn();
+  Rx<int> remainingTime = 0.obs;
+  final Rx<CountdownTimerController>? timerController;
+
+  onEnd(){
+    if(timerController!.value.isRunning){
+      timerController?.value.disposeTimer();
+    }
+    if (Get.isRegistered<NegotiationViewModel>()) {
+      Get.find<NegotiationViewModel>().getNegotiationCarsData();
+      Get.find<NegotiationViewModel>().getLostDeal();
+    }
+    if(Get.isRegistered<ProcuredScreenViewModel>()){
+      Get.find<ProcuredScreenViewModel>().getProcuredBill();
+    }
+    if(Get.isRegistered<RcTransferViewModel>()){
+      Get.find<RcTransferViewModel>().getRcTransfer();
+    }
+  }
 
   @override
   State<CustomOrderContainer> createState() => _CustomOrderContainerState();
 }
 
 class _CustomOrderContainerState extends State<CustomOrderContainer> {
-
-  void startTimer() {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (widget.duration.value!.inSeconds == 0) {
-        timer.cancel();
-        if (Get.isRegistered<NegotiationViewModel>()) {
-          Get.find<NegotiationViewModel>().getNegotiationCarsData();
-          Get.find<NegotiationViewModel>().getLostDeal();
-        }
-        if(Get.isRegistered<ProcuredScreenViewModel>()){
-          Get.find<ProcuredScreenViewModel>().getProcuredBill();
-        }
-        if(Get.isRegistered<RcTransferViewModel>()){
-          Get.find<RcTransferViewModel>().getRcTransfer();
-        }
-      } else {
-        widget.duration.value = widget.duration.value! - const Duration(seconds: 1);
-      }
-    });
-  }
 
   String formatDuration(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
@@ -76,26 +75,34 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
 
   @override
   void initState() {
-    var start = DateTime.now();
-    var end = widget.negEndTime ?? DateTime.now();
-    Duration diff = end.difference(start);
-    widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
-    if(start.isBefore(end)) {
-      startTimer();
-    }
     super.initState();
   }
+
+  @override
+  void dispose() {
+    widget.timerController?.value.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 1),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
-            color: MyColors.subTitleColor.withOpacity(0.15),
-            blurRadius: 15.0,
-          ),
+              color: MyColors.subTitleColor.withOpacity(0.1),
+              offset: const Offset(0, 4),
+              blurRadius: 6,
+              spreadRadius: 0
+          ),BoxShadow(
+              color: MyColors.subTitleColor.withOpacity(0.1),
+              offset: const Offset(0, 10),
+              blurRadius: 15,
+              spreadRadius: 0
+          )
         ],
       ),
       child: SingleChildScrollView(
@@ -141,7 +148,7 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                     ),
                   ),
                 ),
-                (widget.dealStatus.isEmpty)
+                (widget.dealStatus.isEmpty || (widget.dealStatus == OrderStatus.negotiation.name && widget.buttonText.toLowerCase() == Status.pending.name))
                     ? const SizedBox()
                     : Container(
                   height: 25,
@@ -173,21 +180,29 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                         width: 3,
                       ),
                       widget.dealStatus == OrderStatus.negotiation.name?
-                      Obx(() => Text(
-                        (widget.dealStatus == OrderStatus.negotiation.name)
-                            ?  formatDuration( widget.duration.value! )
-                            : (widget.dealStatus == OrderStatus.procurement.name)
-                            ? MyStrings.dealWon
-                            : MyStrings.dealLost,
-                        style: (widget.dealStatus == OrderStatus.negotiation.name)
-                            ? MyStyles.white14700
-                            : (widget.dealStatus == OrderStatus.procurement.name)
-                            ? MyStyles.whiteTitleStyle
-                            : MyStyles.whiteTitleStyle,
-                      ),) :  Text(
-                        (widget.dealStatus == OrderStatus.negotiation.name)
-                            ?  formatDuration( widget.duration.value! )
-                            : (widget.dealStatus == OrderStatus.procurement.name)
+                      Obx(() => CountdownTimer(
+                        controller: widget.timerController?.value,
+                        onEnd: widget.onEnd,
+                        widgetBuilder: (_, CurrentRemainingTime? time) {
+                          if (time == null) {
+                            return const Text('');
+                          }
+                          if(time.min != null){
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              widget.remainingTime.value = time.min ?? 0;
+                            });
+                          }
+                          return Text(time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: const TextStyle(
+                            color: MyColors.white,
+                            fontSize: 14,
+                            fontFamily: 'DM Sans',
+                            fontWeight: FontWeight.w700,
+                            height: 0,
+                          ));
+                        },
+                      ),)
+                          :  Text(
+                        (widget.dealStatus == OrderStatus.procurement.name)
                             ? MyStrings.dealWon
                             : MyStrings.dealLost,
                         style: (widget.dealStatus == OrderStatus.negotiation.name)
@@ -257,6 +272,7 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                         color: (widget.buttonStatus.toLowerCase() == Status.pending.name) ? MyColors.yellow2 : Colors.transparent,
                         padding: EdgeInsets.zero,
                         radius: const Radius.circular(6),
+                        borderType: BorderType.RRect,
                         dashPattern: const [3, 3],
                         child: CustomElevatedButton(
                           onPressed: (widget.onPressed != null) ? widget.onPressed : () {},
