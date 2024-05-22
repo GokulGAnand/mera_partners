@@ -2,6 +2,10 @@
 
 Mera Partners
 
+///ios key id (push notifications APN id)
+Key ID:N5P48NND99
+Team ID : GYK264S84Q
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
