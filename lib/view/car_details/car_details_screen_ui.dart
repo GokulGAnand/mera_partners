@@ -143,7 +143,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         MyColors.black5],
                     ),
                   ),
-                  child: Row(
+                  child: Obx(() => Row(
                     children: [
                       Text(
                         (carDetailsScreenViewModel.carStatus == "bid won")
@@ -174,18 +174,18 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       const SizedBox(
                         width: 8,
                       ),
-                      globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!)
+                      globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == CarStatus.live.name && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!)
                           ? Padding(
                         padding: const EdgeInsets.only(left: 8.0, right: 5.0),
                         child: SvgPicture.asset(MySvg.arrowUp, width: 14,),
                       )
-                          :globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
+                          :globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == CarStatus.live.name && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
                           ? Padding(
                         padding: const EdgeInsets.only(left: 8.0, right: 5.0),
                         child: SvgPicture.asset(MySvg.arrowDown, width: 14,),
                       )
                           :const SizedBox(),
-                      Text(
+                      Obx(() => Text(
                         // (carDetailsScreenViewModel.carStatus == "")?
                         // '₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid.toString()}':
                         // '',
@@ -194,16 +194,16 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         // ? Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid).toString()
                         // : "",
                             ?globals.documentStatus == DocumentStatus.VERIFIED.name ?
-                        Constants.numberFormat.format(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase() ? carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue ?? 0 : carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid ?? 0)
-                            :(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid != null)
-                            ?'₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
+                        Constants.numberFormat.format(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase() ? (carDetailsScreenViewModel.carDetailsResponse.value.data?[0].realValue ?? 0) : (carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0))
+                            :(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid != null)
+                            ?'₹${carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
                             :'₹${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
                             : "",
                         textAlign: TextAlign.center,
                         style: MyStyles.white16700,
-                      )
+                      ),)
                     ],
-                  ),
+                  ),)
                 ),),
                 Container(
                   color: MyColors.white,
@@ -706,12 +706,12 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!)
+              globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == CarStatus.live.name && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!)
                   ? Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: SvgPicture.asset(MySvg.arrowUp,),
                   )
-                  :globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
+                  :globals.uniqueUserId != null && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == CarStatus.live.name && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].winner != null && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && carDetailsScreenViewModel.carDetailsResponse.value.data?[0].leaderBoard != null && carDetailsScreenViewModel.carDetailsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
                   ? Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: SvgPicture.asset(MySvg.arrowDown,),
@@ -722,9 +722,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                 carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
                         // ? Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid).toString()
                         ?globals.documentStatus == DocumentStatus.VERIFIED.name ?
-                Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid ?? 0)
-                                  :(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid != null)
-                                  ?'₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
+                Constants.numberFormat.format(carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid ?? 0)
+                                  :(carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid != null)
+                                  ?'₹${carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
                                   :'₹${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
                 : carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.scheduled.toLowerCase()
                 ? MyStrings.scheduledBid
@@ -848,12 +848,12 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                     bidEndTime: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime ?? DateTime.now().toString()),
                                     amountController: liveCarListViewModel.autoBidController,
                                     isAutoBid: true,
-                                    bidValue: RxInt(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid!.toInt()),
-                                    stepRate: carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 99999
+                                    bidValue: RxInt(carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid!.toInt()),
+                                    stepRate: carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! <= 99999
                                         ? RxInt(2000)
-                                        : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 100000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 299999)
+                                        : (carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! >= 100000 && carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! <= 299999)
                                         ? RxInt(4000)
-                                        : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 300000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 499999)
+                                        : (carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! >= 300000 && carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! <= 499999)
                                         ? RxInt(7000)
                                         : RxInt(10000),
                                     onAutoBidPressed: () {
@@ -906,12 +906,12 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                     bidStartTime: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()),
                                     bidEndTime: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime ?? DateTime.now().toString()),
                                     amountController: liveCarListViewModel.bidController,
-                                    bidValue: RxInt(carDetailsScreenViewModel.reportResponse.value.data?.allCarInfo!.highestBid!.toInt() ?? 0),
-                                    stepRate: carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 99999
+                                    bidValue: RxInt(carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid!.toInt() ?? 0),
+                                    stepRate: carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! <= 99999
                                         ? RxInt(2000)
-                                        : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 100000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 299999)
+                                        : (carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! >= 100000 && carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! <= 299999)
                                         ? RxInt(4000)
-                                        : (carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! >= 300000 && carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid! <= 499999)
+                                        : (carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! >= 300000 && carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! <= 499999)
                                         ? RxInt(7000)
                                         : RxInt(10000),
                                     onBidPressed: () {

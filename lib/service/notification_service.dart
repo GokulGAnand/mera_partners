@@ -83,7 +83,7 @@ class NotificationService {
     try{
       await showNotification(
         title: "⏱️ Autobid limit reached", 
-        body: "      Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet ", 
+        body: "Autobid limit reached for the car ",
         isNegotiation: false);
     } catch(e){
       throw(e);
