@@ -261,7 +261,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.ownershipNumber != null)...[
                                   const Text('|', style: MyStyles.regular12),
                                   const SizedBox(width: 6),
-                                  Text(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.ownershipNumber!.capitalize.toString(), style: MyStyles.regular12),
+                                  Text('${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.ownershipNumber!.capitalize} Owner'.toString(), style: MyStyles.regular12),
                                   const SizedBox(width: 6),
                                 ],
                                 if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.transmission != null)...[
