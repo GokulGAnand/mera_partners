@@ -252,10 +252,10 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                   Text(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.fuelType!.capitalize.toString(), style: MyStyles.regular12),
                                   const SizedBox(width: 6),
                                 ],
-                                if(carDetailsScreenViewModel.reportResponse.value.data!.odometerReading != null)...[
+                                if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo?.odometerReading != null)...[
                                   const Text('|', style: MyStyles.regular12),
                                   const SizedBox(width: 6),
-                                  Text('${carDetailsScreenViewModel.reportResponse.value.data!.odometerReading} KM', style: MyStyles.regular12),
+                                  Text('${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo?.odometerReading} KM', style: MyStyles.regular12),
                                   const SizedBox(width: 6),
                                 ],
                                 if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.ownershipNumber != null)...[
