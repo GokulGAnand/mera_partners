@@ -585,7 +585,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                               Text.rich(
                                 TextSpan(
                                   children: [
-                                    const TextSpan(text: 'FMV  ', style: MyStyles.subTitleGreayStyle),
+                                    const TextSpan(text: 'Fair Value ', style: MyStyles.subTitleGreayStyle),
                                     TextSpan(text: globals.documentStatus == DocumentStatus.VERIFIED.name ? '₹${widget.fmv}' : '₹${widget.fmv.replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}', style: MyStyles.grey14700),
                                   ],
                                 ),
