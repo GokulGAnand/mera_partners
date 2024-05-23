@@ -73,11 +73,10 @@ class _OrdersScreenState extends State<OrdersScreen>
                               if(negotiationScreenViewModel.isNegotiation.value == true){
                                 negotiationScreenViewModel.searchNegotiationList.clear();
                                 for(int i=0; i<negotiationScreenViewModel.carListResponse.value.data!.length; i++){
-                                  if(negotiationScreenViewModel.carListResponse.value.data![i].model!.contains(negotiationScreenViewModel.searchNegotiationController.text) || 
-                                    negotiationScreenViewModel.carListResponse.value.data![i].model!.toLowerCase().contains(negotiationScreenViewModel.searchNegotiationController.text) ||
-                                    negotiationScreenViewModel.carListResponse.value.data![i].make!.contains(negotiationScreenViewModel.searchNegotiationController.text) ||
-                                    negotiationScreenViewModel.carListResponse.value.data![i].make!.toLowerCase().contains(negotiationScreenViewModel.searchNegotiationController.text) ||
-                                    negotiationScreenViewModel.carListResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(negotiationScreenViewModel.searchNegotiationController.text)){
+                                  if(negotiationScreenViewModel.carListResponse.value.data![i].model!.toLowerCase().contains(negotiationScreenViewModel.searchNegotiationController.text.toLowerCase()) ||
+                                    negotiationScreenViewModel.carListResponse.value.data![i].make!.toLowerCase().contains(negotiationScreenViewModel.searchNegotiationController.text.toLowerCase()) ||
+                                    negotiationScreenViewModel.carListResponse.value.data![i].variant!.toLowerCase().contains(negotiationScreenViewModel.searchNegotiationController.text.toLowerCase()) ||
+                                    negotiationScreenViewModel.carListResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(negotiationScreenViewModel.searchNegotiationController.text.toLowerCase())){
                                     negotiationScreenViewModel.searchNegotiationList.add(negotiationScreenViewModel.carListResponse.value.data![i]);
                                     log(negotiationScreenViewModel.searchNegotiationList.toString());
                                   }
@@ -85,11 +84,10 @@ class _OrdersScreenState extends State<OrdersScreen>
                               } else {
                                 negotiationScreenViewModel.searchLostList.clear();
                                 for(int i=0; i<negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal!.length; i++){
-                                  if(negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal![i].model!.contains(negotiationScreenViewModel.searchLostController.text) || 
-                                    negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal![i].model!.toLowerCase().contains(negotiationScreenViewModel.searchLostController.text) ||
-                                    negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal![i].make!.contains(negotiationScreenViewModel.searchLostController.text) ||
-                                    negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal![i].make!.toLowerCase().contains(negotiationScreenViewModel.searchLostController.text) ||
-                                    negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal![i].uniqueId!.toString().toLowerCase().contains(negotiationScreenViewModel.searchLostController.text)){
+                                  if(negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal![i].model!.toLowerCase().contains(negotiationScreenViewModel.searchLostController.text.toLowerCase()) ||
+                                    negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal![i].make!.toLowerCase().contains(negotiationScreenViewModel.searchLostController.text.toLowerCase()) ||
+                                    negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal![i].variant!.toLowerCase().contains(negotiationScreenViewModel.searchLostController.text.toLowerCase()) ||
+                                    negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal![i].uniqueId!.toString().toLowerCase().contains(negotiationScreenViewModel.searchLostController.text.toLowerCase())){
                                     negotiationScreenViewModel.searchLostList.add(negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal![i]);
                                     log(negotiationScreenViewModel.searchLostList.toString());
                                   }
@@ -100,11 +98,10 @@ class _OrdersScreenState extends State<OrdersScreen>
                               log(procuredScreenViewModel.liveCarsResponse.value.data!.length.toString());
                               procuredScreenViewModel.searchList.clear();
                               for(int i=0; i<procuredScreenViewModel.liveCarsResponse.value.data!.length; i++){
-                                if(procuredScreenViewModel.liveCarsResponse.value.data![i].model!.contains(procuredScreenViewModel.searchController.text) || 
-                                  procuredScreenViewModel.liveCarsResponse.value.data![i].model!.toLowerCase().contains(procuredScreenViewModel.searchController.text) ||
-                                  procuredScreenViewModel.liveCarsResponse.value.data![i].make!.contains(procuredScreenViewModel.searchController.text) ||
-                                  procuredScreenViewModel.liveCarsResponse.value.data![i].make!.toLowerCase().contains(procuredScreenViewModel.searchController.text) ||
-                                  procuredScreenViewModel.liveCarsResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(procuredScreenViewModel.searchController.text)){
+                                if(procuredScreenViewModel.liveCarsResponse.value.data![i].model!.toLowerCase().contains(procuredScreenViewModel.searchController.text.toLowerCase()) ||
+                                  procuredScreenViewModel.liveCarsResponse.value.data![i].make!.toLowerCase().contains(procuredScreenViewModel.searchController.text.toLowerCase()) ||
+                                  procuredScreenViewModel.liveCarsResponse.value.data![i].variant!.toLowerCase().contains(procuredScreenViewModel.searchController.text.toLowerCase()) ||
+                                  procuredScreenViewModel.liveCarsResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(procuredScreenViewModel.searchController.text.toLowerCase())){
                                   procuredScreenViewModel.searchList.add(procuredScreenViewModel.liveCarsResponse.value.data![i]);
                                   log(procuredScreenViewModel.searchList.toString());
                                 }
@@ -112,11 +109,10 @@ class _OrdersScreenState extends State<OrdersScreen>
                             } else {
                               rcTransferViewModel.searchRcTransferList.clear();
                               for(int i=0; i<rcTransferViewModel.liveCarsResponse.value.data!.length; i++){
-                                if(rcTransferViewModel.liveCarsResponse.value.data![i].model!.contains(rcTransferViewModel.searchRcTransferController.text) || 
-                                  rcTransferViewModel.liveCarsResponse.value.data![i].model!.toLowerCase().contains(rcTransferViewModel.searchRcTransferController.text) ||
-                                  rcTransferViewModel.liveCarsResponse.value.data![i].make!.contains(rcTransferViewModel.searchRcTransferController.text) ||
-                                  rcTransferViewModel.liveCarsResponse.value.data![i].make!.toLowerCase().contains(rcTransferViewModel.searchRcTransferController.text) ||
-                                  rcTransferViewModel.liveCarsResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(rcTransferViewModel.searchRcTransferController.text)){
+                                if(rcTransferViewModel.liveCarsResponse.value.data![i].model!.toLowerCase().contains(rcTransferViewModel.searchRcTransferController.text.toLowerCase()) ||
+                                  rcTransferViewModel.liveCarsResponse.value.data![i].make!.toLowerCase().contains(rcTransferViewModel.searchRcTransferController.text.toLowerCase()) ||
+                                  rcTransferViewModel.liveCarsResponse.value.data![i].variant!.toLowerCase().contains(rcTransferViewModel.searchRcTransferController.text.toLowerCase()) ||
+                                  rcTransferViewModel.liveCarsResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(rcTransferViewModel.searchRcTransferController.text.toLowerCase())){
                                   rcTransferViewModel.searchRcTransferList.add(rcTransferViewModel.liveCarsResponse.value.data![i]);
                                   log(rcTransferViewModel.searchRcTransferList.toString());
                                 }

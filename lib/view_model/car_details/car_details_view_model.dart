@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:mera_partners/model/response/car_details/report_response.dart';
 import 'package:mera_partners/model/response/live/live_cars_list_response.dart';
 import 'package:mera_partners/model/response/user_data/user_car_details_response.dart';
 import 'package:mera_partners/service/endpoints.dart';
 import 'package:mera_partners/service/exception_error_util.dart';
 import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +56,25 @@ class CarDetailsScreenViewModel extends GetxController {
     return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
   }
 
+  String formatKmDriven(String kmDrivenString) {
+    int kmDriven = int.parse(kmDrivenString);
+    if(kmDriven >= 10000) {
+      double result = kmDriven/1000;
+      return '${result.toStringAsFixed(1)}k';
+    }
+    else if (kmDriven >= 100000){
+      double result = kmDriven/1000;
+      return '${result.toStringAsFixed(1)}k';
+    }
+    else if (kmDriven >= 1000){
+      double result = kmDriven/1000;
+      return '${result.toStringAsFixed(1)}k';
+    }
+    else {
+      return '$kmDriven';
+    }
+  }
+
   Rx<PageController> pageSliderController = PageController(initialPage: 0, viewportFraction: 1).obs;
   var activePage = 0.obs;
   // Timer? carouselTimer;
@@ -72,7 +93,7 @@ class CarDetailsScreenViewModel extends GetxController {
 
   bool get isSliverAppBarExpanded {
     return scrollController.hasClients &&
-        scrollController.offset > (600 - kToolbarHeight);
+        scrollController.offset > ((criticalIssue.isEmpty)?380 :600 - kToolbarHeight);
   }
 
   ///page 2
@@ -127,6 +148,14 @@ class CarDetailsScreenViewModel extends GetxController {
 
   Rxn<VideoPlayerController> videoController = Rxn<VideoPlayerController>();
   Rx<TextEditingController> quotePriceController = TextEditingController().obs;
+  Rx<CountdownTimerController>? timerController;
+  Rx<int>? endTime;
+
+  void onEnd() {
+    if (timerController!.value.isRunning) {
+      timerController?.value.disposeTimer();
+    }
+  }
 
   @override
   void onInit() {
@@ -676,24 +705,29 @@ class CarDetailsScreenViewModel extends GetxController {
         //   final nextPageKey = pageKey + 1;
         //   infinitePagingController.appendPage(liveCarsResponse.value.data!, nextPageKey);
         // }
-        if(carDetailsResponse.value.data![0].bidStartTime != null && carDetailsResponse.value.data![0].bidEndTime != null){
-          var startTime= DateTime.parse(carDetailsResponse.value.data![0].bidStartTime!);
-          var endTime= DateTime.parse(carDetailsResponse.value.data![0].bidEndTime!);
+        // if(carDetailsResponse.value.data![0].bidStartTime != null && carDetailsResponse.value.data![0].bidEndTime != null){
+        //   var startTime= DateTime.parse(carDetailsResponse.value.data![0].bidStartTime!);
+        //   var endTime= DateTime.parse(carDetailsResponse.value.data![0].bidEndTime!);
 
-          var start = DateTime(startTime.year, startTime.month, startTime.day, startTime.hour, startTime.minute, startTime.second);
-          var now = DateTime.now();
-          var end = DateTime(endTime.year, endTime.month, endTime.day, endTime.hour, endTime.minute, endTime.second);
+          // var start = DateTime(startTime.year, startTime.month, startTime.day, startTime.hour, startTime.minute, startTime.second);
+          // var now = DateTime.now();
+          // var end = DateTime(endTime.year, endTime.month, endTime.day, endTime.hour, endTime.minute, endTime.second);
 
-          if(now.isBefore(start)){
-            Duration diff = start.difference(now);
-            duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
-            startTimer();
-          }else if(now.isBefore(end)) {
-            Duration diff = end.difference(now);
-            duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
-            startTimer();
-          }
-        }
+          // if(now.isBefore(start)){
+          //   Duration diff = start.difference(now);
+          //   duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+          //   startTimer();
+          // }else if(now.isBefore(end)) {
+          //   Duration diff = end.difference(now);
+          //   duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
+          //   startTimer();
+          // }
+        // }
+        timerController!.value = carDetailsResponse.value.data?[0].status?.toLowerCase() == CarStatus.otb.name
+        ?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsResponse.value.data![0].otbEndTime  ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},)
+        :carDetailsResponse.value.data?[0].status?.toLowerCase() == CarStatus.scheduled.name
+          ?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},) 
+          : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsResponse.value.data![0].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},);
       } else {
         // ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());

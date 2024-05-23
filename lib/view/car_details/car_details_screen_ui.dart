@@ -1,5 +1,7 @@
 import 'dart:developer';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
+import 'package:flutter_countdown_timer/current_remaining_time.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/constants.dart';
@@ -60,6 +62,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
     carDetailsScreenViewModel.getReport();
     carDetailsScreenViewModel.getCarDetails();
     carDetailsScreenViewModel.getLikedCarData();
+    var duration = DateTime.now().difference(DateTime.parse(DateTime.now().toString()));
+    carDetailsScreenViewModel.endTime?.value = DateTime.now().millisecondsSinceEpoch + Duration(seconds: duration.inSeconds).inMilliseconds;
+    carDetailsScreenViewModel.timerController = CountdownTimerController(endTime: carDetailsScreenViewModel.endTime?.value ?? 0, onEnd: carDetailsScreenViewModel.onEnd).obs;
     super.initState();
   }
 
@@ -68,6 +73,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
     if(carDetailsScreenViewModel.videoController.value != null){
       carDetailsScreenViewModel.videoController.value!.pause();
     }
+    carDetailsScreenViewModel.timerController?.value.dispose();
     super.dispose();
   }
 
@@ -255,7 +261,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo?.odometerReading != null)...[
                                   const Text('|', style: MyStyles.regular12),
                                   const SizedBox(width: 6),
-                                  Text('${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo?.odometerReading} KM', style: MyStyles.regular12),
+                                  Text('${carDetailsScreenViewModel.formatKmDriven(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo?.odometerReading.toString() ?? '0')} KM', style: MyStyles.regular12),
                                   const SizedBox(width: 6),
                                 ],
                                 if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.ownershipNumber != null)...[
@@ -391,7 +397,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                   width: double.infinity,
                   color: MyColors.lightBlue1,
                 ),
-                Container(
+                (carDetailsScreenViewModel.criticalIssue.isEmpty)?
+                const SizedBox()
+                :Container(
                   width: double.infinity,
                   color: MyColors.white,
                   padding:
@@ -765,11 +773,35 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                   const SizedBox(
                     width: 5,
                   ),
-                      if(carDetailsScreenViewModel.duration.value != null)
-                         Text(
-                          carDetailsScreenViewModel.formatDuration(carDetailsScreenViewModel.duration.value!),
-                          style: MyStyles.green2_14700,
-                        )
+                  Obx(
+                    () {
+                      return CountdownTimer(
+                                    controller: carDetailsScreenViewModel.timerController?.value,
+                                    widgetBuilder: (_, CurrentRemainingTime? time) {
+                                      if (time == null) {
+                                        return const Text('');
+                                      }
+                                      // if(time.min != null){
+                                      //   WidgetsBinding.instance.addPostFrameCallback((_) {
+                                      //     widget.auctionTime.value = time.min ?? 0;
+                                      //   });
+                                      // }
+                                      return Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
+                                        color: MyColors.green2,
+                                        fontSize: 14,
+                                        fontFamily: 'DM Sans',
+                                        fontWeight: FontWeight.w700,
+                                        height: 0,
+                                      ));
+                                    },
+                                  );
+                    }
+                  ),
+                      // if(carDetailsScreenViewModel.duration.value != null)
+                      //    Text(
+                      //     carDetailsScreenViewModel.formatDuration(carDetailsScreenViewModel.duration.value!),
+                      //     style: MyStyles.green2_14700,
+                      //   )
                 ],
               ),
               const SizedBox(
@@ -1423,7 +1455,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                   SliverAppBar(
                     pinned: true,
                     automaticallyImplyLeading: false,
-                    expandedHeight: 725,
+                    expandedHeight:  (carDetailsScreenViewModel.criticalIssue.isEmpty)?541:725,
                     toolbarHeight: 134,
                     scrolledUnderElevation: 0,
                     flexibleSpace: FlexibleSpaceBar(

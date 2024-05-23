@@ -58,11 +58,10 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                         if(tabController.index == 0){
                           liveCarListViewModel.searchList.clear();
                           for(int i=0; i<liveCarListViewModel.liveCarsResponse.value.data!.length; i++){
-                            if(liveCarListViewModel.liveCarsResponse.value.data![i].model!.contains(liveCarListViewModel.searchController.text) ||
-                              liveCarListViewModel.liveCarsResponse.value.data![i].model!.toLowerCase().contains(liveCarListViewModel.searchController.text) ||
-                              liveCarListViewModel.liveCarsResponse.value.data![i].make!.contains(liveCarListViewModel.searchController.text) ||
-                              liveCarListViewModel.liveCarsResponse.value.data![i].make!.toLowerCase().contains(liveCarListViewModel.searchController.text) ||
-                              liveCarListViewModel.liveCarsResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(liveCarListViewModel.searchController.text)){
+                            if(liveCarListViewModel.liveCarsResponse.value.data![i].model!.toLowerCase().contains(liveCarListViewModel.searchController.text.toLowerCase()) ||
+                              liveCarListViewModel.liveCarsResponse.value.data![i].make!.toLowerCase().contains(liveCarListViewModel.searchController.text.toLowerCase()) ||
+                              liveCarListViewModel.liveCarsResponse.value.data![i].variant!.toLowerCase().contains(liveCarListViewModel.searchController.text.toLowerCase()) ||
+                              liveCarListViewModel.liveCarsResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(liveCarListViewModel.searchController.text.toLowerCase())){
                               liveCarListViewModel.searchList.add(liveCarListViewModel.liveCarsResponse.value.data![i].sId.toString());
                               log(liveCarListViewModel.searchList.toString());
                             }
@@ -70,11 +69,10 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                         } else {
                           otbCarsListViewModel.searchList.clear();
                           for(int i=0; i<otbCarsListViewModel.carsListResponse.value.data!.length; i++){
-                            if(otbCarsListViewModel.carsListResponse.value.data![i].model!.contains(otbCarsListViewModel.searchController.text) || 
-                              otbCarsListViewModel.carsListResponse.value.data![i].model!.toLowerCase().contains(otbCarsListViewModel.searchController.text) ||
-                              otbCarsListViewModel.carsListResponse.value.data![i].make!.contains(otbCarsListViewModel.searchController.text) ||
-                              otbCarsListViewModel.carsListResponse.value.data![i].make!.toLowerCase().contains(otbCarsListViewModel.searchController.text) ||
-                              otbCarsListViewModel.carsListResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(otbCarsListViewModel.searchController.text)){
+                            if(otbCarsListViewModel.carsListResponse.value.data![i].model!.toLowerCase().contains(otbCarsListViewModel.searchController.text.toLowerCase()) ||
+                              otbCarsListViewModel.carsListResponse.value.data![i].make!.toLowerCase().contains(otbCarsListViewModel.searchController.text.toLowerCase()) ||
+                              otbCarsListViewModel.carsListResponse.value.data![i].variant!.toLowerCase().contains(otbCarsListViewModel.searchController.text.toLowerCase()) ||
+                              otbCarsListViewModel.carsListResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(otbCarsListViewModel.searchController.text.toLowerCase())){
                               otbCarsListViewModel.searchList.add(otbCarsListViewModel.carsListResponse.value.data![i].sId.toString());
                               log(otbCarsListViewModel.searchList.toString());
                             }
