@@ -39,7 +39,7 @@ class Data {
   String? role;
   int? contactNo;
   bool? isDeposited;
-  int? depositedAmount;
+  num? depositedAmount;
   String? isDocumentsVerified;
   String? createdAt;
   String? updatedAt;

@@ -356,6 +356,12 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                   height: 10,
                 ),
                 Padding(
+                  padding: const EdgeInsets.only(left: 12),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                      child: Text(widget.carModel, style: MyStyles.subTitleBlackStyle)),
+                ),
+                Padding(
                   padding: const EdgeInsets.only(left: 12.0, right: 12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -365,7 +371,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                         children: [
                           Row(
                             children: [
-                              Text(widget.carModel, style: MyStyles.subTitleBlackStyle),
+                              //Text(widget.carModel, style: MyStyles.subTitleBlackStyle),
                               const SizedBox(
                                 width: 2,
                               ),
@@ -441,11 +447,11 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                             Text(widget.fuelType, style: MyStyles.regular12),
                             const SizedBox(width: 6),                            const Text('|', style: MyStyles.regular12),
                             const SizedBox(width: 6),
-                            Text('${widget.kmDriven} KM', style: MyStyles.regular12),
+                             Text('${formatKmDriven(widget.kmDriven)} KM', style: MyStyles.regular12),
                             const SizedBox(width: 6),
                             const Text('|', style: MyStyles.regular12),
                             const SizedBox(width: 6),
-                            Text(widget.ownerShip, style: MyStyles.regular12),
+                            Text('${widget.ownerShip} Owner', style: MyStyles.regular12),
                             const SizedBox(width: 6),
                             if (widget.transmission.isNotEmpty) const Text('|', style: MyStyles.regular12),
                             if (widget.transmission.isNotEmpty) const SizedBox(width: 6),
@@ -493,7 +499,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                             widget.isScheduled?.value == true ? MyStrings.yetToStart : widget.auctionTime.value >= 10 ? MyStrings.acceptingBids:
                             widget.auctionTime.value <= 10 ? MyStrings.bidEndsIn : MyStrings.lastCall,
                             style: TextStyle(
-                              color: widget.isScheduled?.value == true ? MyColors.kPrimaryColor : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                              color: widget.isScheduled?.value == true ? MyColors.kPrimaryColor : widget.auctionTime.value >= 10 ? MyColors.green2 : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
                               fontSize: 12,
                               fontFamily: 'DM Sans',
                               fontWeight: FontWeight.w500,
@@ -507,7 +513,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                               if(widget.auctionTime.value != 0 && widget.timerController?.value != null)
                               Icon(
                                 Icons.timer_sharp,
-                                color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                                color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.auctionTime.value >= 10 ? MyColors.green2 : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
                                 size: 14,
                               ),
                               Obx(() => CountdownTimer(
@@ -522,7 +528,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                                     });
                                   }
                                   return Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                                    color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                                    color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.auctionTime.value >= 10 ? MyColors.green2 : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
                                     fontSize: 14,
                                     fontFamily: 'DM Sans',
                                     fontWeight: FontWeight.w700,
@@ -671,4 +677,24 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
       ),
     ));
   }
+
+  String formatKmDriven(String kmDrivenString) {
+    int kmDriven = int.parse(kmDrivenString);
+    if(kmDriven >= 10000) {
+      double result = kmDriven/1000;
+      return '${result.toStringAsFixed(1)}k';
+    }
+    else if (kmDriven >= 100000){
+      double result = kmDriven/1000;
+      return '${result.toStringAsFixed(1)}k';
+    }
+    else if (kmDriven >= 1000){
+      double result = kmDriven/1000;
+      return '${result.toStringAsFixed(1)}k';
+    }
+    else {
+      return '$kmDriven';
+    }
+  }
+
 }

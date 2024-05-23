@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:mera_partners/service/endpoints.dart';
@@ -12,15 +13,36 @@ class PushNotifications {
 
   // request notification permission
   static Future init() async {
+    if (Platform.isIOS) {
+      await _firebaseMessaging.requestPermission(
+          alert: true,
+          announcement: true,
+          badge: true,
+          carPlay: true,
+          criticalAlert: true,
+          provisional: true,
+          sound: true);
+    }
+
+    NotificationSettings notificationSettings =
     await _firebaseMessaging.requestPermission(
-      alert: true,
-      announcement: true,
-      badge: true,
-      carPlay: false,
-      criticalAlert: true,
-      provisional: false,
-      sound: true,
-    );
+        alert: true,
+        announcement: true,
+        badge: true,
+        carPlay: true,
+        criticalAlert: true,
+        provisional: true,
+        sound: true);
+
+    if (notificationSettings.authorizationStatus ==
+        AuthorizationStatus.authorized) {
+      log('user is already granted permissions');
+    } else if (notificationSettings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      log('user is already granted provisional permissions');
+    } else {
+      log('User has denied permission');
+    }
   }
 
   // get the fcm device token

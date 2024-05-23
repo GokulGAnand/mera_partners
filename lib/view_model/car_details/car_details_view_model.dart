@@ -449,7 +449,7 @@ class CarDetailsScreenViewModel extends GetxController {
       if (response.statusCode == 200) {
         // ProgressBar.instance.stopProgressBar(Get.context!);
         // log(response.body);
-        reportResponse.value = ReportResponse.fromJson(jsonDecode(response.body));
+        reportResponse.value = ReportResponse.fromJson(json.decode(response.body));
         if (reportResponse.value.data != null) {
           sliderImage.value = [
             if(reportResponse.value.data!.allCarInfo!.frontLeft != null) reportResponse.value.data!.allCarInfo!.frontLeft!.url ?? '',
@@ -494,7 +494,7 @@ class CarDetailsScreenViewModel extends GetxController {
             Master(title: MyStrings.chasisNumberEmbossing, value: reportResponse.value.data!.chasisNumber ?? ''),
           ];
           regAndFitness.value = [
-            Master(title: MyStrings.manufacturingDate, value: reportResponse.value.data!.monthAndYearOfManufacture ?? ''),
+            Master(title: MyStrings.manufacturingDate, value: reportResponse.value.data!.allCarInfo?.monthAndYearOfManufacture ?? ''),
             Master(title: MyStrings.regDate, value: reportResponse.value.data!.regDate ?? ''),
             Master(title: MyStrings.rto, value: reportResponse.value.data!.rto ?? ''),
           ];
