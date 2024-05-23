@@ -717,7 +717,7 @@ class CarDetailsScreenViewModel extends GetxController {
       log(response.body.toString());
       if (response.statusCode == 200) {
         // ProgressBar.instance.stopProgressBar(Get.context!);
-        // CustomToast.instance.showMsg(MyStrings.success);
+         //CustomToast.instance.showMsg(MyStrings.success);
       } else {
         // ProgressBar.instance.stopProgressBar(Get.context!);
         CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);

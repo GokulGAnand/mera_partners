@@ -209,7 +209,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
           Get.find<LiveCarsListViewModel>().getLikedCarData();
         }
         // ProgressBar.instance.stopProgressBar(Get.context!);
-        // CustomToast.instance.showMsg(MyStrings.success);
+          //CustomToast.instance.showMsg(MyStrings.success);
       } else {
         // ProgressBar.instance.stopProgressBar(Get.context!);
         CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);
