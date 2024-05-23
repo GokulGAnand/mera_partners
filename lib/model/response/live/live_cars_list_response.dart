@@ -81,7 +81,7 @@ class Data {
   String? otbEndTime;
   String? otbStartTime;
   int? negotiationAmount;
-  int? finalPrice;
+  num? finalPrice;
   String? negotiationStatus;
   String? negotiationEndTime;
   String? negotiationStartTime;

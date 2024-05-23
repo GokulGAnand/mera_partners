@@ -47,7 +47,7 @@ class HelpBottomSheet extends StatelessWidget {
               onTap: (){
                 _lauchCalllog();
               },
-              child: helpDetails(MySvg.call, MyStrings.callUs, "+91 99999 99999")),
+              child: helpDetails(MySvg.call, MyStrings.callUs, "+91 81130 27722")),
           Divider(color: MyColors.black.withOpacity(0.11),),
           InkWell(
               onTap: (){
@@ -80,7 +80,7 @@ class HelpBottomSheet extends StatelessWidget {
           );
   }
   _lauchCalllog() async {
-    const phoneNumber = '+91 9999999999';
+    const phoneNumber = '+91 81130 27722';
     const url = 'tel:$phoneNumber';
     if(await canLaunch(url)) {
       await launch(url);

@@ -57,12 +57,12 @@ class Data {
   String? odometerWorking;
   String? accidential;
   String? oemWarrantyRemain;
-  int? oemMonthRemain;
+  num? oemMonthRemain;
   String? oemKmRemain;
   String? regNumber;
   String? customerPrice;
-  int? sellerMobileNumber;
-  int? rcOwnerMobileNumber;
+  num? sellerMobileNumber;
+  num? rcOwnerMobileNumber;
   String? sellerName;
   String? rcOwnerName;
   String? sellerAddress;
@@ -201,7 +201,7 @@ class Data {
 }
 
 class AllCarInfo {
-  int? engineCylinder;
+  num? engineCylinder;
   String? evaluationStatusForEngine;
   Battery? firewall;
   String? dashboardCondition;
@@ -334,7 +334,7 @@ class AllCarInfo {
   FrontTyreRight? rearViewMirror;
   String? secondKey;
   String? warningDetails;
-  int? uniqueId;
+  num? uniqueId;
   String? make;
   String? model;
   String? variant;
@@ -343,12 +343,12 @@ class AllCarInfo {
   String? ownershipNumber;
   String? fuelType;
   String? monthAndYearOfManufacture;
-  int? odometerReading;
+  num? odometerReading;
   String? transmission;
   bool? bidClosed;
   String? qcStatus;
-  int? highestBid;
-  int? totalBidder;
+  num? highestBid;
+  num? totalBidder;
   String? status;
   List<LeaderBoard>? leaderBoard;
   String? specialComments;
@@ -359,13 +359,13 @@ class AllCarInfo {
   Battery? rear;
   Battery? rearRight;
   Battery? engineCompartment;
-  int? engineStar;
-  double? exteriorStar;
-  int? interiorAndElectricalStar;
-  int? testDriveStar;
+  num? engineStar;
+  num? exteriorStar;
+  num? interiorAndElectricalStar;
+  num? testDriveStar;
   String? bidEndTime;
   String? bidStartTime;
-  int? realValue;
+  num? realValue;
   String? winner;
 
   AllCarInfo(
@@ -1285,11 +1285,11 @@ class Sunroof {
 }
 
 class LeaderBoard {
-  int? amount;
+  num? amount;
   String? userId;
   String? uniqueId;
   bool? isAutobid;
-  int? contactNo;
+  num? contactNo;
   String? fullname;
   bool? isRejected;
   String? sId;
