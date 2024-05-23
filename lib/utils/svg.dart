@@ -1,7 +1,7 @@
 class MySvg {
   static const svgRoot = "assets/svg/";
 
-  static const bids = "${svgRoot}bids.svg";
+  static const explore = "${svgRoot}explore.svg";
   static const myCars = "${svgRoot}my_cars.svg";
   static const orders = "${svgRoot}orders.svg";
   static const wallet = "${svgRoot}wallet.svg";
