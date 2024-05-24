@@ -25,7 +25,7 @@ class ProcuredScreenViewModel extends GetxController{
   }
 
   launchCaller() async {
-    Uri url = Uri(scheme: "tel", path: "1234567890");
+    Uri url = Uri(scheme: "tel", path: "+91 81130 27722");
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {

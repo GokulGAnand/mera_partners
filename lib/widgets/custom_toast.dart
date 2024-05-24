@@ -30,6 +30,7 @@ class CustomToast {
       borderRadius: 8,
       backgroundColor: Colors.transparent, // Make the background transparent to show shadow
       margin: const EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 90),
+      duration: const Duration(seconds: 1),
       messageText: Container(
         decoration: BoxDecoration(
           color: MyColors.white,

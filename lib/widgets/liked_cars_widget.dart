@@ -68,7 +68,7 @@ class LikedCarsWidget extends StatelessWidget {
         log('checking: ${bidCarsListViewModel.likeResponse}');
         Get.find<BidCarsListViewModel>().getLikedCarData();
         Get.find<BidCarsListViewModel>().likeResponse.refresh();
-        CustomToast.instance.showMsg(MyStrings.success);
+         //CustomToast.instance.showMsg(MyStrings.success);
       } else {
         CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);
       }

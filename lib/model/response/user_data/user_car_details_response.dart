@@ -37,10 +37,10 @@ class UserData {
   String? userId;
   bool? isBlocked;
   String? role;
-  int? contactNo;
+  num? contactNo;
   bool? isDeactivate;
   bool? isDeposited;
-  int? depositedAmount;
+  num? depositedAmount;
   String? isDocumentsVerified;
   String? createdAt;
   String? updatedAt;
@@ -222,11 +222,11 @@ class AddressProofBack {
 
 class LostDeal {
   String? sId;
-  int? uniqueId;
+  num? uniqueId;
   String? make;
   String? model;
   String? variant;
-  int? highestBid;
+  num? highestBid;
   String? status;
   FrontLeft? frontLeft;
 
@@ -271,14 +271,14 @@ class LostDeal {
 
 class LikedCars {
   String? sId;
-  int? uniqueId;
+  num? uniqueId;
   String? make;
   String? model;
   String? variant;
-  int? highestBid;
+  num? highestBid;
   String? status;
   FrontLeft? frontLeft;
-  int? realValue;
+  num? realValue;
   String? monthAndYearOfManufacture;
   num? odometerReading;
   String? transmission;
@@ -396,7 +396,7 @@ class FrontLeft {
 
 class BiddedCars {
   String? sId;
-  int? uniqueId;
+  num? uniqueId;
   String? make;
   String? model;
   String? variant;
@@ -406,11 +406,11 @@ class BiddedCars {
   String? fuelType;
   String? qcStatus;
   int? highestBid;
-  int? totalBidder;
+  num? totalBidder;
   String? status;
   String? createdAt;
   String? winner;
-  int? realValue;
+  num? realValue;
   String? monthAndYearOfManufacture;
   num? odometerReading;
   String? transmission;
