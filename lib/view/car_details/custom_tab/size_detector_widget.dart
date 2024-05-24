@@ -56,7 +56,7 @@ class _SizeDetectorWidgetState extends State<SizeDetectorWidget> {
                                   child: Row(
                                     children: [
                                       Text(
-                                        (widget.showMore.value == false)
+                                        (widget.showMore.value == false && widget.listLength > 2)
                                             ? '+${widget.listLength - 2} ${MyStrings.otherIssues}'
                                             : MyStrings.viewLessIssues,
                                         textAlign: TextAlign.center,

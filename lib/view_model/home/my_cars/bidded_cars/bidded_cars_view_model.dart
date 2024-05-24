@@ -128,9 +128,9 @@ class BidCarsListViewModel extends GetxController{
 
   void getLikedCarData() async {
     try {
-      print('API URL: ${Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}')}');
+      log('API URL: ${Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}')}');
       var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'), headers: globals.headers);
-      print('API Response Body: ${response.body}');
+      log('API Response Body: ${response.body}');
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         likeResponse.value = UserResponse();
@@ -141,14 +141,14 @@ class BidCarsListViewModel extends GetxController{
         notifyChildrens();
         // getLikedCarData();
         likeResponse.refresh();
-        print('API Response otb: ${response.body}');
+        log('API Response otb: ${response.body}');
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        print('API Error: ${response.reasonPhrase}');
+        log('API Error: ${response.reasonPhrase}');
       }
     } catch (e) {
       ProgressBar.instance.stopProgressBar(Get.context!);
-      print('Exception occurred: $e');
+      log('Exception occurred: $e');
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }
   }
