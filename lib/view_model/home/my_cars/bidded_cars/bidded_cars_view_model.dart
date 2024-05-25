@@ -33,20 +33,20 @@ class BidCarsListViewModel extends GetxController{
 
   @override
   void onInit() {
-    bidController.value.addListener(() {
-      if (bidController.value.text.length > 3) {
-        bidController.value.selection = TextSelection.fromPosition(
-          TextPosition(offset: bidController.value.text.length - 3),
-        );
-      }
-    });
-    autoBidController.value.addListener(() {
-      if (autoBidController.value.text.length > 3) {
-        autoBidController.value.selection = TextSelection.fromPosition(
-          TextPosition(offset: autoBidController.value.text.length - 3),
-        );
-      }
-    });
+    // bidController.value.addListener(() {
+    //   if (bidController.value.text.length > 3) {
+    //     bidController.value.selection = TextSelection.fromPosition(
+    //       TextPosition(offset: bidController.value.text.length - 3),
+    //     );
+    //   }
+    // });
+    // autoBidController.value.addListener(() {
+    //   if (autoBidController.value.text.length > 3) {
+    //     autoBidController.value.selection = TextSelection.fromPosition(
+    //       TextPosition(offset: autoBidController.value.text.length - 3),
+    //     );
+    //   }
+    // });
     // infinitePagingController.addPageRequestListener((pageKey) {
     getCarData();
     getLikedCarData();

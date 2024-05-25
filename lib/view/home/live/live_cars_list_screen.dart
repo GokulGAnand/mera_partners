@@ -12,6 +12,7 @@ import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/widgets/custom_bid_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mera_partners/widgets/custom_toast.dart';
 import '../../../model/response/live/live_cars_list_response.dart';
 import '../../../utils/svg.dart';
 import '../../../view_model/home/live/live_cars_list_view_model.dart';
@@ -180,7 +181,11 @@ class LiveCarsListScreen extends StatelessWidget {
                                                     : RxInt(10000),
                                         onAutoBidPressed: () {
                                           try {
-                                            controller.placeAutoBid(controller.autoBidController.value.text, controller.liveCarsResponse.value.data?[index].sId);
+                                            if(globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].winner != null && controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) && controller.liveCarsResponse.value.data![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && (int.tryParse(controller.bidController.value.text) ?? 0) <= element.autoBidLimit!)){
+                                              CustomToast.instance.showMsg('Your bid must be higher than your auto-bid of ₹${controller.liveCarsResponse.value.data![index].leaderBoard![0].autoBidLimit ?? 0}');
+                                            }else{
+                                              controller.placeAutoBid(controller.autoBidController.value.text, controller.liveCarsResponse.value.data?[index].sId);
+                                            }
                                             Navigator.of(context).pop();
                                           } catch (e) {
                                             log(e.toString());
@@ -210,7 +215,11 @@ class LiveCarsListScreen extends StatelessWidget {
                                                     : RxInt(10000),
                                         onBidPressed: () {
                                           try {
-                                            controller.placeBid(controller.bidController.value.text, controller.liveCarsResponse.value.data?[index].sId);
+                                            if(globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].winner != null && controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) && controller.liveCarsResponse.value.data![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && (int.tryParse(controller.bidController.value.text) ?? 0) <= element.autoBidLimit!)){
+                                              CustomToast.instance.showMsg('Your bid must be higher than your auto-bid of ₹${controller.liveCarsResponse.value.data![index].leaderBoard![0].autoBidLimit ?? 0}');
+                                            }else{
+                                              controller.placeBid(controller.bidController.value.text, controller.liveCarsResponse.value.data?[index].sId);
+                                            }
                                             Navigator.of(context).pop();
                                           } catch (e) {
                                             log(e.toString());

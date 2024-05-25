@@ -69,7 +69,7 @@ class PushNotifications {
     }
   }
 
-  static saveToken({required String token}) async {
+  static saveToken({required dynamic token}) async {
     try {
       var headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer ${globals.token}'};
       var request = http.Request('POST', Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.setFCM + (globals.uniqueUserId ?? '')));

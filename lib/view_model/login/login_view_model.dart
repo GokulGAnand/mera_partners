@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:mera_partners/model/response/user_data/user_info_response.dart';
 import 'package:mera_partners/service/endpoints.dart';
 import 'package:mera_partners/service/exception_error_util.dart';
+import 'package:mera_partners/service/firebase_push_notifications.dart';
 import 'package:mera_partners/utils/constants.dart';
 import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/utils/shared_pref_manager.dart';
@@ -57,6 +58,7 @@ class LoginScreenViewModel extends GetxController {
       var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.login), body: {"contactNo": mobileController.value.text});
       String? message = json.decode(response.body)['message'];
       if (response.statusCode == 200) {
+        await PushNotifications.getDeviceToken();
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
         Get.toNamed(AppRoutes.otpScreen);

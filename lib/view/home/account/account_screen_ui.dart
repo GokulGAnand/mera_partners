@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
-import 'package:mera_partners/widgets/show_logout_dialog.dart';
+import '../../../service/firebase_push_notifications.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -208,16 +208,17 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
               const SizedBox(height: 20,),
               InkWell(
-                onTap: () {
+               /* onTap: () {
                   showExitDialog(context);
-                },
-                /*onTap: () async{
+                },*/
+                onTap: () async{
                   showDialog(
                     context: context, 
                   builder: (context){
                     return CustomDialog(
                       title: MyStrings.logOutDesc,
                       okFun: () async{
+                        PushNotifications.saveToken(token: null);
                         globals.clearData();
                         SharedPrefManager.instance.removeStringAsync(Constants.userName);
                         SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
@@ -238,7 +239,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     );
                   });
                   
-                },*/
+                },
                 child: Row(
                   children: [
                     SvgPicture.asset(MySvg.logout),
