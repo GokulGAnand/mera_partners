@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/utils/svg.dart';
@@ -66,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return PopScope(
         canPop: false,
         onPopInvoked: (bool didPop) {
-          showLogoutDialog(context);
+          showExitDialog(context);
         },
         child: Scaffold(
           backgroundColor: MyColors.white,

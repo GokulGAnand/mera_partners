@@ -220,7 +220,7 @@ class DocumentScreen extends StatelessWidget {
                       prefixIcon: Padding(
                         padding: Dimens.suffixPadding,
                         child: viewModel.panCard.value == null
-                            ? Image.asset(MyImages.upload)
+                            ? const Icon(Icons.file_upload_outlined)
                             : const Icon(
                                 Icons.done_rounded,
                                 color: MyColors.green,
@@ -577,7 +577,8 @@ class DocumentScreen extends StatelessWidget {
           onPopInvoked: (didPop) {
             // Methods.showConfirmDialog(context);
             if (viewModel.activePage.value == 0) {
-              showLogoutDialog(context);
+              //showLogoutDialog(context);
+              showExitDialog(context);
             } else {
               viewModel.pageController.value.animateToPage(
                 viewModel.activePage.value - 1,
@@ -593,7 +594,7 @@ class DocumentScreen extends StatelessWidget {
               subTitle: MyStrings.documentDesc,
               onBackPressed: () {
                 if (viewModel.activePage.value == 0) {
-                  showLogoutDialog(context);
+                  showExitDialog(context);
                 } else {
                   viewModel.pageController.value.animateToPage(
                     viewModel.activePage.value - 1,

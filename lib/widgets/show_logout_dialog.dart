@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,6 +25,22 @@ void showLogoutDialog(BuildContext context) {
             SharedPrefManager.instance.removeStringAsync(Constants.documentStatus);
             globals.clearData();
             Get.offAllNamed(AppRoutes.loginScreen);
+          },
+          cancelFun: (){
+            Get.back();
+          },
+        );
+      });
+}
+
+void showExitDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (context){
+        return CustomExitDialog(
+          title: MyStrings.logOutDesc,
+          exitFun: (){
+            SystemNavigator.pop();
           },
           cancelFun: (){
             Get.back();

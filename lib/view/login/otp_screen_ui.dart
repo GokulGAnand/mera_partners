@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/dimens.dart';
 import 'package:mera_partners/utils/strings.dart';
@@ -146,6 +147,7 @@ class _OtpScreenState extends State<OtpScreen> {
       child: CustomTextFormField(
           controller: controller,
           keyboardType: TextInputType.number,
+          inputFormatter: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
           textAlign: TextAlign.center,
           maxLength: 1,
           leftPadding: 0.0,

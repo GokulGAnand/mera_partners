@@ -23,9 +23,8 @@ class OnboardingScreen extends GetView<OnboardingScreenViewModel> {
       PopScope(
         canPop: false,
         onPopInvoked: (bool didPop) {
-          // if (didPop) {
-          //   return;         // }
-          showLogoutDialog(context);
+          //showLogoutDialog(context);
+          showExitDialog(context);
         },
         child: PageView(
           controller: controller.indicator,

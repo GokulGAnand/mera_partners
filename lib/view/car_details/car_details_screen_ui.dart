@@ -1268,6 +1268,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                         backgroundColor: list[index].color,
                                         child: SvgPicture.asset(
                                           MySvg.carCrash,
+                                          color: list[index].color == MyColors.yellow ? Colors.black:null,
                                         ),
                                       ),
                                       const SizedBox(
@@ -1300,7 +1301,10 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                             ),
                                             child: Text(
                                               list[index].listValue![i].capitalize.toString(),
-                                            style: MyStyles.white12500,),
+                                            //style: MyStyles.white12500,
+                                              style: list[index].color == MyColors.warning ? MyStyles.white12500 : MyStyles.black12500,
+
+                                            ),
                                           );
                                         }),
                                   ),
