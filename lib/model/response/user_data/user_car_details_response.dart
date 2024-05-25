@@ -472,6 +472,12 @@ class BiddedCars {
     uniqueId = json['uniqueId'];
     make = json['make'];
     model = json['model'];
+    if (json['leaderBoard'] != null) {
+      leaderBoard = <LeaderBoard>[];
+      json['leaderBoard'].forEach((v) {
+        leaderBoard!.add(LeaderBoard.fromJson(v));
+      });
+    }
     variant = json['variant'];
     maskedRegNumber = json['maskedRegNumber'];
     vehicleLocation = json['vehicleLocation'];
@@ -506,6 +512,9 @@ class BiddedCars {
     data['winner'] = winner;
     data['bidEndTime'] = bidEndTime;
     data['bidStartTime'] = bidStartTime;
+    if (leaderBoard != null) {
+      data['leaderBoard'] = leaderBoard!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
@@ -513,14 +522,33 @@ class BiddedCars {
 class LeaderBoard {
   num? amount;
   String? userId;
+  String? sId;
+  String? fullname;
+  String? uniqueId;
+  num? autoBidLimit;
+  num? contactNo;
+  bool? isRejected;
   bool? isAutobid;
 
-  LeaderBoard({this.amount, this.userId, this.isAutobid});
+  LeaderBoard({this.amount, this.userId, this.isAutobid,
+    this.uniqueId,
+    this.autoBidLimit,
+    this.contactNo,
+    this.isRejected,
+    this.sId,
+    this.fullname,
+  });
 
   LeaderBoard.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];
     userId = json['userId'];
     isAutobid = json['isAutobid'];
+    sId = json['_id'];
+    fullname = json['fullname'];
+    uniqueId = json['uniqueId'];
+    autoBidLimit = json['autoBidLimit'];
+    contactNo = json['contactNo'];
+    isRejected = json['isRejected'];
   }
 
   Map<String, dynamic> toJson() {
@@ -528,6 +556,12 @@ class LeaderBoard {
     data['amount'] = amount;
     data['userId'] = userId;
     data['isAutobid'] = isAutobid;
+    data['_id'] = sId;
+    data['fullname'] = fullname;
+    data['uniqueId'] = uniqueId;
+    data['autoBidLimit'] = autoBidLimit;
+    data['contactNo'] = contactNo;
+    data['isRejected'] = isRejected;
     return data;
   }
 }

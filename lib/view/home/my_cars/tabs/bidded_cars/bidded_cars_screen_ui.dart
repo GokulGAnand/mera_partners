@@ -10,7 +10,6 @@ import 'package:mera_partners/widgets/custom_car_detail_card.dart';
 import '../../../../../routes/app_routes.dart';
 import '../../../../../utils/colors.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
-
 import '../../../../../utils/enum.dart';
 
 /// ignore: must_be_immutable

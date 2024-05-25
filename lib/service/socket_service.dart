@@ -10,6 +10,7 @@ import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:mera_partners/utils/globals.dart' as globals;
+import '../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 
 class SocketService {
   static IO.Socket? socket;
@@ -67,9 +68,8 @@ class SocketService {
       if (data != null) {
         List<Data> carList = parseCarDataList(data);
         filterCars(carList);
-        //todo changes
-        // Get.find<BidCarsListViewModel>().bidCarsResponse.value.data = carList;
-        // Get.find<BidCarsListViewModel>().bidCarsResponse.refresh(); // Manually trigger UI update
+        Get.find<BidCarsListViewModel>().getCarData();
+        Get.find<BidCarsListViewModel>().bidCarsResponse.refresh(); // Manually trigger UI update
 
         if ((Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data != null) && Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data!.isNotEmpty) {
           for (int i = 0; i < Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data!.length; i++) {
