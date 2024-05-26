@@ -177,7 +177,7 @@ void _showFullScreenImage(BuildContext context, File? imageFile, String? imageUr
               Align(
                 alignment: Alignment.topRight,
                 child: IconButton(
-                  icon: Icon(Icons.close),
+                  icon: const Icon(Icons.close),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -188,7 +188,7 @@ void _showFullScreenImage(BuildContext context, File? imageFile, String? imageUr
               else if (imageUrl != null)
                 Image.network(imageUrl)
               else
-                Text('No image available'),
+                const Text('No image available'),
             ],
           ),
         ),

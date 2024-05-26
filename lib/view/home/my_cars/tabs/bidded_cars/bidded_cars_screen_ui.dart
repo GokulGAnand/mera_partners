@@ -11,6 +11,7 @@ import '../../../../../routes/app_routes.dart';
 import '../../../../../utils/colors.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
 import '../../../../../utils/enum.dart';
+import '../../../../../widgets/custom_toast.dart';
 
 /// ignore: must_be_immutable
 class BidCarsListScreen extends StatelessWidget {
@@ -103,8 +104,12 @@ class BidCarsListScreen extends StatelessWidget {
                                                     : RxInt(10000),
                                         onAutoBidPressed: () {
                                           try {
-                                            controller.placeAutoBid(controller.autoBidController.value.text, controller.bidCarsResponse.value.data?[index].sId);
-                                            Navigator.of(context).pop();
+                                            if(globals.uniqueUserId != null && controller.bidCarsResponse.value.data?[0].biddedCars![index].winner != null && controller.bidCarsResponse.value.data![0].biddedCars![index].winner!.contains(globals.uniqueUserId!) && controller.bidCarsResponse.value.data![0].biddedCars![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && (int.tryParse(controller.autoBidController.value.text) ?? 0) <= element.autoBidLimit!)){
+                                              CustomToast.instance.showMsg(MyStrings.vAutoBidLimit+(controller.bidCarsResponse.value.data![0].biddedCars![index].leaderBoard![0].autoBidLimit ?? 0).toString());
+                                            }else{
+                                              controller.placeAutoBid(controller.autoBidController.value.text, controller.bidCarsResponse.value.data?[0].biddedCars![index].sId);
+                                              Navigator.of(context).pop();
+                                            }
                                           } catch (e) {
                                             log(e.toString());
                                           }
@@ -133,8 +138,13 @@ class BidCarsListScreen extends StatelessWidget {
                                                     : RxInt(10000),
                                         onBidPressed: () {
                                           try {
-                                            controller.placeBid(controller.bidController.value.text, controller.bidCarsResponse.value.data?[0].biddedCars![index].sId);
-                                            Navigator.of(context).pop();
+                                            if(globals.uniqueUserId != null && controller.bidCarsResponse.value.data?[0].biddedCars![index].winner != null && controller.bidCarsResponse.value.data![0].biddedCars![index].winner!.contains(globals.uniqueUserId!) && controller.bidCarsResponse.value.data![0].biddedCars![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && (int.tryParse(controller.bidController.value.text) ?? 0) <= element.autoBidLimit!)){
+                                              CustomToast.instance.showMsg(MyStrings.vAutoBidLimit+(controller.bidCarsResponse.value.data![0].biddedCars![index].leaderBoard![0].autoBidLimit ?? 0).toString());
+                                            }else{
+                                              controller.placeBid(controller.bidController.value.text, controller.bidCarsResponse.value.data?[0].biddedCars![index].sId);
+                                              Navigator.of(context).pop();
+                                            }
+
                                           } catch (e) {
                                             log(e.toString());
                                           }

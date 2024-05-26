@@ -17,9 +17,9 @@ class CustomDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10)
       ),
-      contentPadding: EdgeInsets.fromLTRB(24, 0, 0, 0),
+      contentPadding: const EdgeInsets.fromLTRB(24, 0, 0, 0),
       //buttonPadding: EdgeInsets.fromLTRB(0, 10, 27, 0),
-      actionsPadding: EdgeInsets.fromLTRB(0, 20, 30, 2),
+      actionsPadding: const EdgeInsets.fromLTRB(0, 20, 30, 2),
 
       title: Text(title ?? '',style: titleStyle ?? MyStyles.pageTitleStyle,),
       content: Text(content ?? '',style: MyStyles.pageTitleStyle,),
@@ -46,9 +46,9 @@ class CustomExitDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10)
       ),
-      contentPadding: EdgeInsets.fromLTRB(24, 0, 0, 0),
+      contentPadding: const EdgeInsets.fromLTRB(24, 0, 0, 0),
       //buttonPadding: EdgeInsets.fromLTRB(0, 10, 27, 0),
-      actionsPadding: EdgeInsets.fromLTRB(0, 20, 30, 2),
+      actionsPadding: const EdgeInsets.fromLTRB(0, 20, 30, 2),
 
       title: Text(title ?? '',style: titleStyle ?? MyStyles.pageTitleStyle,),
       content: Text(content ?? '',style: MyStyles.pageTitleStyle,),

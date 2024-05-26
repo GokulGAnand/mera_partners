@@ -105,7 +105,7 @@ class LiveCarsListScreen extends StatelessWidget {
                   ? Expanded(
                       child: ListView.builder(
                       itemCount: controller.liveCarsResponse.value.data?.length,
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.fromLTRB(16,8,16,8),
                       itemBuilder: (context, index) {
                         return Obx(() {
                           if ((controller.searchController.text.isEmpty && controller.searchList.isEmpty) || controller.searchList.contains(controller.liveCarsResponse.value.data?[index].sId)) {
@@ -181,12 +181,12 @@ class LiveCarsListScreen extends StatelessWidget {
                                                     : RxInt(10000),
                                         onAutoBidPressed: () {
                                           try {
-                                            if(globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].winner != null && controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) && controller.liveCarsResponse.value.data![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && (int.tryParse(controller.bidController.value.text) ?? 0) <= element.autoBidLimit!)){
-                                              CustomToast.instance.showMsg('Your bid must be higher than your auto-bid of ₹${controller.liveCarsResponse.value.data![index].leaderBoard![0].autoBidLimit ?? 0}');
+                                            if(globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].winner != null && controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) && controller.liveCarsResponse.value.data![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && controller.autoBidController.value.text.isNotEmpty && (int.tryParse(controller.autoBidController.value.text) ?? 0) <= element.autoBidLimit!)){
+                                              CustomToast.instance.showMsg(MyStrings.vAutoBidLimit+(controller.liveCarsResponse.value.data![index].leaderBoard![0].autoBidLimit ?? 0).toString());
                                             }else{
                                               controller.placeAutoBid(controller.autoBidController.value.text, controller.liveCarsResponse.value.data?[index].sId);
+                                              Navigator.of(context).pop();
                                             }
-                                            Navigator.of(context).pop();
                                           } catch (e) {
                                             log(e.toString());
                                           }
@@ -216,11 +216,11 @@ class LiveCarsListScreen extends StatelessWidget {
                                         onBidPressed: () {
                                           try {
                                             if(globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].winner != null && controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) && controller.liveCarsResponse.value.data![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && (int.tryParse(controller.bidController.value.text) ?? 0) <= element.autoBidLimit!)){
-                                              CustomToast.instance.showMsg('Your bid must be higher than your auto-bid of ₹${controller.liveCarsResponse.value.data![index].leaderBoard![0].autoBidLimit ?? 0}');
+                                              CustomToast.instance.showMsg(MyStrings.vAutoBidLimit+(controller.liveCarsResponse.value.data![index].leaderBoard![0].autoBidLimit ?? 0).toString());
                                             }else{
                                               controller.placeBid(controller.bidController.value.text, controller.liveCarsResponse.value.data?[index].sId);
+                                              Navigator.of(context).pop();
                                             }
-                                            Navigator.of(context).pop();
                                           } catch (e) {
                                             log(e.toString());
                                           }
@@ -234,8 +234,8 @@ class LiveCarsListScreen extends StatelessWidget {
                           }
                         });
                       },
-                    )): Expanded(
-                      child: const Center(
+                    )): const Expanded(
+                      child: Center(
                                       child: Text(MyStrings.noDataFound),
                                     ),
                     )

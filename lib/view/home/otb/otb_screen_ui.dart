@@ -22,7 +22,7 @@ class OTBScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.fromLTRB(16,8.0,16,8.0,),
             child: Obx(
               () {
                 if(controller.searchList.isNotEmpty || (controller.searchList.isEmpty && controller.searchController.text.isEmpty)){

@@ -24,7 +24,7 @@ class CarDetailsScreenViewModel extends GetxController {
   var id = Get.arguments ?? '';
 
   ///page 1
-  String carStatus = "";
+  var carStatus = "".obs;
   //""
   //bid won
   //bid closed
@@ -698,6 +698,9 @@ class CarDetailsScreenViewModel extends GetxController {
         // ProgressBar.instance.stopProgressBar(Get.context!);
         // log("get car details"+response.body);
         carDetailsResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
+        if (carDetailsResponse.value.data?[0].status?.toLowerCase() != CarStatus.live.name && carDetailsResponse.value.data?[0].status?.toLowerCase() != CarStatus.otb.name && carDetailsResponse.value.data?[0].status?.toLowerCase() != CarStatus.scheduled.name) {
+          carStatus.value = carDetailsResponse.value.data?[0].status ?? '';
+        }
         // final isLastPage = liveCarsResponse.value.data!.length < limit;
         // if (isLastPage) {
         //   infinitePagingController.appendLastPage(liveCarsResponse.value.data!);

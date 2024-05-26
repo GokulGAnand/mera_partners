@@ -44,6 +44,7 @@ class RcTransfer extends StatelessWidget {
                     return CustomOrderContainer(
                       buttonStatus: Status.completed.name,
                       carID: controller.searchRcTransferList[index].uniqueId?.toString() ?? '',
+                      uniqueCarID: controller.searchRcTransferList[index].sId?.toString() ?? '',
                       finalPrice: controller.searchRcTransferList[index].highestBid != null ? Constants.numberFormat.format(controller.searchRcTransferList[index].highestBid) : '',
                       carModel: controller.searchRcTransferList[index].model ?? '',
                       carName: controller.searchRcTransferList[index].make ?? '',

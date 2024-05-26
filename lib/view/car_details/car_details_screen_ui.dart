@@ -26,6 +26,7 @@ import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:mera_partners/widgets/otb_bottom_sheet.dart';
 import 'package:mera_partners/widgets/quote_price_bottom_sheet.dart';
 import 'package:video_player/video_player.dart';
+import '../../widgets/custom_toast.dart';
 
 class CarDetailsScreen extends StatefulWidget {
   const CarDetailsScreen({super.key});
@@ -90,15 +91,15 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       pageSliderController: carDetailsScreenViewModel.pageSliderController, 
                       activePage: carDetailsScreenViewModel.activePage,
                       height: 258,),
-                    (carDetailsScreenViewModel.carStatus != "")?Container(
+                    (carDetailsScreenViewModel.carStatus.value != "")?Container(
                       width: double.infinity,
                       height: 258,
                       padding: const EdgeInsets.all(32),
                       decoration: BoxDecoration(
                         color: MyColors.black3.withOpacity(0.7),),
-                      child: Image.asset((carDetailsScreenViewModel.carStatus == "bid won")?MyImages.bidWon
-                      :(carDetailsScreenViewModel.carStatus == "bid closed")?MyImages.bidClosed
-                      :MyImages.carSold),
+                      child: Image.asset((carDetailsScreenViewModel.carStatus.value.toLowerCase() == "deal_lost")?MyImages.bidClosed
+                      // :(carDetailsScreenViewModel.carStatus.value == "bid closed")?MyImages.bidClosed
+                      :MyImages.bidWon),
                     ): const SizedBox(),
                     Positioned(
                         left: 12,
@@ -128,11 +129,11 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                   height: 37,
                   padding: const EdgeInsets.only(left: 12),
                   decoration: BoxDecoration(
-                    color: (carDetailsScreenViewModel.carStatus == "bid won")?MyColors.green4
-                        :(carDetailsScreenViewModel.carStatus == "bid closed")? MyColors.grey4
-                        :(carDetailsScreenViewModel.carStatus == "car sold")? MyColors.yellow
+                    color: (carDetailsScreenViewModel.carStatus.value == "bid won")?MyColors.green4
+                        :(carDetailsScreenViewModel.carStatus.value == "bid closed")? MyColors.grey4
+                        :(carDetailsScreenViewModel.carStatus.value == "car sold")? MyColors.yellow
                         :null,
-                    gradient: (carDetailsScreenViewModel.carStatus != "")?null
+                    gradient: (carDetailsScreenViewModel.carStatus.value != "")?null
                         :LinearGradient(
                       end: const Alignment(2.00, 0.00),
                       begin: const Alignment(-1, 0),
@@ -152,11 +153,11 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                   child: Obx(() => Row(
                     children: [
                       Text(
-                        (carDetailsScreenViewModel.carStatus == "bid won")
+                        (carDetailsScreenViewModel.carStatus.value == "bid won")
                             ? MyStrings.bidWon
-                            :(carDetailsScreenViewModel.carStatus == "bid closed")
+                            :(carDetailsScreenViewModel.carStatus.value == "bid closed")
                             ? MyStrings.bidClosed
-                            :(carDetailsScreenViewModel.carStatus == "car sold")
+                            :(carDetailsScreenViewModel.carStatus.value == "car sold")
                             ? MyStrings.carSold
                             :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase()
                             ? MyStrings.closingPrice
@@ -173,8 +174,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         // :(carDetailsScreenViewModel.carStatus == "car sold")? MyStrings.carSold
                         // :MyStrings.highestBid,
                         textAlign: TextAlign.center,
-                        style: (carDetailsScreenViewModel.carStatus == "bid closed")? MyStyles.pageTitleStyle
-                            :(carDetailsScreenViewModel.carStatus == "car sold")? MyStyles.pageTitleStyle
+                        style: (carDetailsScreenViewModel.carStatus.value == "bid closed")? MyStyles.pageTitleStyle
+                            :(carDetailsScreenViewModel.carStatus.value == "car sold")? MyStyles.pageTitleStyle
                             :MyStyles.whiteTitleStyle,
                       ),
                       const SizedBox(
@@ -786,7 +787,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                       //     widget.auctionTime.value = time.min ?? 0;
                                       //   });
                                       // }
-                                      return Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
+                                      return Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: const TextStyle(
                                         color: MyColors.green2,
                                         fontSize: 14,
                                         fontFamily: 'DM Sans',
@@ -890,8 +891,12 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                         : RxInt(10000),
                                     onAutoBidPressed: () {
                                       try {
-                                        liveCarListViewModel.placeAutoBid(liveCarListViewModel.autoBidController.value.text, carDetailsScreenViewModel.reportResponse.value.data!.sId);
-                                        Navigator.of(context).pop();
+                                        if(globals.uniqueUserId != null && liveCarListViewModel.liveCarsResponse.value.data?[0].winner != null && liveCarListViewModel.liveCarsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && (int.tryParse(liveCarListViewModel.autoBidController.value.text) ?? 0) <= element.autoBidLimit!)){
+                                          CustomToast.instance.showMsg(MyStrings.vAutoBidLimit+(liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard![0].autoBidLimit ?? 0).toString());
+                                        }else{
+                                          liveCarListViewModel.placeAutoBid(liveCarListViewModel.autoBidController.value.text, carDetailsScreenViewModel.reportResponse.value.data!.sId);
+                                         Navigator.of(context).pop();
+                                        }
                                       } catch (e) {
                                         log(e.toString());
                                       }
@@ -938,7 +943,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                     bidStartTime: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()),
                                     bidEndTime: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime ?? DateTime.now().toString()),
                                     amountController: liveCarListViewModel.bidController,
-                                    bidValue: RxInt(carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid!.toInt() ?? 0),
+                                    bidValue: RxInt(carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid?.toInt() ?? 0),
                                     stepRate: carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! <= 99999
                                         ? RxInt(2000)
                                         : (carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! >= 100000 && carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! <= 299999)
@@ -948,8 +953,12 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                         : RxInt(10000),
                                     onBidPressed: () {
                                       try {
-                                        liveCarListViewModel.placeBid(liveCarListViewModel.bidController.value.text, carDetailsScreenViewModel.reportResponse.value.data?.sId);
-                                        Navigator.of(context).pop();
+                                        if(globals.uniqueUserId != null && liveCarListViewModel.liveCarsResponse.value.data?[0].winner != null && liveCarListViewModel.liveCarsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && (int.tryParse(liveCarListViewModel.bidController.value.text) ?? 0) <= element.autoBidLimit!)){
+                                          CustomToast.instance.showMsg(MyStrings.vAutoBidLimit+(liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard![0].autoBidLimit ?? 0).toString());
+                                        }else{
+                                          liveCarListViewModel.placeBid(liveCarListViewModel.bidController.value.text, carDetailsScreenViewModel.reportResponse.value.data?.sId);
+                                          Navigator.of(context).pop();
+                                        }
                                       } catch (e) {
                                         log(e.toString());
                                       }
@@ -1497,7 +1506,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
           }
         ),
       ),
-      bottomSheet: bottomSheetWidget(),
+      bottomSheet: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.live.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase()?
+      bottomSheetWidget(): const SizedBox(),
     );
   }
 }

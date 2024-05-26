@@ -231,7 +231,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
         widget.showPendingDialog();
       },
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 20.0, top: 8,left: 8,right: 8),
+        padding: const EdgeInsets.only(bottom: 20.0, top: 8,),
         child: Container(
           // elevation: 5,
           // color: MyColors.white,

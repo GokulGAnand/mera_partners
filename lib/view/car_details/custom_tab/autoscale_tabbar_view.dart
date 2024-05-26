@@ -9,7 +9,7 @@ class AutoScaleTabBarView extends StatefulWidget {
   /// The length of [children] must be the same as the [controller]'s length.
   const AutoScaleTabBarView({
     Key? key,
-    required this.children,
+    required this.children,                                                         
     required this.onTap,
     required this.listLength,
     required this.showMore,
