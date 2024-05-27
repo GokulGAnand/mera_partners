@@ -410,6 +410,7 @@ class BiddedCars {
   String? status;
   String? createdAt;
   String? winner;
+  String? carCondition;
   num? realValue;
   String? monthAndYearOfManufacture;
   num? odometerReading;
@@ -446,6 +447,7 @@ class BiddedCars {
         this.status,
         this.createdAt,
         this.winner,
+        this.carCondition,
         this.realValue,
         this.monthAndYearOfManufacture,
         this.odometerReading,
@@ -489,6 +491,7 @@ class BiddedCars {
     status = json['status'];
     createdAt = json['createdAt'];
     winner = json['winner'];
+    carCondition = json['carCondition'];
     bidEndTime = json['bidEndTime'];
     bidStartTime = json['bidStartTime'];
   }
@@ -510,6 +513,7 @@ class BiddedCars {
     data['status'] = status;
     data['createdAt'] = createdAt;
     data['winner'] = winner;
+    data['carCondition'] = carCondition;
     data['bidEndTime'] = bidEndTime;
     data['bidStartTime'] = bidStartTime;
     if (leaderBoard != null) {

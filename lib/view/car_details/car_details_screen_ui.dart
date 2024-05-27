@@ -97,7 +97,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       sliderImage: carDetailsScreenViewModel.sliderImage, 
                       pageSliderController: carDetailsScreenViewModel.pageSliderController, 
                       activePage: carDetailsScreenViewModel.activePage,
-                      height: 258,),
+                      height: 256,),
                     (carDetailsScreenViewModel.carStatus.value != "")?Container(
                       width: double.infinity,
                       height: 258,

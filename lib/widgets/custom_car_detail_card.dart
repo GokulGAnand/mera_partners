@@ -355,11 +355,22 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                 const SizedBox(
                   height: 10,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 12),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                      child: Text(widget.carModel, style: MyStyles.subTitleBlackStyle)),
+
+                Row(
+                  children: [
+                    //Text(widget.carModel, style: MyStyles.subTitleBlackStyle),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12),
+                      child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(widget.carModel, style: MyStyles.subTitleBlackStyle)),
+                    ),
+                    const SizedBox(
+                      width: 2,
+                    ),
+                    if (widget.criticalIssue!.isNotEmpty && widget.criticalIssue!.toLowerCase().contains('good'))
+                      SvgPicture.asset(MyImages.verified)
+                  ],
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 12.0, right: 12),
@@ -369,16 +380,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            children: [
-                              //Text(widget.carModel, style: MyStyles.subTitleBlackStyle),
-                              const SizedBox(
-                                width: 2,
-                              ),
-                              if (widget.criticalIssue?.toLowerCase() == 'good') SvgPicture.asset(MyImages.verified)
-                            ],
-                          ),
-                          const SizedBox(height: 4),
+                          // const SizedBox(height: 4),
                           Text(widget.carVariant, style: MyStyles.black16700),
                         ],
                       ),
@@ -465,7 +467,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                 const SizedBox(
                   height: 17,
                 ),
-                if (widget.criticalIssue != null && widget.criticalIssue?.toLowerCase() != 'good')
+                if (widget.criticalIssue != null && widget.criticalIssue!.isNotEmpty && !widget.criticalIssue!.toLowerCase().contains('good'))
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0, right: 12),
                     child: Row(
@@ -482,7 +484,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       ],
                     ),
                   ),
-                if (widget.criticalIssue != null)
+                if (widget.criticalIssue != null && widget.criticalIssue!.isNotEmpty)
                   const SizedBox(
                     height: 21,
                   ),

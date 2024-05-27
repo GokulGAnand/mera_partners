@@ -269,7 +269,7 @@ class MyStrings {
   static const String accept = 'Accept';
   static const String id = 'ID:';
   static const String yFinal = 'Final: ';
-  static const String yBid = 'Your Bid: ';
+  static const String yBid = 'Bid: ';
 
   ///account screen
   static const String customerSupport = 'Customer Support';

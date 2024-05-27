@@ -37,6 +37,7 @@ class BidCarsListScreen extends StatelessWidget {
                                 Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.bidCarsResponse.value.data?[0].biddedCars![index].sId);
                               },
                               isOtb: false.obs,
+                              criticalIssue: controller.bidCarsResponse.value.data?[0].biddedCars![index].carCondition ?? '',
                               isFavourite: controller.likeResponse.value.data?[0].likedCars != null && (controller.likeResponse.value.data![0].likedCars!.isNotEmpty)
                                   ? controller.likeResponse.value.data![0].likedCars!.any((element) => element.sId == controller.bidCarsResponse.value.data?[0].biddedCars![index].sId)
                                       ? true.obs
@@ -68,7 +69,7 @@ class BidCarsListScreen extends StatelessWidget {
                               timerController: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs,
                               carModel: controller.bidCarsResponse.value.data?[0].biddedCars![index].model ?? '',
                               carVariant: controller.bidCarsResponse.value.data?[0].biddedCars![index].variant ?? '',
-                              rating: ((controller.bidCarsResponse.value.data?[0].biddedCars![index].engineStar ?? 0 + (controller.bidCarsResponse.value.data?[0].biddedCars![index].exteriorStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].interiorAndElectricalStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].testDriveStar ?? 0)) / 4).roundToDouble(),
+                              rating: (((controller.bidCarsResponse.value.data?[0].biddedCars![index].engineStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].exteriorStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].interiorAndElectricalStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].testDriveStar ?? 0)) / 4).roundToDouble(),
                               fuelType: controller.bidCarsResponse.value.data?[0].biddedCars![index].fuelType ?? '',
                               id: controller.bidCarsResponse.value.data?[0].biddedCars![index].uniqueId.toString() ?? '',
                               fmv: controller.bidCarsResponse.value.data?[0].biddedCars![index].realValue != null ? controller.bidCarsResponse.value.data![0].biddedCars![index].realValue.toString() : '0',

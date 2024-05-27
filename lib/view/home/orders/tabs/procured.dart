@@ -35,11 +35,11 @@ class Procured extends StatelessWidget {
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: controller.searchList.length,
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           crossAxisSpacing: 22,
                           mainAxisSpacing: 18,
-                          mainAxisExtent: 272,
+                          mainAxisExtent: MediaQuery.of(context).size.height > 800 ? 285 : 272,
                         ),
                         itemBuilder: (context, index) {
                           return Obx(() {

@@ -114,7 +114,7 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
               children: [
                 Icon(
                   Icons.timer_sharp,
-                  color:  widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime < 10 ? MyColors.orange : MyColors.red,
+                  color:  widget.auctionTime.value <= 2 ? MyColors.red2 : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime < 10 ? MyColors.orange : MyColors.red,
                   size: 20,
                 ),
                 const SizedBox(
@@ -132,7 +132,7 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
                       });
                     }
                     return Text(time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                      color: widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                      color: widget.auctionTime.value <= 2 ? MyColors.red2 : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
                       fontSize: 14,
                       fontFamily: 'DM Sans',
                       fontWeight: FontWeight.w700,

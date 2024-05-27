@@ -65,6 +65,7 @@ class Data {
   List<LeaderBoard>? leaderBoard;
   // List<String>? winner;
   String? winner;
+  String? carCondition;
   Front? front;
   Front? frontLeft;
   Front? frontRight;
@@ -112,6 +113,7 @@ class Data {
         this.statusValues,
         this.leaderBoard,
         this.winner,
+        this.carCondition,
         this.front,
         this.frontLeft,
         this.frontRight,
@@ -159,6 +161,7 @@ class Data {
     transmission = json['transmission'];
     statusValues = json['statusValues'];
     winner = json['winner'];
+    carCondition = json['carCondition'];
     if (json['leaderBoard'] != null) {
       leaderBoard = <LeaderBoard>[];
       json['leaderBoard'].forEach((v) {
@@ -228,6 +231,7 @@ class Data {
       data['leaderBoard'] = leaderBoard!.map((v) => v.toJson()).toList();
     }
     data['winner'] = winner;
+    data['carCondition'] = carCondition;
     if (front != null) {
       data['front'] = front!.toJson();
     }

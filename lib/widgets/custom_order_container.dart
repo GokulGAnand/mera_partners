@@ -209,12 +209,13 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.fromLTRB(8.0,8.0,8.0,0,),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       widget.carName,
+                      overflow: TextOverflow.ellipsis,
                       style: MyStyles.black12400,
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.00),
@@ -251,7 +252,7 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                       style: MyStyles.primary14700,
                     ),
                     const SizedBox(
-                      height: 12,
+                      height: 8,
                     ),
                     if (widget.showButton)
                       SizedBox(

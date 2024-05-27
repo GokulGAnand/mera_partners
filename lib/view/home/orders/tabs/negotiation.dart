@@ -81,11 +81,11 @@ class _NegotiationState extends State<Negotiation> {
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: controller.searchNegotiationList.length,
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           crossAxisSpacing: 22,
                           mainAxisSpacing: 18,
-                          mainAxisExtent: 289,
+                          mainAxisExtent: MediaQuery.of(context).size.height > 800 ? 284 : 270,
                         ),
                         itemBuilder: (context, index) {
                           return Obx(() {
@@ -165,11 +165,11 @@ class _NegotiationState extends State<Negotiation> {
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: controller.searchLostList.length,
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
                                   crossAxisSpacing: 22,
                                   mainAxisSpacing: 18,
-                                  mainAxisExtent: 272,
+                                  mainAxisExtent: MediaQuery.of(context).size.height > 800 ? 284 : 270,
                                 ),
                                 itemBuilder: (context, index) {
                                   return CustomOrderContainer(

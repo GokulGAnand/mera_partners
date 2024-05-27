@@ -40,6 +40,7 @@ class OTBScreen extends StatelessWidget {
                                   onCarTapped: () {
                                     Get.toNamed(AppRoutes.carDetailsScreen, arguments: item.sId);
                                   },
+                                  criticalIssue: item.carCondition ?? '',
                                   isFavourite: controller.likeResponse.value.data?[0].likedCars != null && (controller.likeResponse.value.data![0].likedCars!.isNotEmpty)? controller.likeResponse.value.data![0].likedCars!.any((element) => element.sId == controller.carsListResponse.value.data?[index].sId) ? true.obs : false.obs : false.obs,
                                   isOtb: true.obs,
                                   scheduleTime: Constants.getScheduledStatus(DateTime.parse(item.bidStartTime ?? DateTime.now().toString()).toLocal()),
@@ -49,7 +50,7 @@ class OTBScreen extends StatelessWidget {
                                   bidAmount: Constants.numberFormat.format(item.realValue ?? 0).toString().obs,
                                   carModel: item.model ?? '',
                                   carVariant: item.variant ?? '',
-                                  rating: ((item.engineStar ?? 0 + (item.exteriorStar ?? 0) + (item.interiorAndElectricalStar ?? 0) + (item.testDriveStar ?? 0)) / 4).roundToDouble(),
+                                  rating: (((item.engineStar ?? 0) + (item.exteriorStar ?? 0) + (item.interiorAndElectricalStar ?? 0) + (item.testDriveStar ?? 0)) / 4).roundToDouble(),
                                   fuelType: item.fuelType ?? '',
                                   id: item.uniqueId.toString(),
                                   fmv: item.realValue != null ? item.realValue.toString() : '0',
