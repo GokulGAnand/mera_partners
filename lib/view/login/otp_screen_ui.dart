@@ -147,7 +147,7 @@ class _OtpScreenState extends State<OtpScreen> {
       child: CustomTextFormField(
           controller: controller,
           keyboardType: TextInputType.number,
-          inputFormatter: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
+          inputFormatter: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly,],
           textAlign: TextAlign.center,
           maxLength: 1,
           leftPadding: 0.0,

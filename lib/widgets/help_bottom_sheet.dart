@@ -82,8 +82,8 @@ class HelpBottomSheet extends StatelessWidget {
   _lauchCalllog() async {
     const phoneNumber = '+91 81130 27722';
     const url = 'tel:$phoneNumber';
-    if(await canLaunch(url)) {
-      await launch(url);
+    if(await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
     } else {
       throw 'Could not launch $url';
     }
@@ -92,8 +92,8 @@ class HelpBottomSheet extends StatelessWidget {
   _launchEmail() async {
     const email = 'support@meracars.com';
     const url = 'mailto:$email';
-    if(await canLaunch(url)) {
-      await launch(url);
+    if(await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
     } else {
       throw 'Could not launch $url';
     }

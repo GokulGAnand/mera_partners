@@ -198,7 +198,9 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
                         // bidValue.value -= 1000;
                         if (int.parse(widget.amountController!.value.text.replaceAll(',', '')) > widget.bidValue.value) {
                           int bidAmount = int.parse(widget.amountController!.value.text.replaceAll(',', ''));
-                          bidAmount -= widget.stepRate?.value ?? 0;
+                          if (bidAmount >= (widget.bidValue.value + widget.stepRate!.value)) {
+                            bidAmount -= widget.stepRate?.value ?? 0;
+                          }
                           widget.amountController?.value.text = bidAmount.toString();
                         }
                       },

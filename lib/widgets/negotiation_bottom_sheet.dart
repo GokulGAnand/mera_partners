@@ -73,7 +73,7 @@ class NegotiationBottomSheet extends StatelessWidget {
             children: [
               Icon(
                 Icons.timer_sharp,
-                color:  auctionTime.value >= 10 ? MyColors.green : auctionTime < 10 ? MyColors.orange : MyColors.red,
+                color:  auctionTime.value <= 2 ? MyColors.red2 : auctionTime.value >= 10 ? MyColors.green : auctionTime < 10 ? MyColors.orange : MyColors.red,
                 size: 14,
               ),
               const SizedBox(
@@ -91,7 +91,7 @@ class NegotiationBottomSheet extends StatelessWidget {
                     });
                   }
                   return Text(time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                    color: auctionTime.value >= 10 ? MyColors.green : auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                    color: auctionTime.value <= 2 ? MyColors.red2 : auctionTime.value >= 10 ? MyColors.green : auctionTime.value < 10 ? MyColors.orange : MyColors.red,
                     fontSize: 14,
                     fontFamily: 'DM Sans',
                     fontWeight: FontWeight.w700,

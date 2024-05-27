@@ -50,7 +50,11 @@ class _NegotiationState extends State<Negotiation> {
                                 element["isClick"].value = false;
                               }
                               controller.negotiationOrdersCategory[index]["isClick"].value = true;
-                              controller.isNegotiation.value = !controller.isNegotiation.value;
+                              if (index == 0) {
+                                controller.isNegotiation.value = true;
+                              } else {
+                                controller.isNegotiation.value = false;
+                              }
                             },
                             child: Container(
                               padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -149,6 +153,7 @@ class _NegotiationState extends State<Negotiation> {
                               carModel: controller.searchNegotiationList[index].model ?? '',
                               carName: controller.searchNegotiationList[index].variant ?? '',
                               carID: controller.searchNegotiationList[index].uniqueId != null ? controller.searchNegotiationList[index].uniqueId.toString() : '',
+                              uniqueCarID: controller.searchNegotiationList[index].sId != null ? controller.searchNegotiationList[index].sId.toString() : '',
                               imageURL: controller.searchNegotiationList[index].front?.url ?? controller.searchNegotiationList[index].frontLeft?.url ?? controller.searchNegotiationList[index].frontRight?.url ?? '',
                               finalPrice: Constants.numberFormat.format(controller.searchNegotiationList[index].highestBid),
                             );
@@ -183,6 +188,7 @@ class _NegotiationState extends State<Negotiation> {
                                     carModel: controller.searchLostList[index].model ?? '',
                                     carName: controller.searchLostList[index].variant ?? '',
                                     carID: controller.searchLostList[index].uniqueId.toString(),
+                                    uniqueCarID: controller.searchLostList[index].sId.toString(),
                                     imageURL: controller.searchLostList[index].frontLeft?.url ?? '',
                                     finalPrice: Constants.numberFormat.format(controller.searchLostList[index].highestBid),
                                   );

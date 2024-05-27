@@ -231,7 +231,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
         widget.showPendingDialog();
       },
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 20.0, top: 8,left: 8,right: 8),
+        padding: const EdgeInsets.only(bottom: 20.0, top: 8,),
         child: Container(
           // elevation: 5,
           // color: MyColors.white,
@@ -496,10 +496,10 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                         children: [
                           if(widget.auctionTime.value != 0 && widget.timerController?.value != null)
                           Obx(() => Text(
-                            widget.isScheduled?.value == true ? MyStrings.yetToStart : widget.auctionTime.value >= 10 ? MyStrings.acceptingBids:
+                            widget.isScheduled?.value == true ? MyStrings.yetToStart : widget.auctionTime.value <= 2 ? MyStrings.lastCall : widget.auctionTime.value >= 10 ? MyStrings.acceptingBids:
                             widget.auctionTime.value <= 10 ? MyStrings.bidEndsIn : MyStrings.lastCall,
                             style: TextStyle(
-                              color: widget.isScheduled?.value == true ? MyColors.kPrimaryColor : widget.auctionTime.value >= 10 ? MyColors.green2 : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                              color: widget.isScheduled?.value == true ? MyColors.kPrimaryColor : widget.auctionTime.value <= 2 ? MyColors.red2 : widget.auctionTime.value >= 10 ? MyColors.green2 : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
                               fontSize: 12,
                               fontFamily: 'DM Sans',
                               fontWeight: FontWeight.w500,
@@ -513,7 +513,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                               if(widget.auctionTime.value != 0 && widget.timerController?.value != null)
                               Icon(
                                 Icons.timer_sharp,
-                                color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.auctionTime.value >= 10 ? MyColors.green2 : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                                color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.auctionTime.value <= 2 ? MyColors.red2 : widget.auctionTime.value >= 10 ? MyColors.green2 : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
                                 size: 14,
                               ),
                               Obx(() => CountdownTimer(
@@ -528,7 +528,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                                     });
                                   }
                                   return Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                                    color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.auctionTime.value >= 10 ? MyColors.green2 : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                                    color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.auctionTime.value <= 2 ? MyColors.red2 : widget.auctionTime.value >= 10 ? MyColors.green2 : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
                                     fontSize: 14,
                                     fontFamily: 'DM Sans',
                                     fontWeight: FontWeight.w700,

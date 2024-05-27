@@ -53,20 +53,20 @@ class LiveCarsListViewModel extends GetxController {
     //   getCarData(pageKey);
     // });
     socketService = await SocketService().connectToSocket();
-    bidController.value.addListener(() {
-      if (bidController.value.text.length > 3) {
-        bidController.value.selection = TextSelection.fromPosition(
-          TextPosition(offset: bidController.value.text.length - 3),
-        );
-      }
-    });
-    autoBidController.value.addListener(() {
-      if (autoBidController.value.text.length > 3) {
-        autoBidController.value.selection = TextSelection.fromPosition(
-          TextPosition(offset: autoBidController.value.text.length - 3),
-        );
-      }
-    });
+    // bidController.value.addListener(() {
+    //   if (bidController.value.text.length > 3) {
+    //     bidController.value.selection = TextSelection.fromPosition(
+    //       TextPosition(offset: bidController.value.text.length - 3),
+    //     );
+    //   }
+    // });
+    // autoBidController.value.addListener(() {
+    //   if (autoBidController.value.text.length > 3) {
+    //     autoBidController.value.selection = TextSelection.fromPosition(
+    //       TextPosition(offset: autoBidController.value.text.length - 3),
+    //     );
+    //   }
+    // });
 
     super.onInit();
   }

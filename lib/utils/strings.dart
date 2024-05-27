@@ -370,5 +370,6 @@ class MyStrings {
 
 
   static String rupeesSymbol = '₹';
+  static String vAutoBidLimit = 'Your bid must be higher than your auto-bid of ₹';
 
 }

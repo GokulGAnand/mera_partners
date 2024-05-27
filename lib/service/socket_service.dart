@@ -10,6 +10,7 @@ import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:mera_partners/utils/globals.dart' as globals;
+import '../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 
 class SocketService {
   static IO.Socket? socket;
@@ -44,22 +45,13 @@ class SocketService {
         if(carList[i].status?.toLowerCase() == CarStatus.live.name || carList[i].status?.toLowerCase() == CarStatus.scheduled.name){
           liveCarsList.add(carList[i]);
         }
-        else if(carList[i].status?.toLowerCase() == CarStatus.otb.name){
-          otbCarsList.add(carList[i]);
-        }
+        // else if(carList[i].status?.toLowerCase() == CarStatus.otb.name){
+        //   otbCarsList.add(carList[i]);
+        // }
       }
       Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data = liveCarsList;
       Get.find<LiveCarsListViewModel>().updateBid(liveCarsList);
       Get.find<LiveCarsListViewModel>().liveCarsResponse.refresh();
-      ///OTB data update
-      if (Get.isRegistered<OTBCarsListViewModel>()) {
-        // Get.find<OTBCarsListViewModel>().carsListResponse.value.data = otbCarsList;
-        // Get.find<OTBCarsListViewModel>().updateCars(otbCarsList);
-        // Get.find<OTBCarsListViewModel>().carsListResponse.refresh();
-        Get.find<OTBCarsListViewModel>().infinitePagingController.refresh();
-      }else{
-        Get.put(OTBCarsListViewModel());
-      }
     }
 
     socket?.on('getBidInfo', (data) {
@@ -67,10 +59,6 @@ class SocketService {
       if (data != null) {
         List<Data> carList = parseCarDataList(data);
         filterCars(carList);
-        //todo changes
-        // Get.find<BidCarsListViewModel>().bidCarsResponse.value.data = carList;
-        // Get.find<BidCarsListViewModel>().bidCarsResponse.refresh(); // Manually trigger UI update
-
         if ((Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data != null) && Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data!.isNotEmpty) {
           for (int i = 0; i < Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data!.length; i++) {
             num highestBid = Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data![i].highestBid ?? 0;
@@ -81,6 +69,21 @@ class SocketService {
               }
             }
           }
+        }
+
+        ///OTB data update
+        if (Get.isRegistered<OTBCarsListViewModel>()) {
+          // Get.find<OTBCarsListViewModel>().carsListResponse.value.data = otbCarsList;
+          // Get.find<OTBCarsListViewModel>().updateCars(otbCarsList);
+          // Get.find<OTBCarsListViewModel>().carsListResponse.refresh();
+          Get.find<OTBCarsListViewModel>().infinitePagingController.refresh();
+        }else{
+          Get.put(OTBCarsListViewModel());
+        }
+
+        if (Get.isRegistered<BidCarsListViewModel>()) {
+          Get.find<BidCarsListViewModel>().getCarData();
+          Get.find<BidCarsListViewModel>().bidCarsResponse.refresh();
         }
       }
     });
