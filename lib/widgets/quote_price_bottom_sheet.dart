@@ -103,7 +103,7 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
             children: [
               Icon(
                 Icons.timer_sharp,
-                color:  widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime < 10 ? MyColors.orange : MyColors.red,
+                color:  widget.auctionTime.value <= 2 ? MyColors.red2 : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime < 10 ? MyColors.orange : MyColors.red,
                 size: 14,
               ),
               const SizedBox(
@@ -121,7 +121,7 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
                     });
                   }
                   return Text(time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                    color: widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                    color: widget.auctionTime.value <= 2 ? MyColors.red2 : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
                     fontSize: 14,
                     fontFamily: 'DM Sans',
                     fontWeight: FontWeight.w700,
