@@ -34,6 +34,13 @@ class CarDetailsScreen extends StatefulWidget {
   State<CarDetailsScreen> createState() => _CarDetailsScreenState();
 }
 
+class Item{
+  final String title;
+  final String value;
+
+  Item({required this.title,required this.value});
+}
+
 class _CarDetailsScreenState extends State<CarDetailsScreen>
     with TickerProviderStateMixin {
   CarDetailsScreenViewModel carDetailsScreenViewModel =
@@ -662,11 +669,11 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         child: Text(
                           list[index].value!,
                           textAlign: TextAlign.left,
-                          style: MyStyles.black12400,
+                          style: _getValueStyle(Item(title: list[index].title, value: list[index].value??""))
                         ),
                       ),
-                                        ],
-                                      ),
+                      ],
+                      ),
                     );
                 });
   }
@@ -1527,5 +1534,58 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
     return maxHeight != oldDelegate.maxHeight ||
         minHeight != oldDelegate.minHeight ||
         child != oldDelegate.child;
+  }
+}
+
+TextStyle _getValueStyle(Item item) {
+  if (item.title == "RC Availability") {
+    if(item.value == "Original" || item.value == "Photocopy" || item.value == "Duplicate"){
+      //print('The item inside it is------------------${item.value}');
+      return MyStyles.green_12500;
+    }
+    else{
+      return MyStyles.warningRed_12500;
+    }
+  } else if (item.title == "RC Mismatch") {
+    if(item.value == "Yes"){
+      return MyStyles.warningRed_12500;
+    }
+    else{
+      return MyStyles.green_12500;
+    }
+  } else if (item.title == "NOC Issued" && item.value == "No") {
+    return MyStyles.warningRed_12500;
+  } else if (item.title == "Insurance") {
+    if(item.value == "Not Applicable"){
+      return MyStyles.warningRed_12500;
+    }
+    else{
+      return MyStyles.green_12500;
+    }
+  }
+  // else if (item.title == "No Claim Bonus") {
+  //     if(item.value == "Yes"){
+  //       return MyStyles.green_12500;
+  //     }
+  //     else{
+  //       return MyStyles.warningRed_12500;
+  //     }
+  // }
+  else if (item.title == "Under Hypothecation") {
+    if(item.value == "Yes"){
+      return MyStyles.warningRed_12500;
+    }
+    else{
+      return MyStyles.green_12500;
+    }
+  } else if (item.title == "Duplicate Key") {
+    if(item.value == "No"){
+      return MyStyles.warningRed_12500;
+    }
+    else{
+      return MyStyles.green_12500;
+    }
+  } else {
+    return MyStyles.black12400;
   }
 }

@@ -109,11 +109,25 @@ class MyStyles {
     fontWeight: FontWeight.w700,
     height: 0,
   );
+  static const green_12500 = TextStyle(
+    color: MyColors.green,
+    fontSize: 12,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
+    height: 0,
+  );
   static const warningRed_18700 = TextStyle(
     color: MyColors.warning,
     fontSize: 18,
     fontFamily: 'DM Sans',
     fontWeight: FontWeight.w700,
+    height: 0,
+  );
+  static const warningRed_12500 = TextStyle(
+    color: MyColors.warning,
+    fontSize: 12,
+    fontFamily: 'DM Sans',
+    fontWeight: FontWeight.w500,
     height: 0,
   );
   static const regular12 = TextStyle(
