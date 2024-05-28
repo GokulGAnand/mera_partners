@@ -9,6 +9,7 @@ import 'package:mera_partners/service/endpoints.dart';
 import 'package:mera_partners/service/exception_error_util.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/enum.dart';
+import 'package:mera_partners/utils/shared_pref_manager.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 import 'package:http/http.dart' as http;
 import 'package:mera_partners/utils/globals.dart' as globals;
+import '../../utils/constants.dart';
 import '../../widgets/progressbar.dart';
 
 class CarDetailsScreenViewModel extends GetxController {
@@ -781,6 +783,13 @@ class CarDetailsScreenViewModel extends GetxController {
             isLike.value = true;
           }
         }
+        if (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false) {
+          globals.documentStatus = likeResponse.value.data?.first.isDocumentsVerified;
+          globals.isDeposited = likeResponse.value.data?.first.isDeposited;
+          SharedPrefManager.instance.setStringAsync(Constants.documentStatus, likeResponse.value.data!.first.isDocumentsVerified.toString());
+          SharedPrefManager.instance.setBoolAsync(Constants.isDeposited, likeResponse.value.data!.first.isDeposited ?? false);
+        }
+
         log('API Response svvs: ${response.body}');
       } else {
         // ProgressBar.instance.stopProgressBar(Get.context!);
