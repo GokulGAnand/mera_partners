@@ -39,6 +39,7 @@ class MyColors {
   static const Color green3 = Color(0XFF1CB975);
   static const Color green4 = Color(0XFF199E52);
   static const Color orange = Color(0xFFFF7A00);
+  static const Color yellowRating = Color(0xFFE6B400);
 
   static const Color subTitleColor = Color(0XFF4D535A);
 }

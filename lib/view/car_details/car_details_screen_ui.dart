@@ -104,7 +104,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       padding: const EdgeInsets.all(32),
                       decoration: BoxDecoration(
                         color: MyColors.black3.withOpacity(0.7),),
-                      child: Image.asset((carDetailsScreenViewModel.carStatus.value.toLowerCase() == "deal_lost")?MyImages.bidClosed
+                      child: Image.asset((!carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) || carDetailsScreenViewModel.carStatus.value.toLowerCase() == "deal_lost")?MyImages.bidClosed
                       // :(carDetailsScreenViewModel.carStatus.value == "bid closed")?MyImages.bidClosed
                       :MyImages.bidWon),
                     ): const SizedBox(),
@@ -441,7 +441,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                     width: 5,
                                   ),
                                   Text(
-                                    carDetailsScreenViewModel.criticalIssue[i],
+                                    carDetailsScreenViewModel.criticalIssue[i].capitalize ?? '',
                                     style: MyStyles.red2_12700,
                                   )
                                 ],
@@ -1302,11 +1302,12 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                       physics: const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       itemCount: list[index].listValue!.length,
-                                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2,
                                         crossAxisSpacing: 8,
                                         mainAxisSpacing: 8,
-                                        mainAxisExtent: 30), 
+                                        mainAxisExtent: list[index].listValue!.any((item) => item.length >= 20) ? 45 : 30,
+                                      ),
                                         itemBuilder: (context, i){
                                           return Container(
                                             alignment: Alignment.center,
@@ -1317,9 +1318,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                             ),
                                             child: Text(
                                               list[index].listValue![i].capitalize.toString(),
-                                            //style: MyStyles.white12500,
                                               style: list[index].color == MyColors.warning ? MyStyles.white12500 : MyStyles.black12500,
-
+                                              textAlign: TextAlign.center,
                                             ),
                                           );
                                         }),
@@ -1451,71 +1451,73 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Obx(() => Scaffold(
       backgroundColor: MyColors.lightBlue1,
       body: SafeArea(
         child: Obx(
-          () {
-            if(carDetailsScreenViewModel.reportResponse.value.data == null || carDetailsScreenViewModel.carDetailsResponse.value.data == null){
-              return const Center(child: CircularProgressIndicator(color: MyColors.kPrimaryColor,));
-            }
-            carDetailsScreenViewModel.exteriorTabController =
-        TabController(length: (carDetailsScreenViewModel.exteriorIssue.isEmpty)?1:2, vsync: this);
-    carDetailsScreenViewModel.interiorElectricalTabController =
-        TabController(length: (carDetailsScreenViewModel.interiorAndElectricalIssue.isEmpty)?1:2, vsync: this);
-    carDetailsScreenViewModel.engineTabController =
-        TabController(length: (carDetailsScreenViewModel.engineIssue.isEmpty)?1:2, vsync: this);
-    carDetailsScreenViewModel.acTabController =
-        TabController(length: (carDetailsScreenViewModel.airConditionIssue.isEmpty)?1:2, vsync: this);
-    carDetailsScreenViewModel.testDriveTabController =
-        TabController(length: (carDetailsScreenViewModel.testDriveIssue.isEmpty)?1:2, vsync: this);
-            return CustomScrollView(
-                controller: carDetailsScreenViewModel.scrollController,
-                slivers: <Widget>[
-                  SliverAppBar(
-                    pinned: true,
-                    automaticallyImplyLeading: false,
-                    expandedHeight:  (carDetailsScreenViewModel.criticalIssue.isEmpty)?541:725,
-                    toolbarHeight: 134,
-                    scrolledUnderElevation: 0,
-                    flexibleSpace: FlexibleSpaceBar(
-                      collapseMode: CollapseMode.pin,
-                      expandedTitleScale: 1,
-                      titlePadding: const EdgeInsets.all(0),
-                      title: Obx(() {
-                        if (carDetailsScreenViewModel.showSliverAppBarTitle.value) {
-                          return sliverAppBarTitle();
-                        }
-                        return const SizedBox();
-                      }),
-                      background: page1(),
-                    ),
-                  ),
-                  SliverPersistentHeader(
-                    pinned: true,
-                    delegate: SliverAppBarDelegate(
-                      minHeight: 120.0,
-                      maxHeight: 120.0,
-                      child: inspectionReport(),
-                    ),
-                  ),
-                  SliverList(
-                      delegate: SliverChildListDelegate.fixed(<Widget>[
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 120),
-                      child: Column(
-                        children: page2(),
+                () {
+              if(carDetailsScreenViewModel.reportResponse.value.data == null || carDetailsScreenViewModel.carDetailsResponse.value.data == null){
+                return const Center(child: CircularProgressIndicator(color: MyColors.kPrimaryColor,));
+              }
+              carDetailsScreenViewModel.exteriorTabController =
+                  TabController(length: (carDetailsScreenViewModel.exteriorIssue.isEmpty)?1:2, vsync: this);
+              carDetailsScreenViewModel.interiorElectricalTabController =
+                  TabController(length: (carDetailsScreenViewModel.interiorAndElectricalIssue.isEmpty)?1:2, vsync: this);
+              carDetailsScreenViewModel.engineTabController =
+                  TabController(length: (carDetailsScreenViewModel.engineIssue.isEmpty)?1:2, vsync: this);
+              carDetailsScreenViewModel.acTabController =
+                  TabController(length: (carDetailsScreenViewModel.airConditionIssue.isEmpty)?1:2, vsync: this);
+              carDetailsScreenViewModel.testDriveTabController =
+                  TabController(length: (carDetailsScreenViewModel.testDriveIssue.isEmpty)?1:2, vsync: this);
+              return CustomScrollView(
+                  controller: carDetailsScreenViewModel.scrollController,
+                  slivers: <Widget>[
+                    SliverAppBar(
+                      pinned: true,
+                      automaticallyImplyLeading: false,
+                      expandedHeight:  (carDetailsScreenViewModel.criticalIssue.isEmpty)?541:725,
+                      toolbarHeight: 134,
+                      scrolledUnderElevation: 0,
+                      flexibleSpace: FlexibleSpaceBar(
+                        collapseMode: CollapseMode.pin,
+                        expandedTitleScale: 1,
+                        titlePadding: const EdgeInsets.all(0),
+                        title: Obx(() {
+                          if (carDetailsScreenViewModel.showSliverAppBarTitle.value) {
+                            return sliverAppBarTitle();
+                          }
+                          return const SizedBox();
+                        }),
+                        background: page1(),
                       ),
-                    )
-                  ])),
-                ]);
-          }
+                    ),
+                    SliverPersistentHeader(
+                      pinned: true,
+                      delegate: SliverAppBarDelegate(
+                        minHeight: 120.0,
+                        maxHeight: 120.0,
+                        child: inspectionReport(),
+                      ),
+                    ),
+                    SliverList(
+                        delegate: SliverChildListDelegate.fixed(<Widget>[
+                          Padding(
+                            padding:
+                            const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 120),
+                            child: Column(
+                              children: page2(),
+                            ),
+                          )
+                        ])),
+                  ]);
+            }
         ),
       ),
-      bottomSheet: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.live.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase()?
-      bottomSheetWidget(): const SizedBox(),
-    );
+      bottomSheet:
+      carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.live.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase()
+          ? bottomSheetWidget()
+          : const SizedBox(),
+    ),);
   }
 }
 

@@ -140,52 +140,6 @@ class CustomCarDetailCard extends StatefulWidget {
 
 class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
 
-  // void startTimer() {
-  //   Timer.periodic(const Duration(seconds: 1), (timer) {
-  //     if (widget.duration.value!.inSeconds == 0) {
-  //       timer.cancel();
-  //     } else {
-  //       widget.duration.value = widget.duration.value! - const Duration(seconds: 1);
-  //     }
-  //   });
-  // }
-  //
-  // String formatDuration(Duration duration) {
-  //   String twoDigits(int n) => n.toString().padLeft(2, '0');
-  //   String hour = duration.inHours.toString();
-  //   String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-  //   String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-  //   if(duration.inHours == 0){
-  //     return "${twoDigitMinutes}min ${twoDigitSeconds}sec";
-  //   } else if (duration.inHours < 10){
-  //     hour = twoDigits(duration.inHours);
-  //     return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
-  //   }
-  //   return "${hour}h ${twoDigitMinutes}min ${twoDigitSeconds}sec";
-  // }
-
-  @override
-  void initState() {
-    // var start = DateTime.now();
-    // var end = widget.bidEndTime ?? DateTime.now();
-    // if (widget.isScheduled?.value == false) {
-    //   Duration diff = end.difference(start);
-    //   widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
-    //
-    //   if(start.isBefore(end)) {
-    //     startTimer();
-    //   }
-    // }else{
-    //   Duration diff = widget.bidStartTime!.difference(start);
-    //   widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
-    //
-    //   if(start.isAfter(widget.bidStartTime!)) {
-    //     startTimer();
-    //   }
-    // }
-    super.initState();
-  }
-
   @override
   void dispose() {
     widget.timerController!.value.dispose();
@@ -208,14 +162,10 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
         if (Get.isRegistered<LiveCarsListViewModel>()) {
           Get.find<LiveCarsListViewModel>().getLikedCarData();
         }
-        // ProgressBar.instance.stopProgressBar(Get.context!);
-          //CustomToast.instance.showMsg(MyStrings.success);
       } else {
-        // ProgressBar.instance.stopProgressBar(Get.context!);
         CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);
       }
     } catch (e) {
-      // ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? MyStrings.unableToConnect);
     }
@@ -233,9 +183,6 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 20.0, top: 8,),
         child: Container(
-          // elevation: 5,
-          // color: MyColors.white,
-          // surfaceTintColor: MyColors.white,
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
               color: MyColors.white1,
@@ -249,10 +196,9 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
               ],
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(8)),
-          // shape: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
           child: SizedBox(
             width: double.maxFinite,
-            height: 480,
+            height: widget.criticalIssue!.isNotEmpty ? 495 : 485,
             child: Column(
               children: [
                 Stack(
@@ -392,7 +338,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                               color: widget.rating >= 4
                                   ? MyColors.green2
                                   : widget.rating >= 2.5 && widget.rating <= 3.5
-                                      ? MyColors.yellow
+                                      ? MyColors.orange
                                       : MyColors.red,
                               fontSize: 14,
                               fontFamily: 'DM Sans',
@@ -406,7 +352,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                               color: widget.rating >= 4
                                   ? MyColors.green2
                                   : widget.rating >= 2.5 && widget.rating <= 3.5
-                                      ? MyColors.yellow
+                                      ? MyColors.orange
                                       : MyColors.red,
                               fontSize: 14,
                               fontFamily: 'DM Sans',
@@ -422,7 +368,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                             color: widget.rating >= 4
                                 ? MyColors.green2
                                 : widget.rating >= 2.5 && widget.rating <= 3.5
-                                    ? MyColors.yellow
+                                    ? MyColors.orange
                                     : MyColors.red,
                             size: Dimens.iconSizeS,
                           )
@@ -538,13 +484,6 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                                   ));
                                 },
                               ),)
-                              // Text(formatDuration( widget.duration.value! ), style: TextStyle(
-                              //   color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
-                              //   fontSize: 14,
-                              //   fontFamily: 'DM Sans',
-                              //   fontWeight: FontWeight.w700,
-                              //   height: 0,
-                              // )),
                             ],
                           ),)
                         ],
