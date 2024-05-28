@@ -230,6 +230,9 @@ class MyStrings {
  static const String green = "green";
  static const String red ="red";
  static const String tutorialSubtitle = "The scheduled bid in an auction is represented in the";
+ static const String tutorialSubtitle1 = "The highest bid in an auction is  represented in the";
+ static const String tutorialSubtitle2 = "The leading bid in an auction is represented in the";
+ static const String tutorialSubtitle3 = "The loosing bid in an auction is represented in the";
  static const String startBiding = "Start Bidding";
 
   ///home screen

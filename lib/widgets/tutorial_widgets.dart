@@ -32,11 +32,14 @@ class TutorialWidgets extends StatelessWidget {
             width: size.width * 0.8,
             // alignment: Alignment.bottomCenter,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), color: MyColors.lightGrey),
-            child: Container(
-              height: size.height * 0.3,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(image ?? ''),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Container(
+                height: size.height * 0.3,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(image ?? ''),
+                  ),
                 ),
               ),
             ),
