@@ -198,7 +198,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
               borderRadius: BorderRadius.circular(8)),
           child: SizedBox(
             width: double.maxFinite,
-            height: widget.criticalIssue!.isNotEmpty ? 495 : 485,
+            height: widget.criticalIssue!.isNotEmpty ? 500 : 480,
             child: Column(
               children: [
                 Stack(
