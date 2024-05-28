@@ -124,7 +124,7 @@ class LoginScreenViewModel extends GetxController {
           globals.headers = {'Authorization': 'Bearer ${globals.token}'};
           globals.jsonHeaders = {'Content-Type': 'application/json','Authorization': 'Bearer ${globals.token}',};
 
-          if((globals.isOnboarding == null || globals.isOnboarding == false) && globals.isDeposited == false){
+          if((globals.isOnboarding == null || globals.isOnboarding == false) && (globals.isDeposited == null || globals.isDeposited == false)){
             SharedPrefManager.instance.setBoolAsync(Constants.isOnboarding, true);
             Get.toNamed(AppRoutes.onboardingScreen);
           } else if (userInfoResponse.value.data?.first.isDocumentsVerified != null && (userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.SUBMITTED.name || userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.VERIFIED.name) && userInfoResponse.value.data?.first.isDeposited != null && userInfoResponse.value.data?.first.isDeposited == true) {

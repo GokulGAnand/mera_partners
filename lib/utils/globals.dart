@@ -23,7 +23,7 @@ void clearData(){
   documentStatus = null;
   addressProofFront = null;
   isDeposited = null;
-  isOnboarding = true;
+  isOnboarding = null;
   city = null;
   contactNo = null;
   token = null;

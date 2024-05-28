@@ -380,12 +380,12 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                             TextSpan(
                               children: [
                                 const TextSpan(
-                                  text: "${MyStrings.fmv}  ",
+                                  text: "${MyStrings.fairValue}  ",
                                   style: MyStyles.subTitleGreayStyle,
                                 ),
                                 TextSpan(
                                   text: globals.documentStatus == DocumentStatus.VERIFIED.name ? 
-                                  '₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue}' 
+                                  Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue)
                                   :(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue != null)
                                   ?'₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
                                   :'₹${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}',

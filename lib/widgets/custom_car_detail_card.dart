@@ -7,6 +7,7 @@ import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/service/exception_error_util.dart';
 import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/constants.dart';
 import 'package:mera_partners/utils/dimens.dart';
 import 'package:mera_partners/utils/images.dart';
 import 'package:mera_partners/widgets/custom_slider.dart';
@@ -527,7 +528,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                                 TextSpan(
                                   children: [
                                     const TextSpan(text: 'Fair Value ', style: MyStyles.subTitleGreayStyle),
-                                    TextSpan(text: globals.documentStatus == DocumentStatus.VERIFIED.name ? '₹${widget.fmv}' : '₹${widget.fmv.replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}', style: MyStyles.grey14700),
+                                    TextSpan(text: globals.documentStatus == DocumentStatus.VERIFIED.name ? Constants.numberFormat.format(double.parse(widget.fmv)) : '₹${widget.fmv.replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}', style: MyStyles.grey14700),
                                   ],
                                 ),
                                 textAlign: TextAlign.center,
