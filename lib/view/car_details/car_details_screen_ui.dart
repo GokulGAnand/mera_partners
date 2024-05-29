@@ -136,9 +136,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                   height: 37,
                   padding: const EdgeInsets.only(left: 12),
                   decoration: BoxDecoration(
-                    color: (carDetailsScreenViewModel.carStatus.value == "bid won")?MyColors.green4
-                        :(carDetailsScreenViewModel.carStatus.value == "bid closed")? MyColors.grey4
-                        :(carDetailsScreenViewModel.carStatus.value == "car sold")? MyColors.yellow
+                    color: (carDetailsScreenViewModel.carStatus.value.toLowerCase() == "bid won")?MyColors.green4
+                        :(carDetailsScreenViewModel.carStatus.value.toLowerCase() == "bid closed")? MyColors.grey4
+                        :(carDetailsScreenViewModel.carStatus.value.toLowerCase() == "car sold")? MyColors.yellow
                         :null,
                     gradient: (carDetailsScreenViewModel.carStatus.value != "")?null
                         :LinearGradient(
