@@ -44,7 +44,7 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 16,right: 16),
+            padding: const EdgeInsets.only(left: 16,right: 16,top: 16),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

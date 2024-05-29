@@ -9,6 +9,8 @@ import '../../../../model/response/user_data/user_car_details_response.dart';
 import '../../../../service/endpoints.dart';
 import '../../../../service/exception_error_util.dart';
 import '../../../../service/socket_service.dart';
+import '../../../../utils/constants.dart';
+import '../../../../utils/shared_pref_manager.dart';
 import '../../../../utils/strings.dart';
 import '../../../../widgets/custom_toast.dart';
 import '../../../../widgets/progressbar.dart';
@@ -108,6 +110,12 @@ class BidCarsListViewModel extends GetxController{
             bidCarsResponse.value.data?[0].biddedCars?.add(tempBidCarResponse.value.data![0].biddedCars![i]);
           }
         }
+        if (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false) {
+          globals.documentStatus = bidCarsResponse.value.data?.first.isDocumentsVerified;
+          globals.isDeposited = bidCarsResponse.value.data?.first.isDeposited;
+          SharedPrefManager.instance.setStringAsync(Constants.documentStatus, bidCarsResponse.value.data!.first.isDocumentsVerified.toString());
+          SharedPrefManager.instance.setBoolAsync(Constants.isDeposited, bidCarsResponse.value.data!.first.isDeposited ?? false);
+        }
         // final isLastPage = bidCarsResponse.value.data!.length < limit;
         // if (isLastPage) {
         //   infinitePagingController.appendLastPage(bidCarsResponse.value.data!);
@@ -136,6 +144,12 @@ class BidCarsListViewModel extends GetxController{
         likeResponse.value = UserResponse();
         likeResponse.value = UserResponse.fromJson(jsonDecode(response.body));
         likedCarsearchList.value = UserResponse.fromJson(jsonDecode(response.body)).data![0].likedCars!;
+        if (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false) {
+          globals.documentStatus = likeResponse.value.data?.first.isDocumentsVerified;
+          globals.isDeposited = likeResponse.value.data?.first.isDeposited;
+          SharedPrefManager.instance.setStringAsync(Constants.documentStatus, likeResponse.value.data!.first.isDocumentsVerified.toString());
+          SharedPrefManager.instance.setBoolAsync(Constants.isDeposited, likeResponse.value.data!.first.isDeposited ?? false);
+        }
         update();
         refresh();
         notifyChildrens();

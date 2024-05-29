@@ -43,11 +43,7 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
 
   @override
   void initState() {
-    // var start = DateTime.now();
-    // var end = widget.otbEndTime ?? DateTime.now();
     widget.amountController.value.addListener(_onTextChanged);
-    // Duration diff = end.difference(start);
-    // widget.duration.value = Duration(hours: diff.inHours, minutes: diff.inMinutes.remainder(60), seconds:diff.inSeconds.remainder(60));
 
     if (widget.amountController.value.text.isEmpty){
       // widget.amountController.value.text = numberFormatter.format(widget.otbPrice.value).toString();
@@ -103,13 +99,14 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
             children: [
               Icon(
                 Icons.timer_sharp,
-                color:  widget.auctionTime.value <= 2 ? MyColors.red2 : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime < 10 ? MyColors.orange : MyColors.red,
+                color: MyColors.green2,
+                // color:  widget.auctionTime.value <= 2 ? MyColors.red2 : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime < 10 ? MyColors.orange : MyColors.red,
                 size: 14,
               ),
               const SizedBox(
                 width: 5,
               ),
-              Obx(() => CountdownTimer(
+              CountdownTimer(
                 controller: widget.timerController?.value,
                 widgetBuilder: (_, CurrentRemainingTime? time) {
                   if (time == null) {
@@ -117,26 +114,19 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
                   }
                   if(time.min != null){
                     WidgetsBinding.instance.addPostFrameCallback((_) {
-                      widget.auctionTime.value = time.min ?? 0;
+                      widget.auctionTime.value = time.min!;
                     });
                   }
                   return Text(time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                    color: widget.auctionTime.value <= 2 ? MyColors.red2 : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                    // color: widget.auctionTime.value <= 2 ? MyColors.red2 : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                    color: MyColors.green2,
                     fontSize: 14,
                     fontFamily: 'DM Sans',
                     fontWeight: FontWeight.w700,
                     height: 0,
                   ));
                 },
-              ),),
-              // if(widget.duration.value != null)
-              // Text(formatDuration( widget.duration.value! ), style: TextStyle(
-              //   color: widget.duration.value!.inMinutes >= 10 ? MyColors.green : widget.duration.value!.inMinutes < 10 ? MyColors.orange : MyColors.red,
-              //   fontSize: 14,
-              //   fontFamily: 'DM Sans',
-              //   fontWeight: FontWeight.w700,
-              //   height: 0,
-              // )),
+              ),
               const Spacer(),
               InkWell(
                 onTap: () {

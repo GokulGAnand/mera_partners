@@ -14,6 +14,9 @@ import 'package:http_parser/http_parser.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../../model/response/payment/create_order_response.dart';
 import '../../model/response/user_data/user_info_response.dart';
+import '../../utils/constants.dart';
+import '../../utils/enum.dart';
+import '../../utils/shared_pref_manager.dart';
 import '../../utils/strings.dart';
 
 class DocumentScreenViewModel extends GetxController {
@@ -92,6 +95,12 @@ class DocumentScreenViewModel extends GetxController {
       userInfoResponse.value = UserInfoResponse.fromJson(json.decode(response.body));
       if (userInfoResponse.value.data != null) {
         loadData();
+      }
+      if (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false) {
+        globals.documentStatus = userInfoResponse.value.data?.first.isDocumentsVerified;
+        globals.isDeposited = userInfoResponse.value.data?.first.isDeposited;
+        SharedPrefManager.instance.setStringAsync(Constants.documentStatus, userInfoResponse.value.data!.first.isDocumentsVerified.toString());
+        SharedPrefManager.instance.setBoolAsync(Constants.isDeposited, userInfoResponse.value.data!.first.isDeposited ?? false);
       }
     } catch (e) {
       log(e.toString());

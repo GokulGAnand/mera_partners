@@ -3,9 +3,11 @@ import 'package:mera_partners/service/firebase_push_notifications.dart';
 import 'package:mera_partners/utils/images.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mera_partners/utils/shared_pref_manager.dart';
 import 'package:mera_partners/view_model/splash/splash_screen_view_model.dart';
 import '../../routes/app_routes.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
+import '../../utils/constants.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,6 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     splashScreenViewModel.loadData().then((value) async{
+      splashScreenViewModel.isFirstLaunch = await SharedPrefManager.instance.getBoolAsync(Constants.isFirstLaunch) ?? true;
       splashScreenViewModel.isLoginAlready = value;
       if(splashScreenViewModel.isLoginAlready == true){
         await splashScreenViewModel.getUserData();
@@ -27,9 +30,10 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     });
     Timer(const Duration(seconds: 3), () {
-      if(splashScreenViewModel.isLoginAlready){
+      if(splashScreenViewModel.isLoginAlready && !splashScreenViewModel.isFirstLaunch){
         Get.offNamed(AppRoutes.homeScreen);
       } else {
+        SharedPrefManager.instance.setBoolAsync(Constants.isFirstLaunch, false);
         Get.offNamed(AppRoutes.loginScreen);
       }
     });

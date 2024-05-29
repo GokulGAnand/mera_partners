@@ -373,6 +373,7 @@ class MyStrings {
 
 
   static String rupeesSymbol = '₹';
+  static const String fairValue = 'Fair Value';
   static String vAutoBidLimit = 'Your bid must be higher than your auto-bid of ₹';
 
 }

@@ -10,6 +10,9 @@ import 'package:mera_partners/view_model/home/orders/rc_transfer_view_model.dart
 import '../../../model/response/live/live_cars_list_response.dart';
 import '../../../service/endpoints.dart';
 import '../../../service/exception_error_util.dart';
+import '../../../utils/constants.dart';
+import '../../../utils/enum.dart';
+import '../../../utils/shared_pref_manager.dart';
 import '../../../utils/strings.dart';
 import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
@@ -80,6 +83,12 @@ class NegotiationViewModel extends GetxController {
         ProgressBar.instance.stopProgressBar(Get.context!);
         lostDealsData.value = UserResponse.fromJson(jsonDecode(response.body));
         searchLostList.value = UserResponse.fromJson(jsonDecode(response.body)).data![0].lostDeal ?? [];
+        if (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false) {
+          globals.documentStatus = lostDealsData.value.data?.first.isDocumentsVerified;
+          globals.isDeposited = lostDealsData.value.data?.first.isDeposited;
+          SharedPrefManager.instance.setStringAsync(Constants.documentStatus, lostDealsData.value.data!.first.isDocumentsVerified.toString());
+          SharedPrefManager.instance.setBoolAsync(Constants.isDeposited, lostDealsData.value.data!.first.isDeposited ?? false);
+        }
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log('API Error: ${response.reasonPhrase}');

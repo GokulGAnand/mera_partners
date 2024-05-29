@@ -14,6 +14,7 @@ class Constants {
   static const String uniqueUserId = 'uniqueUserId';
   static const String documentStatus = 'documentStatus';
   static const String isDeposited = 'isDeposited';
+  static const String isFirstLaunch = 'isFirstLaunch';
   static const String addressProofFront = 'addressProofFront';
   static const String isOnboarding = 'isOnboarding';
   static const String fcmToken = 'fcmToken';

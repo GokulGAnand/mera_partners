@@ -13,6 +13,7 @@ import 'package:mera_partners/widgets/custom_toast.dart';
 
 class SplashScreenViewModel extends GetxController {
   bool isLoginAlready = false;
+  bool isFirstLaunch = true;
 
   Future<bool> loadData() async {
     globals.token = await SharedPrefManager.instance.getStringAsync(Constants.token);

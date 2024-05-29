@@ -25,9 +25,9 @@ class ProcuredBillScreen extends StatelessWidget {
     final String? gstAmount = arguments?['gst'];
     final String? serviceFees = arguments?['serviceFees'];
     final String? totalAmount = arguments?['totalAmount'];
-    final String? totalPayment = finalPrice; // Assigning finalPrice to totalPayment as per your existing code
     final String additionalCharges = serviceFees ?? ''; // Example value for additional charges
     final String gst = gstAmount ?? ''; // Example value for GST
+    final num sellingPrice = ((double.tryParse(totalAmount ?? '0') ?? 0) - ((double.tryParse(gstAmount ?? '0') ?? 0) + (double.tryParse(serviceFees ?? '0') ?? 0)));
 
     // Calculate total amount
     // final num totalAmount = (int.tryParse(totalPayment ?? '0') ?? 0) +
@@ -89,11 +89,11 @@ class ProcuredBillScreen extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(Constants.numberFormat.format(int.tryParse(totalAmount ?? '0') ?? 0), style: MyStyles.black16400),
+                            Text(Constants.numberFormat.format(sellingPrice), style: MyStyles.black16400),
                             SizedBox(height: Dimens.standard_10),
-                            Text(Constants.numberFormat.format(int.tryParse(additionalCharges) ?? 0), style: MyStyles.black16400),
+                            Text(Constants.numberFormat.format(double.tryParse(additionalCharges) ?? 0), style: MyStyles.black16400),
                             SizedBox(height: Dimens.standard_10),
-                             Text(Constants.numberFormat.format(int.tryParse(gst) ?? 0), style: MyStyles.black16400),
+                             Text(Constants.numberFormat.format(double.tryParse(gst) ?? 0), style: MyStyles.black16400),
                           ],
                         ),
                       ],
