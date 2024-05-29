@@ -34,10 +34,23 @@ class _SplashScreenState extends State<SplashScreen> {
         Get.offNamed(AppRoutes.homeScreen);
       } else {
         SharedPrefManager.instance.setBoolAsync(Constants.isFirstLaunch, false);
+        globals.clearData();
+        clearData();
         Get.offNamed(AppRoutes.loginScreen);
       }
     });
     super.initState();
+  }
+
+  clearData(){
+    SharedPrefManager.instance.removeStringAsync(Constants.userName);
+    SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
+    SharedPrefManager.instance.removeStringAsync(Constants.contactNo);
+    SharedPrefManager.instance.removeStringAsync(Constants.token);
+    SharedPrefManager.instance.removeStringAsync(Constants.fcmToken);
+    SharedPrefManager.instance.removeStringAsync(Constants.userId);
+    SharedPrefManager.instance.removeStringAsync(Constants.uniqueUserId);
+    SharedPrefManager.instance.removeStringAsync(Constants.documentStatus);
   }
 
   @override

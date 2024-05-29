@@ -51,6 +51,7 @@ class SocketService {
       }
       Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data = liveCarsList;
       Get.find<LiveCarsListViewModel>().updateBid(liveCarsList);
+      Get.find<LiveCarsListViewModel>().liveCarsResponse.value.count = liveCarsList.length;
       Get.find<LiveCarsListViewModel>().liveCarsResponse.refresh();
     }
 

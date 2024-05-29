@@ -19,7 +19,6 @@ class ProcuredBillScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic>? arguments = Get.arguments as Map<String, dynamic>?;
-    final String? finalPrice = arguments?['finalPrice'];
     final String? carModel = arguments?['carModel'];
     final String? carName = arguments?['carName'];
     final String? gstAmount = arguments?['gst'];
@@ -28,11 +27,6 @@ class ProcuredBillScreen extends StatelessWidget {
     final String additionalCharges = serviceFees ?? ''; // Example value for additional charges
     final String gst = gstAmount ?? ''; // Example value for GST
     final num sellingPrice = ((double.tryParse(totalAmount ?? '0') ?? 0) - ((double.tryParse(gstAmount ?? '0') ?? 0) + (double.tryParse(serviceFees ?? '0') ?? 0)));
-
-    // Calculate total amount
-    // final num totalAmount = (int.tryParse(totalPayment ?? '0') ?? 0) +
-    //     (int.tryParse(additionalCharges) ?? 0) +
-    //     (int.tryParse(gst) ?? 0);
 
 
     return Scaffold(
@@ -115,7 +109,7 @@ class ProcuredBillScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(MyStrings.totalAmount, style: MyStyles.black16700),
-                        Text(Constants.numberFormat.format(int.tryParse(totalAmount ?? '0') ?? 0), style: MyStyles.blue16W700),
+                        Text(Constants.numberFormat.format(double.tryParse(totalAmount ?? '0') ?? 0), style: MyStyles.blue16W700),
                       ],
                     ),
                   ],
