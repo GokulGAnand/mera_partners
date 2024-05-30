@@ -91,7 +91,7 @@ class BidCarsListScreen extends StatelessWidget {
                                     backgroundColor: Colors.transparent,
                                     context: context,
                                     builder: (context) {
-                                      return CustomBidBottomSheet(
+                                      return Obx(() => CustomBidBottomSheet(
                                         timerController: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs,
                                         amountController: controller.autoBidController,
                                         isAutoBid: true,
@@ -99,10 +99,10 @@ class BidCarsListScreen extends StatelessWidget {
                                         stepRate: controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 99999
                                             ? RxInt(2000)
                                             : (controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! >= 100000 && controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 299999)
-                                                ? RxInt(4000)
-                                                : (controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! >= 300000 && controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 499999)
-                                                    ? RxInt(7000)
-                                                    : RxInt(10000),
+                                            ? RxInt(4000)
+                                            : (controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! >= 300000 && controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 499999)
+                                            ? RxInt(7000)
+                                            : RxInt(10000),
                                         onAutoBidPressed: () {
                                           try {
                                             if(globals.uniqueUserId != null && controller.bidCarsResponse.value.data?[0].biddedCars![index].winner != null && controller.bidCarsResponse.value.data![0].biddedCars![index].winner!.contains(globals.uniqueUserId!) && controller.bidCarsResponse.value.data![0].biddedCars![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && (int.tryParse(controller.autoBidController.value.text) ?? 0) <= element.autoBidLimit!)){
@@ -115,7 +115,7 @@ class BidCarsListScreen extends StatelessWidget {
                                             log(e.toString());
                                           }
                                         },
-                                      );
+                                      ),);
                                     });
                               },
                               bid: () {
@@ -126,17 +126,17 @@ class BidCarsListScreen extends StatelessWidget {
                                     backgroundColor: Colors.transparent,
                                     context: context,
                                     builder: (context) {
-                                      return CustomBidBottomSheet(
+                                      return Obx(() => CustomBidBottomSheet(
                                         timerController: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs,
                                         amountController: controller.bidController,
                                         bidValue: RxInt(controller.bidCarsResponse.value.data?[0].biddedCars![index].highestBid ?? 0),
                                         stepRate: controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 99999
                                             ? RxInt(2000)
                                             : (controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! >= 100000 && controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 299999)
-                                                ? RxInt(4000)
-                                                : (controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! >= 300000 && controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 499999)
-                                                    ? RxInt(7000)
-                                                    : RxInt(10000),
+                                            ? RxInt(4000)
+                                            : (controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! >= 300000 && controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 499999)
+                                            ? RxInt(7000)
+                                            : RxInt(10000),
                                         onBidPressed: () {
                                           try {
                                             if(globals.uniqueUserId != null && controller.bidCarsResponse.value.data?[0].biddedCars![index].winner != null && controller.bidCarsResponse.value.data![0].biddedCars![index].winner!.contains(globals.uniqueUserId!) && controller.bidCarsResponse.value.data![0].biddedCars![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && (int.tryParse(controller.bidController.value.text) ?? 0) <= element.autoBidLimit!)){
@@ -150,7 +150,7 @@ class BidCarsListScreen extends StatelessWidget {
                                             log(e.toString());
                                           }
                                         },
-                                      );
+                                      ),);
                                     });
                               },
                             );

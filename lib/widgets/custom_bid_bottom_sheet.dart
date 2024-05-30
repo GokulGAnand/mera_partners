@@ -270,8 +270,10 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
             ),
             Obx(() {
               return CustomElevatedButton(
-                onPressed: (widget.amountController!.value.text.isEmpty || ((int.tryParse(widget.amountController!.value.text) ?? 0) < widget.bidValue.value)) ?() {
-                  if (widget.amountController!.value.text.isEmpty || ((int.tryParse(widget.amountController!.value.text) ?? 0) < widget.bidValue.value)) {
+                onPressed:
+                (widget.amountController!.value.text.isEmpty || ((int.tryParse(widget.amountController!.value.text) ?? 0) < widget.bidValue.value + widget.stepRate!.value))
+                    ? () {
+                  if (widget.amountController!.value.text.isEmpty || ((int.tryParse(widget.amountController!.value.text) ?? 0) < widget.bidValue.value + widget.stepRate!.value)) {
                     CustomToast.instance.showMsg('${MyStrings.vLowBidAmount}(${widget.bidValue.value+widget.stepRate!.value})');
                   }
                 }: widget.isAutoBid? widget.onAutoBidPressed : widget.onBidPressed,

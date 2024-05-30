@@ -18,7 +18,7 @@ class TutorialScreen extends GetView<TutorialScreenViewModel> {
       height: MediaQuery.of(context).size.height * 0.63,
       child: PageView(
         controller: controller.indicator,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         onPageChanged: ((value) {
           controller.page.value = value;
         }),

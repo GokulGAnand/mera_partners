@@ -878,7 +878,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 backgroundColor: Colors.transparent,
                                 context: context,
                                 builder: (context) {
-                                  return CustomBidBottomSheet(
+                                  return Obx(() => CustomBidBottomSheet(
                                     timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status?.toLowerCase() == CarStatus.scheduled.name
                                         ?carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime != null ?
                                     CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null
@@ -902,13 +902,13 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                           CustomToast.instance.showMsg(MyStrings.vAutoBidLimit+(liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard![0].autoBidLimit ?? 0).toString());
                                         }else{
                                           liveCarListViewModel.placeAutoBid(liveCarListViewModel.autoBidController.value.text, carDetailsScreenViewModel.reportResponse.value.data!.sId);
-                                         Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
                                         }
                                       } catch (e) {
                                         log(e.toString());
                                       }
                                     },
-                                  );
+                                  ),);
                                 });
                         },
                         buttonStyle: ElevatedButton.styleFrom(
@@ -941,7 +941,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 backgroundColor: Colors.transparent,
                                 context: context,
                                 builder: (context) {
-                                  return CustomBidBottomSheet(
+                                  return Obx(() => CustomBidBottomSheet(
                                     timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status?.toLowerCase() == CarStatus.scheduled.name
                                         ?carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime != null ?
                                     CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null
@@ -970,7 +970,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                         log(e.toString());
                                       }
                                     },
-                                  );
+                                  ),);
                                 });
                         },
                         buttonStyle: ElevatedButton.styleFrom(
