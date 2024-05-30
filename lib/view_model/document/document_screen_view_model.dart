@@ -29,6 +29,7 @@ class DocumentScreenViewModel extends GetxController {
   var page = Get.arguments;
 
   Rx<TextEditingController> fullNameController = TextEditingController().obs;
+  Rx<TextEditingController> emailController = TextEditingController().obs;
   Rx<TextEditingController> phoneNumberController = TextEditingController(text: globals.phoneNum).obs;
   Rx<TextEditingController> businessNameController = TextEditingController().obs;
   Rx<TextEditingController> businessAddressController = TextEditingController().obs;
@@ -109,6 +110,7 @@ class DocumentScreenViewModel extends GetxController {
 
   void loadData() {
     fullNameController.value.text = userInfoResponse.value.data?[0].fullname ?? '';
+    emailController.value.text = userInfoResponse.value.data?[0].email ?? '';
     phoneNumberController.value.text = userInfoResponse.value.data?[0].contactNo.toString() ?? '';
     businessNameController.value.text = userInfoResponse.value.data?[0].businessName ?? '';
     businessAddressController.value.text = userInfoResponse.value.data?[0].businessAddress ?? '';
@@ -138,7 +140,7 @@ class DocumentScreenViewModel extends GetxController {
     ProgressBar.instance.showProgressbar(Get.context!);
     try {
       var request = http.MultipartRequest('PATCH', Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId!}'));
-      request.fields.addAll({'fullname': fullNameController.value.text, 'businessName': businessNameController.value.text, 'businessAddress': businessAddressController.value.text, 'pincode': pinCodeController.value.text, 'contactNo': phoneNumberController.value.text, 'district': districtController.value.text});
+      request.fields.addAll({'fullname': fullNameController.value.text, "isDocumentsVerified": userInfoResponse.value.data?[0].isDocumentsVerified == "NOTSUBMITTED" ? DocumentStatus.SUBMITTED.name : userInfoResponse.value.data![0].isDocumentsVerified!,'email': emailController.value.text, 'businessName': businessNameController.value.text, 'businessAddress': businessAddressController.value.text, 'pincode': pinCodeController.value.text, 'contactNo': phoneNumberController.value.text, 'district': districtController.value.text});
       if (panCard.value != null && !panCard.value!.path.startsWith('http') && !panCard.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('panCard', panCard.value!.path, contentType: MediaType('image', panCard.value!.path.split('.').last)));
       }

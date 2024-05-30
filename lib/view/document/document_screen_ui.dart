@@ -47,6 +47,16 @@ class DocumentScreen extends StatelessWidget {
                   height: Dimens.spaceWidth,
                 ),
                 CustomTextFormField(
+                  controller: viewModel.emailController.value,
+                  labelText: "${MyStrings.email}*",
+                  helperText: "${MyStrings.email}*",
+                  validator: ValidateInput.validateRequiredFields,
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                const SizedBox(
+                  height: Dimens.spaceWidth,
+                ),
+                CustomTextFormField(
                   controller: viewModel.phoneNumberController.value,
                   labelText: "${MyStrings.phoneNumber}*",
                   helperText: "${MyStrings.phoneNumber}*",
@@ -81,7 +91,7 @@ class DocumentScreen extends StatelessWidget {
                   helperText: '${MyStrings.enterPinCode}*',
                   validator: ValidateInput.validateRequiredFields,
                   keyboardType: TextInputType.number,
-                  inputFormatter: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
+                  inputFormatter: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),LengthLimitingTextInputFormatter(6)],
                 ),
                 const SizedBox(
                   height: Dimens.spaceWidth,
@@ -214,12 +224,12 @@ class DocumentScreen extends StatelessWidget {
                       labelText: MyStrings.aadhaarCardFront,
                       helperText: MyStrings.additionalInfo,
                       controller: TextEditingController(),
-                      validator: viewModel.panCard.value == null ? ValidateInput.validateRequiredFields : null,
+                      validator: viewModel.aadhaarFront.value == null ? ValidateInput.validateRequiredFields : null,
                       isEnabled: false,
                       showCursor: false,
                       prefixIcon: Padding(
                         padding: Dimens.suffixPadding,
-                        child: viewModel.panCard.value == null
+                        child: viewModel.aadhaarFront.value == null
                             ? const Icon(Icons.file_upload_outlined)
                             : const Icon(
                                 Icons.done_rounded,
@@ -491,11 +501,16 @@ class DocumentScreen extends StatelessWidget {
   }
 
   Widget pageFour() {
-    return Scaffold(
+    return Obx(() => Scaffold(
       bottomNavigationBar: SizedBox(
         height: 70,
         child: Center(
-          child: CustomElevatedButton(
+          child: viewModel.userInfoResponse.value.data?[0].isDeposited == true ? CustomElevatedButton(
+            onPressed: () {
+              Get.toNamed(AppRoutes.homeScreen);
+            },
+            buttonText: MyStrings.cont,
+          ) : CustomElevatedButton(
             onPressed: () {
               if (viewModel.page4Key.currentState!.validate()) {
                 viewModel.page4Key.currentState!.save();
@@ -507,7 +522,19 @@ class DocumentScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(
+      body: viewModel.userInfoResponse.value.data?[0].isDeposited == true ? Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(MyImages.success),
+            SizedBox(height: Dimens.standard_10,),
+            const Text(
+              MyStrings.paySuccess,
+              style: MyStyles.blackBold20,
+            ),
+          ],
+        ),
+      ) : SingleChildScrollView(
         child: Form(
           key: viewModel.page4Key,
           child: const Column(
@@ -528,7 +555,7 @@ class DocumentScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ),);
   }
 
   Widget paymentStatus() {
