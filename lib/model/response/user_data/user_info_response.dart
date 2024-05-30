@@ -50,6 +50,7 @@ class Data {
   AddressProofBack? canceledCheque;
   String? district;
   String? fullname;
+  String? email;
   AddressProofBack? panCard;
   String? pincode;
   AddressProofBack? shopPicture;
@@ -75,6 +76,7 @@ class Data {
         this.canceledCheque,
         this.district,
         this.fullname,
+        this.email,
         this.panCard,
         this.pincode,
         this.shopPicture,
@@ -106,6 +108,7 @@ class Data {
         : null;
     district = json['district'];
     fullname = json['fullname'];
+    email = json['email'];
     panCard = json['panCard'] != null
         ? AddressProofBack.fromJson(json['panCard'])
         : null;
@@ -145,6 +148,7 @@ class Data {
     }
     data['district'] = district;
     data['fullname'] = fullname;
+    data['email'] = email;
     if (panCard != null) {
       data['panCard'] = panCard!.toJson();
     }

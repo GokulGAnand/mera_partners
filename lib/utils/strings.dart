@@ -173,6 +173,7 @@ class MyStrings {
   static const String documentDesc = "Please upload the necessary documents inorder\nto bid cars through our app";
   static const String businessInfo = "Business Information";
   static const String fullName = "Full Name";
+  static const String email = "Email";
   static const String phoneNumber = "Phone Number";
   static const String businessName = "Business Name";
   static const String enterBusinessName = "Enter your business name";
@@ -310,11 +311,11 @@ class MyStrings {
   static const String needHelp ='Need Help ?';
   static const String viewButton ='View Bank Details';
   static const String acHName = 'Account Holder’s Name';
-  static const String mAdmin = 'Mera Admin';
+  static const String mAdmin = 'TEAMTECH MEDIA PRIVATE LIMITED';
   static const String admin = 'Account Number';
-  static const String aC = '545045775465';
+  static const String aC = '751405500116';
   static const String ifsc = 'IFSC Code';
-  static const String ifscCode = 'MC82734823';
+  static const String ifscCode = 'ICIC0007514';
   static const String bankAc ='Bank Account Details';
   static const String currentBid = 'Current bid';
   static const String stepRate = 'Step rate';
