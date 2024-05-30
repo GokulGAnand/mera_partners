@@ -24,6 +24,7 @@ class TutorialWidgets extends StatelessWidget {
     TutorialScreenViewModel controller = Get.find<TutorialScreenViewModel>();
     final size = MediaQuery.of(context).size;
     return SingleChildScrollView(
+      physics: NeverScrollableScrollPhysics(),
       child: Column(
         children: [
           // SizedBox(height: Dimens.standard_2),
@@ -113,7 +114,7 @@ class TutorialWidgets extends StatelessWidget {
                           );
                         }
                         controller.update();
-                        buttonPressed = true;
+                        //buttonPressed = true;
                       }
                     },
                     textColor: MyColors.white,
