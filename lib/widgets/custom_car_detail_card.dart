@@ -10,6 +10,7 @@ import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/constants.dart';
 import 'package:mera_partners/utils/dimens.dart';
 import 'package:mera_partners/utils/images.dart';
+import 'package:mera_partners/view_model/document/document_screen_view_model.dart';
 import 'package:mera_partners/widgets/custom_slider.dart';
 import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
@@ -84,9 +85,17 @@ class CustomCarDetailCard extends StatefulWidget {
             style: MyStyles.pageTitleStyle,
           ),
           actions: [
+            if(globals.documentStatus == DocumentStatus.NOTSUBMITTED.name || globals.isDeposited != true)
             TextButton(
               onPressed: () {
-                Get.toNamed(AppRoutes.documentScreen);
+                if(Get.isRegistered<DocumentScreenViewModel>()){
+                  Get.delete<DocumentScreenViewModel>();
+                }
+                if (globals.documentStatus == DocumentStatus.NOTSUBMITTED.name) {
+                  Get.toNamed(AppRoutes.documentScreen, arguments: 0);
+                }else if(globals.isDeposited != true){
+                  Get.toNamed(AppRoutes.documentScreen,arguments: 3);
+                }
               },
               child: Text(MyStrings.cont.toUpperCase()),
             ),

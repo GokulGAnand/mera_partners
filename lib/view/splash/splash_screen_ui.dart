@@ -45,6 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
   clearData(){
     SharedPrefManager.instance.removeStringAsync(Constants.userName);
     SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
+    SharedPrefManager.instance.removeStringAsync(Constants.email);
     SharedPrefManager.instance.removeStringAsync(Constants.contactNo);
     SharedPrefManager.instance.removeStringAsync(Constants.token);
     SharedPrefManager.instance.removeStringAsync(Constants.fcmToken);

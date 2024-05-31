@@ -7,6 +7,7 @@ class Constants {
   static const int maxInputLength = 25;
   static const int maxTextLength = 100;
   static const String phoneNum = 'phoneNum';
+  static const String email = 'email';
   static const String contactNo= 'contactNo';
   static const String userName = 'userName';
   static const String userId = 'userId';

@@ -170,6 +170,8 @@ class DocumentScreenViewModel extends GetxController {
       var response = await request.send();
 
       if (response.statusCode == 200) {
+        globals.documentStatus = DocumentStatus.SUBMITTED.name;
+        await SharedPrefManager.instance.setStringAsync(Constants.documentStatus,DocumentStatus.SUBMITTED.name);
         ProgressBar.instance.stopProgressBar(Get.context!);
         log('success');
         log(response.stream.toString());
@@ -205,7 +207,7 @@ class DocumentScreenViewModel extends GetxController {
           // 'send_sms_hash': true,
           'order_id': '${createOrderResponse.value.data?.id}',
           // 'callback_url': 'http://192.168.1.12:8000/api/v1/users/verifyPayment',
-          'prefill': {'contact': globals.phoneNum, 'email': 'test@razorpay.com'},
+          'prefill': {'contact': globals.phoneNum, 'email': globals.email ?? 'test@razorpay.com'},
           'external': {
             'wallets': ['paytm']
           }
@@ -291,6 +293,8 @@ class DocumentScreenViewModel extends GetxController {
             "razorpay_signature": signature}));
       log(response.body.toString());
       if (response.statusCode == 201 || response.statusCode == 200) {
+        globals.isDeposited = true;
+        await SharedPrefManager.instance.setBoolAsync(Constants.isDeposited,true);
         ProgressBar.instance.stopProgressBar(Get.context!);
         log("success");
         Get.offNamed(AppRoutes.homeScreen);

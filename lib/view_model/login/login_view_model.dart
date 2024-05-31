@@ -76,6 +76,7 @@ class LoginScreenViewModel extends GetxController {
   clearData(){
     SharedPrefManager.instance.removeStringAsync(Constants.userName);
     SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
+    SharedPrefManager.instance.removeStringAsync(Constants.email);
     SharedPrefManager.instance.removeStringAsync(Constants.contactNo);
     SharedPrefManager.instance.removeStringAsync(Constants.token);
     SharedPrefManager.instance.removeStringAsync(Constants.fcmToken);
@@ -106,6 +107,7 @@ class LoginScreenViewModel extends GetxController {
           
           SharedPrefManager.instance.setStringAsync(Constants.phoneNum, mobileController.value.text);
           SharedPrefManager.instance.setStringAsync(Constants.contactNo, userInfoResponse.value.data!.first.contactNo.toString());
+          SharedPrefManager.instance.setStringAsync(Constants.email, userInfoResponse.value.data!.first.email.toString());
           SharedPrefManager.instance.setStringAsync(Constants.token, userInfoResponse.value.meta!.access.toString());
           SharedPrefManager.instance.setStringAsync(Constants.userId, userInfoResponse.value.data!.first.userId.toString());
           SharedPrefManager.instance.setStringAsync(Constants.uniqueUserId, userInfoResponse.value.data!.first.sId.toString());
@@ -115,6 +117,7 @@ class LoginScreenViewModel extends GetxController {
 
           globals.contactNo = userInfoResponse.value.data?.first.contactNo;
           globals.phoneNum = userInfoResponse.value.data?.first.contactNo.toString();
+          globals.email = userInfoResponse.value.data?.first.email;
           globals.token = userInfoResponse.value.meta?.access;
           globals.userId = userInfoResponse.value.data?.first.userId;
           globals.uniqueUserId = userInfoResponse.value.data?.first.sId;
