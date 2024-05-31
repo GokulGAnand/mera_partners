@@ -218,7 +218,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     return CustomDialog(
                       title: MyStrings.logOutDesc,
                       okFun: () async{
-                        PushNotifications.saveToken(token: null);
+                        await PushNotifications.saveToken(token: null);
                         globals.clearData();
                         SharedPrefManager.instance.removeStringAsync(Constants.userName);
                         SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);

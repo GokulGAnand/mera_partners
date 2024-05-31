@@ -123,6 +123,7 @@ class LoginScreenViewModel extends GetxController {
           globals.addressProofFront = userInfoResponse.value.data?.first.addressProofFront != null ? true : false;
           globals.headers = {'Authorization': 'Bearer ${globals.token}'};
           globals.jsonHeaders = {'Content-Type': 'application/json','Authorization': 'Bearer ${globals.token}',};
+          await PushNotifications.saveToken(token: globals.fcmToken);
 
           if((globals.isOnboarding == null || globals.isOnboarding == false) && (globals.isDeposited == null || globals.isDeposited == false)){
             SharedPrefManager.instance.setBoolAsync(Constants.isOnboarding, true);

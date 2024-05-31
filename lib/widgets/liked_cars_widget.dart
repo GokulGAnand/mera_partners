@@ -37,7 +37,7 @@ class LikedCarsWidget extends StatelessWidget {
   final DateTime? bidStartTime;
   final DateTime? bidEndTime;
   Rxn<Duration> duration = Rxn();
-  Rx<int> auctionTime = 0.obs;
+  CurrentRemainingTime? remainingTime;
   final Rx<CountdownTimerController>? timerController;
 
   onEnd(){
@@ -269,7 +269,7 @@ class LikedCarsWidget extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.timer_sharp,
-                        color:  status.toLowerCase() == CarStatus.scheduled.name ? MyColors.kPrimaryColor : auctionTime.value >= 10 ? MyColors.green : auctionTime < 10 ? MyColors.orange : MyColors.red,
+                        color: status.toLowerCase() == CarStatus.scheduled.name ? MyColors.kPrimaryColor : remainingTime?.hours != 0 ? MyColors.green2 : remainingTime!.min! <= 2 ? MyColors.red2 : remainingTime!.min! >= 10 ? MyColors.green2 : remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
                         size: 14,
                       ),
                       Obx(() => CountdownTimer(
@@ -277,14 +277,11 @@ class LikedCarsWidget extends StatelessWidget {
                         widgetBuilder: (_, CurrentRemainingTime? time) {
                           if (time == null) {
                             return const Text('');
-                          }
-                          if(time.min != null){
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              auctionTime.value = time.min ?? 0;
-                            });
+                          }else{
+                            remainingTime = time;
                           }
                           return Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                            color: status.toLowerCase() == CarStatus.scheduled.name ? MyColors.kPrimaryColor : auctionTime.value >= 10 ? MyColors.green : auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                            color: status.toLowerCase() == CarStatus.scheduled.name ? MyColors.kPrimaryColor : remainingTime?.hours != 0 ? MyColors.green2 : remainingTime!.min! <= 2 ? MyColors.red2 : remainingTime!.min! >= 10 ? MyColors.green2 : remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
                             fontSize: 14,
                             fontFamily: 'DM Sans',
                             fontWeight: FontWeight.w700,

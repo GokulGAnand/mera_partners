@@ -41,7 +41,7 @@ class DocumentScreen extends StatelessWidget {
                   helperText: "${MyStrings.enterFullName}*",
                   validator: ValidateInput.validateRequiredFields,
                   keyboardType: TextInputType.text,
-                  inputFormatter: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))],
+                  inputFormatter: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z ]'))],
                 ),
                 const SizedBox(
                   height: Dimens.spaceWidth,

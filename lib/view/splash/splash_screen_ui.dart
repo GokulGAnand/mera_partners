@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
       splashScreenViewModel.isLoginAlready = value;
       if(splashScreenViewModel.isLoginAlready == true){
         await splashScreenViewModel.getUserData();
-        PushNotifications.saveToken(token: (globals.fcmToken ?? ''));
+        await PushNotifications.saveToken(token: (globals.fcmToken ?? ''));
       }
     });
     Timer(const Duration(seconds: 3), () {

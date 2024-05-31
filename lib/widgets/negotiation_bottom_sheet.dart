@@ -22,7 +22,7 @@ class NegotiationBottomSheet extends StatelessWidget {
   final void Function() onRejectPressed;
   final DateTime? negStartTime;
   final DateTime? negEndTime;
-  Rx<int> auctionTime = 0.obs;
+  CurrentRemainingTime? remainingTime;
   final Rx<CountdownTimerController>? timerController;
 
   onEnd(){
@@ -68,12 +68,12 @@ class NegotiationBottomSheet extends StatelessWidget {
               ],
             ),
           ),
-          Obx(() => Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Icon(
                 Icons.timer_sharp,
-                color:  auctionTime.value <= 2 ? MyColors.red2 : auctionTime.value >= 10 ? MyColors.green : auctionTime < 10 ? MyColors.orange : MyColors.red,
+                color:  remainingTime?.hours != 0 ? MyColors.green2 : remainingTime!.min! <= 2 ? MyColors.red2 : remainingTime!.min! >= 10 ? MyColors.green2 : remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
                 size: 14,
               ),
               const SizedBox(
@@ -84,15 +84,11 @@ class NegotiationBottomSheet extends StatelessWidget {
                 widgetBuilder: (_, CurrentRemainingTime? time) {
                   if (time == null) {
                     return const Text('');
-                  }
-                  if(time.min != null){
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      auctionTime.value = time.min ?? 0;
-                    });
+                  }else{
+                    remainingTime = time;
                   }
                   return Text(time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                    color: auctionTime.value <= 2 ? MyColors.red2 : auctionTime.value >= 10 ? MyColors.green : auctionTime.value < 10 ? MyColors.orange : MyColors.red,
-                    fontSize: 14,
+                    color: remainingTime?.hours != 0 ? MyColors.green2 : remainingTime!.min! <= 2 ? MyColors.red2 : remainingTime!.min! >= 10 ? MyColors.green2 : remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,                    fontSize: 14,
                     fontFamily: 'DM Sans',
                     fontWeight: FontWeight.w700,
                     height: 0,
@@ -109,7 +105,7 @@ class NegotiationBottomSheet extends StatelessWidget {
                 ),
               ),
             ],
-          ),),
+          ),
           const SizedBox(
             height: 16,
           ),

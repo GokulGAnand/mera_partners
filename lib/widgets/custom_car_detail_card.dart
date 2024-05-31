@@ -58,7 +58,7 @@ class CustomCarDetailCard extends StatefulWidget {
   final DateTime? bidStartTime;
   final DateTime? bidEndTime;
   final Rx<int>? endTime;
-  Rx<int> auctionTime = 0.obs;
+  CurrentRemainingTime? remainingTime;
   final Rx<CountdownTimerController>? timerController;
   // Rxn<Duration> duration = Rxn();
   // Timer? timer;
@@ -323,14 +323,15 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                   padding: const EdgeInsets.only(left: 12.0, right: 12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
+                      Expanded(child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // const SizedBox(height: 4),
                           Text(widget.carVariant, style: MyStyles.black16700),
                         ],
-                      ),
+                      ),),
                       Row(
                         children: [
                           Text(
@@ -443,12 +444,12 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if(widget.auctionTime.value != 0 && widget.timerController?.value != null)
+                          if(widget.remainingTime?.min != 0 && widget.timerController?.value != null)
                           Obx(() => Text(
-                            widget.isScheduled?.value == true ? MyStrings.yetToStart : widget.auctionTime.value <= 2 ? MyStrings.lastCall : widget.auctionTime.value >= 10 ? MyStrings.acceptingBids:
-                            widget.auctionTime.value <= 10 ? MyStrings.bidEndsIn : MyStrings.lastCall,
+                            widget.isScheduled?.value == true ? MyStrings.yetToStart : widget.remainingTime?.hours != 0 ? MyStrings.acceptingBids : widget.remainingTime!.min! <= 2 ? MyStrings.lastCall : widget.remainingTime!.min! >= 10 ? MyStrings.acceptingBids:
+                            widget.remainingTime!.min! <= 10 ? MyStrings.bidEndsIn : MyStrings.lastCall,
                             style: TextStyle(
-                              color: widget.isScheduled?.value == true ? MyColors.kPrimaryColor : widget.auctionTime.value <= 2 ? MyColors.red2 : widget.auctionTime.value >= 10 ? MyColors.green2 : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                              color: widget.isScheduled?.value == true ? MyColors.kPrimaryColor : widget.remainingTime?.hours != 0 ? MyColors.green2 : widget.remainingTime!.min! <= 2 ? MyColors.red2 : widget.remainingTime!.min! >= 10 ? MyColors.green2 : widget.remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
                               fontSize: 12,
                               fontFamily: 'DM Sans',
                               fontWeight: FontWeight.w500,
@@ -457,36 +458,33 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                           const SizedBox(
                             height: 1,
                           ),
-                          Obx(() => Row(
+                          Row(
                             children: [
-                              if(widget.auctionTime.value != 0 && widget.timerController?.value != null)
-                              Icon(
-                                Icons.timer_sharp,
-                                color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.auctionTime.value <= 2 ? MyColors.red2 : widget.auctionTime.value >= 10 ? MyColors.green2 : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
-                                size: 14,
-                              ),
-                              Obx(() => CountdownTimer(
+                              if(widget.remainingTime?.min != 0 && widget.timerController?.value != null)
+                                Icon(
+                                  Icons.timer_sharp,
+                                  color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.remainingTime?.hours != 0 ? MyColors.green2 : widget.remainingTime!.min! <= 2 ? MyColors.red2 : widget.remainingTime!.min! >= 10 ? MyColors.green2 : widget.remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
+                                  size: 14,
+                                ),
+                              CountdownTimer(
                                 controller: widget.timerController?.value,
                                 widgetBuilder: (_, CurrentRemainingTime? time) {
                                   if (time == null) {
                                     return const Text('');
-                                  }
-                                  if(time.min != null){
-                                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                                      widget.auctionTime.value = time.min ?? 0;
-                                    });
+                                  }else{
+                                    widget.remainingTime = time;
                                   }
                                   return Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                                    color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.auctionTime.value <= 2 ? MyColors.red2 : widget.auctionTime.value >= 10 ? MyColors.green2 : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                                    color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.remainingTime?.hours != 0 ? MyColors.green2 : widget.remainingTime!.min! <= 2 ? MyColors.red2 : widget.remainingTime!.min! >= 10 ? MyColors.green2 : widget.remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
                                     fontSize: 14,
                                     fontFamily: 'DM Sans',
                                     fontWeight: FontWeight.w700,
                                     height: 0,
                                   ));
                                 },
-                              ),)
+                              )
                             ],
-                          ),)
+                          ),
                         ],
                       ),
                       Column(
