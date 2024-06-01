@@ -12,6 +12,7 @@ int? contactNo;
 String? token ;
 String? carId;
 String? phoneNum;
+String? email;
 String? fcmToken;
 var headers = {'Authorization': 'Bearer $token'};
 var jsonHeaders = {'Content-Type': 'application/json','Authorization': 'Bearer $token',};
@@ -29,6 +30,7 @@ void clearData(){
   token = null;
   carId = null;
   phoneNum = null;
+  email = null;
   headers = {};
   jsonHeaders = {};
 }

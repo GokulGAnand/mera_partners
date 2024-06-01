@@ -136,9 +136,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                   height: 37,
                   padding: const EdgeInsets.only(left: 12),
                   decoration: BoxDecoration(
-                    color: (carDetailsScreenViewModel.carStatus.value == "bid won")?MyColors.green4
-                        :(carDetailsScreenViewModel.carStatus.value == "bid closed")? MyColors.grey4
-                        :(carDetailsScreenViewModel.carStatus.value == "car sold")? MyColors.yellow
+                    color: (carDetailsScreenViewModel.carStatus.value.toLowerCase() == "bid won")?MyColors.green4
+                        :(carDetailsScreenViewModel.carStatus.value.toLowerCase() == "bid closed")? MyColors.grey4
+                        :(carDetailsScreenViewModel.carStatus.value.toLowerCase() == "car sold")? MyColors.yellow
                         :null,
                     gradient: (carDetailsScreenViewModel.carStatus.value != "")?null
                         :LinearGradient(
@@ -788,14 +788,11 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                     widgetBuilder: (_, CurrentRemainingTime? time) {
                                       if (time == null) {
                                         return const Text('');
+                                      }else{
+                                        carDetailsScreenViewModel.remainingTime = time;
                                       }
-                                      // if(time.min != null){
-                                      //   WidgetsBinding.instance.addPostFrameCallback((_) {
-                                      //     widget.auctionTime.value = time.min ?? 0;
-                                      //   });
-                                      // }
-                                      return Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: const TextStyle(
-                                        color: MyColors.green2,
+                                      return Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
+                                        color: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() ? MyColors.kPrimaryColor : carDetailsScreenViewModel.remainingTime?.hours != 0 ? MyColors.green2 : carDetailsScreenViewModel.remainingTime!.min! <= 2 ? MyColors.red2 : carDetailsScreenViewModel.remainingTime!.min! >= 10 ? MyColors.green2 : carDetailsScreenViewModel.remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
                                         fontSize: 14,
                                         fontFamily: 'DM Sans',
                                         fontWeight: FontWeight.w700,
@@ -878,7 +875,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 backgroundColor: Colors.transparent,
                                 context: context,
                                 builder: (context) {
-                                  return CustomBidBottomSheet(
+                                  return Obx(() => CustomBidBottomSheet(
                                     timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status?.toLowerCase() == CarStatus.scheduled.name
                                         ?carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime != null ?
                                     CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null
@@ -902,13 +899,13 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                           CustomToast.instance.showMsg(MyStrings.vAutoBidLimit+(liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard![0].autoBidLimit ?? 0).toString());
                                         }else{
                                           liveCarListViewModel.placeAutoBid(liveCarListViewModel.autoBidController.value.text, carDetailsScreenViewModel.reportResponse.value.data!.sId);
-                                         Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
                                         }
                                       } catch (e) {
                                         log(e.toString());
                                       }
                                     },
-                                  );
+                                  ),);
                                 });
                         },
                         buttonStyle: ElevatedButton.styleFrom(
@@ -941,7 +938,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 backgroundColor: Colors.transparent,
                                 context: context,
                                 builder: (context) {
-                                  return CustomBidBottomSheet(
+                                  return Obx(() => CustomBidBottomSheet(
                                     timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status?.toLowerCase() == CarStatus.scheduled.name
                                         ?carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime != null ?
                                     CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null
@@ -970,7 +967,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                         log(e.toString());
                                       }
                                     },
-                                  );
+                                  ),);
                                 });
                         },
                         buttonStyle: ElevatedButton.styleFrom(

@@ -35,7 +35,7 @@ class CustomBidBottomSheet extends StatefulWidget {
   final DateTime? bidEndTime;
   Rxn<Duration> duration = Rxn();
   RxBool? isScheduled = false.obs;
-  Rx<int> auctionTime = 0.obs;
+  CurrentRemainingTime? remainingTime;
   final Rx<CountdownTimerController>? timerController;
 
   onEnd(){
@@ -109,12 +109,12 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
                 ],
               ),
             ),
-            Obx(() => Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Icon(
                   Icons.timer_sharp,
-                  color:  widget.auctionTime.value <= 2 ? MyColors.red2 : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime < 10 ? MyColors.orange : MyColors.red,
+                  color: widget.remainingTime?.hours != 0 ? MyColors.green2 : widget.remainingTime!.min! <= 2 ? MyColors.red2 : widget.remainingTime!.min! >= 10 ? MyColors.green2 : widget.remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
                   size: 20,
                 ),
                 const SizedBox(
@@ -125,14 +125,11 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
                   widgetBuilder: (_, CurrentRemainingTime? time) {
                     if (time == null) {
                       return const Text('');
-                    }
-                    if(time.min != null){
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        widget.auctionTime.value = time.min ?? 0;
-                      });
+                    }else{
+                      widget.remainingTime = time;
                     }
                     return Text(time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                      color: widget.auctionTime.value <= 2 ? MyColors.red2 : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
+                      color: widget.remainingTime?.hours != 0 ? MyColors.green2 : widget.remainingTime!.min! <= 2 ? MyColors.red2 : widget.remainingTime!.min! >= 10 ? MyColors.green2 : widget.remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
                       fontSize: 14,
                       fontFamily: 'DM Sans',
                       fontWeight: FontWeight.w700,
@@ -150,7 +147,7 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
                   ),
                 ),
               ],
-            ),),
+            ),
             const SizedBox(
               height: 16,
             ),
@@ -270,8 +267,10 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
             ),
             Obx(() {
               return CustomElevatedButton(
-                onPressed: (widget.amountController!.value.text.isEmpty || ((int.tryParse(widget.amountController!.value.text) ?? 0) < widget.bidValue.value)) ?() {
-                  if (widget.amountController!.value.text.isEmpty || ((int.tryParse(widget.amountController!.value.text) ?? 0) < widget.bidValue.value)) {
+                onPressed:
+                (widget.amountController!.value.text.isEmpty || ((int.tryParse(widget.amountController!.value.text) ?? 0) < widget.bidValue.value + widget.stepRate!.value))
+                    ? () {
+                  if (widget.amountController!.value.text.isEmpty || ((int.tryParse(widget.amountController!.value.text) ?? 0) < widget.bidValue.value + widget.stepRate!.value)) {
                     CustomToast.instance.showMsg('${MyStrings.vLowBidAmount}(${widget.bidValue.value+widget.stepRate!.value})');
                   }
                 }: widget.isAutoBid? widget.onAutoBidPressed : widget.onBidPressed,

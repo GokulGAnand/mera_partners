@@ -20,6 +20,7 @@ class SplashScreenViewModel extends GetxController {
     globals.isOnboarding = await SharedPrefManager.instance.getBoolAsync(Constants.isOnboarding);
     if (globals.token != null && globals.token.toString().isNotEmpty) {
       globals.phoneNum = await SharedPrefManager.instance.getStringAsync(Constants.phoneNum);
+      globals.email = await SharedPrefManager.instance.getStringAsync(Constants.email);
       if (globals.phoneNum != null) {
         globals.contactNo = int.parse(await SharedPrefManager.instance.getStringAsync(Constants.contactNo) ?? "0");
       }
@@ -53,6 +54,7 @@ class SplashScreenViewModel extends GetxController {
           globals.clearData();
           SharedPrefManager.instance.removeStringAsync(Constants.userName);
           SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
+          SharedPrefManager.instance.removeStringAsync(Constants.email);
           SharedPrefManager.instance.removeStringAsync(Constants.contactNo);
           SharedPrefManager.instance.removeStringAsync(Constants.token);
           SharedPrefManager.instance.removeStringAsync(Constants.fcmToken);

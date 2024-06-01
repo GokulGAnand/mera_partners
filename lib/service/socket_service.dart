@@ -21,7 +21,7 @@ class SocketService {
 
   connectToSocket() {
     //todo change url
-    socket = IO.io('ws://test.meracars.com', <String, dynamic>{
+    socket = IO.io('ws://api.meracars.com', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
     });
@@ -51,6 +51,7 @@ class SocketService {
       }
       Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data = liveCarsList;
       Get.find<LiveCarsListViewModel>().updateBid(liveCarsList);
+      Get.find<LiveCarsListViewModel>().liveCarsResponse.value.count = liveCarsList.length;
       Get.find<LiveCarsListViewModel>().liveCarsResponse.refresh();
     }
 

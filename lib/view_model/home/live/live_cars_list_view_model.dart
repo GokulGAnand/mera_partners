@@ -74,20 +74,22 @@ class LiveCarsListViewModel extends GetxController {
     super.onInit();
   }
 
-  void showAlertDialog(/*Data car*/) {
-    Get.dialog(
-      AlertDialog(
-        title: const Text("Auto Bid Limit Reached"),
-        content: const Text("The auto bid limit has been reached or exceeded"),
-        actions: [
-          TextButton(
-            child: Text(MyStrings.ok.toUpperCase()),
-            onPressed: () => Get.back(),
-          ),
-        ],
-      ),
-      barrierDismissible: false,
-    );
+  void showAlertDialog() {
+    if (Get.isDialogOpen == false) {
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Auto Bid Limit Reached"),
+          content: const Text("The auto bid limit has been reached or exceeded"),
+          actions: [
+            TextButton(
+              child: Text(MyStrings.ok.toUpperCase()),
+              onPressed: () => Get.back(),
+            ),
+          ],
+        ),
+        barrierDismissible: false,
+      );
+    }
   }
 
   void getLikedCarData() async {

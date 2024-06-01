@@ -29,6 +29,7 @@ class DocumentScreenViewModel extends GetxController {
   var page = Get.arguments;
 
   Rx<TextEditingController> fullNameController = TextEditingController().obs;
+  Rx<TextEditingController> emailController = TextEditingController().obs;
   Rx<TextEditingController> phoneNumberController = TextEditingController(text: globals.phoneNum).obs;
   Rx<TextEditingController> businessNameController = TextEditingController().obs;
   Rx<TextEditingController> businessAddressController = TextEditingController().obs;
@@ -109,6 +110,7 @@ class DocumentScreenViewModel extends GetxController {
 
   void loadData() {
     fullNameController.value.text = userInfoResponse.value.data?[0].fullname ?? '';
+    emailController.value.text = userInfoResponse.value.data?[0].email ?? '';
     phoneNumberController.value.text = userInfoResponse.value.data?[0].contactNo.toString() ?? '';
     businessNameController.value.text = userInfoResponse.value.data?[0].businessName ?? '';
     businessAddressController.value.text = userInfoResponse.value.data?[0].businessAddress ?? '';
@@ -138,7 +140,7 @@ class DocumentScreenViewModel extends GetxController {
     ProgressBar.instance.showProgressbar(Get.context!);
     try {
       var request = http.MultipartRequest('PATCH', Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId!}'));
-      request.fields.addAll({'fullname': fullNameController.value.text, 'businessName': businessNameController.value.text, 'businessAddress': businessAddressController.value.text, 'pincode': pinCodeController.value.text, 'contactNo': phoneNumberController.value.text, 'district': districtController.value.text});
+      request.fields.addAll({'fullname': fullNameController.value.text, "isDocumentsVerified": userInfoResponse.value.data?[0].isDocumentsVerified == "NOTSUBMITTED" ? DocumentStatus.SUBMITTED.name : userInfoResponse.value.data![0].isDocumentsVerified!,'email': emailController.value.text, 'businessName': businessNameController.value.text, 'businessAddress': businessAddressController.value.text, 'pincode': pinCodeController.value.text, 'contactNo': phoneNumberController.value.text, 'district': districtController.value.text});
       if (panCard.value != null && !panCard.value!.path.startsWith('http') && !panCard.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('panCard', panCard.value!.path, contentType: MediaType('image', panCard.value!.path.split('.').last)));
       }
@@ -168,6 +170,8 @@ class DocumentScreenViewModel extends GetxController {
       var response = await request.send();
 
       if (response.statusCode == 200) {
+        globals.documentStatus = DocumentStatus.SUBMITTED.name;
+        await SharedPrefManager.instance.setStringAsync(Constants.documentStatus,DocumentStatus.SUBMITTED.name);
         ProgressBar.instance.stopProgressBar(Get.context!);
         log('success');
         log(response.stream.toString());
@@ -203,7 +207,7 @@ class DocumentScreenViewModel extends GetxController {
           // 'send_sms_hash': true,
           'order_id': '${createOrderResponse.value.data?.id}',
           // 'callback_url': 'http://192.168.1.12:8000/api/v1/users/verifyPayment',
-          'prefill': {'contact': globals.phoneNum, 'email': 'test@razorpay.com'},
+          'prefill': {'contact': globals.phoneNum, 'email': globals.email ?? 'test@razorpay.com'},
           'external': {
             'wallets': ['paytm']
           }
@@ -289,6 +293,8 @@ class DocumentScreenViewModel extends GetxController {
             "razorpay_signature": signature}));
       log(response.body.toString());
       if (response.statusCode == 201 || response.statusCode == 200) {
+        globals.isDeposited = true;
+        await SharedPrefManager.instance.setBoolAsync(Constants.isDeposited,true);
         ProgressBar.instance.stopProgressBar(Get.context!);
         log("success");
         Get.offNamed(AppRoutes.homeScreen);

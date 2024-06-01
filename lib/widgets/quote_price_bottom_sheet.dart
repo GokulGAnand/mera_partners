@@ -26,7 +26,7 @@ class QuotePriceBottomSheet extends StatefulWidget {
   final Rx<TextEditingController> amountController;
   final DateTime? otbStartTime;
   final DateTime? otbEndTime;
-  Rx<int> auctionTime = 0.obs;
+  CurrentRemainingTime? remainingTime;
   final Rx<CountdownTimerController>? timerController;
 
   onEnd(){
@@ -99,8 +99,8 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
             children: [
               Icon(
                 Icons.timer_sharp,
-                color: MyColors.green2,
-                // color:  widget.auctionTime.value <= 2 ? MyColors.red2 : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime < 10 ? MyColors.orange : MyColors.red,
+                // color: MyColors.green2,
+                color: widget.remainingTime?.hours != 0 ? MyColors.green2 : widget.remainingTime!.min! <= 2 ? MyColors.red2 : widget.remainingTime!.min! >= 10 ? MyColors.green2 : widget.remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
                 size: 14,
               ),
               const SizedBox(
@@ -111,15 +111,12 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
                 widgetBuilder: (_, CurrentRemainingTime? time) {
                   if (time == null) {
                     return const Text('');
-                  }
-                  if(time.min != null){
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      widget.auctionTime.value = time.min!;
-                    });
+                  }else{
+                    widget.remainingTime = time;
                   }
                   return Text(time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                    // color: widget.auctionTime.value <= 2 ? MyColors.red2 : widget.auctionTime.value >= 10 ? MyColors.green : widget.auctionTime.value < 10 ? MyColors.orange : MyColors.red,
-                    color: MyColors.green2,
+                    color: widget.remainingTime?.hours != 0 ? MyColors.green2 : widget.remainingTime!.min! <= 2 ? MyColors.red2 : widget.remainingTime!.min! >= 10 ? MyColors.green2 : widget.remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
+                    // color: MyColors.green2,
                     fontSize: 14,
                     fontFamily: 'DM Sans',
                     fontWeight: FontWeight.w700,
