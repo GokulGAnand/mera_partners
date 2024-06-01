@@ -22,13 +22,14 @@ class BidCarsListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MyColors.white,
       body: Obx(
         () => SafeArea(
           child: controller.bidCarsResponse.value.data != null
               ? ((controller.bidCarsearchList.isNotEmpty || (controller.bidCarsearchList.isEmpty && controller.bidCarsearchController.text.isEmpty)) && controller.bidCarsResponse.value.data![0].biddedCars!.isNotEmpty)
                   ? ListView.builder(
                       itemCount: controller.bidCarsResponse.value.data![0].biddedCars?.length,
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.fromLTRB(16,8,16,8),
                       itemBuilder: (context, index) {
                         return Obx(() {
                           if (((controller.bidCarsearchController.value.text.isEmpty && controller.bidCarsearchList.isEmpty) || controller.bidCarsearchList.contains(controller.bidCarsResponse.value.data?[index].sId)) && controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == CarStatus.live.name) {
@@ -66,7 +67,7 @@ class BidCarsListScreen extends StatelessWidget {
                               bidStartTime: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()).toLocal(),
                               bidEndTime: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal(),
                               endTime: Rx(Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds),
-                              timerController: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {controller.bidCarsResponse.value.data?[0].biddedCars!.removeAt(index);},).obs,
+                              timerController: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {/*controller.bidCarsResponse.value.data?[0].biddedCars!.removeAt(index);*/},).obs,
                               carModel: controller.bidCarsResponse.value.data?[0].biddedCars![index].model ?? '',
                               carVariant: controller.bidCarsResponse.value.data?[0].biddedCars![index].variant ?? '',
                               rating: (((controller.bidCarsResponse.value.data?[0].biddedCars![index].engineStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].exteriorStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].interiorAndElectricalStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].testDriveStar ?? 0)) / 4).roundToDouble(),

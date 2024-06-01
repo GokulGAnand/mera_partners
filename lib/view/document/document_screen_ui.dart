@@ -670,7 +670,7 @@ class DocumentScreen extends StatelessWidget {
             body: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 16, top: 19, bottom: 28),
+                  padding: const EdgeInsets.only(left: 16, right: 16, top: 30, bottom: 28),
                   child: SizedBox(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),

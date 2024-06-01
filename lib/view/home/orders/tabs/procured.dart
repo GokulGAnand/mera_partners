@@ -32,6 +32,7 @@ class Procured extends StatelessWidget {
             controller.searchList.isNotEmpty
                 ? Obx(() {
                     return GridView.builder(
+                        padding: const EdgeInsets.fromLTRB(16,0,16,0),
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: controller.searchList.length,

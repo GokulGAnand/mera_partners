@@ -21,21 +21,21 @@ class OTBScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16,8.0,16,8.0,),
-            child: Obx(
-              () {
+          child: Obx(
+                  () {
                 if(controller.searchList.isNotEmpty || (controller.searchList.isEmpty && controller.searchController.text.isEmpty)){
                   return PagedListView<int, Data>(
-                  pagingController: controller.infinitePagingController,
-                  builderDelegate: PagedChildBuilderDelegate<Data>(
-                          // itemCount: controller.carsListResponse.value.data?.length,
-                          // padding: const EdgeInsets.all(8),
-                          itemBuilder: (context, item, index) {
-                            return Obx(
-                              () {
-                                if((controller.searchController.text.isEmpty && controller.searchList.isEmpty) || controller.searchList.contains(controller.carsListResponse.value.data?[index].sId)){
-                                return CustomCarDetailCard(
+                    padding: const EdgeInsets.only(top: 8),
+                    pagingController: controller.infinitePagingController,
+                    builderDelegate: PagedChildBuilderDelegate<Data>(
+                      // itemCount: controller.carsListResponse.value.data?.length,
+                      // padding: const EdgeInsets.all(8),
+                      itemBuilder: (context, item, index) {
+                        return Obx(
+                                () {
+                              if((controller.searchController.text.isEmpty && controller.searchList.isEmpty) || controller.searchList.contains(controller.carsListResponse.value.data?[index].sId)){
+                                return Padding(padding: const EdgeInsets.fromLTRB(16,0,16,0),
+                                child: CustomCarDetailCard(
                                   carId: item.sId ?? '',
                                   onCarTapped: () {
                                     Get.toNamed(AppRoutes.carDetailsScreen, arguments: item.sId);
@@ -86,18 +86,17 @@ class OTBScreen extends StatelessWidget {
                                         });
                                   },
                                   statusColor: MyColors.kPrimaryColor,
-                                );
-                                }
-                            return const SizedBox();
+                                ),);
                               }
-                          );
-                          },
-                        ),
-                );
+                              return const SizedBox();
+                            }
+                        );
+                      },
+                    ),
+                  );
                 }
                 return const Center(child: Text(MyStrings.noDataFound));
               }
-            ),
           ),
         ),
       );

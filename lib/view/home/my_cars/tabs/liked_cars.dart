@@ -24,6 +24,7 @@ class LikedCars extends StatelessWidget {
                 return const Center(child: Text(MyStrings.noDataFound),);
               }
               return GridView.builder(
+                  padding: const EdgeInsets.fromLTRB(16,8,16,8),
                   itemCount: controller.likedCarsearchList.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,

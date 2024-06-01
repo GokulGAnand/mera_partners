@@ -31,6 +31,7 @@ class RcTransfer extends StatelessWidget {
             Obx(() {
               if (controller.searchRcTransferList.isNotEmpty) {
                 return GridView.builder(
+                  padding: const EdgeInsets.fromLTRB(16,0,16,0),
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: controller.searchRcTransferList.length,

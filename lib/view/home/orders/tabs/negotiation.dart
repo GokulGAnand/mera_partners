@@ -40,6 +40,7 @@ class _NegotiationState extends State<Negotiation> {
                   height: 33,
                   margin: const EdgeInsets.symmetric(vertical: 12),
                   child: ListView.builder(
+                      padding: const EdgeInsets.fromLTRB(16,0,16,0),
                       scrollDirection: Axis.horizontal,
                       itemCount: controller.negotiationOrdersCategory.length,
                       itemBuilder: (context, index) {
@@ -80,6 +81,7 @@ class _NegotiationState extends State<Negotiation> {
                     ? GridView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
+                        padding: const EdgeInsets.fromLTRB(16,0,16,0),
                         itemCount: controller.searchNegotiationList.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
@@ -162,6 +164,7 @@ class _NegotiationState extends State<Negotiation> {
                     : (controller.isNegotiation.value == false && controller.searchLostList.isNotEmpty)
                         ? Obx(
                             () => GridView.builder(
+                                padding: const EdgeInsets.fromLTRB(16,0,16,0),
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: controller.searchLostList.length,

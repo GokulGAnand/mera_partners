@@ -35,10 +35,6 @@ android {
     compileSdk 34
     ndkVersion flutter.ndkVersion
 
-    defaultConfig {
-        multiDexEnabled true
-    }
-
     compileOptions {
         coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -63,7 +59,6 @@ android {
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        multiDexEnabled true
     }
 
     signingConfigs {

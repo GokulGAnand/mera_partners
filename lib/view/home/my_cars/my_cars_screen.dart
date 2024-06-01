@@ -40,51 +40,52 @@ class _MyCarsScreenState extends State<MyCarsScreen>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(0),
         child: Column(
           children: [
-            Row(
+            Padding(padding: const EdgeInsets.only(left: 16,right: 16,top: 16),
+              child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
                     child: SizedBox(
-                  height: 50,
-                  child: CustomTextFormField(
-                      controller: (tabController.index == 0)?bidCarsListViewModel.bidCarsearchController : bidCarsListViewModel.likedCarsearchController,
-                      onChange: (value){
-                        if(tabController.index == 0){
-                          bidCarsListViewModel.bidCarsearchList.clear();
-                          for(int i=0; i<bidCarsListViewModel.bidCarsResponse.value.data!.length; i++){
-                            if(bidCarsListViewModel.bidCarsResponse.value.data![0].biddedCars![i].model!.toLowerCase().contains(bidCarsListViewModel.bidCarsearchController.text.toLowerCase()) ||
-                              bidCarsListViewModel.bidCarsResponse.value.data![0].biddedCars![i].make!.toLowerCase().contains(bidCarsListViewModel.bidCarsearchController.text.toLowerCase()) ||
-                              bidCarsListViewModel.bidCarsResponse.value.data![0].biddedCars![i].variant!.toLowerCase().contains(bidCarsListViewModel.bidCarsearchController.text.toLowerCase()) ||
-                              bidCarsListViewModel.bidCarsResponse.value.data![0].biddedCars![i].uniqueId!.toString().toLowerCase().contains(bidCarsListViewModel.bidCarsearchController.text.toLowerCase())){
-                              bidCarsListViewModel.bidCarsearchList.add(bidCarsListViewModel.bidCarsResponse.value.data![i].sId.toString());
-                              log(bidCarsListViewModel.bidCarsearchList.toString());
+                      height: 50,
+                      child: CustomTextFormField(
+                          controller: (tabController.index == 0)?bidCarsListViewModel.bidCarsearchController : bidCarsListViewModel.likedCarsearchController,
+                          onChange: (value){
+                            if(tabController.index == 0){
+                              bidCarsListViewModel.bidCarsearchList.clear();
+                              for(int i=0; i<bidCarsListViewModel.bidCarsResponse.value.data!.length; i++){
+                                if(bidCarsListViewModel.bidCarsResponse.value.data![0].biddedCars![i].model!.toLowerCase().contains(bidCarsListViewModel.bidCarsearchController.text.toLowerCase()) ||
+                                    bidCarsListViewModel.bidCarsResponse.value.data![0].biddedCars![i].make!.toLowerCase().contains(bidCarsListViewModel.bidCarsearchController.text.toLowerCase()) ||
+                                    bidCarsListViewModel.bidCarsResponse.value.data![0].biddedCars![i].variant!.toLowerCase().contains(bidCarsListViewModel.bidCarsearchController.text.toLowerCase()) ||
+                                    bidCarsListViewModel.bidCarsResponse.value.data![0].biddedCars![i].uniqueId!.toString().toLowerCase().contains(bidCarsListViewModel.bidCarsearchController.text.toLowerCase())){
+                                  bidCarsListViewModel.bidCarsearchList.add(bidCarsListViewModel.bidCarsResponse.value.data![i].sId.toString());
+                                  log(bidCarsListViewModel.bidCarsearchList.toString());
+                                }
+                              }
+                            } else {
+                              bidCarsListViewModel.likedCarsearchList.clear();
+                              for(int i=0; i<bidCarsListViewModel.likeResponse.value.data![0].likedCars!.length; i++){
+                                if(bidCarsListViewModel.likeResponse.value.data![0].likedCars![i].model!.toLowerCase().contains(bidCarsListViewModel.likedCarsearchController.text.toLowerCase()) ||
+                                    bidCarsListViewModel.likeResponse.value.data![0].likedCars![i].make!.toLowerCase().contains(bidCarsListViewModel.likedCarsearchController.text.toLowerCase()) ||
+                                    bidCarsListViewModel.likeResponse.value.data![0].likedCars![i].variant!.toLowerCase().contains(bidCarsListViewModel.likedCarsearchController.text.toLowerCase()) ||
+                                    bidCarsListViewModel.likeResponse.value.data![0].likedCars![i].uniqueId!.toString().toLowerCase().contains(bidCarsListViewModel.likedCarsearchController.text.toLowerCase())){
+                                  bidCarsListViewModel.likedCarsearchList.add(bidCarsListViewModel.likeResponse.value.data![0].likedCars![i]);
+                                  log(bidCarsListViewModel.likedCarsearchList.toString());
+                                }
+                              }
                             }
-                          }
-                        } else {
-                          bidCarsListViewModel.likedCarsearchList.clear();
-                          for(int i=0; i<bidCarsListViewModel.likeResponse.value.data![0].likedCars!.length; i++){
-                            if(bidCarsListViewModel.likeResponse.value.data![0].likedCars![i].model!.toLowerCase().contains(bidCarsListViewModel.likedCarsearchController.text.toLowerCase()) ||
-                              bidCarsListViewModel.likeResponse.value.data![0].likedCars![i].make!.toLowerCase().contains(bidCarsListViewModel.likedCarsearchController.text.toLowerCase()) ||
-                              bidCarsListViewModel.likeResponse.value.data![0].likedCars![i].variant!.toLowerCase().contains(bidCarsListViewModel.likedCarsearchController.text.toLowerCase()) ||
-                              bidCarsListViewModel.likeResponse.value.data![0].likedCars![i].uniqueId!.toString().toLowerCase().contains(bidCarsListViewModel.likedCarsearchController.text.toLowerCase())){
-                              bidCarsListViewModel.likedCarsearchList.add(bidCarsListViewModel.likeResponse.value.data![0].likedCars![i]);
-                              log(bidCarsListViewModel.likedCarsearchList.toString());
-                            }
-                          }
-                        }
-                      },
-                      prefixIcon: const Icon(Icons.search),
-                      borderColor: MyColors.kPrimaryColor.withOpacity(0.1),
-                      focusedBorderColor: MyColors.kPrimaryColor,
-                      contentPadding: const EdgeInsets.all(8),
-                      enabledBorderColor:
+                          },
+                          prefixIcon: const Icon(Icons.search),
+                          borderColor: MyColors.kPrimaryColor.withOpacity(0.1),
+                          focusedBorderColor: MyColors.kPrimaryColor,
+                          contentPadding: const EdgeInsets.all(8),
+                          enabledBorderColor:
                           MyColors.kPrimaryColor.withOpacity(0.1),
-                      fillColor: MyColors.kPrimaryColor.withOpacity(0.1),
-                      validator: null),
-                )),
+                          fillColor: MyColors.kPrimaryColor.withOpacity(0.1),
+                          validator: null),
+                    )),
                 const SizedBox(
                   width: 15,
                 ),
@@ -106,8 +107,9 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                   ),
                 )
               ],
-            ),
+            ),),
             Obx(() => TabBar(
+              padding: const EdgeInsets.only(left: 16,right: 16,),
               controller: tabController,
               labelStyle: MyStyles.selectedTabBarTitleStyle,
               labelColor: MyColors.black,

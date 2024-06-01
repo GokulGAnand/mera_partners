@@ -61,8 +61,6 @@ class CustomCarDetailCard extends StatefulWidget {
   final Rx<int>? endTime;
   CurrentRemainingTime? remainingTime;
   final Rx<CountdownTimerController>? timerController;
-  // Rxn<Duration> duration = Rxn();
-  // Timer? timer;
   final String? scheduleTime;
 
   onEnd(){

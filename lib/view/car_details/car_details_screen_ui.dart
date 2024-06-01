@@ -776,7 +776,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                     MySvg.timer,
                     width: 18,
                     // ignore: deprecated_member_use
-                    color: MyColors.green2,
+                    color: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() ? MyColors.kPrimaryColor : carDetailsScreenViewModel.remainingTime?.hours != 0 ? MyColors.green2 : carDetailsScreenViewModel.remainingTime!.min! <= 2 ? MyColors.red2 : carDetailsScreenViewModel.remainingTime!.min! >= 10 ? MyColors.green2 : carDetailsScreenViewModel.remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
                   ),
                   const SizedBox(
                     width: 5,
@@ -1324,12 +1324,12 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 ],
                               ),
                             ),
-                            if(list[index].value!.startsWith("http") || list[index].value!.startsWith("https")) Padding(
+                            if(list[index].image != null && (list[index].image!.startsWith("http") || list[index].image!.startsWith("https"))) Padding(
                               padding: const EdgeInsets.only(left: 10.0),
                               child: SizedBox(
                                 width: 75,
                                 height: 68,
-                                child: Image.network(list[index].value.toString(), fit: BoxFit.cover,
+                                child: Image.network(list[index].image!, fit: BoxFit.cover,
                                     errorBuilder: (context, error, stackTrace) {
                                       return SvgPicture.asset(MyImages.loadingCar);
                                     }, frameBuilder:
