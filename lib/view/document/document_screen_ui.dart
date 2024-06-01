@@ -41,7 +41,7 @@ class DocumentScreen extends StatelessWidget {
                   helperText: "${MyStrings.enterFullName}*",
                   validator: ValidateInput.validateRequiredFields,
                   keyboardType: TextInputType.text,
-                  inputFormatter: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))],
+                  inputFormatter: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]'))],
                 ),
                 const SizedBox(
                   height: Dimens.spaceWidth,
@@ -81,7 +81,9 @@ class DocumentScreen extends StatelessWidget {
                   helperText: '${MyStrings.enterPinCode}*',
                   validator: ValidateInput.validateRequiredFields,
                   keyboardType: TextInputType.number,
-                  inputFormatter: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
+                  inputFormatter: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'[0-9\s]')),
+                  LengthLimitingTextInputFormatter(6)
+                  ],
                 ),
                 const SizedBox(
                   height: Dimens.spaceWidth,
