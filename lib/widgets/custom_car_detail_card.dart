@@ -37,6 +37,7 @@ class CustomCarDetailCard extends StatefulWidget {
   final RxString bidAmount;
   final Color statusColor;
   final String carModel;
+  final String yearOfManufacture;
   final String carVariant;
   final num rating;
   final String fuelType;
@@ -119,6 +120,7 @@ class CustomCarDetailCard extends StatefulWidget {
     required this.bidStatus,
     required this.bidAmount,
     required this.carModel,
+    required this.yearOfManufacture,
     required this.carVariant,
     required this.rating,
     required this.fuelType,
@@ -317,6 +319,12 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       padding: const EdgeInsets.only(left: 12),
                       child: Align(
                           alignment: Alignment.topLeft,
+                          child: Text(widget.yearOfManufacture.substring(widget.yearOfManufacture.length - 4), style: MyStyles.subTitleBlackStyle)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Align(
+                          alignment: Alignment.topLeft,
                           child: Text(widget.carModel, style: MyStyles.subTitleBlackStyle)),
                     ),
                     const SizedBox(
@@ -404,7 +412,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                             Text(widget.fuelType, style: MyStyles.regular12),
                             const SizedBox(width: 6),                            const Text('|', style: MyStyles.regular12),
                             const SizedBox(width: 6),
-                             Text('${formatKmDriven(widget.kmDriven)} KM', style: MyStyles.regular12),
+                             Text('${Constants.numberFormatter.format(double.parse(widget.kmDriven))} KM', style: MyStyles.regular12),
                             const SizedBox(width: 6),
                             const Text('|', style: MyStyles.regular12),
                             const SizedBox(width: 6),

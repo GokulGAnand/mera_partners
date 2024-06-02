@@ -39,6 +39,7 @@ class BidCarsListScreen extends StatelessWidget {
                               },
                               isOtb: false.obs,
                               criticalIssue: controller.bidCarsResponse.value.data?[0].biddedCars![index].carCondition ?? '',
+                              yearOfManufacture: controller.bidCarsResponse.value.data?[0].biddedCars![index].monthAndYearOfManufacture ?? '',
                               isFavourite: controller.likeResponse.value.data?[0].likedCars != null && (controller.likeResponse.value.data![0].likedCars!.isNotEmpty)
                                   ? controller.likeResponse.value.data![0].likedCars!.any((element) => element.sId == controller.bidCarsResponse.value.data?[0].biddedCars![index].sId)
                                       ? true.obs

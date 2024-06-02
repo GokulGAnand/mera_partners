@@ -228,9 +228,18 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       ListTile(
                         contentPadding: EdgeInsets.zero,
                         dense: true,
-                        title: Text(
-                          carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.model.toString(),
-                          style: MyStyles.selectedTabBarTitleStyle,
+                        title: Row(
+                          children: [
+                            Text(
+                              carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.monthAndYearOfManufacture?.substring((carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.monthAndYearOfManufacture?.length ?? 0) - 4) ?? '',
+                              style: MyStyles.selectedTabBarTitleStyle,
+                            ),
+                            const SizedBox(width: 10,),
+                            Text(
+                              carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.model.toString(),
+                              style: MyStyles.selectedTabBarTitleStyle,
+                            ),
+                          ],
                         ),
                         subtitle: Text(
                           carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.variant.toString(),
@@ -269,7 +278,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo?.odometerReading != null)...[
                                   const Text('|', style: MyStyles.regular12),
                                   const SizedBox(width: 6),
-                                  Text('${carDetailsScreenViewModel.formatKmDriven(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo?.odometerReading.toString() ?? '0')} KM', style: MyStyles.regular12),
+                                  Text('${Constants.numberFormatter.format(double.parse(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo?.odometerReading.toString() ?? '0'))} KM', style: MyStyles.regular12),
                                   const SizedBox(width: 6),
                                 ],
                                 if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.ownershipNumber != null)...[

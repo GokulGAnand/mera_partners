@@ -121,6 +121,7 @@ class LiveCarsListScreen extends StatelessWidget {
                               isOtb: false.obs,
                               scheduleTime: Constants.getScheduledStatus(DateTime.parse(controller.liveCarsResponse.value.data?[index].bidStartTime ?? DateTime.now().toString()).toLocal()),
                               carId: controller.liveCarsResponse.value.data?[index].sId ?? '',
+                              yearOfManufacture: controller.liveCarsResponse.value.data?[index].monthAndYearOfManufacture ?? '',
                               isScheduled: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == 'scheduled' ? true.obs : false.obs,
                               imageUrl: controller.liveCarsResponse.value.data?[index].rearRight?.url ?? '',
                               carLocation: controller.liveCarsResponse.value.data?[index].vehicleLocation ?? '',

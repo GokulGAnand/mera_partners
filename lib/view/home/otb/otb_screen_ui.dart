@@ -45,6 +45,7 @@ class OTBScreen extends StatelessWidget {
                                   isOtb: true.obs,
                                   scheduleTime: Constants.getScheduledStatus(DateTime.parse(item.bidStartTime ?? DateTime.now().toString()).toLocal()),
                                   imageUrl: item.rearRight?.url ?? '',
+                                  yearOfManufacture: item.monthAndYearOfManufacture ?? '',
                                   carLocation: item.vehicleLocation ?? '',
                                   bidStatus: RxString(item.status ?? ''),
                                   bidAmount: Constants.numberFormat.format(item.realValue ?? 0).toString().obs,
