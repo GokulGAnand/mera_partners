@@ -332,7 +332,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                             child: SizedBox(
                                               width: 58,
                                               height: 58,
-                                              child: Image.network(carDetailsScreenViewModel.imageList[index]["images"][0].value, fit: BoxFit.cover,
+                                              child: Image.network(carDetailsScreenViewModel.imageList[index]["images"][0].image, fit: BoxFit.cover,
                                               errorBuilder: (context, error, stackTrace) {
                                                 return SvgPicture.asset(MyImages.loadingCar);
                                               }, frameBuilder:
@@ -1075,7 +1075,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                       const SizedBox(
                                         height: 2,
                                       ),
-                                      (index == 0)
+                                      (index == 0 || index == 4)
                                           ? const SizedBox()
                                           : Container(
                                               padding: const EdgeInsets.symmetric(

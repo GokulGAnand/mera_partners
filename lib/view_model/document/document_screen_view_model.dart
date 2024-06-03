@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/service/endpoints.dart';
-import 'package:mera_partners/view_model/login/login_view_model.dart';
 import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:mera_partners/widgets/progressbar.dart';
 import 'package:http/http.dart' as http;
@@ -53,16 +52,16 @@ class DocumentScreenViewModel extends GetxController {
   void onInit() {
     pageController.value = PageController(initialPage: page ?? 0);
     activePage.value = page ?? 0;
-    if (Get.isRegistered<LoginScreenViewModel>()) {
-      if (Get.find<LoginScreenViewModel>().userInfoResponse.value.data != null) {
-        userInfoResponse.value = Get.find<LoginScreenViewModel>().userInfoResponse.value;
-        loadData();
-      } else {
-        getDocument();
-      }
-    } else {
+    // if (Get.isRegistered<LoginScreenViewModel>()) {
+    //   if (Get.find<LoginScreenViewModel>().userInfoResponse.value.data != null) {
+    //     userInfoResponse.value = Get.find<LoginScreenViewModel>().userInfoResponse.value;
+    //     loadData();
+    //   } else {
+    //     getDocument();
+    //   }
+    // } else {
       getDocument();
-    }
+    // }
     super.onInit();
   }
 

@@ -138,7 +138,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                           children: [
                             AspectRatio(
                               aspectRatio: 16/9,
-                              child: Image.network(galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].value.toString(),
+                              child: Image.network(galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].image.toString(),
                               fit: BoxFit.fill,
                               errorBuilder: (context, error, stackTrace) {
                                               return SvgPicture.asset(MyImages.loadingCar);
@@ -171,10 +171,19 @@ class _GalleryScreenState extends State<GalleryScreen> {
                                   color: MyColors.white,
                                   borderRadius: BorderRadius.circular(6),
                                 ),
-                                child: Text(
-                                  galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].title.toString(),
-                                  style: MyStyles.black12500,
-                                ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].title.toString(),
+                                      style: MyStyles.black12500,
+                                    ),
+                                    if(galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index]?.listValue != null && (galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index]?.listValue.isNotEmpty))
+                                    Text(
+                                      "${" (" + (galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index]?.listValue?.join(",") ?? '')})",
+                                      style: MyStyles.black12500,
+                                    ),
+                                  ],
+                                )
                               ),
                             )
                           ],

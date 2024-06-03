@@ -377,4 +377,6 @@ class MyStrings {
   static const String fairValue = 'Fair Value';
   static String vAutoBidLimit = 'Your bid must be higher than your auto-bid of ₹';
 
+  static const String notTraceable = 'Not traceable';
+
 }

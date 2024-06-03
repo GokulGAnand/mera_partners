@@ -248,10 +248,16 @@ class CarDetailsScreenViewModel extends GetxController {
       if(redListData.contains(exterior[i].value.toString().toLowerCase())){
         exterior[i].color = MyColors.warning;
         exteriorIssue.add(exterior[i]);
+        if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
+          damageImages.add(exterior[i]);
+        }
       }
       if(yellowListData.contains(exterior[i].value.toString().toLowerCase())){
         exterior[i].color = MyColors.yellow;
         exteriorIssue.add(exterior[i]);
+        if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
+          damageImages.add(exterior[i]);
+        }
       }
       if(exterior[i].listValue != null){
         for(int j=0; j<exterior[i].listValue!.length; j++){
@@ -263,11 +269,17 @@ class CarDetailsScreenViewModel extends GetxController {
             exterior[i].value = exterior[i].listValue![j];
             exterior[i].color = MyColors.warning;
             exteriorIssue.add(exterior[i]);
+            if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
+              damageImages.add(exterior[i]);
+            }
           }
           if(yellowListData.contains(exterior[i].listValue![j].toString().toLowerCase())){
             exterior[i].value = exterior[i].listValue![j];
             exterior[i].color = MyColors.yellow;
             exteriorIssue.add(exterior[i]);
+            if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
+              damageImages.add(exterior[i]);
+            }
           }
           if(exterior[i].listValue![j].isEmpty){
             exterior[i].listValue!.removeAt(j);
@@ -282,10 +294,16 @@ class CarDetailsScreenViewModel extends GetxController {
       if(redListData.contains(interiorAndElectrical[i].value.toString().toLowerCase())){
         interiorAndElectrical[i].color = MyColors.warning;
         interiorAndElectricalIssue.add(interiorAndElectrical[i]);
+        if(interiorAndElectrical[i].image != null && (interiorAndElectrical[i].image!.isNotEmpty)){
+          damageImages.add(interiorAndElectrical[i]);
+        }
       }
       if(yellowListData.contains(interiorAndElectrical[i].value.toString().toLowerCase())){
         interiorAndElectrical[i].color = MyColors.yellow;
         interiorAndElectricalIssue.add(interiorAndElectrical[i]);
+        if(interiorAndElectrical[i].image != null && (interiorAndElectrical[i].image!.isNotEmpty)){
+          damageImages.add(interiorAndElectrical[i]);
+        }
       }
       if(interiorAndElectrical[i].listValue != null){
         for(int j=0; j<interiorAndElectrical[i].listValue!.length; j++){
@@ -297,11 +315,17 @@ class CarDetailsScreenViewModel extends GetxController {
             interiorAndElectrical[i].value = interiorAndElectrical[i].listValue![j];
             interiorAndElectrical[i].color = MyColors.warning;
             interiorAndElectricalIssue.add(interiorAndElectrical[i]);
+            if(interiorAndElectrical[i].image != null && (interiorAndElectrical[i].image!.isNotEmpty)){
+              damageImages.add(interiorAndElectrical[i]);
+            }
           }
           if(yellowListData.contains(interiorAndElectrical[i].listValue![j].toString().toLowerCase())){
             interiorAndElectrical[i].value = interiorAndElectrical[i].listValue![j];
             interiorAndElectrical[i].color = MyColors.yellow;
             interiorAndElectricalIssue.add(interiorAndElectrical[i]);
+            if(interiorAndElectrical[i].image != null && (interiorAndElectrical[i].image!.isNotEmpty)){
+              damageImages.add(interiorAndElectrical[i]);
+            }
           }
           if(interiorAndElectrical[i].listValue![j].isEmpty){
             interiorAndElectrical[i].listValue!.removeAt(j);
@@ -316,10 +340,16 @@ class CarDetailsScreenViewModel extends GetxController {
       if(redListData.contains(engine[i].value.toString().toLowerCase())){
         engine[i].color = MyColors.warning;
         engineIssue.add(engine[i]);
+        if(engine[i].image != null && (engine[i].image!.isNotEmpty)){
+          damageImages.add(engine[i]);
+        }
       }
       if(yellowListData.contains(engine[i].value.toString().toLowerCase())){
         engine[i].color = MyColors.yellow;
         engineIssue.add(engine[i]);
+        if(engine[i].image != null && (engine[i].image!.isNotEmpty)){
+          damageImages.add(engine[i]);
+        }
       }
       if(engine[i].listValue != null){
         for(int j=0; j<engine[i].listValue!.length; j++){
@@ -331,11 +361,17 @@ class CarDetailsScreenViewModel extends GetxController {
             engine[i].value = engine[i].listValue![j];
             engine[i].color = MyColors.warning;
             engineIssue.add(engine[i]);
+            if(engine[i].image != null && (engine[i].image!.isNotEmpty)){
+              damageImages.add(engine[i]);
+            }
           }
           if(yellowListData.contains(engine[i].listValue![j].toString().toLowerCase())){
             engine[i].value = engine[i].listValue![j];
             engine[i].color = MyColors.yellow;
             engineIssue.add(engine[i]);
+            if(engine[i].image != null && (engine[i].image!.isNotEmpty)){
+              damageImages.add(engine[i]);
+            }
           }
           if(engine[i].listValue![j].isEmpty){
             engine[i].listValue!.removeAt(j);
@@ -350,10 +386,14 @@ class CarDetailsScreenViewModel extends GetxController {
       if(redListData.contains(airCondition[i].value.toString().toLowerCase())){
         airCondition[i].color = MyColors.warning;
         airConditionIssue.add(airCondition[i]);
+        if(airCondition[i].image != null && (airCondition[i].image!.isNotEmpty)){
+          damageImages.add(airCondition[i]);
+        }
       }
       if(yellowListData.contains(airCondition[i].value.toString().toLowerCase())){
         airCondition[i].color = MyColors.yellow;
         airConditionIssue.add(airCondition[i]);
+
       }
       if(airCondition[i].listValue != null){
         for(int j=0; j<airCondition[i].listValue!.length; j++){
@@ -411,6 +451,11 @@ class CarDetailsScreenViewModel extends GetxController {
         }
       }
     }
+    // damageImages.addAll(exteriorIssue);
+    // damageImages.addAll(interiorAndElectricalIssue);
+    // damageImages.addAll(engineIssue);
+    // damageImages.addAll(airConditionIssue);
+    // damageImages.addAll(testDriveIssue);
     log("exterior other parts: $exteriorOtherParts");
     log("interior other parts: $interiorAndElectricalOtherParts");
     log("engine other parts: $engineOtherParts");
@@ -427,39 +472,39 @@ class CarDetailsScreenViewModel extends GetxController {
 
    void addImageList() {
     exteriorImages.value = [
-      if(reportResponse.value.data!.allCarInfo!.front != null) Master(title: MyStrings.frontImage, value: reportResponse.value.data!.allCarInfo!.front!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.frontLeft != null) Master(title: MyStrings.frontLeftImage, value: reportResponse.value.data!.allCarInfo!.frontLeft!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.frontRight != null) Master(title: MyStrings.frontRightImage, value: reportResponse.value.data!.allCarInfo!.frontRight!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.leftImage != null) Master(title: MyStrings.leftImage, value: reportResponse.value.data!.allCarInfo!.leftImage!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.rightImage != null) Master(title: MyStrings.rightImage, value: reportResponse.value.data!.allCarInfo!.rightImage!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.rearLeft != null) Master(title: MyStrings.rearLeftImage, value: reportResponse.value.data!.allCarInfo!.rearLeft!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.rear != null) Master(title: MyStrings.rearImage, value: reportResponse.value.data!.allCarInfo!.rear!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.rearRight != null) Master(title: MyStrings.rearRight, value: reportResponse.value.data!.allCarInfo!.rearRight!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.roof != null) Master(title: MyStrings.roofImage, value: reportResponse.value.data!.allCarInfo!.roof!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.bumperFront != null) Master(title: MyStrings.frontBumper, value: reportResponse.value.data!.allCarInfo!.bumperFront!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.apronLeft != null) Master(title: MyStrings.apronLH, value: reportResponse.value.data!.allCarInfo!.apronLeft!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.apronRight != null) Master(title: MyStrings.apronRH, value: reportResponse.value.data!.allCarInfo!.apronRight!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.frontTyreRight != null) Master(title: MyStrings.tyreFrontRHS, value: reportResponse.value.data!.allCarInfo!.frontTyreRight!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.frontTyreLeft != null) Master(title: MyStrings.tyreFrontLHS, value: reportResponse.value.data!.allCarInfo!.frontTyreLeft!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.rearTyreRight != null) Master(title: MyStrings.tyreRearRHS, value: reportResponse.value.data!.allCarInfo!.rearTyreRight!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.rearTyreLeft != null) Master(title: MyStrings.tyreRearLHS, value: reportResponse.value.data!.allCarInfo!.rearTyreLeft!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.doorFrontRight != null) Master(title: MyStrings.frontRHDoor, value: reportResponse.value.data!.allCarInfo!.doorFrontRight!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.boot != null) Master(title: MyStrings.boot, value: reportResponse.value.data!.allCarInfo!.boot!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.spareWheel != null) Master(title: MyStrings.spareWheel, value: reportResponse.value.data!.allCarInfo!.spareWheel!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.fuelLid != null) Master(title: MyStrings.fuelLid, value: reportResponse.value.data!.allCarInfo!.fuelLid!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.front != null) Master(title: MyStrings.frontImage, image: reportResponse.value.data!.allCarInfo!.front!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.frontLeft != null) Master(title: MyStrings.frontLeftImage, image: reportResponse.value.data!.allCarInfo!.frontLeft!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.frontRight != null) Master(title: MyStrings.frontRightImage, image: reportResponse.value.data!.allCarInfo!.frontRight!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.leftImage != null) Master(title: MyStrings.leftImage, image: reportResponse.value.data!.allCarInfo!.leftImage!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rightImage != null) Master(title: MyStrings.rightImage, image: reportResponse.value.data!.allCarInfo!.rightImage!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rearLeft != null) Master(title: MyStrings.rearLeftImage, image: reportResponse.value.data!.allCarInfo!.rearLeft!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rear != null) Master(title: MyStrings.rearImage, image: reportResponse.value.data!.allCarInfo!.rear!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rearRight != null) Master(title: MyStrings.rearRight, image: reportResponse.value.data!.allCarInfo!.rearRight!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.roof != null) Master(title: MyStrings.roofImage, image: reportResponse.value.data!.allCarInfo!.roof!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.bumperFront != null) Master(title: MyStrings.frontBumper, image: reportResponse.value.data!.allCarInfo!.bumperFront!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.apronLeft != null) Master(title: MyStrings.apronLH, image: reportResponse.value.data!.allCarInfo!.apronLeft!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.apronRight != null) Master(title: MyStrings.apronRH, image: reportResponse.value.data!.allCarInfo!.apronRight!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.frontTyreRight != null) Master(title: MyStrings.tyreFrontRHS, image: reportResponse.value.data!.allCarInfo!.frontTyreRight!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.frontTyreLeft != null) Master(title: MyStrings.tyreFrontLHS, image: reportResponse.value.data!.allCarInfo!.frontTyreLeft!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rearTyreRight != null) Master(title: MyStrings.tyreRearRHS, image: reportResponse.value.data!.allCarInfo!.rearTyreRight!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rearTyreLeft != null) Master(title: MyStrings.tyreRearLHS, image: reportResponse.value.data!.allCarInfo!.rearTyreLeft!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.doorFrontRight != null) Master(title: MyStrings.frontRHDoor, image: reportResponse.value.data!.allCarInfo!.doorFrontRight!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.boot != null) Master(title: MyStrings.boot, image: reportResponse.value.data!.allCarInfo!.boot!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.spareWheel != null) Master(title: MyStrings.spareWheel, image: reportResponse.value.data!.allCarInfo!.spareWheel!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.fuelLid != null) Master(title: MyStrings.fuelLid, image: reportResponse.value.data!.allCarInfo!.fuelLid!.url ?? ''),
     ];
     interiorImages.value = [
-      if(reportResponse.value.data!.allCarInfo!.clusterPanel != null) Master(title: MyStrings.clusterPanel, value: reportResponse.value.data!.allCarInfo!.clusterPanel!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.dashboardImage != null) Master(title: MyStrings.dashboardImage, value: reportResponse.value.data!.allCarInfo!.dashboardImage!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.frontSeatImage != null) Master(title: MyStrings.frontSeatImage, value: reportResponse.value.data!.allCarInfo!.frontSeatImage!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.rearSeatImage != null) Master(title: MyStrings.rearSeatImage, value: reportResponse.value.data!.allCarInfo!.rearSeatImage!.url ?? ''),
-      // if(reportResponse.value.data!.allCarInfo!.rearViewMirror != null) Master(title: MyStrings.insideRearViewMirror, value: reportResponse.value.data!.allCarInfo!.rearViewMirror!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.interiorView != null) Master(title: MyStrings.interiorViewFromBootDashboard, value: reportResponse.value.data!.allCarInfo!.interiorView!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.powerWindowDriverImage != null) Master(title: MyStrings.powerWindowDriverImage, value: reportResponse.value.data!.allCarInfo!.powerWindowDriverImage!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.pushWindowDriverImage != null) Master(title: MyStrings.pushWindowDriverImage, value: reportResponse.value.data!.allCarInfo!.pushWindowDriverImage!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.clusterPanel != null) Master(title: MyStrings.clusterPanel, image: reportResponse.value.data!.allCarInfo!.clusterPanel!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.dashboardImage != null) Master(title: MyStrings.dashboardImage, image: reportResponse.value.data!.allCarInfo!.dashboardImage!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.frontSeatImage != null) Master(title: MyStrings.frontSeatImage, image: reportResponse.value.data!.allCarInfo!.frontSeatImage!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rearSeatImage != null) Master(title: MyStrings.rearSeatImage, image: reportResponse.value.data!.allCarInfo!.rearSeatImage!.url ?? ''),
+      // if(reportResponse.value.data!.allCarInfo!.rearViewMirror != null) Master(title: MyStrings.insideRearViewMirror, image: reportResponse.value.data!.allCarInfo!.rearViewMirror!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.interiorView != null) Master(title: MyStrings.interiorViewFromBootDashboard, image: reportResponse.value.data!.allCarInfo!.interiorView!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.powerWindowDriverImage != null) Master(title: MyStrings.powerWindowDriverImage, image: reportResponse.value.data!.allCarInfo!.powerWindowDriverImage!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.pushWindowDriverImage != null) Master(title: MyStrings.pushWindowDriverImage, image: reportResponse.value.data!.allCarInfo!.pushWindowDriverImage!.url ?? ''),
     ];
     engineImages.value = [
-      if(reportResponse.value.data!.allCarInfo!.engineCompartment != null) Master(title: MyStrings.engineCompartmentImage, value: reportResponse.value.data!.allCarInfo!.engineCompartment!.url ?? '')
+      if(reportResponse.value.data!.allCarInfo!.engineCompartment != null) Master(title: MyStrings.engineCompartmentImage, image: reportResponse.value.data!.allCarInfo!.engineCompartment!.url ?? '')
     ];
     Map<String, dynamic> mainObject = reportResponse.value.data!.allCarInfo!.toJson();
     mainObject.forEach((key, value) {
@@ -516,16 +561,21 @@ class CarDetailsScreenViewModel extends GetxController {
           documents.value = [
             Master(title: MyStrings.rcAvailability, value: reportResponse.value.data!.rcAvailability ?? ''),
             Master(title: MyStrings.rcMismatch, value: reportResponse.value.data!.rcMismatch ?? ''),
+            if((reportResponse.value.data!.loanNoc != null) && (reportResponse.value.data!.loanNoc!.isNotEmpty))
             Master(title: MyStrings.nocIssued, value: reportResponse.value.data!.loanNoc ?? ''),
+            if((reportResponse.value.data!.insurance != null) && (reportResponse.value.data!.insurance!.isNotEmpty))
             Master(title: MyStrings.insurance, value: reportResponse.value.data!.insurance ?? ''),
+            if((reportResponse.value.data!.ncb != null) && (reportResponse.value.data!.ncb!.isNotEmpty))
             Master(title: MyStrings.ncb, value: reportResponse.value.data!.ncb ?? ''),
             Master(title: MyStrings.underHypothecation, value: reportResponse.value.data!.hypothecation ?? ''),
+            if((reportResponse.value.data!.loanStatus != null) && (reportResponse.value.data!.loanStatus!.isNotEmpty))
             Master(title: MyStrings.loanClosed, value: reportResponse.value.data!.loanStatus ?? ''),
+            if((reportResponse.value.data!.form35 != null) && (reportResponse.value.data!.form35!.isNotEmpty))
             Master(title: MyStrings.form35, value: reportResponse.value.data!.form35 ?? ''),
           ];
           otherInformation.value = [
             Master(title: MyStrings.duplicateKey, value: reportResponse.value.data!.duplicateKey ?? ''),
-            Master(title: MyStrings.chasisNumberEmbossing, value: reportResponse.value.data!.chasisNumber ?? ''),
+            Master(title: MyStrings.chasisNumberEmbossing, value: reportResponse.value.data!.chasisNumber != null && (reportResponse.value.data!.chasisNumber!.isNotEmpty) ? MyStrings.ok : MyStrings.notTraceable),
           ];
           regAndFitness.value = [
             Master(title: MyStrings.manufacturingDate, value: reportResponse.value.data!.allCarInfo?.monthAndYearOfManufacture ?? ''),
