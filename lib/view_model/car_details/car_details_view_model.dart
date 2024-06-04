@@ -506,12 +506,12 @@ class CarDetailsScreenViewModel extends GetxController {
     engineImages.value = [
       if(reportResponse.value.data!.allCarInfo!.engineCompartment != null) Master(title: MyStrings.engineCompartmentImage, image: reportResponse.value.data!.allCarInfo!.engineCompartment!.url ?? '')
     ];
-    Map<String, dynamic> mainObject = reportResponse.value.data!.allCarInfo!.toJson();
-    mainObject.forEach((key, value) {
-      if (value is Map<String, dynamic> && value.containsKey('url') && value['url'] != null && value.containsValue('damaged')) {
-        damageImages.add(value['url']);
-      }
-    });
+    // Map<String, dynamic> mainObject = reportResponse.value.data!.allCarInfo!.toJson();
+    // mainObject.forEach((key, value) {
+    //   if (value is Map<String, dynamic> && value.containsKey('url') && value['url'] != null && value.containsValue('damaged')) {
+    //     damageImages.add(value['url']);
+    //   }
+    // });
     if(exteriorImages.isNotEmpty) imageList.add({"title":MyStrings.exterior, "isClick": false.obs, "images": exteriorImages});
     if(engineImages.isNotEmpty) imageList.add({"title":MyStrings.engine, "isClick": false.obs, "images": engineImages});
     if(interiorImages.isNotEmpty) imageList.add({"title":MyStrings.interior, "isClick": false.obs, "images": interiorImages});

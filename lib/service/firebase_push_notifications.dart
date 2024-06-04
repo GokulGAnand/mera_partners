@@ -7,6 +7,7 @@ import 'package:mera_partners/service/endpoints.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
 import '../utils/constants.dart';
 import '../utils/shared_pref_manager.dart';
+import 'dart:io' show Platform;
 
 class PushNotifications {
   static final _firebaseMessaging = FirebaseMessaging.instance;
@@ -73,7 +74,7 @@ class PushNotifications {
     try {
       var headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer ${globals.token}'};
       var request = http.Request('POST', Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.setFCM + (globals.uniqueUserId ?? '')));
-      request.body = json.encode({"fcmToken": token});
+      request.body = json.encode({"fcmToken": token,if(Platform.isIOS)"platform": "IOS"});
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
