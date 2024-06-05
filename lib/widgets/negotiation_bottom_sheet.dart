@@ -22,7 +22,6 @@ class NegotiationBottomSheet extends StatelessWidget {
   final void Function() onRejectPressed;
   final DateTime? negStartTime;
   final DateTime? negEndTime;
-  CurrentRemainingTime? remainingTime;
   final Rx<CountdownTimerController>? timerController;
 
   onEnd(){

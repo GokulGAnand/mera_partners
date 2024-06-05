@@ -35,7 +35,6 @@ class CustomBidBottomSheet extends StatefulWidget {
   final DateTime? bidEndTime;
   Rxn<Duration> duration = Rxn();
   RxBool? isScheduled = false.obs;
-  CurrentRemainingTime? remainingTime;
   final Rx<CountdownTimerController>? timerController;
 
   onEnd(){

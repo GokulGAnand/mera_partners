@@ -22,7 +22,6 @@ class OTBBottomSheet extends StatelessWidget {
   final DateTime? bidStartTime;
   final DateTime? bidEndTime;
   Rxn<Duration> duration = Rxn();
-  CurrentRemainingTime? remainingTime;
   final Rx<CountdownTimerController>? timerController;
 
   onEnd(){

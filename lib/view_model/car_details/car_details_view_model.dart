@@ -153,7 +153,6 @@ class CarDetailsScreenViewModel extends GetxController {
   Rx<TextEditingController> quotePriceController = TextEditingController().obs;
   Rx<CountdownTimerController>? timerController;
   Rx<int>? endTime;
-  CurrentRemainingTime? remainingTime;
 
   void onEnd() {
     if (timerController!.value.isRunning) {
