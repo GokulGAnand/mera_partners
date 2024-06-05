@@ -47,6 +47,7 @@ class RcTransfer extends StatelessWidget {
                       carID: controller.searchRcTransferList[index].uniqueId?.toString() ?? '',
                       uniqueCarID: controller.searchRcTransferList[index].sId?.toString() ?? '',
                       finalPrice: controller.searchRcTransferList[index].highestBid != null ? Constants.numberFormat.format(controller.searchRcTransferList[index].highestBid) : '',
+                      offerPrice: controller.searchRcTransferList[index].finalPrice != null ? Constants.numberFormat.format(controller.searchRcTransferList[index].finalPrice) : '',
                       carModel: controller.searchRcTransferList[index].model ?? '',
                       carName: controller.searchRcTransferList[index].make ?? '',
                       imageURL: controller.searchRcTransferList[index].frontLeft?.url ?? '',

@@ -781,41 +781,36 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset(
-                    MySvg.timer,
-                    width: 18,
-                    // ignore: deprecated_member_use
-                    color: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() ? MyColors.kPrimaryColor : carDetailsScreenViewModel.remainingTime?.hours != 0 ? MyColors.green2 : carDetailsScreenViewModel.remainingTime!.min! <= 2 ? MyColors.red2 : carDetailsScreenViewModel.remainingTime!.min! >= 10 ? MyColors.green2 : carDetailsScreenViewModel.remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Obx(
-                    () {
-                      return CountdownTimer(
-                                    controller: carDetailsScreenViewModel.timerController?.value,
-                                    widgetBuilder: (_, CurrentRemainingTime? time) {
-                                      if (time == null) {
-                                        return const Text('');
-                                      }else{
-                                        carDetailsScreenViewModel.remainingTime = time;
-                                      }
-                                      return Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                                        color: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() ? MyColors.kPrimaryColor : carDetailsScreenViewModel.remainingTime?.hours != 0 ? MyColors.green2 : carDetailsScreenViewModel.remainingTime!.min! <= 2 ? MyColors.red2 : carDetailsScreenViewModel.remainingTime!.min! >= 10 ? MyColors.green2 : carDetailsScreenViewModel.remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
-                                        fontSize: 14,
-                                        fontFamily: 'DM Sans',
-                                        fontWeight: FontWeight.w700,
-                                        height: 0,
-                                      ));
-                                    },
-                                  );
-                    }
-                  ),
-                      // if(carDetailsScreenViewModel.duration.value != null)
-                      //    Text(
-                      //     carDetailsScreenViewModel.formatDuration(carDetailsScreenViewModel.duration.value!),
-                      //     style: MyStyles.green2_14700,
-                      //   )
+                  Obx(() => CountdownTimer(
+                    controller: carDetailsScreenViewModel.timerController?.value,
+                    widgetBuilder: (_, CurrentRemainingTime? time) {
+                      if (time == null) {
+                        return const Text(MyStrings.paused);
+                      }
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              if(time.min != 0 && carDetailsScreenViewModel.timerController?.value != null)
+                                Icon(
+                                  Icons.timer_sharp,
+                                  color: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() ? MyColors.kPrimaryColor : (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
+                                  size: 14,
+                                ),
+                              Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
+                                color: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() ? MyColors.kPrimaryColor : (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
+                                fontSize: 14,
+                                fontFamily: 'DM Sans',
+                                fontWeight: FontWeight.w700,
+                                height: 0,
+                              ))
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  ),),
                 ],
               ),
               const SizedBox(

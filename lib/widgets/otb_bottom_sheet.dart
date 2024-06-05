@@ -72,33 +72,34 @@ class OTBBottomSheet extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Icon(
-                Icons.timer_sharp,
-                color: remainingTime?.hours != 0 ? MyColors.green2 : remainingTime!.min! <= 2 ? MyColors.red2 : remainingTime!.min! >= 10 ? MyColors.green2 : remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
-                size: 14,
-              ),
-              const SizedBox(
-                width: 5,
-              ),
               Obx(() => CountdownTimer(
                 controller: timerController?.value,
                 widgetBuilder: (_, CurrentRemainingTime? time) {
                   if (time == null) {
-                    return const Text('');
-                  }else{
-                    remainingTime = time;
+                    return const Text(MyStrings.paused);
                   }
-                  return Text(time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                    color: remainingTime?.hours != 0 ? MyColors.green2 : remainingTime!.min! <= 2 ? MyColors.red2 : remainingTime!.min! >= 10 ? MyColors.green2 : remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
-                    fontSize: 14,
-                    fontFamily: 'DM Sans',
-                    fontWeight: FontWeight.w700,
-                    height: 0,
-                  ));
+                  return Row(
+                    children: [
+                      if(time.min != 0 && timerController?.value != null)
+                        Icon(
+                          Icons.timer_sharp,
+                          color: (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
+                          size: 14,
+                        ),
+                      Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
+                        color: (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
+                        fontSize: 14,
+                        fontFamily: 'DM Sans',
+                        fontWeight: FontWeight.w700,
+                        height: 0,
+                      ))
+                    ],
+                  );
                 },
               ),),
               const Spacer(),
-              InkWell(
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () {
                   Get.back();
                 },

@@ -123,7 +123,8 @@ class _GalleryScreenState extends State<GalleryScreen> {
                         ),
                       );
                     }
-                    return GestureDetector(
+                      if(galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].image != null && galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].image.isNotEmpty) {
+                        return GestureDetector(
                       onTap: (){
                         Get.toNamed(AppRoutes.imageViewScreen, arguments: 
                         {"title": galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["title"],
@@ -190,6 +191,8 @@ class _GalleryScreenState extends State<GalleryScreen> {
                         ),
                       ),
                     );
+                      }
+                      return const SizedBox();
                     });
                   }
                 ),

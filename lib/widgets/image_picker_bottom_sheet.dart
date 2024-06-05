@@ -21,12 +21,15 @@ class ImagePickerSheet extends StatelessWidget {
 
   Future pickImage(ImageSource source) async {
     try {
-      if(source == ImageSource.camera){
+      if (source == ImageSource.camera) {
         var cameraStatus = await Permission.camera.status;
         if (!cameraStatus.isGranted) {
           final result = await Permission.camera.request();
-          if(!result.isGranted){
-            openAppSettings();
+          if (!result.isGranted) {
+            if (result.isPermanentlyDenied) {
+              openAppSettings();
+            }
+            return;
           }
           log("camera access: ${result.isGranted}");
         }
