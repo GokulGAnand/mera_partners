@@ -33,7 +33,7 @@ class SocketService {
 
     void filterCars(List<Data> carList){
       List<Data> liveCarsList = <Data> [];
-      List<Data> otbCarsList = <Data> [];
+      // List<Data> otbCarsList = <Data> [];
       for(int i=0;i<carList.length;i++){
         if(Get.isRegistered<CarDetailsScreenViewModel>()){
           if(Get.find<CarDetailsScreenViewModel>().carDetailsResponse.value.data?[0].sId == carList[i].sId){
