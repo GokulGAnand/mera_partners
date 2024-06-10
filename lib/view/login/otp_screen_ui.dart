@@ -84,16 +84,24 @@ class _OtpScreenState extends State<OtpScreen> {
               padding: const EdgeInsets.only(left: 16),
               child: Obx(() {
                 if (loginScreenViewModel.resend.value == true) {
-                  return GestureDetector(
-                    onTap: () async {
-                      loginScreenViewModel.mobileLogin();
-                      loginScreenViewModel.startTimer(60);
-                      loginScreenViewModel.resend.value = false;
-                    },
-                    child: const Text(
-                      MyStrings.resendOTP,
-                      style: MyStyles.red14400,
+                  return Row(
+                    children: [
+                      const Text(
+                      MyStrings.receiveOTP,
+                      style: MyStyles.subTitleGreayStyle,
                     ),
+                      GestureDetector(
+                        onTap: () async {
+                          loginScreenViewModel.mobileLogin();
+                          loginScreenViewModel.startTimer(60);
+                          loginScreenViewModel.resend.value = false;
+                        },
+                        child: const Text(
+                          MyStrings.resendOTP,
+                          style: MyStyles.primary14500,
+                        ),
+                      ),
+                    ],
                   );
                 }
                 return Row(

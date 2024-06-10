@@ -155,6 +155,7 @@ class MyStrings {
   static const String termsCondition = "Terms and Conditions.";
   static const String otpVerification = "OTP Verification";
   static const String otpDesc = "Please enter the 4-digit OTP (One-Time Password)\nsent to your registered mobile number below.";
+  static const String receiveOTP = "Didn't Receive the OTP? ";
   static const String resendOTP = "Resend OTP";
   static const String requestOTP = "Request OTP in ";
   static const String verify = "Verify";
