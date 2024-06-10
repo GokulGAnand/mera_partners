@@ -25,14 +25,14 @@ class NotificationScreen extends StatelessWidget {
         //   appBarHeight: appBarHeight,
         // ),
       appBar: AppBar(
-        title: Text(MyStrings.notification,
+        title: const Text(MyStrings.notification,
           style: TextStyle(color: Colors.white,
           fontWeight: FontWeight.w600
           ),
         ),
         toolbarHeight: appBarHeight,
         backgroundColor: MyColors.kPrimaryColor,
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
         body: Obx(() => (controller.notificationList.value.data != null) && controller.notificationList.value.data!.isNotEmpty ? ListView.builder(
           itemCount: controller.notificationList.value.data?.length ?? 0,

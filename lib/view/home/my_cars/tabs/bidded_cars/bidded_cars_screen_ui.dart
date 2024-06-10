@@ -10,8 +10,8 @@ import 'package:mera_partners/widgets/custom_car_detail_card.dart';
 import '../../../../../routes/app_routes.dart';
 import '../../../../../utils/colors.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
-
 import '../../../../../utils/enum.dart';
+import '../../../../../widgets/custom_toast.dart';
 
 /// ignore: must_be_immutable
 class BidCarsListScreen extends StatelessWidget {
@@ -22,13 +22,14 @@ class BidCarsListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MyColors.white,
       body: Obx(
         () => SafeArea(
           child: controller.bidCarsResponse.value.data != null
               ? ((controller.bidCarsearchList.isNotEmpty || (controller.bidCarsearchList.isEmpty && controller.bidCarsearchController.text.isEmpty)) && controller.bidCarsResponse.value.data![0].biddedCars!.isNotEmpty)
                   ? ListView.builder(
                       itemCount: controller.bidCarsResponse.value.data![0].biddedCars?.length,
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.fromLTRB(16,8,16,8),
                       itemBuilder: (context, index) {
                         return Obx(() {
                           if (((controller.bidCarsearchController.value.text.isEmpty && controller.bidCarsearchList.isEmpty) || controller.bidCarsearchList.contains(controller.bidCarsResponse.value.data?[index].sId)) && controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == CarStatus.live.name) {
@@ -37,6 +38,8 @@ class BidCarsListScreen extends StatelessWidget {
                                 Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.bidCarsResponse.value.data?[0].biddedCars![index].sId);
                               },
                               isOtb: false.obs,
+                              criticalIssue: controller.bidCarsResponse.value.data?[0].biddedCars![index].carCondition ?? '',
+                              yearOfManufacture: controller.bidCarsResponse.value.data?[0].biddedCars![index].monthAndYearOfManufacture ?? '',
                               isFavourite: controller.likeResponse.value.data?[0].likedCars != null && (controller.likeResponse.value.data![0].likedCars!.isNotEmpty)
                                   ? controller.likeResponse.value.data![0].likedCars!.any((element) => element.sId == controller.bidCarsResponse.value.data?[0].biddedCars![index].sId)
                                       ? true.obs
@@ -65,10 +68,10 @@ class BidCarsListScreen extends StatelessWidget {
                               bidStartTime: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()).toLocal(),
                               bidEndTime: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal(),
                               endTime: Rx(Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds),
-                              timerController: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs,
+                              timerController: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {/*controller.bidCarsResponse.value.data?[0].biddedCars!.removeAt(index);*/},).obs,
                               carModel: controller.bidCarsResponse.value.data?[0].biddedCars![index].model ?? '',
                               carVariant: controller.bidCarsResponse.value.data?[0].biddedCars![index].variant ?? '',
-                              rating: ((controller.bidCarsResponse.value.data?[0].biddedCars![index].engineStar ?? 0 + (controller.bidCarsResponse.value.data?[0].biddedCars![index].exteriorStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].interiorAndElectricalStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].testDriveStar ?? 0)) / 4).roundToDouble(),
+                              rating: (((controller.bidCarsResponse.value.data?[0].biddedCars![index].engineStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].exteriorStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].interiorAndElectricalStar ?? 0) + (controller.bidCarsResponse.value.data?[0].biddedCars![index].testDriveStar ?? 0)) / 4).roundToDouble(),
                               fuelType: controller.bidCarsResponse.value.data?[0].biddedCars![index].fuelType ?? '',
                               id: controller.bidCarsResponse.value.data?[0].biddedCars![index].uniqueId.toString() ?? '',
                               fmv: controller.bidCarsResponse.value.data?[0].biddedCars![index].realValue != null ? controller.bidCarsResponse.value.data![0].biddedCars![index].realValue.toString() : '0',
@@ -90,7 +93,7 @@ class BidCarsListScreen extends StatelessWidget {
                                     backgroundColor: Colors.transparent,
                                     context: context,
                                     builder: (context) {
-                                      return CustomBidBottomSheet(
+                                      return Obx(() => CustomBidBottomSheet(
                                         timerController: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs,
                                         amountController: controller.autoBidController,
                                         isAutoBid: true,
@@ -98,19 +101,23 @@ class BidCarsListScreen extends StatelessWidget {
                                         stepRate: controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 99999
                                             ? RxInt(2000)
                                             : (controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! >= 100000 && controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 299999)
-                                                ? RxInt(4000)
-                                                : (controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! >= 300000 && controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 499999)
-                                                    ? RxInt(7000)
-                                                    : RxInt(10000),
+                                            ? RxInt(4000)
+                                            : (controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! >= 300000 && controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 499999)
+                                            ? RxInt(7000)
+                                            : RxInt(10000),
                                         onAutoBidPressed: () {
                                           try {
-                                            controller.placeAutoBid(controller.autoBidController.value.text, controller.bidCarsResponse.value.data?[index].sId);
-                                            Navigator.of(context).pop();
+                                            if(globals.uniqueUserId != null && controller.bidCarsResponse.value.data?[0].biddedCars![index].winner != null && controller.bidCarsResponse.value.data![0].biddedCars![index].winner!.contains(globals.uniqueUserId!) && controller.bidCarsResponse.value.data![0].biddedCars![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && (int.tryParse(controller.autoBidController.value.text) ?? 0) <= element.autoBidLimit!)){
+                                              CustomToast.instance.showMsg(MyStrings.vAutoBidLimit+(controller.bidCarsResponse.value.data![0].biddedCars![index].leaderBoard![0].autoBidLimit ?? 0).toString());
+                                            }else{
+                                              controller.placeAutoBid(controller.autoBidController.value.text, controller.bidCarsResponse.value.data?[0].biddedCars![index].sId);
+                                              Navigator.of(context).pop();
+                                            }
                                           } catch (e) {
                                             log(e.toString());
                                           }
                                         },
-                                      );
+                                      ),);
                                     });
                               },
                               bid: () {
@@ -121,26 +128,31 @@ class BidCarsListScreen extends StatelessWidget {
                                     backgroundColor: Colors.transparent,
                                     context: context,
                                     builder: (context) {
-                                      return CustomBidBottomSheet(
+                                      return Obx(() => CustomBidBottomSheet(
                                         timerController: controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == CarStatus.scheduled.name?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.bidCarsResponse.value.data?[0].biddedCars![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs,
                                         amountController: controller.bidController,
                                         bidValue: RxInt(controller.bidCarsResponse.value.data?[0].biddedCars![index].highestBid ?? 0),
                                         stepRate: controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 99999
                                             ? RxInt(2000)
                                             : (controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! >= 100000 && controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 299999)
-                                                ? RxInt(4000)
-                                                : (controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! >= 300000 && controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 499999)
-                                                    ? RxInt(7000)
-                                                    : RxInt(10000),
+                                            ? RxInt(4000)
+                                            : (controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! >= 300000 && controller.bidCarsResponse.value.data![0].biddedCars![index].highestBid! <= 499999)
+                                            ? RxInt(7000)
+                                            : RxInt(10000),
                                         onBidPressed: () {
                                           try {
-                                            controller.placeBid(controller.bidController.value.text, controller.bidCarsResponse.value.data?[0].biddedCars![index].sId);
-                                            Navigator.of(context).pop();
+                                            if(globals.uniqueUserId != null && controller.bidCarsResponse.value.data?[0].biddedCars![index].winner != null && controller.bidCarsResponse.value.data![0].biddedCars![index].winner!.contains(globals.uniqueUserId!) && controller.bidCarsResponse.value.data![0].biddedCars![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && (int.tryParse(controller.bidController.value.text) ?? 0) <= element.autoBidLimit!)){
+                                              CustomToast.instance.showMsg(MyStrings.vAutoBidLimit+(controller.bidCarsResponse.value.data![0].biddedCars![index].leaderBoard![0].autoBidLimit ?? 0).toString());
+                                            }else{
+                                              controller.placeBid(controller.bidController.value.text, controller.bidCarsResponse.value.data?[0].biddedCars![index].sId);
+                                              Navigator.of(context).pop();
+                                            }
+
                                           } catch (e) {
                                             log(e.toString());
                                           }
                                         },
-                                      );
+                                      ),);
                                     });
                               },
                             );

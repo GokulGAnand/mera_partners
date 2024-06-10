@@ -29,9 +29,12 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    bool isKeyboardOpen() {
+      return MediaQuery.of(context).viewInsets.bottom > 0;
+    }
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
         actions: [
@@ -40,12 +43,12 @@ class _LoginScreenState extends State<LoginScreen> {
               showModalBottomSheet(
                 context: context, 
                 builder: (context){
-                  return HelpBottomSheet();
+                  return const HelpBottomSheet();
                 });
             },
             child: Container(
-              margin: EdgeInsets.only(right: 20),
-              padding: EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+              margin: const EdgeInsets.only(right: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18),
                 border: Border.all(color: MyColors.subTitleColor,width: 1)
@@ -71,9 +74,9 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(height: size.height * 0.5, alignment: Alignment.bottomCenter, child: Image.asset(MyImages.loginImage)),
+                Container(height: isKeyboardOpen() ? size.height * 0.29 : size.height * 0.5, alignment: Alignment.bottomCenter, child: Image.asset(MyImages.loginImage)),
                 Padding(
-                  padding: Dimens.padding16,
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

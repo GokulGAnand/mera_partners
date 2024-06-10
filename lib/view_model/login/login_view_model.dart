@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:mera_partners/model/response/user_data/user_info_response.dart';
 import 'package:mera_partners/service/endpoints.dart';
 import 'package:mera_partners/service/exception_error_util.dart';
+import 'package:mera_partners/service/firebase_push_notifications.dart';
 import 'package:mera_partners/utils/constants.dart';
 import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/utils/shared_pref_manager.dart';
@@ -57,6 +58,7 @@ class LoginScreenViewModel extends GetxController {
       var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.login), body: {"contactNo": mobileController.value.text});
       String? message = json.decode(response.body)['message'];
       if (response.statusCode == 200) {
+        await PushNotifications.getDeviceToken();
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
         Get.toNamed(AppRoutes.otpScreen);
@@ -74,6 +76,7 @@ class LoginScreenViewModel extends GetxController {
   clearData(){
     SharedPrefManager.instance.removeStringAsync(Constants.userName);
     SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
+    SharedPrefManager.instance.removeStringAsync(Constants.email);
     SharedPrefManager.instance.removeStringAsync(Constants.contactNo);
     SharedPrefManager.instance.removeStringAsync(Constants.token);
     SharedPrefManager.instance.removeStringAsync(Constants.fcmToken);
@@ -104,6 +107,7 @@ class LoginScreenViewModel extends GetxController {
           
           SharedPrefManager.instance.setStringAsync(Constants.phoneNum, mobileController.value.text);
           SharedPrefManager.instance.setStringAsync(Constants.contactNo, userInfoResponse.value.data!.first.contactNo.toString());
+          SharedPrefManager.instance.setStringAsync(Constants.email, userInfoResponse.value.data!.first.email.toString());
           SharedPrefManager.instance.setStringAsync(Constants.token, userInfoResponse.value.meta!.access.toString());
           SharedPrefManager.instance.setStringAsync(Constants.userId, userInfoResponse.value.data!.first.userId.toString());
           SharedPrefManager.instance.setStringAsync(Constants.uniqueUserId, userInfoResponse.value.data!.first.sId.toString());
@@ -113,6 +117,7 @@ class LoginScreenViewModel extends GetxController {
 
           globals.contactNo = userInfoResponse.value.data?.first.contactNo;
           globals.phoneNum = userInfoResponse.value.data?.first.contactNo.toString();
+          globals.email = userInfoResponse.value.data?.first.email;
           globals.token = userInfoResponse.value.meta?.access;
           globals.userId = userInfoResponse.value.data?.first.userId;
           globals.uniqueUserId = userInfoResponse.value.data?.first.sId;
@@ -121,8 +126,9 @@ class LoginScreenViewModel extends GetxController {
           globals.addressProofFront = userInfoResponse.value.data?.first.addressProofFront != null ? true : false;
           globals.headers = {'Authorization': 'Bearer ${globals.token}'};
           globals.jsonHeaders = {'Content-Type': 'application/json','Authorization': 'Bearer ${globals.token}',};
+          await PushNotifications.saveToken(token: globals.fcmToken);
 
-          if((globals.isOnboarding == null || globals.isOnboarding == false) && globals.isDeposited == false){
+          if((globals.isOnboarding == null || globals.isOnboarding == false) && (globals.isDeposited == null || globals.isDeposited == false)){
             SharedPrefManager.instance.setBoolAsync(Constants.isOnboarding, true);
             Get.toNamed(AppRoutes.onboardingScreen);
           } else if (userInfoResponse.value.data?.first.isDocumentsVerified != null && (userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.SUBMITTED.name || userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.VERIFIED.name) && userInfoResponse.value.data?.first.isDeposited != null && userInfoResponse.value.data?.first.isDeposited == true) {

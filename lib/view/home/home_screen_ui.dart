@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return PopScope(
         canPop: false,
         onPopInvoked: (bool didPop) {
-          showLogoutDialog(context);
+          showExitDialog(context);
         },
         child: Scaffold(
           backgroundColor: MyColors.white,
@@ -88,11 +88,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 40,
                       alignment: Alignment.bottomCenter,
                       child: SvgPicture.asset(
-                        MySvg.bids,
+                        MySvg.explore,
                         color: (homeScreenViewModel.selectedIndex.value == 0) ? MyColors.kPrimaryColor : MyColors.grey,
                       ),
                     ),
-                    label: "Bids"),
+                    label: "Explore"),
                 BottomNavigationBarItem(
                     icon: Container(
                       width: 30,

@@ -21,35 +21,37 @@ class OTBScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Obx(
-              () {
+          child: Obx(
+                  () {
                 if(controller.searchList.isNotEmpty || (controller.searchList.isEmpty && controller.searchController.text.isEmpty)){
                   return PagedListView<int, Data>(
-                  pagingController: controller.infinitePagingController,
-                  builderDelegate: PagedChildBuilderDelegate<Data>(
-                          // itemCount: controller.carsListResponse.value.data?.length,
-                          // padding: const EdgeInsets.all(8),
-                          itemBuilder: (context, item, index) {
-                            return Obx(
-                              () {
-                                if((controller.searchController.text.isEmpty && controller.searchList.isEmpty) || controller.searchList.contains(controller.carsListResponse.value.data?[index].sId)){
-                                return CustomCarDetailCard(
+                    padding: const EdgeInsets.only(top: 8),
+                    pagingController: controller.infinitePagingController,
+                    builderDelegate: PagedChildBuilderDelegate<Data>(
+                      // itemCount: controller.carsListResponse.value.data?.length,
+                      // padding: const EdgeInsets.all(8),
+                      itemBuilder: (context, item, index) {
+                        return Obx(
+                                () {
+                              if((controller.searchController.text.isEmpty && controller.searchList.isEmpty) || controller.searchList.contains(controller.carsListResponse.value.data?[index].sId)){
+                                return Padding(padding: const EdgeInsets.fromLTRB(16,0,16,0),
+                                child: CustomCarDetailCard(
                                   carId: item.sId ?? '',
                                   onCarTapped: () {
                                     Get.toNamed(AppRoutes.carDetailsScreen, arguments: item.sId);
                                   },
+                                  criticalIssue: item.carCondition ?? '',
                                   isFavourite: controller.likeResponse.value.data?[0].likedCars != null && (controller.likeResponse.value.data![0].likedCars!.isNotEmpty)? controller.likeResponse.value.data![0].likedCars!.any((element) => element.sId == controller.carsListResponse.value.data?[index].sId) ? true.obs : false.obs : false.obs,
                                   isOtb: true.obs,
                                   scheduleTime: Constants.getScheduledStatus(DateTime.parse(item.bidStartTime ?? DateTime.now().toString()).toLocal()),
                                   imageUrl: item.rearRight?.url ?? '',
+                                  yearOfManufacture: item.monthAndYearOfManufacture ?? '',
                                   carLocation: item.vehicleLocation ?? '',
                                   bidStatus: RxString(item.status ?? ''),
                                   bidAmount: Constants.numberFormat.format(item.realValue ?? 0).toString().obs,
                                   carModel: item.model ?? '',
                                   carVariant: item.variant ?? '',
-                                  rating: ((item.engineStar ?? 0 + (item.exteriorStar ?? 0) + (item.interiorAndElectricalStar ?? 0) + (item.testDriveStar ?? 0)) / 4).roundToDouble(),
+                                  rating: (((item.engineStar ?? 0) + (item.exteriorStar ?? 0) + (item.interiorAndElectricalStar ?? 0) + (item.testDriveStar ?? 0)) / 4).roundToDouble(),
                                   fuelType: item.fuelType ?? '',
                                   id: item.uniqueId.toString(),
                                   fmv: item.realValue != null ? item.realValue.toString() : '0',
@@ -85,18 +87,17 @@ class OTBScreen extends StatelessWidget {
                                         });
                                   },
                                   statusColor: MyColors.kPrimaryColor,
-                                );
-                                }
-                            return const SizedBox();
+                                ),);
                               }
-                          );
-                          },
-                        ),
-                );
+                              return const SizedBox();
+                            }
+                        );
+                      },
+                    ),
+                  );
                 }
                 return const Center(child: Text(MyStrings.noDataFound));
               }
-            ),
           ),
         ),
       );

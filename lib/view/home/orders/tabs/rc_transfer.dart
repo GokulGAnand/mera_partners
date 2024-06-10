@@ -31,20 +31,23 @@ class RcTransfer extends StatelessWidget {
             Obx(() {
               if (controller.searchRcTransferList.isNotEmpty) {
                 return GridView.builder(
+                  padding: const EdgeInsets.fromLTRB(16,0,16,0),
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: controller.searchRcTransferList.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 22,
                     mainAxisSpacing: 18,
-                    mainAxisExtent: 272,
+                    mainAxisExtent: MediaQuery.of(context).size.height > 800 ? 285 : 272,
                   ),
                   itemBuilder: (context, index) {
                     return CustomOrderContainer(
                       buttonStatus: Status.completed.name,
                       carID: controller.searchRcTransferList[index].uniqueId?.toString() ?? '',
+                      uniqueCarID: controller.searchRcTransferList[index].sId?.toString() ?? '',
                       finalPrice: controller.searchRcTransferList[index].highestBid != null ? Constants.numberFormat.format(controller.searchRcTransferList[index].highestBid) : '',
+                      offerPrice: controller.searchRcTransferList[index].finalPrice != null ? Constants.numberFormat.format(controller.searchRcTransferList[index].finalPrice) : '',
                       carModel: controller.searchRcTransferList[index].model ?? '',
                       carName: controller.searchRcTransferList[index].make ?? '',
                       imageURL: controller.searchRcTransferList[index].frontLeft?.url ?? '',

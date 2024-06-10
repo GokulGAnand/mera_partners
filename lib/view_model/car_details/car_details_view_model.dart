@@ -9,6 +9,7 @@ import 'package:mera_partners/service/endpoints.dart';
 import 'package:mera_partners/service/exception_error_util.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/enum.dart';
+import 'package:mera_partners/utils/shared_pref_manager.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 import 'package:http/http.dart' as http;
 import 'package:mera_partners/utils/globals.dart' as globals;
+import '../../utils/constants.dart';
 import '../../widgets/progressbar.dart';
 
 class CarDetailsScreenViewModel extends GetxController {
@@ -24,7 +26,7 @@ class CarDetailsScreenViewModel extends GetxController {
   var id = Get.arguments ?? '';
 
   ///page 1
-  String carStatus = "";
+  var carStatus = "".obs;
   //""
   //bid won
   //bid closed
@@ -188,7 +190,8 @@ class CarDetailsScreenViewModel extends GetxController {
   "not engaging-gear", "noisy", "jittering", "dirty oil", "leakage-turbo", "ac vent grill broken", "front rh power window not working", "rear rh power window not working",
   "front lh power window not working", "rear lh power window not working", "ecm malfunction", "fuel pump not working", "wiring damage", "electric not working", "hydraulic not working",
   "weak breaks", "gear not engaged", "drum scratch", "alloy wheel missing", "needs replacement", "deployed", "not satisfactory",
-  "abs ebd sensor damaged", "abs ebd module damaged"];
+  "abs ebd sensor damaged", "abs ebd module damaged","flood affected", "total loss", "apron replaced", "apron repaired", "roof replaced", "car converted from commercial to private", "commercial vehicle", "fitness expired", "engine replaced"
+  ];
 
   String notAvailable = "";
   var sliderImage = <String>[].obs;
@@ -243,10 +246,16 @@ class CarDetailsScreenViewModel extends GetxController {
       if(redListData.contains(exterior[i].value.toString().toLowerCase())){
         exterior[i].color = MyColors.warning;
         exteriorIssue.add(exterior[i]);
+        if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
+          damageImages.add(exterior[i]);
+        }
       }
       if(yellowListData.contains(exterior[i].value.toString().toLowerCase())){
         exterior[i].color = MyColors.yellow;
         exteriorIssue.add(exterior[i]);
+        if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
+          damageImages.add(exterior[i]);
+        }
       }
       if(exterior[i].listValue != null){
         for(int j=0; j<exterior[i].listValue!.length; j++){
@@ -258,11 +267,17 @@ class CarDetailsScreenViewModel extends GetxController {
             exterior[i].value = exterior[i].listValue![j];
             exterior[i].color = MyColors.warning;
             exteriorIssue.add(exterior[i]);
+            if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
+              damageImages.add(exterior[i]);
+            }
           }
           if(yellowListData.contains(exterior[i].listValue![j].toString().toLowerCase())){
             exterior[i].value = exterior[i].listValue![j];
             exterior[i].color = MyColors.yellow;
             exteriorIssue.add(exterior[i]);
+            if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
+              damageImages.add(exterior[i]);
+            }
           }
           if(exterior[i].listValue![j].isEmpty){
             exterior[i].listValue!.removeAt(j);
@@ -277,10 +292,16 @@ class CarDetailsScreenViewModel extends GetxController {
       if(redListData.contains(interiorAndElectrical[i].value.toString().toLowerCase())){
         interiorAndElectrical[i].color = MyColors.warning;
         interiorAndElectricalIssue.add(interiorAndElectrical[i]);
+        if(interiorAndElectrical[i].image != null && (interiorAndElectrical[i].image!.isNotEmpty)){
+          damageImages.add(interiorAndElectrical[i]);
+        }
       }
       if(yellowListData.contains(interiorAndElectrical[i].value.toString().toLowerCase())){
         interiorAndElectrical[i].color = MyColors.yellow;
         interiorAndElectricalIssue.add(interiorAndElectrical[i]);
+        if(interiorAndElectrical[i].image != null && (interiorAndElectrical[i].image!.isNotEmpty)){
+          damageImages.add(interiorAndElectrical[i]);
+        }
       }
       if(interiorAndElectrical[i].listValue != null){
         for(int j=0; j<interiorAndElectrical[i].listValue!.length; j++){
@@ -292,11 +313,17 @@ class CarDetailsScreenViewModel extends GetxController {
             interiorAndElectrical[i].value = interiorAndElectrical[i].listValue![j];
             interiorAndElectrical[i].color = MyColors.warning;
             interiorAndElectricalIssue.add(interiorAndElectrical[i]);
+            if(interiorAndElectrical[i].image != null && (interiorAndElectrical[i].image!.isNotEmpty)){
+              damageImages.add(interiorAndElectrical[i]);
+            }
           }
           if(yellowListData.contains(interiorAndElectrical[i].listValue![j].toString().toLowerCase())){
             interiorAndElectrical[i].value = interiorAndElectrical[i].listValue![j];
             interiorAndElectrical[i].color = MyColors.yellow;
             interiorAndElectricalIssue.add(interiorAndElectrical[i]);
+            if(interiorAndElectrical[i].image != null && (interiorAndElectrical[i].image!.isNotEmpty)){
+              damageImages.add(interiorAndElectrical[i]);
+            }
           }
           if(interiorAndElectrical[i].listValue![j].isEmpty){
             interiorAndElectrical[i].listValue!.removeAt(j);
@@ -311,10 +338,16 @@ class CarDetailsScreenViewModel extends GetxController {
       if(redListData.contains(engine[i].value.toString().toLowerCase())){
         engine[i].color = MyColors.warning;
         engineIssue.add(engine[i]);
+        if(engine[i].image != null && (engine[i].image!.isNotEmpty)){
+          damageImages.add(engine[i]);
+        }
       }
       if(yellowListData.contains(engine[i].value.toString().toLowerCase())){
         engine[i].color = MyColors.yellow;
         engineIssue.add(engine[i]);
+        if(engine[i].image != null && (engine[i].image!.isNotEmpty)){
+          damageImages.add(engine[i]);
+        }
       }
       if(engine[i].listValue != null){
         for(int j=0; j<engine[i].listValue!.length; j++){
@@ -326,11 +359,17 @@ class CarDetailsScreenViewModel extends GetxController {
             engine[i].value = engine[i].listValue![j];
             engine[i].color = MyColors.warning;
             engineIssue.add(engine[i]);
+            if(engine[i].image != null && (engine[i].image!.isNotEmpty)){
+              damageImages.add(engine[i]);
+            }
           }
           if(yellowListData.contains(engine[i].listValue![j].toString().toLowerCase())){
             engine[i].value = engine[i].listValue![j];
             engine[i].color = MyColors.yellow;
             engineIssue.add(engine[i]);
+            if(engine[i].image != null && (engine[i].image!.isNotEmpty)){
+              damageImages.add(engine[i]);
+            }
           }
           if(engine[i].listValue![j].isEmpty){
             engine[i].listValue!.removeAt(j);
@@ -345,10 +384,14 @@ class CarDetailsScreenViewModel extends GetxController {
       if(redListData.contains(airCondition[i].value.toString().toLowerCase())){
         airCondition[i].color = MyColors.warning;
         airConditionIssue.add(airCondition[i]);
+        if(airCondition[i].image != null && (airCondition[i].image!.isNotEmpty)){
+          damageImages.add(airCondition[i]);
+        }
       }
       if(yellowListData.contains(airCondition[i].value.toString().toLowerCase())){
         airCondition[i].color = MyColors.yellow;
         airConditionIssue.add(airCondition[i]);
+
       }
       if(airCondition[i].listValue != null){
         for(int j=0; j<airCondition[i].listValue!.length; j++){
@@ -406,6 +449,11 @@ class CarDetailsScreenViewModel extends GetxController {
         }
       }
     }
+    // damageImages.addAll(exteriorIssue);
+    // damageImages.addAll(interiorAndElectricalIssue);
+    // damageImages.addAll(engineIssue);
+    // damageImages.addAll(airConditionIssue);
+    // damageImages.addAll(testDriveIssue);
     log("exterior other parts: $exteriorOtherParts");
     log("interior other parts: $interiorAndElectricalOtherParts");
     log("engine other parts: $engineOtherParts");
@@ -422,46 +470,46 @@ class CarDetailsScreenViewModel extends GetxController {
 
    void addImageList() {
     exteriorImages.value = [
-      if(reportResponse.value.data!.allCarInfo!.front != null) Master(title: MyStrings.frontImage, value: reportResponse.value.data!.allCarInfo!.front!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.frontLeft != null) Master(title: MyStrings.frontLeftImage, value: reportResponse.value.data!.allCarInfo!.frontLeft!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.frontRight != null) Master(title: MyStrings.frontRightImage, value: reportResponse.value.data!.allCarInfo!.frontRight!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.leftImage != null) Master(title: MyStrings.leftImage, value: reportResponse.value.data!.allCarInfo!.leftImage!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.rightImage != null) Master(title: MyStrings.rightImage, value: reportResponse.value.data!.allCarInfo!.rightImage!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.rearLeft != null) Master(title: MyStrings.rearLeftImage, value: reportResponse.value.data!.allCarInfo!.rearLeft!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.rear != null) Master(title: MyStrings.rearImage, value: reportResponse.value.data!.allCarInfo!.rear!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.rearRight != null) Master(title: MyStrings.rearRight, value: reportResponse.value.data!.allCarInfo!.rearRight!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.roof != null) Master(title: MyStrings.roofImage, value: reportResponse.value.data!.allCarInfo!.roof!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.bumperFront != null) Master(title: MyStrings.frontBumper, value: reportResponse.value.data!.allCarInfo!.bumperFront!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.apronLeft != null) Master(title: MyStrings.apronLH, value: reportResponse.value.data!.allCarInfo!.apronLeft!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.apronRight != null) Master(title: MyStrings.apronRH, value: reportResponse.value.data!.allCarInfo!.apronRight!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.frontTyreRight != null) Master(title: MyStrings.tyreFrontRHS, value: reportResponse.value.data!.allCarInfo!.frontTyreRight!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.frontTyreLeft != null) Master(title: MyStrings.tyreFrontLHS, value: reportResponse.value.data!.allCarInfo!.frontTyreLeft!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.rearTyreRight != null) Master(title: MyStrings.tyreRearRHS, value: reportResponse.value.data!.allCarInfo!.rearTyreRight!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.rearTyreLeft != null) Master(title: MyStrings.tyreRearLHS, value: reportResponse.value.data!.allCarInfo!.rearTyreLeft!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.doorFrontRight != null) Master(title: MyStrings.frontRHDoor, value: reportResponse.value.data!.allCarInfo!.doorFrontRight!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.boot != null) Master(title: MyStrings.boot, value: reportResponse.value.data!.allCarInfo!.boot!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.spareWheel != null) Master(title: MyStrings.spareWheel, value: reportResponse.value.data!.allCarInfo!.spareWheel!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.fuelLid != null) Master(title: MyStrings.fuelLid, value: reportResponse.value.data!.allCarInfo!.fuelLid!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.front != null) Master(title: MyStrings.frontImage, image: reportResponse.value.data!.allCarInfo!.front!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.frontLeft != null) Master(title: MyStrings.frontLeftImage, image: reportResponse.value.data!.allCarInfo!.frontLeft!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.frontRight != null) Master(title: MyStrings.frontRightImage, image: reportResponse.value.data!.allCarInfo!.frontRight!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.leftImage != null) Master(title: MyStrings.leftImage, image: reportResponse.value.data!.allCarInfo!.leftImage!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rightImage != null) Master(title: MyStrings.rightImage, image: reportResponse.value.data!.allCarInfo!.rightImage!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rearLeft != null) Master(title: MyStrings.rearLeftImage, image: reportResponse.value.data!.allCarInfo!.rearLeft!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rear != null) Master(title: MyStrings.rearImage, image: reportResponse.value.data!.allCarInfo!.rear!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rearRight != null) Master(title: MyStrings.rearRight, image: reportResponse.value.data!.allCarInfo!.rearRight!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.roof != null) Master(title: MyStrings.roofImage, image: reportResponse.value.data!.allCarInfo!.roof!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.bumperFront != null) Master(title: MyStrings.frontBumper, image: reportResponse.value.data!.allCarInfo!.bumperFront!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.apronLeft != null) Master(title: MyStrings.apronLH, image: reportResponse.value.data!.allCarInfo!.apronLeft!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.apronRight != null) Master(title: MyStrings.apronRH, image: reportResponse.value.data!.allCarInfo!.apronRight!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.frontTyreRight != null) Master(title: MyStrings.tyreFrontRHS, image: reportResponse.value.data!.allCarInfo!.frontTyreRight!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.frontTyreLeft != null) Master(title: MyStrings.tyreFrontLHS, image: reportResponse.value.data!.allCarInfo!.frontTyreLeft!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rearTyreRight != null) Master(title: MyStrings.tyreRearRHS, image: reportResponse.value.data!.allCarInfo!.rearTyreRight!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rearTyreLeft != null) Master(title: MyStrings.tyreRearLHS, image: reportResponse.value.data!.allCarInfo!.rearTyreLeft!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.doorFrontRight != null) Master(title: MyStrings.frontRHDoor, image: reportResponse.value.data!.allCarInfo!.doorFrontRight!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.boot != null) Master(title: MyStrings.boot, image: reportResponse.value.data!.allCarInfo!.boot!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.spareWheel != null) Master(title: MyStrings.spareWheel, image: reportResponse.value.data!.allCarInfo!.spareWheel!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.fuelLid != null) Master(title: MyStrings.fuelLid, image: reportResponse.value.data!.allCarInfo!.fuelLid!.url ?? ''),
     ];
     interiorImages.value = [
-      if(reportResponse.value.data!.allCarInfo!.clusterPanel != null) Master(title: MyStrings.clusterPanel, value: reportResponse.value.data!.allCarInfo!.clusterPanel!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.dashboardImage != null) Master(title: MyStrings.dashboardImage, value: reportResponse.value.data!.allCarInfo!.dashboardImage!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.frontSeatImage != null) Master(title: MyStrings.frontSeatImage, value: reportResponse.value.data!.allCarInfo!.frontSeatImage!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.rearSeatImage != null) Master(title: MyStrings.rearSeatImage, value: reportResponse.value.data!.allCarInfo!.rearSeatImage!.url ?? ''),
-      // if(reportResponse.value.data!.allCarInfo!.rearViewMirror != null) Master(title: MyStrings.insideRearViewMirror, value: reportResponse.value.data!.allCarInfo!.rearViewMirror!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.interiorView != null) Master(title: MyStrings.interiorViewFromBootDashboard, value: reportResponse.value.data!.allCarInfo!.interiorView!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.powerWindowDriverImage != null) Master(title: MyStrings.powerWindowDriverImage, value: reportResponse.value.data!.allCarInfo!.powerWindowDriverImage!.url ?? ''),
-      if(reportResponse.value.data!.allCarInfo!.pushWindowDriverImage != null) Master(title: MyStrings.pushWindowDriverImage, value: reportResponse.value.data!.allCarInfo!.pushWindowDriverImage!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.clusterPanel != null) Master(title: MyStrings.clusterPanel, image: reportResponse.value.data!.allCarInfo!.clusterPanel!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.dashboardImage != null) Master(title: MyStrings.dashboardImage, image: reportResponse.value.data!.allCarInfo!.dashboardImage!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.frontSeatImage != null) Master(title: MyStrings.frontSeatImage, image: reportResponse.value.data!.allCarInfo!.frontSeatImage!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rearSeatImage != null) Master(title: MyStrings.rearSeatImage, image: reportResponse.value.data!.allCarInfo!.rearSeatImage!.url ?? ''),
+      // if(reportResponse.value.data!.allCarInfo!.rearViewMirror != null) Master(title: MyStrings.insideRearViewMirror, image: reportResponse.value.data!.allCarInfo!.rearViewMirror!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.interiorView != null) Master(title: MyStrings.interiorViewFromBootDashboard, image: reportResponse.value.data!.allCarInfo!.interiorView!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.powerWindowDriverImage != null) Master(title: MyStrings.powerWindowDriverImage, image: reportResponse.value.data!.allCarInfo!.powerWindowDriverImage!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.pushWindowDriverImage != null) Master(title: MyStrings.pushWindowDriverImage, image: reportResponse.value.data!.allCarInfo!.pushWindowDriverImage!.url ?? ''),
     ];
     engineImages.value = [
-      if(reportResponse.value.data!.allCarInfo!.engineCompartment != null) Master(title: MyStrings.engineCompartmentImage, value: reportResponse.value.data!.allCarInfo!.engineCompartment!.url ?? '')
+      if(reportResponse.value.data!.allCarInfo!.engineCompartment != null) Master(title: MyStrings.engineCompartmentImage, image: reportResponse.value.data!.allCarInfo!.engineCompartment!.url ?? '')
     ];
-    Map<String, dynamic> mainObject = reportResponse.value.data!.allCarInfo!.toJson();
-    mainObject.forEach((key, value) {
-      if (value is Map<String, dynamic> && value.containsKey('url') && value['url'] != null && value.containsValue('damaged')) {
-        damageImages.add(value['url']);
-      }
-    });
+    // Map<String, dynamic> mainObject = reportResponse.value.data!.allCarInfo!.toJson();
+    // mainObject.forEach((key, value) {
+    //   if (value is Map<String, dynamic> && value.containsKey('url') && value['url'] != null && value.containsValue('damaged')) {
+    //     damageImages.add(value['url']);
+    //   }
+    // });
     if(exteriorImages.isNotEmpty) imageList.add({"title":MyStrings.exterior, "isClick": false.obs, "images": exteriorImages});
     if(engineImages.isNotEmpty) imageList.add({"title":MyStrings.engine, "isClick": false.obs, "images": engineImages});
     if(interiorImages.isNotEmpty) imageList.add({"title":MyStrings.interior, "isClick": false.obs, "images": interiorImages});
@@ -511,16 +559,21 @@ class CarDetailsScreenViewModel extends GetxController {
           documents.value = [
             Master(title: MyStrings.rcAvailability, value: reportResponse.value.data!.rcAvailability ?? ''),
             Master(title: MyStrings.rcMismatch, value: reportResponse.value.data!.rcMismatch ?? ''),
+            if((reportResponse.value.data!.loanNoc != null) && (reportResponse.value.data!.loanNoc!.isNotEmpty))
             Master(title: MyStrings.nocIssued, value: reportResponse.value.data!.loanNoc ?? ''),
+            if((reportResponse.value.data!.insurance != null) && (reportResponse.value.data!.insurance!.isNotEmpty))
             Master(title: MyStrings.insurance, value: reportResponse.value.data!.insurance ?? ''),
+            if((reportResponse.value.data!.ncb != null) && (reportResponse.value.data!.ncb!.isNotEmpty))
             Master(title: MyStrings.ncb, value: reportResponse.value.data!.ncb ?? ''),
             Master(title: MyStrings.underHypothecation, value: reportResponse.value.data!.hypothecation ?? ''),
+            if((reportResponse.value.data!.loanStatus != null) && (reportResponse.value.data!.loanStatus!.isNotEmpty))
             Master(title: MyStrings.loanClosed, value: reportResponse.value.data!.loanStatus ?? ''),
+            if((reportResponse.value.data!.form35 != null) && (reportResponse.value.data!.form35!.isNotEmpty))
             Master(title: MyStrings.form35, value: reportResponse.value.data!.form35 ?? ''),
           ];
           otherInformation.value = [
             Master(title: MyStrings.duplicateKey, value: reportResponse.value.data!.duplicateKey ?? ''),
-            Master(title: MyStrings.chasisNumberEmbossing, value: reportResponse.value.data!.chasisNumber ?? ''),
+            Master(title: MyStrings.chasisNumberEmbossing, value: reportResponse.value.data!.chasisNumber != null && (reportResponse.value.data!.chasisNumber!.isNotEmpty) ? MyStrings.ok : MyStrings.notTraceable),
           ];
           regAndFitness.value = [
             Master(title: MyStrings.manufacturingDate, value: reportResponse.value.data!.allCarInfo?.monthAndYearOfManufacture ?? ''),
@@ -557,37 +610,37 @@ class CarDetailsScreenViewModel extends GetxController {
           ];
           engine.value = [
             Master(title: MyStrings.engineSound, value: reportResponse.value.data!.allCarInfo!.engineSound ?? ''),
-            Master(title: MyStrings.engine, listValue: reportResponse.value.data!.allCarInfo?.engine?.condition, remarks: reportResponse.value.data!.allCarInfo!.engine?.remarks),
+            Master(title: MyStrings.engine, listValue: reportResponse.value.data!.allCarInfo?.engine?.condition, remarks: reportResponse.value.data!.allCarInfo!.engine?.remarks,image: reportResponse.value.data!.allCarInfo?.engine?.url),
             Master(title: MyStrings.smoke, value: reportResponse.value.data!.allCarInfo!.exhaustSmoke ?? ''),
-            Master(title: MyStrings.battery, listValue: reportResponse.value.data!.allCarInfo!.battery?.condition, remarks: reportResponse.value.data!.allCarInfo!.battery?.remarks),
+            Master(title: MyStrings.battery, listValue: reportResponse.value.data!.allCarInfo!.battery?.condition, remarks: reportResponse.value.data!.allCarInfo!.battery?.remarks,image: reportResponse.value.data!.allCarInfo?.battery?.url),
             Master(title: MyStrings.radiator, value: reportResponse.value.data!.allCarInfo!.radiator ?? ''),
             Master(title: MyStrings.startingMotor, value: reportResponse.value.data!.allCarInfo!.startingMotor ?? ''),
             Master(title: MyStrings.coolant, value: reportResponse.value.data!.allCarInfo!.coolant ?? ''),
-            Master(title: MyStrings.blowByBackCompression, listValue: reportResponse.value.data!.allCarInfo!.blowBy?.condition, remarks: reportResponse.value.data!.allCarInfo!.blowBy?.remarks),
+            Master(title: MyStrings.blowByBackCompression, listValue: reportResponse.value.data!.allCarInfo!.blowBy?.condition, remarks: reportResponse.value.data!.allCarInfo!.blowBy?.remarks,image: reportResponse.value.data!.allCarInfo?.blowBy?.url),
             Master(title: MyStrings.silencer, value: reportResponse.value.data!.allCarInfo!.silencer ?? ''),
-            Master(title: MyStrings.clutchOperations, listValue: reportResponse.value.data!.allCarInfo!.clutch?.condition, remarks: reportResponse.value.data!.allCarInfo!.clutch?.remarks),
-            Master(title: MyStrings.gearbox, listValue: reportResponse.value.data!.allCarInfo!.gearBox?.condition, remarks: reportResponse.value.data!.allCarInfo!.gearBox?.remarks),
-            Master(title: MyStrings.engineOil, listValue: reportResponse.value.data!.allCarInfo!.engineOil?.condition, remarks: reportResponse.value.data!.allCarInfo!.engineOil?.remarks),
-            Master(title: MyStrings.turboCharger, listValue: reportResponse.value.data!.allCarInfo!.turboCharger?.condition, remarks: reportResponse.value.data!.allCarInfo!.turboCharger?.remarks),
+            Master(title: MyStrings.clutchOperations, listValue: reportResponse.value.data!.allCarInfo!.clutch?.condition, remarks: reportResponse.value.data!.allCarInfo!.clutch?.remarks,image: reportResponse.value.data!.allCarInfo?.clutch?.url),
+            Master(title: MyStrings.gearbox, listValue: reportResponse.value.data!.allCarInfo!.gearBox?.condition, remarks: reportResponse.value.data!.allCarInfo!.gearBox?.remarks,image: reportResponse.value.data!.allCarInfo?.gearBox?.url),
+            Master(title: MyStrings.engineOil, listValue: reportResponse.value.data!.allCarInfo!.engineOil?.condition, remarks: reportResponse.value.data!.allCarInfo!.engineOil?.remarks,image: reportResponse.value.data!.allCarInfo?.engineOil?.url),
+            Master(title: MyStrings.turboCharger, listValue: reportResponse.value.data!.allCarInfo!.turboCharger?.condition, remarks: reportResponse.value.data!.allCarInfo!.turboCharger?.remarks,image: reportResponse.value.data!.allCarInfo?.turboCharger?.url),
             Master(title: MyStrings.gearboxLeakage, value: reportResponse.value.data!.allCarInfo!.gearBoxLeakage ?? ''),
-            Master(title: MyStrings.engineMount, listValue: reportResponse.value.data!.allCarInfo!.mount?.condition, remarks: reportResponse.value.data!.allCarInfo!.mount?.remarks),
-            Master(title: MyStrings.sump, listValue: reportResponse.value.data!.allCarInfo!.sump?.condition, remarks: reportResponse.value.data!.allCarInfo!.sump?.remarks),
+            Master(title: MyStrings.engineMount, listValue: reportResponse.value.data!.allCarInfo!.mount?.condition, remarks: reportResponse.value.data!.allCarInfo!.mount?.remarks,image: reportResponse.value.data!.allCarInfo?.mount?.url),
+            Master(title: MyStrings.sump, listValue: reportResponse.value.data!.allCarInfo!.sump?.condition, remarks: reportResponse.value.data!.allCarInfo!.sump?.remarks,image: reportResponse.value.data!.allCarInfo?.sump?.url),
             Master(title: MyStrings.comments, value: reportResponse.value.data!.allCarInfo!.engineComment ?? ''),
           ];
           interiorAndElectrical.value = [
-            Master(title: MyStrings.clusterPanel, listValue: reportResponse.value.data!.allCarInfo!.clusterPanel?.condition, remarks: reportResponse.value.data!.allCarInfo!.clusterPanel?.remarks),
+            Master(title: MyStrings.clusterPanel, listValue: reportResponse.value.data!.allCarInfo!.clusterPanel?.condition, remarks: reportResponse.value.data!.allCarInfo!.clusterPanel?.remarks,image: reportResponse.value.data!.allCarInfo?.clusterPanel?.url),
             Master(title: MyStrings.warningLight, value: reportResponse.value.data!.allCarInfo!.warningDetails ?? ''),
             Master(title: MyStrings.dashboardImage, value: reportResponse.value.data!.allCarInfo!.dashboardCondition ?? ''),
-            Master(title: MyStrings.frontSeatImage, listValue: reportResponse.value.data!.allCarInfo!.frontSeatImage?.condition, remarks: reportResponse.value.data!.allCarInfo!.frontSeatImage?.remarks),
-            Master(title: MyStrings.rearSeatImage, listValue: reportResponse.value.data!.allCarInfo!.rearSeatImage?.condition, remarks: reportResponse.value.data!.allCarInfo!.rearSeatImage?.remarks),
-            Master(title: MyStrings.insideRearViewMirror, listValue: reportResponse.value.data!.allCarInfo?.interiorView?.condition, remarks: reportResponse.value.data!.allCarInfo!.interiorView?.remarks),
+            Master(title: MyStrings.frontSeatImage, listValue: reportResponse.value.data!.allCarInfo!.frontSeatImage?.condition, remarks: reportResponse.value.data!.allCarInfo!.frontSeatImage?.remarks,image: reportResponse.value.data!.allCarInfo?.frontSeatImage?.url),
+            Master(title: MyStrings.rearSeatImage, listValue: reportResponse.value.data!.allCarInfo!.rearSeatImage?.condition, remarks: reportResponse.value.data!.allCarInfo!.rearSeatImage?.remarks,image: reportResponse.value.data!.allCarInfo?.rearSeatImage?.url),
+            Master(title: MyStrings.insideRearViewMirror, listValue: reportResponse.value.data!.allCarInfo?.interiorView?.condition, remarks: reportResponse.value.data!.allCarInfo!.interiorView?.remarks,image: reportResponse.value.data!.allCarInfo?.interiorView?.url),
             Master(title: MyStrings.pushButtonOnOff, value: reportResponse.value.data!.allCarInfo!.pushButton ?? ''),
             Master(title: MyStrings.dashboardSwitches, value: reportResponse.value.data!.allCarInfo!.dashboardSwitch ?? ''),
-            Master(title: MyStrings.powerWindowAndWindowLock, listValue: reportResponse.value.data!.allCarInfo!.powerWindowCentalLock?.condition, remarks: reportResponse.value.data!.allCarInfo!.powerWindowCentalLock?.remarks),
+            Master(title: MyStrings.powerWindowAndWindowLock, listValue: reportResponse.value.data!.allCarInfo!.powerWindowCentalLock?.condition, remarks: reportResponse.value.data!.allCarInfo!.powerWindowCentalLock?.remarks,image: reportResponse.value.data!.allCarInfo?.powerWindowCentalLock?.url),
             Master(title: MyStrings.handBrake, listValue: reportResponse.value.data!.allCarInfo!.handBreak),
-            Master(title: MyStrings.carElectrical, listValue: reportResponse.value.data!.allCarInfo!.carElectrical?.condition, remarks: reportResponse.value.data!.allCarInfo!.carElectrical?.remarks),
+            Master(title: MyStrings.carElectrical, listValue: reportResponse.value.data!.allCarInfo!.carElectrical?.condition, remarks: reportResponse.value.data!.allCarInfo!.carElectrical?.remarks,image: reportResponse.value.data!.allCarInfo?.carElectrical?.url),
             Master(title: MyStrings.secondKey, value: reportResponse.value.data!.allCarInfo!.secondKey ?? ''),
-            Master(title: MyStrings.platform, listValue: reportResponse.value.data!.allCarInfo!.platformImage?.condition, remarks: reportResponse.value.data!.allCarInfo!.platformImage?.remarks),
+            Master(title: MyStrings.platform, listValue: reportResponse.value.data!.allCarInfo!.platformImage?.condition, remarks: reportResponse.value.data!.allCarInfo!.platformImage?.remarks,image: reportResponse.value.data!.allCarInfo?.platformImage?.url),
           ];
           airCondition.value = [
             Master(title: MyStrings.acWorking, value: reportResponse.value.data!.allCarInfo!.acWorking ?? ''),
@@ -600,62 +653,62 @@ class CarDetailsScreenViewModel extends GetxController {
             Master(title: MyStrings.rearDefogger, value: reportResponse.value.data!.allCarInfo!.rearDefogger ?? ''),
           ];
           exterior.value = [
-            Master(title: MyStrings.frontImage, listValue: reportResponse.value.data!.allCarInfo?.front?.condition, remarks: reportResponse.value.data!.allCarInfo!.front?.remarks),
-            Master(title: MyStrings.frontLeftImage, listValue: reportResponse.value.data!.allCarInfo?.frontLeft?.condition, remarks: reportResponse.value.data!.allCarInfo!.frontLeft?.remarks),
-            Master(title: MyStrings.frontRightImage, listValue: reportResponse.value.data!.allCarInfo?.frontRight?.condition, remarks: reportResponse.value.data!.allCarInfo!.frontRight?.remarks),
-            Master(title: MyStrings.leftImage, listValue: reportResponse.value.data!.allCarInfo?.leftImage?.condition, remarks: reportResponse.value.data!.allCarInfo!.leftImage?.remarks),
-            Master(title: MyStrings.rightImage, listValue: reportResponse.value.data!.allCarInfo?.rightImage?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.rearLeftImage, listValue: reportResponse.value.data!.allCarInfo?.rearLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.rearImage, listValue: reportResponse.value.data!.allCarInfo?.rear?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.rearRight, listValue: reportResponse.value.data!.allCarInfo?.rearRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.roofImage, listValue: reportResponse.value.data!.allCarInfo?.roof?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.frontWindShieldWiper, listValue: reportResponse.value.data!.allCarInfo?.frontWindShield?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.rearWindShield, listValue: reportResponse.value.data!.allCarInfo?.rearWindShield?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.doorGlassLH, listValue: reportResponse.value.data!.allCarInfo?.doorGlassLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.doorGlassRH, listValue: reportResponse.value.data!.allCarInfo?.doorGlassRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.quarterGlass, listValue: reportResponse.value.data!.allCarInfo?.quarterGlass?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.headlightsLH, listValue: reportResponse.value.data!.allCarInfo?.headLightLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.headlightsRH, listValue: reportResponse.value.data!.allCarInfo?.headLightRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.headlightSupport, listValue: reportResponse.value.data!.allCarInfo?.headLightSupport?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.frontBumper, listValue: reportResponse.value.data!.allCarInfo?.bumperFront?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.rearBumper, listValue: reportResponse.value.data!.allCarInfo?.bumperRear?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.frontGrill, listValue: reportResponse.value.data!.allCarInfo?.grill?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.bonnetPatti, listValue: reportResponse.value.data!.allCarInfo?.bonnetPatti?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.upperCrossMember, listValue: reportResponse.value.data!.allCarInfo?.upperCrossMember?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.lowerCrossMember, listValue: reportResponse.value.data!.allCarInfo?.lowerCrossMember?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.apronLH, listValue: reportResponse.value.data!.allCarInfo?.apronLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.apronRH, listValue: reportResponse.value.data!.allCarInfo?.apronRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.cowlTop, listValue: reportResponse.value.data!.allCarInfo?.cowlTop?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.chassisExtension, listValue: reportResponse.value.data!.allCarInfo?.chassisExtension?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.tyreFrontRHS, listValue: reportResponse.value.data!.allCarInfo?.frontTyreRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.tyreFrontLHS, listValue: reportResponse.value.data!.allCarInfo?.frontTyreLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.tyreRearRHS, listValue: reportResponse.value.data!.allCarInfo?.rearTyreRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.tyreRearLHS, listValue: reportResponse.value.data!.allCarInfo?.rearTyreLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.lhFender, listValue: reportResponse.value.data!.allCarInfo?.fenderLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.rhFender, listValue: reportResponse.value.data!.allCarInfo?.fenderRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.lhQuarterPanel, listValue: reportResponse.value.data!.allCarInfo?.quarterPanelLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.frontLHDoor, listValue: reportResponse.value.data!.allCarInfo?.doorFrontLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.frontRHDoor, listValue: reportResponse.value.data!.allCarInfo?.doorFrontRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.rearRHDoor, listValue: reportResponse.value.data!.allCarInfo?.doorRearRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.lhaPillar, listValue: reportResponse.value.data!.allCarInfo?.leftApillar?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.rhaPillar, listValue: reportResponse.value.data!.allCarInfo?.rightApillar?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.lhbPillar, listValue: reportResponse.value.data!.allCarInfo?.leftBpillar?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.rhbPillar, listValue: reportResponse.value.data!.allCarInfo?.rightBpillar?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.lhcPillar, listValue: reportResponse.value.data!.allCarInfo?.leftCpillar?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.rhcPillar, listValue: reportResponse.value.data!.allCarInfo?.rightCpillar?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.lhRunBoard, listValue: reportResponse.value.data!.allCarInfo?.runnningBorderLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.rhRunBoard, listValue: reportResponse.value.data!.allCarInfo?.runnningBorderRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.tailLightLh, listValue: reportResponse.value.data!.allCarInfo?.tailLightLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.tailLightRh, listValue: reportResponse.value.data!.allCarInfo?.tailLightRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.rearWiper, listValue: reportResponse.value.data!.allCarInfo?.rearWiper?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.boot, listValue: reportResponse.value.data!.allCarInfo?.boot?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.dickyDoor, listValue: reportResponse.value.data!.allCarInfo?.dickyDoor?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.spareWheel, listValue: reportResponse.value.data!.allCarInfo?.spareWheel?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
+            Master(title: MyStrings.frontImage, listValue: reportResponse.value.data!.allCarInfo?.front?.condition, remarks: reportResponse.value.data!.allCarInfo!.front?.remarks,image: reportResponse.value.data!.allCarInfo?.front?.url),
+            Master(title: MyStrings.frontLeftImage, listValue: reportResponse.value.data!.allCarInfo?.frontLeft?.condition, remarks: reportResponse.value.data!.allCarInfo!.frontLeft?.remarks,image: reportResponse.value.data!.allCarInfo?.frontLeft?.url),
+            Master(title: MyStrings.frontRightImage, listValue: reportResponse.value.data!.allCarInfo?.frontRight?.condition, remarks: reportResponse.value.data!.allCarInfo!.frontRight?.remarks,image: reportResponse.value.data!.allCarInfo?.frontRight?.url),
+            Master(title: MyStrings.leftImage, listValue: reportResponse.value.data!.allCarInfo?.leftImage?.condition, remarks: reportResponse.value.data!.allCarInfo!.leftImage?.remarks,image: reportResponse.value.data!.allCarInfo?.leftImage?.url),
+            Master(title: MyStrings.rightImage, listValue: reportResponse.value.data!.allCarInfo?.rightImage?.condition, remarks: reportResponse.value.data!.allCarInfo?.rightImage?.remarks,image: reportResponse.value.data!.allCarInfo?.rightImage?.url),
+            Master(title: MyStrings.rearLeftImage, listValue: reportResponse.value.data!.allCarInfo?.rearLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks,image: reportResponse.value.data!.allCarInfo?.rearLeft?.url),
+            Master(title: MyStrings.rearImage, listValue: reportResponse.value.data!.allCarInfo?.rear?.condition, remarks: reportResponse.value.data!.allCarInfo?.rear?.remarks,image: reportResponse.value.data!.allCarInfo?.rear?.url),
+            Master(title: MyStrings.rearRight, listValue: reportResponse.value.data!.allCarInfo?.rearRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearRight?.remarks,image: reportResponse.value.data!.allCarInfo?.rearRight?.url),
+            Master(title: MyStrings.roofImage, listValue: reportResponse.value.data!.allCarInfo?.roof?.condition, remarks: reportResponse.value.data!.allCarInfo?.roof?.remarks,image: reportResponse.value.data!.allCarInfo?.roof?.url),
+            Master(title: MyStrings.frontWindShieldWiper, listValue: reportResponse.value.data!.allCarInfo?.frontWindShield?.condition, remarks: reportResponse.value.data!.allCarInfo?.frontWindShield?.remarks,image: reportResponse.value.data!.allCarInfo?.frontWindShield?.url),
+            Master(title: MyStrings.rearWindShield, listValue: reportResponse.value.data!.allCarInfo?.rearWindShield?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearWindShield?.remarks,image: reportResponse.value.data!.allCarInfo?.rearWindShield?.url),
+            Master(title: MyStrings.doorGlassLH, listValue: reportResponse.value.data!.allCarInfo?.doorGlassLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.doorGlassLeft?.remarks,image: reportResponse.value.data!.allCarInfo?.doorGlassLeft?.url),
+            Master(title: MyStrings.doorGlassRH, listValue: reportResponse.value.data!.allCarInfo?.doorGlassRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.doorGlassRight?.remarks,image: reportResponse.value.data!.allCarInfo?.doorGlassRight?.url),
+            Master(title: MyStrings.quarterGlass, listValue: reportResponse.value.data!.allCarInfo?.quarterGlass?.condition, remarks: reportResponse.value.data!.allCarInfo?.quarterGlass?.remarks,image: reportResponse.value.data!.allCarInfo?.quarterGlass?.url),
+            Master(title: MyStrings.headlightsLH, listValue: reportResponse.value.data!.allCarInfo?.headLightLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.headLightLeft?.remarks,image: reportResponse.value.data!.allCarInfo?.headLightLeft?.url),
+            Master(title: MyStrings.headlightsRH, listValue: reportResponse.value.data!.allCarInfo?.headLightRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.headLightRight?.remarks,image: reportResponse.value.data!.allCarInfo?.headLightRight?.url),
+            Master(title: MyStrings.headlightSupport, listValue: reportResponse.value.data!.allCarInfo?.headLightSupport?.condition, remarks: reportResponse.value.data!.allCarInfo?.headLightSupport?.remarks,image: reportResponse.value.data!.allCarInfo?.headLightSupport?.url),
+            Master(title: MyStrings.frontBumper, listValue: reportResponse.value.data!.allCarInfo?.bumperFront?.condition, remarks: reportResponse.value.data!.allCarInfo?.bumperFront?.remarks,image: reportResponse.value.data!.allCarInfo?.bumperFront?.url),
+            Master(title: MyStrings.rearBumper, listValue: reportResponse.value.data!.allCarInfo?.bumperRear?.condition, remarks: reportResponse.value.data!.allCarInfo?.bumperRear?.remarks,image: reportResponse.value.data!.allCarInfo?.bumperRear?.url),
+            Master(title: MyStrings.frontGrill, listValue: reportResponse.value.data!.allCarInfo?.grill?.condition, remarks: reportResponse.value.data!.allCarInfo?.grill?.remarks,image: reportResponse.value.data!.allCarInfo?.grill?.url),
+            Master(title: MyStrings.bonnetPatti, listValue: reportResponse.value.data!.allCarInfo?.bonnetPatti?.condition, remarks: reportResponse.value.data!.allCarInfo?.bonnetPatti?.remarks,image: reportResponse.value.data!.allCarInfo?.bonnetPatti?.url),
+            Master(title: MyStrings.upperCrossMember, listValue: reportResponse.value.data!.allCarInfo?.upperCrossMember?.condition, remarks: reportResponse.value.data!.allCarInfo?.upperCrossMember?.remarks,image: reportResponse.value.data!.allCarInfo?.upperCrossMember?.url),
+            Master(title: MyStrings.lowerCrossMember, listValue: reportResponse.value.data!.allCarInfo?.lowerCrossMember?.condition, remarks: reportResponse.value.data!.allCarInfo?.lowerCrossMember?.remarks,image: reportResponse.value.data!.allCarInfo?.lowerCrossMember?.url),
+            Master(title: MyStrings.apronLH, listValue: reportResponse.value.data!.allCarInfo?.apronLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.apronLeft?.remarks,image: reportResponse.value.data!.allCarInfo?.apronLeft?.url),
+            Master(title: MyStrings.apronRH, listValue: reportResponse.value.data!.allCarInfo?.apronRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.apronRight?.remarks,image: reportResponse.value.data!.allCarInfo?.apronRight?.url),
+            Master(title: MyStrings.cowlTop, listValue: reportResponse.value.data!.allCarInfo?.cowlTop?.condition, remarks: reportResponse.value.data!.allCarInfo?.cowlTop?.remarks,image: reportResponse.value.data!.allCarInfo?.cowlTop?.url),
+            Master(title: MyStrings.chassisExtension, listValue: reportResponse.value.data!.allCarInfo?.chassisExtension?.condition, remarks: reportResponse.value.data!.allCarInfo?.chassisExtension?.remarks,image: reportResponse.value.data!.allCarInfo?.chassisExtension?.url),
+            Master(title: MyStrings.tyreFrontRHS, listValue: reportResponse.value.data!.allCarInfo?.frontTyreRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.frontTyreRight?.remarks,image: reportResponse.value.data!.allCarInfo?.frontTyreRight?.url),
+            Master(title: MyStrings.tyreFrontLHS, listValue: reportResponse.value.data!.allCarInfo?.frontTyreLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.frontTyreLeft?.remarks,image: reportResponse.value.data!.allCarInfo?.frontTyreLeft?.url),
+            Master(title: MyStrings.tyreRearRHS, listValue: reportResponse.value.data!.allCarInfo?.rearTyreRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearTyreRight?.remarks,image: reportResponse.value.data!.allCarInfo?.rearTyreRight?.url),
+            Master(title: MyStrings.tyreRearLHS, listValue: reportResponse.value.data!.allCarInfo?.rearTyreLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearTyreLeft?.remarks,image: reportResponse.value.data!.allCarInfo?.rearTyreLeft?.url),
+            Master(title: MyStrings.lhFender, listValue: reportResponse.value.data!.allCarInfo?.fenderLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.fenderLeft?.remarks,image: reportResponse.value.data!.allCarInfo?.fenderLeft?.url),
+            Master(title: MyStrings.rhFender, listValue: reportResponse.value.data!.allCarInfo?.fenderRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.fenderRight?.remarks,image: reportResponse.value.data!.allCarInfo?.fenderRight?.url),
+            Master(title: MyStrings.lhQuarterPanel, listValue: reportResponse.value.data!.allCarInfo?.quarterPanelLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.quarterPanelLeft?.remarks,image: reportResponse.value.data!.allCarInfo?.quarterPanelLeft?.url),
+            Master(title: MyStrings.frontLHDoor, listValue: reportResponse.value.data!.allCarInfo?.doorFrontLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.doorFrontLeft?.remarks,image: reportResponse.value.data!.allCarInfo?.doorFrontLeft?.url),
+            Master(title: MyStrings.frontRHDoor, listValue: reportResponse.value.data!.allCarInfo?.doorFrontRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.doorFrontRight?.remarks,image: reportResponse.value.data!.allCarInfo?.doorFrontRight?.url),
+            Master(title: MyStrings.rearRHDoor, listValue: reportResponse.value.data!.allCarInfo?.doorRearRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.doorRearRight?.remarks,image: reportResponse.value.data!.allCarInfo?.doorRearRight?.url),
+            Master(title: MyStrings.lhaPillar, listValue: reportResponse.value.data!.allCarInfo?.leftApillar?.condition, remarks: reportResponse.value.data!.allCarInfo?.leftApillar?.remarks,image: reportResponse.value.data!.allCarInfo?.leftApillar?.url),
+            Master(title: MyStrings.rhaPillar, listValue: reportResponse.value.data!.allCarInfo?.rightApillar?.condition, remarks: reportResponse.value.data!.allCarInfo?.rightApillar?.remarks,image: reportResponse.value.data!.allCarInfo?.rightApillar?.url),
+            Master(title: MyStrings.lhbPillar, listValue: reportResponse.value.data!.allCarInfo?.leftBpillar?.condition, remarks: reportResponse.value.data!.allCarInfo?.leftBpillar?.remarks,image: reportResponse.value.data!.allCarInfo?.leftBpillar?.url),
+            Master(title: MyStrings.rhbPillar, listValue: reportResponse.value.data!.allCarInfo?.rightBpillar?.condition, remarks: reportResponse.value.data!.allCarInfo?.rightBpillar?.remarks,image: reportResponse.value.data!.allCarInfo?.rightBpillar?.url),
+            Master(title: MyStrings.lhcPillar, listValue: reportResponse.value.data!.allCarInfo?.leftCpillar?.condition, remarks: reportResponse.value.data!.allCarInfo?.leftCpillar?.remarks,image: reportResponse.value.data!.allCarInfo?.leftCpillar?.url),
+            Master(title: MyStrings.rhcPillar, listValue: reportResponse.value.data!.allCarInfo?.rightCpillar?.condition, remarks: reportResponse.value.data!.allCarInfo?.rightCpillar?.remarks,image: reportResponse.value.data!.allCarInfo?.rightCpillar?.url),
+            Master(title: MyStrings.lhRunBoard, listValue: reportResponse.value.data!.allCarInfo?.runnningBorderLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.runnningBorderLeft?.remarks,image: reportResponse.value.data!.allCarInfo?.runnningBorderLeft?.url),
+            Master(title: MyStrings.rhRunBoard, listValue: reportResponse.value.data!.allCarInfo?.runnningBorderRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.runnningBorderRight?.remarks,image: reportResponse.value.data!.allCarInfo?.runnningBorderRight?.url),
+            Master(title: MyStrings.tailLightLh, listValue: reportResponse.value.data!.allCarInfo?.tailLightLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.tailLightLeft?.remarks,image: reportResponse.value.data!.allCarInfo?.tailLightLeft?.url),
+            Master(title: MyStrings.tailLightRh, listValue: reportResponse.value.data!.allCarInfo?.tailLightRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.tailLightRight?.remarks,image: reportResponse.value.data!.allCarInfo?.tailLightRight?.url),
+            Master(title: MyStrings.rearWiper, listValue: reportResponse.value.data!.allCarInfo?.rearWiper?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearWiper?.remarks,image: reportResponse.value.data!.allCarInfo?.rearWiper?.url),
+            Master(title: MyStrings.boot, listValue: reportResponse.value.data!.allCarInfo?.boot?.condition, remarks: reportResponse.value.data!.allCarInfo?.boot?.remarks,image: reportResponse.value.data!.allCarInfo?.boot?.url),
+            Master(title: MyStrings.dickyDoor, listValue: reportResponse.value.data!.allCarInfo?.dickyDoor?.condition, remarks: reportResponse.value.data!.allCarInfo?.dickyDoor?.remarks,image: reportResponse.value.data!.allCarInfo?.dickyDoor?.url),
+            Master(title: MyStrings.spareWheel, listValue: reportResponse.value.data!.allCarInfo?.spareWheel?.condition, remarks: reportResponse.value.data!.allCarInfo?.spareWheel?.remarks,image: reportResponse.value.data!.allCarInfo?.spareWheel?.url),
             Master(title: MyStrings.jackAndTool, value: reportResponse.value.data!.allCarInfo?.jackAndTool),
-            Master(title: MyStrings.lhRearViewMirror, listValue: reportResponse.value.data!.allCarInfo?.rearViewMirrorLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.rhRearViewMirror, listValue: reportResponse.value.data!.allCarInfo?.rearViewMirrorRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.fuelLid, listValue: reportResponse.value.data!.allCarInfo?.fuelLid?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
-            Master(title: MyStrings.firewall, listValue: reportResponse.value.data!.allCarInfo?.firewall?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearLeft?.remarks),
+            Master(title: MyStrings.lhRearViewMirror, listValue: reportResponse.value.data!.allCarInfo?.rearViewMirrorLeft?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearViewMirrorLeft?.remarks,image: reportResponse.value.data!.allCarInfo?.rearViewMirrorLeft?.url),
+            Master(title: MyStrings.rhRearViewMirror, listValue: reportResponse.value.data!.allCarInfo?.rearViewMirrorRight?.condition, remarks: reportResponse.value.data!.allCarInfo?.rearViewMirrorRight?.remarks,image: reportResponse.value.data!.allCarInfo?.rearViewMirrorRight?.url),
+            Master(title: MyStrings.fuelLid, listValue: reportResponse.value.data!.allCarInfo?.fuelLid?.condition, remarks: reportResponse.value.data!.allCarInfo?.fuelLid?.remarks,image: reportResponse.value.data!.allCarInfo?.fuelLid?.url),
+            Master(title: MyStrings.firewall, listValue: reportResponse.value.data!.allCarInfo?.firewall?.condition, remarks: reportResponse.value.data!.allCarInfo?.firewall?.remarks,image: reportResponse.value.data!.allCarInfo?.firewall?.url),
             Master(title: MyStrings.fullBodyRepaint, value: reportResponse.value.data!.allCarInfo?.fullBodyRepaint ?? ''),
             // Master(title: MyStrings.missingParts, value: reportResponse.value.data!.allCarInfo!.missingParts ?? ''),
           ];
@@ -698,6 +751,9 @@ class CarDetailsScreenViewModel extends GetxController {
         // ProgressBar.instance.stopProgressBar(Get.context!);
         // log("get car details"+response.body);
         carDetailsResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
+        if (carDetailsResponse.value.data?[0].status?.toLowerCase() != CarStatus.live.name && carDetailsResponse.value.data?[0].status?.toLowerCase() != CarStatus.otb.name && carDetailsResponse.value.data?[0].status?.toLowerCase() != CarStatus.scheduled.name) {
+          carStatus.value = carDetailsResponse.value.data?[0].status ?? '';
+        }
         // final isLastPage = liveCarsResponse.value.data!.length < limit;
         // if (isLastPage) {
         //   infinitePagingController.appendLastPage(liveCarsResponse.value.data!);
@@ -777,6 +833,13 @@ class CarDetailsScreenViewModel extends GetxController {
             isLike.value = true;
           }
         }
+        if (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false) {
+          globals.documentStatus = likeResponse.value.data?.first.isDocumentsVerified;
+          globals.isDeposited = likeResponse.value.data?.first.isDeposited;
+          SharedPrefManager.instance.setStringAsync(Constants.documentStatus, likeResponse.value.data!.first.isDocumentsVerified.toString());
+          SharedPrefManager.instance.setBoolAsync(Constants.isDeposited, likeResponse.value.data!.first.isDeposited ?? false);
+        }
+
         log('API Response svvs: ${response.body}');
       } else {
         // ProgressBar.instance.stopProgressBar(Get.context!);
@@ -832,11 +895,13 @@ class Master {
     this.listValue,
     this.color,
     this.remarks,
+    this.image,
   });
 
   String title;
   String? value;
   String? remarks;
+  String? image;
   List<String>? listValue;
   Color? color;
 }

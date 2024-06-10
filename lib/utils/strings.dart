@@ -174,6 +174,7 @@ class MyStrings {
   static const String documentDesc = "Please upload the necessary documents inorder\nto bid cars through our app";
   static const String businessInfo = "Business Information";
   static const String fullName = "Full Name";
+  static const String email = "Email";
   static const String phoneNumber = "Phone Number";
   static const String businessName = "Business Name";
   static const String enterBusinessName = "Enter your business name";
@@ -231,6 +232,9 @@ class MyStrings {
  static const String green = "green";
  static const String red ="red";
  static const String tutorialSubtitle = "The scheduled bid in an auction is represented in the";
+ static const String tutorialSubtitle1 = "The highest bid in an auction is  represented in the";
+ static const String tutorialSubtitle2 = "The leading bid in an auction is represented in the";
+ static const String tutorialSubtitle3 = "The loosing bid in an auction is represented in the";
  static const String startBiding = "Start Bidding";
 
   ///home screen
@@ -270,7 +274,7 @@ class MyStrings {
   static const String accept = 'Accept';
   static const String id = 'ID:';
   static const String yFinal = 'Final: ';
-  static const String yBid = 'Your Bid: ';
+  static const String yBid = 'Bid: ';
 
   ///account screen
   static const String customerSupport = 'Customer Support';
@@ -278,7 +282,7 @@ class MyStrings {
   static const String aboutUs = 'About Us';
   static const String privacyPolicy= 'Privacy Policy';
   static const String logOut= 'LogOut';
-  static const String logOutDesc= 'Are you sure you want to logout?';
+  static const String logOutDesc= 'Are you sure you want to exit?';
   static const String meraPartners= 'Mera Partners';
   static const String version= 'v0.1';
 
@@ -308,11 +312,11 @@ class MyStrings {
   static const String needHelp ='Need Help ?';
   static const String viewButton ='View Bank Details';
   static const String acHName = 'Account Holder’s Name';
-  static const String mAdmin = 'Mera Admin';
+  static const String mAdmin = 'TEAMTECH MEDIA PRIVATE LIMITED';
   static const String admin = 'Account Number';
-  static const String aC = '545045775465';
+  static const String aC = '751405500116';
   static const String ifsc = 'IFSC Code';
-  static const String ifscCode = 'MC82734823';
+  static const String ifscCode = 'ICIC0007514';
   static const String bankAc ='Bank Account Details';
   static const String currentBid = 'Current bid';
   static const String stepRate = 'Step rate';
@@ -371,5 +375,10 @@ class MyStrings {
 
 
   static String rupeesSymbol = '₹';
+  static const String fairValue = 'Fair Value';
+  static String vAutoBidLimit = 'Your bid must be higher than your auto-bid of ₹';
+
+  static const String notTraceable = 'Not traceable';
+  static const String paused = 'Paused';
 
 }

@@ -12,6 +12,9 @@ import '../../../model/response/live/live_cars_list_response.dart';
 import '../../../model/response/user_data/user_car_details_response.dart';
 import '../../../service/endpoints.dart';
 import '../../../service/exception_error_util.dart';
+import '../../../utils/constants.dart';
+import '../../../utils/enum.dart';
+import '../../../utils/shared_pref_manager.dart';
 import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
 
@@ -53,38 +56,40 @@ class LiveCarsListViewModel extends GetxController {
     //   getCarData(pageKey);
     // });
     socketService = await SocketService().connectToSocket();
-    bidController.value.addListener(() {
-      if (bidController.value.text.length > 3) {
-        bidController.value.selection = TextSelection.fromPosition(
-          TextPosition(offset: bidController.value.text.length - 3),
-        );
-      }
-    });
-    autoBidController.value.addListener(() {
-      if (autoBidController.value.text.length > 3) {
-        autoBidController.value.selection = TextSelection.fromPosition(
-          TextPosition(offset: autoBidController.value.text.length - 3),
-        );
-      }
-    });
+    // bidController.value.addListener(() {
+    //   if (bidController.value.text.length > 3) {
+    //     bidController.value.selection = TextSelection.fromPosition(
+    //       TextPosition(offset: bidController.value.text.length - 3),
+    //     );
+    //   }
+    // });
+    // autoBidController.value.addListener(() {
+    //   if (autoBidController.value.text.length > 3) {
+    //     autoBidController.value.selection = TextSelection.fromPosition(
+    //       TextPosition(offset: autoBidController.value.text.length - 3),
+    //     );
+    //   }
+    // });
 
     super.onInit();
   }
 
-  void showAlertDialog(/*Data car*/) {
-    Get.dialog(
-      AlertDialog(
-        title: const Text("Auto Bid Limit Reached"),
-        content: const Text("The auto bid limit has been reached or exceeded"),
-        actions: [
-          TextButton(
-            child: Text(MyStrings.ok.toUpperCase()),
-            onPressed: () => Get.back(),
-          ),
-        ],
-      ),
-      barrierDismissible: false,
-    );
+  void showAlertDialog() {
+    if (Get.isDialogOpen == false) {
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Auto Bid Limit Reached"),
+          content: const Text("The auto bid limit has been reached or exceeded"),
+          actions: [
+            TextButton(
+              child: Text(MyStrings.ok.toUpperCase()),
+              onPressed: () => Get.back(),
+            ),
+          ],
+        ),
+        barrierDismissible: false,
+      );
+    }
   }
 
   void getLikedCarData() async {
@@ -94,6 +99,12 @@ class LiveCarsListViewModel extends GetxController {
       log('API Response Body: ${response.body}');
       if (response.statusCode == 200) {
         likeResponse.value = UserResponse.fromJson(jsonDecode(response.body));
+        if (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false) {
+          globals.documentStatus = likeResponse.value.data?.first.isDocumentsVerified;
+          globals.isDeposited = likeResponse.value.data?.first.isDeposited;
+          SharedPrefManager.instance.setStringAsync(Constants.documentStatus, likeResponse.value.data!.first.isDocumentsVerified.toString());
+          SharedPrefManager.instance.setBoolAsync(Constants.isDeposited, likeResponse.value.data!.first.isDeposited ?? false);
+        }
       } else {
         log('API Error: ${response.reasonPhrase}');
       }

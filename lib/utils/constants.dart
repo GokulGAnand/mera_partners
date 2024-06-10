@@ -7,6 +7,7 @@ class Constants {
   static const int maxInputLength = 25;
   static const int maxTextLength = 100;
   static const String phoneNum = 'phoneNum';
+  static const String email = 'email';
   static const String contactNo= 'contactNo';
   static const String userName = 'userName';
   static const String userId = 'userId';
@@ -14,10 +15,12 @@ class Constants {
   static const String uniqueUserId = 'uniqueUserId';
   static const String documentStatus = 'documentStatus';
   static const String isDeposited = 'isDeposited';
+  static const String isFirstLaunch = 'isFirstLaunch';
   static const String addressProofFront = 'addressProofFront';
   static const String isOnboarding = 'isOnboarding';
   static const String fcmToken = 'fcmToken';
   static NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
+  static NumberFormat numberFormatter = NumberFormat.currency(locale: 'HI', name: '', decimalDigits: 0);
   static const tenMinutes = 600000;
 
   static String formatTime(DateTime dateTime) {

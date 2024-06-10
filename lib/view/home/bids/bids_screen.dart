@@ -41,19 +41,19 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Row(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 16,right: 16,top: 16),
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
                   child: SizedBox(
                     height: 50,
                     child: CustomTextFormField(
-                      controller: (tabController.index ==0)? liveCarListViewModel.searchController 
-                                  :otbCarsListViewModel.searchController, 
+                      controller: (tabController.index ==0)? liveCarListViewModel.searchController
+                                  :otbCarsListViewModel.searchController,
                       onChange: (value){
                         if(tabController.index == 0){
                           liveCarListViewModel.searchList.clear();
@@ -107,36 +107,42 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                 )
               ],
             ),
-            Obx(() => TabBar(
-              controller: tabController,
-              labelStyle: MyStyles.selectedTabBarTitleStyle,
-              labelColor: MyColors.black,
-              unselectedLabelStyle: MyStyles.selectedTabBarTitleStyle,
-              unselectedLabelColor: MyColors.grey.withOpacity(0.5),
-              indicatorColor: MyColors.kPrimaryColor,
-              indicatorSize: TabBarIndicatorSize.tab,
-              indicatorWeight: 4,
-              dividerColor: MyColors.grey.withOpacity(0.25),
-              dividerHeight: 2,
-              onTap: (val){
-                setState(() {});
-              },
-              tabs: [
-                Tab(text: '${MyStrings.live}(${Get.find<LiveCarsListViewModel>().liveCarsResponse.value.count ?? '0'})',),
-                Tab(text: '${MyStrings.otb}(${Get.find<OTBCarsListViewModel>().carsListResponse.value.count ?? '0'})',),
-              ],
-            ),),
-                  Expanded(
-                    child: TabBarView(
-                      controller: tabController,
-                      children: [
-                        LiveCarsListScreen(),
-                        OTBScreen(),
-                      ],
-                    ),
+          ),
+          Obx(() => Padding(
+            padding: const EdgeInsets.only(left: 16,right: 16),
+            child: Container(
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+              child: TabBar(
+                controller: tabController,
+                labelStyle: MyStyles.selectedTabBarTitleStyle,
+                labelColor: MyColors.black,
+                unselectedLabelStyle: MyStyles.selectedTabBarTitleStyle,
+                unselectedLabelColor: MyColors.grey.withOpacity(0.5),
+                indicatorColor: MyColors.kPrimaryColor,
+                indicatorSize: TabBarIndicatorSize.tab,
+                indicatorWeight: 4,
+                dividerColor: MyColors.grey.withOpacity(0.25),
+                dividerHeight: 2,
+                onTap: (val){
+                  setState(() {});
+                },
+                tabs: [
+                  Tab(text: '${MyStrings.live}(${Get.find<LiveCarsListViewModel>().liveCarsResponse.value.count ?? '0'})',),
+                  Tab(text: '${MyStrings.otb}(${Get.find<OTBCarsListViewModel>().carsListResponse.value.count ?? '0'})',),
+                ],
+              ),
+            ),
+          ),),
+                Expanded(
+                  child: TabBarView(
+                    controller: tabController,
+                    children: [
+                      LiveCarsListScreen(),
+                      OTBScreen(),
+                    ],
                   ),
-          ],
-        ),
+                ),
+        ],
       ),
     );
   }

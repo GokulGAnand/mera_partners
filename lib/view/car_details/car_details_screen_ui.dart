@@ -26,12 +26,20 @@ import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:mera_partners/widgets/otb_bottom_sheet.dart';
 import 'package:mera_partners/widgets/quote_price_bottom_sheet.dart';
 import 'package:video_player/video_player.dart';
+import '../../widgets/custom_toast.dart';
 
 class CarDetailsScreen extends StatefulWidget {
   const CarDetailsScreen({super.key});
 
   @override
   State<CarDetailsScreen> createState() => _CarDetailsScreenState();
+}
+
+class Item{
+  final String title;
+  final String value;
+
+  Item({required this.title,required this.value});
 }
 
 class _CarDetailsScreenState extends State<CarDetailsScreen>
@@ -89,16 +97,16 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       sliderImage: carDetailsScreenViewModel.sliderImage, 
                       pageSliderController: carDetailsScreenViewModel.pageSliderController, 
                       activePage: carDetailsScreenViewModel.activePage,
-                      height: 258,),
-                    (carDetailsScreenViewModel.carStatus != "")?Container(
+                      height: 256,),
+                    (carDetailsScreenViewModel.carStatus.value != "")?Container(
                       width: double.infinity,
                       height: 258,
                       padding: const EdgeInsets.all(32),
                       decoration: BoxDecoration(
                         color: MyColors.black3.withOpacity(0.7),),
-                      child: Image.asset((carDetailsScreenViewModel.carStatus == "bid won")?MyImages.bidWon
-                      :(carDetailsScreenViewModel.carStatus == "bid closed")?MyImages.bidClosed
-                      :MyImages.carSold),
+                      child: Image.asset((!carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) || carDetailsScreenViewModel.carStatus.value.toLowerCase() == "deal_lost")?MyImages.bidClosed
+                      // :(carDetailsScreenViewModel.carStatus.value == "bid closed")?MyImages.bidClosed
+                      :MyImages.bidWon),
                     ): const SizedBox(),
                     Positioned(
                         left: 12,
@@ -128,11 +136,11 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                   height: 37,
                   padding: const EdgeInsets.only(left: 12),
                   decoration: BoxDecoration(
-                    color: (carDetailsScreenViewModel.carStatus == "bid won")?MyColors.green4
-                        :(carDetailsScreenViewModel.carStatus == "bid closed")? MyColors.grey4
-                        :(carDetailsScreenViewModel.carStatus == "car sold")? MyColors.yellow
+                    color: (carDetailsScreenViewModel.carStatus.value.toLowerCase() == "bid won")?MyColors.green4
+                        :(carDetailsScreenViewModel.carStatus.value.toLowerCase() == "bid closed")? MyColors.grey4
+                        :(carDetailsScreenViewModel.carStatus.value.toLowerCase() == "car sold")? MyColors.yellow
                         :null,
-                    gradient: (carDetailsScreenViewModel.carStatus != "")?null
+                    gradient: (carDetailsScreenViewModel.carStatus.value != "")?null
                         :LinearGradient(
                       end: const Alignment(2.00, 0.00),
                       begin: const Alignment(-1, 0),
@@ -152,11 +160,11 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                   child: Obx(() => Row(
                     children: [
                       Text(
-                        (carDetailsScreenViewModel.carStatus == "bid won")
+                        (carDetailsScreenViewModel.carStatus.value == "bid won")
                             ? MyStrings.bidWon
-                            :(carDetailsScreenViewModel.carStatus == "bid closed")
+                            :(carDetailsScreenViewModel.carStatus.value == "bid closed")
                             ? MyStrings.bidClosed
-                            :(carDetailsScreenViewModel.carStatus == "car sold")
+                            :(carDetailsScreenViewModel.carStatus.value == "car sold")
                             ? MyStrings.carSold
                             :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase()
                             ? MyStrings.closingPrice
@@ -173,8 +181,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         // :(carDetailsScreenViewModel.carStatus == "car sold")? MyStrings.carSold
                         // :MyStrings.highestBid,
                         textAlign: TextAlign.center,
-                        style: (carDetailsScreenViewModel.carStatus == "bid closed")? MyStyles.pageTitleStyle
-                            :(carDetailsScreenViewModel.carStatus == "car sold")? MyStyles.pageTitleStyle
+                        style: (carDetailsScreenViewModel.carStatus.value == "bid closed")? MyStyles.pageTitleStyle
+                            :(carDetailsScreenViewModel.carStatus.value == "car sold")? MyStyles.pageTitleStyle
                             :MyStyles.whiteTitleStyle,
                       ),
                       const SizedBox(
@@ -220,9 +228,18 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       ListTile(
                         contentPadding: EdgeInsets.zero,
                         dense: true,
-                        title: Text(
-                          carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.model.toString(),
-                          style: MyStyles.selectedTabBarTitleStyle,
+                        title: Row(
+                          children: [
+                            Text(
+                              carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.monthAndYearOfManufacture?.substring((carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.monthAndYearOfManufacture?.length ?? 0) - 4) ?? '',
+                              style: MyStyles.selectedTabBarTitleStyle,
+                            ),
+                            const SizedBox(width: 10,),
+                            Text(
+                              carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.model.toString(),
+                              style: MyStyles.selectedTabBarTitleStyle,
+                            ),
+                          ],
                         ),
                         subtitle: Text(
                           carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.variant.toString(),
@@ -261,7 +278,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo?.odometerReading != null)...[
                                   const Text('|', style: MyStyles.regular12),
                                   const SizedBox(width: 6),
-                                  Text('${carDetailsScreenViewModel.formatKmDriven(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo?.odometerReading.toString() ?? '0')} KM', style: MyStyles.regular12),
+                                  Text('${Constants.numberFormatter.format(double.parse(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo?.odometerReading.toString() ?? '0'))} KM', style: MyStyles.regular12),
                                   const SizedBox(width: 6),
                                 ],
                                 if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.ownershipNumber != null)...[
@@ -315,7 +332,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                             child: SizedBox(
                                               width: 58,
                                               height: 58,
-                                              child: Image.network(carDetailsScreenViewModel.imageList[index]["images"][0].value, fit: BoxFit.cover,
+                                              child: Image.network(carDetailsScreenViewModel.imageList[index]["images"][0].image, fit: BoxFit.cover,
                                               errorBuilder: (context, error, stackTrace) {
                                                 return SvgPicture.asset(MyImages.loadingCar);
                                               }, frameBuilder:
@@ -372,12 +389,12 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                             TextSpan(
                               children: [
                                 const TextSpan(
-                                  text: "${MyStrings.fmv}  ",
+                                  text: "${MyStrings.fairValue}  ",
                                   style: MyStyles.subTitleGreayStyle,
                                 ),
                                 TextSpan(
                                   text: globals.documentStatus == DocumentStatus.VERIFIED.name ? 
-                                  '₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue}' 
+                                  Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue)
                                   :(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue != null)
                                   ?'₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
                                   :'₹${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}',
@@ -433,7 +450,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                     width: 5,
                                   ),
                                   Text(
-                                    carDetailsScreenViewModel.criticalIssue[i],
+                                    carDetailsScreenViewModel.criticalIssue[i].capitalize ?? '',
                                     style: MyStyles.red2_12700,
                                   )
                                 ],
@@ -662,11 +679,11 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         child: Text(
                           list[index].value!,
                           textAlign: TextAlign.left,
-                          style: MyStyles.black12400,
+                          style: _getValueStyle(Item(title: list[index].title, value: list[index].value??""))
                         ),
                       ),
-                                        ],
-                                      ),
+                      ],
+                      ),
                     );
                 });
   }
@@ -764,44 +781,36 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset(
-                    MySvg.timer,
-                    width: 18,
-                    // ignore: deprecated_member_use
-                    color: MyColors.green2,
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Obx(
-                    () {
-                      return CountdownTimer(
-                                    controller: carDetailsScreenViewModel.timerController?.value,
-                                    widgetBuilder: (_, CurrentRemainingTime? time) {
-                                      if (time == null) {
-                                        return const Text('');
-                                      }
-                                      // if(time.min != null){
-                                      //   WidgetsBinding.instance.addPostFrameCallback((_) {
-                                      //     widget.auctionTime.value = time.min ?? 0;
-                                      //   });
-                                      // }
-                                      return Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                                        color: MyColors.green2,
-                                        fontSize: 14,
-                                        fontFamily: 'DM Sans',
-                                        fontWeight: FontWeight.w700,
-                                        height: 0,
-                                      ));
-                                    },
-                                  );
-                    }
-                  ),
-                      // if(carDetailsScreenViewModel.duration.value != null)
-                      //    Text(
-                      //     carDetailsScreenViewModel.formatDuration(carDetailsScreenViewModel.duration.value!),
-                      //     style: MyStyles.green2_14700,
-                      //   )
+                  Obx(() => CountdownTimer(
+                    controller: carDetailsScreenViewModel.timerController?.value,
+                    widgetBuilder: (_, CurrentRemainingTime? time) {
+                      if (time == null) {
+                        return const Text(MyStrings.paused);
+                      }
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              if(time.min != 0 && carDetailsScreenViewModel.timerController?.value != null)
+                                Icon(
+                                  Icons.timer_sharp,
+                                  color: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() ? MyColors.kPrimaryColor : (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
+                                  size: 14,
+                                ),
+                              Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
+                                color: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() ? MyColors.kPrimaryColor : (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
+                                fontSize: 14,
+                                fontFamily: 'DM Sans',
+                                fontWeight: FontWeight.w700,
+                                height: 0,
+                              ))
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  ),),
                 ],
               ),
               const SizedBox(
@@ -870,7 +879,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 backgroundColor: Colors.transparent,
                                 context: context,
                                 builder: (context) {
-                                  return CustomBidBottomSheet(
+                                  return Obx(() => CustomBidBottomSheet(
                                     timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status?.toLowerCase() == CarStatus.scheduled.name
                                         ?carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime != null ?
                                     CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null
@@ -890,13 +899,17 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                         : RxInt(10000),
                                     onAutoBidPressed: () {
                                       try {
-                                        liveCarListViewModel.placeAutoBid(liveCarListViewModel.autoBidController.value.text, carDetailsScreenViewModel.reportResponse.value.data!.sId);
-                                        Navigator.of(context).pop();
+                                        if(globals.uniqueUserId != null && liveCarListViewModel.liveCarsResponse.value.data?[0].winner != null && liveCarListViewModel.liveCarsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && (int.tryParse(liveCarListViewModel.autoBidController.value.text) ?? 0) <= element.autoBidLimit!)){
+                                          CustomToast.instance.showMsg(MyStrings.vAutoBidLimit+(liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard![0].autoBidLimit ?? 0).toString());
+                                        }else{
+                                          liveCarListViewModel.placeAutoBid(liveCarListViewModel.autoBidController.value.text, carDetailsScreenViewModel.reportResponse.value.data!.sId);
+                                          Navigator.of(context).pop();
+                                        }
                                       } catch (e) {
                                         log(e.toString());
                                       }
                                     },
-                                  );
+                                  ),);
                                 });
                         },
                         buttonStyle: ElevatedButton.styleFrom(
@@ -929,7 +942,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 backgroundColor: Colors.transparent,
                                 context: context,
                                 builder: (context) {
-                                  return CustomBidBottomSheet(
+                                  return Obx(() => CustomBidBottomSheet(
                                     timerController: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status?.toLowerCase() == CarStatus.scheduled.name
                                         ?carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime != null ?
                                     CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},).obs : null
@@ -938,7 +951,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                     bidStartTime: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()),
                                     bidEndTime: DateTime.parse(carDetailsScreenViewModel.carDetailsResponse.value.data![0].bidEndTime ?? DateTime.now().toString()),
                                     amountController: liveCarListViewModel.bidController,
-                                    bidValue: RxInt(carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid!.toInt() ?? 0),
+                                    bidValue: RxInt(carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid?.toInt() ?? 0),
                                     stepRate: carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! <= 99999
                                         ? RxInt(2000)
                                         : (carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! >= 100000 && carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid! <= 299999)
@@ -948,13 +961,17 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                         : RxInt(10000),
                                     onBidPressed: () {
                                       try {
-                                        liveCarListViewModel.placeBid(liveCarListViewModel.bidController.value.text, carDetailsScreenViewModel.reportResponse.value.data?.sId);
-                                        Navigator.of(context).pop();
+                                        if(globals.uniqueUserId != null && liveCarListViewModel.liveCarsResponse.value.data?[0].winner != null && liveCarListViewModel.liveCarsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && (int.tryParse(liveCarListViewModel.bidController.value.text) ?? 0) <= element.autoBidLimit!)){
+                                          CustomToast.instance.showMsg(MyStrings.vAutoBidLimit+(liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard![0].autoBidLimit ?? 0).toString());
+                                        }else{
+                                          liveCarListViewModel.placeBid(liveCarListViewModel.bidController.value.text, carDetailsScreenViewModel.reportResponse.value.data?.sId);
+                                          Navigator.of(context).pop();
+                                        }
                                       } catch (e) {
                                         log(e.toString());
                                       }
                                     },
-                                  );
+                                  ),);
                                 });
                         },
                         buttonStyle: ElevatedButton.styleFrom(
@@ -1053,7 +1070,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                       const SizedBox(
                                         height: 2,
                                       ),
-                                      (index == 0)
+                                      (index == 0 || index == 4)
                                           ? const SizedBox()
                                           : Container(
                                               padding: const EdgeInsets.symmetric(
@@ -1268,6 +1285,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                         backgroundColor: list[index].color,
                                         child: SvgPicture.asset(
                                           MySvg.carCrash,
+                                          color: list[index].color == MyColors.yellow ? Colors.black:null,
                                         ),
                                       ),
                                       const SizedBox(
@@ -1285,11 +1303,12 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                       physics: const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       itemCount: list[index].listValue!.length,
-                                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2,
                                         crossAxisSpacing: 8,
                                         mainAxisSpacing: 8,
-                                        mainAxisExtent: 30), 
+                                        mainAxisExtent: list[index].listValue!.any((item) => item.length >= 20) ? 45 : 30,
+                                      ),
                                         itemBuilder: (context, i){
                                           return Container(
                                             alignment: Alignment.center,
@@ -1300,19 +1319,21 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                             ),
                                             child: Text(
                                               list[index].listValue![i].capitalize.toString(),
-                                            style: MyStyles.white12500,),
+                                              style: list[index].color == MyColors.warning ? MyStyles.white12500 : MyStyles.black12500,
+                                              textAlign: TextAlign.center,
+                                            ),
                                           );
                                         }),
                                   ),
                                 ],
                               ),
                             ),
-                            if(list[index].value!.startsWith("http") || list[index].value!.startsWith("https")) Padding(
+                            if(list[index].image != null && (list[index].image!.startsWith("http") || list[index].image!.startsWith("https"))) Padding(
                               padding: const EdgeInsets.only(left: 10.0),
                               child: SizedBox(
                                 width: 75,
                                 height: 68,
-                                child: Image.network(list[index].value.toString(), fit: BoxFit.cover,
+                                child: Image.network(list[index].image!, fit: BoxFit.cover,
                                     errorBuilder: (context, error, stackTrace) {
                                       return SvgPicture.asset(MyImages.loadingCar);
                                     }, frameBuilder:
@@ -1431,70 +1452,73 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Obx(() => Scaffold(
       backgroundColor: MyColors.lightBlue1,
       body: SafeArea(
         child: Obx(
-          () {
-            if(carDetailsScreenViewModel.reportResponse.value.data == null || carDetailsScreenViewModel.carDetailsResponse.value.data == null){
-              return const Center(child: CircularProgressIndicator(color: MyColors.kPrimaryColor,));
-            }
-            carDetailsScreenViewModel.exteriorTabController =
-        TabController(length: (carDetailsScreenViewModel.exteriorIssue.isEmpty)?1:2, vsync: this);
-    carDetailsScreenViewModel.interiorElectricalTabController =
-        TabController(length: (carDetailsScreenViewModel.interiorAndElectricalIssue.isEmpty)?1:2, vsync: this);
-    carDetailsScreenViewModel.engineTabController =
-        TabController(length: (carDetailsScreenViewModel.engineIssue.isEmpty)?1:2, vsync: this);
-    carDetailsScreenViewModel.acTabController =
-        TabController(length: (carDetailsScreenViewModel.airConditionIssue.isEmpty)?1:2, vsync: this);
-    carDetailsScreenViewModel.testDriveTabController =
-        TabController(length: (carDetailsScreenViewModel.testDriveIssue.isEmpty)?1:2, vsync: this);
-            return CustomScrollView(
-                controller: carDetailsScreenViewModel.scrollController,
-                slivers: <Widget>[
-                  SliverAppBar(
-                    pinned: true,
-                    automaticallyImplyLeading: false,
-                    expandedHeight:  (carDetailsScreenViewModel.criticalIssue.isEmpty)?541:725,
-                    toolbarHeight: 134,
-                    scrolledUnderElevation: 0,
-                    flexibleSpace: FlexibleSpaceBar(
-                      collapseMode: CollapseMode.pin,
-                      expandedTitleScale: 1,
-                      titlePadding: const EdgeInsets.all(0),
-                      title: Obx(() {
-                        if (carDetailsScreenViewModel.showSliverAppBarTitle.value) {
-                          return sliverAppBarTitle();
-                        }
-                        return const SizedBox();
-                      }),
-                      background: page1(),
-                    ),
-                  ),
-                  SliverPersistentHeader(
-                    pinned: true,
-                    delegate: SliverAppBarDelegate(
-                      minHeight: 120.0,
-                      maxHeight: 120.0,
-                      child: inspectionReport(),
-                    ),
-                  ),
-                  SliverList(
-                      delegate: SliverChildListDelegate.fixed(<Widget>[
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 120),
-                      child: Column(
-                        children: page2(),
+                () {
+              if(carDetailsScreenViewModel.reportResponse.value.data == null || carDetailsScreenViewModel.carDetailsResponse.value.data == null){
+                return const Center(child: CircularProgressIndicator(color: MyColors.kPrimaryColor,));
+              }
+              carDetailsScreenViewModel.exteriorTabController =
+                  TabController(length: (carDetailsScreenViewModel.exteriorIssue.isEmpty)?1:2, vsync: this);
+              carDetailsScreenViewModel.interiorElectricalTabController =
+                  TabController(length: (carDetailsScreenViewModel.interiorAndElectricalIssue.isEmpty)?1:2, vsync: this);
+              carDetailsScreenViewModel.engineTabController =
+                  TabController(length: (carDetailsScreenViewModel.engineIssue.isEmpty)?1:2, vsync: this);
+              carDetailsScreenViewModel.acTabController =
+                  TabController(length: (carDetailsScreenViewModel.airConditionIssue.isEmpty)?1:2, vsync: this);
+              carDetailsScreenViewModel.testDriveTabController =
+                  TabController(length: (carDetailsScreenViewModel.testDriveIssue.isEmpty)?1:2, vsync: this);
+              return CustomScrollView(
+                  controller: carDetailsScreenViewModel.scrollController,
+                  slivers: <Widget>[
+                    SliverAppBar(
+                      pinned: true,
+                      automaticallyImplyLeading: false,
+                      expandedHeight:  (carDetailsScreenViewModel.criticalIssue.isEmpty)?541:725,
+                      toolbarHeight: 134,
+                      scrolledUnderElevation: 0,
+                      flexibleSpace: FlexibleSpaceBar(
+                        collapseMode: CollapseMode.pin,
+                        expandedTitleScale: 1,
+                        titlePadding: const EdgeInsets.all(0),
+                        title: Obx(() {
+                          if (carDetailsScreenViewModel.showSliverAppBarTitle.value) {
+                            return sliverAppBarTitle();
+                          }
+                          return const SizedBox();
+                        }),
+                        background: page1(),
                       ),
-                    )
-                  ])),
-                ]);
-          }
+                    ),
+                    SliverPersistentHeader(
+                      pinned: true,
+                      delegate: SliverAppBarDelegate(
+                        minHeight: 120.0,
+                        maxHeight: 120.0,
+                        child: inspectionReport(),
+                      ),
+                    ),
+                    SliverList(
+                        delegate: SliverChildListDelegate.fixed(<Widget>[
+                          Padding(
+                            padding:
+                            const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 120),
+                            child: Column(
+                              children: page2(),
+                            ),
+                          )
+                        ])),
+                  ]);
+            }
         ),
       ),
-      bottomSheet: bottomSheetWidget(),
-    );
+      bottomSheet:
+      carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.live.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase()
+          ? bottomSheetWidget()
+          : const SizedBox(),
+    ),);
   }
 }
 
@@ -1523,5 +1547,58 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
     return maxHeight != oldDelegate.maxHeight ||
         minHeight != oldDelegate.minHeight ||
         child != oldDelegate.child;
+  }
+}
+
+TextStyle _getValueStyle(Item item) {
+  if (item.title == "RC Availability") {
+    if(item.value == "Original" || item.value == "Photocopy" || item.value == "Duplicate"){
+      //print('The item inside it is------------------${item.value}');
+      return MyStyles.green_12500;
+    }
+    else{
+      return MyStyles.warningRed_12500;
+    }
+  } else if (item.title == "RC Mismatch") {
+    if(item.value == "Yes"){
+      return MyStyles.warningRed_12500;
+    }
+    else{
+      return MyStyles.green_12500;
+    }
+  } else if (item.title == "NOC Issued" && item.value == "No") {
+    return MyStyles.warningRed_12500;
+  } else if (item.title == "Insurance") {
+    if(item.value == "Not Applicable"){
+      return MyStyles.warningRed_12500;
+    }
+    else{
+      return MyStyles.green_12500;
+    }
+  }
+  // else if (item.title == "No Claim Bonus") {
+  //     if(item.value == "Yes"){
+  //       return MyStyles.green_12500;
+  //     }
+  //     else{
+  //       return MyStyles.warningRed_12500;
+  //     }
+  // }
+  else if (item.title == "Under Hypothecation") {
+    if(item.value == "Yes"){
+      return MyStyles.warningRed_12500;
+    }
+    else{
+      return MyStyles.green_12500;
+    }
+  } else if (item.title == "Duplicate Key") {
+    if(item.value == "No"){
+      return MyStyles.warningRed_12500;
+    }
+    else{
+      return MyStyles.green_12500;
+    }
+  } else {
+    return MyStyles.black12400;
   }
 }

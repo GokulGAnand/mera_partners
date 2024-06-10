@@ -26,7 +26,7 @@ class NotificationService {
 
   notificationDetails(bool isNegotiation, {Duration? negotiationTimer}) {
     DateTime currentTime = DateTime.now();
-    DateTime whenTimer = currentTime.add(negotiationTimer ?? Duration(seconds: 0));
+    DateTime whenTimer = currentTime.add(negotiationTimer ?? const Duration(seconds: 0));
     return NotificationDetails(
         android: AndroidNotificationDetails('channelId', 'channelName',
         icon: '@drawable/mera_cars_notification',
@@ -48,7 +48,7 @@ class NotificationService {
             visibility: NotificationVisibility.public,
             // largeIcon: DrawableResourceAndroidBitmap('@drawable/mera_cars_notification'),
             actions: <AndroidNotificationAction>[
-              AndroidNotificationAction(
+              const AndroidNotificationAction(
                 'dismiss', // ID of the action
                 'Dismiss', // Label of the action
                 showsUserInterface: true,
@@ -57,7 +57,7 @@ class NotificationService {
               ),
             ],
             ),
-        iOS: DarwinNotificationDetails());
+        iOS: const DarwinNotificationDetails());
   }
 
   Future showNotification(
@@ -75,7 +75,7 @@ class NotificationService {
         negotiationTimer: negotiationTimer,
         );
     } catch(e) {
-      throw(e);
+      rethrow;
     }
   }
 
@@ -86,7 +86,7 @@ class NotificationService {
         body: "Autobid limit reached for the car ",
         isNegotiation: false);
     } catch(e){
-      throw(e);
+      rethrow;
     }
   }
 }

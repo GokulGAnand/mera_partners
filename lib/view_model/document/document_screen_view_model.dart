@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/service/endpoints.dart';
-import 'package:mera_partners/view_model/login/login_view_model.dart';
 import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:mera_partners/widgets/progressbar.dart';
 import 'package:http/http.dart' as http;
@@ -14,6 +13,9 @@ import 'package:http_parser/http_parser.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../../model/response/payment/create_order_response.dart';
 import '../../model/response/user_data/user_info_response.dart';
+import '../../utils/constants.dart';
+import '../../utils/enum.dart';
+import '../../utils/shared_pref_manager.dart';
 import '../../utils/strings.dart';
 
 class DocumentScreenViewModel extends GetxController {
@@ -26,6 +28,7 @@ class DocumentScreenViewModel extends GetxController {
   var page = Get.arguments;
 
   Rx<TextEditingController> fullNameController = TextEditingController().obs;
+  Rx<TextEditingController> emailController = TextEditingController().obs;
   Rx<TextEditingController> phoneNumberController = TextEditingController(text: globals.phoneNum).obs;
   Rx<TextEditingController> businessNameController = TextEditingController().obs;
   Rx<TextEditingController> businessAddressController = TextEditingController().obs;
@@ -49,16 +52,16 @@ class DocumentScreenViewModel extends GetxController {
   void onInit() {
     pageController.value = PageController(initialPage: page ?? 0);
     activePage.value = page ?? 0;
-    if (Get.isRegistered<LoginScreenViewModel>()) {
-      if (Get.find<LoginScreenViewModel>().userInfoResponse.value.data != null) {
-        userInfoResponse.value = Get.find<LoginScreenViewModel>().userInfoResponse.value;
-        loadData();
-      } else {
-        getDocument();
-      }
-    } else {
+    // if (Get.isRegistered<LoginScreenViewModel>()) {
+    //   if (Get.find<LoginScreenViewModel>().userInfoResponse.value.data != null) {
+    //     userInfoResponse.value = Get.find<LoginScreenViewModel>().userInfoResponse.value;
+    //     loadData();
+    //   } else {
+    //     getDocument();
+    //   }
+    // } else {
       getDocument();
-    }
+    // }
     super.onInit();
   }
 
@@ -93,6 +96,12 @@ class DocumentScreenViewModel extends GetxController {
       if (userInfoResponse.value.data != null) {
         loadData();
       }
+      if (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false) {
+        globals.documentStatus = userInfoResponse.value.data?.first.isDocumentsVerified;
+        globals.isDeposited = userInfoResponse.value.data?.first.isDeposited;
+        SharedPrefManager.instance.setStringAsync(Constants.documentStatus, userInfoResponse.value.data!.first.isDocumentsVerified.toString());
+        SharedPrefManager.instance.setBoolAsync(Constants.isDeposited, userInfoResponse.value.data!.first.isDeposited ?? false);
+      }
     } catch (e) {
       log(e.toString());
     }
@@ -100,6 +109,7 @@ class DocumentScreenViewModel extends GetxController {
 
   void loadData() {
     fullNameController.value.text = userInfoResponse.value.data?[0].fullname ?? '';
+    emailController.value.text = userInfoResponse.value.data?[0].email ?? '';
     phoneNumberController.value.text = userInfoResponse.value.data?[0].contactNo.toString() ?? '';
     businessNameController.value.text = userInfoResponse.value.data?[0].businessName ?? '';
     businessAddressController.value.text = userInfoResponse.value.data?[0].businessAddress ?? '';
@@ -129,7 +139,7 @@ class DocumentScreenViewModel extends GetxController {
     ProgressBar.instance.showProgressbar(Get.context!);
     try {
       var request = http.MultipartRequest('PATCH', Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId!}'));
-      request.fields.addAll({'fullname': fullNameController.value.text, 'businessName': businessNameController.value.text, 'businessAddress': businessAddressController.value.text, 'pincode': pinCodeController.value.text, 'contactNo': phoneNumberController.value.text, 'district': districtController.value.text});
+      request.fields.addAll({'fullname': fullNameController.value.text, "isDocumentsVerified": userInfoResponse.value.data?[0].isDocumentsVerified == "NOTSUBMITTED" ? DocumentStatus.SUBMITTED.name : userInfoResponse.value.data![0].isDocumentsVerified!,'email': emailController.value.text, 'businessName': businessNameController.value.text, 'businessAddress': businessAddressController.value.text, 'pincode': pinCodeController.value.text, 'contactNo': phoneNumberController.value.text, 'district': districtController.value.text});
       if (panCard.value != null && !panCard.value!.path.startsWith('http') && !panCard.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('panCard', panCard.value!.path, contentType: MediaType('image', panCard.value!.path.split('.').last)));
       }
@@ -159,6 +169,8 @@ class DocumentScreenViewModel extends GetxController {
       var response = await request.send();
 
       if (response.statusCode == 200) {
+        globals.documentStatus = DocumentStatus.SUBMITTED.name;
+        await SharedPrefManager.instance.setStringAsync(Constants.documentStatus,DocumentStatus.SUBMITTED.name);
         ProgressBar.instance.stopProgressBar(Get.context!);
         log('success');
         log(response.stream.toString());
@@ -194,7 +206,7 @@ class DocumentScreenViewModel extends GetxController {
           // 'send_sms_hash': true,
           'order_id': '${createOrderResponse.value.data?.id}',
           // 'callback_url': 'http://192.168.1.12:8000/api/v1/users/verifyPayment',
-          'prefill': {'contact': globals.phoneNum, 'email': 'test@razorpay.com'},
+          'prefill': {'contact': globals.phoneNum, 'email': globals.email ?? 'test@razorpay.com'},
           'external': {
             'wallets': ['paytm']
           }
@@ -280,6 +292,8 @@ class DocumentScreenViewModel extends GetxController {
             "razorpay_signature": signature}));
       log(response.body.toString());
       if (response.statusCode == 201 || response.statusCode == 200) {
+        globals.isDeposited = true;
+        await SharedPrefManager.instance.setBoolAsync(Constants.isDeposited,true);
         ProgressBar.instance.stopProgressBar(Get.context!);
         log("success");
         Get.offNamed(AppRoutes.homeScreen);

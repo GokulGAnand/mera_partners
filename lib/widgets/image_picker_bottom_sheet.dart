@@ -21,12 +21,15 @@ class ImagePickerSheet extends StatelessWidget {
 
   Future pickImage(ImageSource source) async {
     try {
-      if(source == ImageSource.camera){
+      if (source == ImageSource.camera) {
         var cameraStatus = await Permission.camera.status;
         if (!cameraStatus.isGranted) {
           final result = await Permission.camera.request();
-          if(!result.isGranted){
-            openAppSettings();
+          if (!result.isGranted) {
+            if (result.isPermanentlyDenied) {
+              openAppSettings();
+            }
+            return;
           }
           log("camera access: ${result.isGranted}");
         }
@@ -177,7 +180,7 @@ void _showFullScreenImage(BuildContext context, File? imageFile, String? imageUr
               Align(
                 alignment: Alignment.topRight,
                 child: IconButton(
-                  icon: Icon(Icons.close),
+                  icon: const Icon(Icons.close),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -188,7 +191,7 @@ void _showFullScreenImage(BuildContext context, File? imageFile, String? imageUr
               else if (imageUrl != null)
                 Image.network(imageUrl)
               else
-                Text('No image available'),
+                const Text('No image available'),
             ],
           ),
         ),

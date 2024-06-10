@@ -40,6 +40,7 @@ class _NegotiationState extends State<Negotiation> {
                   height: 33,
                   margin: const EdgeInsets.symmetric(vertical: 12),
                   child: ListView.builder(
+                      padding: const EdgeInsets.fromLTRB(16,0,16,0),
                       scrollDirection: Axis.horizontal,
                       itemCount: controller.negotiationOrdersCategory.length,
                       itemBuilder: (context, index) {
@@ -50,7 +51,11 @@ class _NegotiationState extends State<Negotiation> {
                                 element["isClick"].value = false;
                               }
                               controller.negotiationOrdersCategory[index]["isClick"].value = true;
-                              controller.isNegotiation.value = !controller.isNegotiation.value;
+                              if (index == 0) {
+                                controller.isNegotiation.value = true;
+                              } else {
+                                controller.isNegotiation.value = false;
+                              }
                             },
                             child: Container(
                               padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -76,12 +81,13 @@ class _NegotiationState extends State<Negotiation> {
                     ? GridView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
+                        padding: const EdgeInsets.fromLTRB(16,0,16,0),
                         itemCount: controller.searchNegotiationList.length,
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           crossAxisSpacing: 22,
                           mainAxisSpacing: 18,
-                          mainAxisExtent: 289,
+                          mainAxisExtent: MediaQuery.of(context).size.height > 800 ? 284 : 270,
                         ),
                         itemBuilder: (context, index) {
                           return Obx(() {
@@ -108,8 +114,8 @@ class _NegotiationState extends State<Negotiation> {
                                 ),
                               ),
                               dealStatus: OrderStatus.negotiation.name,
-                              buttonStatus: controller.searchNegotiationList[index].negotiationStatus == Status.pending.name || controller.searchNegotiationList[index].negotiationStatus!.isEmpty ? Status.pending.name : Status.view.name,
-                              buttonText: controller.searchNegotiationList[index].negotiationStatus == Status.pending.name || controller.searchNegotiationList[index].negotiationStatus!.isEmpty ? Status.pending.name : MyStrings.viewOffer,
+                              buttonStatus: controller.searchNegotiationList[index].negotiationStatus?.toLowerCase() == Status.pending.name || controller.searchNegotiationList[index].negotiationStatus!.isEmpty ? Status.pending.name : Status.view.name,
+                              buttonText: controller.searchNegotiationList[index].negotiationStatus?.toLowerCase() == Status.pending.name || controller.searchNegotiationList[index].negotiationStatus!.isEmpty ? Status.pending.name : MyStrings.viewOffer,
                               onPressed: controller.searchNegotiationList[index].negotiationStatus?.toLowerCase() == Status.pending.name || controller.searchNegotiationList[index].negotiationStatus!.isEmpty
                                   ? () => null
                                   : () {
@@ -149,22 +155,25 @@ class _NegotiationState extends State<Negotiation> {
                               carModel: controller.searchNegotiationList[index].model ?? '',
                               carName: controller.searchNegotiationList[index].variant ?? '',
                               carID: controller.searchNegotiationList[index].uniqueId != null ? controller.searchNegotiationList[index].uniqueId.toString() : '',
+                              uniqueCarID: controller.searchNegotiationList[index].sId != null ? controller.searchNegotiationList[index].sId.toString() : '',
                               imageURL: controller.searchNegotiationList[index].front?.url ?? controller.searchNegotiationList[index].frontLeft?.url ?? controller.searchNegotiationList[index].frontRight?.url ?? '',
                               finalPrice: Constants.numberFormat.format(controller.searchNegotiationList[index].highestBid),
+                              offerPrice: Constants.numberFormat.format(controller.searchNegotiationList[index].highestBid),
                             );
                           });
                         })
                     : (controller.isNegotiation.value == false && controller.searchLostList.isNotEmpty)
                         ? Obx(
                             () => GridView.builder(
+                                padding: const EdgeInsets.fromLTRB(16,0,16,0),
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: controller.searchLostList.length,
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
                                   crossAxisSpacing: 22,
                                   mainAxisSpacing: 18,
-                                  mainAxisExtent: 272,
+                                  mainAxisExtent: MediaQuery.of(context).size.height > 800 ? 284 : 270,
                                 ),
                                 itemBuilder: (context, index) {
                                   return CustomOrderContainer(
@@ -183,8 +192,10 @@ class _NegotiationState extends State<Negotiation> {
                                     carModel: controller.searchLostList[index].model ?? '',
                                     carName: controller.searchLostList[index].variant ?? '',
                                     carID: controller.searchLostList[index].uniqueId.toString(),
+                                    uniqueCarID: controller.searchLostList[index].sId.toString(),
                                     imageURL: controller.searchLostList[index].frontLeft?.url ?? '',
                                     finalPrice: Constants.numberFormat.format(controller.searchLostList[index].highestBid),
+                                    offerPrice: Constants.numberFormat.format(controller.searchLostList[index].highestBid),
                                   );
                                 }),
                           )

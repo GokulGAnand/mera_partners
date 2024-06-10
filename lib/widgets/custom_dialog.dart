@@ -17,14 +17,43 @@ class CustomDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10)
       ),
-      contentPadding: EdgeInsets.fromLTRB(24, 0, 0, 0),
+      contentPadding: const EdgeInsets.fromLTRB(24, 0, 0, 0),
       //buttonPadding: EdgeInsets.fromLTRB(0, 10, 27, 0),
-      actionsPadding: EdgeInsets.fromLTRB(0, 20, 30, 2),
+      actionsPadding: const EdgeInsets.fromLTRB(0, 20, 30, 2),
 
       title: Text(title ?? '',style: titleStyle ?? MyStyles.pageTitleStyle,),
       content: Text(content ?? '',style: MyStyles.pageTitleStyle,),
       actions: [
         TextButton(onPressed: okFun, child: Text(MyStrings.cont.toUpperCase()),),
+        TextButton(onPressed: cancelFun, child: Text(MyStrings.cancel.toUpperCase(),style: const TextStyle(color: MyColors.grey),),),
+      ],
+    );
+  }
+}
+
+
+class CustomExitDialog extends StatelessWidget {
+  final String? title;
+  final String? content;
+  final TextStyle? titleStyle;
+  final VoidCallback? exitFun;
+  final VoidCallback? cancelFun;
+  const CustomExitDialog({super.key, this.title, this.exitFun, this.cancelFun, this.content, this.titleStyle});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10)
+      ),
+      contentPadding: const EdgeInsets.fromLTRB(24, 0, 0, 0),
+      //buttonPadding: EdgeInsets.fromLTRB(0, 10, 27, 0),
+      actionsPadding: const EdgeInsets.fromLTRB(0, 20, 30, 2),
+
+      title: Text(title ?? '',style: titleStyle ?? MyStyles.pageTitleStyle,),
+      content: Text(content ?? '',style: MyStyles.pageTitleStyle,),
+      actions: [
+        TextButton(onPressed: exitFun, child: Text(MyStrings.cont.toUpperCase()),),
         TextButton(onPressed: cancelFun, child: Text(MyStrings.cancel.toUpperCase(),style: const TextStyle(color: MyColors.grey),),),
       ],
     );

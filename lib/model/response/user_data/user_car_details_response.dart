@@ -33,6 +33,7 @@ class UserResponse {
 }
 
 class UserData {
+  FcmNotification? fcmNotification;
   String? sId;
   String? userId;
   bool? isBlocked;
@@ -41,28 +42,16 @@ class UserData {
   bool? isDeactivate;
   bool? isDeposited;
   num? depositedAmount;
-  String? isDocumentsVerified;
-  String? createdAt;
-  String? updatedAt;
-  AddressProofBack? addressProofBack;
-  AddressProofBack? addressProofFront;
-  String? businessAddress;
-  String? businessName;
-  AddressProofBack? canceledCheque;
-  String? district;
-  String? fullname;
-  AddressProofBack? panCard;
-  String? pincode;
-  AddressProofBack? shopPicture;
-  AddressProofBack? visitingCard;
-  String? orderId;
-  String? paymentId;
   List<LostDeal>? lostDeal;
   List<LikedCars>? likedCars;
   List<BiddedCars>? biddedCars;
+  String? isDocumentsVerified;
+  String? createdAt;
+  String? updatedAt;
 
   UserData(
-      {this.sId,
+      {this.fcmNotification,
+        this.sId,
         this.userId,
         this.isBlocked,
         this.role,
@@ -70,27 +59,17 @@ class UserData {
         this.isDeactivate,
         this.isDeposited,
         this.depositedAmount,
-        this.isDocumentsVerified,
-        this.createdAt,
-        this.updatedAt,
-        this.addressProofBack,
-        this.addressProofFront,
-        this.businessAddress,
-        this.businessName,
-        this.canceledCheque,
-        this.district,
-        this.fullname,
-        this.panCard,
-        this.pincode,
-        this.shopPicture,
-        this.visitingCard,
-        this.orderId,
-        this.paymentId,
         this.lostDeal,
         this.likedCars,
-        this.biddedCars});
+        this.biddedCars,
+        this.isDocumentsVerified,
+        this.createdAt,
+        this.updatedAt});
 
   UserData.fromJson(Map<String, dynamic> json) {
+    fcmNotification = json['fcmNotification'] != null
+        ? FcmNotification.fromJson(json['fcmNotification'])
+        : null;
     sId = json['_id'];
     userId = json['userId'];
     isBlocked = json['isBlocked'];
@@ -99,34 +78,6 @@ class UserData {
     isDeactivate = json['isDeactivate'];
     isDeposited = json['isDeposited'];
     depositedAmount = json['depositedAmount'];
-    isDocumentsVerified = json['isDocumentsVerified'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    addressProofBack = json['addressProofBack'] != null
-        ? AddressProofBack.fromJson(json['addressProofBack'])
-        : null;
-    addressProofFront = json['addressProofFront'] != null
-        ? AddressProofBack.fromJson(json['addressProofFront'])
-        : null;
-    businessAddress = json['businessAddress'];
-    businessName = json['businessName'];
-    canceledCheque = json['canceledCheque'] != null
-        ? AddressProofBack.fromJson(json['canceledCheque'])
-        : null;
-    district = json['district'];
-    fullname = json['fullname'];
-    panCard = json['panCard'] != null
-        ? AddressProofBack.fromJson(json['panCard'])
-        : null;
-    pincode = json['pincode'];
-    shopPicture = json['shopPicture'] != null
-        ? AddressProofBack.fromJson(json['shopPicture'])
-        : null;
-    visitingCard = json['visitingCard'] != null
-        ? AddressProofBack.fromJson(json['visitingCard'])
-        : null;
-    orderId = json['order_id'];
-    paymentId = json['payment_id'];
     if (json['lostDeal'] != null) {
       lostDeal = <LostDeal>[];
       json['lostDeal'].forEach((v) {
@@ -145,10 +96,16 @@ class UserData {
         biddedCars!.add(BiddedCars.fromJson(v));
       });
     }
+    isDocumentsVerified = json['isDocumentsVerified'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    if (fcmNotification != null) {
+      data['fcmNotification'] = fcmNotification!.toJson();
+    }
     data['_id'] = sId;
     data['userId'] = userId;
     data['isBlocked'] = isBlocked;
@@ -157,34 +114,6 @@ class UserData {
     data['isDeactivate'] = isDeactivate;
     data['isDeposited'] = isDeposited;
     data['depositedAmount'] = depositedAmount;
-    data['isDocumentsVerified'] = isDocumentsVerified;
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
-    if (addressProofBack != null) {
-      data['addressProofBack'] = addressProofBack!.toJson();
-    }
-    if (addressProofFront != null) {
-      data['addressProofFront'] = addressProofFront!.toJson();
-    }
-    data['businessAddress'] = businessAddress;
-    data['businessName'] = businessName;
-    if (canceledCheque != null) {
-      data['canceledCheque'] = canceledCheque!.toJson();
-    }
-    data['district'] = district;
-    data['fullname'] = fullname;
-    if (panCard != null) {
-      data['panCard'] = panCard!.toJson();
-    }
-    data['pincode'] = pincode;
-    if (shopPicture != null) {
-      data['shopPicture'] = shopPicture!.toJson();
-    }
-    if (visitingCard != null) {
-      data['visitingCard'] = visitingCard!.toJson();
-    }
-    data['order_id'] = orderId;
-    data['payment_id'] = paymentId;
     if (lostDeal != null) {
       data['lostDeal'] = lostDeal!.map((v) => v.toJson()).toList();
     }
@@ -194,28 +123,28 @@ class UserData {
     if (biddedCars != null) {
       data['biddedCars'] = biddedCars!.map((v) => v.toJson()).toList();
     }
+    data['isDocumentsVerified'] = isDocumentsVerified;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }
 
-class AddressProofBack {
-  String? name;
-  String? url;
-  String? type;
+class FcmNotification {
+  String? fcmToken;
+  String? platform;
 
-  AddressProofBack({this.name, url, this.type});
+  FcmNotification({this.fcmToken, this.platform});
 
-  AddressProofBack.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    url = json['url'];
-    type = json['type'];
+  FcmNotification.fromJson(Map<String, dynamic> json) {
+    fcmToken = json['fcmToken'];
+    platform = json['platform'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = name;
-    data['url'] = url;
-    data['type'] = type;
+    data['fcmToken'] = fcmToken;
+    data['platform'] = platform;
     return data;
   }
 }
@@ -229,6 +158,7 @@ class LostDeal {
   num? highestBid;
   String? status;
   FrontLeft? frontLeft;
+  String? monthAndYearOfManufacture;
 
   LostDeal(
       {this.sId,
@@ -237,8 +167,9 @@ class LostDeal {
         this.model,
         this.variant,
         this.highestBid,
+        this.status,
         this.frontLeft,
-        this.status});
+        this.monthAndYearOfManufacture});
 
   LostDeal.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -251,6 +182,7 @@ class LostDeal {
     frontLeft = json['frontLeft'] != null
         ? FrontLeft.fromJson(json['frontLeft'])
         : null;
+    monthAndYearOfManufacture = json['monthAndYearOfManufacture'];
   }
 
   Map<String, dynamic> toJson() {
@@ -265,106 +197,7 @@ class LostDeal {
     if (frontLeft != null) {
       data['frontLeft'] = frontLeft!.toJson();
     }
-    return data;
-  }
-}
-
-class LikedCars {
-  String? sId;
-  num? uniqueId;
-  String? make;
-  String? model;
-  String? variant;
-  num? highestBid;
-  String? status;
-  FrontLeft? frontLeft;
-  num? realValue;
-  String? monthAndYearOfManufacture;
-  num? odometerReading;
-  String? transmission;
-  num? statusValues;
-  List<LeaderBoard>? leaderBoard;
-  Front? front;
-  Front? frontRight;
-  Front? rearLeft;
-  Front? rear;
-  Front? rearRight;
-  num? engineStar;
-  num? exteriorStar;
-  num? testDriveStar;
-  num? interiorAndElectricalStar;
-  Front? engineCompartment;
-  String? bidEndTime;
-  String? bidStartTime;
-  String? otbEndTime;
-  String? otbStartTime;
-  String? winner;
-
-  LikedCars(
-      {this.sId,
-        this.uniqueId,
-        this.make,
-        this.model,
-        this.variant,
-        this.highestBid,
-        this.status,
-        this.frontLeft,
-        this.winner,
-        this.realValue,
-        this.monthAndYearOfManufacture,
-        this.odometerReading,
-        this.transmission,
-        this.statusValues,
-        this.leaderBoard,
-        this.front,
-        this.frontRight,
-        this.rearLeft,
-        this.rear,
-        this.rearRight,
-        this.engineStar,
-        this.exteriorStar,
-        this.testDriveStar,
-        this.interiorAndElectricalStar,
-        this.engineCompartment,
-        this.bidEndTime,
-        this.bidStartTime,
-        this.otbEndTime,
-        this.otbStartTime
-      });
-
-  LikedCars.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    uniqueId = json['uniqueId'];
-    make = json['make'];
-    model = json['model'];
-    variant = json['variant'];
-    highestBid = json['highestBid'];
-    status = json['status'];
-    bidEndTime = json['bidEndTime'];
-    bidStartTime = json['bidStartTime'];
-    otbStartTime = json['otbStartTime'];
-    otbEndTime = json['otbEndTime'];
-    frontLeft = json['frontLeft'] != null
-        ? FrontLeft.fromJson(json['frontLeft'])
-        : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    data['uniqueId'] = uniqueId;
-    data['make'] = make;
-    data['model'] = model;
-    data['variant'] = variant;
-    data['highestBid'] = highestBid;
-    data['bidEndTime'] = bidEndTime;
-    data['bidStartTime'] = bidStartTime;
-    data['otbEndTime'] = otbEndTime;
-    data['otbStartTime'] = otbStartTime;
-    data['status'] = status;
-    if (frontLeft != null) {
-      data['frontLeft'] = frontLeft!.toJson();
-    }
+    data['monthAndYearOfManufacture'] = monthAndYearOfManufacture;
     return data;
   }
 }
@@ -394,97 +227,55 @@ class FrontLeft {
   }
 }
 
-class BiddedCars {
+class LikedCars {
   String? sId;
   num? uniqueId;
   String? make;
   String? model;
   String? variant;
-  String? maskedRegNumber;
-  String? vehicleLocation;
-  String? ownershipNumber;
-  String? fuelType;
-  String? qcStatus;
-  int? highestBid;
-  num? totalBidder;
+  num? highestBid;
   String? status;
-  String? createdAt;
-  String? winner;
-  num? realValue;
-  String? monthAndYearOfManufacture;
-  num? odometerReading;
-  String? transmission;
-  num? statusValues;
-  List<LeaderBoard>? leaderBoard;
-  Front? front;
-  Front? frontLeft;
-  Front? frontRight;
-  Front? rearLeft;
-  Front? rear;
-  Front? rearRight;
-  num? engineStar;
-  num? exteriorStar;
-  num? testDriveStar;
-  num? interiorAndElectricalStar;
-  Front? engineCompartment;
+  FrontLeft? frontLeft;
   String? bidEndTime;
   String? bidStartTime;
+  String? monthAndYearOfManufacture;
+  num? realValue;
+  String? otbEndTime;
+  String? otbStartTime;
 
-  BiddedCars(
+  LikedCars(
       {this.sId,
         this.uniqueId,
         this.make,
         this.model,
         this.variant,
-        this.maskedRegNumber,
-        this.vehicleLocation,
-        this.ownershipNumber,
-        this.fuelType,
-        this.qcStatus,
         this.highestBid,
-        this.totalBidder,
         this.status,
-        this.createdAt,
-        this.winner,
-        this.realValue,
-        this.monthAndYearOfManufacture,
-        this.odometerReading,
-        this.transmission,
-        this.statusValues,
-        this.leaderBoard,
-        this.front,
         this.frontLeft,
-        this.frontRight,
-        this.rearLeft,
-        this.rear,
-        this.rearRight,
-        this.engineStar,
-        this.exteriorStar,
-        this.testDriveStar,
-        this.interiorAndElectricalStar,
-        this.engineCompartment,
         this.bidEndTime,
-        this.bidStartTime
-      });
+        this.bidStartTime,
+        this.monthAndYearOfManufacture,
+        this.realValue,
+        this.otbEndTime,
+        this.otbStartTime});
 
-  BiddedCars.fromJson(Map<String, dynamic> json) {
+  LikedCars.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     uniqueId = json['uniqueId'];
     make = json['make'];
     model = json['model'];
     variant = json['variant'];
-    maskedRegNumber = json['maskedRegNumber'];
-    vehicleLocation = json['vehicleLocation'];
-    ownershipNumber = json['ownershipNumber'];
-    fuelType = json['fuelType'];
-    qcStatus = json['qcStatus'];
     highestBid = json['highestBid'];
-    totalBidder = json['totalBidder'];
     status = json['status'];
-    createdAt = json['createdAt'];
-    winner = json['winner'];
+    frontLeft = json['frontLeft'] != null
+        ? FrontLeft.fromJson(json['frontLeft'])
+        : null;
     bidEndTime = json['bidEndTime'];
     bidStartTime = json['bidStartTime'];
+    monthAndYearOfManufacture = json['monthAndYearOfManufacture'];
+    realValue = json['realValue'];
+    otbEndTime = json['otbEndTime'];
+    otbStartTime = json['otbStartTime'];
   }
 
   Map<String, dynamic> toJson() {
@@ -494,7 +285,166 @@ class BiddedCars {
     data['make'] = make;
     data['model'] = model;
     data['variant'] = variant;
-    data['maskedRegNumber'] = maskedRegNumber;
+    data['highestBid'] = highestBid;
+    data['status'] = status;
+    if (frontLeft != null) {
+      data['frontLeft'] = frontLeft!.toJson();
+    }
+    data['bidEndTime'] = bidEndTime;
+    data['bidStartTime'] = bidStartTime;
+    data['monthAndYearOfManufacture'] = monthAndYearOfManufacture;
+    data['realValue'] = realValue;
+    data['otbEndTime'] = otbEndTime;
+    data['otbStartTime'] = otbStartTime;
+    return data;
+  }
+}
+
+class BiddedCars {
+  String? sId;
+  num? uniqueId;
+  String? make;
+  String? model;
+  String? variant;
+  String? vehicleLocation;
+  String? ownershipNumber;
+  String? fuelType;
+  String? qcStatus;
+  int? highestBid;
+  num? totalBidder;
+  String? status;
+  String? carCondition;
+  List<LeaderBoard>? leaderBoard;
+  String? createdAt;
+  FrontLeft? engineCompartment;
+  String? specialComments;
+  FrontLeft? front;
+  FrontLeft? frontLeft;
+  FrontLeft? frontRight;
+  FrontLeft? frontWithHoodOpen;
+  FrontLeft? rear;
+  FrontLeft? rearBootOpen;
+  FrontLeft? rearLeft;
+  FrontLeft? rearRight;
+  String? winner;
+  String? bidEndTime;
+  String? bidStartTime;
+  String? maskedRegNumber;
+  String? monthAndYearOfManufacture;
+  num? odometerReading;
+  String? transmission;
+  num? engineStar;
+  num? exteriorStar;
+  num? interiorAndElectricalStar;
+  num? testDriveStar;
+  num? realValue;
+
+  BiddedCars(
+      {this.sId,
+        this.uniqueId,
+        this.make,
+        this.model,
+        this.variant,
+        this.vehicleLocation,
+        this.ownershipNumber,
+        this.fuelType,
+        this.qcStatus,
+        this.highestBid,
+        this.totalBidder,
+        this.status,
+        this.carCondition,
+        this.leaderBoard,
+        this.createdAt,
+        this.engineCompartment,
+        this.specialComments,
+        this.front,
+        this.frontLeft,
+        this.frontRight,
+        this.frontWithHoodOpen,
+        this.rear,
+        this.rearBootOpen,
+        this.rearLeft,
+        this.rearRight,
+        this.winner,
+        this.bidEndTime,
+        this.bidStartTime,
+        this.maskedRegNumber,
+        this.monthAndYearOfManufacture,
+        this.odometerReading,
+        this.transmission,
+        this.engineStar,
+        this.exteriorStar,
+        this.interiorAndElectricalStar,
+        this.testDriveStar,
+        this.realValue});
+
+  BiddedCars.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    uniqueId = json['uniqueId'];
+    make = json['make'];
+    model = json['model'];
+    variant = json['variant'];
+    vehicleLocation = json['vehicleLocation'];
+    ownershipNumber = json['ownershipNumber'];
+    fuelType = json['fuelType'];
+    qcStatus = json['qcStatus'];
+    highestBid = json['highestBid'];
+    totalBidder = json['totalBidder'];
+    status = json['status'];
+    carCondition = json['carCondition'];
+    if (json['leaderBoard'] != null) {
+      leaderBoard = <LeaderBoard>[];
+      json['leaderBoard'].forEach((v) {
+        leaderBoard!.add(LeaderBoard.fromJson(v));
+      });
+    }
+    createdAt = json['createdAt'];
+    engineCompartment = json['engineCompartment'] != null
+        ? FrontLeft.fromJson(json['engineCompartment'])
+        : null;
+    specialComments = json['specialComments'];
+    front =
+    json['front'] != null ? FrontLeft.fromJson(json['front']) : null;
+    frontLeft = json['frontLeft'] != null
+        ? FrontLeft.fromJson(json['frontLeft'])
+        : null;
+    frontRight = json['frontRight'] != null
+        ? FrontLeft.fromJson(json['frontRight'])
+        : null;
+    frontWithHoodOpen = json['frontWithHoodOpen'] != null
+        ? FrontLeft.fromJson(json['frontWithHoodOpen'])
+        : null;
+    rear = json['rear'] != null ? FrontLeft.fromJson(json['rear']) : null;
+    rearBootOpen = json['rearBootOpen'] != null
+        ? FrontLeft.fromJson(json['rearBootOpen'])
+        : null;
+    rearLeft = json['rearLeft'] != null
+        ? FrontLeft.fromJson(json['rearLeft'])
+        : null;
+    rearRight = json['rearRight'] != null
+        ? FrontLeft.fromJson(json['rearRight'])
+        : null;
+    winner = json['winner'];
+    bidEndTime = json['bidEndTime'];
+    bidStartTime = json['bidStartTime'];
+    maskedRegNumber = json['maskedRegNumber'];
+    monthAndYearOfManufacture = json['monthAndYearOfManufacture'];
+    odometerReading = json['odometerReading'];
+    transmission = json['transmission'];
+    engineStar = json['engineStar'];
+    exteriorStar = json['exteriorStar'];
+    interiorAndElectricalStar = json['interiorAndElectricalStar'];
+    testDriveStar = json['testDriveStar'];
+    realValue = json['realValue'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['uniqueId'] = uniqueId;
+    data['make'] = make;
+    data['model'] = model;
+    data['variant'] = variant;
     data['vehicleLocation'] = vehicleLocation;
     data['ownershipNumber'] = ownershipNumber;
     data['fuelType'] = fuelType;
@@ -502,10 +452,51 @@ class BiddedCars {
     data['highestBid'] = highestBid;
     data['totalBidder'] = totalBidder;
     data['status'] = status;
+    data['carCondition'] = carCondition;
+    if (leaderBoard != null) {
+      data['leaderBoard'] = leaderBoard!.map((v) => v.toJson()).toList();
+    }
     data['createdAt'] = createdAt;
+    if (engineCompartment != null) {
+      data['engineCompartment'] = engineCompartment!.toJson();
+    }
+    data['specialComments'] = specialComments;
+    if (front != null) {
+      data['front'] = front!.toJson();
+    }
+    if (frontLeft != null) {
+      data['frontLeft'] = frontLeft!.toJson();
+    }
+    if (frontRight != null) {
+      data['frontRight'] = frontRight!.toJson();
+    }
+    if (frontWithHoodOpen != null) {
+      data['frontWithHoodOpen'] = frontWithHoodOpen!.toJson();
+    }
+    if (rear != null) {
+      data['rear'] = rear!.toJson();
+    }
+    if (rearBootOpen != null) {
+      data['rearBootOpen'] = rearBootOpen!.toJson();
+    }
+    if (rearLeft != null) {
+      data['rearLeft'] = rearLeft!.toJson();
+    }
+    if (rearRight != null) {
+      data['rearRight'] = rearRight!.toJson();
+    }
     data['winner'] = winner;
     data['bidEndTime'] = bidEndTime;
     data['bidStartTime'] = bidStartTime;
+    data['maskedRegNumber'] = maskedRegNumber;
+    data['monthAndYearOfManufacture'] = monthAndYearOfManufacture;
+    data['odometerReading'] = odometerReading;
+    data['transmission'] = transmission;
+    data['engineStar'] = engineStar;
+    data['exteriorStar'] = exteriorStar;
+    data['interiorAndElectricalStar'] = interiorAndElectricalStar;
+    data['testDriveStar'] = testDriveStar;
+    data['realValue'] = realValue;
     return data;
   }
 }
@@ -513,46 +504,52 @@ class BiddedCars {
 class LeaderBoard {
   num? amount;
   String? userId;
+  String? uniqueId;
   bool? isAutobid;
+  num? contactNo;
+  String? fullname;
+  bool? isRejected;
+  String? sId;
+  num? autoBidLimit;
+  String? type;
 
-  LeaderBoard({this.amount, this.userId, this.isAutobid});
+  LeaderBoard(
+      {this.amount,
+        this.userId,
+        this.uniqueId,
+        this.isAutobid,
+        this.contactNo,
+        this.fullname,
+        this.isRejected,
+        this.sId,
+        this.autoBidLimit,
+        this.type});
 
   LeaderBoard.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];
     userId = json['userId'];
+    uniqueId = json['uniqueId'];
     isAutobid = json['isAutobid'];
+    contactNo = json['contactNo'];
+    fullname = json['fullname'];
+    isRejected = json['isRejected'];
+    sId = json['_id'];
+    autoBidLimit = json['autoBidLimit'];
+    type = json['type'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['amount'] = amount;
     data['userId'] = userId;
+    data['uniqueId'] = uniqueId;
     data['isAutobid'] = isAutobid;
-    return data;
-  }
-}
-
-class Front {
-  String? name;
-  String? url;
-  List<String>? condition;
-  String? remarks;
-
-  Front({this.name, this.url, this.condition, this.remarks});
-
-  Front.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    url = json['url'];
-    condition = json['condition'].cast<String>();
-    remarks = json['remarks'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = name;
-    data['url'] = url;
-    data['condition'] = condition;
-    data['remarks'] = remarks;
+    data['contactNo'] = contactNo;
+    data['fullname'] = fullname;
+    data['isRejected'] = isRejected;
+    data['_id'] = sId;
+    data['autoBidLimit'] = autoBidLimit;
+    data['type'] = type;
     return data;
   }
 }

@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
+import '../../../service/firebase_push_notifications.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -44,6 +45,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 globals.clearData();
                 SharedPrefManager.instance.removeStringAsync(Constants.userName);
                 SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
+                SharedPrefManager.instance.removeStringAsync(Constants.email);
                 SharedPrefManager.instance.removeStringAsync(Constants.contactNo);
                 SharedPrefManager.instance.removeStringAsync(Constants.token);
                 SharedPrefManager.instance.removeStringAsync(Constants.fcmToken);
@@ -207,6 +209,9 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
               const SizedBox(height: 20,),
               InkWell(
+               /* onTap: () {
+                  showExitDialog(context);
+                },*/
                 onTap: () async{
                   showDialog(
                     context: context, 
@@ -214,9 +219,11 @@ class _AccountScreenState extends State<AccountScreen> {
                     return CustomDialog(
                       title: MyStrings.logOutDesc,
                       okFun: () async{
+                        await PushNotifications.saveToken(token: null);
                         globals.clearData();
                         SharedPrefManager.instance.removeStringAsync(Constants.userName);
                         SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
+                        SharedPrefManager.instance.removeStringAsync(Constants.email);
                         SharedPrefManager.instance.removeStringAsync(Constants.contactNo);
                         SharedPrefManager.instance.removeStringAsync(Constants.token);
                         SharedPrefManager.instance.removeStringAsync(Constants.fcmToken);

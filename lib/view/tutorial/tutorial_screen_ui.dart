@@ -17,7 +17,8 @@ class TutorialScreen extends GetView<TutorialScreenViewModel> {
       width: MediaQuery.of(context).size.width * 0.95,
       height: MediaQuery.of(context).size.height * 0.63,
       child: PageView(
-        controller: controller.indicator, 
+        controller: controller.indicator,
+        physics: const NeverScrollableScrollPhysics(),
         onPageChanged: ((value) {
           controller.page.value = value;
         }),
@@ -32,21 +33,21 @@ class TutorialScreen extends GetView<TutorialScreenViewModel> {
           TutorialWidgets(
             image: MyImages.highBid,
             title: MyStrings.stagesOfBidding,
-            subtitle: MyStrings.tutorialSubtitle,
+            subtitle: MyStrings.tutorialSubtitle1,
             colour: MyColors.kPrimaryColor,
             colourTitle: "blue",
           ),
           TutorialWidgets(
             image: MyImages.leadBid,
             title: MyStrings.stagesOfBidding,
-            subtitle: MyStrings.tutorialSubtitle,
+            subtitle: MyStrings.tutorialSubtitle2,
             colour: MyColors.green,
             colourTitle: "green",
           ),
           TutorialWidgets(
             image: MyImages.looseBid,
             title: MyStrings.stagesOfBidding,
-            subtitle: MyStrings.tutorialSubtitle,
+            subtitle: MyStrings.tutorialSubtitle3,
             colour: MyColors.red,
             colourTitle: "red",
           ),
