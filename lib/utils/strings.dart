@@ -380,5 +380,8 @@ class MyStrings {
 
   static const String notTraceable = 'Not traceable';
   static const String paused = 'Paused';
+  static const String upload = 'Upload';
+  static const String uploaded = 'Uploaded';
+  static const String edit = 'Edit';
 
 }

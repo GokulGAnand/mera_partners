@@ -35,4 +35,5 @@ class MySvg {
   static const logout = "${svgRoot}logout.svg";
 
   static const carLoading = "${svgRoot}car_loading.svg";
+  static const edit = "${svgRoot}edit.svg";
 }

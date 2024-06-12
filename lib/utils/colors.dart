@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class MyColors {
   ///Theme_color
   static const Color kPrimaryColor = Color(0xFF1B69B8);
+  static const Color blueLight = Color(0xFFDCE4F5);
   static const Color grey = Color(0xFF6A6F75);
   static const Color grey2 = Color(0xFF989CA0);
   static const Color grey3 = Color(0xFFBABCBF);
