@@ -10,6 +10,7 @@ import 'package:mera_partners/widgets/custom_text_form_field.dart';
 import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pinput/pinput.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -27,6 +28,9 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   void initState() {
     loginScreenViewModel.startTimer(60);
+    loginScreenViewModel.otpFocusNode.addListener((){
+      setState(() {});
+    });
     super.initState();
   }
 
@@ -35,10 +39,7 @@ class _OtpScreenState extends State<OtpScreen> {
     if (loginScreenViewModel.timer != null) {
       loginScreenViewModel.timer!.cancel();
     }
-    loginScreenViewModel.otpTextField1.clear();
-    loginScreenViewModel.otpTextField2.clear();
-    loginScreenViewModel.otpTextField3.clear();
-    loginScreenViewModel.otpTextField4.clear();
+    loginScreenViewModel.otpTextField.clear();
     // loginScreenViewModel.
     super.dispose();
   }
@@ -59,27 +60,50 @@ class _OtpScreenState extends State<OtpScreen> {
               ),
             ),
             SizedBox(
-              height: Dimens.standard_10,
+              height: Dimens.standard_24,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                    child: otpField(
-                        loginScreenViewModel.otpTextField1, true, false)),
-                Expanded(
-                    child: otpField(
-                        loginScreenViewModel.otpTextField2, false, false)),
-                Expanded(
-                    child: otpField(
-                        loginScreenViewModel.otpTextField3, false, false)),
-                Expanded(
-                    child: otpField(
-                        loginScreenViewModel.otpTextField4, false, true)),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: Align(
+                alignment: Alignment.center,
+                child: Pinput(
+                          defaultPinTheme:  PinTheme(
+                            width: MediaQuery.of(context).size.width / 4,
+                            height: 62,
+                            textStyle: TextStyle(fontSize: 20, color: Color.fromRGBO(30, 60, 87, 1), fontWeight: FontWeight.w600),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: MyColors.grey),
+                              borderRadius: BorderRadius.all(Radius.circular(12.0),),
+                            ),
+                          ),
+                          focusedPinTheme: PinTheme(
+                            width: MediaQuery.of(context).size.width / 4,
+                            height: 62,
+                            textStyle: TextStyle(fontSize: 20, color: Color.fromRGBO(30, 60, 87, 1), fontWeight: FontWeight.w600),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: MyColors.kPrimaryColor, width: 1),
+                              borderRadius: BorderRadius.all(Radius.circular(12.0),),
+                            ),
+                          ),
+                          length: 4,
+                          onChanged: (value) {
+                            if(value.length == 4){
+                              loginScreenViewModel.buttonDisable.value = false;
+                            } else {
+                              loginScreenViewModel.buttonDisable.value = true;
+                            }
+                          },
+                          pinAnimationType: PinAnimationType.none,
+                          isCursorAnimationEnabled: false,
+                          controller: loginScreenViewModel.otpTextField,
+                          focusNode: loginScreenViewModel.otpFocusNode,
+                          showCursor: true,
+                          
+                        ),
+              ),
             ),
             SizedBox(
-              height: Dimens.standard_10,
+              height: Dimens.standard_24,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 16),
@@ -134,40 +158,6 @@ class _OtpScreenState extends State<OtpScreen> {
               }),
         );
       }),
-    );
-  }
-
-  Widget otpField(
-    TextEditingController controller,
-    bool first,
-    bool last,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.all(12),
-      child: CustomTextFormField(
-          controller: controller,
-          keyboardType: TextInputType.number,
-          inputFormatter: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly,],
-          textAlign: TextAlign.center,
-          maxLength: 1,
-          leftPadding: 0.0,
-          onChange: (value) {
-            if (value.length == 1 && last == false) {
-              FocusScope.of(context).nextFocus();
-            }
-            if (value.isEmpty && first == false) {
-              FocusScope.of(context).previousFocus();
-            }
-            if (loginScreenViewModel.otpTextField1.text.isNotEmpty &&
-                loginScreenViewModel.otpTextField2.text.isNotEmpty &&
-                loginScreenViewModel.otpTextField3.text.isNotEmpty &&
-                loginScreenViewModel.otpTextField4.text.isNotEmpty) {
-              loginScreenViewModel.buttonDisable.value = false;
-            } else {
-              loginScreenViewModel.buttonDisable.value = true;
-            }
-          },
-          validator: null),
     );
   }
 }

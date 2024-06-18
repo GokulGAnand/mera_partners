@@ -26,10 +26,9 @@ class LoginScreenViewModel extends GetxController {
   RxBool buttonDisable = true.obs;
   var userInfoResponse = UserInfoResponse().obs;
 
-  final TextEditingController otpTextField1 = TextEditingController();
-  final TextEditingController otpTextField2 = TextEditingController();
-  final TextEditingController otpTextField3 = TextEditingController();
-  final TextEditingController otpTextField4 = TextEditingController();
+  final TextEditingController otpTextField = TextEditingController();
+
+  FocusNode otpFocusNode = FocusNode();
 
   Timer? timer;
   final time = '00.00'.obs;
@@ -91,7 +90,7 @@ class LoginScreenViewModel extends GetxController {
       var headers = {
         'Content-Type': 'application/json'
       };
-      String otp = otpTextField1.value.text.toString() + otpTextField2.value.text.toString() + otpTextField3.value.text.toString() + otpTextField4.value.text.toString();
+      String otp = otpTextField.value.text.toString();
       var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.verifyOtp), body: jsonEncode({"contactNo": int.parse(mobileController.value.text), "otp": int.parse(otp)}),headers: headers);
       if (response.statusCode == 200) {
         clearData();
