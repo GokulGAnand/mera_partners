@@ -42,6 +42,7 @@ class ProcuredBillScreen extends StatelessWidget {
                 child: ListTile(
                   tileColor: null, // Set tileColor to null
                   leading: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
                     onTap: () {
                       Get.back();
                     },

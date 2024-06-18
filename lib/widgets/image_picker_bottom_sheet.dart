@@ -21,12 +21,15 @@ class ImagePickerSheet extends StatelessWidget {
 
   Future pickImage(ImageSource source) async {
     try {
-      if(source == ImageSource.camera){
+      if (source == ImageSource.camera) {
         var cameraStatus = await Permission.camera.status;
         if (!cameraStatus.isGranted) {
           final result = await Permission.camera.request();
-          if(!result.isGranted){
-            openAppSettings();
+          if (!result.isGranted) {
+            if (result.isPermanentlyDenied) {
+              openAppSettings();
+            }
+            return;
           }
           log("camera access: ${result.isGranted}");
         }
@@ -59,7 +62,7 @@ class ImagePickerSheet extends StatelessWidget {
               const SizedBox(
                 height: 24,
               ),
-              if(image.value != null)
+              /*if(image.value != null)
                 Stack(
                   children: [
                     image.value!.path.startsWith('http') || image.value!.path.startsWith('https')?Image.network(
@@ -101,11 +104,11 @@ class ImagePickerSheet extends StatelessWidget {
                       ),
                     ),
                   ],
-                ),
-              if(image.value != null)
+                ),*/
+              /*if(image.value != null)
               const SizedBox(
                 height: 10,
-              ),
+              ),*/
               Row(
                 children: [
                   Column(

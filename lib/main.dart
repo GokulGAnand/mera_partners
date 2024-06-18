@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/service/firebase_push_notifications.dart';
 import 'package:mera_partners/service/notification_service.dart';
@@ -16,6 +17,10 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform
   );
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   await NotificationService().initNotification();
   getPermission();
   await PushNotifications.init();

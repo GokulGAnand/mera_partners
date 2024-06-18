@@ -1,4 +1,3 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/services.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/styles.dart';
@@ -6,6 +5,7 @@ import 'package:mera_partners/widgets/custom_appbar.dart';
 import 'package:mera_partners/widgets/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mera_partners/widgets/document_upload_card.dart';
 import '../../../utils/dimens.dart';
 import '../../../utils/strings.dart';
 import '../../../utils/validate_input.dart';
@@ -14,7 +14,7 @@ import '../../../widgets/custom_text_form_field.dart';
 import '../../utils/colors.dart';
 import '../../utils/images.dart';
 import '../../view_model/document/document_screen_view_model.dart';
-import '../../widgets/image_picker_bottom_sheet.dart';
+import '../../widgets/custom_toast.dart';
 import '../../widgets/progressbar.dart';
 import '../../widgets/show_logout_dialog.dart';
 
@@ -155,55 +155,71 @@ class DocumentScreen extends StatelessWidget {
   }
 
   Widget pageTwo(BuildContext context) {
-    return Obx(
-      () => Scaffold(
-        bottomNavigationBar: SizedBox(
-          height: 70,
-          child: Center(
-            child: CustomElevatedButton(
-              onPressed: () {
-                if (viewModel.page2Key.currentState!.validate()) {
-                  viewModel.page2Key.currentState!.save();
-                  viewModel.pageController.value.animateToPage(
-                    2,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.linear,
-                  );
-                }
-              },
-              buttonText: MyStrings.next,
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    MyStrings.next,
-                    style: TextStyle(
-                      color: MyColors.white,
-                      fontSize: 16,
-                      fontFamily: 'DM Sans',
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 13,
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios_sharp,
+    return Scaffold(
+      bottomNavigationBar: SizedBox(
+        height: 70,
+        child: Center(
+          child: CustomElevatedButton(
+            onPressed: () {
+              if (viewModel.aadhaarFront.value != null && viewModel.aadhaarBack.value != null && viewModel.panCard.value != null/* && viewModel.page2Key.currentState!.validate()*/) {
+                viewModel.page2Key.currentState!.save();
+                viewModel.pageController.value.animateToPage(
+                  2,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.linear,
+                );
+              }else{
+                CustomToast.instance.showMsg('${MyStrings.documents} ${MyStrings.required}');
+              }
+            },
+            buttonText: MyStrings.next,
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  MyStrings.next,
+                  style: TextStyle(
                     color: MyColors.white,
-                    size: 15,
-                  )
-                ],
-              ),
+                    fontSize: 16,
+                    fontFamily: 'DM Sans',
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1,
+                  ),
+                ),
+                SizedBox(
+                  width: 13,
+                ),
+                Icon(
+                  Icons.arrow_forward_ios_sharp,
+                  color: MyColors.white,
+                  size: 15,
+                )
+              ],
             ),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Form(
-            key: viewModel.page2Key,
-            child: Column(
-              children: [
-                GestureDetector(
+      ),
+      body: SingleChildScrollView(
+        child: Form(
+          key: viewModel.page2Key,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  DocumentUploadCard(image: viewModel.aadhaarFront,label: '${MyStrings.aadhaarCardFront} *',),
+                  DocumentUploadCard(image: viewModel.aadhaarBack,label: '${MyStrings.aadhaarCardBack} *',),
+                ],
+              ),
+              const SizedBox(
+                height: Dimens.spaceWidth,
+              ),
+              Row(
+                children: [
+                  DocumentUploadCard(image: viewModel.panCard,label: '${MyStrings.panCard} *',),
+                ],
+              )
+              /*GestureDetector(
                   onTap: () async {
                     showModalBottomSheet<void>(
                       context: Get.context!,
@@ -276,11 +292,8 @@ class DocumentScreen extends StatelessWidget {
                                 ),
                         ),
                       ),
-                    )),
-                const SizedBox(
-                  height: Dimens.spaceWidth,
-                ),
-                GestureDetector(
+                    )),*/
+              /*  GestureDetector(
                   onTap: () async {
                     showModalBottomSheet<void>(
                       context: Get.context!,
@@ -315,9 +328,8 @@ class DocumentScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                )
-              ],
-            ),
+                )*/
+            ],
           ),
         ),
       ),
@@ -325,57 +337,73 @@ class DocumentScreen extends StatelessWidget {
   }
 
   Widget pageThree(BuildContext context) {
-    return Obx(
-      () => Scaffold(
-        bottomNavigationBar: SizedBox(
-          height: 70,
-          child: Center(
-            child: CustomElevatedButton(
-              onPressed: () async {
-                if (viewModel.page3Key.currentState!.validate()) {
-                  viewModel.page3Key.currentState!.save();
-                  if (await viewModel.addDocument() == true) {
-                    viewModel.pageController.value.animateToPage(
-                      3,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.linear,
-                    );
-                  }
+    return Scaffold(
+      bottomNavigationBar: SizedBox(
+        height: 70,
+        child: Center(
+          child: CustomElevatedButton(
+            onPressed: () async {
+              if (viewModel.shopImage.value != null && viewModel.visitingCard.value != null && viewModel.cancelledCheque.value != null /*&& viewModel.page3Key.currentState!.validate()*/) {
+                viewModel.page3Key.currentState!.save();
+                if (await viewModel.addDocument() == true) {
+                  viewModel.pageController.value.animateToPage(
+                    3,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.linear,
+                  );
                 }
-              },
-              buttonText: MyStrings.next,
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    MyStrings.next,
-                    style: TextStyle(
-                      color: MyColors.white,
-                      fontSize: 16,
-                      fontFamily: 'DM Sans',
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 13,
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios_sharp,
+              }else{
+                CustomToast.instance.showMsg('${MyStrings.documents} ${MyStrings.required}');
+              }
+            },
+            buttonText: MyStrings.next,
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  MyStrings.next,
+                  style: TextStyle(
                     color: MyColors.white,
-                    size: 15,
-                  )
-                ],
-              ),
+                    fontSize: 16,
+                    fontFamily: 'DM Sans',
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1,
+                  ),
+                ),
+                SizedBox(
+                  width: 13,
+                ),
+                Icon(
+                  Icons.arrow_forward_ios_sharp,
+                  color: MyColors.white,
+                  size: 15,
+                )
+              ],
             ),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Form(
-            key: viewModel.page3Key,
-            child: Column(
-              children: [
-                GestureDetector(
+      ),
+      body: SingleChildScrollView(
+        child: Form(
+          key: viewModel.page3Key,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  DocumentUploadCard(image: viewModel.shopImage,label: '${MyStrings.shopImage} *',),
+                  DocumentUploadCard(image: viewModel.visitingCard,label: '${MyStrings.visitingCard} *',),
+                ],
+              ),
+              const SizedBox(
+                height: Dimens.spaceWidth,
+              ),
+              Row(
+                children: [
+                  DocumentUploadCard(image: viewModel.cancelledCheque,label: '${MyStrings.cancelledCheque} *',),
+                ],
+              )
+              /* GestureDetector(
                   onTap: () async {
                     showModalBottomSheet<void>(
                       context: Get.context!,
@@ -491,9 +519,8 @@ class DocumentScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                )
-              ],
-            ),
+                )*/
+            ],
           ),
         ),
       ),
@@ -505,7 +532,7 @@ class DocumentScreen extends StatelessWidget {
       bottomNavigationBar: SizedBox(
         height: 70,
         child: Center(
-          child: viewModel.userInfoResponse.value.data?[0].isDeposited == true ? CustomElevatedButton(
+          child: viewModel.userInfoResponse.value.data != null && viewModel.userInfoResponse.value.data!.isNotEmpty && (viewModel.userInfoResponse.value.data?[0].isDeposited == true) ? CustomElevatedButton(
             onPressed: () {
               Get.toNamed(AppRoutes.homeScreen);
             },
@@ -522,7 +549,7 @@ class DocumentScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: viewModel.userInfoResponse.value.data?[0].isDeposited == true ? Center(
+      body: viewModel.userInfoResponse.value.data != null && viewModel.userInfoResponse.value.data!.isNotEmpty && (viewModel.userInfoResponse.value.data?[0].isDeposited == true) ? Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -670,7 +697,7 @@ class DocumentScreen extends StatelessWidget {
             body: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 16, top: 19, bottom: 28),
+                  padding: const EdgeInsets.only(left: 16, right: 16, top: 30, bottom: 28),
                   child: SizedBox(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),

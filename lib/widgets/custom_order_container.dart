@@ -20,7 +20,7 @@ import '../view_model/home/orders/rc_transfer_view_model.dart';
 import 'custom_toast.dart';
 
 class CustomOrderContainer extends StatefulWidget {
-  CustomOrderContainer({super.key, required this.dealStatus, this.backgroundBlackOpacity, required this.buttonText, required this.buttonStatus, required this.carModel, required this.carName, required this.carID, required this.imageURL, required this.finalPrice, this.onPressed, required this.showButton, this.negStartTime, this.negEndTime, this.timerController, required this.uniqueCarID});
+  CustomOrderContainer({super.key, required this.dealStatus, this.backgroundBlackOpacity, required this.buttonText, required this.buttonStatus, required this.carModel, required this.carName, required this.carID, required this.imageURL, required this.finalPrice, this.onPressed, required this.showButton, this.negStartTime, this.negEndTime, this.timerController, required this.uniqueCarID, required this.offerPrice});
 
   final String dealStatus;
   final Widget? backgroundBlackOpacity;
@@ -32,11 +32,11 @@ class CustomOrderContainer extends StatefulWidget {
   final String uniqueCarID;
   final String imageURL;
   final String finalPrice;
+  final String offerPrice;
   final Function()? onPressed;
   final bool showButton;
   final DateTime? negStartTime;
   final DateTime? negEndTime;
-  Rx<int> remainingTime = 0.obs;
   final Rx<CountdownTimerController>? timerController;
 
   onEnd() {
@@ -179,11 +179,6 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                                           if (time == null) {
                                             return const Text('');
                                           }
-                                          if (time.min != null) {
-                                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                                              widget.remainingTime.value = time.min ?? 0;
-                                            });
-                                          }
                                           return Text(time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',
                                               style: const TextStyle(
                                                 color: MyColors.white,
@@ -248,7 +243,7 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                       ),
                     ),
                     Text(
-                      widget.dealStatus == OrderStatus.procurement.name || widget.dealStatus == OrderStatus.rcTransfer.name || widget.dealStatus.isEmpty ? MyStrings.yFinal + widget.finalPrice : MyStrings.yBid + widget.finalPrice,
+                      widget.dealStatus == OrderStatus.procurement.name || widget.dealStatus == OrderStatus.rcTransfer.name || widget.dealStatus.isEmpty ? MyStrings.yFinal + widget.offerPrice : MyStrings.yBid + widget.finalPrice,
                       style: MyStyles.primary14700,
                     ),
                     const SizedBox(

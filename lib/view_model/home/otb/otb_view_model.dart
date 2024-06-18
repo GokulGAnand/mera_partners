@@ -34,6 +34,7 @@ class OTBCarsListViewModel extends GetxController {
     infinitePagingController.addPageRequestListener((pageKey) {
       getCarData(pageKey);
     });
+    getCarData(1);
     super.onInit();
   }
 

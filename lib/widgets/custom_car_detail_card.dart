@@ -37,6 +37,7 @@ class CustomCarDetailCard extends StatefulWidget {
   final RxString bidAmount;
   final Color statusColor;
   final String carModel;
+  final String yearOfManufacture;
   final String carVariant;
   final num rating;
   final String fuelType;
@@ -59,10 +60,7 @@ class CustomCarDetailCard extends StatefulWidget {
   final DateTime? bidStartTime;
   final DateTime? bidEndTime;
   final Rx<int>? endTime;
-  CurrentRemainingTime? remainingTime;
   final Rx<CountdownTimerController>? timerController;
-  // Rxn<Duration> duration = Rxn();
-  // Timer? timer;
   final String? scheduleTime;
 
   onEnd(){
@@ -80,10 +78,10 @@ class CustomCarDetailCard extends StatefulWidget {
             MyStrings.verifyPending,
             style: MyStyles.black20700,
           ),
-          content: const Text(
-            MyStrings.verifyWarning,
-            style: MyStyles.pageTitleStyle,
-          ),
+          // content: const Text(
+          //   MyStrings.verifyWarning,
+          //   style: MyStyles.pageTitleStyle,
+          // ),
           actions: [
             if(globals.documentStatus == DocumentStatus.NOTSUBMITTED.name || globals.isDeposited != true)
             TextButton(
@@ -121,6 +119,7 @@ class CustomCarDetailCard extends StatefulWidget {
     required this.bidStatus,
     required this.bidAmount,
     required this.carModel,
+    required this.yearOfManufacture,
     required this.carVariant,
     required this.rating,
     required this.fuelType,
@@ -319,6 +318,12 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       padding: const EdgeInsets.only(left: 12),
                       child: Align(
                           alignment: Alignment.topLeft,
+                          child: Text(widget.yearOfManufacture.substring(widget.yearOfManufacture.length - 4), style: MyStyles.subTitleBlackStyle)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Align(
+                          alignment: Alignment.topLeft,
                           child: Text(widget.carModel, style: MyStyles.subTitleBlackStyle)),
                     ),
                     const SizedBox(
@@ -406,7 +411,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                             Text(widget.fuelType, style: MyStyles.regular12),
                             const SizedBox(width: 6),                            const Text('|', style: MyStyles.regular12),
                             const SizedBox(width: 6),
-                             Text('${formatKmDriven(widget.kmDriven)} KM', style: MyStyles.regular12),
+                             Text('${Constants.numberFormatter.format(double.parse(widget.kmDriven))} KM', style: MyStyles.regular12),
                             const SizedBox(width: 6),
                             const Text('|', style: MyStyles.regular12),
                             const SizedBox(width: 6),
@@ -450,52 +455,49 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if(widget.remainingTime?.min != 0 && widget.timerController?.value != null)
-                          Obx(() => Text(
-                            widget.isScheduled?.value == true ? MyStrings.yetToStart : widget.remainingTime?.hours != 0 ? MyStrings.acceptingBids : widget.remainingTime!.min! <= 2 ? MyStrings.lastCall : widget.remainingTime!.min! >= 10 ? MyStrings.acceptingBids:
-                            widget.remainingTime!.min! <= 10 ? MyStrings.bidEndsIn : MyStrings.lastCall,
-                            style: TextStyle(
-                              color: widget.isScheduled?.value == true ? MyColors.kPrimaryColor : widget.remainingTime?.hours != 0 ? MyColors.green2 : widget.remainingTime!.min! <= 2 ? MyColors.red2 : widget.remainingTime!.min! >= 10 ? MyColors.green2 : widget.remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
-                              fontSize: 12,
-                              fontFamily: 'DM Sans',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),),
-                          const SizedBox(
-                            height: 1,
-                          ),
-                          Row(
+                      Obx(() => CountdownTimer(
+                        controller: widget.timerController?.value,
+                        widgetBuilder: (_, CurrentRemainingTime? time) {
+                          if (time == null) {
+                            return const Text(MyStrings.paused);
+                          }
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              if(widget.remainingTime?.min != 0 && widget.timerController?.value != null)
-                                Icon(
-                                  Icons.timer_sharp,
-                                  color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.remainingTime?.hours != 0 ? MyColors.green2 : widget.remainingTime!.min! <= 2 ? MyColors.red2 : widget.remainingTime!.min! >= 10 ? MyColors.green2 : widget.remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
-                                  size: 14,
+                              Text(
+                                widget.isScheduled?.value == true ? MyStrings.yetToStart : (time.hours != null && time.hours != 0) ? MyStrings.acceptingBids : (time.min ?? 0) <= 2 ? MyStrings.lastCall : (time.min ?? 0) >= 10 ? MyStrings.acceptingBids:
+                                (time.min ?? 0) <= 10 ? MyStrings.bidEndsIn : MyStrings.lastCall,
+                                style: TextStyle(
+                                  color: widget.isScheduled?.value == true ? MyColors.kPrimaryColor : (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
+                                  fontSize: 12,
+                                  fontFamily: 'DM Sans',
+                                  fontWeight: FontWeight.w500,
                                 ),
-                              CountdownTimer(
-                                controller: widget.timerController?.value,
-                                widgetBuilder: (_, CurrentRemainingTime? time) {
-                                  if (time == null) {
-                                    return const Text('');
-                                  }else{
-                                    widget.remainingTime = time;
-                                  }
-                                  return Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                                    color: widget.isScheduled!.value ? MyColors.kPrimaryColor : widget.remainingTime?.hours != 0 ? MyColors.green2 : widget.remainingTime!.min! <= 2 ? MyColors.red2 : widget.remainingTime!.min! >= 10 ? MyColors.green2 : widget.remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
+                              ),
+                              const SizedBox(
+                                height: 1,
+                              ),
+                              Row(
+                                children: [
+                                  if(time.min != 0 && widget.timerController?.value != null)
+                                    Icon(
+                                      Icons.timer_sharp,
+                                      color: widget.isScheduled!.value ? MyColors.kPrimaryColor : (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
+                                      size: 14,
+                                    ),
+                                  Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
+                                    color: widget.isScheduled!.value ? MyColors.kPrimaryColor : (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
                                     fontSize: 14,
                                     fontFamily: 'DM Sans',
                                     fontWeight: FontWeight.w700,
                                     height: 0,
-                                  ));
-                                },
-                              )
+                                  ))
+                                ],
+                              ),
                             ],
-                          ),
-                        ],
-                      ),
+                          );
+                        },
+                      ),),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [

@@ -32,6 +32,7 @@ class Procured extends StatelessWidget {
             controller.searchList.isNotEmpty
                 ? Obx(() {
                     return GridView.builder(
+                        padding: const EdgeInsets.fromLTRB(16,0,16,0),
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: controller.searchList.length,
@@ -47,6 +48,7 @@ class Procured extends StatelessWidget {
                                 buttonStatus: controller.searchList[index].procurementStatus == null || controller.searchList[index].procurementStatus?.toLowerCase() == Status.pending.name || controller.searchList[index].procurementStatus!.isEmpty ? Status.pending.name : Status.view.name,
                                 carModel: controller.searchList[index].model ?? '',
                                 finalPrice: controller.searchList[index].highestBid != null ? Constants.numberFormat.format(controller.searchList[index].highestBid) : '',
+                                offerPrice: controller.searchList[index].finalPrice != null ? Constants.numberFormat.format(controller.searchList[index].finalPrice) : '',
                                 carName: controller.searchList[index].variant ?? '',
                                 carID: controller.searchList[index].uniqueId?.toString() ?? '',
                                 uniqueCarID: controller.searchList[index].sId?.toString() ?? '',

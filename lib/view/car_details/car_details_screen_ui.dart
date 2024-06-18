@@ -228,9 +228,18 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       ListTile(
                         contentPadding: EdgeInsets.zero,
                         dense: true,
-                        title: Text(
-                          carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.model.toString(),
-                          style: MyStyles.selectedTabBarTitleStyle,
+                        title: Row(
+                          children: [
+                            Text(
+                              carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.monthAndYearOfManufacture?.substring((carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.monthAndYearOfManufacture?.length ?? 0) - 4) ?? '',
+                              style: MyStyles.selectedTabBarTitleStyle,
+                            ),
+                            const SizedBox(width: 10,),
+                            Text(
+                              carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.model.toString(),
+                              style: MyStyles.selectedTabBarTitleStyle,
+                            ),
+                          ],
                         ),
                         subtitle: Text(
                           carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.variant.toString(),
@@ -269,7 +278,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo?.odometerReading != null)...[
                                   const Text('|', style: MyStyles.regular12),
                                   const SizedBox(width: 6),
-                                  Text('${carDetailsScreenViewModel.formatKmDriven(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo?.odometerReading.toString() ?? '0')} KM', style: MyStyles.regular12),
+                                  Text('${Constants.numberFormatter.format(double.parse(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo?.odometerReading.toString() ?? '0'))} KM', style: MyStyles.regular12),
                                   const SizedBox(width: 6),
                                 ],
                                 if(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.ownershipNumber != null)...[
@@ -323,7 +332,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                             child: SizedBox(
                                               width: 58,
                                               height: 58,
-                                              child: Image.network(carDetailsScreenViewModel.imageList[index]["images"][0].value, fit: BoxFit.cover,
+                                              child: Image.network(carDetailsScreenViewModel.imageList[index]["images"][0].image, fit: BoxFit.cover,
                                               errorBuilder: (context, error, stackTrace) {
                                                 return SvgPicture.asset(MyImages.loadingCar);
                                               }, frameBuilder:
@@ -772,41 +781,36 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset(
-                    MySvg.timer,
-                    width: 18,
-                    // ignore: deprecated_member_use
-                    color: MyColors.green2,
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Obx(
-                    () {
-                      return CountdownTimer(
-                                    controller: carDetailsScreenViewModel.timerController?.value,
-                                    widgetBuilder: (_, CurrentRemainingTime? time) {
-                                      if (time == null) {
-                                        return const Text('');
-                                      }else{
-                                        carDetailsScreenViewModel.remainingTime = time;
-                                      }
-                                      return Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                                        color: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() ? MyColors.kPrimaryColor : carDetailsScreenViewModel.remainingTime?.hours != 0 ? MyColors.green2 : carDetailsScreenViewModel.remainingTime!.min! <= 2 ? MyColors.red2 : carDetailsScreenViewModel.remainingTime!.min! >= 10 ? MyColors.green2 : carDetailsScreenViewModel.remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
-                                        fontSize: 14,
-                                        fontFamily: 'DM Sans',
-                                        fontWeight: FontWeight.w700,
-                                        height: 0,
-                                      ));
-                                    },
-                                  );
-                    }
-                  ),
-                      // if(carDetailsScreenViewModel.duration.value != null)
-                      //    Text(
-                      //     carDetailsScreenViewModel.formatDuration(carDetailsScreenViewModel.duration.value!),
-                      //     style: MyStyles.green2_14700,
-                      //   )
+                  Obx(() => CountdownTimer(
+                    controller: carDetailsScreenViewModel.timerController?.value,
+                    widgetBuilder: (_, CurrentRemainingTime? time) {
+                      if (time == null) {
+                        return const Text(MyStrings.paused);
+                      }
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              if(time.min != 0 && carDetailsScreenViewModel.timerController?.value != null)
+                                Icon(
+                                  Icons.timer_sharp,
+                                  color: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() ? MyColors.kPrimaryColor : (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
+                                  size: 14,
+                                ),
+                              Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
+                                color: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() ? MyColors.kPrimaryColor : (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
+                                fontSize: 14,
+                                fontFamily: 'DM Sans',
+                                fontWeight: FontWeight.w700,
+                                height: 0,
+                              ))
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  ),),
                 ],
               ),
               const SizedBox(
@@ -1066,7 +1070,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                       const SizedBox(
                                         height: 2,
                                       ),
-                                      (index == 0 || carDetailsScreenViewModel.ratingList[index].title == "AC")
+                                      (index == 0 || index == 4)
                                           ? const SizedBox()
                                           : Container(
                                               padding: const EdgeInsets.symmetric(
@@ -1324,12 +1328,12 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 ],
                               ),
                             ),
-                            if(list[index].value!.startsWith("http") || list[index].value!.startsWith("https")) Padding(
+                            if(list[index].image != null && (list[index].image!.startsWith("http") || list[index].image!.startsWith("https"))) Padding(
                               padding: const EdgeInsets.only(left: 10.0),
                               child: SizedBox(
                                 width: 75,
                                 height: 68,
-                                child: Image.network(list[index].value.toString(), fit: BoxFit.cover,
+                                child: Image.network(list[index].image!, fit: BoxFit.cover,
                                     errorBuilder: (context, error, stackTrace) {
                                       return SvgPicture.asset(MyImages.loadingCar);
                                     }, frameBuilder:

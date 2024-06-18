@@ -37,7 +37,6 @@ class LikedCarsWidget extends StatelessWidget {
   final DateTime? bidStartTime;
   final DateTime? bidEndTime;
   Rxn<Duration> duration = Rxn();
-  CurrentRemainingTime? remainingTime;
   final Rx<CountdownTimerController>? timerController;
 
   onEnd(){
@@ -267,26 +266,34 @@ class LikedCarsWidget extends StatelessWidget {
                 if(status.toLowerCase() == CarStatus.scheduled.name)
                   Row(
                     children: [
-                      Icon(
-                        Icons.timer_sharp,
-                        color: status.toLowerCase() == CarStatus.scheduled.name ? MyColors.kPrimaryColor : remainingTime?.hours != 0 ? MyColors.green2 : remainingTime!.min! <= 2 ? MyColors.red2 : remainingTime!.min! >= 10 ? MyColors.green2 : remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
-                        size: 14,
-                      ),
                       Obx(() => CountdownTimer(
                         controller: timerController?.value,
                         widgetBuilder: (_, CurrentRemainingTime? time) {
                           if (time == null) {
-                            return const Text('');
-                          }else{
-                            remainingTime = time;
+                            return const Text(MyStrings.paused);
                           }
-                          return Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                            color: status.toLowerCase() == CarStatus.scheduled.name ? MyColors.kPrimaryColor : remainingTime?.hours != 0 ? MyColors.green2 : remainingTime!.min! <= 2 ? MyColors.red2 : remainingTime!.min! >= 10 ? MyColors.green2 : remainingTime!.min! < 10 ? MyColors.orange : MyColors.red,
-                            fontSize: 14,
-                            fontFamily: 'DM Sans',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
-                          ));
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  if(time.min != 0 && timerController?.value != null)
+                                    Icon(
+                                      Icons.timer_sharp,
+                                      color: status.toLowerCase() == CarStatus.scheduled.name ? MyColors.kPrimaryColor : (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
+                                      size: 14,
+                                    ),
+                                  Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
+                                    color: status.toLowerCase() == CarStatus.scheduled.name ? MyColors.kPrimaryColor : (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
+                                    fontSize: 14,
+                                    fontFamily: 'DM Sans',
+                                    fontWeight: FontWeight.w700,
+                                    height: 0,
+                                  ))
+                                ],
+                              ),
+                            ],
+                          );
                         },
                       ),),
                     ],
