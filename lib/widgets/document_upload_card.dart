@@ -72,18 +72,23 @@ class DocumentUploadCard extends StatelessWidget {
                         height: 5,
                       ),
                       if (image.value != null)
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: Image.file(
-                            image.value!,
-                            frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                              return child;
-                            },
-                            width: size.width * 0.3,
-                            height: size.height * 0.09,
-                            fit: BoxFit.fill,
+                        GestureDetector(
+                          onTap: () {
+                            _showFullScreenImage(context, image.value, null);
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(4),
+                            child: Image.file(
+                              image.value!,
+                              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                                return child;
+                              },
+                              width: size.width * 0.3,
+                              height: size.height * 0.09,
+                              fit: BoxFit.fill,
+                            ),
                           ),
-                        ),
+                        )
                     ],
                   )),
             ),
@@ -149,4 +154,36 @@ class DocumentUploadCard extends StatelessWidget {
       ),
     );
   }
+}
+
+void _showFullScreenImage(BuildContext context, File? imageFile, String? imageUrl) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+              if (imageFile != null)
+                Image.file(imageFile)
+              else if (imageUrl != null)
+                Image.network(imageUrl)
+              else
+                const Text('No image available'),
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }

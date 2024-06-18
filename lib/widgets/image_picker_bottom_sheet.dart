@@ -105,10 +105,10 @@ class ImagePickerSheet extends StatelessWidget {
                     ),
                   ],
                 ),*/
-              if(image.value != null)
+              /*if(image.value != null)
               const SizedBox(
                 height: 10,
-              ),
+              ),*/
               Row(
                 children: [
                   Column(
