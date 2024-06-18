@@ -62,7 +62,7 @@ class ImagePickerSheet extends StatelessWidget {
               const SizedBox(
                 height: 24,
               ),
-              if(image.value != null)
+              /*if(image.value != null)
                 Stack(
                   children: [
                     image.value!.path.startsWith('http') || image.value!.path.startsWith('https')?Image.network(
@@ -104,11 +104,11 @@ class ImagePickerSheet extends StatelessWidget {
                       ),
                     ),
                   ],
-                ),
-              if(image.value != null)
+                ),*/
+              /*if(image.value != null)
               const SizedBox(
                 height: 10,
-              ),
+              ),*/
               Row(
                 children: [
                   Column(
