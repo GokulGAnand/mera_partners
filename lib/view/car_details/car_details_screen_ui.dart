@@ -1066,7 +1066,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                       const SizedBox(
                                         height: 2,
                                       ),
-                                      (index == 0)
+                                      (index == 0 || carDetailsScreenViewModel.ratingList[index].title == "AC")
                                           ? const SizedBox()
                                           : Container(
                                               padding: const EdgeInsets.symmetric(
