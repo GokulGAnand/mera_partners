@@ -129,7 +129,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                         Get.toNamed(AppRoutes.imageViewScreen, arguments: 
                         {"title": galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["title"],
                           "image_title" : galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].title,
-                          "image" : galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].value
+                          "image" : galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].image
                         },
                         );
                       },
