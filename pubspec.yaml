@@ -56,6 +56,7 @@ dependencies:
   firebase_messaging: ^14.9.2
   http_parser:
   pinput: ^5.0.0
+  smart_auth: ^2.0.0
 
 dev_dependencies:
   flutter_test:

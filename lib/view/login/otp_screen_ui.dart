@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/dimens.dart';
 import 'package:mera_partners/utils/strings.dart';
@@ -6,11 +5,11 @@ import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/view_model/login/login_view_model.dart';
 import 'package:mera_partners/widgets/custom_appbar.dart';
 import 'package:mera_partners/widgets/custom_button.dart';
-import 'package:mera_partners/widgets/custom_text_form_field.dart';
 import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
+import 'package:smart_auth/smart_auth.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -25,12 +24,14 @@ class _OtpScreenState extends State<OtpScreen> {
           ? Get.find<LoginScreenViewModel>()
           : Get.put(LoginScreenViewModel());
 
+  late final SmsRetrieverImpl smsRetrieverImpl;
   @override
   void initState() {
     loginScreenViewModel.startTimer(60);
     loginScreenViewModel.otpFocusNode.addListener((){
       setState(() {});
     });
+    smsRetrieverImpl = SmsRetrieverImpl(SmartAuth());
     super.initState();
   }
 
@@ -67,6 +68,7 @@ class _OtpScreenState extends State<OtpScreen> {
               child: Align(
                 alignment: Alignment.center,
                 child: Pinput(
+                  smsRetriever: smsRetrieverImpl,
                           defaultPinTheme:  PinTheme(
                             width: MediaQuery.of(context).size.width / 4,
                             height: 62,
@@ -168,4 +170,27 @@ class _OtpScreenState extends State<OtpScreen> {
       }),
     );
   }
+}
+
+class SmsRetrieverImpl implements SmsRetriever {
+  const SmsRetrieverImpl(this.smartAuth);
+
+  final SmartAuth smartAuth;
+
+  @override
+  Future<void> dispose() {
+    return smartAuth.removeSmsListener();
+  }
+
+  @override
+  Future<String?> getSmsCode() async {
+    final res = await smartAuth.getSmsCode();
+    if (res.succeed && res.codeFound) {
+      return res.code!;
+    }
+    return null;
+  }
+
+  @override
+  bool get listenForMultipleSms => false;
 }

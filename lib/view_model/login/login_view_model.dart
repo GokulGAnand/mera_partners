@@ -129,17 +129,17 @@ class LoginScreenViewModel extends GetxController {
 
           if((globals.isOnboarding == null || globals.isOnboarding == false) && (globals.isDeposited == null || globals.isDeposited == false)){
             SharedPrefManager.instance.setBoolAsync(Constants.isOnboarding, true);
-            Get.toNamed(AppRoutes.onboardingScreen);
+            Get.offAllNamed(AppRoutes.onboardingScreen);
           } else if (userInfoResponse.value.data?.first.isDocumentsVerified != null && (userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.SUBMITTED.name || userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.VERIFIED.name) && userInfoResponse.value.data?.first.isDeposited != null && userInfoResponse.value.data?.first.isDeposited == true) {
-            Get.toNamed(AppRoutes.homeScreen);
+            Get.offAllNamed(AppRoutes.homeScreen);
           }  else if(userInfoResponse.value.data?.first.isDocumentsVerified != null && (userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.VERIFIED.name || userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.SUBMITTED.name) && userInfoResponse.value.data?.first.isDeposited == false ){
-            Get.toNamed(AppRoutes.documentScreen,arguments: 3);
+            Get.offAllNamed(AppRoutes.documentScreen,arguments: 3);
           }else if(userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.NOTSUBMITTED.name){
-            Get.toNamed(AppRoutes.documentScreen,arguments: 0);
+            Get.offAllNamed(AppRoutes.documentScreen,arguments: 0);
           }else if (userInfoResponse.value.data?.first.fullname == null) {
-            Get.toNamed(AppRoutes.onboardingScreen);
+            Get.offAllNamed(AppRoutes.onboardingScreen);
           } else {
-            Get.toNamed(AppRoutes.documentScreen);
+            Get.offAllNamed(AppRoutes.documentScreen);
           }
         }
       } else {

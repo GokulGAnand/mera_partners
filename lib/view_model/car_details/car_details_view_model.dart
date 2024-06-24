@@ -259,9 +259,15 @@ class CarDetailsScreenViewModel extends GetxController {
       }
       if(exterior[i].listValue != null){
         for(int j=0; j<exterior[i].listValue!.length; j++){
+          if(exterior[i].listValue![j].isEmpty){
+            exterior[i].listValue!.removeAt(j);
+          }
+        }
+        for(int j=0; j<exterior[i].listValue!.length; j++){
           if(goodListData.contains(exterior[i].listValue![j].toString().toLowerCase())){
             exterior[i].value = exterior[i].listValue![j];
             exteriorOtherParts.add(exterior[i]);
+            break;
           }
           if(redListData.contains(exterior[i].listValue![j].toString().toLowerCase())){
             exterior[i].value = exterior[i].listValue![j];
@@ -270,6 +276,7 @@ class CarDetailsScreenViewModel extends GetxController {
             if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
               damageImages.add(exterior[i]);
             }
+            break;
           }
           if(yellowListData.contains(exterior[i].listValue![j].toString().toLowerCase())){
             exterior[i].value = exterior[i].listValue![j];
@@ -278,10 +285,11 @@ class CarDetailsScreenViewModel extends GetxController {
             if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
               damageImages.add(exterior[i]);
             }
+            break;
           }
-          if(exterior[i].listValue![j].isEmpty){
-            exterior[i].listValue!.removeAt(j);
-          }
+          // if(exterior[i].listValue![j].isEmpty){
+          //   exterior[i].listValue!.removeAt(j);
+          // }
         }
       }
     }
@@ -305,9 +313,15 @@ class CarDetailsScreenViewModel extends GetxController {
       }
       if(interiorAndElectrical[i].listValue != null){
         for(int j=0; j<interiorAndElectrical[i].listValue!.length; j++){
+          if(interiorAndElectrical[i].listValue![j].isEmpty){
+            interiorAndElectrical[i].listValue!.removeAt(j);
+          }
+        }
+        for(int j=0; j<interiorAndElectrical[i].listValue!.length; j++){
           if(goodListData.contains(interiorAndElectrical[i].listValue![j].toString().toLowerCase())){
             interiorAndElectrical[i].value = interiorAndElectrical[i].listValue![j];
             interiorAndElectricalOtherParts.add(interiorAndElectrical[i]);
+            break;
           }
           if(redListData.contains(interiorAndElectrical[i].listValue![j].toString().toLowerCase())){
             interiorAndElectrical[i].value = interiorAndElectrical[i].listValue![j];
@@ -316,6 +330,7 @@ class CarDetailsScreenViewModel extends GetxController {
             if(interiorAndElectrical[i].image != null && (interiorAndElectrical[i].image!.isNotEmpty)){
               damageImages.add(interiorAndElectrical[i]);
             }
+            break;
           }
           if(yellowListData.contains(interiorAndElectrical[i].listValue![j].toString().toLowerCase())){
             interiorAndElectrical[i].value = interiorAndElectrical[i].listValue![j];
@@ -324,10 +339,11 @@ class CarDetailsScreenViewModel extends GetxController {
             if(interiorAndElectrical[i].image != null && (interiorAndElectrical[i].image!.isNotEmpty)){
               damageImages.add(interiorAndElectrical[i]);
             }
+            break;
           }
-          if(interiorAndElectrical[i].listValue![j].isEmpty){
-            interiorAndElectrical[i].listValue!.removeAt(j);
-          }
+          // if(interiorAndElectrical[i].listValue![j].isEmpty){
+          //   interiorAndElectrical[i].listValue!.removeAt(j);
+          // }
         }
       }
     }
@@ -351,9 +367,15 @@ class CarDetailsScreenViewModel extends GetxController {
       }
       if(engine[i].listValue != null){
         for(int j=0; j<engine[i].listValue!.length; j++){
+          if(engine[i].listValue![j].isEmpty){
+            engine[i].listValue!.removeAt(j);
+          }
+        }
+        for(int j=0; j<engine[i].listValue!.length; j++){
           if(goodListData.contains(engine[i].listValue![j].toString().toLowerCase())){
             engine[i].value = engine[i].listValue![j];
             engineOtherParts.add(engine[i]);
+            break;
           }
           if(redListData.contains(engine[i].listValue![j].toString().toLowerCase())){
             engine[i].value = engine[i].listValue![j];
@@ -362,6 +384,7 @@ class CarDetailsScreenViewModel extends GetxController {
             if(engine[i].image != null && (engine[i].image!.isNotEmpty)){
               damageImages.add(engine[i]);
             }
+            break;
           }
           if(yellowListData.contains(engine[i].listValue![j].toString().toLowerCase())){
             engine[i].value = engine[i].listValue![j];
@@ -370,10 +393,11 @@ class CarDetailsScreenViewModel extends GetxController {
             if(engine[i].image != null && (engine[i].image!.isNotEmpty)){
               damageImages.add(engine[i]);
             }
+            break;
           }
-          if(engine[i].listValue![j].isEmpty){
-            engine[i].listValue!.removeAt(j);
-          }
+          // if(engine[i].listValue![j].isEmpty){
+          //   engine[i].listValue!.removeAt(j);
+          // }
         }
       }
     }
@@ -395,23 +419,31 @@ class CarDetailsScreenViewModel extends GetxController {
       }
       if(airCondition[i].listValue != null){
         for(int j=0; j<airCondition[i].listValue!.length; j++){
+          if(airCondition[i].listValue![j].isEmpty){
+            airCondition[i].listValue!.removeAt(j);
+          }
+        }
+        for(int j=0; j<airCondition[i].listValue!.length; j++){
           if(goodListData.contains(airCondition[i].listValue![j].toString().toLowerCase())){
             airCondition[i].value = airCondition[i].listValue![j];
             airConditionOtherParts.add(airCondition[i]);
+            break;
           }
           if(redListData.contains(airCondition[i].listValue![j].toString().toLowerCase())){
             airCondition[i].value = airCondition[i].listValue![j];
             airCondition[i].color = MyColors.warning;
             airConditionIssue.add(airCondition[i]);
+            break;
           }
           if(yellowListData.contains(airCondition[i].listValue![j].toString().toLowerCase())){
             airCondition[i].value = airCondition[i].listValue![j];
             airCondition[i].color = MyColors.yellow;
             airConditionIssue.add(airCondition[i]);
+            break;
           }
-          if(airCondition[i].listValue![j].isEmpty){
-            airCondition[i].listValue!.removeAt(j);
-          }
+          // if(airCondition[i].listValue![j].isEmpty){
+          //   airCondition[i].listValue!.removeAt(j);
+          // }
         }
       }
     }
@@ -429,23 +461,31 @@ class CarDetailsScreenViewModel extends GetxController {
       }
       if(testDrive[i].listValue != null){
         for(int j=0; j<testDrive[i].listValue!.length; j++){
+          if(testDrive[i].listValue![j].isEmpty){
+            testDrive[i].listValue!.removeAt(j);
+          }
+        }
+        for(int j=0; j<testDrive[i].listValue!.length; j++){
           if(goodListData.contains(testDrive[i].listValue![j].toString().toLowerCase())){
             testDrive[i].value = testDrive[i].listValue![j];
             testDriveOtherParts.add(testDrive[i]);
+            break;
           }
           if(redListData.contains(testDrive[i].listValue![j].toString().toLowerCase())){
             testDrive[i].value = testDrive[i].listValue![j];
             testDrive[i].color = MyColors.warning;
             testDriveIssue.add(testDrive[i]);
+            break;
           }
           if(yellowListData.contains(testDrive[i].listValue![j].toString().toLowerCase())){
             testDrive[i].value = testDrive[i].listValue![j];
             testDrive[i].color = MyColors.yellow;
             testDriveIssue.add(testDrive[i]);
+            break;
           }
-           if(testDrive[i].listValue![j].isEmpty){
-            testDrive[i].listValue!.removeAt(j);
-          }
+          //  if(testDrive[i].listValue![j].isEmpty){
+          //   testDrive[i].listValue!.removeAt(j);
+          // }
         }
       }
     }
