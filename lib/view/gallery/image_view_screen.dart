@@ -11,7 +11,6 @@ class ImageViewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //title, image_title, image
     Map<String, dynamic> image = Get.arguments;
     return Scaffold(
       backgroundColor: MyColors.black4,
@@ -27,36 +26,34 @@ class ImageViewScreen extends StatelessWidget {
               style: MyStyles.white16700,
             ),
           ),
-          InteractiveViewer(
-            child: AspectRatio(
-                                aspectRatio: 16/9,
-                                child: Image.network(image["image"],
-                                fit: BoxFit.fill,
-                                errorBuilder: (context, error, stackTrace) {
-                                                return SvgPicture.asset(MyImages.loadingCar);
-                                              }, frameBuilder:
-                                                  (context, child, frame, wasSynchronouslyLoaded) {
-                                                return child;
-                                              }, loadingBuilder: (context, child, loadingProgress) {
-                                                if (loadingProgress == null) {
-                                                  return child;
-                                                } else {
-                                                  return SvgPicture.asset(MyImages.loadingCar);
-                                                }
-                                              }),
-                                ),
+          Expanded(
+            child: InteractiveViewer(
+              minScale: 0.1,
+              maxScale: 4.0,
+              clipBehavior: Clip.none,
+              child: Center(
+                child: Image.network(
+                  image["image"],
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) {
+                    return SvgPicture.asset(MyImages.loadingCar);
+                  },
+                  frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                    return child;
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ),
+              ),
+            ),
           ),
-          // InteractiveViewer(
-          //   child: Container(
-          //     width: double.infinity,
-          //     height: 216,
-          //     decoration: const BoxDecoration(
-          //         image: DecorationImage(
-          //             image: NetworkImage(
-          //                 "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
-          //             fit: BoxFit.fill)),
-          //   ),
-          // ),
         ],
       ),
     );
