@@ -1,7 +1,7 @@
 
 class MyStrings {
   static const String regAndFitness = "Reg and Fitness";
-  static const String manufacturingDate = "Manufacturing date ";
+  static const String manufacturingDate = "Manufacturing date";
   static const String regDate = "Reg date";
   static const String rto = "RTO";
   static const String comments = "Comments";
@@ -126,7 +126,7 @@ class MyStrings {
   ///
   static const String logoutConfirmMsg = "Are you sure want to sign out?";
   static const String confirmDiscardChanges = "Are you sure want to discard changes?";
-  static const String confirmDelete = "Are you sure want to delete?";
+  static const String confirmDelete = "Are you sure you want to delete your account? This action cannot be undone and will remove all your data from the app.";
   static const String engineCompartmentImage = "Engine Compartment Image";
   static const String engineSound = "Engine Sound";
   static const String smoke = "Smoke";
@@ -149,7 +149,7 @@ class MyStrings {
 
   //Login and OTP screen
   static const String login = "Login";
-  static const String loginDesc = "Please enter the phone number we will send the OTP in this phone number.";
+  static const String loginDesc = "Please enter your phone number to receive the OTP.";
   static const String mobileNo = "Mobile Number";
   static const String aggreeTerms = 'By logging in you agree to  our ';
   static const String termsCondition = "Terms and Conditions.";

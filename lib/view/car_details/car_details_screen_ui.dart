@@ -1304,10 +1304,10 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                       shrinkWrap: true,
                                       itemCount: list[index].listValue!.length,
                                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
+                                        crossAxisCount: list[index].listValue!.any((item) => item.length >= 20) ? 1 : 2,
                                         crossAxisSpacing: 8,
                                         mainAxisSpacing: 8,
-                                        mainAxisExtent: list[index].listValue!.any((item) => item.length >= 20) ? 45 : 30,
+                                        mainAxisExtent: list[index].listValue!.any((item) => item.length >= 10) ? 40 : 30,
                                       ),
                                         itemBuilder: (context, i){
                                           return Container(

@@ -98,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           controller: loginScreenViewModel.mobileController,
                           prefixIcon: const Padding(
                             padding: Dimens.padding16,
-                            child: Text('+91'),
+                            child: Text('+91',style: TextStyle(color: MyColors.black, fontSize: 16, fontWeight: FontWeight.w400),),
                           ),
                           inputFormatter: [
                             FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
