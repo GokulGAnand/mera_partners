@@ -96,6 +96,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       CustomTextFormField(labelText: MyStrings.mobileNo, keyboardType: TextInputType.number,
                           controller: loginScreenViewModel.mobileController,
+                          prefixIcon: const Padding(
+                            padding: Dimens.padding16,
+                            child: Text('+91'),
+                          ),
                           inputFormatter: [
                             FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                             LengthLimitingTextInputFormatter(10)

@@ -1330,23 +1330,33 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                             ),
                             if(list[index].image != null && (list[index].image!.startsWith("http") || list[index].image!.startsWith("https"))) Padding(
                               padding: const EdgeInsets.only(left: 10.0),
-                              child: SizedBox(
-                                width: 75,
-                                height: 68,
-                                child: Image.network(list[index].image!, fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return SvgPicture.asset(MyImages.loadingCar);
-                                    }, frameBuilder:
-                                        (context, child, frame, wasSynchronouslyLoaded) {
-                                      return child;
-                                    }, loadingBuilder: (context, child, loadingProgress) {
-                                      if (loadingProgress == null) {
-                                        return child;
-                                      } else {
+                              child: GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(AppRoutes.imageViewScreen, arguments:
+                                  {"title": list[index].title,
+                                    "image_title" : list[index].title,
+                                    "image" : list[index].image!
+                                  },
+                                  );
+                                },
+                                child: SizedBox(
+                                  width: 75,
+                                  height: 68,
+                                  child: Image.network(list[index].image!, fit: BoxFit.cover,
+                                      errorBuilder: (context, error, stackTrace) {
                                         return SvgPicture.asset(MyImages.loadingCar);
-                                      }
-                                    }),
-                              ),
+                                      }, frameBuilder:
+                                          (context, child, frame, wasSynchronouslyLoaded) {
+                                        return child;
+                                      }, loadingBuilder: (context, child, loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return child;
+                                        } else {
+                                          return SvgPicture.asset(MyImages.loadingCar);
+                                        }
+                                      }),
+                                ),
+                              )
                             )
                           ],
                         ),
