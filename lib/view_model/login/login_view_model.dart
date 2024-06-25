@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mera_partners/utils/globals.dart' as globals;
+import 'package:sms_autofill/sms_autofill.dart';
 import '../../routes/app_routes.dart';
 
 class LoginScreenViewModel extends GetxController {
@@ -26,9 +27,7 @@ class LoginScreenViewModel extends GetxController {
   RxBool buttonDisable = true.obs;
   var userInfoResponse = UserInfoResponse().obs;
 
-  final TextEditingController otpTextField = TextEditingController();
-
-  FocusNode otpFocusNode = FocusNode();
+  RxString otpValue = "".obs;
 
   Timer? timer;
   final time = '00.00'.obs;
@@ -54,7 +53,11 @@ class LoginScreenViewModel extends GetxController {
   Future<void> mobileLogin() async {
     try {
       ProgressBar.instance.showProgressbar(Get.context!);
-      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.login), body: {"contactNo": mobileController.value.text});
+      var appSignatureID = await SmsAutoFill().getAppSignature;
+      print("Signature ID: "+ appSignatureID.toString());
+      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.login), 
+      body: {"contactNo": mobileController.value.text,
+            "number": appSignatureID});
       String? message = json.decode(response.body)['message'];
       if (response.statusCode == 200) {
         await PushNotifications.getDeviceToken();
@@ -84,13 +87,20 @@ class LoginScreenViewModel extends GetxController {
     SharedPrefManager.instance.removeStringAsync(Constants.documentStatus);
   }
 
+  void listenOtp() async {
+    await SmsAutoFill().unregisterListener();
+    // listenForCode();
+    await SmsAutoFill().listenForCode();
+    print("OTP listen Called");
+  }
+
   Future<void> verifyOTP(BuildContext context) async {
     try {
       ProgressBar.instance.showProgressbar(context);
       var headers = {
         'Content-Type': 'application/json'
       };
-      String otp = otpTextField.value.text.toString();
+      String otp = otpValue.value;
       var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.verifyOtp), body: jsonEncode({"contactNo": int.parse(mobileController.value.text), "otp": int.parse(otp)}),headers: headers);
       if (response.statusCode == 200) {
         clearData();

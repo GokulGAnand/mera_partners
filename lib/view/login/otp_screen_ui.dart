@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/dimens.dart';
 import 'package:mera_partners/utils/strings.dart';
@@ -8,8 +9,7 @@ import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pinput/pinput.dart';
-import 'package:smart_auth/smart_auth.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -24,14 +24,11 @@ class _OtpScreenState extends State<OtpScreen> {
           ? Get.find<LoginScreenViewModel>()
           : Get.put(LoginScreenViewModel());
 
-  late final SmsRetrieverImpl smsRetrieverImpl;
+  // late final SmsRetrieverImpl smsRetrieverImpl;
   @override
   void initState() {
     loginScreenViewModel.startTimer(60);
-    loginScreenViewModel.otpFocusNode.addListener((){
-      setState(() {});
-    });
-    smsRetrieverImpl = SmsRetrieverImpl(SmartAuth());
+    loginScreenViewModel.listenOtp();
     super.initState();
   }
 
@@ -40,8 +37,7 @@ class _OtpScreenState extends State<OtpScreen> {
     if (loginScreenViewModel.timer != null) {
       loginScreenViewModel.timer!.cancel();
     }
-    loginScreenViewModel.otpTextField.clear();
-    // loginScreenViewModel.
+    SmsAutoFill().unregisterListener();
     super.dispose();
   }
 
@@ -64,45 +60,26 @@ class _OtpScreenState extends State<OtpScreen> {
               height: Dimens.standard_24,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Align(
-                alignment: Alignment.center,
-                child: Pinput(
-                  smsRetriever: smsRetrieverImpl,
-                          defaultPinTheme:  PinTheme(
-                            width: MediaQuery.of(context).size.width / 4,
-                            height: 62,
-                            textStyle: TextStyle(fontSize: 20, color: Color.fromRGBO(30, 60, 87, 1), fontWeight: FontWeight.w600),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: MyColors.grey),
-                              borderRadius: BorderRadius.all(Radius.circular(12.0),),
-                            ),
-                          ),
-                          focusedPinTheme: PinTheme(
-                            width: MediaQuery.of(context).size.width / 4,
-                            height: 62,
-                            textStyle: TextStyle(fontSize: 20, color: Color.fromRGBO(30, 60, 87, 1), fontWeight: FontWeight.w600),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: MyColors.kPrimaryColor, width: 1),
-                              borderRadius: BorderRadius.all(Radius.circular(12.0),),
-                            ),
-                          ),
-                          length: 4,
-                          onChanged: (value) {
-                            if(value.length == 4){
-                              loginScreenViewModel.buttonDisable.value = false;
-                            } else {
-                              loginScreenViewModel.buttonDisable.value = true;
-                            }
-                          },
-                          pinAnimationType: PinAnimationType.none,
-                          isCursorAnimationEnabled: false,
-                          controller: loginScreenViewModel.otpTextField,
-                          focusNode: loginScreenViewModel.otpFocusNode,
-                          showCursor: true,
-                          
-                        ),
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: PinFieldAutoFill(
+                currentCode: loginScreenViewModel.otpValue.value,
+                keyboardType: TextInputType.number,
+                decoration: BoxLooseDecoration(
+                  textStyle: const TextStyle(fontSize: 20, color: MyColors.black, fontWeight: FontWeight.w600),
+                  strokeColorBuilder: PinListenColorBuilder(MyColors.kPrimaryColor, MyColors.grey),
+                  bgColorBuilder: const FixedColorBuilder(Colors.transparent),
+                  radius: const Radius.circular(12.0)
+                ),
+                codeLength: 4,
+                  onCodeChanged: (value) {
+                    loginScreenViewModel.otpValue.value = value!;
+                    if(value.length == 4){
+                        loginScreenViewModel.buttonDisable.value = false;
+                    } else {
+                        loginScreenViewModel.buttonDisable.value = true;
+                    }
+                  },
+                ),
             ),
             SizedBox(
               height: Dimens.standard_24,
@@ -170,27 +147,4 @@ class _OtpScreenState extends State<OtpScreen> {
       }),
     );
   }
-}
-
-class SmsRetrieverImpl implements SmsRetriever {
-  const SmsRetrieverImpl(this.smartAuth);
-
-  final SmartAuth smartAuth;
-
-  @override
-  Future<void> dispose() {
-    return smartAuth.removeSmsListener();
-  }
-
-  @override
-  Future<String?> getSmsCode() async {
-    final res = await smartAuth.getSmsCode();
-    if (res.succeed && res.codeFound) {
-      return res.code!;
-    }
-    return null;
-  }
-
-  @override
-  bool get listenForMultipleSms => false;
 }
