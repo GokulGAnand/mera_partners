@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:mera_partners/model/response/live/live_cars_list_response.dart';
-import 'package:mera_partners/model/response/user_data/user_car_details_response.dart';
 import 'package:mera_partners/service/notification_service.dart';
 import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/view_model/car_details/car_details_view_model.dart';
