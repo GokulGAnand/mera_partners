@@ -239,10 +239,18 @@ class LikedCarsWidget extends StatelessWidget {
                 if(status.toLowerCase() == CarStatus.live.name || (status.toLowerCase() != CarStatus.scheduled.name && status.toLowerCase() != CarStatus.otb.name))
                   SizedBox(height: Dimens.standard_2),
                 if(status.toLowerCase() == CarStatus.live.name || (status.toLowerCase() != CarStatus.scheduled.name && status.toLowerCase() != CarStatus.otb.name))
-                  Text(
-                    bidAmount,
-                    style: MyStyles.primary16500,
-                  ),
+                  RichText(
+                    textAlign: TextAlign.center,
+                                text: TextSpan(
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: '₹ ',
+                                        style: MyStyles.primary16500.copyWith(fontFamily: 'Rupee')),
+                                    TextSpan(text: bidAmount,
+                                    style: MyStyles.primary16500,),
+                                  ],
+                                ),
+                              ),
                 ///OTB
                 if(status.toLowerCase() == CarStatus.otb.name)
                   const Text(
@@ -252,10 +260,18 @@ class LikedCarsWidget extends StatelessWidget {
                 if(status.toLowerCase() == CarStatus.otb.name)
                   SizedBox(height: Dimens.standard_2),
                 if(status.toLowerCase() == CarStatus.otb.name)
-                  Text(
-                    otbPrice,
-                    style: MyStyles.primary16500,
-                  ),
+                RichText(
+                    textAlign: TextAlign.center,
+                                text: TextSpan(
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: '₹ ',
+                                        style: MyStyles.primary16500.copyWith(fontFamily: 'Rupee')),
+                                    TextSpan(text: otbPrice,
+                                    style: MyStyles.primary16500,),
+                                  ],
+                                ),
+                              ),
                 if(status.toLowerCase() == CarStatus.scheduled.name) //schedule & otb timer
                   const Text(
                     MyStrings.yetToStart,

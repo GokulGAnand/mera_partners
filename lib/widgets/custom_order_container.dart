@@ -242,10 +242,26 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                         ),
                       ),
                     ),
-                    Text(
-                      widget.dealStatus == OrderStatus.procurement.name || widget.dealStatus == OrderStatus.rcTransfer.name || widget.dealStatus.isEmpty ? MyStrings.yFinal + widget.offerPrice : MyStrings.yBid + widget.finalPrice,
-                      style: MyStyles.primary14700,
-                    ),
+                    RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: widget.dealStatus == OrderStatus.procurement.name || widget.dealStatus == OrderStatus.rcTransfer.name || widget.dealStatus.isEmpty 
+                                  ? MyStrings.yFinal
+                                  : MyStrings.yBid,
+                                style: MyStyles.primary14700,
+                              ),
+                              TextSpan(
+                                  text: '₹ ',
+                                  style: MyStyles.primary14700.copyWith(fontFamily: 'Rupee')),
+                              TextSpan(text: widget.dealStatus == OrderStatus.procurement.name || widget.dealStatus == OrderStatus.rcTransfer.name || widget.dealStatus.isEmpty 
+                                  ? widget.offerPrice 
+                                  : widget.finalPrice,
+                              style: MyStyles.primary14700,),
+                            ],
+                          ),
+                        ),
                     const SizedBox(
                       height: 8,
                     ),

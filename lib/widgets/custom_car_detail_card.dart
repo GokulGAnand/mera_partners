@@ -303,7 +303,20 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                           child: SvgPicture.asset(MySvg.arrowDown, width: 14,),
                         ),
                       if (widget.bidAmount.isNotEmpty && widget.isScheduled?.value == false)
-                        Obx(() =>Text(globals.documentStatus == DocumentStatus.VERIFIED.name?widget.bidAmount.value: widget.bidAmount.value.replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ','), textAlign: TextAlign.center, style: MyStyles.white16700)),
+                        Obx(() =>
+                        RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: '₹ ',
+                                  style: MyStyles.white16700.copyWith(fontFamily: 'Rupee')),
+                              TextSpan(text: globals.documentStatus == DocumentStatus.VERIFIED.name?widget.bidAmount.value: widget.bidAmount.value.replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ','),
+                              style: MyStyles.white16700,),
+                            ],
+                          ),
+                        ),
+                        ),
                     ],
                   ),
                 ),),
@@ -411,7 +424,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                             Text(widget.fuelType, style: MyStyles.regular12),
                             const SizedBox(width: 6),                            const Text('|', style: MyStyles.regular12),
                             const SizedBox(width: 6),
-                             Text('${Constants.numberFormatter.format(double.parse(widget.kmDriven))} KM', style: MyStyles.regular12),
+                            Text('${Constants.numberFormatter.format(double.parse(widget.kmDriven))} KM', style: MyStyles.regular12),
                             const SizedBox(width: 6),
                             const Text('|', style: MyStyles.regular12),
                             const SizedBox(width: 6),
@@ -537,7 +550,10 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                                 TextSpan(
                                   children: [
                                     const TextSpan(text: 'Fair Value ', style: MyStyles.subTitleGreayStyle),
-                                    TextSpan(text: globals.documentStatus == DocumentStatus.VERIFIED.name ? Constants.numberFormat.format(double.parse(widget.fmv)) : '₹${widget.fmv.replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}', style: MyStyles.grey14700),
+                                    TextSpan(text: "₹",
+                                    style: MyStyles.grey14700.copyWith(fontFamily: 'Rupee')),
+                                    TextSpan(text: globals.documentStatus == DocumentStatus.VERIFIED.name ? Constants.numberFormat.format(double.parse(widget.fmv)) : '${widget.fmv.replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}', 
+                                    style: MyStyles.grey14700),
                                   ],
                                 ),
                                 textAlign: TextAlign.center,

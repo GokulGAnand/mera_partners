@@ -311,7 +311,7 @@ class BidTextFormFieldState extends State<BidTextFormField> {
             suffixIcon: widget.suffixIcon,
             prefixText: widget.prefixText ?? '₹ ',
             suffixStyle: MyStyles.subtitle18700,
-            prefixStyle: MyStyles.subtitle18700,
+            prefixStyle: (widget.prefixText != null)?MyStyles.subtitle18700:MyStyles.subtitle18700.copyWith(fontFamily: 'Rupee'),
         ),
       ),
     );

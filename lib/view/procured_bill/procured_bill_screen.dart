@@ -84,11 +84,41 @@ class ProcuredBillScreen extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(Constants.numberFormat.format(sellingPrice), style: MyStyles.black16400),
+                            RichText(
+                              text: TextSpan(
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: '₹ ',
+                                      style: MyStyles.black16400.copyWith(fontFamily: 'Rupee')),
+                                  TextSpan(text: Constants.numberFormat.format(sellingPrice),
+                                  style: MyStyles.black16400,),
+                                ],
+                              ),
+                            ),
                             SizedBox(height: Dimens.standard_10),
-                            Text(Constants.numberFormat.format(double.tryParse(additionalCharges) ?? 0), style: MyStyles.black16400),
+                            RichText(
+                              text: TextSpan(
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: '₹ ',
+                                      style: MyStyles.black16400.copyWith(fontFamily: 'Rupee')),
+                                  TextSpan(text: Constants.numberFormat.format(double.tryParse(additionalCharges) ?? 0),
+                                  style: MyStyles.black16400,),
+                                ],
+                              ),
+                            ),
                             SizedBox(height: Dimens.standard_10),
-                             Text(Constants.numberFormat.format(double.tryParse(gst) ?? 0), style: MyStyles.black16400),
+                            RichText(
+                              text: TextSpan(
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: '₹ ',
+                                      style: MyStyles.black16400.copyWith(fontFamily: 'Rupee')),
+                                  TextSpan(text: Constants.numberFormat.format(double.tryParse(gst) ?? 0),
+                                  style: MyStyles.black16400,),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -110,7 +140,17 @@ class ProcuredBillScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(MyStrings.totalAmount, style: MyStyles.black16700),
-                        Text(Constants.numberFormat.format(double.tryParse(totalAmount ?? '0') ?? 0), style: MyStyles.blue16W700),
+                        RichText(
+                              text: TextSpan(
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: '₹ ',
+                                      style: MyStyles.blue16W700.copyWith(fontFamily: 'Rupee')),
+                                  TextSpan(text: Constants.numberFormat.format(double.tryParse(totalAmount ?? '0') ?? 0),
+                                  style: MyStyles.blue16W700,),
+                                ],
+                              ),
+                        ),
                       ],
                     ),
                   ],
