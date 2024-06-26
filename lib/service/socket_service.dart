@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:mera_partners/model/response/live/live_cars_list_response.dart';
+import 'package:mera_partners/model/response/user_data/user_car_details_response.dart';
 import 'package:mera_partners/service/notification_service.dart';
 import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/view_model/car_details/car_details_view_model.dart';
@@ -10,6 +11,8 @@ import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:mera_partners/utils/globals.dart' as globals;
+import '../utils/constants.dart';
+import '../utils/shared_pref_manager.dart';
 import '../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 
 class SocketService {
@@ -29,6 +32,11 @@ class SocketService {
     List<Data> parseCarDataList(String jsonString) {
       final parsed = jsonDecode(jsonString).cast<Map<String, dynamic>>();
       return parsed.map<Data>((json) => Data.fromJson(json)).toList();
+    }
+
+    List<UserData> parseUserData(String jsonString) {
+      final parsed = jsonDecode(jsonString).cast<Map<String, dynamic>>();
+      return parsed.map<UserData>((json) => UserData.fromJson(json)).toList();
     }
 
     void filterCars(List<Data> carList){
@@ -89,9 +97,22 @@ class SocketService {
       }
     });
 
+    socket?.on('getUserInfo', (data) {
+      log('user socket');
+      log(data.toString());
+      // List<UserData> userDetail = parseUserData(data);
+      // if (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false) {
+      //   globals.documentStatus = userDetail.first.isDocumentsVerified;
+      //   globals.isDeposited = userDetail.first.isDeposited;
+      //   SharedPrefManager.instance.setStringAsync(Constants.documentStatus, userDetail.first.isDocumentsVerified.toString());
+      //   SharedPrefManager.instance.setBoolAsync(Constants.isDeposited, userDetail.first.isDeposited ?? false);
+      // }
+    },);
+
     socket?.connect();
 
     socket?.onConnect((_) {
+      socket?.emit("joinDealerRoom", globals.uniqueUserId);
       log('Connected to the socket server');
     });
 
