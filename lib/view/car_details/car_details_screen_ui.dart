@@ -1283,7 +1283,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
               itemBuilder: (context, index) {
                 return Obx((){
                   if (index < 2 || (showMore.value == true && index != list.length)) {
-                  return Container(
+                    String issueSubTitle = list[index].listValue?.map((item) => item.capitalize.toString()).join(',')??'';
+                    return Container(
                     width: double.infinity,
                     // height: 142,
                     padding:
@@ -1327,10 +1328,10 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                       shrinkWrap: true,
                                       itemCount: list[index].listValue!.length,
                                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
+                                        crossAxisCount: list[index].listValue!.any((item) => item.length >= 20) ? 1 : 2,
                                         crossAxisSpacing: 8,
                                         mainAxisSpacing: 8,
-                                        mainAxisExtent: list[index].listValue!.any((item) => item.length >= 20) ? 45 : 30,
+                                        mainAxisExtent: list[index].listValue!.any((item) => item.length >= 10) ? 40 : 30,
                                       ),
                                         itemBuilder: (context, i){
                                           return Container(
@@ -1358,7 +1359,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                   Get.toNamed(AppRoutes.imageViewScreen, arguments:
                                   {"title": list[index].title,
                                     "image_title" : list[index].title,
-                                    "image" : list[index].image!
+                                    "image" : list[index].image!,
+                                    "subtitle" : issueSubTitle
                                   },
                                   );
                                 },

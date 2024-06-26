@@ -137,7 +137,7 @@ class LoginScreenViewModel extends GetxController {
           globals.jsonHeaders = {'Content-Type': 'application/json','Authorization': 'Bearer ${globals.token}',};
           await PushNotifications.saveToken(token: globals.fcmToken);
 
-          if((globals.isOnboarding == null || globals.isOnboarding == false) && (globals.isDeposited == null || globals.isDeposited == false)){
+          if((globals.isOnboarding == null || globals.isOnboarding == false) && !DateTime.parse(userInfoResponse.value.data!.first.createdAt!).toLocal().isBefore(DateTime.now())){
             SharedPrefManager.instance.setBoolAsync(Constants.isOnboarding, true);
             Get.offAllNamed(AppRoutes.onboardingScreen);
           } else if (userInfoResponse.value.data?.first.isDocumentsVerified != null && (userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.SUBMITTED.name || userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.VERIFIED.name) && userInfoResponse.value.data?.first.isDeposited != null && userInfoResponse.value.data?.first.isDeposited == true) {
@@ -146,8 +146,6 @@ class LoginScreenViewModel extends GetxController {
             Get.offAllNamed(AppRoutes.documentScreen,arguments: 3);
           }else if(userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.NOTSUBMITTED.name){
             Get.offAllNamed(AppRoutes.documentScreen,arguments: 0);
-          }else if (userInfoResponse.value.data?.first.fullname == null) {
-            Get.offAllNamed(AppRoutes.onboardingScreen);
           } else {
             Get.offAllNamed(AppRoutes.documentScreen);
           }

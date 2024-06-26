@@ -10,6 +10,8 @@ import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:mera_partners/utils/globals.dart' as globals;
+import '../utils/constants.dart';
+import '../utils/shared_pref_manager.dart';
 import '../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 
 class SocketService {
@@ -30,6 +32,11 @@ class SocketService {
       final parsed = jsonDecode(jsonString).cast<Map<String, dynamic>>();
       return parsed.map<Data>((json) => Data.fromJson(json)).toList();
     }
+
+    // List<UserData> parseUserData(String jsonString) {
+    //   final parsed = jsonDecode(jsonString).cast<Map<String, dynamic>>();
+    //   return parsed.map<UserData>((json) => UserData.fromJson(json)).toList();
+    // }
 
     void filterCars(List<Data> carList){
       List<Data> liveCarsList = <Data> [];
@@ -89,9 +96,19 @@ class SocketService {
       }
     });
 
+    socket?.on('getUserInfo', (data) {
+      log(data.toString());
+      // List<UserData> userDetail = parseUserData(data);
+      if (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false) {
+      globals.documentStatus = DocumentStatus.VERIFIED.name;
+      SharedPrefManager.instance.setStringAsync(Constants.documentStatus, DocumentStatus.VERIFIED.name);
+      }
+    },);
+
     socket?.connect();
 
     socket?.onConnect((_) {
+      socket?.emit("joinDealerRoom", globals.uniqueUserId);
       log('Connected to the socket server');
     });
 
