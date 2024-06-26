@@ -1235,7 +1235,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             showMore: showMore,
             children: (issueList.isNotEmpty)?
             [
-              viewIssue(issueList, showMore, onTap, isExterior: (title.toLowerCase() == Inspection.exterior.name)?true:false),
+              viewIssue(issueList, showMore, onTap,title, isExterior: (title.toLowerCase() == Inspection.exterior.name)?true:false),
               // Text("view"),
               otherIssue(otherPartsList),
             ]
@@ -1248,7 +1248,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
     );
   }
 
-  Widget viewIssue(RxList<Master> list, RxBool showMore, Function()? onTap, {bool isExterior = false}) {
+  Widget viewIssue(RxList<Master> list, RxBool showMore, Function()? onTap,String title, {bool isExterior = false}) {
+    list.value = list.toSet().toList();
     return (list.isEmpty)?
     const SizedBox()
     :Column(
@@ -1260,7 +1261,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
               itemBuilder: (context, index) {
                 return Obx((){
                   if (index < 2 || (showMore.value == true && index != list.length)) {
-                  return Container(
+                    String issueSubTitle = list[index].listValue?.map((item) => item.capitalize.toString()).join(',')??'';
+                    return Container(
                     width: double.infinity,
                     // height: 142,
                     padding:
@@ -1330,16 +1332,30 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                             ),
                             if(list[index].image != null && (list[index].image!.startsWith("http") || list[index].image!.startsWith("https"))) Padding(
                               padding: const EdgeInsets.only(left: 10.0),
-                              child: SizedBox(
-                                width: 75,
-                                height: 68,
-                                child: Image.network(list[index].image!, fit: BoxFit.cover,
+
+                              child: GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(AppRoutes.imageViewScreen, arguments:
+                                  {"title": list[index].title,
+                                    "image_title" : list[index].title,
+                                    "image" : list[index].image!,
+                                    "subtitle" : issueSubTitle
+                                  },
+                                  );
+                                },
+                                child: SizedBox(
+                                  width: 75,
+                                  height: 68,
+                                  child: Image.network(
+                                    list[index].image!,
+                                    fit: BoxFit.cover,
                                     errorBuilder: (context, error, stackTrace) {
                                       return SvgPicture.asset(MyImages.loadingCar);
-                                    }, frameBuilder:
-                                        (context, child, frame, wasSynchronouslyLoaded) {
+                                    },
+                                    frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
                                       return child;
-                                    }, loadingBuilder: (context, child, loadingProgress) {
+                                    },
+                                    loadingBuilder: (context, child, loadingProgress) {
                                       if (loadingProgress == null) {
                                         return child;
                                       } else {
@@ -1347,6 +1363,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                       }
                                     }),
                               ),
+                            )
                             )
                           ],
                         ),

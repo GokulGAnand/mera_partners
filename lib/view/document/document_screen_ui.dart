@@ -61,8 +61,8 @@ class DocumentScreen extends StatelessWidget {
                   labelText: "${MyStrings.phoneNumber}*",
                   helperText: "${MyStrings.phoneNumber}*",
                   validator: ValidateInput.validateRequiredFields,
-                  isEnabled: false,
-                  showCursor: false,
+                  inputFormatter: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    LengthLimitingTextInputFormatter(10)],
                 ),
                 const SizedBox(
                   height: Dimens.spaceWidth,

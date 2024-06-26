@@ -125,20 +125,22 @@ class _GalleryScreenState extends State<GalleryScreen> {
                     }
                       if(galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].image != null && galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].image.isNotEmpty) {
                         return GestureDetector(
-                      onTap: (){
-                        Get.toNamed(AppRoutes.imageViewScreen, arguments: 
-                        {"title": galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["title"],
-                          "image_title" : galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].title,
-                          "image" : galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].value
-                        },
-                        );
-                      },
+                          onTap: () {
+                            Get.toNamed(AppRoutes.imageViewScreen, arguments:
+                            {"title": galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["title"],
+                              "image_title" : galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].title,
+                              "image" : galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].image,
+                              "subtitle": galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index]?.listValue?.join(",") ?? ''
+                            },
+                            );
+                            },
+
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 15.0),
                         child: Stack(
                           children: [
                             AspectRatio(
-                              aspectRatio: 16/9,
+                              aspectRatio: 4/3,
                               child: Image.network(galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].image.toString(),
                               fit: BoxFit.fill,
                               errorBuilder: (context, error, stackTrace) {

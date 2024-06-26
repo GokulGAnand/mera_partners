@@ -1,10 +1,11 @@
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mera_partners/utils/colors.dart';
-import 'package:mera_partners/utils/images.dart';
 import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/widgets/common_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../utils/images.dart';
 
 class ImageViewScreen extends StatelessWidget {
   const ImageViewScreen({super.key});
@@ -21,44 +22,53 @@ class ImageViewScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Text(
-              image["image_title"],
-              style: MyStyles.white16700,
+            padding: const EdgeInsets.only(left: 16,right: 16,bottom: 8,),
+            child: Row(
+              children: [
+                Expanded(
+                  child: image["subtitle"] != null && image["subtitle"].isNotEmpty
+                      ? Text(
+                    image["image_title"] + ' (${image["subtitle"]})',
+                    style: MyStyles.white16700,
+                  )
+                      : const SizedBox(),
+                )
+              ],
             ),
           ),
-          InteractiveViewer(
-            child: AspectRatio(
-                                aspectRatio: 16/9,
-                                child: Image.network(image["image"],
-                                fit: BoxFit.fill,
-                                errorBuilder: (context, error, stackTrace) {
-                                                return SvgPicture.asset(MyImages.loadingCar);
-                                              }, frameBuilder:
-                                                  (context, child, frame, wasSynchronouslyLoaded) {
-                                                return child;
-                                              }, loadingBuilder: (context, child, loadingProgress) {
-                                                if (loadingProgress == null) {
-                                                  return child;
-                                                } else {
-                                                  return SvgPicture.asset(MyImages.loadingCar);
-                                                }
-                                              }),
-                                ),
+          Expanded(
+            child: InteractiveViewer(
+              minScale: 0.1,
+              maxScale: 4.0,
+              clipBehavior: Clip.none,
+              child: Center(
+                child: Image.network(
+                  image["image"],
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) {
+                    return SvgPicture.asset(MyImages.loadingCar);
+                  },
+                  frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                    return child;
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ),
+              ),
+            ),
           ),
-          // InteractiveViewer(
-          //   child: Container(
-          //     width: double.infinity,
-          //     height: 216,
-          //     decoration: const BoxDecoration(
-          //         image: DecorationImage(
-          //             image: NetworkImage(
-          //                 "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
-          //             fit: BoxFit.fill)),
-          //   ),
-          // ),
+
         ],
       ),
     );
   }
 }
+
+
