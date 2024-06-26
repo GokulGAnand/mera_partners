@@ -1,5 +1,6 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:mera_partners/utils/colors.dart';
+import 'package:mera_partners/utils/images.dart';
 import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/widgets/common_appbar.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,6 @@ class ImageViewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //title, image_title, image
     Map<String, dynamic> image = Get.arguments;
     return Scaffold(
       backgroundColor: MyColors.black4,
@@ -70,5 +70,3 @@ class ImageViewScreen extends StatelessWidget {
     );
   }
 }
-
-

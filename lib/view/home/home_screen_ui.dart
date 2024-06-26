@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/utils/svg.dart';
@@ -63,7 +64,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: MyColors.white,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.dark, // Dark content for a light background on iOS
+      ),
+      child: PopScope(
         canPop: false,
         onPopInvoked: (bool didPop) {
           showExitDialog(context);
@@ -161,6 +168,6 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             );
           }),
-        ));
+        )),);
   }
 }

@@ -1235,7 +1235,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             showMore: showMore,
             children: (issueList.isNotEmpty)?
             [
-              viewIssue(issueList, showMore, onTap,title, isExterior: (title.toLowerCase() == Inspection.exterior.name)?true:false),
+              viewIssue(issueList, showMore, onTap, isExterior: (title.toLowerCase() == Inspection.exterior.name)?true:false),
               // Text("view"),
               otherIssue(otherPartsList),
             ]
@@ -1248,8 +1248,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
     );
   }
 
-  Widget viewIssue(RxList<Master> list, RxBool showMore, Function()? onTap,String title, {bool isExterior = false}) {
-    list.value = list.toSet().toList();
+  Widget viewIssue(RxList<Master> list, RxBool showMore, Function()? onTap, {bool isExterior = false}) {
     return (list.isEmpty)?
     const SizedBox()
     :Column(
@@ -1306,10 +1305,10 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                       shrinkWrap: true,
                                       itemCount: list[index].listValue!.length,
                                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
+                                        crossAxisCount: list[index].listValue!.any((item) => item.length >= 20) ? 1 : 2,
                                         crossAxisSpacing: 8,
                                         mainAxisSpacing: 8,
-                                        mainAxisExtent: list[index].listValue!.any((item) => item.length >= 20) ? 45 : 30,
+                                        mainAxisExtent: list[index].listValue!.any((item) => item.length >= 10) ? 40 : 30,
                                       ),
                                         itemBuilder: (context, i){
                                           return Container(
@@ -1332,7 +1331,6 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                             ),
                             if(list[index].image != null && (list[index].image!.startsWith("http") || list[index].image!.startsWith("https"))) Padding(
                               padding: const EdgeInsets.only(left: 10.0),
-
                               child: GestureDetector(
                                 onTap: () {
                                   Get.toNamed(AppRoutes.imageViewScreen, arguments:
@@ -1346,24 +1344,21 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 child: SizedBox(
                                   width: 75,
                                   height: 68,
-                                  child: Image.network(
-                                    list[index].image!,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return SvgPicture.asset(MyImages.loadingCar);
-                                    },
-                                    frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                                      return child;
-                                    },
-                                    loadingBuilder: (context, child, loadingProgress) {
-                                      if (loadingProgress == null) {
-                                        return child;
-                                      } else {
+                                  child: Image.network(list[index].image!, fit: BoxFit.cover,
+                                      errorBuilder: (context, error, stackTrace) {
                                         return SvgPicture.asset(MyImages.loadingCar);
-                                      }
-                                    }),
-                              ),
-                            )
+                                      }, frameBuilder:
+                                          (context, child, frame, wasSynchronouslyLoaded) {
+                                        return child;
+                                      }, loadingBuilder: (context, child, loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return child;
+                                        } else {
+                                          return SvgPicture.asset(MyImages.loadingCar);
+                                        }
+                                      }),
+                                ),
+                              )
                             )
                           ],
                         ),

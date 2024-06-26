@@ -220,10 +220,20 @@ class CarDetailsScreenViewModel extends GetxController {
 
   //issue
   var exteriorIssue = <Master>[].obs;
+  var exteriorMajorIssue = <Master>[].obs;
+  var exteriorMinorIssue = <Master>[].obs;
   var interiorAndElectricalIssue = <Master>[].obs;
+  var interiorMajorIssue = <Master>[].obs;
+  var interiorMinorIssue = <Master>[].obs;
   var engineIssue = <Master>[].obs;
+  var engineMinorIssue = <Master>[].obs;
+  var engineMajorIssue = <Master>[].obs;
   var airConditionIssue = <Master>[].obs;
+  var airConditionMinorIssue = <Master>[].obs;
+  var airConditionMajorIssue = <Master>[].obs;
   var testDriveIssue = <Master>[].obs;
+  var testDriveMinorIssue = <Master>[].obs;
+  var testDriveMajorIssue = <Master>[].obs;
 
   //other parts
   var exteriorOtherParts = <Master>[].obs;
@@ -245,43 +255,55 @@ class CarDetailsScreenViewModel extends GetxController {
       }
       if(redListData.contains(exterior[i].value.toString().toLowerCase())){
         exterior[i].color = MyColors.warning;
-        exteriorIssue.add(exterior[i]);
+        // exteriorIssue.add(exterior[i]);
+        exteriorMajorIssue.add(exterior[i]);
         if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
           damageImages.add(exterior[i]);
         }
       }
       if(yellowListData.contains(exterior[i].value.toString().toLowerCase())){
         exterior[i].color = MyColors.yellow;
-        exteriorIssue.add(exterior[i]);
+        exteriorMinorIssue.add(exterior[i]);
+        // exteriorIssue.add(exterior[i]);
         if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
           damageImages.add(exterior[i]);
         }
       }
       if(exterior[i].listValue != null){
         for(int j=0; j<exterior[i].listValue!.length; j++){
+          if(exterior[i].listValue![j].isEmpty){
+            exterior[i].listValue!.removeAt(j);
+          }
+        }
+        for(int j=0; j<exterior[i].listValue!.length; j++){
           if(goodListData.contains(exterior[i].listValue![j].toString().toLowerCase())){
             exterior[i].value = exterior[i].listValue![j];
             exteriorOtherParts.add(exterior[i]);
+            break;
           }
           if(redListData.contains(exterior[i].listValue![j].toString().toLowerCase())){
             exterior[i].value = exterior[i].listValue![j];
             exterior[i].color = MyColors.warning;
-            exteriorIssue.add(exterior[i]);
+            exteriorMajorIssue.add(exterior[i]);
+            // exteriorIssue.add(exterior[i]);
             if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
               damageImages.add(exterior[i]);
             }
+            break;
           }
           if(yellowListData.contains(exterior[i].listValue![j].toString().toLowerCase())){
             exterior[i].value = exterior[i].listValue![j];
             exterior[i].color = MyColors.yellow;
-            exteriorIssue.add(exterior[i]);
+            exteriorMinorIssue.add(exterior[i]);
+            // exteriorIssue.add(exterior[i]);
             if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
               damageImages.add(exterior[i]);
             }
+            break;
           }
-          if(exterior[i].listValue![j].isEmpty){
-            exterior[i].listValue!.removeAt(j);
-          }
+          // if(exterior[i].listValue![j].isEmpty){
+          //   exterior[i].listValue!.removeAt(j);
+          // }
         }
       }
     }
@@ -291,43 +313,55 @@ class CarDetailsScreenViewModel extends GetxController {
       }
       if(redListData.contains(interiorAndElectrical[i].value.toString().toLowerCase())){
         interiorAndElectrical[i].color = MyColors.warning;
-        interiorAndElectricalIssue.add(interiorAndElectrical[i]);
+        // interiorAndElectricalIssue.add(interiorAndElectrical[i]);
+        interiorMajorIssue.add(interiorAndElectrical[i]);
         if(interiorAndElectrical[i].image != null && (interiorAndElectrical[i].image!.isNotEmpty)){
           damageImages.add(interiorAndElectrical[i]);
         }
       }
       if(yellowListData.contains(interiorAndElectrical[i].value.toString().toLowerCase())){
         interiorAndElectrical[i].color = MyColors.yellow;
-        interiorAndElectricalIssue.add(interiorAndElectrical[i]);
+        interiorMinorIssue.add(interiorAndElectrical[i]);
+        // interiorAndElectricalIssue.add(interiorAndElectrical[i]);
         if(interiorAndElectrical[i].image != null && (interiorAndElectrical[i].image!.isNotEmpty)){
           damageImages.add(interiorAndElectrical[i]);
         }
       }
       if(interiorAndElectrical[i].listValue != null){
         for(int j=0; j<interiorAndElectrical[i].listValue!.length; j++){
+          if(interiorAndElectrical[i].listValue![j].isEmpty){
+            interiorAndElectrical[i].listValue!.removeAt(j);
+          }
+        }
+        for(int j=0; j<interiorAndElectrical[i].listValue!.length; j++){
           if(goodListData.contains(interiorAndElectrical[i].listValue![j].toString().toLowerCase())){
             interiorAndElectrical[i].value = interiorAndElectrical[i].listValue![j];
             interiorAndElectricalOtherParts.add(interiorAndElectrical[i]);
+            break;
           }
           if(redListData.contains(interiorAndElectrical[i].listValue![j].toString().toLowerCase())){
             interiorAndElectrical[i].value = interiorAndElectrical[i].listValue![j];
             interiorAndElectrical[i].color = MyColors.warning;
-            interiorAndElectricalIssue.add(interiorAndElectrical[i]);
+            // interiorAndElectricalIssue.add(interiorAndElectrical[i]);
+            interiorMajorIssue.add(interiorAndElectrical[i]);
             if(interiorAndElectrical[i].image != null && (interiorAndElectrical[i].image!.isNotEmpty)){
               damageImages.add(interiorAndElectrical[i]);
             }
+            break;
           }
           if(yellowListData.contains(interiorAndElectrical[i].listValue![j].toString().toLowerCase())){
             interiorAndElectrical[i].value = interiorAndElectrical[i].listValue![j];
             interiorAndElectrical[i].color = MyColors.yellow;
-            interiorAndElectricalIssue.add(interiorAndElectrical[i]);
+            // interiorAndElectricalIssue.add(interiorAndElectrical[i]);
+            interiorMinorIssue.add(interiorAndElectrical[i]);
             if(interiorAndElectrical[i].image != null && (interiorAndElectrical[i].image!.isNotEmpty)){
               damageImages.add(interiorAndElectrical[i]);
             }
+            break;
           }
-          if(interiorAndElectrical[i].listValue![j].isEmpty){
-            interiorAndElectrical[i].listValue!.removeAt(j);
-          }
+          // if(interiorAndElectrical[i].listValue![j].isEmpty){
+          //   interiorAndElectrical[i].listValue!.removeAt(j);
+          // }
         }
       }
     }
@@ -337,43 +371,55 @@ class CarDetailsScreenViewModel extends GetxController {
       }
       if(redListData.contains(engine[i].value.toString().toLowerCase())){
         engine[i].color = MyColors.warning;
-        engineIssue.add(engine[i]);
+        // engineIssue.add(engine[i]);
+        engineMajorIssue.add(engine[i]);
         if(engine[i].image != null && (engine[i].image!.isNotEmpty)){
           damageImages.add(engine[i]);
         }
       }
       if(yellowListData.contains(engine[i].value.toString().toLowerCase())){
         engine[i].color = MyColors.yellow;
-        engineIssue.add(engine[i]);
+        // engineIssue.add(engine[i]);
+        engineMinorIssue.add(engine[i]);
         if(engine[i].image != null && (engine[i].image!.isNotEmpty)){
           damageImages.add(engine[i]);
         }
       }
       if(engine[i].listValue != null){
         for(int j=0; j<engine[i].listValue!.length; j++){
+          if(engine[i].listValue![j].isEmpty){
+            engine[i].listValue!.removeAt(j);
+          }
+        }
+        for(int j=0; j<engine[i].listValue!.length; j++){
           if(goodListData.contains(engine[i].listValue![j].toString().toLowerCase())){
             engine[i].value = engine[i].listValue![j];
             engineOtherParts.add(engine[i]);
+            break;
           }
           if(redListData.contains(engine[i].listValue![j].toString().toLowerCase())){
             engine[i].value = engine[i].listValue![j];
             engine[i].color = MyColors.warning;
-            engineIssue.add(engine[i]);
+            // engineIssue.add(engine[i]);
+            engineMajorIssue.add(engine[i]);
             if(engine[i].image != null && (engine[i].image!.isNotEmpty)){
               damageImages.add(engine[i]);
             }
+            break;
           }
           if(yellowListData.contains(engine[i].listValue![j].toString().toLowerCase())){
             engine[i].value = engine[i].listValue![j];
             engine[i].color = MyColors.yellow;
-            engineIssue.add(engine[i]);
+            // engineIssue.add(engine[i]);
+            engineMinorIssue.add(engine[i]);
             if(engine[i].image != null && (engine[i].image!.isNotEmpty)){
               damageImages.add(engine[i]);
             }
+            break;
           }
-          if(engine[i].listValue![j].isEmpty){
-            engine[i].listValue!.removeAt(j);
-          }
+          // if(engine[i].listValue![j].isEmpty){
+          //   engine[i].listValue!.removeAt(j);
+          // }
         }
       }
     }
@@ -383,35 +429,47 @@ class CarDetailsScreenViewModel extends GetxController {
       }
       if(redListData.contains(airCondition[i].value.toString().toLowerCase())){
         airCondition[i].color = MyColors.warning;
-        airConditionIssue.add(airCondition[i]);
+        airConditionMajorIssue.add(airCondition[i]);
+        // airConditionIssue.add(airCondition[i]);
         if(airCondition[i].image != null && (airCondition[i].image!.isNotEmpty)){
           damageImages.add(airCondition[i]);
         }
       }
       if(yellowListData.contains(airCondition[i].value.toString().toLowerCase())){
         airCondition[i].color = MyColors.yellow;
-        airConditionIssue.add(airCondition[i]);
+        airConditionMinorIssue.add(airCondition[i]);
+        // airConditionIssue.add(airCondition[i]);
 
       }
       if(airCondition[i].listValue != null){
         for(int j=0; j<airCondition[i].listValue!.length; j++){
+          if(airCondition[i].listValue![j].isEmpty){
+            airCondition[i].listValue!.removeAt(j);
+          }
+        }
+        for(int j=0; j<airCondition[i].listValue!.length; j++){
           if(goodListData.contains(airCondition[i].listValue![j].toString().toLowerCase())){
             airCondition[i].value = airCondition[i].listValue![j];
             airConditionOtherParts.add(airCondition[i]);
+            break;
           }
           if(redListData.contains(airCondition[i].listValue![j].toString().toLowerCase())){
             airCondition[i].value = airCondition[i].listValue![j];
             airCondition[i].color = MyColors.warning;
-            airConditionIssue.add(airCondition[i]);
+            airConditionMajorIssue.add(airCondition[i]);
+            // airConditionIssue.add(airCondition[i]);
+            break;
           }
           if(yellowListData.contains(airCondition[i].listValue![j].toString().toLowerCase())){
             airCondition[i].value = airCondition[i].listValue![j];
             airCondition[i].color = MyColors.yellow;
-            airConditionIssue.add(airCondition[i]);
+            airConditionMinorIssue.add(airCondition[i]);
+            // airConditionIssue.add(airCondition[i]);
+            break;
           }
-          if(airCondition[i].listValue![j].isEmpty){
-            airCondition[i].listValue!.removeAt(j);
-          }
+          // if(airCondition[i].listValue![j].isEmpty){
+          //   airCondition[i].listValue!.removeAt(j);
+          // }
         }
       }
     }
@@ -421,31 +479,43 @@ class CarDetailsScreenViewModel extends GetxController {
       }
       if(redListData.contains(testDrive[i].value.toString().toLowerCase())){
         testDrive[i].color = MyColors.warning;
-        testDriveIssue.add(testDrive[i]);
+        testDriveMajorIssue.add(testDrive[i]);
+        // testDriveIssue.add(testDrive[i]);
       }
       if(yellowListData.contains(testDrive[i].value.toString().toLowerCase())){
         testDrive[i].color = MyColors.yellow;
-        testDriveIssue.add(testDrive[i]);
+        testDriveMinorIssue.add(testDrive[i]);
+        // testDriveIssue.add(testDrive[i]);
       }
       if(testDrive[i].listValue != null){
+        for(int j=0; j<testDrive[i].listValue!.length; j++){
+          if(testDrive[i].listValue![j].isEmpty){
+            testDrive[i].listValue!.removeAt(j);
+          }
+        }
         for(int j=0; j<testDrive[i].listValue!.length; j++){
           if(goodListData.contains(testDrive[i].listValue![j].toString().toLowerCase())){
             testDrive[i].value = testDrive[i].listValue![j];
             testDriveOtherParts.add(testDrive[i]);
+            break;
           }
           if(redListData.contains(testDrive[i].listValue![j].toString().toLowerCase())){
             testDrive[i].value = testDrive[i].listValue![j];
             testDrive[i].color = MyColors.warning;
-            testDriveIssue.add(testDrive[i]);
+            testDriveMajorIssue.add(testDrive[i]);
+            // testDriveIssue.add(testDrive[i]);
+            break;
           }
           if(yellowListData.contains(testDrive[i].listValue![j].toString().toLowerCase())){
             testDrive[i].value = testDrive[i].listValue![j];
             testDrive[i].color = MyColors.yellow;
-            testDriveIssue.add(testDrive[i]);
+            testDriveMinorIssue.add(testDrive[i]);
+            // testDriveIssue.add(testDrive[i]);
+            break;
           }
-           if(testDrive[i].listValue![j].isEmpty){
-            testDrive[i].listValue!.removeAt(j);
-          }
+          //  if(testDrive[i].listValue![j].isEmpty){
+          //   testDrive[i].listValue!.removeAt(j);
+          // }
         }
       }
     }
@@ -454,6 +524,16 @@ class CarDetailsScreenViewModel extends GetxController {
     // damageImages.addAll(engineIssue);
     // damageImages.addAll(airConditionIssue);
     // damageImages.addAll(testDriveIssue);
+      exteriorIssue.addAll(exteriorMajorIssue);
+      exteriorIssue.addAll(exteriorMinorIssue);
+      interiorAndElectricalIssue.addAll(interiorMajorIssue);
+      interiorAndElectricalIssue.addAll(interiorMinorIssue);
+      engineIssue.addAll(engineMajorIssue);
+      engineIssue.addAll(engineMinorIssue);
+      airConditionIssue.addAll(airConditionMinorIssue);
+      airConditionIssue.addAll(airConditionMajorIssue);
+      testDriveIssue.addAll(testDriveMajorIssue);
+      testDriveIssue.addAll(testDriveMinorIssue);
     log("exterior other parts: $exteriorOtherParts");
     log("interior other parts: $interiorAndElectricalOtherParts");
     log("engine other parts: $engineOtherParts");
