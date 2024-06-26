@@ -34,10 +34,10 @@ class SocketService {
       return parsed.map<Data>((json) => Data.fromJson(json)).toList();
     }
 
-    List<UserData> parseUserData(String jsonString) {
-      final parsed = jsonDecode(jsonString).cast<Map<String, dynamic>>();
-      return parsed.map<UserData>((json) => UserData.fromJson(json)).toList();
-    }
+    // List<UserData> parseUserData(String jsonString) {
+    //   final parsed = jsonDecode(jsonString).cast<Map<String, dynamic>>();
+    //   return parsed.map<UserData>((json) => UserData.fromJson(json)).toList();
+    // }
 
     void filterCars(List<Data> carList){
       List<Data> liveCarsList = <Data> [];
@@ -98,15 +98,12 @@ class SocketService {
     });
 
     socket?.on('getUserInfo', (data) {
-      log('user socket');
       log(data.toString());
       // List<UserData> userDetail = parseUserData(data);
-      // if (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false) {
-      //   globals.documentStatus = userDetail.first.isDocumentsVerified;
-      //   globals.isDeposited = userDetail.first.isDeposited;
-      //   SharedPrefManager.instance.setStringAsync(Constants.documentStatus, userDetail.first.isDocumentsVerified.toString());
-      //   SharedPrefManager.instance.setBoolAsync(Constants.isDeposited, userDetail.first.isDeposited ?? false);
-      // }
+      if (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false) {
+      globals.documentStatus = DocumentStatus.VERIFIED.name;
+      SharedPrefManager.instance.setStringAsync(Constants.documentStatus, DocumentStatus.VERIFIED.name);
+      }
     },);
 
     socket?.connect();
