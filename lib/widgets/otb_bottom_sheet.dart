@@ -40,7 +40,7 @@ class OTBBottomSheet extends StatelessWidget {
     // if(start.isBefore(end)) {
     //   startTimer();
     // }
-    NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
+    NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '', decimalDigits: 0);
     return Container(
       height: MediaQuery.of(context).size.height * 0.35,
       padding: const EdgeInsets.all(16.0),
@@ -111,10 +111,19 @@ class OTBBottomSheet extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          Text(
-            '${MyStrings.otbPrice} : ₹ $otbPrice',
-            style: MyStyles.selectedTabBarTitleStyle,
-          ),
+          RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  const TextSpan(text: "${MyStrings.otbPrice} : ",
+                   style: MyStyles.selectedTabBarTitleStyle,),
+                   TextSpan(
+                      text: '₹ ',
+                      style: MyStyles.selectedTabBarTitleStyle.copyWith(fontFamily: 'Rupee')),
+                   TextSpan(text: otbPrice.toString(),
+                   style: MyStyles.selectedTabBarTitleStyle,),
+                ],
+              ),
+            ),
           const SizedBox(
             height: 16,
           ),
@@ -137,8 +146,22 @@ class OTBBottomSheet extends StatelessWidget {
           // Obx(() {return
           CustomElevatedButton(
             onPressed: onPressed,
-            buttonText: (MyStrings.confirmBuy) + numberFormat.format(otbPrice),
-            textStyle: MyStyles.white14700,
+            buttonText: '',
+            child: RichText(
+                    textAlign: TextAlign.center,
+                                text: TextSpan(
+                                  children: <TextSpan>[
+                                    const TextSpan(text: MyStrings.confirmBuy,
+                                    style: MyStyles.white14700,),
+                                    TextSpan(
+                                        text: '₹ ',
+                                        style: MyStyles.white14700.copyWith(fontFamily: 'Rupee')),
+                                    TextSpan(text: numberFormat.format(otbPrice),
+                                    style: MyStyles.white14700,),
+                                  ],
+                                ),
+                              ),
+            // textStyle: MyStyles.white14700,
           ),
           // })
         ],

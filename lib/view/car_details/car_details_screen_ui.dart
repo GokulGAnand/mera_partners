@@ -199,23 +199,32 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         child: SvgPicture.asset(MySvg.arrowDown, width: 14,),
                       )
                           :const SizedBox(),
-                      Obx(() => Text(
-                        // (carDetailsScreenViewModel.carStatus == "")?
-                        // '₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid.toString()}':
-                        // '',
-                        carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() ||
+                      Obx(() => 
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() ||
                             carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
-                        // ? Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid).toString()
-                        // : "",
+                            ?'₹'
+                            : "",
+                                style: MyStyles.white16700.copyWith(fontFamily: 'Rupee')),
+                            TextSpan(
+                                text: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() ||
+                            carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
                             ?globals.documentStatus == DocumentStatus.VERIFIED.name ?
                         Constants.numberFormat.format(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase() ? (carDetailsScreenViewModel.carDetailsResponse.value.data?[0].realValue ?? 0) : (carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0))
                             :(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid != null)
-                            ?'₹${carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
-                            :'₹${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
+                            ?'${carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
+                            :'${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
                             : "",
-                        textAlign: TextAlign.center,
-                        style: MyStyles.white16700,
-                      ),)
+                            
+                                style: MyStyles.white16700,),
+                          ],
+                        ),
+                      ),
+                      )
                     ],
                   ),)
                 ),),
@@ -393,11 +402,15 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                   style: MyStyles.subTitleGreayStyle,
                                 ),
                                 TextSpan(
+                                  text: "₹",
+                                  style: MyStyles.grey14700.copyWith(fontFamily: 'Rupee'),
+                                ),
+                                TextSpan(
                                   text: globals.documentStatus == DocumentStatus.VERIFIED.name ? 
                                   Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue)
                                   :(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue != null)
-                                  ?'₹${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
-                                  :'₹${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}',
+                                  ?'${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
+                                  :'${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}',
                                   style: MyStyles.grey14700,
                                 ),
                               ],
@@ -742,20 +755,30 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                     child: SvgPicture.asset(MySvg.arrowDown,),
                   )
                   :const SizedBox(),
-              Text(
-                carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() ||
+              RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                   TextSpan(
+                      text: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() ||
                 carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
-                        // ? Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.highestBid).toString()
+                        ?'₹'
+                : "",
+                      style: MyStyles.titleStyle.copyWith(fontFamily: 'Rupee')),
+
+                   TextSpan(text: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() ||
+                carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
                         ?globals.documentStatus == DocumentStatus.VERIFIED.name ?
                 Constants.numberFormat.format(carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid ?? 0)
                                   :(carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid != null)
-                                  ?'₹${carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
-                                  :'₹${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
+                                  ?'${carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
+                                  :'${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
                 : carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.scheduled.toLowerCase()
                 ? MyStrings.scheduledBid
                 :"",
-                style: MyStyles.titleStyle,
+                   style: MyStyles.titleStyle,),
+                ],
               ),
+            ),
             ],
           )
         ],

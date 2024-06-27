@@ -65,7 +65,7 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
+    NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '', decimalDigits: 0);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -140,16 +140,34 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
             const SizedBox(
               height: 16,
             ),
-            Text(
-              '${MyStrings.currentOtbPrice} : ₹ ${widget.otbPrice.value}',
-              style: MyStyles.selectedTabBarTitleStyle,
+            RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  const TextSpan(text: "${MyStrings.currentOtbPrice} : ",
+                   style: MyStyles.selectedTabBarTitleStyle,),
+                   TextSpan(
+                      text: '₹ ',
+                      style: MyStyles.selectedTabBarTitleStyle.copyWith(fontFamily: 'Rupee')),
+                   TextSpan(text: widget.otbPrice.value.toString(),
+                   style: MyStyles.selectedTabBarTitleStyle,),
+                ],
+              ),
             ),
             const SizedBox(
               height: 12,
             ),
-            Text(
-              '${MyStrings.minQuotePrice} ${Constants.numberFormat.format(widget.minQuotePrice.value)}',
-              style: MyStyles.blue14500,
+            RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  const TextSpan(text: "${MyStrings.minQuotePrice} ",
+                   style: MyStyles.blue14500,),
+                   TextSpan(
+                      text: '₹ ',
+                      style: MyStyles.blue14500.copyWith(fontFamily: 'Rupee')),
+                   TextSpan(text: Constants.numberFormat.format(widget.minQuotePrice.value),
+                   style: MyStyles.blue14500,),
+                ],
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -207,8 +225,22 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
                   CustomToast.instance.showMsg('Quoted price should not be less than minimum quote price');
                 }
               }:widget.onPressed,
-              buttonText: (MyStrings.quotePriceAt) + numberFormat.format(int.tryParse(widget.amountController.value.text) ?? 0),
-              textStyle: MyStyles.white14700,
+              buttonText: '',
+              child: RichText(
+                    textAlign: TextAlign.center,
+                                text: TextSpan(
+                                  children: <TextSpan>[
+                                    const TextSpan(text: MyStrings.quotePriceAt,
+                                    style: MyStyles.white14700,),
+                                    TextSpan(
+                                        text: '₹ ',
+                                        style: MyStyles.white14700.copyWith(fontFamily: 'Rupee')),
+                                    TextSpan(text: numberFormat.format(int.tryParse(widget.amountController.value.text) ?? 0),
+                                    style: MyStyles.white14700,),
+                                  ],
+                                ),
+                              ),
+              // textStyle: MyStyles.white14700,
             ),)
             // })
           ],

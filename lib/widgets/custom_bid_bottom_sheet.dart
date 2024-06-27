@@ -78,7 +78,7 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
+    NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '', decimalDigits: 0);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -143,17 +143,35 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
               const SizedBox(
                 height: 16,
               ),
-              Text(
-                '${MyStrings.currentBid} : ${numberFormat.format(widget.bidValue.value)}',
-                style: MyStyles.selectedTabBarTitleStyle,
+              RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  const TextSpan(text: '${MyStrings.currentBid} : ',
+                   style: MyStyles.selectedTabBarTitleStyle,),
+                  TextSpan(
+                      text: '₹ ',
+                      style: MyStyles.selectedTabBarTitleStyle.copyWith(fontFamily: 'Rupee')),
+                  TextSpan(text: numberFormat.format(widget.bidValue.value).toString(),
+                   style: MyStyles.selectedTabBarTitleStyle,),
+                ],
               ),
+            ),
               const SizedBox(
                 height: 8,
               ),
-              Text(
-                '${MyStrings.stepRate} : ${numberFormat.format(widget.stepRate?.value)}',
-                style: MyStyles.selectedTabBarTitleStyle,
+              RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  const TextSpan(text: '${MyStrings.stepRate} : ',
+                   style: MyStyles.selectedTabBarTitleStyle,),
+                  TextSpan(
+                      text: '₹ ',
+                      style: MyStyles.selectedTabBarTitleStyle.copyWith(fontFamily: 'Rupee')),
+                  TextSpan(text: numberFormat.format(widget.stepRate?.value).toString(),
+                   style: MyStyles.selectedTabBarTitleStyle,),
+                ],
               ),
+            ),
               (widget.isAutoBid)
                   ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,10 +186,19 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
                   const SizedBox(
                     height: 8,
                   ),
-                  Text(
-                    'We’ll automatically increase your bid by ₹ ${widget.stepRate?.value} until reaching the set amount.',
-                    style: MyStyles.grey14500,
-                  ),
+                  RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  const TextSpan(text: 'We’ll automatically increase your bid by ',
+                   style: MyStyles.grey14500,),
+                  TextSpan(
+                      text: '₹ ',
+                      style: MyStyles.grey14500.copyWith(fontFamily: 'Rupee')),
+                  TextSpan(text: '${widget.stepRate?.value} until reaching the set amount.',
+                   style: MyStyles.grey14500,),
+                ],
+              ),
+            ),
                 ],
               )
                   : const SizedBox(),
@@ -243,10 +270,19 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
                               padding: const EdgeInsets.symmetric(vertical: 5),
                               margin: EdgeInsets.only(right: (i == widget.bid.length - 1) ? 0 : 8),
                               decoration: BoxDecoration(color: MyColors.lightBlue, borderRadius: BorderRadius.circular(4), border: Border.all(color: MyColors.kPrimaryColor)),
-                              child: Text(
-                                '+ ${numberFormat.format(widget.bid[i])}',
+                              child: RichText(
                                 textAlign: TextAlign.center,
-                                style: MyStyles.black14700,
+                                text: TextSpan(
+                                  children: <TextSpan>[
+                                    const TextSpan(text: '+ ',
+                                    style: MyStyles.black14700,),
+                                    TextSpan(
+                                        text: '₹ ',
+                                        style: MyStyles.black14700.copyWith(fontFamily: 'Rupee')),
+                                    TextSpan(text: numberFormat.format(widget.bid[i]).toString(),
+                                    style: MyStyles.black14700,),
+                                  ],
+                                ),
                               ),
                             ),
                           ))
@@ -266,8 +302,21 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
                       CustomToast.instance.showMsg('${MyStrings.vLowBidAmount}(${widget.bidValue.value+widget.stepRate!.value})');
                     }
                   }: widget.isAutoBid? widget.onAutoBidPressed : widget.onBidPressed,
-                  buttonText: ((widget.isAutoBid) ? MyStrings.confirmAutoBid : MyStrings.confirmBid) + numberFormat.format(int.tryParse(widget.amountController!.value.text) ?? widget.bidValue.value),
-                  textStyle: MyStyles.white14700,
+                  buttonText: '',
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                                text: TextSpan(
+                                  children: <TextSpan>[
+                                    TextSpan(text: ((widget.isAutoBid) ? MyStrings.confirmAutoBid : MyStrings.confirmBid),
+                                    style: MyStyles.white14700,),
+                                    TextSpan(
+                                        text: '₹ ',
+                                        style: MyStyles.white14700.copyWith(fontFamily: 'Rupee')),
+                                    TextSpan(text: numberFormat.format(int.tryParse(widget.amountController!.value.text) ?? widget.bidValue.value),
+                                    style: MyStyles.white14700,),
+                                  ],
+                                ),
+                              ),
                 );
               })
             ],

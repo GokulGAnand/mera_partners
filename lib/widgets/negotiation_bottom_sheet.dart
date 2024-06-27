@@ -110,17 +110,39 @@ class NegotiationBottomSheet extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          Text(
-            '${MyStrings.biddedAmount} : ${Constants.numberFormat.format(biddedAmount)}',
-            style: MyStyles.black14500,
-          ),
+          RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  const TextSpan(
+                    text: '${MyStrings.biddedAmount} : ',
+                    style: MyStyles.black14500,
+                  ),
+                  TextSpan(
+                      text: '₹',
+                      style: MyStyles.black14500.copyWith(fontFamily: 'Rupee')),
+                  TextSpan(text: Constants.numberFormat.format(biddedAmount),
+                   style: MyStyles.black14500,),
+                ],
+              ),
+            ),
           const SizedBox(
             height: 12,
           ),
-          Text(
-            '${MyStrings.negotiatedAmount} : ${Constants.numberFormat.format(negotiatedAmount)}',
-            style: MyStyles.primary14700,
-          ),
+          RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  const TextSpan(
+                    text: '${MyStrings.negotiatedAmount} : ',
+                    style: MyStyles.primary14700,
+                  ),
+                  TextSpan(
+                      text: '₹',
+                      style: MyStyles.primary14700.copyWith(fontFamily: 'Rupee')),
+                  TextSpan(text: Constants.numberFormat.format(negotiatedAmount),
+                   style: MyStyles.primary14700,),
+                ],
+              ),
+            ),
           const SizedBox(
             height: 24,
           ),

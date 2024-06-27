@@ -103,7 +103,7 @@ class LoginScreenViewModel extends GetxController {
       String otp = otpValue.value;
       var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.verifyOtp), body: jsonEncode({"contactNo": int.parse(mobileController.value.text), "otp": int.parse(otp)}),headers: headers);
       if (response.statusCode == 200) {
-        clearData();
+        clearData(); 
         globals.clearData();
         ProgressBar.instance.stopProgressBar(context);
         log(response.body.toString());

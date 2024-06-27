@@ -564,17 +564,24 @@ class DocumentScreen extends StatelessWidget {
       ) : SingleChildScrollView(
         child: Form(
           key: viewModel.page4Key,
-          child: const Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "₹10,000",
-                style: MyStyles.blackBold28,
+              RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                   TextSpan(
+                      text: '₹',
+                      style: MyStyles.blackBold28.copyWith(fontFamily: 'Rupee')),
+                   const TextSpan(text: '10,000',
+                   style: MyStyles.blackBold28,),
+                ],
               ),
-              SizedBox(
+            ),
+              const SizedBox(
                 height: 10,
               ),
-              Text(
+              const Text(
                 MyStrings.securityDepositDesc,
                 style: MyStyles.pageTitleStyle,
               ),

@@ -19,7 +19,7 @@ class Constants {
   static const String addressProofFront = 'addressProofFront';
   static const String isOnboarding = 'isOnboarding';
   static const String fcmToken = 'fcmToken';
-  static NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '₹ ', decimalDigits: 0);
+  static NumberFormat numberFormat = NumberFormat.currency(locale: 'HI', name: '', decimalDigits: 0);
   static NumberFormat numberFormatter = NumberFormat.currency(locale: 'HI', name: '', decimalDigits: 0);
   static const tenMinutes = 600000;
 
