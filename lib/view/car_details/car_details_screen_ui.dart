@@ -1235,7 +1235,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             showMore: showMore,
             children: (issueList.isNotEmpty)?
             [
-              viewIssue(issueList, showMore, onTap, isExterior: (title.toLowerCase() == Inspection.exterior.name)?true:false),
+              viewIssue(issueList, showMore, onTap,title, isExterior: (title.toLowerCase() == Inspection.exterior.name)?true:false),
               // Text("view"),
               otherIssue(otherPartsList),
             ]
@@ -1248,7 +1248,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
     );
   }
 
-  Widget viewIssue(RxList<Master> list, RxBool showMore, Function()? onTap, {bool isExterior = false}) {
+  Widget viewIssue(RxList<Master> list, RxBool showMore, Function()? onTap,String title, {bool isExterior = false}) {
     return (list.isEmpty)?
     const SizedBox()
     :Column(
@@ -1334,7 +1334,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                               child: GestureDetector(
                                 onTap: () {
                                   Get.toNamed(AppRoutes.imageViewScreen, arguments:
-                                  {"title": list[index].title,
+                                  {"title": title,
                                     "image_title" : list[index].title,
                                     "image" : list[index].image!,
                                     "subtitle" : issueSubTitle
