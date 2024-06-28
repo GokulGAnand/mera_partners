@@ -11,6 +11,7 @@ import 'package:mera_partners/view_model/home/orders/negotiation_cars_view_model
 import 'package:mera_partners/view_model/home/orders/procured_bill_view_model.dart';
 import 'package:mera_partners/view_model/home/orders/rc_transfer_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:upgrader/upgrader.dart';
 import '../../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 import '../../widgets/show_logout_dialog.dart';
 
@@ -64,110 +65,120 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: const SystemUiOverlayStyle(
-        statusBarColor: MyColors.white,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.dark, // Dark content for a light background on iOS
+    return UpgradeAlert(
+      upgrader: Upgrader(
+        durationUntilAlertAgain: const Duration(seconds: 0)
       ),
-      child: PopScope(
-        canPop: false,
-        onPopInvoked: (bool didPop) {
-          showExitDialog(context);
-        },
-        child: Scaffold(
-          backgroundColor: MyColors.white,
-          body: Obx(() {
-            return homeScreenViewModel.pages[homeScreenViewModel.selectedIndex.value];
-          }),
-          bottomNavigationBar: Obx(() {
-            return BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              currentIndex: homeScreenViewModel.selectedIndex.value,
-              selectedLabelStyle: MyStyles.primary12400,
-              unselectedLabelStyle: MyStyles.grey12400,
-              items: <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                    icon: Container(
-                      width: 30,
-                      height: 40,
-                      alignment: Alignment.bottomCenter,
-                      child: SvgPicture.asset(
-                        MySvg.explore,
-                        color: (homeScreenViewModel.selectedIndex.value == 0) ? MyColors.kPrimaryColor : MyColors.grey,
+      showLater: false,
+      onIgnore: () {
+            SystemNavigator.pop();
+             throw UnsupportedError('_');
+          },
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: const SystemUiOverlayStyle(
+          statusBarColor: MyColors.white,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.dark, // Dark content for a light background on iOS
+        ),
+        child: PopScope(
+          canPop: false,
+          onPopInvoked: (bool didPop) {
+            showExitDialog(context);
+          },
+          child: Scaffold(
+            backgroundColor: MyColors.white,
+            body: Obx(() {
+              return homeScreenViewModel.pages[homeScreenViewModel.selectedIndex.value];
+            }),
+            bottomNavigationBar: Obx(() {
+              return BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                currentIndex: homeScreenViewModel.selectedIndex.value,
+                selectedLabelStyle: MyStyles.primary12400,
+                unselectedLabelStyle: MyStyles.grey12400,
+                items: <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                      icon: Container(
+                        width: 30,
+                        height: 40,
+                        alignment: Alignment.bottomCenter,
+                        child: SvgPicture.asset(
+                          MySvg.explore,
+                          color: (homeScreenViewModel.selectedIndex.value == 0) ? MyColors.kPrimaryColor : MyColors.grey,
+                        ),
                       ),
-                    ),
-                    label: "Explore"),
-                BottomNavigationBarItem(
-                    icon: Container(
-                      width: 30,
-                      height: 40,
-                      alignment: Alignment.bottomCenter,
-                      child: SvgPicture.asset(
-                        MySvg.myCars,
-                        color: (homeScreenViewModel.selectedIndex.value == 1) ? MyColors.kPrimaryColor : MyColors.grey,
+                      label: "Explore"),
+                  BottomNavigationBarItem(
+                      icon: Container(
+                        width: 30,
+                        height: 40,
+                        alignment: Alignment.bottomCenter,
+                        child: SvgPicture.asset(
+                          MySvg.myCars,
+                          color: (homeScreenViewModel.selectedIndex.value == 1) ? MyColors.kPrimaryColor : MyColors.grey,
+                        ),
                       ),
-                    ),
-                    label: "My Cars"),
-                BottomNavigationBarItem(
-                    icon: Container(
-                      width: 30,
-                      height: 40,
-                      alignment: Alignment.bottomCenter,
-                      child: SvgPicture.asset(
-                        MySvg.orders,
-                        color: (homeScreenViewModel.selectedIndex.value == 2) ? MyColors.kPrimaryColor : MyColors.grey,
+                      label: "My Cars"),
+                  BottomNavigationBarItem(
+                      icon: Container(
+                        width: 30,
+                        height: 40,
+                        alignment: Alignment.bottomCenter,
+                        child: SvgPicture.asset(
+                          MySvg.orders,
+                          color: (homeScreenViewModel.selectedIndex.value == 2) ? MyColors.kPrimaryColor : MyColors.grey,
+                        ),
                       ),
-                    ),
-                    label: "Orders"),
-                BottomNavigationBarItem(
-                    icon: Container(
-                      width: 30,
-                      height: 40,
-                      alignment: Alignment.bottomCenter,
-                      child: SvgPicture.asset(
-                        MySvg.wallet,
-                        color: (homeScreenViewModel.selectedIndex.value == 3) ? MyColors.kPrimaryColor : MyColors.grey3,
+                      label: "Orders"),
+                  BottomNavigationBarItem(
+                      icon: Container(
+                        width: 30,
+                        height: 40,
+                        alignment: Alignment.bottomCenter,
+                        child: SvgPicture.asset(
+                          MySvg.wallet,
+                          color: (homeScreenViewModel.selectedIndex.value == 3) ? MyColors.kPrimaryColor : MyColors.grey3,
+                        ),
                       ),
-                    ),
-                    label: "Wallet"),
-                BottomNavigationBarItem(
-                    icon: Container(
-                      width: 30,
-                      height: 40,
-                      alignment: Alignment.bottomCenter,
-                      child: SvgPicture.asset(
-                        MySvg.account,
-                        color: (homeScreenViewModel.selectedIndex.value == 4) ? MyColors.kPrimaryColor : MyColors.grey,
+                      label: "Wallet"),
+                  BottomNavigationBarItem(
+                      icon: Container(
+                        width: 30,
+                        height: 40,
+                        alignment: Alignment.bottomCenter,
+                        child: SvgPicture.asset(
+                          MySvg.account,
+                          color: (homeScreenViewModel.selectedIndex.value == 4) ? MyColors.kPrimaryColor : MyColors.grey,
+                        ),
                       ),
-                    ),
-                    label: "Account"),
-              ],
-              onTap: (index) {
-                if (index == 1) {
-                  if (Get.isRegistered<BidCarsListViewModel>()) {
-                    Get.delete<BidCarsListViewModel>();
-                  } else {}
-                  homeScreenViewModel.selectedIndex.value = index;
-                } else if (index == 2) {
-                  homeScreenViewModel.selectedIndex.value = index;
-                  if (Get.isRegistered<NegotiationViewModel>()) {
-                    Get.delete<NegotiationViewModel>();
+                      label: "Account"),
+                ],
+                onTap: (index) {
+                  if (index == 1) {
+                    if (Get.isRegistered<BidCarsListViewModel>()) {
+                      Get.delete<BidCarsListViewModel>();
+                    } else {}
+                    homeScreenViewModel.selectedIndex.value = index;
+                  } else if (index == 2) {
+                    homeScreenViewModel.selectedIndex.value = index;
+                    if (Get.isRegistered<NegotiationViewModel>()) {
+                      Get.delete<NegotiationViewModel>();
+                    }
+                    if (Get.isRegistered<ProcuredScreenViewModel>()) {
+                      Get.delete<ProcuredScreenViewModel>();
+                    }
+                    if (Get.isRegistered<RcTransferViewModel>()) {
+                      Get.delete<RcTransferViewModel>();
+                    }
+                  } else if (index != 3) {
+                    homeScreenViewModel.selectedIndex.value = index;
                   }
-                  if (Get.isRegistered<ProcuredScreenViewModel>()) {
-                    Get.delete<ProcuredScreenViewModel>();
-                  }
-                  if (Get.isRegistered<RcTransferViewModel>()) {
-                    Get.delete<RcTransferViewModel>();
-                  }
-                } else if (index != 3) {
-                  homeScreenViewModel.selectedIndex.value = index;
-                }
-              },
-            );
-          }),
-        )),);
+                },
+              );
+            }),
+          )),),
+    );
   }
 }
