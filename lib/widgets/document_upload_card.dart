@@ -24,7 +24,7 @@ class DocumentUploadCard extends StatelessWidget {
         children: [
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.43,
-            height: size.height * 0.2,
+            height: size.height * 0.21,
             child: GestureDetector(
               onTap: () async {
                 showModalBottomSheet<void>(
@@ -74,11 +74,18 @@ class DocumentUploadCard extends StatelessWidget {
                       if (image.value != null)
                         GestureDetector(
                           onTap: () {
+                            image.value!.path.startsWith('http') || image.value!.path.startsWith('https') ?
+                            _showFullScreenImage(context, null, image.value?.path) :
                             _showFullScreenImage(context, image.value, null);
                           },
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(4),
-                            child: Image.file(
+                            child: image.value!.path.startsWith('http') || image.value!.path.startsWith('https')?Image.network(
+                                width: size.width * 0.3,
+                                height: size.height * 0.09,
+                                fit: BoxFit.fill,
+                                image.value?.path ?? '')
+                                :Image.file(
                               image.value!,
                               frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
                                 return child;
@@ -95,15 +102,12 @@ class DocumentUploadCard extends StatelessWidget {
           ),
           Positioned(
             top: 4,
-            left: 20,
+            left: 22,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(4),
               child: Container(
-                color: MyColors.white,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 4,
-                ),
-                child: Text(label),
+                color: Colors.white,
+                child: Text(label,overflow: TextOverflow.ellipsis,),
               ),
             ),
           ),

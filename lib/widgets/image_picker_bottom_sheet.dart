@@ -50,7 +50,7 @@ class ImagePickerSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(()=> SizedBox(
-        height: image.value == null ? MediaQuery.of(context).size.height*0.27 : MediaQuery.of(context).size.height*0.45,
+        height: image.value == null ? MediaQuery.of(context).size.height*0.28 : MediaQuery.of(context).size.height*0.45,
         child: Padding(
           padding: const EdgeInsets.only(left: 26.0, top: 36,bottom: 35),
           child: Column(

@@ -139,7 +139,7 @@ class DocumentScreenViewModel extends GetxController {
     ProgressBar.instance.showProgressbar(Get.context!);
     try {
       var request = http.MultipartRequest('PATCH', Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId!}'));
-      request.fields.addAll({'fullname': fullNameController.value.text, "isDocumentsVerified": userInfoResponse.value.data?[0].isDocumentsVerified == "NOTSUBMITTED" ? DocumentStatus.SUBMITTED.name : userInfoResponse.value.data![0].isDocumentsVerified!,'email': emailController.value.text, 'businessName': businessNameController.value.text, 'businessAddress': businessAddressController.value.text, 'pincode': pinCodeController.value.text, 'contactNo': phoneNumberController.value.text, 'district': districtController.value.text});
+      request.fields.addAll({'fullname': fullNameController.value.text, "isDocumentsVerified": userInfoResponse.value.data?[0].isDocumentsVerified == "NOTSUBMITTED" ? DocumentStatus.SUBMITTED.name : userInfoResponse.value.data?[0].isDocumentsVerified ?? '','email': emailController.value.text, 'businessName': businessNameController.value.text, 'businessAddress': businessAddressController.value.text, 'pincode': pinCodeController.value.text, 'contactNo': phoneNumberController.value.text, 'district': districtController.value.text});
       if (panCard.value != null && !panCard.value!.path.startsWith('http') && !panCard.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('panCard', panCard.value!.path, contentType: MediaType('image', panCard.value!.path.split('.').last)));
       }
@@ -162,7 +162,7 @@ class DocumentScreenViewModel extends GetxController {
       if (cancelledCheque.value != null && !cancelledCheque.value!.path.startsWith('http') && !cancelledCheque.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('canceledCheque', cancelledCheque.value!.path, contentType: MediaType('image', cancelledCheque.value!.path.split('.').last)));
       }
-      request.headers.addAll(globals.jsonHeaders);
+      request.headers.addAll(globals.headers);
       log(request.fields.toString());
       log(request.toString());
 
