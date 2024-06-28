@@ -22,7 +22,7 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
   await NotificationService().initNotification();
-  getPermission();
+  await getPermission();
   await PushNotifications.init();
   await PushNotifications.getDeviceToken();
   runApp(const MyApp());
