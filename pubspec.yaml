@@ -57,6 +57,7 @@ dependencies:
   http_parser:
   sms_autofill: ^2.4.0
   upgrader: ^10.3.0
+  firebase_crashlytics: ^3.5.7
 
 dev_dependencies:
   flutter_test:
