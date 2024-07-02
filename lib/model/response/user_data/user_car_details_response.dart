@@ -313,7 +313,7 @@ class BiddedCars {
   int? highestBid;
   num? totalBidder;
   String? status;
-  String? carCondition;
+  List<String>? carCondition;
   List<LeaderBoard>? leaderBoard;
   String? createdAt;
   FrontLeft? engineCompartment;
@@ -391,7 +391,9 @@ class BiddedCars {
     highestBid = json['highestBid'];
     totalBidder = json['totalBidder'];
     status = json['status'];
-    carCondition = json['carCondition'];
+    if (json['carCondition'] != null && json['carCondition'] is List) {
+      carCondition = json['carCondition'].cast<String>();
+    }
     if (json['leaderBoard'] != null) {
       leaderBoard = <LeaderBoard>[];
       json['leaderBoard'].forEach((v) {

@@ -290,7 +290,7 @@ class AllCarInfo {
   List<String>? airCooling;
   List<String>? acCondensor;
   String? evaluationStatusForAc;
-  String? carCondition;
+  List<String>? carCondition;
   String? brakes;
   String? clutchSystem;
   String? cruiseControl;
@@ -729,7 +729,9 @@ class AllCarInfo {
     airCooling = json['airCooling'].cast<String>();
     acCondensor = json['acCondensor'].cast<String>();
     evaluationStatusForAc = json['evaluationStatusForAc'];
-    carCondition = json['carCondition'];
+    if (json['carCondition'] != null && json['carCondition'] is List) {
+      carCondition = json['carCondition'].cast<String>();
+    }
     brakes = json['brakes'];
     clutchSystem = json['clutchSystem'];
     cruiseControl = json['cruiseControl'];

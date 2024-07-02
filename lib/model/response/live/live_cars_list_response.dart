@@ -65,7 +65,7 @@ class Data {
   List<LeaderBoard>? leaderBoard;
   // List<String>? winner;
   String? winner;
-  String? carCondition;
+  List<String>? carCondition;
   Front? front;
   Front? frontLeft;
   Front? frontRight;
@@ -161,7 +161,9 @@ class Data {
     transmission = json['transmission'];
     statusValues = json['statusValues'];
     winner = json['winner'];
-    carCondition = json['carCondition'];
+    if (json['carCondition'] != null && json['carCondition'] is List) {
+      carCondition = json['carCondition'].cast<String>();
+    }
     if (json['leaderBoard'] != null) {
       leaderBoard = <LeaderBoard>[];
       json['leaderBoard'].forEach((v) {
