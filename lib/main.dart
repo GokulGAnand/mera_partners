@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/services.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/service/firebase_push_notifications.dart';
@@ -17,12 +18,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform
   );
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
   await NotificationService().initNotification();
-  getPermission();
+  await getPermission();
   await PushNotifications.init();
   await PushNotifications.getDeviceToken();
   runApp(const MyApp());
