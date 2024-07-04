@@ -29,9 +29,9 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To allow users to select and upload photos from their device.</string>
 	<key>NSCameraUsageDescription</key>
-    <string>Please grant camera access</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>Please grant microphone access</string>
+	<string>Please grant camera access</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Please grant microphone access</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -54,5 +54,20 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>FLTEnableImpeller</key>
+	<false/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Program requires GPS to track cars and job orders</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Program requires GPS to track cars and job orders</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Program requires GPS to track cars and job orders</string>
 </dict>
 </plist>
