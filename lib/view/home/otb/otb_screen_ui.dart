@@ -40,7 +40,7 @@ class OTBScreen extends StatelessWidget {
                                   onCarTapped: () {
                                     Get.toNamed(AppRoutes.carDetailsScreen, arguments: item.sId);
                                   },
-                                  criticalIssue: item.carCondition ?? '',
+                                  criticalIssue: item.carCondition?.join(',') ?? '',
                                   isFavourite: controller.likeResponse.value.data?[0].likedCars != null && (controller.likeResponse.value.data![0].likedCars!.isNotEmpty)? controller.likeResponse.value.data![0].likedCars!.any((element) => element.sId == controller.carsListResponse.value.data?[index].sId) ? true.obs : false.obs : false.obs,
                                   isOtb: true.obs,
                                   scheduleTime: Constants.getScheduledStatus(DateTime.parse(item.bidStartTime ?? DateTime.now().toString()).toLocal()),

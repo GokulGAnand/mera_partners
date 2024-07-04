@@ -29,6 +29,7 @@ class DocumentScreen extends StatelessWidget {
   Widget pageOne() {
     return Obx(
       () => Scaffold(
+        backgroundColor: MyColors.white,
         body: SingleChildScrollView(
           child: Form(
             key: viewModel.page1Key,
@@ -156,11 +157,12 @@ class DocumentScreen extends StatelessWidget {
 
   Widget pageTwo(BuildContext context) {
     return Scaffold(
+      backgroundColor: MyColors.white,
       bottomNavigationBar: SizedBox(
         height: 70,
         child: Center(
-          child: CustomElevatedButton(
-            onPressed: () {
+          child: Obx(() => CustomElevatedButton(
+            onPressed: (viewModel.aadhaarFront.value != null && viewModel.aadhaarBack.value != null && viewModel.panCard.value != null) ? () {
               if (viewModel.aadhaarFront.value != null && viewModel.aadhaarBack.value != null && viewModel.panCard.value != null/* && viewModel.page2Key.currentState!.validate()*/) {
                 viewModel.page2Key.currentState!.save();
                 viewModel.pageController.value.animateToPage(
@@ -171,8 +173,9 @@ class DocumentScreen extends StatelessWidget {
               }else{
                 CustomToast.instance.showMsg('${MyStrings.documents} ${MyStrings.required}');
               }
-            },
+            } : null,
             buttonText: MyStrings.next,
+            disableColor:  MyColors.kPrimaryColor.withOpacity(0.3),
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -196,7 +199,7 @@ class DocumentScreen extends StatelessWidget {
                 )
               ],
             ),
-          ),
+          ),)
         ),
       ),
       body: SingleChildScrollView(
@@ -338,11 +341,13 @@ class DocumentScreen extends StatelessWidget {
 
   Widget pageThree(BuildContext context) {
     return Scaffold(
+      backgroundColor: MyColors.white,
       bottomNavigationBar: SizedBox(
         height: 70,
         child: Center(
-          child: CustomElevatedButton(
-            onPressed: () async {
+          child: Obx(() => CustomElevatedButton(
+            disableColor:  MyColors.kPrimaryColor.withOpacity(0.3),
+            onPressed: (viewModel.shopImage.value != null && viewModel.visitingCard.value != null && viewModel.cancelledCheque.value != null) ? () async {
               if (viewModel.shopImage.value != null && viewModel.visitingCard.value != null && viewModel.cancelledCheque.value != null /*&& viewModel.page3Key.currentState!.validate()*/) {
                 viewModel.page3Key.currentState!.save();
                 if (await viewModel.addDocument() == true) {
@@ -355,7 +360,7 @@ class DocumentScreen extends StatelessWidget {
               }else{
                 CustomToast.instance.showMsg('${MyStrings.documents} ${MyStrings.required}');
               }
-            },
+            } : null,
             buttonText: MyStrings.next,
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -380,7 +385,7 @@ class DocumentScreen extends StatelessWidget {
                 )
               ],
             ),
-          ),
+          ),),
         ),
       ),
       body: SingleChildScrollView(
@@ -529,6 +534,7 @@ class DocumentScreen extends StatelessWidget {
 
   Widget pageFour() {
     return Obx(() => Scaffold(
+      backgroundColor: MyColors.white,
       bottomNavigationBar: SizedBox(
         height: 70,
         child: Center(
@@ -650,6 +656,7 @@ class DocumentScreen extends StatelessWidget {
           },
           child: Scaffold(
             key: _key,
+            backgroundColor: MyColors.white,
             appBar: CustomAppBar(
               title: MyStrings.documentVerification,
               subTitle: MyStrings.documentDesc,

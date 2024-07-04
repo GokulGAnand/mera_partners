@@ -146,7 +146,7 @@ class LiveCarsListScreen extends StatelessWidget {
                               bidEndTime: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal(),
                               carModel: controller.liveCarsResponse.value.data?[index].model ?? '',
                               carVariant: controller.liveCarsResponse.value.data?[index].variant ?? '',
-                              criticalIssue: controller.liveCarsResponse.value.data?[index].carCondition ?? '',
+                              criticalIssue: controller.liveCarsResponse.value.data?[index].carCondition?.join(',') ?? '',
                               rating: (((controller.liveCarsResponse.value.data?[index].engineStar ?? 0) + (controller.liveCarsResponse.value.data?[index].exteriorStar ?? 0) + (controller.liveCarsResponse.value.data?[index].interiorAndElectricalStar ?? 0) + (controller.liveCarsResponse.value.data?[index].testDriveStar ?? 0)) / 4).roundToDouble(),
                               fuelType: controller.liveCarsResponse.value.data?[index].fuelType ?? '',
                               id: controller.liveCarsResponse.value.data?[index].uniqueId.toString() ?? '',
