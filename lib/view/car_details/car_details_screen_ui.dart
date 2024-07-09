@@ -1597,7 +1597,7 @@ TextStyle _getValueStyle(Item item) {
     case "Under Hypothecation":
       return (item.value == "Yes") ? MyStyles.warningRed_12500 : MyStyles.green_12500;
     case "No Claim Bonus":
-    case "NOC Issued":
+    case "Loan NOC Issued":
     case "Loan Closed":
     case "Form 35":
     case "Duplicate Key":

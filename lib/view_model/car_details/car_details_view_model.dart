@@ -703,6 +703,8 @@ class CarDetailsScreenViewModel extends GetxController {
           regAndFitness.value = [
             Master(title: MyStrings.manufacturingDate, value: reportResponse.value.data!.allCarInfo?.monthAndYearOfManufacture ?? ''),
             Master(title: MyStrings.regDate, value: reportResponse.value.data!.regDate ?? ''),
+            Master(title: MyStrings.regValidity, value: reportResponse.value.data!.regValidity ?? ''),
+            Master(title: MyStrings.taxValidity, value: reportResponse.value.data!.taxValidity ?? ''),
             Master(title: MyStrings.rto, value: reportResponse.value.data!.rto ?? ''),
           ];
           // features.value = [

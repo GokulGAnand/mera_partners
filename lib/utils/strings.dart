@@ -1,13 +1,15 @@
 
 class MyStrings {
   static const String regAndFitness = "Reg and Fitness";
-  static const String manufacturingDate = "Manufacturing date";
-  static const String regDate = "Reg date";
+  static const String manufacturingDate = "Manufacturing Date";
+  static const String regDate = "Registration Date";
+  static const String regValidity = "Registration Validity";
+  static const String taxValidity = "Tax Validity";
   static const String rto = "RTO";
   static const String comments = "Comments";
   static const String otherInformation = "Other Information";
   static const String duplicateKey = "Duplicate Key";
-  static const String chasisNumberEmbossing = "Chasis Number Embossing";
+  static const String chasisNumberEmbossing = "Chassis Number Embossing";
   static const String rcAvailability = "RC Availability";
   static const String steering = "Steering System";
   static const String steeringWheel = "Steering Wheel";
@@ -33,7 +35,7 @@ class MyStrings {
   static const String ncb = "No Claim Bonus";
   static const String underHypothecation = "Under Hypothecation";
   static const String loanClosed = "Loan Closed";
-  static const String nocIssued = "NOC Issued";
+  static const String nocIssued = "Loan NOC Issued";
   static const String form35 = "Form 35";
   static const String rcMismatch = "RC Mismatch";
   ///Exterior page 1
