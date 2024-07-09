@@ -27,6 +27,7 @@ class LoginScreenViewModel extends GetxController {
   RxBool buttonDisable = true.obs;
   var userInfoResponse = UserInfoResponse().obs;
 
+  FocusNode otpFocusNode = FocusNode();
   RxString otpValue = "".obs;
 
   Timer? timer;
