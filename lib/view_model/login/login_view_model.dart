@@ -57,7 +57,7 @@ class LoginScreenViewModel extends GetxController {
       print("Signature ID: "+ appSignatureID.toString());
       var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.login), 
       body: {"contactNo": mobileController.value.text,
-            "number": appSignatureID});
+            "number": appSignatureID.toString()});
       String? message = json.decode(response.body)['message'];
       if (response.statusCode == 200) {
         await PushNotifications.getDeviceToken();

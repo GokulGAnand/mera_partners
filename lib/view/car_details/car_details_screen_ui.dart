@@ -922,7 +922,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                         : RxInt(10000),
                                     onAutoBidPressed: () {
                                       try {
-                                        if(globals.uniqueUserId != null && liveCarListViewModel.liveCarsResponse.value.data?[0].winner != null && liveCarListViewModel.liveCarsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && (int.tryParse(liveCarListViewModel.autoBidController.value.text) ?? 0) <= element.autoBidLimit!)){
+                                        if(globals.uniqueUserId != null && liveCarListViewModel.liveCarsResponse.value.data?[0].winner != null && liveCarListViewModel.liveCarsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.autoBidLimit != null && (int.tryParse(liveCarListViewModel.autoBidController.value.text) ?? 0) <= element.autoBidLimit!)){
                                           CustomToast.instance.showMsg(MyStrings.vAutoBidLimit+(liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard![0].autoBidLimit ?? 0).toString());
                                         }else{
                                           liveCarListViewModel.placeAutoBid(liveCarListViewModel.autoBidController.value.text, carDetailsScreenViewModel.reportResponse.value.data!.sId);
@@ -984,7 +984,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                         : RxInt(10000),
                                     onBidPressed: () {
                                       try {
-                                        if(globals.uniqueUserId != null && liveCarListViewModel.liveCarsResponse.value.data?[0].winner != null && liveCarListViewModel.liveCarsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && (int.tryParse(liveCarListViewModel.bidController.value.text) ?? 0) <= element.autoBidLimit!)){
+                                        if(globals.uniqueUserId != null && liveCarListViewModel.liveCarsResponse.value.data?[0].winner != null && liveCarListViewModel.liveCarsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.autoBidLimit != null && (int.tryParse(liveCarListViewModel.bidController.value.text) ?? 0) <= element.autoBidLimit!)){
                                           CustomToast.instance.showMsg(MyStrings.vAutoBidLimit+(liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard![0].autoBidLimit ?? 0).toString());
                                         }else{
                                           liveCarListViewModel.placeBid(liveCarListViewModel.bidController.value.text, carDetailsScreenViewModel.reportResponse.value.data?.sId);
