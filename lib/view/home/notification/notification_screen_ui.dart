@@ -36,7 +36,7 @@ class NotificationScreen extends StatelessWidget {
       ),
         body: Obx(() => (controller.notificationList.value.data != null) && controller.notificationList.value.data!.isNotEmpty ? ListView.builder(
           itemCount: controller.notificationList.value.data?.length ?? 0,
-          padding: const EdgeInsets.only(top: 24),
+          padding: const EdgeInsets.only(top: 15),
           itemBuilder: (context, index) {
             return NotificationWidget(title: controller.notificationList.value.data?[index].title ?? '',
                 subtitle: controller.notificationList.value.data?[index].body ?? '',

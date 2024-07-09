@@ -1586,54 +1586,23 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 }
 
 TextStyle _getValueStyle(Item item) {
-  if (item.title == "RC Availability") {
-    if(item.value == "Original" || item.value == "Photocopy" || item.value == "Duplicate"){
-      //print('The item inside it is------------------${item.value}');
-      return MyStyles.green_12500;
-    }
-    else{
-      return MyStyles.warningRed_12500;
-    }
-  } else if (item.title == "RC Mismatch") {
-    if(item.value == "Yes"){
-      return MyStyles.warningRed_12500;
-    }
-    else{
-      return MyStyles.green_12500;
-    }
-  } else if (item.title == "NOC Issued" && item.value == "No") {
-    return MyStyles.warningRed_12500;
-  } else if (item.title == "Insurance") {
-    if(item.value == "Not Applicable"){
-      return MyStyles.warningRed_12500;
-    }
-    else{
-      return MyStyles.green_12500;
-    }
-  }
-  // else if (item.title == "No Claim Bonus") {
-  //     if(item.value == "Yes"){
-  //       return MyStyles.green_12500;
-  //     }
-  //     else{
-  //       return MyStyles.warningRed_12500;
-  //     }
-  // }
-  else if (item.title == "Under Hypothecation") {
-    if(item.value == "Yes"){
-      return MyStyles.warningRed_12500;
-    }
-    else{
-      return MyStyles.green_12500;
-    }
-  } else if (item.title == "Duplicate Key") {
-    if(item.value == "No"){
-      return MyStyles.warningRed_12500;
-    }
-    else{
-      return MyStyles.green_12500;
-    }
-  } else {
-    return MyStyles.black12400;
+  switch (item.title) {
+    case "RC Availability":
+      return (item.value == "Original" || item.value == "Photocopy")
+          ? MyStyles.green_12500
+          : MyStyles.warningRed_12500;
+    case "Insurance":
+      return (item.value == "Not Applicable") ? MyStyles.warningRed_12500 : MyStyles.green_12500;
+    case "RC Mismatch":
+    case "Under Hypothecation":
+      return (item.value == "Yes") ? MyStyles.warningRed_12500 : MyStyles.green_12500;
+    case "No Claim Bonus":
+    case "NOC Issued":
+    case "Loan Closed":
+    case "Form 35":
+    case "Duplicate Key":
+      return (item.value == "No") ? MyStyles.warningRed_12500 : MyStyles.green_12500;
+    default:
+      return MyStyles.black12400;
   }
 }

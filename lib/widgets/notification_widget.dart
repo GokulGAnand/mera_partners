@@ -28,40 +28,45 @@ class NotificationWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          image.isNotEmpty && (image.startsWith('http') || image.startsWith('https')) ? Container(
-            width: 35,
-            height: 35,
-            decoration: BoxDecoration(
-              color: MyColors.lightBlue,
-              borderRadius: BorderRadius.circular(35),
-              image: DecorationImage(
-                image: NetworkImage(image),
-                fit: BoxFit.fill,
+          if (image.isNotEmpty && (image.startsWith('http') || image.startsWith('https')))
+            Container(
+              width: 35,
+              height: 35,
+              decoration: BoxDecoration(
+                color: MyColors.lightBlue,
+                borderRadius: BorderRadius.circular(35),
+                image: DecorationImage(
+                  image: NetworkImage(image),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            )
+          else if (title.isNotEmpty || subtitle.isNotEmpty)
+            CircleAvatar(
+              radius: 20,
+              child: SvgPicture.asset(MyImages.notification1),
+            ),
+          if (title.isNotEmpty || subtitle.isNotEmpty) ...[
+            const SizedBox(width: Dimens.standard_8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: MyStyles.grey12400,
+                  ),
+                  SizedBox(height: Dimens.standard_4),
+                  Text(
+                    subtitle,
+                    style: MyStyles.greyShade14500,
+                  ),
+                ],
               ),
             ),
-          ): CircleAvatar(
-            radius: 20,
-            child: SvgPicture.asset(MyImages.notification1),
-          ),
-          const SizedBox(width:Dimens.standard_8),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: MyStyles.grey12400
-                ),
-                SizedBox(height: Dimens.standard_4),
-                Text(
-                  subtitle,
-                  style: MyStyles.greyShade14500
-                ),
-              ],
-            ),
-          ),
+          ],
         ],
-      ),
+      )
     );
   }
 }

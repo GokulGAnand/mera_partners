@@ -39,7 +39,7 @@ void showExitDialog(BuildContext context) {
       context: context,
       builder: (context){
         return CustomExitDialog(
-          title: MyStrings.logOutDesc,
+          title: MyStrings.exitDesc,
           exitFun: (){
             SystemNavigator.pop();
           },

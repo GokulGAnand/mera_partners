@@ -282,7 +282,8 @@ class MyStrings {
   static const String aboutUs = 'About Us';
   static const String privacyPolicy= 'Privacy Policy';
   static const String logOut= 'LogOut';
-  static const String logOutDesc= 'Are you sure you want to exit?';
+  static const String logOutDesc= 'Are you sure you want to logout?';
+  static const String exitDesc= 'Are you sure you want to exit?';
   static const String meraPartners= 'Mera Partners';
   static const String version= 'v0.1';
 
