@@ -38,10 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
         durationUntilAlertAgain: const Duration(seconds: 0),
       ),
       showLater: false,
-      onIgnore: () {
-            SystemNavigator.pop();
-             throw UnsupportedError('_');
-          },
+      showIgnore: false,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,

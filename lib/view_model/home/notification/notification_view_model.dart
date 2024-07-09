@@ -22,6 +22,9 @@ class NotificationViewModel extends GetxController{
       log(result.body.toString());
       if(result.statusCode == 200){
             notificationList.value = NotificationListResponse.fromJson(jsonDecode(result.body));
+            if (notificationList.value.data!=null){
+              notificationList.value.data = notificationList.value.data!.reversed.toList();
+            }
             update();
             refresh();
             notifyChildrens();
@@ -33,4 +36,6 @@ class NotificationViewModel extends GetxController{
     }
 
   }
+
+
 }

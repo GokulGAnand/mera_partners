@@ -104,7 +104,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       padding: const EdgeInsets.all(32),
                       decoration: BoxDecoration(
                         color: MyColors.black3.withOpacity(0.7),),
-                      child: Image.asset((!carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) || carDetailsScreenViewModel.carStatus.value.toLowerCase() == "deal_lost")?MyImages.bidClosed
+                      child: Image.asset((((carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner != null) && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!)) || carDetailsScreenViewModel.carStatus.value.toLowerCase() == "deal_lost")?MyImages.bidClosed
                       // :(carDetailsScreenViewModel.carStatus.value == "bid closed")?MyImages.bidClosed
                       :MyImages.bidWon),
                     ): const SizedBox(),
@@ -407,7 +407,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 ),
                                 TextSpan(
                                   text: globals.documentStatus == DocumentStatus.VERIFIED.name ? 
-                                  Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue)
+                                  Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo?.realValue ?? 0)
                                   :(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue != null)
                                   ?'${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
                                   :'${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}',

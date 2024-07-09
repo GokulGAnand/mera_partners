@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -36,10 +37,14 @@ Future getPermission() async {
     cameraStatus = await Permission.camera.request();
   }
   log("camera access: ${cameraStatus.isGranted}");
-  final deviceInfo = await DeviceInfoPlugin().androidInfo;
   PermissionStatus? storageStatus;
-  if (deviceInfo.version.sdkInt > 32) {
-    storageStatus = await Permission.photos.request();
+  if(Platform.isAndroid){
+    final deviceInfo = await DeviceInfoPlugin().androidInfo;
+    if (deviceInfo.version.sdkInt > 32) {
+      storageStatus = await Permission.photos.request();
+    } else {
+      storageStatus = await Permission.storage.request();
+    }
   } else {
     storageStatus = await Permission.storage.request();
   }

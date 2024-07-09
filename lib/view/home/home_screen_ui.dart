@@ -70,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
         durationUntilAlertAgain: const Duration(seconds: 0)
       ),
       showLater: false,
+      showIgnore: false,
       onIgnore: () {
             SystemNavigator.pop();
              throw UnsupportedError('_');
