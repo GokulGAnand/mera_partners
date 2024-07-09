@@ -39,10 +39,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       showLater: false,
       showIgnore: false,
-      onIgnore: () {
-            SystemNavigator.pop();
-             throw UnsupportedError('_');
-          },
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,

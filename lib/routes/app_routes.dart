@@ -36,7 +36,7 @@ import '../view/procured_bill/bindings/procured_bill_screen_bindings.dart';
 class AppRoutes {
   static const splashScreen = '/splash_screen';
   static const documentScreen = '/document_screen_ui';
-  static const onboardingScreen ='/onboarding_screen_ui';
+  static const onboardingScreen = '/onboarding_screen_ui';
   static const tutorialScreen = '/tutorial_screen_ui';
   static const String loginScreen = '/login_screen_ui';
   static const String otpScreen = '/otp_screen_ui';
@@ -58,88 +58,67 @@ class AppRoutes {
   static const String biddedCarsScreen = '/bidded_cars_screen_ui';
   static const String likedCarsScreen = '/liked_cars';
 
-
   List<GetPage> pages = [
-    GetPage(name: splashScreen, page: () => const SplashScreen(),
-      bindings: [
+    GetPage(name: splashScreen, page: () => const SplashScreen(), bindings: [
       SplashScreenBinding(),
     ]),
-    GetPage(name: onboardingScreen, page: () => OnboardingScreen(),
-      bindings: [
+    GetPage(name: onboardingScreen, page: () => OnboardingScreen(), bindings: [
       OnboardingBinding(),
     ]),
-    GetPage(name: documentScreen, page: () => DocumentScreen(),
-      bindings: [
+    GetPage(name: documentScreen, page: () => DocumentScreen(), bindings: [
       DocumentScreenBinding(),
     ]),
-    GetPage(name: loginScreen, page: () => const LoginScreen(),
-      bindings: [
+    GetPage(name: loginScreen, page: () => const LoginScreen(), bindings: [
       LoginBinding(),
     ]),
-    GetPage(name: otpScreen, page: () => const OtpScreen(),
-      bindings: [
+    GetPage(name: otpScreen, page: () => const OtpScreen(), bindings: [
       LoginBinding(),
     ]),
-    GetPage(name: homeScreen, page: () => const HomeScreen(),
-      bindings: [
+    GetPage(name: homeScreen, page: () => const HomeScreen(), bindings: [
       HomeBinding(),
-        NegotiationCarsBinding(),
-    ]), 
-    GetPage(name: bidsScreen, page: () => const BidsScreen(),
-      bindings: [
+      NegotiationCarsBinding(),
+    ]),
+    GetPage(name: bidsScreen, page: () => const BidsScreen(), bindings: [
       BidsBinding(),
     ]),
-    GetPage(name: myCarsScreen, page: () => const MyCarsScreen(),
-      bindings: [
+    GetPage(name: myCarsScreen, page: () => const MyCarsScreen(), bindings: [
       MyCarsBinding(),
     ]),
-    GetPage(name: ordersScreen, page: () => const OrdersScreen(),
-      bindings: [
+    GetPage(name: ordersScreen, page: () => const OrdersScreen(), bindings: [
       OrdersBinding(),
     ]),
-    GetPage(name: procuredBill, page: () =>  ProcuredBillScreen(),
-      bindings: [
+    GetPage(name: procuredBill, page: () => ProcuredBillScreen(), bindings: [
       OrdersBinding(),
     ]),
-    GetPage(name: accountScreen, page: () => const AccountScreen(),
-      bindings: [
+    GetPage(name: accountScreen, page: () => const AccountScreen(), bindings: [
       AccountBinding(),
     ]),
-    GetPage(name: carDetailsScreen, page: () => const CarDetailsScreen(),
-      bindings: [
+    GetPage(name: carDetailsScreen, page: () => const CarDetailsScreen(), bindings: [
       CarDetailsBinding(),
     ]),
-    GetPage(name: galleryScreen, page: () => const GalleryScreen(),
-      bindings: [
+    GetPage(name: galleryScreen, page: () => const GalleryScreen(), bindings: [
       GalleryBinding(),
     ]),
-    GetPage(name: imageViewScreen, page: () => const ImageViewScreen(),
-      bindings: [
+    GetPage(name: imageViewScreen, page: () => const ImageViewScreen(), bindings: [
       GalleryBinding(),
     ]),
-    GetPage(name: aboutUsScreen, page: () => const AboutUsScreen(),
-      bindings: [
+    GetPage(name: aboutUsScreen, page: () => const AboutUsScreen(), bindings: [
       AccountBinding(),
     ]),
-    GetPage(name: privacyPolicyScreen, page: () => const PrivacyPolicyScreen(),
-      bindings: [
+    GetPage(name: privacyPolicyScreen, page: () => const PrivacyPolicyScreen(), bindings: [
       AccountBinding(),
     ]),
-    GetPage(name: procuredBillScreen, page: () =>  ProcuredBillScreen(),
-        bindings: [
-          ProcuredBillScreenBinding(),
-        ]),
-    GetPage(name: notificationScreen, page: () =>  NotificationScreen(),
-        bindings: [
-          NotificationScreenBinding(),
-        ]),
-    GetPage(name: biddedCarsScreen, page: () =>  BidCarsListScreen(),
-        bindings: [
-          MyCarsBinding(),
-        ]),
-    GetPage(name: likedCarsScreen, page: () =>  const LikedCars(),
-        bindings: [
-          MyCarsBinding(),
-        ]),
+    GetPage(name: procuredBillScreen, page: () => ProcuredBillScreen(), bindings: [
+      ProcuredBillScreenBinding(),
+    ]),
+    GetPage(name: notificationScreen, page: () => NotificationScreen(), bindings: [
+      NotificationScreenBinding(),
+    ]),
+    GetPage(name: biddedCarsScreen, page: () => BidCarsListScreen(), bindings: [
+      MyCarsBinding(),
+    ]),
+    GetPage(name: likedCarsScreen, page: () => LikedCars(), bindings: [
+      MyCarsBinding(),
+    ]),
   ];
 }

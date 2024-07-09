@@ -12,6 +12,7 @@ class NotificationScreen extends StatelessWidget {
   });
 
   NotificationViewModel controller = Get.isRegistered<NotificationViewModel>() ? Get.find<NotificationViewModel>() : Get.put(NotificationViewModel());
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
   @override
   Widget build(BuildContext context) {
@@ -19,29 +20,36 @@ class NotificationScreen extends StatelessWidget {
     //final appBarHeight = 240 / pixelRatio;
     final appBarHeight = 150 / pixelRatio;
 
-    return Scaffold(
-        // appBar: CustomAppBar(
-        //    title: MyStrings.notification,
-        //   appBarHeight: appBarHeight,
-        // ),
-      appBar: AppBar(
-        title: const Text(MyStrings.notification,
-          style: TextStyle(color: Colors.white,
-          fontWeight: FontWeight.w600
+    return RefreshIndicator(
+      key: _refreshIndicatorKey,
+      onRefresh: () async {
+        controller.getNotificationsList();
+      },
+      child: Scaffold(
+          // appBar: CustomAppBar(
+          //    title: MyStrings.notification,
+          //   appBarHeight: appBarHeight,
+          // ),
+          appBar: AppBar(
+            title: const Text(
+              MyStrings.notification,
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+            ),
+            toolbarHeight: appBarHeight,
+            backgroundColor: MyColors.kPrimaryColor,
+            iconTheme: const IconThemeData(color: Colors.white),
           ),
-        ),
-        toolbarHeight: appBarHeight,
-        backgroundColor: MyColors.kPrimaryColor,
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
-        body: Obx(() => (controller.notificationList.value.data != null) && controller.notificationList.value.data!.isNotEmpty ? ListView.builder(
-          itemCount: controller.notificationList.value.data?.length ?? 0,
-          padding: const EdgeInsets.only(top: 24),
-          itemBuilder: (context, index) {
-            return NotificationWidget(title: controller.notificationList.value.data?[index].title ?? '',
-                subtitle: controller.notificationList.value.data?[index].body ?? '',
-                image: controller.notificationList.value.data?[index].imageUrl ?? '');
-          },
-        )  : const Center(child: Text(MyStrings.noDataFound),)) );
+          body: Obx(() => (controller.notificationList.value.data != null) && controller.notificationList.value.data!.isNotEmpty
+              ? ListView.builder(
+                  itemCount: controller.notificationList.value.data?.length ?? 0,
+                  padding: const EdgeInsets.only(top: 15),
+                  itemBuilder: (context, index) {
+                    return NotificationWidget(title: controller.notificationList.value.data?[index].title ?? '', subtitle: controller.notificationList.value.data?[index].body ?? '', image: controller.notificationList.value.data?[index].imageUrl ?? '');
+                  },
+                )
+              : const Center(
+                  child: Text(MyStrings.noDataFound),
+                ))),
+    );
   }
 }

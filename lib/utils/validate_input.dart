@@ -18,5 +18,22 @@ class ValidateInput {
       return 'Please enter valid mobile number';
     }
     return null;
-  }  
+  }
+
+  static String? validateEmail(String? value) {
+    String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = RegExp(pattern);
+    if (value!.trim().isEmpty)
+      {
+        return 'E-mail is required';
+      }
+    else if (!regex.hasMatch(value))
+      {
+        return 'Enter valid email';
+      }
+    else
+      {
+        return null;
+      }
+  }
 }

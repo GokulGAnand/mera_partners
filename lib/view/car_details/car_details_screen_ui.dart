@@ -104,7 +104,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       padding: const EdgeInsets.all(32),
                       decoration: BoxDecoration(
                         color: MyColors.black3.withOpacity(0.7),),
-                      child: Image.asset((!carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) || carDetailsScreenViewModel.carStatus.value.toLowerCase() == "deal_lost")?MyImages.bidClosed
+                      child: Image.asset((((carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner != null) && !carDetailsScreenViewModel.carDetailsResponse.value.data![0].winner!.contains(globals.uniqueUserId!)) || carDetailsScreenViewModel.carStatus.value.toLowerCase() == "deal_lost")?MyImages.bidClosed
                       // :(carDetailsScreenViewModel.carStatus.value == "bid closed")?MyImages.bidClosed
                       :MyImages.bidWon),
                     ): const SizedBox(),
@@ -407,7 +407,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 ),
                                 TextSpan(
                                   text: globals.documentStatus == DocumentStatus.VERIFIED.name ? 
-                                  Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue)
+                                  Constants.numberFormat.format(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo?.realValue ?? 0)
                                   :(carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue != null)
                                   ?'${carDetailsScreenViewModel.reportResponse.value.data!.allCarInfo!.realValue!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
                                   :'${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}',
@@ -922,7 +922,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                         : RxInt(10000),
                                     onAutoBidPressed: () {
                                       try {
-                                        if(globals.uniqueUserId != null && liveCarListViewModel.liveCarsResponse.value.data?[0].winner != null && liveCarListViewModel.liveCarsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && (int.tryParse(liveCarListViewModel.autoBidController.value.text) ?? 0) <= element.autoBidLimit!)){
+                                        if(globals.uniqueUserId != null && liveCarListViewModel.liveCarsResponse.value.data?[0].winner != null && liveCarListViewModel.liveCarsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.autoBidLimit != null && (int.tryParse(liveCarListViewModel.autoBidController.value.text) ?? 0) <= element.autoBidLimit!)){
                                           CustomToast.instance.showMsg(MyStrings.vAutoBidLimit+(liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard![0].autoBidLimit ?? 0).toString());
                                         }else{
                                           liveCarListViewModel.placeAutoBid(liveCarListViewModel.autoBidController.value.text, carDetailsScreenViewModel.reportResponse.value.data!.sId);
@@ -984,7 +984,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                         : RxInt(10000),
                                     onBidPressed: () {
                                       try {
-                                        if(globals.uniqueUserId != null && liveCarListViewModel.liveCarsResponse.value.data?[0].winner != null && liveCarListViewModel.liveCarsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.isAutobid == true && (int.tryParse(liveCarListViewModel.bidController.value.text) ?? 0) <= element.autoBidLimit!)){
+                                        if(globals.uniqueUserId != null && liveCarListViewModel.liveCarsResponse.value.data?[0].winner != null && liveCarListViewModel.liveCarsResponse.value.data![0].winner!.contains(globals.uniqueUserId!) && liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.autoBidLimit != null && (int.tryParse(liveCarListViewModel.bidController.value.text) ?? 0) <= element.autoBidLimit!)){
                                           CustomToast.instance.showMsg(MyStrings.vAutoBidLimit+(liveCarListViewModel.liveCarsResponse.value.data![0].leaderBoard![0].autoBidLimit ?? 0).toString());
                                         }else{
                                           liveCarListViewModel.placeBid(liveCarListViewModel.bidController.value.text, carDetailsScreenViewModel.reportResponse.value.data?.sId);
@@ -1586,54 +1586,23 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 }
 
 TextStyle _getValueStyle(Item item) {
-  if (item.title == "RC Availability") {
-    if(item.value == "Original" || item.value == "Photocopy" || item.value == "Duplicate"){
-      //print('The item inside it is------------------${item.value}');
-      return MyStyles.green_12500;
-    }
-    else{
-      return MyStyles.warningRed_12500;
-    }
-  } else if (item.title == "RC Mismatch") {
-    if(item.value == "Yes"){
-      return MyStyles.warningRed_12500;
-    }
-    else{
-      return MyStyles.green_12500;
-    }
-  } else if (item.title == "NOC Issued" && item.value == "No") {
-    return MyStyles.warningRed_12500;
-  } else if (item.title == "Insurance") {
-    if(item.value == "Not Applicable"){
-      return MyStyles.warningRed_12500;
-    }
-    else{
-      return MyStyles.green_12500;
-    }
-  }
-  // else if (item.title == "No Claim Bonus") {
-  //     if(item.value == "Yes"){
-  //       return MyStyles.green_12500;
-  //     }
-  //     else{
-  //       return MyStyles.warningRed_12500;
-  //     }
-  // }
-  else if (item.title == "Under Hypothecation") {
-    if(item.value == "Yes"){
-      return MyStyles.warningRed_12500;
-    }
-    else{
-      return MyStyles.green_12500;
-    }
-  } else if (item.title == "Duplicate Key") {
-    if(item.value == "No"){
-      return MyStyles.warningRed_12500;
-    }
-    else{
-      return MyStyles.green_12500;
-    }
-  } else {
-    return MyStyles.black12400;
+  switch (item.title) {
+    case "RC Availability":
+      return (item.value == "Original" || item.value == "Photocopy")
+          ? MyStyles.green_12500
+          : MyStyles.warningRed_12500;
+    case "Insurance":
+      return (item.value == "Not Applicable") ? MyStyles.warningRed_12500 : MyStyles.green_12500;
+    case "RC Mismatch":
+    case "Under Hypothecation":
+      return (item.value == "Yes") ? MyStyles.warningRed_12500 : MyStyles.green_12500;
+    case "No Claim Bonus":
+    case "Loan NOC Issued":
+    case "Loan Closed":
+    case "Form 35":
+    case "Duplicate Key":
+      return (item.value == "No") ? MyStyles.warningRed_12500 : MyStyles.green_12500;
+    default:
+      return MyStyles.black12400;
   }
 }

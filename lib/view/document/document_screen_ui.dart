@@ -51,7 +51,7 @@ class DocumentScreen extends StatelessWidget {
                   controller: viewModel.emailController.value,
                   labelText: "${MyStrings.email}*",
                   helperText: "${MyStrings.email}*",
-                  validator: ValidateInput.validateRequiredFields,
+                    validator: (value) => ValidateInput.validateEmail(value),
                   keyboardType: TextInputType.emailAddress,
                 ),
                 const SizedBox(
