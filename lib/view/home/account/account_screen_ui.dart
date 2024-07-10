@@ -8,6 +8,7 @@ import 'package:mera_partners/utils/shared_pref_manager.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/utils/svg.dart';
+import 'package:mera_partners/view_model/document/document_screen_view_model.dart';
 import 'package:mera_partners/view_model/home/account/account_view_model.dart';
 import 'package:mera_partners/widgets/custom_appbar.dart';
 import 'package:mera_partners/widgets/custom_dialog.dart';
@@ -130,35 +131,52 @@ class _AccountScreenState extends State<AccountScreen> {
                 style: MyStyles.grey2_14500,
               ),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 18.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(MySvg.documentVerify),
-                    const SizedBox(
-                      width: 6,
-                    ),
-                    const Text(
-                      MyStrings.documentVerification,
-                      style: MyStyles.subTitleBlackStyle,
-                    ),
-                    const SizedBox(
-                      width: 6,
-                    ),
-                    Container(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                          decoration: BoxDecoration(
-                              color: (globals.documentStatus?.toUpperCase() != DocumentStatus.VERIFIED.name)?MyColors.yellow :MyColors.green1,
-                              borderRadius: BorderRadius.circular(4)),
-                          child: Text(
-                            (globals.documentStatus?.toUpperCase() != DocumentStatus.VERIFIED.name)? MyStrings.pending :MyStrings.completed,
-                            textAlign: TextAlign.center,
-                            style: (globals.documentStatus != DocumentStatus.VERIFIED.name)? MyStyles.black12500 :MyStyles.white12500
+              InkWell(
+                onTap: globals.documentStatus?.toUpperCase() != DocumentStatus.VERIFIED.name ? () {
+                  Get.delete<DocumentScreenViewModel>();
+                  Get.toNamed(AppRoutes.documentScreen);
+                } : null,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 18.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          SvgPicture.asset(MySvg.documentVerify),
+                          const SizedBox(
+                            width: 6,
                           ),
-                        )
-                  ],
+                          const Text(
+                            MyStrings.documentVerification,
+                            style: MyStyles.subTitleBlackStyle,
+                          ),
+                          const SizedBox(
+                            width: 6,
+                          ),
+                          Container(
+                            padding:
+                            const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                            decoration: BoxDecoration(
+                                color: (globals.documentStatus?.toUpperCase() != DocumentStatus.VERIFIED.name)?MyColors.yellow :MyColors.green1,
+                                borderRadius: BorderRadius.circular(4)),
+                            child: Text(
+                                (globals.documentStatus?.toUpperCase() != DocumentStatus.VERIFIED.name)? MyStrings.pending :MyStrings.completed,
+                                textAlign: TextAlign.center,
+                                style: (globals.documentStatus != DocumentStatus.VERIFIED.name)? MyStyles.black12500 :MyStyles.white12500
+                            ),
+                          ),
+                        ],
+                      ),
+                      if(globals.documentStatus?.toUpperCase() != DocumentStatus.VERIFIED.name)
+                      Row(
+                        children: [
+                          SvgPicture.asset(MySvg.arrowRight)
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
               InkWell(

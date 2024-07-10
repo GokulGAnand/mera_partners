@@ -1,5 +1,4 @@
 class EndPoints {
-  // static String baseUrl = 'https://api.meracars.com/api/v1/';
   ///live server url
   // static String baseUrl = 'https://api.meracars.com/api/v1/';
   // static String socketUrl = 'https://api.meracars.com/api/v1/';

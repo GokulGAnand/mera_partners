@@ -27,8 +27,14 @@ class _OtpScreenState extends State<OtpScreen> {
   // late final SmsRetrieverImpl smsRetrieverImpl;
   @override
   void initState() {
+    loginScreenViewModel.otpValue.value = "";
     loginScreenViewModel.startTimer(60);
     loginScreenViewModel.listenOtp();
+    loginScreenViewModel.otpFocusNode.addListener(() {
+      setState(() {
+        
+      });
+    });
     super.initState();
   }
 
@@ -37,6 +43,7 @@ class _OtpScreenState extends State<OtpScreen> {
     if (loginScreenViewModel.timer != null) {
       loginScreenViewModel.timer!.cancel();
     }
+    loginScreenViewModel.otpValue.value = "";
     SmsAutoFill().unregisterListener();
     super.dispose();
   }
@@ -62,8 +69,10 @@ class _OtpScreenState extends State<OtpScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: PinFieldAutoFill(
+                focusNode: loginScreenViewModel.otpFocusNode,
                 currentCode: loginScreenViewModel.otpValue.value,
                 keyboardType: TextInputType.number,
+                enableInteractiveSelection: false,
                 decoration: BoxLooseDecoration(
                   textStyle: const TextStyle(fontSize: 20, color: MyColors.black, fontWeight: FontWeight.w600),
                   strokeColorBuilder: PinListenColorBuilder(MyColors.kPrimaryColor, MyColors.grey),
@@ -74,10 +83,14 @@ class _OtpScreenState extends State<OtpScreen> {
                   onCodeChanged: (value) {
                     loginScreenViewModel.otpValue.value = value!;
                     if(value.length == 4){
+                        loginScreenViewModel.otpFocusNode.unfocus();
                         loginScreenViewModel.buttonDisable.value = false;
                     } else {
                         loginScreenViewModel.buttonDisable.value = true;
                     }
+                  },
+                  onCodeSubmitted: (val){
+                    loginScreenViewModel.otpFocusNode.unfocus();
                   },
                 ),
             ),
