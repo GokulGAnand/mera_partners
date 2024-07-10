@@ -1065,6 +1065,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         scrollDirection: Axis.horizontal,
                         itemCount: carDetailsScreenViewModel.ratingList.length,
                         itemBuilder: (context, index) {
+                          if(index == 4) {
+                            return const SizedBox.shrink();
+                          }
                           return Obx(
                             () {
                               return InkWell(
@@ -1315,23 +1318,23 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                       const SizedBox(
                                         width: 6,
                                       ),
-                                      Text(
+                                      Expanded(child: Text(
                                         list[index].title.capitalize.toString(),
                                         style: MyStyles.black12500,
-                                      ),
+                                      ),)
                                     ],
                                   ),
-                                  if(list[index].listValue != null) Padding(
+                                  if(list[index].listValue != null || list[index].value != null) Padding(
                                     padding: const EdgeInsets.only(top: 12.0),
                                     child: GridView.builder(
                                       physics: const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
-                                      itemCount: list[index].listValue!.length,
+                                      itemCount: list[index].listValue?.length ?? (list[index].value != null ? 1 : 0),
                                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: list[index].listValue!.any((item) => item.length >= 20) ? 1 : 2,
+                                        crossAxisCount: ((list[index].listValue?.any((item) => item.length >= 20)) ?? list[index].value!.length >= 20) ? 1 : 2,
                                         crossAxisSpacing: 8,
                                         mainAxisSpacing: 8,
-                                        mainAxisExtent: list[index].listValue!.any((item) => item.length >= 10) ? 40 : 30,
+                                        mainAxisExtent: ((list[index].listValue?.any((item) => item.length >= 10)) ?? list[index].value!.length >= 10) ? 40 : 30,
                                       ),
                                         itemBuilder: (context, i){
                                           return Container(
@@ -1342,7 +1345,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                               borderRadius: BorderRadius.circular(4)
                                             ),
                                             child: Text(
-                                              list[index].listValue![i].capitalize.toString(),
+                                              list[index].listValue?[i].capitalize.toString() ?? list[index].value ?? '',
                                               style: list[index].color == MyColors.warning ? MyStyles.white12500 : MyStyles.black12500,
                                               textAlign: TextAlign.center,
                                             ),

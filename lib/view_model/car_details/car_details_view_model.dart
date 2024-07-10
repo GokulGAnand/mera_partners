@@ -180,7 +180,7 @@ class CarDetailsScreenViewModel extends GetxController {
     "scratch", "dent", "fade", "colour mismatch", "repainted", "moderated", "chipped", "foggy",
     "minor sound", "tappet noise", "timing noise", "silencer noise", "turbo & whistling noise", 
     "injector leakage", "white smoke", "black smoke", "weak", "terminal corroded", "manifold", "blowby on idle",
-    "oil spillage on idle", "noisy", "leakage from tappet cover oil", "leakage from side cover oil", "low oil", "speedometer not working",
+    "oil spillage on idle", "leakage from tappet cover oil", "leakage from side cover oil", "low oil", "speedometer not working",
     "warning light", "rattling sound", "dirty seat cover", "front rh power window stuck", "rear rh power window stuck", "front lh power window stuck",
     "rear lh power window stuck", "rat damage", "hard", "abnormal noise", "modified horn", "cooling low", "weak compression ac"
   ];
