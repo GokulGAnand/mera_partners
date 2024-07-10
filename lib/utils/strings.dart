@@ -5,6 +5,7 @@ class MyStrings {
   static const String regDate = "Registration Date";
   static const String regValidity = "Registration Validity";
   static const String taxValidity = "Tax Validity";
+  static const String insuranceValidity = "Insurance Validity";
   static const String rto = "RTO";
   static const String comments = "Comments";
   static const String otherInformation = "Other Information";
