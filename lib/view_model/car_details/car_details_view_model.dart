@@ -530,8 +530,8 @@ class CarDetailsScreenViewModel extends GetxController {
       interiorAndElectricalIssue.addAll(interiorMinorIssue);
       engineIssue.addAll(engineMajorIssue);
       engineIssue.addAll(engineMinorIssue);
-      airConditionIssue.addAll(airConditionMinorIssue);
       airConditionIssue.addAll(airConditionMajorIssue);
+      airConditionIssue.addAll(airConditionMinorIssue);
       testDriveIssue.addAll(testDriveMajorIssue);
       testDriveIssue.addAll(testDriveMinorIssue);
     log("exterior other parts: $exteriorOtherParts");
