@@ -45,6 +45,7 @@ class Data {
   String? hypothecation;
   String? regValidity;
   String? engineNumber;
+  String? insuranceValidity;
   String? insurance;
   String? form35;
   String? taxValidity;
@@ -86,6 +87,7 @@ class Data {
         this.hypothecation,
         this.regValidity,
         this.engineNumber,
+        this.insuranceValidity,
         this.insurance,
         this.form35,
         this.taxValidity,
@@ -129,6 +131,7 @@ class Data {
     hypothecation = json['hypothecation'];
     regValidity = json['regValidity'];
     engineNumber = json['engineNumber'];
+    insuranceValidity = json['insuranceValidity'];
     insurance = json['insurance'];
     form35 = json['form35'];
     taxValidity = json['taxValidity'];
@@ -174,6 +177,7 @@ class Data {
     data['hypothecation'] = hypothecation;
     data['regValidity'] = regValidity;
     data['engineNumber'] = engineNumber;
+    data['insuranceValidity'] = insuranceValidity;
     data['insurance'] = insurance;
     data['form35'] = form35;
     data['taxValidity'] = taxValidity;
