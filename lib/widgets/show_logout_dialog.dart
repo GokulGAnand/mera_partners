@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:flutter/material.dart';
@@ -41,7 +42,11 @@ void showExitDialog(BuildContext context) {
         return CustomExitDialog(
           title: MyStrings.exitDesc,
           exitFun: (){
-            SystemNavigator.pop();
+            if (Platform.isAndroid) {
+              SystemNavigator.pop();
+            } else if (Platform.isIOS) {
+              exit(0);
+            }
           },
           cancelFun: (){
             Get.back();

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:mera_partners/service/endpoints.dart';
@@ -34,6 +35,31 @@ class PushNotifications {
         criticalAlert: true,
         provisional: true,
         sound: true);
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+      flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      AppleNotification? apple = message.notification?.apple;
+
+      if (notification != null && (android != null || apple != null)) {
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          const NotificationDetails(
+            android: AndroidNotificationDetails(
+              '@mipmap/ic_launcher', // Replace with your app icon
+              'channel name',
+              importance: Importance.max,
+              priority: Priority.high,
+              showWhen: false,
+            ),
+            iOS: DarwinNotificationDetails(),
+          ),
+        );
+      }
+    });
 
     if (notificationSettings.authorizationStatus ==
         AuthorizationStatus.authorized) {
