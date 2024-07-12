@@ -95,11 +95,11 @@ class BidCarsListScreen extends StatelessWidget {
                                   ownerShip: controller.bidCarsResponse.value.data?[0].biddedCars![index].ownershipNumber ?? '',
                                   transmission: controller.bidCarsResponse.value.data?[0].biddedCars![index].transmission ?? '',
                                   images: [
-                                    controller.bidCarsResponse.value.data?[0].biddedCars![index].frontLeft?.url ?? '',
-                                    controller.bidCarsResponse.value.data?[0].biddedCars![index].front?.url ?? '',
-                                    controller.bidCarsResponse.value.data?[0].biddedCars![index].frontRight?.url ?? '',
-                                    controller.bidCarsResponse.value.data?[0].biddedCars![index].rear?.url ?? '',
-                                    controller.bidCarsResponse.value.data?[0].biddedCars![index].engineCompartment?.url ?? '',
+                                    controller.bidCarsResponse.value.data?[0].biddedCars![index].frontLeft?.url ?? controller.bidCarsResponse.value.data?[0].biddedCars![index].rearLeft?.url ?? '',
+                                    controller.bidCarsResponse.value.data?[0].biddedCars![index].front?.url /*?? controller.bidCarsResponse.value.data?[0].biddedCars![index].leftImage?.url */?? '',
+                                    controller.bidCarsResponse.value.data?[0].biddedCars![index].frontRight?.url ?? controller.bidCarsResponse.value.data?[0].biddedCars![index].rearRight?.url ?? '',
+                                    controller.bidCarsResponse.value.data?[0].biddedCars![index].rear?.url /*?? controller.bidCarsResponse.value.data?[0].biddedCars![index].rightImage?.url */?? '',
+                                    controller.bidCarsResponse.value.data?[0].biddedCars![index].engineCompartment?.url /*?? controller.bidCarsResponse.value.data?[0].biddedCars![index].roof?.url */?? '',
                                   ],
                                   autoBid: () {
                                     controller.autoBidController.value.clear();

@@ -76,11 +76,11 @@ class OTBScreen extends StatelessWidget {
                               onEnd: () {},
                             ).obs,
                             images: [
-                              item.frontLeft?.url ?? '',
-                              item.front?.url ?? '',
-                              item.frontRight?.url ?? '',
-                              item.rear?.url ?? '',
-                              item.engineCompartment?.url ?? '',
+                              item.frontLeft?.url ?? item.rearLeft?.url ?? '',
+                              item.front?.url ?? item.leftImage?.url ?? '',
+                              item.frontRight?.url ?? item.rearRight?.url ?? '',
+                              item.rear?.url ?? item.rightImage?.url ?? '',
+                              item.engineCompartment?.url ?? item.roof?.url ?? '',
                             ],
                             otbTapped: () {
                               showModalBottomSheet(

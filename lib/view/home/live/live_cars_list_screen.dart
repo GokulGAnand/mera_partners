@@ -175,11 +175,11 @@ class LiveCarsListScreen extends StatelessWidget {
                                     ownerShip: controller.liveCarsResponse.value.data?[index].ownershipNumber ?? '',
                                     transmission: controller.liveCarsResponse.value.data?[index].transmission ?? '',
                                     images: [
-                                      controller.liveCarsResponse.value.data?[index].frontLeft?.url ?? '',
-                                      controller.liveCarsResponse.value.data?[index].front?.url ?? '',
-                                      controller.liveCarsResponse.value.data?[index].frontRight?.url ?? '',
-                                      controller.liveCarsResponse.value.data?[index].rear?.url ?? '',
-                                      controller.liveCarsResponse.value.data?[index].engineCompartment?.url ?? '',
+                                      controller.liveCarsResponse.value.data?[index].frontLeft?.url ?? controller.liveCarsResponse.value.data?[index].rearLeft?.url ?? '',
+                                      controller.liveCarsResponse.value.data?[index].front?.url ?? controller.liveCarsResponse.value.data?[index].leftImage?.url ?? '',
+                                      controller.liveCarsResponse.value.data?[index].frontRight?.url ?? controller.liveCarsResponse.value.data?[index].rearRight?.url ?? '',
+                                      controller.liveCarsResponse.value.data?[index].rear?.url ?? controller.liveCarsResponse.value.data?[index].rightImage?.url ?? '',
+                                      controller.liveCarsResponse.value.data?[index].engineCompartment?.url ?? controller.liveCarsResponse.value.data?[index].roof?.url ?? '',
                                     ],
                                     autoBid: () {
                                       controller.autoBidController.value.clear();
