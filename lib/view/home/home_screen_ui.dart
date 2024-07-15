@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/styles.dart';
@@ -72,9 +73,13 @@ class _HomeScreenState extends State<HomeScreen> {
       showLater: false,
       showIgnore: false,
       onIgnore: () {
-            SystemNavigator.pop();
-             throw UnsupportedError('_');
-          },
+        if (Platform.isAndroid) {
+          SystemNavigator.pop();
+        } else if (Platform.isIOS) {
+          exit(0);
+        }
+        throw UnsupportedError('_');
+      },
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: const SystemUiOverlayStyle(
           statusBarColor: MyColors.white,

@@ -169,24 +169,52 @@ class _GalleryScreenState extends State<GalleryScreen> {
                               bottom: 8,
                               left: 8,
                               child: Container(
+                                width: galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index]?.listValue.length >=2 ? MediaQuery.of(context).size.width - 15 : null,
                                 padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
                                 decoration: BoxDecoration(
                                   color: MyColors.white,
                                   borderRadius: BorderRadius.circular(6),
                                 ),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].title.toString(),
-                                      style: MyStyles.black12500,
-                                    ),
-                                    if(galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index]?.listValue != null && (galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index]?.listValue.isNotEmpty))
-                                    Text(
-                                      "${" (" + (galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index]?.listValue?.join(",") ?? '')})",
-                                      style: MyStyles.black12500,
-                                    ),
-                                  ],
-                                )
+                                child: IntrinsicWidth(
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text: galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].title.toString(),
+                                                style: MyStyles.black12500,
+                                              ),
+                                              if (galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index]?.listValue != null &&
+                                                  galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index]?.listValue.isNotEmpty)
+                                                TextSpan(
+                                                  text: " (${galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index]?.listValue?.join(", ") ?? ''})",
+                                                  style: MyStyles.black12500,
+                                                ),
+                                            ],
+                                          ),
+                                          softWrap: true,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                // child: Row(
+                                //   children: [
+                                //     Text(
+                                //       galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].title.toString(),
+                                //       style: MyStyles.black12500,
+                                //     ),
+                                //     if(galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index]?.listValue != null && (galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index]?.listValue.isNotEmpty))
+                                //     Text(
+                                //       "${" (" + (galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index]?.listValue?.join(",") ?? '')})",
+                                //       style: MyStyles.black12500,
+                                //     ),
+                                //   ],
+                                // )
                               ),
                             )
                           ],

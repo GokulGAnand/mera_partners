@@ -72,6 +72,9 @@ class Data {
   Front? rearLeft;
   Front? rear;
   Front? rearRight;
+  Front? leftImage;
+  Front? rightImage;
+  Front? roof;
   num? engineStar;
   num? exteriorStar;
   num? testDriveStar;
@@ -138,6 +141,9 @@ class Data {
         this.gst,
         this.serviceFees,
         this.totalAmount,
+        this.leftImage,
+        this.rightImage,
+        this.roof,
       });
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -183,6 +189,9 @@ class Data {
     rearLeft =
     json['rearLeft'] != null ? Front.fromJson(json['rearLeft']) : null;
     rear = json['rear'] != null ? Front.fromJson(json['rear']) : null;
+    roof = json['roof'] != null ? Front.fromJson(json['roof']) : null;
+    rightImage = json['rightImage'] != null ? Front.fromJson(json['rightImage']) : null;
+    leftImage = json['leftImage'] != null ? Front.fromJson(json['leftImage']) : null;
     rearRight = json['rearRight'] != null
         ? Front.fromJson(json['rearRight'])
         : null;
