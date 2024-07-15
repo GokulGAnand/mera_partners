@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/widgets.dart';
 import 'package:mera_partners/model/response/user_data/user_info_response.dart';
 import 'package:mera_partners/service/endpoints.dart';
 import 'package:mera_partners/service/exception_error_util.dart';
@@ -28,6 +29,7 @@ class LoginScreenViewModel extends GetxController {
   var userInfoResponse = UserInfoResponse().obs;
 
   FocusNode otpFocusNode = FocusNode();
+  TextEditingController otpController = TextEditingController();
   RxString otpValue = "".obs;
 
   Timer? timer;
@@ -55,6 +57,7 @@ class LoginScreenViewModel extends GetxController {
     try {
       ProgressBar.instance.showProgressbar(Get.context!);
       var appSignatureID = await SmsAutoFill().getAppSignature;
+      // var appSignatureID = "";
       print("Signature ID: "+ appSignatureID.toString());
       var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.login), 
       body: {"contactNo": mobileController.value.text,
