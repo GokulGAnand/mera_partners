@@ -100,7 +100,7 @@ class PushNotifications {
     try {
       var headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer ${globals.token}'};
       var request = http.Request('POST', Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.setFCM + (globals.uniqueUserId ?? '')));
-      request.body = json.encode({"fcmToken": token,if(Platform.isIOS)"platform": "IOS"});
+      request.body = jsonEncode({"fcmToken": token,if(Platform.isIOS)"platform": "IOS"});
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
@@ -126,5 +126,19 @@ class PushNotifications {
     //     print("save to firestore");
     //   }
     // });
+  }
+
+  static removeToken(String token) async {
+    try {
+      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.setFCM + (globals.uniqueUserId ?? '')), headers: globals.jsonHeaders, body: jsonEncode({"fcmToken": token}));
+      log(response.body);
+      if(response.statusCode == 200){
+        log("fcm token successfully removed");
+      } else {
+        log(response.reasonPhrase.toString());
+      }
+    } catch (e) {
+      log(e.toString());
+    }
   }
 }
