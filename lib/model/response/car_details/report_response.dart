@@ -546,9 +546,8 @@ class AllCarInfo {
     dashboardCondition = json['dashboardCondition'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    battery =
-    json['firewall'] != null ? Battery.fromJson(json['firewall']) : null;
-    json['battery'] != null ? Battery.fromJson(json['battery']) : null;
+    battery = json['battery'] != null ? Battery.fromJson(json['battery']) : null;
+    firewall = json['firewall'] != null ? Battery.fromJson(json['firewall']) : null;
     blowBy =
     json['blowBy'] != null ? Battery.fromJson(json['blowBy']) : null;
     clutch =
