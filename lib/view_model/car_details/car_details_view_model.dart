@@ -189,8 +189,8 @@ class CarDetailsScreenViewModel extends GetxController {
   ];
 
   List<String> redListData = ["rusted", "replaced", "cracked", "welded", "clamped", "repaired", "critical sound", 
-  "damaged", "weak compression", "air filter box damaged", "blue", "fluid leakage", "back compression", "shift hard-gear",
-  "not engaging-gear", "noisy", "jittering", "dirty oil", "leakage-turbo", "ac vent grill broken", "front rh power window not working", "rear rh power window not working",
+  "damaged", "weak compression", "air filter box damaged", "blue", "fluid leakage", "back compression", "shift hard",
+  "not engaging-gear", "noisy", "jittering", "jerking" "dirty oil", "leakage-turbo", "ac vent grill broken", "front rh power window not working", "rear rh power window not working",
   "front lh power window not working", "rear lh power window not working", "ecm malfunction", "fuel pump not working", "wiring damage", "electric not working", "hydraulic not working",
   "weak breaks", "gear not engaged", "drum scratch", "alloy wheel missing", "needs replacement", "deployed", "not satisfactory",
   "abs ebd sensor damaged", "abs ebd module damaged","flood affected", "total loss", "apron replaced", "apron repaired", "roof replaced", "car converted from commercial to private", "commercial vehicle", "fitness expired", "engine replaced",
