@@ -54,8 +54,9 @@ class PushNotifications {
               importance: Importance.max,
               priority: Priority.high,
               showWhen: false,
+              sound: RawResourceAndroidNotificationSound('notification')
             ),
-            iOS: DarwinNotificationDetails(),
+            iOS: DarwinNotificationDetails(sound: 'notification.mp3'),
           ),
         );
       }
@@ -104,7 +105,6 @@ class PushNotifications {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
-
       if (response.statusCode == 200) {
         log("fcm token successfully saved");
       } else {

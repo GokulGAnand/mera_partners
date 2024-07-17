@@ -174,23 +174,28 @@ class CarDetailsScreenViewModel extends GetxController {
   List<String> goodListData = ["good", "normal", 
   "condition ok", "no blowby", "front rh power window working", 
   "rear rh power window working", "front lh power window working", 
-  "rear lh power window working", "all windows working"];
+  "rear lh power window working", "all windows working","yes","25-50%", "50-75%", "75%-100%",
+    "working", "tilt", "telescopic", "available", "height adjustable", "functioning",
+    "not applicable"
+  ];
 
   List<String> yellowListData = [
     "scratch", "dent", "fade", "colour mismatch", "repainted", "moderated", "chipped", "foggy",
     "minor sound", "tappet noise", "timing noise", "silencer noise", "turbo & whistling noise", 
-    "injector leakage", "white smoke", "black smoke", "weak", "terminal corroded", "manifold", "blowby on idle",
+    "injector leakage", "white", "black", "weak", "terminal corroded", "manifold", "blowby on idle",
     "oil spillage on idle", "leakage from tappet cover oil", "leakage from side cover oil", "low oil", "speedometer not working",
     "warning light", "rattling sound", "dirty seat cover", "front rh power window stuck", "rear rh power window stuck", "front lh power window stuck",
     "rear lh power window stuck", "rat damage", "hard", "abnormal noise", "modified horn", "cooling low", "weak compression ac"
   ];
 
   List<String> redListData = ["rusted", "replaced", "cracked", "welded", "clamped", "repaired", "critical sound", 
-  "damaged", "weak compression", "air filter box damaged", "blue smoke", "fluid leakage", "back compression", "shift hard-gear", 
+  "damaged", "weak compression", "air filter box damaged", "blue", "fluid leakage", "back compression", "shift hard-gear",
   "not engaging-gear", "noisy", "jittering", "dirty oil", "leakage-turbo", "ac vent grill broken", "front rh power window not working", "rear rh power window not working",
   "front lh power window not working", "rear lh power window not working", "ecm malfunction", "fuel pump not working", "wiring damage", "electric not working", "hydraulic not working",
   "weak breaks", "gear not engaged", "drum scratch", "alloy wheel missing", "needs replacement", "deployed", "not satisfactory",
-  "abs ebd sensor damaged", "abs ebd module damaged","flood affected", "total loss", "apron replaced", "apron repaired", "roof replaced", "car converted from commercial to private", "commercial vehicle", "fitness expired", "engine replaced"
+  "abs ebd sensor damaged", "abs ebd module damaged","flood affected", "total loss", "apron replaced", "apron repaired", "roof replaced", "car converted from commercial to private", "commercial vehicle", "fitness expired", "engine replaced",
+  "0-5%", "5-25%","no", "leakage from tappet cover", "leakage from side cover", "low", "dirty", "not working", "not available",
+    "faded", "broken", "not functioning", "scratched"
   ];
 
   String notAvailable = "";
@@ -650,17 +655,18 @@ class CarDetailsScreenViewModel extends GetxController {
       var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.evaluation}/${EndPoints.report}$id'), 
       headers: globals.headers
       );
+      log(response.body);
       if (response.statusCode == 200) {
         // ProgressBar.instance.stopProgressBar(Get.context!);
         // log(response.body);
         reportResponse.value = ReportResponse.fromJson(json.decode(response.body));
         if (reportResponse.value.data != null) {
           sliderImage.value = [
-            if(reportResponse.value.data!.allCarInfo!.frontLeft != null) reportResponse.value.data!.allCarInfo!.frontLeft!.url ?? '',
-            if(reportResponse.value.data!.allCarInfo!.front != null) reportResponse.value.data!.allCarInfo!.front!.url ?? '',
-            if(reportResponse.value.data!.allCarInfo!.frontRight != null) reportResponse.value.data!.allCarInfo!.frontRight!.url ?? '',
-            if(reportResponse.value.data!.allCarInfo!.rear != null) reportResponse.value.data!.allCarInfo!.rear!.url ?? '',
-            if(reportResponse.value.data!.allCarInfo!.engineCompartment != null) reportResponse.value.data!.allCarInfo!.engineCompartment!.url ?? '',
+            /*if(reportResponse.value.data!.allCarInfo!.frontLeft != null)*/ reportResponse.value.data!.allCarInfo?.frontLeft?.url ?? reportResponse.value.data!.allCarInfo?.rearLeft?.url ?? '',
+            /*if(reportResponse.value.data!.allCarInfo!.front != null)*/ reportResponse.value.data!.allCarInfo?.front?.url ?? reportResponse.value.data!.allCarInfo?.leftImage?.url ?? '',
+            /*if(reportResponse.value.data!.allCarInfo!.frontRight != null)*/ reportResponse.value.data!.allCarInfo?.frontRight?.url ?? reportResponse.value.data?.allCarInfo?.rearRight?.url ?? '',
+            /*if(reportResponse.value.data!.allCarInfo!.rear != null)*/ reportResponse.value.data?.allCarInfo?.rear?.url ?? reportResponse.value.data?.allCarInfo?.rightImage?.url ?? '',
+            /*if(reportResponse.value.data!.allCarInfo!.engineCompartment != null)*/ reportResponse.value.data?.allCarInfo?.engineCompartment?.url ?? reportResponse.value.data?.allCarInfo?.roof?.url ?? '',
           ];
           ratingList.value = [
             Item(title: MyStrings.documents, rating: 0.0),
@@ -740,9 +746,11 @@ class CarDetailsScreenViewModel extends GetxController {
             Master(title: MyStrings.vehicleHorn, listValue: reportResponse.value.data!.allCarInfo!.vehicleHorn ?? []),
           ];
           engine.value = [
+            Master(title: MyStrings.engineCompartmentImage, remarks: reportResponse.value.data!.allCarInfo!.engineCompartment?.remarks ?? '',image: reportResponse.value.data!.allCarInfo!.engineCompartment?.url),
             Master(title: MyStrings.engineSound, value: reportResponse.value.data!.allCarInfo!.engineSound ?? ''),
             Master(title: MyStrings.engine, listValue: reportResponse.value.data!.allCarInfo?.engine?.condition, remarks: reportResponse.value.data!.allCarInfo!.engine?.remarks,image: reportResponse.value.data!.allCarInfo?.engine?.url),
             Master(title: MyStrings.smoke, value: reportResponse.value.data!.allCarInfo!.exhaustSmoke ?? ''),
+            Master(title: MyStrings.engineIdleStartVideo, listValue: reportResponse.value.data?.allCarInfo?.startVideo?.condition, remarks: reportResponse.value.data!.allCarInfo!.startVideo?.remarks ?? '',image: reportResponse.value.data!.allCarInfo!.startVideo?.url),
             Master(title: MyStrings.battery, listValue: reportResponse.value.data!.allCarInfo!.battery?.condition, remarks: reportResponse.value.data!.allCarInfo!.battery?.remarks,image: reportResponse.value.data!.allCarInfo?.battery?.url),
             Master(title: MyStrings.radiator, value: reportResponse.value.data!.allCarInfo!.radiator ?? ''),
             Master(title: MyStrings.startingMotor, value: reportResponse.value.data!.allCarInfo!.startingMotor ?? ''),
@@ -761,11 +769,10 @@ class CarDetailsScreenViewModel extends GetxController {
           interiorAndElectrical.value = [
             Master(title: MyStrings.clusterPanel, listValue: reportResponse.value.data!.allCarInfo!.clusterPanel?.condition, remarks: reportResponse.value.data!.allCarInfo!.clusterPanel?.remarks,image: reportResponse.value.data!.allCarInfo?.clusterPanel?.url),
             Master(title: MyStrings.warningLight, value: reportResponse.value.data!.allCarInfo!.warningDetails ?? ''),
-            Master(title: MyStrings.dashboardImage, value: reportResponse.value.data!.allCarInfo!.dashboardCondition ?? ''),
+            Master(title: MyStrings.dashboardImage, listValue: reportResponse.value.data!.allCarInfo!.dashboardImage?.condition, image: reportResponse.value.data!.allCarInfo!.dashboardImage?.url, remarks: reportResponse.value.data!.allCarInfo!.dashboardImage?.remarks),
             Master(title: MyStrings.frontSeatImage, listValue: reportResponse.value.data!.allCarInfo!.frontSeatImage?.condition, remarks: reportResponse.value.data!.allCarInfo!.frontSeatImage?.remarks,image: reportResponse.value.data!.allCarInfo?.frontSeatImage?.url),
             Master(title: MyStrings.rearSeatImage, listValue: reportResponse.value.data!.allCarInfo!.rearSeatImage?.condition, remarks: reportResponse.value.data!.allCarInfo!.rearSeatImage?.remarks,image: reportResponse.value.data!.allCarInfo?.rearSeatImage?.url),
             Master(title: MyStrings.insideRearViewMirror, listValue: reportResponse.value.data!.allCarInfo?.rearViewMirror?.condition, remarks: reportResponse.value.data!.allCarInfo!.rearViewMirror?.remarks,image: reportResponse.value.data!.allCarInfo?.rearViewMirror?.url),
-            Master(title: MyStrings.interiorViewFromBootDashboard, listValue: reportResponse.value.data!.allCarInfo?.interiorView?.condition, remarks: reportResponse.value.data!.allCarInfo!.interiorView?.remarks,image: reportResponse.value.data!.allCarInfo?.interiorView?.url),
             Master(title: MyStrings.pushButtonOnOff, value: reportResponse.value.data!.allCarInfo!.pushButton ?? ''),
             Master(title: MyStrings.dashboardSwitches, value: reportResponse.value.data!.allCarInfo!.dashboardSwitch ?? ''),
             Master(title: MyStrings.powerWindowAndWindowLock, listValue: reportResponse.value.data!.allCarInfo!.powerWindowCentalLock?.condition, remarks: reportResponse.value.data!.allCarInfo!.powerWindowCentalLock?.remarks,image: reportResponse.value.data!.allCarInfo?.powerWindowCentalLock?.url),
@@ -773,6 +780,8 @@ class CarDetailsScreenViewModel extends GetxController {
             Master(title: MyStrings.carElectrical, listValue: reportResponse.value.data!.allCarInfo!.carElectrical?.condition, remarks: reportResponse.value.data!.allCarInfo!.carElectrical?.remarks,image: reportResponse.value.data!.allCarInfo?.carElectrical?.url),
             Master(title: MyStrings.secondKey, value: reportResponse.value.data!.allCarInfo!.secondKey ?? ''),
             Master(title: MyStrings.platform, listValue: reportResponse.value.data!.allCarInfo!.platformImage?.condition, remarks: reportResponse.value.data!.allCarInfo!.platformImage?.remarks,image: reportResponse.value.data!.allCarInfo?.platformImage?.url),
+            Master(title: MyStrings.cngLpgKitImage, image: reportResponse.value.data!.allCarInfo!.cngKitImage?.url, listValue: reportResponse.value.data!.allCarInfo!.cngKitImage?.condition, remarks: reportResponse.value.data!.allCarInfo!.cngKitImage?.remarks,),
+            Master(title: MyStrings.interiorViewFromBootDashboard, image: reportResponse.value.data!.allCarInfo!.interiorView?.url, listValue: reportResponse.value.data!.allCarInfo!.interiorView?.condition, remarks: reportResponse.value.data!.allCarInfo!.interiorView?.remarks),
           ];
           airCondition.value = [
             Master(title: MyStrings.acWorking, value: reportResponse.value.data!.allCarInfo!.acWorking ?? ''),

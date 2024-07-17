@@ -56,6 +56,7 @@ class OTBCarsListViewModel extends GetxController {
         carsListResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
         final isLastPage = carsListResponse.value.data!.length < limit;
         if (isLastPage) {
+          infinitePagingController.itemList = [];
           infinitePagingController.appendLastPage(carsListResponse.value.data!);
         } else {
           final nextPageKey = pageKey + 1;
