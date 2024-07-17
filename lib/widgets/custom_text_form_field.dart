@@ -80,7 +80,7 @@ class CustomTextFormField extends StatefulWidget {
   final double? labelHeight;
   final double? topPadding;
   final double? leftPadding;
-  final void focusNode;
+  final FocusNode? focusNode;
   final EdgeInsetsGeometry? contentPadding;
 
   final Key? formKey;
@@ -117,6 +117,10 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
           onTapOutside: (event) {
             context.dismissKeyBoard();
           },
+          onEditingComplete: () {
+            FocusScope.of(context).unfocus();
+            myFocusNode.unfocus();
+          },
           style: widget.textFieldStyle,
           inputFormatters: widget.inputFormatter,
           controller: widget.controller,
@@ -133,7 +137,7 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
           maxLength: widget.maxLength, 
           textAlign: widget.textAlign!,
           textInputAction: widget.inputAction,
-          focusNode: myFocusNode,
+          focusNode: widget.focusNode ?? myFocusNode,
           onChanged: widget.onChange,
           validator: widget.validator,
           onSaved: widget.onSave,

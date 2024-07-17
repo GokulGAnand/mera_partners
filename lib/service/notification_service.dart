@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mera_partners/utils/colors.dart';
 
+
 class NotificationService {
   final FlutterLocalNotificationsPlugin notificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -40,6 +41,7 @@ class NotificationService {
             autoCancel: false,
             color: Colors.blue,
             onlyAlertOnce: true,
+            sound: RawResourceAndroidNotificationSound('notification'),
             ongoing: (isNegotiation)?true:false,
             when: (isNegotiation)?whenTimer.millisecondsSinceEpoch:null,
             timeoutAfter: (isNegotiation)?whenTimer.difference(currentTime).inMilliseconds:null,
@@ -82,7 +84,7 @@ class NotificationService {
   Future<void> showAutoBidNotification() async {
     try{
       await showNotification(
-        title: "⏱️ Autobid limit reached", 
+        title: "⏱️ Autobid limit reached",
         body: "Autobid limit reached for the car ",
         isNegotiation: false);
     } catch(e){
@@ -90,3 +92,5 @@ class NotificationService {
     }
   }
 }
+
+

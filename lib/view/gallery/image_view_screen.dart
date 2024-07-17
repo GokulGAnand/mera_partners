@@ -32,6 +32,7 @@ class ImageViewScreen extends StatelessWidget {
                     left: 16,
                     right: 16,
                     bottom: 8,
+                    top: 16
                   ),
                   child: Row(
                     children: [
@@ -46,7 +47,7 @@ class ImageViewScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-          InteractiveViewer(
+          Expanded(child: InteractiveViewer(
             minScale: 0.1,
             maxScale: 4.0,
             clipBehavior: Clip.none,
@@ -71,7 +72,7 @@ class ImageViewScreen extends StatelessWidget {
                 },
               ),
             ),
-          ),
+          ),)
         ],
       ),
     );

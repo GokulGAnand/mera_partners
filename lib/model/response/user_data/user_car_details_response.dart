@@ -131,13 +131,13 @@ class UserData {
 }
 
 class FcmNotification {
-  String? fcmToken;
+  List<String>? fcmToken;
   String? platform;
 
   FcmNotification({this.fcmToken, this.platform});
 
   FcmNotification.fromJson(Map<String, dynamic> json) {
-    fcmToken = json['fcmToken'];
+    fcmToken = json['fcmToken'].cast<String>();
     platform = json['platform'];
   }
 
