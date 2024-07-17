@@ -179,14 +179,14 @@ class CarDetailsScreenViewModel extends GetxController {
   List<String> yellowListData = [
     "scratch", "dent", "fade", "colour mismatch", "repainted", "moderated", "chipped", "foggy",
     "minor sound", "tappet noise", "timing noise", "silencer noise", "turbo & whistling noise", 
-    "injector leakage", "white smoke", "black smoke", "weak", "terminal corroded", "manifold", "blowby on idle",
+    "injector leakage", "white", "black", "weak", "terminal corroded", "manifold", "blowby on idle",
     "oil spillage on idle", "leakage from tappet cover oil", "leakage from side cover oil", "low oil", "speedometer not working",
     "warning light", "rattling sound", "dirty seat cover", "front rh power window stuck", "rear rh power window stuck", "front lh power window stuck",
     "rear lh power window stuck", "rat damage", "hard", "abnormal noise", "modified horn", "cooling low", "weak compression ac"
   ];
 
   List<String> redListData = ["rusted", "replaced", "cracked", "welded", "clamped", "repaired", "critical sound", 
-  "damaged", "weak compression", "air filter box damaged", "blue smoke", "fluid leakage", "back compression", "shift hard-gear", 
+  "damaged", "weak compression", "air filter box damaged", "blue", "fluid leakage", "back compression", "shift hard-gear",
   "not engaging-gear", "noisy", "jittering", "dirty oil", "leakage-turbo", "ac vent grill broken", "front rh power window not working", "rear rh power window not working",
   "front lh power window not working", "rear lh power window not working", "ecm malfunction", "fuel pump not working", "wiring damage", "electric not working", "hydraulic not working",
   "weak breaks", "gear not engaged", "drum scratch", "alloy wheel missing", "needs replacement", "deployed", "not satisfactory",
