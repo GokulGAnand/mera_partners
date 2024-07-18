@@ -302,7 +302,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                           padding: const EdgeInsets.only(left: 8.0, right: 5.0),
                           child: SvgPicture.asset(MySvg.arrowDown, width: 14,),
                         ),
-                      if (widget.bidAmount.isNotEmpty && widget.isScheduled?.value == false)
+                      if ((widget.bidAmount.isNotEmpty && widget.isScheduled?.value == false) || widget.bidStatus.value == CarStatus.OTB_SCHEDULED.name)
                         Obx(() =>
                         RichText(
                           textAlign: TextAlign.center,
@@ -605,7 +605,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                       ],
                     ),
                   ),
-                if (widget.isOtb?.value == true)
+                if (widget.isOtb?.value == true && widget.isScheduled?.value == false)
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0, right: 12),
                     child: CustomElevatedButton(
