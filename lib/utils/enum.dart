@@ -7,7 +7,8 @@ enum DocumentStatus{
 enum CarStatus{
   live,
   scheduled,
-  otb
+  otb,
+  OTB_SCHEDULED
 }
 
 enum Status{

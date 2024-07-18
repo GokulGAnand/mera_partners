@@ -894,7 +894,7 @@ class CarDetailsScreenViewModel extends GetxController {
         // ProgressBar.instance.stopProgressBar(Get.context!);
         // log("get car details"+response.body);
         carDetailsResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
-        if (carDetailsResponse.value.data?[0].status?.toLowerCase() != CarStatus.live.name && carDetailsResponse.value.data?[0].status?.toLowerCase() != CarStatus.otb.name && carDetailsResponse.value.data?[0].status?.toLowerCase() != CarStatus.scheduled.name) {
+        if (carDetailsResponse.value.data?[0].status?.toLowerCase() != CarStatus.live.name && carDetailsResponse.value.data?[0].status?.toLowerCase() != CarStatus.otb.name && carDetailsResponse.value.data?[0].status?.toLowerCase() != CarStatus.scheduled.name && carDetailsResponse.value.data?[0].status != CarStatus.OTB_SCHEDULED.name) {
           carStatus.value = carDetailsResponse.value.data?[0].status ?? '';
         }
         // final isLastPage = liveCarsResponse.value.data!.length < limit;
@@ -922,7 +922,9 @@ class CarDetailsScreenViewModel extends GetxController {
           //   startTimer();
           // }
         // }
-        timerController!.value = carDetailsResponse.value.data?[0].status?.toLowerCase() == CarStatus.otb.name
+        timerController!.value = carDetailsResponse.value.data?[0].status == CarStatus.OTB_SCHEDULED.name
+            ?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsResponse.value.data![0].otbStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},)
+        :carDetailsResponse.value.data?[0].status?.toLowerCase() == CarStatus.otb.name
         ?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsResponse.value.data![0].otbEndTime  ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},)
         :carDetailsResponse.value.data?[0].status?.toLowerCase() == CarStatus.scheduled.name
           ?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},) 

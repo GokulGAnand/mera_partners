@@ -69,7 +69,7 @@ class LikedCars extends StatelessWidget {
                             model: controller.likedCarsearchList[index].model.toString(),
                             variant: controller.likedCarsearchList[index].variant.toString(),
                             status: controller.likedCarsearchList[index].status.toString(),
-                            otbPrice: controller.likedCarsearchList[index].status?.toLowerCase() == CarStatus.otb.name ? Constants.numberFormat.format(controller.likedCarsearchList[index].realValue ?? 0) : '',
+                            otbPrice: controller.likedCarsearchList[index].status?.toLowerCase() == CarStatus.otb.name || controller.likedCarsearchList[index].status == CarStatus.OTB_SCHEDULED.name ? Constants.numberFormat.format(controller.likedCarsearchList[index].realValue ?? 0) : '',
                             bidStartTime: DateTime.parse(controller.likedCarsearchList[index].bidStartTime ?? DateTime.now().toString()),
                             bidEndTime: DateTime.parse(controller.likedCarsearchList[index].bidEndTime ?? DateTime.now().toString()),
                           );
