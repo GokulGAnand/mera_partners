@@ -30,6 +30,8 @@ class AccountScreenViewModel extends GetxController {
       );
       log(response.body);
       if(response.statusCode == 200){
+        globals.uniqueUserId = null;
+        globals.jsonHeaders = {};
         CustomToast.instance.showMsg(MyStrings.success);
         Get.offAllNamed(AppRoutes.loginScreen);
       }else{

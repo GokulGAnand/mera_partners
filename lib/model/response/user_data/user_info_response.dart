@@ -33,6 +33,7 @@ class UserInfoResponse {
 }
 
 class Data {
+  FcmNotification? fcmNotification;
   String? sId;
   String? userId;
   bool? isBlocked;
@@ -59,7 +60,8 @@ class Data {
   String? paymentId;
 
   Data(
-      {this.sId,
+      {this.fcmNotification,
+        this.sId,
         this.userId,
         this.isBlocked,
         this.role,
@@ -85,6 +87,9 @@ class Data {
         this.paymentId});
 
   Data.fromJson(Map<String, dynamic> json) {
+    fcmNotification = json['fcmNotification'] != null
+        ? FcmNotification.fromJson(json['fcmNotification'])
+        : null;
     sId = json['_id'];
     userId = json['userId'];
     isBlocked = json['isBlocked'];
@@ -125,6 +130,9 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    if (fcmNotification != null) {
+      data['fcmNotification'] = fcmNotification!.toJson();
+    }
     data['_id'] = sId;
     data['userId'] = userId;
     data['isBlocked'] = isBlocked;
@@ -161,6 +169,25 @@ class Data {
     }
     data['order_id'] = orderId;
     data['payment_id'] = paymentId;
+    return data;
+  }
+}
+
+class FcmNotification {
+  List<String>? fcmToken;
+  String? platform;
+
+  FcmNotification({this.fcmToken, this.platform});
+
+  FcmNotification.fromJson(Map<String, dynamic> json) {
+    fcmToken = json['fcmToken'].cast<String>();
+    platform = json['platform'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['fcmToken'] = fcmToken;
+    data['platform'] = platform;
     return data;
   }
 }

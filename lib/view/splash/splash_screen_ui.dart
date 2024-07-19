@@ -26,8 +26,13 @@ class _SplashScreenState extends State<SplashScreen> {
       splashScreenViewModel.isLoginAlready = value;
       if(splashScreenViewModel.isLoginAlready == true){
         await splashScreenViewModel.getUserData();
-        await PushNotifications.saveToken(token: (globals.fcmToken ?? ''));
       }
+      if (globals.fcmToken == null || globals.fcmToken == '') {
+        await PushNotifications.getDeviceToken().then((value) async {
+                await PushNotifications.saveToken(token: (globals.fcmToken ?? ''));
+              },);
+      }
+
     });
     Timer(const Duration(seconds: 3), () {
       if(splashScreenViewModel.isLoginAlready && !splashScreenViewModel.isFirstLaunch){

@@ -145,7 +145,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                       end: const Alignment(2.00, 0.00),
                       begin: const Alignment(-1, 0),
                       colors: [
-                        carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase()
+                        carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status == CarStatus.OTB_SCHEDULED.name
                             ? MyColors.kPrimaryColor
                             :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase()
                             ? MyColors.black
@@ -166,7 +166,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                             ? MyStrings.bidClosed
                             :(carDetailsScreenViewModel.carStatus.value == "car sold")
                             ? MyStrings.carSold
-                            :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase()
+                            :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status == CarStatus.OTB_SCHEDULED.name
                             ? MyStrings.closingPrice
                             :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase()
                             ? MyStrings.scheduledBid
@@ -206,15 +206,15 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                           children: <TextSpan>[
                             TextSpan(
                                 text: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() ||
-                            carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
+                            carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status == CarStatus.OTB_SCHEDULED.name
                             ?'₹'
                             : "",
                                 style: MyStyles.white16700.copyWith(fontFamily: 'Rupee')),
                             TextSpan(
                                 text: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() ||
-                            carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
+                            carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status == CarStatus.OTB_SCHEDULED.name
                             ?globals.documentStatus == DocumentStatus.VERIFIED.name ?
-                        Constants.numberFormat.format(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase() ? (carDetailsScreenViewModel.carDetailsResponse.value.data?[0].realValue ?? 0) : (carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0))
+                        Constants.numberFormat.format(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status == CarStatus.OTB_SCHEDULED.name ? (carDetailsScreenViewModel.carDetailsResponse.value.data?[0].realValue ?? 0) : (carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid ?? 0))
                             :(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid != null)
                             ?'${carDetailsScreenViewModel.carDetailsResponse.value.data?[0].highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
                             :'${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
@@ -711,7 +711,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             begin: const Alignment(-1, 0),
             end: const Alignment(2.00, 0.00),
             colors: <Color>[
-              carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase()?
+              carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status == CarStatus.OTB_SCHEDULED.name?
               MyColors.kPrimaryColor
               :carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() != MyStrings.live.toLowerCase()
                                   ? MyColors.black
@@ -760,20 +760,20 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                 children: <TextSpan>[
                    TextSpan(
                       text: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() ||
-                carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
+                carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status == CarStatus.OTB_SCHEDULED.name
                         ?'₹'
                 : "",
                       style: MyStyles.titleStyle.copyWith(fontFamily: 'Rupee')),
 
                    TextSpan(text: carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.live.toLowerCase() ||
-                carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase()
+                carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.otb.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status == CarStatus.OTB_SCHEDULED.name
                         ?globals.documentStatus == DocumentStatus.VERIFIED.name ?
                 Constants.numberFormat.format(carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid ?? 0)
                                   :(carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid != null)
                                   ?'${carDetailsScreenViewModel.carDetailsResponse.value.data![0].highestBid!.toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
                                   :'${(0).toString().replaceAllMapped(RegExp(r'\d'), (match) => "*").replaceAll('.', ',')}'
-                : carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.scheduled.toLowerCase()
-                ? MyStrings.scheduledBid
+                : carDetailsScreenViewModel.carDetailsResponse.value.data![0].status!.toLowerCase() == MyStrings.scheduled.toLowerCase()|| carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status == CarStatus.OTB_SCHEDULED.name
+                       ? MyStrings.scheduledBid
                 :"",
                    style: MyStyles.titleStyle,),
                 ],
@@ -791,7 +791,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
       () {
         return Container(
           width: double.infinity,
-          height: (carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() )
+          height: (carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status == CarStatus.OTB_SCHEDULED.name )
           ?65
           :(carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase() )
           ?142
@@ -818,11 +818,11 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                               if(time.min != 0 && carDetailsScreenViewModel.timerController?.value != null)
                                 Icon(
                                   Icons.timer_sharp,
-                                  color: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() ? MyColors.kPrimaryColor : (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
+                                  color: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status == CarStatus.OTB_SCHEDULED.name ? MyColors.kPrimaryColor : (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
                                   size: 14,
                                 ),
                               Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                                color: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() ? MyColors.kPrimaryColor : (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
+                                color: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status == CarStatus.OTB_SCHEDULED.name ? MyColors.kPrimaryColor : (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
                                 fontSize: 14,
                                 fontFamily: 'DM Sans',
                                 fontWeight: FontWeight.w700,
@@ -1545,7 +1545,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
         ),
       ),
       bottomSheet:
-      carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.live.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase()
+      carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.live.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.otb.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status == CarStatus.OTB_SCHEDULED.name
           ? bottomSheetWidget()
           : const SizedBox(),
     ),);

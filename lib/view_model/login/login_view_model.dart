@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/widgets.dart';
 import 'package:mera_partners/model/response/user_data/user_info_response.dart';
 import 'package:mera_partners/service/endpoints.dart';
 import 'package:mera_partners/service/exception_error_util.dart';
@@ -28,6 +29,7 @@ class LoginScreenViewModel extends GetxController {
   var userInfoResponse = UserInfoResponse().obs;
 
   FocusNode otpFocusNode = FocusNode();
+  TextEditingController otpController = TextEditingController();
   RxString otpValue = "".obs;
 
   Timer? timer;
@@ -55,13 +57,16 @@ class LoginScreenViewModel extends GetxController {
     try {
       ProgressBar.instance.showProgressbar(Get.context!);
       var appSignatureID = await SmsAutoFill().getAppSignature;
+      // var appSignatureID = "";
       print("Signature ID: "+ appSignatureID.toString());
       var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.login), 
       body: {"contactNo": mobileController.value.text,
             "number": appSignatureID.toString()});
       String? message = json.decode(response.body)['message'];
       if (response.statusCode == 200) {
-        await PushNotifications.getDeviceToken();
+        if (globals.fcmToken == null || globals.fcmToken == '') {
+          await PushNotifications.getDeviceToken();
+        }
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
         Get.toNamed(AppRoutes.otpScreen);
@@ -106,6 +111,8 @@ class LoginScreenViewModel extends GetxController {
       if (response.statusCode == 200) {
         clearData(); 
         globals.clearData();
+        globals.uniqueUserId = null;
+        globals.jsonHeaders = {};
         ProgressBar.instance.stopProgressBar(context);
         log(response.body.toString());
         userInfoResponse.value = UserInfoResponse.fromJson(jsonDecode(response.body));
@@ -136,7 +143,14 @@ class LoginScreenViewModel extends GetxController {
           globals.addressProofFront = userInfoResponse.value.data?.first.addressProofFront != null ? true : false;
           globals.headers = {'Authorization': 'Bearer ${globals.token}'};
           globals.jsonHeaders = {'Content-Type': 'application/json','Authorization': 'Bearer ${globals.token}',};
-          await PushNotifications.saveToken(token: globals.fcmToken);
+          try {
+            if (!userInfoResponse.value.data!.first.fcmNotification!.fcmToken!.contains(globals.fcmToken)) {
+                        await PushNotifications.saveToken(token: globals.fcmToken);
+                      }
+          } catch (e) {
+            log(e.toString());
+            await PushNotifications.saveToken(token: globals.fcmToken);
+          }
 
           if((globals.isOnboarding == null || globals.isOnboarding == false) && !DateTime.parse(userInfoResponse.value.data!.first.createdAt!).toLocal().isBefore(DateTime.now())){
             SharedPrefManager.instance.setBoolAsync(Constants.isOnboarding, true);

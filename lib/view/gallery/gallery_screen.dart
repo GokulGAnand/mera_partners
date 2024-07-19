@@ -31,6 +31,15 @@ class _GalleryScreenState extends State<GalleryScreen> {
         // galleryScreenViewModel.imagesList[i]["isClick"].value = true;
         galleryScreenViewModel.imageIndex.value = i;
       }
+      for(int j=0; j<galleryScreenViewModel.imagesList[i]["images"].length; j++){
+        if(galleryScreenViewModel.imagesList[i]["images"][j].listValue != null){
+          for(int k=0; k<galleryScreenViewModel.imagesList[i]["images"][j].listValue.length; k++){
+            if(galleryScreenViewModel.imagesList[i]["images"][j].listValue[k].isEmpty){
+              galleryScreenViewModel.imagesList[i]["images"][j].listValue.removeAt(k);
+            }
+          }
+        }
+      }
     }
     // Future.delayed(const Duration(seconds: 3)).then((value) {
       galleryScreenViewModel.showLoading.value = false;

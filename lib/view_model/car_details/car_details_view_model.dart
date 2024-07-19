@@ -605,6 +605,7 @@ class CarDetailsScreenViewModel extends GetxController {
       if(reportResponse.value.data!.allCarInfo!.boot != null) Master(title: MyStrings.boot, image: reportResponse.value.data!.allCarInfo!.boot?.url, listValue: reportResponse.value.data!.allCarInfo!.boot?.condition),
       if(reportResponse.value.data!.allCarInfo!.spareWheel != null) Master(title: MyStrings.spareWheel, image: reportResponse.value.data!.allCarInfo!.spareWheel?.url, listValue: reportResponse.value.data!.allCarInfo!.spareWheel?.condition),
       if(reportResponse.value.data!.allCarInfo!.fuelLid != null) Master(title: MyStrings.fuelLid, image: reportResponse.value.data!.allCarInfo!.fuelLid?.url, listValue: reportResponse.value.data!.allCarInfo!.fuelLid?.condition),
+      if(reportResponse.value.data!.allCarInfo!.firewall != null) Master(title: MyStrings.firewall, image: reportResponse.value.data!.allCarInfo!.firewall?.url, listValue: reportResponse.value.data!.allCarInfo!.firewall?.condition),
       if(reportResponse.value.data!.allCarInfo!.doorFrontLeft != null) Master(title: MyStrings.frontLHDoor, image: reportResponse.value.data!.allCarInfo!.doorFrontLeft?.url, listValue: reportResponse.value.data!.allCarInfo!.doorFrontLeft?.condition),
       if(reportResponse.value.data!.allCarInfo!.doorFrontRight != null) Master(title: MyStrings.frontRHDoor, image: reportResponse.value.data!.allCarInfo!.doorFrontRight?.url, listValue: reportResponse.value.data!.allCarInfo!.doorFrontRight?.condition),
       if(reportResponse.value.data!.allCarInfo!.doorRearLeft != null) Master(title: MyStrings.rearLHDoor, image: reportResponse.value.data!.allCarInfo!.doorRearLeft?.url, listValue: reportResponse.value.data!.allCarInfo!.doorRearLeft?.condition),
@@ -618,7 +619,7 @@ class CarDetailsScreenViewModel extends GetxController {
       if(reportResponse.value.data!.allCarInfo!.dashboardImage != null) Master(title: MyStrings.dashboardImage, image: reportResponse.value.data!.allCarInfo!.dashboardImage?.url, listValue: reportResponse.value.data!.allCarInfo!.dashboardImage?.condition),
       if(reportResponse.value.data!.allCarInfo!.frontSeatImage != null) Master(title: MyStrings.frontSeatImage, image: reportResponse.value.data!.allCarInfo!.frontSeatImage?.url, listValue: reportResponse.value.data!.allCarInfo!.frontSeatImage?.condition),
       if(reportResponse.value.data!.allCarInfo!.rearSeatImage != null) Master(title: MyStrings.rearSeatImage, image: reportResponse.value.data!.allCarInfo!.rearSeatImage?.url, listValue: reportResponse.value.data!.allCarInfo!.rearSeatImage?.condition),
-      // if(reportResponse.value.data!.allCarInfo!.rearViewMirror != null) Master(title: MyStrings.insideRearViewMirror, image: reportResponse.value.data!.allCarInfo!.rearViewMirror!.url ?? ''),
+      if(reportResponse.value.data!.allCarInfo!.rearViewMirror != null) Master(title: MyStrings.insideRearViewMirror, image: reportResponse.value.data!.allCarInfo!.rearViewMirror!.url ?? ''),
       if(reportResponse.value.data!.allCarInfo!.interiorView != null) Master(title: MyStrings.interiorViewFromBootDashboard, image: reportResponse.value.data!.allCarInfo!.interiorView?.url, listValue: reportResponse.value.data!.allCarInfo!.interiorView?.condition),
       if(reportResponse.value.data!.allCarInfo!.powerWindowDriverImage != null) Master(title: MyStrings.powerWindowDriverImage, image: reportResponse.value.data!.allCarInfo!.powerWindowDriverImage?.url, listValue: reportResponse.value.data!.allCarInfo!.powerWindowDriverImage?.condition),
       if(reportResponse.value.data!.allCarInfo!.pushWindowDriverImage != null) Master(title: MyStrings.pushWindowDriverImage, image: reportResponse.value.data!.allCarInfo!.pushWindowDriverImage?.url, listValue: reportResponse.value.data!.allCarInfo!.pushWindowDriverImage?.condition),
@@ -856,7 +857,7 @@ class CarDetailsScreenViewModel extends GetxController {
           ];
           notAvailable = reportResponse.value.data!.allCarInfo!.missingParts.toString();
           // extractUrls(reportResponse.value.data!.allCarInfo!.toJson());
-          if(reportResponse.value.data!.allCarInfo!.startVideo != null){
+          if(reportResponse.value.data!.allCarInfo!.startVideo != null && reportResponse.value.data!.allCarInfo!.startVideo!.url != null){
             videoController.value = VideoPlayerController.networkUrl(Uri.parse(
             reportResponse.value.data!.allCarInfo!.startVideo!.url ?? ''))
             ..initialize().then((_) {});
@@ -893,7 +894,7 @@ class CarDetailsScreenViewModel extends GetxController {
         // ProgressBar.instance.stopProgressBar(Get.context!);
         // log("get car details"+response.body);
         carDetailsResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
-        if (carDetailsResponse.value.data?[0].status?.toLowerCase() != CarStatus.live.name && carDetailsResponse.value.data?[0].status?.toLowerCase() != CarStatus.otb.name && carDetailsResponse.value.data?[0].status?.toLowerCase() != CarStatus.scheduled.name) {
+        if (carDetailsResponse.value.data?[0].status?.toLowerCase() != CarStatus.live.name && carDetailsResponse.value.data?[0].status?.toLowerCase() != CarStatus.otb.name && carDetailsResponse.value.data?[0].status?.toLowerCase() != CarStatus.scheduled.name && carDetailsResponse.value.data?[0].status != CarStatus.OTB_SCHEDULED.name) {
           carStatus.value = carDetailsResponse.value.data?[0].status ?? '';
         }
         // final isLastPage = liveCarsResponse.value.data!.length < limit;
@@ -921,7 +922,9 @@ class CarDetailsScreenViewModel extends GetxController {
           //   startTimer();
           // }
         // }
-        timerController!.value = carDetailsResponse.value.data?[0].status?.toLowerCase() == CarStatus.otb.name
+        timerController!.value = carDetailsResponse.value.data?[0].status == CarStatus.OTB_SCHEDULED.name
+            ?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsResponse.value.data![0].otbStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},)
+        :carDetailsResponse.value.data?[0].status?.toLowerCase() == CarStatus.otb.name
         ?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsResponse.value.data![0].otbEndTime  ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},)
         :carDetailsResponse.value.data?[0].status?.toLowerCase() == CarStatus.scheduled.name
           ?CountdownTimerController(endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(carDetailsResponse.value.data![0].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds, onEnd:() {},) 
