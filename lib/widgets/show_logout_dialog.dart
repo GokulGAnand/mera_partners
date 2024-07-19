@@ -26,6 +26,8 @@ void showLogoutDialog(BuildContext context) {
             // SharedPrefManager.instance.removeStringAsync(Constants.uniqueUserId);
             SharedPrefManager.instance.removeStringAsync(Constants.documentStatus);
             globals.clearData();
+            globals.uniqueUserId = null;
+            globals.jsonHeaders = {};
             Get.offAllNamed(AppRoutes.loginScreen);
           },
           cancelFun: (){

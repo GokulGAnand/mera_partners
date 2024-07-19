@@ -111,6 +111,8 @@ class LoginScreenViewModel extends GetxController {
       if (response.statusCode == 200) {
         clearData(); 
         globals.clearData();
+        globals.uniqueUserId = null;
+        globals.jsonHeaders = {};
         ProgressBar.instance.stopProgressBar(context);
         log(response.body.toString());
         userInfoResponse.value = UserInfoResponse.fromJson(jsonDecode(response.body));

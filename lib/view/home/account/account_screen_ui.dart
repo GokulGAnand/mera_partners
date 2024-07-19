@@ -241,6 +241,8 @@ class _AccountScreenState extends State<AccountScreen> {
                         await PushNotifications.removeToken(globals.fcmToken ?? '');
                         globals.clearData();
                         globals.fcmToken = null;
+                        globals.uniqueUserId = null;
+                        globals.jsonHeaders = {};
                         SharedPrefManager.instance.removeStringAsync(Constants.userName);
                         SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
                         SharedPrefManager.instance.removeStringAsync(Constants.email);

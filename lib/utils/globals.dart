@@ -20,7 +20,7 @@ var jsonHeaders = {'Content-Type': 'application/json','Authorization': 'Bearer $
 void clearData(){
   userName = null;
   userId = null;
-  uniqueUserId = null;
+  // uniqueUserId = null;
   documentStatus = null;
   addressProofFront = null;
   isDeposited = null;
@@ -32,5 +32,5 @@ void clearData(){
   phoneNum = null;
   email = null;
   headers = {};
-  jsonHeaders = {};
+  // jsonHeaders = {};
 }
