@@ -44,6 +44,7 @@ class _AccountScreenState extends State<AccountScreen> {
             TextButton(
               onPressed: () {
                 globals.clearData();
+                globals.fcmToken = null;
                 SharedPrefManager.instance.removeStringAsync(Constants.userName);
                 SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
                 SharedPrefManager.instance.removeStringAsync(Constants.email);
@@ -51,7 +52,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 SharedPrefManager.instance.removeStringAsync(Constants.token);
                 SharedPrefManager.instance.removeStringAsync(Constants.fcmToken);
                 SharedPrefManager.instance.removeStringAsync(Constants.userId);
-                SharedPrefManager.instance.removeStringAsync(Constants.uniqueUserId);
+                // SharedPrefManager.instance.removeStringAsync(Constants.uniqueUserId);
                 SharedPrefManager.instance.removeStringAsync(Constants.documentStatus);
                 accountScreenViewModel.deleteAccount();
               },
@@ -239,6 +240,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       okFun: () async{
                         await PushNotifications.removeToken(globals.fcmToken ?? '');
                         globals.clearData();
+                        globals.fcmToken = null;
                         SharedPrefManager.instance.removeStringAsync(Constants.userName);
                         SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
                         SharedPrefManager.instance.removeStringAsync(Constants.email);
@@ -246,7 +248,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         SharedPrefManager.instance.removeStringAsync(Constants.token);
                         SharedPrefManager.instance.removeStringAsync(Constants.fcmToken);
                         SharedPrefManager.instance.removeStringAsync(Constants.userId);
-                        SharedPrefManager.instance.removeStringAsync(Constants.uniqueUserId);
+                        // SharedPrefManager.instance.removeStringAsync(Constants.uniqueUserId);
                         SharedPrefManager.instance.removeStringAsync(Constants.documentStatus);
                         // bool removeVal = await SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
                         // if(removeVal){

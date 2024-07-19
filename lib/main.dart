@@ -27,7 +27,7 @@ void main() async {
   await NotificationService().initNotification();
   await getPermission();
   await PushNotifications.init();
-  await PushNotifications.getDeviceToken();
+  // await PushNotifications.getDeviceToken();
   runApp(const MyApp());
 }
 
