@@ -609,6 +609,9 @@ class CarDetailsScreenViewModel extends GetxController {
       if(reportResponse.value.data!.allCarInfo!.doorFrontRight != null) Master(title: MyStrings.frontRHDoor, image: reportResponse.value.data!.allCarInfo!.doorFrontRight?.url, listValue: reportResponse.value.data!.allCarInfo!.doorFrontRight?.condition),
       if(reportResponse.value.data!.allCarInfo!.doorRearLeft != null) Master(title: MyStrings.rearLHDoor, image: reportResponse.value.data!.allCarInfo!.doorRearLeft?.url, listValue: reportResponse.value.data!.allCarInfo!.doorRearLeft?.condition),
       if(reportResponse.value.data!.allCarInfo!.doorFrontRight != null) Master(title: MyStrings.rearRHDoor, image: reportResponse.value.data!.allCarInfo!.doorRearRight?.url, listValue: reportResponse.value.data!.allCarInfo!.doorRearRight?.condition),
+      if(reportResponse.value.data!.allCarInfo!.dickyDoor != null) Master(title: MyStrings.dickyDoor, image: reportResponse.value.data!.allCarInfo!.dickyDoor?.url, listValue: reportResponse.value.data!.allCarInfo!.dickyDoor?.condition),
+      if(reportResponse.value.data!.allCarInfo!.rearViewMirrorRight != null) Master(title: MyStrings.rhRearViewMirror, image: reportResponse.value.data!.allCarInfo!.rearViewMirrorRight?.url, listValue: reportResponse.value.data!.allCarInfo!.rearViewMirrorRight?.condition),
+      if(reportResponse.value.data!.allCarInfo!.rearViewMirrorLeft != null) Master(title: MyStrings.lhRearViewMirror, image: reportResponse.value.data!.allCarInfo!.rearViewMirrorLeft?.url, listValue: reportResponse.value.data!.allCarInfo!.rearViewMirrorLeft?.condition),
     ];
     interiorImages.value = [
       if(reportResponse.value.data!.allCarInfo!.clusterPanel != null) Master(title: MyStrings.clusterPanel, image: reportResponse.value.data!.allCarInfo!.clusterPanel?.url, listValue: reportResponse.value.data!.allCarInfo!.clusterPanel?.condition),
@@ -622,6 +625,7 @@ class CarDetailsScreenViewModel extends GetxController {
       if(reportResponse.value.data!.allCarInfo!.interiorView != null) Master(title: MyStrings.interiorViewFromBootDashboard, image: reportResponse.value.data!.allCarInfo!.interiorView?.url, listValue: reportResponse.value.data!.allCarInfo!.interiorView?.condition),
       if(reportResponse.value.data!.allCarInfo!.powerWindowDriverImage != null) Master(title: MyStrings.powerWindowDriverImage, image: reportResponse.value.data!.allCarInfo!.powerWindowDriverImage?.url, listValue: reportResponse.value.data!.allCarInfo!.powerWindowDriverImage?.condition),
       if(reportResponse.value.data!.allCarInfo!.pushWindowDriverImage != null) Master(title: MyStrings.pushWindowDriverImage, image: reportResponse.value.data!.allCarInfo!.pushWindowDriverImage?.url, listValue: reportResponse.value.data!.allCarInfo!.pushWindowDriverImage?.condition),
+      if(reportResponse.value.data!.allCarInfo!.powerWindowCentalLock != null) Master(title: MyStrings.powerWindowAndWindowLock, image: reportResponse.value.data!.allCarInfo!.powerWindowCentalLock?.url, listValue: reportResponse.value.data!.allCarInfo!.powerWindowCentalLock?.condition),
     ];
     engineImages.value = [
       if(reportResponse.value.data!.allCarInfo!.engineCompartment != null) Master(title: MyStrings.engineCompartmentImage, image: reportResponse.value.data!.allCarInfo!.engineCompartment?.url, listValue: reportResponse.value.data!.allCarInfo!.engineCompartment?.condition),
