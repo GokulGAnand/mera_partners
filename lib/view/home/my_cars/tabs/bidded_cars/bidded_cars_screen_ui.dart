@@ -41,6 +41,7 @@ class BidCarsListScreen extends StatelessWidget {
                               if (((controller.bidCarsearchController.value.text.isEmpty && controller.bidCarsearchList.isEmpty) || controller.bidCarsearchList.contains(controller.bidCarsResponse.value.data?[index].sId)) && controller.bidCarsResponse.value.data?[0].biddedCars![index].status?.toLowerCase() == CarStatus.live.name) {
                                 return CustomCarDetailCard(
                                   onCarTapped: () {
+                                    FocusScope.of(context).requestFocus(FocusNode());
                                     Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.bidCarsResponse.value.data?[0].biddedCars![index].sId);
                                   },
                                   isOtb: false.obs,
@@ -102,6 +103,7 @@ class BidCarsListScreen extends StatelessWidget {
                                     controller.bidCarsResponse.value.data?[0].biddedCars![index].engineCompartment?.url /*?? controller.bidCarsResponse.value.data?[0].biddedCars![index].roof?.url */?? '',
                                   ],
                                   autoBid: () {
+                                    FocusScope.of(context).requestFocus(FocusNode());
                                     controller.autoBidController.value.clear();
                                     showModalBottomSheet(
                                         isScrollControlled: true,
@@ -147,6 +149,7 @@ class BidCarsListScreen extends StatelessWidget {
                                         });
                                   },
                                   bid: () {
+                                    FocusScope.of(context).requestFocus(FocusNode());
                                     controller.bidController.value.clear();
                                     showModalBottomSheet(
                                         enableDrag: true,

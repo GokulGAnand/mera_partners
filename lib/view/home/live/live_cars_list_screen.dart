@@ -121,6 +121,7 @@ class LiveCarsListScreen extends StatelessWidget {
                                 if ((controller.searchController.text.isEmpty && controller.searchList.isEmpty) || controller.searchList.contains(controller.liveCarsResponse.value.data?[index].sId)) {
                                   return CustomCarDetailCard(
                                     onCarTapped: () {
+                                      FocusScope.of(context).requestFocus(FocusNode());
                                       Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.liveCarsResponse.value.data?[index].sId);
                                     },
                                     isFavourite: controller.likeResponse.value.data?[0].likedCars != null && (controller.likeResponse.value.data![0].likedCars!.isNotEmpty)
@@ -182,6 +183,7 @@ class LiveCarsListScreen extends StatelessWidget {
                                       controller.liveCarsResponse.value.data?[index].engineCompartment?.url ?? controller.liveCarsResponse.value.data?[index].roof?.url ?? '',
                                     ],
                                     autoBid: () {
+                                      FocusScope.of(context).requestFocus(FocusNode());
                                       controller.autoBidController.value.clear();
                                       showModalBottomSheet(
                                           isScrollControlled: true,
@@ -227,6 +229,7 @@ class LiveCarsListScreen extends StatelessWidget {
                                           });
                                     },
                                     bid: () {
+                                      FocusScope.of(context).requestFocus(FocusNode());
                                       controller.bidController.value.clear();
                                       showModalBottomSheet(
                                           enableDrag: true,

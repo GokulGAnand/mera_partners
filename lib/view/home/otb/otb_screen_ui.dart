@@ -44,6 +44,7 @@ class OTBScreen extends StatelessWidget {
                           child: CustomCarDetailCard(
                             carId: item.sId ?? '',
                             onCarTapped: () {
+                              FocusScope.of(context).requestFocus(FocusNode());
                               Get.toNamed(AppRoutes.carDetailsScreen, arguments: item.sId);
                             },
                             criticalIssue: item.carCondition?.join(',') ?? '',
@@ -89,6 +90,7 @@ class OTBScreen extends StatelessWidget {
                               item.engineCompartment?.url ?? item.roof?.url ?? '',
                             ],
                             otbTapped: () {
+                              FocusScope.of(context).requestFocus(FocusNode());
                               showModalBottomSheet(
                                   isScrollControlled: true,
                                   backgroundColor: Colors.transparent,

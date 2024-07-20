@@ -319,6 +319,7 @@ class LikedCarsWidget extends StatelessWidget {
                   height: 40,
                   child: CustomElevatedButton(
                     onPressed: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
                       Get.toNamed(AppRoutes.carDetailsScreen, arguments: carId);
                     },
                     buttonStyle: ElevatedButton.styleFrom(
