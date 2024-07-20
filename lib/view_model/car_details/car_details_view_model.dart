@@ -255,14 +255,26 @@ class CarDetailsScreenViewModel extends GetxController {
       // }
     for(int i=0; i<exterior.length; i++){
       if(goodListData.contains(exterior[i].value.toString().toLowerCase())){
-        exteriorOtherParts.add(exterior[i]);
+        if(exterior[i].title == MyStrings.fullBodyRepaint && exterior[i].value?.toLowerCase() == 'yes'){
+          exterior[i].color = MyColors.warning;
+          exteriorMajorIssue.add(exterior[i]);
+          if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
+            damageImages.add(exterior[i]);
+          }
+        }else{
+          exteriorOtherParts.add(exterior[i]);
+        }
       }
       if(redListData.contains(exterior[i].value.toString().toLowerCase())){
-        exterior[i].color = MyColors.warning;
-        // exteriorIssue.add(exterior[i]);
-        exteriorMajorIssue.add(exterior[i]);
-        if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
-          damageImages.add(exterior[i]);
+        if(exterior[i].title == MyStrings.fullBodyRepaint && exterior[i].value?.toLowerCase() == 'no'){
+          exteriorOtherParts.add(exterior[i]);
+        }else{
+          exterior[i].color = MyColors.warning;
+          // exteriorIssue.add(exterior[i]);
+          exteriorMajorIssue.add(exterior[i]);
+          if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
+            damageImages.add(exterior[i]);
+          }
         }
       }
       if(yellowListData.contains(exterior[i].value.toString().toLowerCase())){
@@ -371,14 +383,23 @@ class CarDetailsScreenViewModel extends GetxController {
     }
     for(int i=0; i<engine.length; i++){
       if(goodListData.contains(engine[i].value.toString().toLowerCase())){
-        engineOtherParts.add(engine[i]);
+        if(engine[i].title == MyStrings.gearboxLeakage && engine[i].value?.toLowerCase() == 'yes'){
+          engine[i].color = MyColors.warning;
+          engineMajorIssue.add(engine[i]);
+        }else{
+          engineOtherParts.add(engine[i]);
+        }
       }
       if(redListData.contains(engine[i].value.toString().toLowerCase())){
-        engine[i].color = MyColors.warning;
-        // engineIssue.add(engine[i]);
-        engineMajorIssue.add(engine[i]);
-        if(engine[i].image != null && (engine[i].image!.isNotEmpty)){
-          damageImages.add(engine[i]);
+        if(engine[i].title == MyStrings.gearboxLeakage && engine[i].value?.toLowerCase() == 'no'){
+          engineOtherParts.add(engine[i]);
+        }else{
+          engine[i].color = MyColors.warning;
+          // engineIssue.add(engine[i]);
+          engineMajorIssue.add(engine[i]);
+          if(engine[i].image != null && (engine[i].image!.isNotEmpty)){
+            damageImages.add(engine[i]);
+          }
         }
       }
       if(yellowListData.contains(engine[i].value.toString().toLowerCase())){
@@ -429,14 +450,23 @@ class CarDetailsScreenViewModel extends GetxController {
     }
     for(int i=0; i<airCondition.length; i++){
       if(goodListData.contains(airCondition[i].value.toString().toLowerCase())){
-        airConditionOtherParts.add(airCondition[i]);
+        if(airCondition[i].title == MyStrings.acFilterDamaged && airCondition[i].value?.toLowerCase() == 'yes'){
+          airCondition[i].color = MyColors.warning;
+          airConditionMajorIssue.add(airCondition[i]);
+        }else{
+          airConditionOtherParts.add(airCondition[i]);
+        }
       }
       if(redListData.contains(airCondition[i].value.toString().toLowerCase())){
-        airCondition[i].color = MyColors.warning;
-        airConditionMajorIssue.add(airCondition[i]);
-        // airConditionIssue.add(airCondition[i]);
-        if(airCondition[i].image != null && (airCondition[i].image!.isNotEmpty)){
-          damageImages.add(airCondition[i]);
+        if(airCondition[i].title == MyStrings.acFilterDamaged && airCondition[i].value?.toLowerCase() == 'no'){
+          airConditionOtherParts.add(airCondition[i]);
+        }else{
+          airCondition[i].color = MyColors.warning;
+          airConditionMajorIssue.add(airCondition[i]);
+          // airConditionIssue.add(airCondition[i]);
+          if(airCondition[i].image != null && (airCondition[i].image!.isNotEmpty)){
+            damageImages.add(airCondition[i]);
+          }
         }
       }
       if(yellowListData.contains(airCondition[i].value.toString().toLowerCase())){

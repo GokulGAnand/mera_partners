@@ -187,6 +187,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
       onTap: globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name
           ? widget.onCarTapped
           : () {
+        FocusScope.of(context).requestFocus(FocusNode());
         widget.showPendingDialog();
       },
       child: Padding(
@@ -589,6 +590,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                               ),
                             ),
                             onPressed: globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name ? widget.autoBid : () {
+                                    FocusScope.of(context).requestFocus(FocusNode());
                                     widget.showPendingDialog();
                                   },
                             buttonText: MyStrings.autoBid),
@@ -599,6 +601,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                             globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name
                                 ? widget.bid
                                 : () {
+                                    FocusScope.of(context).requestFocus(FocusNode());
                                     widget.showPendingDialog();
                                   },
                             buttonText: MyStrings.bid),
@@ -613,6 +616,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
                         onPressed: globals.documentStatus?.toUpperCase() == DocumentStatus.VERIFIED.name
                             ? widget.otbTapped
                             : () {
+                                FocusScope.of(context).requestFocus(FocusNode());
                                 widget.showPendingDialog();
                               },
                         buttonText: MyStrings.oneTouchBuy),

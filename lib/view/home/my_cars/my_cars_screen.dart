@@ -91,6 +91,7 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                 ),
                 GestureDetector(
                   onTap: () {
+                    FocusScope.of(context).requestFocus(FocusNode());
                     Get.toNamed(AppRoutes.notificationScreen);
                   },
                   child: Container(

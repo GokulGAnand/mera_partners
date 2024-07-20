@@ -119,6 +119,7 @@ class _NegotiationState extends State<Negotiation> {
                               onPressed: controller.searchNegotiationList[index].negotiationStatus?.toLowerCase() == Status.pending.name || ((controller.searchNegotiationList[index].negotiationStatus == null) || controller.searchNegotiationList[index].negotiationStatus!.isEmpty)
                                   ? () => null
                                   : () {
+                                    FocusScope.of(context).requestFocus(FocusNode());
                                       // if (controller.isNegotiation.value) {
                                       showModalBottomSheet(
                                           isScrollControlled: true,
@@ -186,6 +187,7 @@ class _NegotiationState extends State<Negotiation> {
                                     buttonStatus: Status.view.name,
                                     buttonText: MyStrings.viewDetail,
                                     onPressed: () {
+                                      FocusScope.of(context).requestFocus(FocusNode());
                                       Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.searchLostList[index].sId.toString());
                                     },
                                     showButton: true,

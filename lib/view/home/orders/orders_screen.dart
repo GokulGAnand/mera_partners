@@ -134,6 +134,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                     ),
                     GestureDetector(
                       onTap: () {
+                        FocusScope.of(context).requestFocus(FocusNode());
                         Get.toNamed(AppRoutes.notificationScreen);
                       },
                       child: Container(
