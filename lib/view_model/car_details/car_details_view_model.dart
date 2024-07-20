@@ -175,8 +175,7 @@ class CarDetailsScreenViewModel extends GetxController {
   "condition ok", "no blowby", "front rh power window working", 
   "rear rh power window working", "front lh power window working", 
   "rear lh power window working", "all windows working","yes","25-50%", "50-75%", "75%-100%",
-    "working", "tilt", "telescopic", "available", "height adjustable", "functioning",
-    "not applicable"
+    "working", "tilt", "telescopic", "available", "height adjustable", "functioning","hydraulic","electric"
   ];
 
   List<String> yellowListData = [
