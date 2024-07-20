@@ -90,6 +90,7 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                 const SizedBox(width: 15,),
                 GestureDetector(
                   onTap: () {
+                    FocusScope.of(context).requestFocus(FocusNode());
                     Get.toNamed(AppRoutes.notificationScreen);
                   },
                   child: Container(

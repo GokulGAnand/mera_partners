@@ -59,6 +59,7 @@ class Procured extends StatelessWidget {
                                 onPressed: (controller.searchList[index].procurementStatus == null || controller.searchList[index].procurementStatus == "" || controller.searchList[index].procurementStatus?.toLowerCase() == Status.pending.name)
                                     ? null
                                     : () {
+                                        FocusScope.of(context).requestFocus(FocusNode());
                                         log("View Bill button pressed.");
                                         Get.toNamed(
                                           AppRoutes.procuredBillScreen,
