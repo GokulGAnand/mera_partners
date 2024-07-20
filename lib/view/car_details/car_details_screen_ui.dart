@@ -1248,10 +1248,10 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             dividerHeight: 2,
             tabs: (issueList.isNotEmpty)?[
               Tab(text: "View ${(issueList.isEmpty)?'':issueList.length} Issues"),
-              const Tab(text: "Other Parts"),
+              const Tab(text: "Good Parts"),
             ]
             :[
-              const Tab(text: "Other Parts"),
+              const Tab(text: "Good Parts"),
             ],
           ),
           AutoScaleTabBarView(
