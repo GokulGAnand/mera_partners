@@ -1275,6 +1275,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
   }
 
   Widget viewIssue(RxList<Master> list, RxBool showMore, Function()? onTap,String title, {bool isExterior = false}) {
+    const notAvailableValues = { "","NO", "No","no", "Nil", "Nill","nil",};
     return (list.isEmpty)?
     const SizedBox()
     :Column(
@@ -1403,7 +1404,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                 return const SizedBox();
                 });
         }),
-        (!isExterior || carDetailsScreenViewModel.notAvailable=="")?
+        (!isExterior || notAvailableValues.contains(carDetailsScreenViewModel.notAvailable))?
         const SizedBox()
         :Padding(
                       padding:
@@ -1415,18 +1416,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                             dense: true,
                             minLeadingWidth: 0,
                             horizontalTitleGap: 8,
-                            leading: const CircleAvatar(
-                              backgroundColor: MyColors.black3,
-                              radius: 14,
-                              child: Text(
-                                MyStrings.na,
-                                textAlign: TextAlign.center,
-                                style: MyStyles.white8700,
-                              ),
-                            ),
                             title: const Text(
-                              MyStrings.notAvailable,
-                              style: MyStyles.black12500,
+                              MyStrings.missingParts,
+                              style: MyStyles.black12700,
                             ),
                             subtitle: Text(
                               carDetailsScreenViewModel.notAvailable,

@@ -175,8 +175,7 @@ class CarDetailsScreenViewModel extends GetxController {
   "condition ok", "no blowby", "front rh power window working", 
   "rear rh power window working", "front lh power window working", 
   "rear lh power window working", "all windows working","yes","25-50%", "50-75%", "75%-100%",
-    "working", "tilt", "telescopic", "available", "height adjustable", "functioning",
-    "not applicable"
+    "working", "tilt", "telescopic", "available", "height adjustable", "functioning","hydraulic","electric"
   ];
 
   List<String> yellowListData = [
@@ -190,7 +189,7 @@ class CarDetailsScreenViewModel extends GetxController {
 
   List<String> redListData = ["rusted", "replaced", "cracked", "welded", "clamped", "repaired", "critical sound", 
   "damaged", "weak compression", "air filter box damaged", "blue", "fluid leakage", "back compression", "shift hard",
-  "not engaging-gear", "noisy", "jittering", "jerking" "dirty oil", "leakage-turbo", "ac vent grill broken", "front rh power window not working", "rear rh power window not working",
+  "not engaging-gear", "noisy", "jittering", "jerking", "dirty oil", "leakage-turbo", "ac vent grill broken", "front rh power window not working", "rear rh power window not working",
   "front lh power window not working", "rear lh power window not working", "ecm malfunction", "fuel pump not working", "wiring damage", "electric not working", "hydraulic not working",
   "weak breaks", "gear not engaged", "drum scratch", "alloy wheel missing", "needs replacement", "deployed", "not satisfactory",
   "abs ebd sensor damaged", "abs ebd module damaged","flood affected", "total loss", "apron replaced", "apron repaired", "roof replaced", "car converted from commercial to private", "commercial vehicle", "fitness expired", "engine replaced",
@@ -692,8 +691,6 @@ class CarDetailsScreenViewModel extends GetxController {
           documents.value = [
             Master(title: MyStrings.rcAvailability, value: reportResponse.value.data!.rcAvailability ?? ''),
             Master(title: MyStrings.rcMismatch, value: reportResponse.value.data!.rcMismatch ?? ''),
-            if((reportResponse.value.data!.loanNoc != null) && (reportResponse.value.data!.loanNoc!.isNotEmpty))
-            Master(title: MyStrings.nocIssued, value: reportResponse.value.data!.loanNoc ?? ''),
             if((reportResponse.value.data!.insurance != null) && (reportResponse.value.data!.insurance!.isNotEmpty))
             Master(title: MyStrings.insurance, value: reportResponse.value.data!.insurance ?? ''),
             if((reportResponse.value.data!.ncb != null) && (reportResponse.value.data!.ncb!.isNotEmpty))
@@ -701,6 +698,8 @@ class CarDetailsScreenViewModel extends GetxController {
             Master(title: MyStrings.underHypothecation, value: reportResponse.value.data!.hypothecation ?? ''),
             if((reportResponse.value.data!.loanStatus != null) && (reportResponse.value.data!.loanStatus!.isNotEmpty))
             Master(title: MyStrings.loanClosed, value: reportResponse.value.data!.loanStatus ?? ''),
+            if((reportResponse.value.data!.loanNoc != null) && (reportResponse.value.data!.loanNoc!.isNotEmpty))
+              Master(title: MyStrings.nocIssued, value: reportResponse.value.data!.loanNoc ?? ''),
             if((reportResponse.value.data!.form35 != null) && (reportResponse.value.data!.form35!.isNotEmpty))
             Master(title: MyStrings.form35, value: reportResponse.value.data!.form35 ?? ''),
             if((reportResponse.value.data!.insuranceValidity != null) && (reportResponse.value.data!.insuranceValidity!.isNotEmpty))

@@ -64,7 +64,9 @@ class LoginScreenViewModel extends GetxController {
             "number": appSignatureID.toString()});
       String? message = json.decode(response.body)['message'];
       if (response.statusCode == 200) {
-        await PushNotifications.getDeviceToken();
+        if (globals.fcmToken == null || globals.fcmToken == '') {
+          await PushNotifications.getDeviceToken();
+        }
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
         Get.toNamed(AppRoutes.otpScreen);
@@ -109,6 +111,8 @@ class LoginScreenViewModel extends GetxController {
       if (response.statusCode == 200) {
         clearData(); 
         globals.clearData();
+        globals.uniqueUserId = null;
+        globals.jsonHeaders = {};
         ProgressBar.instance.stopProgressBar(context);
         log(response.body.toString());
         userInfoResponse.value = UserInfoResponse.fromJson(jsonDecode(response.body));
@@ -139,7 +143,14 @@ class LoginScreenViewModel extends GetxController {
           globals.addressProofFront = userInfoResponse.value.data?.first.addressProofFront != null ? true : false;
           globals.headers = {'Authorization': 'Bearer ${globals.token}'};
           globals.jsonHeaders = {'Content-Type': 'application/json','Authorization': 'Bearer ${globals.token}',};
-          await PushNotifications.saveToken(token: globals.fcmToken);
+          try {
+            if (!userInfoResponse.value.data!.first.fcmNotification!.fcmToken!.contains(globals.fcmToken)) {
+                        await PushNotifications.saveToken(token: globals.fcmToken);
+                      }
+          } catch (e) {
+            log(e.toString());
+            await PushNotifications.saveToken(token: globals.fcmToken);
+          }
 
           if((globals.isOnboarding == null || globals.isOnboarding == false) && !DateTime.parse(userInfoResponse.value.data!.first.createdAt!).toLocal().isBefore(DateTime.now())){
             SharedPrefManager.instance.setBoolAsync(Constants.isOnboarding, true);

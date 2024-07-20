@@ -52,6 +52,8 @@ class SplashScreenViewModel extends GetxController {
         log("isDeactivate: ${userResponse.value.data![0].isDeactivate}");
         if (userResponse.value.data![0].isDeactivate == true) {
           globals.clearData();
+          globals.uniqueUserId = null;
+          globals.jsonHeaders = {};
           SharedPrefManager.instance.removeStringAsync(Constants.userName);
           SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
           SharedPrefManager.instance.removeStringAsync(Constants.email);
