@@ -264,14 +264,26 @@ class CarDetailsScreenViewModel extends GetxController {
       // }
     for(int i=0; i<exterior.length; i++){
       if(goodListData.contains(exterior[i].value.toString().toLowerCase())){
-        exteriorOtherParts.add(exterior[i]);
+        if(exterior[i].title == MyStrings.fullBodyRepaint && exterior[i].value?.toLowerCase() == 'yes'){
+          exterior[i].color = MyColors.warning;
+          exteriorMajorIssue.add(exterior[i]);
+          if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
+            damageImages.add(exterior[i]);
+          }
+        }else{
+          exteriorOtherParts.add(exterior[i]);
+        }
       }
       if(redListData.contains(exterior[i].value.toString().toLowerCase())){
-        exterior[i].color = MyColors.warning;
-        // exteriorIssue.add(exterior[i]);
-        exteriorMajorIssue.add(exterior[i]);
-        if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
-          damageImages.add(exterior[i]);
+        if(exterior[i].title == MyStrings.fullBodyRepaint && exterior[i].value?.toLowerCase() == 'no'){
+          exteriorOtherParts.add(exterior[i]);
+        }else{
+          exterior[i].color = MyColors.warning;
+          // exteriorIssue.add(exterior[i]);
+          exteriorMajorIssue.add(exterior[i]);
+          if(exterior[i].image != null && (exterior[i].image!.isNotEmpty)){
+            damageImages.add(exterior[i]);
+          }
         }
       }
       if(yellowListData.contains(exterior[i].value.toString().toLowerCase())){
@@ -380,14 +392,23 @@ class CarDetailsScreenViewModel extends GetxController {
     }
     for(int i=0; i<engine.length; i++){
       if(goodListData.contains(engine[i].value.toString().toLowerCase())){
-        engineOtherParts.add(engine[i]);
+        if(engine[i].title == MyStrings.gearboxLeakage && engine[i].value?.toLowerCase() == 'yes'){
+          engine[i].color = MyColors.warning;
+          engineMajorIssue.add(engine[i]);
+        }else{
+          engineOtherParts.add(engine[i]);
+        }
       }
       if(redListData.contains(engine[i].value.toString().toLowerCase())){
-        engine[i].color = MyColors.warning;
-        // engineIssue.add(engine[i]);
-        engineMajorIssue.add(engine[i]);
-        if(engine[i].image != null && (engine[i].image!.isNotEmpty)){
-          damageImages.add(engine[i]);
+        if(engine[i].title == MyStrings.gearboxLeakage && engine[i].value?.toLowerCase() == 'no'){
+          engineOtherParts.add(engine[i]);
+        }else{
+          engine[i].color = MyColors.warning;
+          // engineIssue.add(engine[i]);
+          engineMajorIssue.add(engine[i]);
+          if(engine[i].image != null && (engine[i].image!.isNotEmpty)){
+            damageImages.add(engine[i]);
+          }
         }
       }
       if(yellowListData.contains(engine[i].value.toString().toLowerCase())){
@@ -438,14 +459,23 @@ class CarDetailsScreenViewModel extends GetxController {
     }
     for(int i=0; i<airCondition.length; i++){
       if(goodListData.contains(airCondition[i].value.toString().toLowerCase())){
-        airConditionOtherParts.add(airCondition[i]);
+        if(airCondition[i].title == MyStrings.acFilterDamaged && airCondition[i].value?.toLowerCase() == 'yes'){
+          airCondition[i].color = MyColors.warning;
+          airConditionMajorIssue.add(airCondition[i]);
+        }else{
+          airConditionOtherParts.add(airCondition[i]);
+        }
       }
       if(redListData.contains(airCondition[i].value.toString().toLowerCase())){
-        airCondition[i].color = MyColors.warning;
-        airConditionMajorIssue.add(airCondition[i]);
-        // airConditionIssue.add(airCondition[i]);
-        if(airCondition[i].image != null && (airCondition[i].image!.isNotEmpty)){
-          damageImages.add(airCondition[i]);
+        if(airCondition[i].title == MyStrings.acFilterDamaged && airCondition[i].value?.toLowerCase() == 'no'){
+          airConditionOtherParts.add(airCondition[i]);
+        }else{
+          airCondition[i].color = MyColors.warning;
+          airConditionMajorIssue.add(airCondition[i]);
+          // airConditionIssue.add(airCondition[i]);
+          if(airCondition[i].image != null && (airCondition[i].image!.isNotEmpty)){
+            damageImages.add(airCondition[i]);
+          }
         }
       }
       if(yellowListData.contains(airCondition[i].value.toString().toLowerCase())){
@@ -670,6 +700,9 @@ class CarDetailsScreenViewModel extends GetxController {
       if(reportResponse.value.data!.allCarInfo!.doorFrontRight != null) Master(title: MyStrings.frontRHDoor, image: reportResponse.value.data!.allCarInfo!.doorFrontRight?.url, listValue: reportResponse.value.data!.allCarInfo!.doorFrontRight?.condition),
       if(reportResponse.value.data!.allCarInfo!.doorRearLeft != null) Master(title: MyStrings.rearLHDoor, image: reportResponse.value.data!.allCarInfo!.doorRearLeft?.url, listValue: reportResponse.value.data!.allCarInfo!.doorRearLeft?.condition),
       if(reportResponse.value.data!.allCarInfo!.doorFrontRight != null) Master(title: MyStrings.rearRHDoor, image: reportResponse.value.data!.allCarInfo!.doorRearRight?.url, listValue: reportResponse.value.data!.allCarInfo!.doorRearRight?.condition),
+      if(reportResponse.value.data!.allCarInfo!.dickyDoor != null) Master(title: MyStrings.dickyDoor, image: reportResponse.value.data!.allCarInfo!.dickyDoor?.url, listValue: reportResponse.value.data!.allCarInfo!.dickyDoor?.condition),
+      if(reportResponse.value.data!.allCarInfo!.rearViewMirrorRight != null) Master(title: MyStrings.rhRearViewMirror, image: reportResponse.value.data!.allCarInfo!.rearViewMirrorRight?.url, listValue: reportResponse.value.data!.allCarInfo!.rearViewMirrorRight?.condition),
+      if(reportResponse.value.data!.allCarInfo!.rearViewMirrorLeft != null) Master(title: MyStrings.lhRearViewMirror, image: reportResponse.value.data!.allCarInfo!.rearViewMirrorLeft?.url, listValue: reportResponse.value.data!.allCarInfo!.rearViewMirrorLeft?.condition),
     ];
     interiorImages.value = [
       if(reportResponse.value.data!.allCarInfo!.clusterPanel != null) Master(title: MyStrings.clusterPanel, image: reportResponse.value.data!.allCarInfo!.clusterPanel?.url, listValue: reportResponse.value.data!.allCarInfo!.clusterPanel?.condition),
@@ -683,6 +716,7 @@ class CarDetailsScreenViewModel extends GetxController {
       if(reportResponse.value.data!.allCarInfo!.interiorView != null) Master(title: MyStrings.interiorViewFromBootDashboard, image: reportResponse.value.data!.allCarInfo!.interiorView?.url, listValue: reportResponse.value.data!.allCarInfo!.interiorView?.condition),
       if(reportResponse.value.data!.allCarInfo!.powerWindowDriverImage != null) Master(title: MyStrings.powerWindowDriverImage, image: reportResponse.value.data!.allCarInfo!.powerWindowDriverImage?.url, listValue: reportResponse.value.data!.allCarInfo!.powerWindowDriverImage?.condition),
       if(reportResponse.value.data!.allCarInfo!.pushWindowDriverImage != null) Master(title: MyStrings.pushWindowDriverImage, image: reportResponse.value.data!.allCarInfo!.pushWindowDriverImage?.url, listValue: reportResponse.value.data!.allCarInfo!.pushWindowDriverImage?.condition),
+      if(reportResponse.value.data!.allCarInfo!.powerWindowCentalLock != null) Master(title: MyStrings.powerWindowAndWindowLock, image: reportResponse.value.data!.allCarInfo!.powerWindowCentalLock?.url, listValue: reportResponse.value.data!.allCarInfo!.powerWindowCentalLock?.condition),
     ];
     engineImages.value = [
       if(reportResponse.value.data!.allCarInfo!.engineCompartment != null) Master(title: MyStrings.engineCompartmentImage, image: reportResponse.value.data!.allCarInfo!.engineCompartment?.url, listValue: reportResponse.value.data!.allCarInfo!.engineCompartment?.condition),
