@@ -656,6 +656,20 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
       Padding(
         padding: const EdgeInsets.all(10.0),
         child: inspectionReportTabBar(
+            carDetailsScreenViewModel.featureKey,
+            carDetailsScreenViewModel.featureTabController,
+            850,
+            MyStrings.feature,
+            carDetailsScreenViewModel.featureIssue,
+            carDetailsScreenViewModel.featureOtherParts,
+            carDetailsScreenViewModel.featureShowMore, () {
+          carDetailsScreenViewModel.featureShowMore.value =
+              !carDetailsScreenViewModel.featureShowMore.value;
+        }),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: inspectionReportTabBar(
             carDetailsScreenViewModel.testDriveKey,
             carDetailsScreenViewModel.testDriveTabController,
             850,
@@ -1096,7 +1110,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                       const SizedBox(
                                         height: 2,
                                       ),
-                                      (index == 0 || index == 4)
+                                      (index == 0 || index == 4 || index == 5)
                                           ? const SizedBox()
                                           : Container(
                                               padding: const EdgeInsets.symmetric(
@@ -1498,6 +1512,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                   TabController(length: (carDetailsScreenViewModel.engineIssue.isEmpty)?1:2, vsync: this);
               carDetailsScreenViewModel.acTabController =
                   TabController(length: (carDetailsScreenViewModel.airConditionIssue.isEmpty)?1:2, vsync: this);
+              carDetailsScreenViewModel.featureTabController =
+                  TabController(length: (carDetailsScreenViewModel.featureIssue.isEmpty)?1:2, vsync: this);
               carDetailsScreenViewModel.testDriveTabController =
                   TabController(length: (carDetailsScreenViewModel.testDriveIssue.isEmpty)?1:2, vsync: this);
               return CustomScrollView(

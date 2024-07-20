@@ -388,4 +388,18 @@ class MyStrings {
   static const String uploaded = 'Uploaded';
   static const String edit = 'Edit';
 
+  static const String feature= 'Features';
+  static const String keyLessEntry= 'Keyless Entry';
+  static const String stereoImage= 'Stereo Image';
+  static const String stereoBrand= 'Stereo Brand';
+  static const String rearParkingSensor= 'Rear Parking Sensor';
+  static const String fogLamp= 'Fog Lamp';
+  static const String sunroof= 'Sunroof';
+  static const String gpsNavigation= 'GPS Navigation';
+  static const String alloyWheels= 'Alloy Wheels';
+  static const String airBag= 'Air Bag';
+  static const String seatBelt= 'Seat Belt';
+  static const String absEbd= 'ABS EBD';
+  static const String gloveBox= 'Glove Box';
+  static const String interiorModifications= 'Any Interior Modifications';
 }

@@ -104,6 +104,7 @@ class CarDetailsScreenViewModel extends GetxController {
   final GlobalKey<State<StatefulWidget>> interiorElectricalKey = GlobalKey();
   final GlobalKey<State<StatefulWidget>> engineKey = GlobalKey();
   final GlobalKey<State<StatefulWidget>> acKey = GlobalKey();
+  final GlobalKey<State<StatefulWidget>> featureKey = GlobalKey();
   final GlobalKey<State<StatefulWidget>> testDriveKey = GlobalKey();
 
   RxInt inspectionIndex = 0.obs;
@@ -120,6 +121,8 @@ class CarDetailsScreenViewModel extends GetxController {
     } else if(inspectionIndex.value==4){
       context = acKey.currentContext;
     } else if(inspectionIndex.value==5){
+      context = featureKey.currentContext;
+    } else if(inspectionIndex.value==6){
       context = testDriveKey.currentContext;
     }
     await Scrollable.ensureVisible(context!, duration: const Duration(milliseconds: 800));
@@ -138,12 +141,14 @@ class CarDetailsScreenViewModel extends GetxController {
   late TabController interiorElectricalTabController;
   late TabController engineTabController;
   late TabController acTabController;
+  late TabController featureTabController;
   late TabController testDriveTabController;
 
   RxBool exteriorShowMore = false.obs;
   RxBool interiorShowMore = false.obs;
   RxBool engineShowMore = false.obs;
   RxBool acShowMore = false.obs;
+  RxBool featureShowMore = false.obs;
   RxBool testDriveShowMore = false.obs;
 
   RxBool playVideo = false.obs;
@@ -213,7 +218,7 @@ class CarDetailsScreenViewModel extends GetxController {
   var engineImages = <Master>[].obs;
   var damageImages = <Master>[].obs;
   var testDrive = <Master>[].obs;
-  // var features = <Master>[].obs;
+  var features = <Master>[].obs;
   // var allImages = <Master>[].obs;
   var interiorAndElectrical = <Master>[].obs;
 
@@ -235,6 +240,9 @@ class CarDetailsScreenViewModel extends GetxController {
   var airConditionIssue = <Master>[].obs;
   var airConditionMinorIssue = <Master>[].obs;
   var airConditionMajorIssue = <Master>[].obs;
+  var featureIssue = <Master>[].obs;
+  var featureMinorIssue = <Master>[].obs;
+  var featureMajorIssue = <Master>[].obs;
   var testDriveIssue = <Master>[].obs;
   var testDriveMinorIssue = <Master>[].obs;
   var testDriveMajorIssue = <Master>[].obs;
@@ -244,6 +252,7 @@ class CarDetailsScreenViewModel extends GetxController {
   var interiorAndElectricalOtherParts = <Master>[].obs;
   var engineOtherParts = <Master>[].obs;
   var airConditionOtherParts = <Master>[].obs;
+  var featureOtherParts = <Master>[].obs;
   var testDriveOtherParts = <Master>[].obs;
 
   void separateListData() {
@@ -477,6 +486,56 @@ class CarDetailsScreenViewModel extends GetxController {
         }
       }
     }
+    for(int i=0; i<features.length; i++){
+      if(goodListData.contains(features[i].value.toString().toLowerCase())){
+        featureOtherParts.add(features[i]);
+      }
+      if(redListData.contains(features[i].value.toString().toLowerCase())){
+        features[i].color = MyColors.warning;
+        featureMajorIssue.add(features[i]);
+        // featureIssue.add(features[i]);
+        if(features[i].image != null && (features[i].image!.isNotEmpty)){
+          damageImages.add(features[i]);
+        }
+      }
+      if(yellowListData.contains(features[i].value.toString().toLowerCase())){
+        features[i].color = MyColors.yellow;
+        featureMinorIssue.add(features[i]);
+        // featureIssue.add(features[i]);
+
+      }
+      if(features[i].listValue != null){
+        for(int j=0; j<features[i].listValue!.length; j++){
+          if(features[i].listValue![j].isEmpty){
+            features[i].listValue!.removeAt(j);
+          }
+        }
+        for(int j=0; j<features[i].listValue!.length; j++){
+          if(goodListData.contains(features[i].listValue![j].toString().toLowerCase())){
+            features[i].value = features[i].listValue![j];
+            featureOtherParts.add(features[i]);
+            break;
+          }
+          if(redListData.contains(features[i].listValue![j].toString().toLowerCase())){
+            features[i].value = features[i].listValue![j];
+            features[i].color = MyColors.warning;
+            featureMajorIssue.add(features[i]);
+            // featureIssue.add(features[i]);
+            break;
+          }
+          if(yellowListData.contains(features[i].listValue![j].toString().toLowerCase())){
+            features[i].value = features[i].listValue![j];
+            features[i].color = MyColors.yellow;
+            featureMinorIssue.add(features[i]);
+            // featureIssue.add(features[i]);
+            break;
+          }
+          // if(features[i].listValue![j].isEmpty){
+          //   features[i].listValue!.removeAt(j);
+          // }
+        }
+      }
+    }
     for(int i=0; i<testDrive.length; i++){
       if(goodListData.contains(testDrive[i].value.toString().toLowerCase())){
         testDriveOtherParts.add(testDrive[i]);
@@ -536,6 +595,8 @@ class CarDetailsScreenViewModel extends GetxController {
       engineIssue.addAll(engineMinorIssue);
       airConditionIssue.addAll(airConditionMajorIssue);
       airConditionIssue.addAll(airConditionMinorIssue);
+      featureIssue.addAll(featureMajorIssue);
+      featureIssue.addAll(featureMinorIssue);
       testDriveIssue.addAll(testDriveMajorIssue);
       testDriveIssue.addAll(testDriveMinorIssue);
     log("exterior other parts: $exteriorOtherParts");
@@ -674,6 +735,7 @@ class CarDetailsScreenViewModel extends GetxController {
             Item(title: MyStrings.engine, rating: reportResponse.value.data!.allCarInfo!.engineStar?.toDouble() ?? 0),
             // Item(title: MyStrings.aC, rating: reportResponse.value.data!.allCarInfo!.acStar?.toDouble() ?? 0),
             Item(title: MyStrings.ac, rating: 0.0),
+            Item(title: MyStrings.feature, rating: 0.0),
             Item(title: MyStrings.testDrive, rating: reportResponse.value.data!.allCarInfo!.testDriveStar?.toDouble() ?? 0),
           ];
           // vehicleDetails.value = [
@@ -716,21 +778,22 @@ class CarDetailsScreenViewModel extends GetxController {
             Master(title: MyStrings.taxValidity, value: reportResponse.value.data!.taxValidity ?? ''),
             Master(title: MyStrings.rto, value: reportResponse.value.data!.rto ?? ''),
           ];
-          // features.value = [
-          //   Master(title: MyStrings.keyLessEntry, value: reportResponse.value.data!.allCarInfo!.keylessEntry?.condition?.join(',') ?? ''),
-          //   Master(title: MyStrings.stereoImage, value: reportResponse.value.data!.allCarInfo!.stereoBrand ?? ''),
-          //   Master(title: MyStrings.stereoBrand, value: reportResponse.value.data!.allCarInfo!.stereoBrand ?? ''),
-          //   Master(title: MyStrings.rearParkingSensor, value: reportResponse.value.data!.allCarInfo!.rearParkingSensor ?? ''),
-          //   Master(title: MyStrings.fogLamp, value: reportResponse.value.data!.allCarInfo!.fogLamps ?? ''),
-          //   Master(title: MyStrings.sunroof, value: reportResponse.value.data!.allCarInfo!.sunroof?.condition?.join(',') ?? ''),
-          //   Master(title: MyStrings.gpsNavigation, value: reportResponse.value.data!.allCarInfo!.gpsNavigation ?? ''),
-          //   Master(title: MyStrings.alloyWheels, value: reportResponse.value.data!.allCarInfo!.alloyWheels?.condition?.join(',') ?? ''),
-          //   Master(title: MyStrings.airBag, value: reportResponse.value.data!.allCarInfo!.airbag?.condition?.join(',') ?? ''),
-          //   Master(title: MyStrings.seatBelt, value: reportResponse.value.data!.allCarInfo!.seatBelt ?? ''),
-          //   Master(title: MyStrings.absEbd, value: reportResponse.value.data!.allCarInfo!.absEbd?.condition?.join(',') ?? ''),
-          //   Master(title: MyStrings.gloveBox, value: reportResponse.value.data!.allCarInfo!.gloveBox?.condition?.join(',') ?? ''),
-          //   Master(title: MyStrings.interiorModifications, value: reportResponse.value.data!.allCarInfo!.interiorView?.condition?.join(',') ?? ''),
-          // ];
+          features.value = [
+            Master(title: MyStrings.keyLessEntry, listValue: reportResponse.value.data!.allCarInfo!.keylessEntry?.condition, image: reportResponse.value.data!.allCarInfo!.keylessEntry?.url),
+            Master(title: MyStrings.stereoImage, value: reportResponse.value.data!.allCarInfo!.stereoBrand ?? ''),
+            Master(title: MyStrings.stereoBrand, value: reportResponse.value.data!.allCarInfo!.stereoBrand ?? ''),
+            Master(title: MyStrings.rearParkingSensor, value: reportResponse.value.data!.allCarInfo!.rearParkingSensor ?? ''),
+            Master(title: MyStrings.fogLamp, value: reportResponse.value.data!.allCarInfo!.fogLamps ?? ''),
+            Master(title: MyStrings.sunroof, listValue: reportResponse.value.data!.allCarInfo!.sunroof?.condition, image: reportResponse.value.data!.allCarInfo!.sunroof?.url),
+            Master(title: MyStrings.gpsNavigation, value: reportResponse.value.data!.allCarInfo!.gpsNavigation ?? ''),
+            Master(title: MyStrings.alloyWheels, listValue: reportResponse.value.data!.allCarInfo!.alloyWheels?.condition, image: reportResponse.value.data!.allCarInfo!.alloyWheels?.url),
+            Master(title: MyStrings.rearDefogger, value: reportResponse.value.data!.allCarInfo!.rearDefogger ?? ''),
+            Master(title: MyStrings.airBag, listValue: reportResponse.value.data!.allCarInfo!.airbag?.condition, image: reportResponse.value.data!.allCarInfo!.airbag?.url),
+            Master(title: MyStrings.seatBelt, value: reportResponse.value.data!.allCarInfo!.seatBelt ?? ''),
+            Master(title: MyStrings.absEbd, listValue: reportResponse.value.data!.allCarInfo!.absEbd?.condition, image: reportResponse.value.data!.allCarInfo!.absEbd?.url),
+            Master(title: MyStrings.gloveBox, listValue: reportResponse.value.data!.allCarInfo!.gloveBox?.condition, image: reportResponse.value.data!.allCarInfo!.gloveBox?.url),
+            Master(title: MyStrings.interiorModifications, listValue: reportResponse.value.data!.allCarInfo!.interiorView?.condition, image: reportResponse.value.data!.allCarInfo!.interiorView?.url),
+          ];
           testDrive.value = [
             Master(title: MyStrings.steering, value: reportResponse.value.data!.allCarInfo!.steeringSystem ?? ''),
             Master(title: MyStrings.steeringWheel, listValue: reportResponse.value.data!.allCarInfo!.steeringWheel),
