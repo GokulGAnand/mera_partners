@@ -5,6 +5,8 @@ import 'package:mera_partners/service/notification_service.dart';
 import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/view_model/car_details/car_details_view_model.dart';
 import 'package:mera_partners/view_model/home/live/live_cars_list_view_model.dart';
+import 'package:mera_partners/view_model/home/orders/negotiation_cars_view_model.dart';
+import 'package:mera_partners/view_model/home/orders/procured_bill_view_model.dart';
 import 'package:mera_partners/view_model/home/otb/otb_view_model.dart';
 import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:get/get.dart';
@@ -105,10 +107,44 @@ class SocketService {
       }
     },);
 
+    socket?.on('getOffer', (data) {
+      log(data.toString());
+      List<dynamic> offerData = jsonDecode(data);
+      Data offer= Data.fromJson(offerData.first);
+      if(Get.isRegistered<NegotiationViewModel>()){
+        for(int i=0; i<Get.find<NegotiationViewModel>().searchNegotiationList.length; i++){
+          if(Get.find<NegotiationViewModel>().searchNegotiationList[i].sId == offer.sId){
+            Get.find<NegotiationViewModel>().searchNegotiationList[i] = offer;
+            Get.find<NegotiationViewModel>().update();
+          }
+        }
+      }
+      log(offer.toString());
+    },);
+
+    socket?.on('getBill', (data) {
+      log("bill message");
+      log(data.toString());
+      List<dynamic> billData = jsonDecode(data);
+      Data bill= Data.fromJson(billData.first);
+      if(Get.isRegistered<ProcuredScreenViewModel>()){
+        for(int i=0; i<Get.find<ProcuredScreenViewModel>().searchList.length; i++){
+          if(Get.find<ProcuredScreenViewModel>().searchList[i].sId == bill.sId){
+            Get.find<ProcuredScreenViewModel>().searchList[i] = bill;
+            Get.find<ProcuredScreenViewModel>().update();
+            break;
+          }
+        }
+      }
+      log(bill.toString());
+    },);
+
     socket?.connect();
 
     socket?.onConnect((_) {
       socket?.emit("joinDealerRoom", globals.uniqueUserId);
+      socket?.emit("joinOfferRoom", globals.uniqueUserId);
+      socket?.emit("joinBillRoom ", globals.uniqueUserId);
       log('Connected to the socket server');
     });
 
