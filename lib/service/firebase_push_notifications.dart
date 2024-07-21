@@ -130,7 +130,7 @@ class PushNotifications {
 
   static removeToken(String token) async {
     try {
-      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.setFCM + (globals.uniqueUserId ?? '')), headers: globals.jsonHeaders, body: jsonEncode({"fcmToken": token}));
+      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.removeFcm + (globals.uniqueUserId ?? '')), headers: globals.jsonHeaders, body: jsonEncode({"fcmToken": token}));
       log(response.body);
       if(response.statusCode == 200){
         log("fcm token successfully removed");

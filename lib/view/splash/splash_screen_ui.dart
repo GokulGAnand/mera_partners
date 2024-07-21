@@ -27,11 +27,11 @@ class _SplashScreenState extends State<SplashScreen> {
       if(splashScreenViewModel.isLoginAlready == true){
         await splashScreenViewModel.getUserData();
       }
-      if (globals.fcmToken == null || globals.fcmToken == '') {
-        await PushNotifications.getDeviceToken().then((value) async {
-                await PushNotifications.saveToken(token: (globals.fcmToken ?? ''));
-              },);
-      }
+      // if (globals.fcmToken == null || globals.fcmToken == '') {
+      //   await PushNotifications.getDeviceToken().then((value) async {
+      //           await PushNotifications.saveToken(token: (globals.fcmToken ?? ''));
+      //         },);
+      // }
 
     });
     Timer(const Duration(seconds: 3), () {

@@ -7,6 +7,7 @@ class EndPoints {
   static String socketUrl = 'https://test.meracars.com/api/v1/';
   static String users = 'users/';
   static String setFCM = 'setfcm/';
+  static String removeFcm = 'removefcm/';
   static String createOrder = 'createOder';
   static String verifyPayment = 'verifyPayment';
   static String login = 'auth/dealerLogin';
