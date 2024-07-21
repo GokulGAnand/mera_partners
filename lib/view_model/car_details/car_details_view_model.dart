@@ -180,7 +180,8 @@ class CarDetailsScreenViewModel extends GetxController {
   "condition ok", "no blowby", "front rh power window working", 
   "rear rh power window working", "front lh power window working", 
   "rear lh power window working", "all windows working","yes","25-50%", "50-75%", "75%-100%",
-    "working", "tilt", "telescopic", "available", "height adjustable", "functioning","hydraulic","electric"
+    "working", "tilt", "telescopic", "available", "height adjustable", "functioning","hydraulic","electric",
+    "remote lock", "central lock", "touch stereo", '1', '2', '2+', 'cooled glove box available'
   ];
 
   List<String> yellowListData = [
@@ -189,7 +190,8 @@ class CarDetailsScreenViewModel extends GetxController {
     "injector leakage", "white", "black", "weak", "terminal corroded", "manifold", "blowby on idle",
     "oil spillage on idle", "leakage from tappet cover oil", "leakage from side cover oil", "low oil", "speedometer not working",
     "warning light", "rattling sound", "dirty seat cover", "front rh power window stuck", "rear rh power window stuck", "front lh power window stuck",
-    "rear lh power window stuck", "rat damage", "hard", "abnormal noise", "modified horn", "cooling low", "weak compression ac"
+    "rear lh power window stuck", "rat damage", "hard", "abnormal noise", "modified horn", "cooling low", "weak compression ac",
+    "customer will take stereo", "drum scratched"
   ];
 
   List<String> redListData = ["rusted", "replaced", "cracked", "welded", "clamped", "repaired", "critical sound", 
@@ -199,7 +201,7 @@ class CarDetailsScreenViewModel extends GetxController {
   "weak breaks", "gear not engaged", "drum scratch", "alloy wheel missing", "needs replacement", "deployed", "not satisfactory",
   "abs ebd sensor damaged", "abs ebd module damaged","flood affected", "total loss", "apron replaced", "apron repaired", "roof replaced", "car converted from commercial to private", "commercial vehicle", "fitness expired", "engine replaced",
   "0-5%", "5-25%","no", "leakage from tappet cover", "leakage from side cover", "low", "dirty", "not working", "not available",
-    "faded", "broken", "not functioning", "scratched"
+    "faded", "broken", "not functioning", "scratched", "remote key damaged"
   ];
 
   String notAvailable = "";

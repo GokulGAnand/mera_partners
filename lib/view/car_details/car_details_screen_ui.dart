@@ -1079,7 +1079,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         scrollDirection: Axis.horizontal,
                         itemCount: carDetailsScreenViewModel.ratingList.length,
                         itemBuilder: (context, index) {
-                          if(index == 4) {
+                          if(index == 4 || index == 5) {
                             return const SizedBox.shrink();
                           }
                           return Obx(
