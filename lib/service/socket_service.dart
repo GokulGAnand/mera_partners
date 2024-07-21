@@ -44,15 +44,15 @@ class SocketService {
       List<Data> liveCarsList = <Data> [];
       // List<Data> otbCarsList = <Data> [];
       for(int i=0;i<carList.length;i++){
+        if(carList[i].status?.toLowerCase() == CarStatus.live.name || carList[i].status?.toLowerCase() == CarStatus.scheduled.name){
+          liveCarsList.add(carList[i]);
+        }
         if(Get.isRegistered<CarDetailsScreenViewModel>()){
           if(Get.find<CarDetailsScreenViewModel>().carDetailsResponse.value.data?[0].sId == carList[i].sId){
             Get.find<CarDetailsScreenViewModel>().carDetailsResponse.value.data?[0] = carList[i];
             Get.find<CarDetailsScreenViewModel>().updateCarData(carList[i]);
             Get.find<CarDetailsScreenViewModel>().carDetailsResponse.refresh();
           }
-        }
-        if(carList[i].status?.toLowerCase() == CarStatus.live.name || carList[i].status?.toLowerCase() == CarStatus.scheduled.name){
-          liveCarsList.add(carList[i]);
         }
         // else if(carList[i].status?.toLowerCase() == CarStatus.otb.name){
         //   otbCarsList.add(carList[i]);
@@ -61,6 +61,7 @@ class SocketService {
       Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data = liveCarsList;
       Get.find<LiveCarsListViewModel>().updateBid(liveCarsList);
       Get.find<LiveCarsListViewModel>().liveCarsResponse.value.count = liveCarsList.length;
+      Get.find<LiveCarsListViewModel>().update();
       Get.find<LiveCarsListViewModel>().liveCarsResponse.refresh();
     }
 
