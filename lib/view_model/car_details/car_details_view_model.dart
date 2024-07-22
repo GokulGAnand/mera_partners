@@ -519,6 +519,9 @@ class CarDetailsScreenViewModel extends GetxController {
       }
     }
     for(int i=0; i<features.length; i++){
+      if (features[i].value.toString().toLowerCase() == 'not available') {
+        continue;
+      }
       if(goodListData.contains(features[i].value.toString().toLowerCase())){
         featureOtherParts.add(features[i]);
       }
@@ -543,6 +546,9 @@ class CarDetailsScreenViewModel extends GetxController {
           }
         }
         for(int j=0; j<features[i].listValue!.length; j++){
+          if (features[i].listValue![j].toString().toLowerCase() == 'not available') {
+            continue;
+          }
           if(goodListData.contains(features[i].listValue![j].toString().toLowerCase())){
             features[i].value = features[i].listValue![j];
             featureOtherParts.add(features[i]);
@@ -816,7 +822,7 @@ class CarDetailsScreenViewModel extends GetxController {
           ];
           features.value = [
             Master(title: MyStrings.keyLessEntry, listValue: reportResponse.value.data!.allCarInfo!.keylessEntry?.condition, image: reportResponse.value.data!.allCarInfo!.keylessEntry?.url),
-            Master(title: MyStrings.stereoImage, value: reportResponse.value.data!.allCarInfo!.stereoBrand ?? ''),
+            Master(title: MyStrings.stereoImage, listValue: reportResponse.value.data!.allCarInfo!.stereoImage?.condition, image: reportResponse.value.data!.allCarInfo!.stereoImage?.url),
             Master(title: MyStrings.stereoBrand, value: reportResponse.value.data!.allCarInfo!.stereoBrand ?? ''),
             Master(title: MyStrings.rearParkingSensor, value: reportResponse.value.data!.allCarInfo!.rearParkingSensor ?? ''),
             Master(title: MyStrings.fogLamp, value: reportResponse.value.data!.allCarInfo!.fogLamps ?? ''),
