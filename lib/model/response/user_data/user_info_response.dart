@@ -37,6 +37,7 @@ class Data {
   String? sId;
   String? userId;
   bool? isBlocked;
+  bool? isCreated;
   String? role;
   int? contactNo;
   bool? isDeposited;
@@ -64,6 +65,7 @@ class Data {
         this.sId,
         this.userId,
         this.isBlocked,
+        this.isCreated,
         this.role,
         this.contactNo,
         this.isDeposited,
@@ -93,6 +95,7 @@ class Data {
     sId = json['_id'];
     userId = json['userId'];
     isBlocked = json['isBlocked'];
+    isCreated = json['isCreated'];
     role = json['role'];
     contactNo = json['contactNo'];
     isDeposited = json['isDeposited'];
@@ -136,6 +139,7 @@ class Data {
     data['_id'] = sId;
     data['userId'] = userId;
     data['isBlocked'] = isBlocked;
+    data['isCreated'] = isCreated;
     data['role'] = role;
     data['contactNo'] = contactNo;
     data['isDeposited'] = isDeposited;

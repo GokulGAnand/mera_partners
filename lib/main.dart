@@ -5,7 +5,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/services.dart';
 import 'package:mera_partners/routes/app_routes.dart';
-import 'package:mera_partners/service/firebase_push_notifications.dart';
 import 'package:mera_partners/service/notification_service.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +15,7 @@ import 'package:mera_partners/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService().initialize();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform
   );
@@ -24,9 +24,9 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  await NotificationService().initNotification();
+  // await NotificationService().initNotification();
   await getPermission();
-  await PushNotifications.init();
+  // await PushNotifications.init();
   // await PushNotifications.getDeviceToken();
   runApp(const MyApp());
 }
