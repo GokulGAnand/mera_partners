@@ -72,6 +72,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                               onChange: (value){
                                 if(tabController.value!.index == 0){
                                   if(negotiationScreenViewModel.isNegotiation.value == true){
+                                    negotiationScreenViewModel.isShowFullListNegotiation.value = value.isEmpty;
                                     negotiationScreenViewModel.searchNegotiationList.clear();
                                     for(int i=0; i<negotiationScreenViewModel.carListResponse.value.data!.length; i++){
                                       if(negotiationScreenViewModel.carListResponse.value.data![i].model!.toLowerCase().contains(negotiationScreenViewModel.searchNegotiationController.text.toLowerCase()) ||
@@ -84,6 +85,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                                     }
                                   } else {
                                     negotiationScreenViewModel.searchLostList.clear();
+                                    negotiationScreenViewModel.isShowFullListLost.value = value.isEmpty;
                                     for(int i=0; i<negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal!.length; i++){
                                       if(negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal![i].model!.toLowerCase().contains(negotiationScreenViewModel.searchLostController.text.toLowerCase()) ||
                                           negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal![i].make!.toLowerCase().contains(negotiationScreenViewModel.searchLostController.text.toLowerCase()) ||
@@ -95,6 +97,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                                     }
                                   }
                                 }else if(tabController.value!.index == 1){
+                                  procuredScreenViewModel.isShowFullListProcured.value = value.isEmpty;
                                   log(procuredScreenViewModel.searchController.text);
                                   log(procuredScreenViewModel.liveCarsResponse.value.data!.length.toString());
                                   procuredScreenViewModel.searchList.clear();
@@ -107,7 +110,9 @@ class _OrdersScreenState extends State<OrdersScreen>
                                       log(procuredScreenViewModel.searchList.toString());
                                     }
                                   }
+                                  procuredScreenViewModel.update();
                                 } else {
+                                  rcTransferViewModel.isShowFullListRcTransfer.value = value.isEmpty;
                                   rcTransferViewModel.searchRcTransferList.clear();
                                   for(int i=0; i<rcTransferViewModel.liveCarsResponse.value.data!.length; i++){
                                     if(rcTransferViewModel.liveCarsResponse.value.data![i].model!.toLowerCase().contains(rcTransferViewModel.searchRcTransferController.text.toLowerCase()) ||
@@ -118,9 +123,29 @@ class _OrdersScreenState extends State<OrdersScreen>
                                       log(rcTransferViewModel.searchRcTransferList.toString());
                                     }
                                   }
+                                  rcTransferViewModel.update();
                                 }
                               },
+                              onSubmitted: (value){
+                                FocusScope.of(context).unfocus();
+                              },
                               prefixIcon: const Icon(Icons.search),
+                              suffixIcon: IconButton(icon: const Icon(Icons.clear),
+                                onPressed: (){
+                                if(tabController.value!.index ==0){
+                                  if (negotiationScreenViewModel.isNegotiation.value) {
+                                    negotiationScreenViewModel.clearNegotiationSearch();
+                                  }else{
+                                    negotiationScreenViewModel.clearLostSearch();
+                                  }
+                                }else if(tabController.value!.index ==1){
+                                  procuredScreenViewModel.clearSearch();
+                                }else{
+                                  rcTransferViewModel.clearSearch();
+                                }
+                                FocusScope.of(context).unfocus();
+                                },
+                              ),
                               borderColor: MyColors.kPrimaryColor.withOpacity(0.1),
                               focusedBorderColor: MyColors.kPrimaryColor,
                               contentPadding: const EdgeInsets.all(8),

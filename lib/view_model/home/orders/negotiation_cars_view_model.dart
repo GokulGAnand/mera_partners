@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
@@ -19,6 +20,18 @@ import '../../../widgets/progressbar.dart';
 
 class NegotiationViewModel extends GetxController {
 
+  void clearNegotiationSearch() {
+    searchNegotiationController.clear();
+    isShowFullListNegotiation.value = true;
+    update();
+  }
+  void clearLostSearch() {
+    searchLostController.clear();
+    isShowFullListLost.value = true;
+    update();
+  }
+  RxBool isShowFullListLost = true.obs;
+  RxBool isShowFullListNegotiation = true.obs;
   TextEditingController searchNegotiationController = TextEditingController();
   RxList<Data> searchNegotiationList = <Data>[].obs;
 

@@ -22,13 +22,13 @@ class BidsScreen extends StatefulWidget {
 
 class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateMixin{
 
-  LiveCarsListViewModel liveCarListViewModel = 
-      Get.isRegistered<LiveCarsListViewModel>() 
-          ? Get.find<LiveCarsListViewModel>() : 
+  LiveCarsListViewModel liveCarListViewModel =
+      Get.isRegistered<LiveCarsListViewModel>()
+          ? Get.find<LiveCarsListViewModel>() :
           Get.put(LiveCarsListViewModel());
-  
-  OTBCarsListViewModel otbCarsListViewModel = Get.isRegistered<OTBCarsListViewModel>() 
-          ? Get.find<OTBCarsListViewModel>() : 
+
+  OTBCarsListViewModel otbCarsListViewModel = Get.isRegistered<OTBCarsListViewModel>()
+          ? Get.find<OTBCarsListViewModel>() :
           Get.put(OTBCarsListViewModel());
 
   late TabController tabController;
@@ -52,40 +52,64 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                   child: SizedBox(
                     height: 50,
                     child: CustomTextFormField(
-                      controller: (tabController.index ==0)? liveCarListViewModel.searchController
-                                  :otbCarsListViewModel.searchController,
-                      onChange: (value){
-                        if(tabController.index == 0){
+                      controller: (tabController.index == 0)
+                          ? liveCarListViewModel.searchController
+                          : otbCarsListViewModel.searchController,
+                      onChange: (value) {
+                        if (tabController.index == 0) {
                           liveCarListViewModel.searchList.clear();
-                          for(int i=0; i<liveCarListViewModel.liveCarsResponse.value.data!.length; i++){
-                            if(liveCarListViewModel.liveCarsResponse.value.data![i].model!.toLowerCase().contains(liveCarListViewModel.searchController.text.toLowerCase()) ||
-                              liveCarListViewModel.liveCarsResponse.value.data![i].make!.toLowerCase().contains(liveCarListViewModel.searchController.text.toLowerCase()) ||
-                              liveCarListViewModel.liveCarsResponse.value.data![i].variant!.toLowerCase().contains(liveCarListViewModel.searchController.text.toLowerCase()) ||
-                              liveCarListViewModel.liveCarsResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(liveCarListViewModel.searchController.text.toLowerCase())){
+                          for (int i = 0; i < liveCarListViewModel.liveCarsResponse.value.data!.length; i++) {
+                            if (liveCarListViewModel.liveCarsResponse.value.data![i].model!.toLowerCase().contains(liveCarListViewModel.searchController.text.toLowerCase()) ||
+                                liveCarListViewModel.liveCarsResponse.value.data![i].make!.toLowerCase().contains(liveCarListViewModel.searchController.text.toLowerCase()) ||
+                                liveCarListViewModel.liveCarsResponse.value.data![i].variant!.toLowerCase().contains(liveCarListViewModel.searchController.text.toLowerCase()) ||
+                                liveCarListViewModel.liveCarsResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(liveCarListViewModel.searchController.text.toLowerCase())) {
                               liveCarListViewModel.searchList.add(liveCarListViewModel.liveCarsResponse.value.data![i].sId.toString());
                               log(liveCarListViewModel.searchList.toString());
                             }
                           }
+                          liveCarListViewModel.update();
                         } else {
                           otbCarsListViewModel.searchList.clear();
-                          for(int i=0; i<otbCarsListViewModel.carsListResponse.value.data!.length; i++){
-                            if(otbCarsListViewModel.carsListResponse.value.data![i].model!.toLowerCase().contains(otbCarsListViewModel.searchController.text.toLowerCase()) ||
-                              otbCarsListViewModel.carsListResponse.value.data![i].make!.toLowerCase().contains(otbCarsListViewModel.searchController.text.toLowerCase()) ||
-                              otbCarsListViewModel.carsListResponse.value.data![i].variant!.toLowerCase().contains(otbCarsListViewModel.searchController.text.toLowerCase()) ||
-                              otbCarsListViewModel.carsListResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(otbCarsListViewModel.searchController.text.toLowerCase())){
+                          for (int i = 0; i < otbCarsListViewModel.carsListResponse.value.data!.length; i++) {
+                            if (otbCarsListViewModel.carsListResponse.value.data![i].model!.toLowerCase().contains(otbCarsListViewModel.searchController.text.toLowerCase()) ||
+                                otbCarsListViewModel.carsListResponse.value.data![i].make!.toLowerCase().contains(otbCarsListViewModel.searchController.text.toLowerCase()) ||
+                                otbCarsListViewModel.carsListResponse.value.data![i].variant!.toLowerCase().contains(otbCarsListViewModel.searchController.text.toLowerCase()) ||
+                                otbCarsListViewModel.carsListResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(otbCarsListViewModel.searchController.text.toLowerCase())) {
                               otbCarsListViewModel.searchList.add(otbCarsListViewModel.carsListResponse.value.data![i].sId.toString());
                               log(otbCarsListViewModel.searchList.toString());
                             }
                           }
+                          otbCarsListViewModel.update();
                         }
                       },
+                      onSubmitted: (value) {
+                        FocusScope.of(context).unfocus();
+                      },
                       prefixIcon: const Icon(Icons.search),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          if (tabController.index == 0) {
+                            liveCarListViewModel.searchController.clear();
+                            liveCarListViewModel.searchList.clear();
+                            liveCarListViewModel.isShowFullList.value = true;
+                            liveCarListViewModel.update();
+                          } else {
+                            otbCarsListViewModel.searchController.clear();
+                            otbCarsListViewModel.searchList.clear();
+                            otbCarsListViewModel.isShowFullList.value = true;
+                            otbCarsListViewModel.update();
+                          }
+                          FocusScope.of(context).unfocus();
+                        },
+                      ),
                       borderColor: MyColors.kPrimaryColor.withOpacity(0.1),
                       focusedBorderColor: MyColors.kPrimaryColor,
                       contentPadding: const EdgeInsets.all(8),
                       enabledBorderColor: MyColors.kPrimaryColor.withOpacity(0.1),
                       fillColor: MyColors.kPrimaryColor.withOpacity(0.1),
-                      validator: null),
+                      validator: null,
+                    )
                   )),
                 const SizedBox(width: 15,),
                 GestureDetector(
