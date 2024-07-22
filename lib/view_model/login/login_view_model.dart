@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:mera_partners/model/response/user_data/user_info_response.dart';
 import 'package:mera_partners/service/endpoints.dart';
 import 'package:mera_partners/service/exception_error_util.dart';
-import 'package:mera_partners/service/firebase_push_notifications.dart';
 import 'package:mera_partners/utils/constants.dart';
 import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/utils/shared_pref_manager.dart';
@@ -18,6 +17,7 @@ import 'package:http/http.dart' as http;
 import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:sms_autofill/sms_autofill.dart';
 import '../../routes/app_routes.dart';
+import '../../service/notification_service.dart';
 
 class LoginScreenViewModel extends GetxController {
   //login
@@ -65,7 +65,7 @@ class LoginScreenViewModel extends GetxController {
       String? message = json.decode(response.body)['message'];
       if (response.statusCode == 200) {
         if (globals.fcmToken == null || globals.fcmToken == '') {
-          await PushNotifications.getDeviceToken();
+          await NotificationService.getDeviceToken();
         }
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.body.toString());
@@ -145,14 +145,14 @@ class LoginScreenViewModel extends GetxController {
           globals.jsonHeaders = {'Content-Type': 'application/json','Authorization': 'Bearer ${globals.token}',};
           try {
             if (!userInfoResponse.value.data!.first.fcmNotification!.fcmToken!.contains(globals.fcmToken)) {
-                        await PushNotifications.saveToken(token: globals.fcmToken);
+                        await NotificationService.saveToken(token: globals.fcmToken);
                       }
           } catch (e) {
             log(e.toString());
-            await PushNotifications.saveToken(token: globals.fcmToken);
+            await NotificationService.saveToken(token: globals.fcmToken);
           }
 
-          if((globals.isOnboarding == null || globals.isOnboarding == false) && !DateTime.parse(userInfoResponse.value.data!.first.createdAt!).toLocal().isBefore(DateTime.now())){
+          if((globals.isOnboarding == null || globals.isOnboarding == false) && (userInfoResponse.value.data?.first.isCreated == true || !DateTime.parse(userInfoResponse.value.data!.first.createdAt!).toLocal().isBefore(DateTime.now()))){
             SharedPrefManager.instance.setBoolAsync(Constants.isOnboarding, true);
             Get.offAllNamed(AppRoutes.onboardingScreen);
           } else if (userInfoResponse.value.data?.first.isDocumentsVerified != null && (userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.SUBMITTED.name || userInfoResponse.value.data?.first.isDocumentsVerified == DocumentStatus.VERIFIED.name) && userInfoResponse.value.data?.first.isDeposited != null && userInfoResponse.value.data?.first.isDeposited == true) {
