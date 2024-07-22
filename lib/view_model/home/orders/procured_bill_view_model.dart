@@ -12,7 +12,12 @@ import '../../../../widgets/custom_toast.dart';
 import '../../../../widgets/progressbar.dart';
 
 class ProcuredScreenViewModel extends GetxController{
-
+  void clearSearch() {
+    searchController.clear();
+    isShowFullListProcured.value = true;
+    update();
+  }
+  RxBool isShowFullListProcured = true.obs;
   TextEditingController searchController = TextEditingController();
   RxList<Data> searchList = <Data>[].obs;
 

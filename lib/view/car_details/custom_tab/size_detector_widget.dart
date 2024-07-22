@@ -42,7 +42,7 @@ class _SizeDetectorWidgetState extends State<SizeDetectorWidget> {
     return Column(
       children: [
         widget.child,
-        (!widget.showViewIssue || widget.listLength == 2)
+        (!widget.showViewIssue || widget.listLength == 2 || widget.listLength < 2)
         ?const SizedBox()
         :Obx(
           () {

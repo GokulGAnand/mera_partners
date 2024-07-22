@@ -1,4 +1,5 @@
 import 'package:mera_partners/routes/app_routes.dart';
+import 'package:mera_partners/service/notification_service.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/constants.dart';
 import 'package:mera_partners/utils/dimens.dart';
@@ -16,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
-import '../../../service/firebase_push_notifications.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -238,7 +238,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     return CustomDialog(
                       title: MyStrings.logOutDesc,
                       okFun: () async{
-                        await PushNotifications.removeToken(globals.fcmToken ?? '');
+                        await NotificationService.removeToken(globals.fcmToken ?? '');
                         globals.clearData();
                         globals.fcmToken = null;
                         globals.uniqueUserId = null;

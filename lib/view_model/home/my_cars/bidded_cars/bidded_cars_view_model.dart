@@ -16,7 +16,7 @@ import '../../../../widgets/custom_toast.dart';
 import '../../../../widgets/progressbar.dart';
 
 class BidCarsListViewModel extends GetxController{
-
+  final isShowFullList = true.obs;
   TextEditingController bidCarsearchController = TextEditingController();
   RxList<String> bidCarsearchList = <String>[].obs;
 

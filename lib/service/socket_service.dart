@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:mera_partners/model/response/live/live_cars_list_response.dart';
-import 'package:mera_partners/service/notification_service.dart';
 import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/view_model/car_details/car_details_view_model.dart';
 import 'package:mera_partners/view_model/home/live/live_cars_list_view_model.dart';
@@ -25,7 +24,7 @@ class SocketService {
 
   connectToSocket() {
     //todo change url
-    socket = IO.io('ws://test.meracars.com', <String, dynamic>{
+    socket = IO.io('ws://api.meracars.com', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
     });
@@ -58,11 +57,13 @@ class SocketService {
         //   otbCarsList.add(carList[i]);
         // }
       }
-      Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data = liveCarsList;
-      Get.find<LiveCarsListViewModel>().updateBid(liveCarsList);
-      Get.find<LiveCarsListViewModel>().liveCarsResponse.value.count = liveCarsList.length;
-      Get.find<LiveCarsListViewModel>().update();
-      Get.find<LiveCarsListViewModel>().liveCarsResponse.refresh();
+      if (Get.isRegistered<LiveCarsListViewModel>()) {
+        Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data = liveCarsList;
+        Get.find<LiveCarsListViewModel>().updateBid(liveCarsList);
+        Get.find<LiveCarsListViewModel>().liveCarsResponse.value.count = liveCarsList.length;
+        Get.find<LiveCarsListViewModel>().update();
+        Get.find<LiveCarsListViewModel>().liveCarsResponse.refresh();
+      }
     }
 
     socket?.on('getBidInfo', (data) {
@@ -70,17 +71,18 @@ class SocketService {
       if (data != null) {
         List<Data> carList = parseCarDataList(data);
         filterCars(carList);
-        if ((Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data != null) && Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data!.isNotEmpty) {
-          for (int i = 0; i < Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data!.length; i++) {
-            num highestBid = Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data![i].highestBid ?? 0;
-            if ((Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data![i].leaderBoard != null) && Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data![i].leaderBoard!.isNotEmpty) {
-              if (Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data![i].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.autoBidLimit != null && highestBid >= element.autoBidLimit!)) {
-                NotificationService().showAutoBidNotification();
-                Get.find<LiveCarsListViewModel>().showAlertDialog();
-              }
-            }
-          }
-        }
+        ///Auto bid notification
+        // if ((Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data != null) && Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data!.isNotEmpty) {
+        //   for (int i = 0; i < Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data!.length; i++) {
+        //     num highestBid = Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data![i].highestBid ?? 0;
+        //     if ((Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data![i].leaderBoard != null) && Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data![i].leaderBoard!.isNotEmpty) {
+        //       if (Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data![i].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.autoBidLimit != null && highestBid >= element.autoBidLimit!)) {
+        //         NotificationService().showAutoBidNotification();
+        //         Get.find<LiveCarsListViewModel>().showAlertDialog();
+        //       }
+        //     }
+        //   }
+        // }
 
         ///OTB data update
         if (Get.isRegistered<OTBCarsListViewModel>()) {

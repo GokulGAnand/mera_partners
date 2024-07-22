@@ -64,6 +64,7 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                                   log(bidCarsListViewModel.bidCarsearchList.toString());
                                 }
                               }
+                              bidCarsListViewModel.update();
                             } else {
                               bidCarsListViewModel.likedCarsearchList.clear();
                               for(int i=0; i<bidCarsListViewModel.likeResponse.value.data![0].likedCars!.length; i++){
@@ -77,7 +78,21 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                               }
                             }
                           },
+                          onSubmitted: (value){
+                            FocusScope.of(context).unfocus();
+                          },
                           prefixIcon: const Icon(Icons.search),
+                          suffixIcon: IconButton(icon: const Icon(Icons.clear),
+                             onPressed: (){
+                            if(tabController.index == 0){
+                              bidCarsListViewModel.bidCarsearchController.clear();
+                              bidCarsListViewModel.bidCarsearchList.clear();
+                              bidCarsListViewModel.isShowFullList.value = true;
+                              bidCarsListViewModel.update();
+                            }
+                            FocusScope.of(context).unfocus();
+                             },
+                          ),
                           borderColor: MyColors.kPrimaryColor.withOpacity(0.1),
                           focusedBorderColor: MyColors.kPrimaryColor,
                           contentPadding: const EdgeInsets.all(8),
