@@ -28,8 +28,8 @@ class _SplashScreenState extends State<SplashScreen> {
         await splashScreenViewModel.getUserData();
       }
       // if (globals.fcmToken == null || globals.fcmToken == '') {
-      //   await PushNotifications.getDeviceToken().then((value) async {
-      //           await PushNotifications.saveToken(token: (globals.fcmToken ?? ''));
+      //   await NotificationService.getDeviceToken().then((value) async {
+      //           await NotificationService.saveToken(token: (globals.fcmToken ?? ''));
       //         },);
       // }
 
