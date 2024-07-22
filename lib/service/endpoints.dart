@@ -1,10 +1,10 @@
 class EndPoints {
   ///live server url
-  // static String baseUrl = 'https://api.meracars.com/api/v1/';
-  // static String socketUrl = 'https://api.meracars.com/api/v1/';
+  static String baseUrl = 'https://api.meracars.com/api/v1/';
+  static String socketUrl = 'https://api.meracars.com/api/v1/';
   ///test server url
-  static String baseUrl = 'https://test.meracars.com/api/v1/';
-  static String socketUrl = 'https://test.meracars.com/api/v1/';
+  // static String baseUrl = 'https://test.meracars.com/api/v1/';
+  // static String socketUrl = 'https://test.meracars.com/api/v1/';
   static String users = 'users/';
   static String setFCM = 'setfcm/';
   static String removeFcm = 'removefcm/';
