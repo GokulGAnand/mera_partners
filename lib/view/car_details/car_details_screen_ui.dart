@@ -1261,7 +1261,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             dividerColor: MyColors.grey.withOpacity(0.25),
             dividerHeight: 2,
             tabs: (issueList.isNotEmpty)?[
-              Tab(text: "View ${(issueList.isEmpty)?'':issueList.length} Issues"),
+              Tab(text: "View ${issueList.length} ${issueList.length==1 ? 'Issue' : 'Issues'}"),
               const Tab(text: "Good Parts"),
             ]
             :[
