@@ -43,6 +43,18 @@ class _OrdersScreenState extends State<OrdersScreen>
   void initState() {
     tabController.value = TabController(length: 3, vsync: this);
     super.initState();
+    negotiationScreenViewModel.searchLostController.addListener(() {
+      setState(() {});
+    });
+    negotiationScreenViewModel.searchNegotiationController.addListener(() {
+      setState(() {});
+    });
+    procuredScreenViewModel.searchController.addListener(() {
+      setState(() {});
+    });
+    rcTransferViewModel.searchRcTransferController.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -130,7 +142,11 @@ class _OrdersScreenState extends State<OrdersScreen>
                                 FocusScope.of(context).unfocus();
                               },
                               prefixIcon: const Icon(Icons.search),
-                              suffixIcon: IconButton(icon: const Icon(Icons.clear),
+                              suffixIcon: (tabController.value!.index ==0 && negotiationScreenViewModel.searchNegotiationController.text.isNotEmpty)||
+                                  (tabController.value!.index == 0 && negotiationScreenViewModel.searchLostController.text.isNotEmpty)||
+                                  (tabController.value!.index == 1 && procuredScreenViewModel.searchController.text.isNotEmpty)||
+                                  (tabController.value!.index ==2 && rcTransferViewModel.searchRcTransferController.text.isNotEmpty)
+                                  ?IconButton(icon: const Icon(Icons.clear),
                                 onPressed: (){
                                 if(tabController.value!.index ==0){
                                   if (negotiationScreenViewModel.isNegotiation.value) {
@@ -145,7 +161,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                                 }
                                 FocusScope.of(context).unfocus();
                                 },
-                              ),
+                              ):null,
                               borderColor: MyColors.kPrimaryColor.withOpacity(0.1),
                               focusedBorderColor: MyColors.kPrimaryColor,
                               contentPadding: const EdgeInsets.all(8),
