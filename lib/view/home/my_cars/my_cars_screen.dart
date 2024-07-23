@@ -34,6 +34,14 @@ class _MyCarsScreenState extends State<MyCarsScreen>
   void initState() {
     tabController = TabController(length: 2, vsync: this);
     super.initState();
+    bidCarsListViewModel.bidCarsearchController.addListener(() {
+      setState(() {});
+    });
+
+    bidCarsListViewModel.likedCarsearchController.addListener(() {
+      setState(() {});
+    });
+
   }
 
   @override
@@ -64,6 +72,7 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                                   log(bidCarsListViewModel.bidCarsearchList.toString());
                                 }
                               }
+                              bidCarsListViewModel.update();
                             } else {
                               bidCarsListViewModel.likedCarsearchList.clear();
                               for(int i=0; i<bidCarsListViewModel.likeResponse.value.data![0].likedCars!.length; i++){
@@ -75,9 +84,30 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                                   log(bidCarsListViewModel.likedCarsearchList.toString());
                                 }
                               }
+                              bidCarsListViewModel.update();
                             }
                           },
+                          onSubmitted: (value){
+                            FocusScope.of(context).unfocus();
+                          },
                           prefixIcon: const Icon(Icons.search),
+                          suffixIcon: (tabController.index ==0 ?bidCarsListViewModel.bidCarsearchController.text.isNotEmpty :bidCarsListViewModel.likedCarsearchController.text.isNotEmpty)
+                              ? IconButton(icon: const Icon(Icons.clear),
+                             onPressed: (){
+                            if(tabController.index == 0){
+                              bidCarsListViewModel.bidCarsearchController.clear();
+                              bidCarsListViewModel.bidCarsearchList.clear();
+                              bidCarsListViewModel.isShowFullList.value = true;
+                              bidCarsListViewModel.update();
+                            }else{
+                              bidCarsListViewModel.likedCarsearchController.clear();
+                              bidCarsListViewModel.likedCarsearchList.clear();
+                              bidCarsListViewModel.isShowFullList.value = true;
+                              bidCarsListViewModel.update();
+                            }
+                            FocusScope.of(context).unfocus();
+                             },
+                          ):null,
                           borderColor: MyColors.kPrimaryColor.withOpacity(0.1),
                           focusedBorderColor: MyColors.kPrimaryColor,
                           contentPadding: const EdgeInsets.all(8),

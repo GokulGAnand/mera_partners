@@ -33,8 +33,12 @@ void main() async {
 
 Future getPermission() async {
   PermissionStatus cameraStatus = await Permission.camera.status;
+  PermissionStatus notificationStatus = await Permission.notification.status;
   if (!cameraStatus.isGranted) {
     cameraStatus = await Permission.camera.request();
+  }
+  if(!notificationStatus.isGranted){
+    notificationStatus = await Permission.notification.request();
   }
   log("camera access: ${cameraStatus.isGranted}");
   PermissionStatus? storageStatus;

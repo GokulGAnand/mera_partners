@@ -43,7 +43,8 @@ class CustomTextFormField extends StatefulWidget {
     this.labelStyle,
     this.topPadding,
     this.leftPadding,
-    this.contentPadding
+    this.contentPadding,
+    this.onSubmitted
   });
 
   final String? labelText;
@@ -82,6 +83,7 @@ class CustomTextFormField extends StatefulWidget {
   final double? leftPadding;
   final FocusNode? focusNode;
   final EdgeInsetsGeometry? contentPadding;
+  final Function(String)? onSubmitted;
 
   final Key? formKey;
 

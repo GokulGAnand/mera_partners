@@ -13,7 +13,13 @@ import 'package:mera_partners/utils/globals.dart' as globals;
 
 
 class RcTransferViewModel extends GetxController{
-  
+  void clearSearch() {
+    searchRcTransferController.clear();
+    isShowFullListRcTransfer.value = true;
+    update();
+  }
+  RxBool isShowFullListRcTransfer = true.obs;
+
   TextEditingController searchRcTransferController = TextEditingController();
   RxList<Data> searchRcTransferList = <Data>[].obs;
 

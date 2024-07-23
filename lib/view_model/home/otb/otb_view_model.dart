@@ -16,7 +16,7 @@ import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
 
 class OTBCarsListViewModel extends GetxController {
-
+  final isShowFullList = true.obs;
   TextEditingController searchController = TextEditingController();
   RxList<String> searchList = <String>[].obs;
 
