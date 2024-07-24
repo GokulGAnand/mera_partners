@@ -140,8 +140,8 @@ class DocumentScreenViewModel extends GetxController {
     try {
       var request = http.MultipartRequest('PATCH', Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId!}'));
       request.fields.addAll({'fullname': fullNameController.value.text,
-        if(userInfoResponse.value.data?[0].isDocumentsVerified != DocumentStatus.VERIFIED.name)
-        "isDocumentsVerified": userInfoResponse.value.data?[0].isDocumentsVerified == "NOTSUBMITTED" ? DocumentStatus.SUBMITTED.name : userInfoResponse.value.data?[0].isDocumentsVerified ?? '',
+        if(userInfoResponse.value.data?[0].isDocumentsVerified == DocumentStatus.NOTSUBMITTED.name)
+        "isDocumentsVerified": DocumentStatus.SUBMITTED.name,
         'email': emailController.value.text,
         'businessName': businessNameController.value.text,
         'businessAddress': businessAddressController.value.text,

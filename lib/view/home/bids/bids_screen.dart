@@ -36,6 +36,14 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
   void initState() {
     tabController = TabController(length: 2, vsync: this);
     super.initState();
+    liveCarListViewModel.searchController.addListener(() {
+      setState(() {});
+    });
+
+    otbCarsListViewModel.searchController.addListener(() {
+      setState(() {});
+    });
+
   }
 
   @override
@@ -86,7 +94,10 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                         FocusScope.of(context).unfocus();
                       },
                       prefixIcon: const Icon(Icons.search),
-                      suffixIcon: IconButton(
+                      suffixIcon: (tabController.index == 0
+                          ? liveCarListViewModel.searchController.text.isNotEmpty
+                          : otbCarsListViewModel.searchController.text.isNotEmpty)
+                          ? IconButton(
                         icon: const Icon(Icons.clear),
                         onPressed: () {
                           if (tabController.index == 0) {
@@ -102,7 +113,8 @@ class _BidsScreenState extends State<BidsScreen> with SingleTickerProviderStateM
                           }
                           FocusScope.of(context).unfocus();
                         },
-                      ),
+                      )
+                          : null,
                       borderColor: MyColors.kPrimaryColor.withOpacity(0.1),
                       focusedBorderColor: MyColors.kPrimaryColor,
                       contentPadding: const EdgeInsets.all(8),

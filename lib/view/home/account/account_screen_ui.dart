@@ -1,5 +1,6 @@
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/service/notification_service.dart';
+import 'package:mera_partners/service/socket_service.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/constants.dart';
 import 'package:mera_partners/utils/dimens.dart';
@@ -42,9 +43,10 @@ class _AccountScreenState extends State<AccountScreen> {
           ),
           actions: [
             TextButton(
-              onPressed: () {
+              onPressed: () async {
+                SocketService().disconnect();
+                await NotificationService.removeToken(globals.fcmToken ?? '');
                 globals.clearData();
-                globals.fcmToken = null;
                 SharedPrefManager.instance.removeStringAsync(Constants.userName);
                 SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
                 SharedPrefManager.instance.removeStringAsync(Constants.email);
@@ -238,11 +240,9 @@ class _AccountScreenState extends State<AccountScreen> {
                     return CustomDialog(
                       title: MyStrings.logOutDesc,
                       okFun: () async{
+                        SocketService().disconnect();
                         await NotificationService.removeToken(globals.fcmToken ?? '');
                         globals.clearData();
-                        globals.fcmToken = null;
-                        globals.uniqueUserId = null;
-                        globals.jsonHeaders = {};
                         SharedPrefManager.instance.removeStringAsync(Constants.userName);
                         SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
                         SharedPrefManager.instance.removeStringAsync(Constants.email);
