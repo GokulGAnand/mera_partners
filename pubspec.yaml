@@ -59,6 +59,7 @@ dependencies:
   # pin_code_fields: ^8.0.1
   upgrader: ^10.3.0
   firebase_crashlytics: ^3.5.7
+  focus_detector: ^2.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
