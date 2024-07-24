@@ -794,6 +794,7 @@ class CarDetailsScreenViewModel extends GetxController {
           // ];
           documents.value = [
             Master(title: MyStrings.rcAvailability, value: reportResponse.value.data!.rcAvailability ?? ''),
+            if((reportResponse.value.data!.rcMismatch != null) && (reportResponse.value.data!.rcMismatch!.isNotEmpty))
             Master(title: MyStrings.rcMismatch, value: reportResponse.value.data!.rcMismatch ?? ''),
             if((reportResponse.value.data!.insurance != null) && (reportResponse.value.data!.insurance!.isNotEmpty))
             Master(title: MyStrings.insurance, value: reportResponse.value.data!.insurance ?? ''),
