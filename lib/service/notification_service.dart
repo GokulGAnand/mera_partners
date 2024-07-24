@@ -80,8 +80,13 @@ class NotificationService {
             channelDescription: 'This channel is used for important notifications.',
             icon: '@drawable/mera_cars_notification',
             sound: RawResourceAndroidNotificationSound('notification'),
+            playSound: true
           ),
-          iOS: DarwinNotificationDetails(sound: 'notification.mp3'),
+          iOS: DarwinNotificationDetails(
+            presentAlert: true,
+            presentBadge: true,
+            presentSound: true,
+            sound: 'notification.mp3'),
         ),
       );
     }
