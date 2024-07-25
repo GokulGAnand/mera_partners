@@ -24,10 +24,13 @@ class SocketService {
 
   connectToSocket() {
     //todo change url
-    socket = IO.io('ws://api.meracars.com', <String, dynamic>{
-      'transports': ['websocket'],
-      'autoConnect': false,
-    });
+    // socket = IO.io('ws://test.meracars.com', <String, dynamic>{
+    //   'transports': ['websocket'],
+    //   'autoConnect': false,
+    // });
+
+    socket = IO.io('ws://test.meracars.com', IO.OptionBuilder().setTransports(['websocket']).enableForceNew().build());
+
 
     List<Data> parseCarDataList(String jsonString) {
       final parsed = jsonDecode(jsonString).cast<Map<String, dynamic>>();
@@ -154,6 +157,11 @@ class SocketService {
     socket?.onDisconnect((_) {
       log('Disconnected from the socket server');
     });
+  }
+
+  void disconnect() {
+    socket?.disconnect();
+    socket?.close();
   }
 
   void sendSocketRequest(event, data) {
