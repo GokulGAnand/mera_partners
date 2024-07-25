@@ -102,7 +102,8 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                             }else{
                               bidCarsListViewModel.likedCarsearchController.clear();
                               bidCarsListViewModel.likedCarsearchList.clear();
-                              bidCarsListViewModel.isShowFullList.value = true;
+                              bidCarsListViewModel.likedCarsearchList.addAll(bidCarsListViewModel.likeResponse.value.data![0].likedCars!);
+                               bidCarsListViewModel.isShowFullList.value = true;
                               bidCarsListViewModel.update();
                             }
                             FocusScope.of(context).unfocus();

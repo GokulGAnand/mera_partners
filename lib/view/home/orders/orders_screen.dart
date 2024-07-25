@@ -142,22 +142,37 @@ class _OrdersScreenState extends State<OrdersScreen>
                                 FocusScope.of(context).unfocus();
                               },
                               prefixIcon: const Icon(Icons.search),
-                              suffixIcon: (tabController.value!.index ==0 && negotiationScreenViewModel.searchNegotiationController.text.isNotEmpty)||
-                                  (tabController.value!.index == 0 && negotiationScreenViewModel.searchLostController.text.isNotEmpty)||
+                              suffixIcon: (tabController.value!.index ==0 && negotiationScreenViewModel.isNegotiation.value && negotiationScreenViewModel.searchNegotiationController.text.isNotEmpty)||
+                                  (tabController.value!.index == 0 && !negotiationScreenViewModel.isNegotiation.value && negotiationScreenViewModel.searchLostController.text.isNotEmpty)||
                                   (tabController.value!.index == 1 && procuredScreenViewModel.searchController.text.isNotEmpty)||
                                   (tabController.value!.index ==2 && rcTransferViewModel.searchRcTransferController.text.isNotEmpty)
                                   ?IconButton(icon: const Icon(Icons.clear),
                                 onPressed: (){
                                 if(tabController.value!.index ==0){
                                   if (negotiationScreenViewModel.isNegotiation.value) {
-                                    negotiationScreenViewModel.clearNegotiationSearch();
+                                    negotiationScreenViewModel.searchNegotiationController.clear();
+                                    negotiationScreenViewModel.searchNegotiationList.clear();
+                                    negotiationScreenViewModel.searchNegotiationList.addAll(negotiationScreenViewModel.carListResponse.value.data ??[]);
+                                    negotiationScreenViewModel.isShowFullListNegotiation.value =true;
                                   }else{
-                                    negotiationScreenViewModel.clearLostSearch();
+                                    negotiationScreenViewModel.searchLostController.clear();
+                                    negotiationScreenViewModel.searchLostList.clear();
+                                    negotiationScreenViewModel.searchLostList.addAll(negotiationScreenViewModel.lostDealsData.value.data?[0].lostDeal ??[]);
+                                    negotiationScreenViewModel.isShowFullListLost.value = true;
                                   }
+                                  negotiationScreenViewModel.update();
                                 }else if(tabController.value!.index ==1){
-                                  procuredScreenViewModel.clearSearch();
+                                  procuredScreenViewModel.searchController.clear();
+                                  procuredScreenViewModel.searchList.clear();
+                                  procuredScreenViewModel.searchList.addAll(procuredScreenViewModel.liveCarsResponse.value.data ?? []);
+                                  procuredScreenViewModel.isShowFullListProcured.value =true;
+                                  procuredScreenViewModel.update();
                                 }else{
-                                  rcTransferViewModel.clearSearch();
+                                  rcTransferViewModel.searchRcTransferController.clear();
+                                  rcTransferViewModel.searchRcTransferList.clear();
+                                  rcTransferViewModel.searchRcTransferList.addAll(rcTransferViewModel.liveCarsResponse.value.data ?? []);
+                                  rcTransferViewModel.isShowFullListRcTransfer.value =true;
+                                  rcTransferViewModel.update();
                                 }
                                 FocusScope.of(context).unfocus();
                                 },
