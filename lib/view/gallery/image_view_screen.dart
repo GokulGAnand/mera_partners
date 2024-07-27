@@ -15,39 +15,10 @@ class ImageViewScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: MyColors.black4,
       appBar: CommonAppBar(title: image["title"]),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: Stack(
+        fit: StackFit.expand,
         children: [
-          image["subtitle"] == null || image["subtitle"].isEmpty
-              ? Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    image["image_title"],
-                    style: MyStyles.white16700,
-                  ),
-                )
-              : Padding(
-                  padding: const EdgeInsets.only(
-                    left: 16,
-                    right: 16,
-                    bottom: 8,
-                    top: 16
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: image["subtitle"] != null && image["subtitle"].isNotEmpty
-                            ? Text(
-                                image["image_title"] + ' (${image["subtitle"]})',
-                                style: MyStyles.white16700,
-                              )
-                            : const SizedBox(),
-                      )
-                    ],
-                  ),
-                ),
-          Expanded(child: InteractiveViewer(
+          InteractiveViewer(
             minScale: 0.1,
             maxScale: 4.0,
             clipBehavior: Clip.none,
@@ -72,7 +43,30 @@ class ImageViewScreen extends StatelessWidget {
                 },
               ),
             ),
-          ),)
+          ),
+          Positioned(
+            left: 16,
+            right: 16,
+            bottom: 16,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  image["image_title"],
+                  style: MyStyles.white16700,
+                ),
+                if (image["subtitle"] != null && image["subtitle"].isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: Text(
+                      '(${image["subtitle"]})',
+                      style: MyStyles.white16700.copyWith(fontSize: 14),
+                    ),
+                  ),
+              ],
+            ),
+          ),
         ],
       ),
     );
