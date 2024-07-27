@@ -139,8 +139,12 @@ class DocumentScreenViewModel extends GetxController {
     ProgressBar.instance.showProgressbar(Get.context!);
     try {
       var request = http.MultipartRequest('PATCH', Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId!}'));
-      request.fields.addAll({'fullname': fullNameController.value.text,
-        if(userInfoResponse.value.data?[0].isDocumentsVerified == DocumentStatus.NOTSUBMITTED.name)
+      request.fields.addAll({
+        if(fullNameController.value.text.isEmpty) 'fullname': fullNameController.value.text,
+        if(userInfoResponse.value.data?[0].isDocumentsVerified == DocumentStatus.NOTSUBMITTED.name 
+        && emailController.value.text.isNotEmpty && businessNameController.value.text.isNotEmpty 
+        && businessAddressController.value.text.isNotEmpty && pinCodeController.value.text.isNotEmpty 
+        && phoneNumberController.value.text.isNotEmpty && districtController.value.text.isNotEmpty)
         "isDocumentsVerified": DocumentStatus.SUBMITTED.name,
         'email': emailController.value.text,
         'businessName': businessNameController.value.text,
