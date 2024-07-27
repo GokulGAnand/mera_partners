@@ -40,65 +40,66 @@ class NotificationService {
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
     );
-    notificationsPlugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
-        ?.requestPermissions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+    notificationsPlugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()?.requestPermissions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
+    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(alert: true, badge: true, sound: true);
     await notificationsPlugin.initialize(initializationSettings, onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) async {});
 
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    ///Function to handle foreground notifications
     FirebaseMessaging.onMessage.listen(_firebaseMessagingForegroundHandler);
 
     // await FirebaseMessaging.instance.subscribeToTopic("all");
 
-    // Create notification channel
+    ///channel creation for android to play custom notification sound
     const AndroidNotificationChannel channel = AndroidNotificationChannel(
       'high_importance_channel',
       'High Importance Notifications',
       description: 'This channel is used for important notifications.',
       importance: Importance.high,
+      sound: RawResourceAndroidNotificationSound('notification'),
+      playSound: true,
     );
 
     await notificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(channel);
   }
 
-  static Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-    await Firebase.initializeApp();
-    NotificationService()._showNotification(message);
+  static Future<void> _firebaseMessagingForegroundHandler(RemoteMessage message) async {
+    NotificationService().showNotificationCustomSound(message);
   }
 
-  static Future<void> _firebaseMessagingForegroundHandler(RemoteMessage message) async {
-    NotificationService()._showNotification(message);
-  }
-  Future<void> _showNotification(RemoteMessage message) async {
+  Future<void> showNotificationCustomSound(RemoteMessage message) async {
     RemoteNotification? notification = message.notification;
-    AndroidNotification? android = message.notification?.android;
-    if (notification != null && android != null) {
-      notificationsPlugin.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
-        const NotificationDetails(
-          android: AndroidNotificationDetails(
-            'high_importance_channel', // Ensure this matches the channel ID defined in initialize
-            'High Importance Notifications',
-            channelDescription: 'This channel is used for important notifications.',
-            icon: 'mipmap/ic_launcher',
-            sound: RawResourceAndroidNotificationSound('notification'),
-            playSound: true,
-            importance: Importance.max,
-            priority: Priority.high,
-          ),
-          iOS: DarwinNotificationDetails(
-            presentAlert: true,
-            presentBadge: true,
-            presentSound: true,
-            sound: 'notification.mp3'),
-        ),
-      );
-    }
+    if (notification == null) return;
+    const AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+      'high_importance_channel',
+      'High Importance Notifications',
+      channelDescription: 'This channel is used for important notifications.',
+      sound: RawResourceAndroidNotificationSound('notification'),
+      playSound: true,
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+    const DarwinNotificationDetails darwinNotificationDetails = DarwinNotificationDetails(
+      sound: 'notification.caf',
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+    );
+    const NotificationDetails notificationDetails = NotificationDetails(
+      android: androidNotificationDetails,
+      iOS: darwinNotificationDetails,
+      macOS: darwinNotificationDetails,
+    );
+    await notificationsPlugin.show(
+      id++,
+      notification.title,
+      notification.body,
+      notificationDetails,
+    );
   }
 
   static Future<String?> getDeviceToken({int maxRetries = 3}) async {
@@ -148,11 +149,11 @@ class NotificationService {
         body: jsonEncode({"fcmToken": token}),
       );
       log(response.body);
-      if(kDebugMode){
+      if (kDebugMode) {
         print(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.removeFcm + (globals.uniqueUserId ?? '')));
         print(jsonEncode({"fcmToken": token}));
         print(globals.jsonHeaders.toString());
-        }
+      }
       if (response.statusCode == 200) {
         globals.fcmToken = null;
         globals.uniqueUserId = null;
@@ -198,7 +199,7 @@ class NotificationService {
     }
   }
 
-  /*NotificationDetails _notificationDetails(bool isNegotiation, {Duration? negotiationTimer}) {
+/*NotificationDetails _notificationDetails(bool isNegotiation, {Duration? negotiationTimer}) {
     DateTime currentTime = DateTime.now();
     DateTime whenTimer = currentTime.add(negotiationTimer ?? const Duration(seconds: 0));
     return NotificationDetails(

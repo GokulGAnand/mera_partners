@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:mera_partners/service/firebase_push_notifications.dart';
 import 'package:mera_partners/utils/images.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
