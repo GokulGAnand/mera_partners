@@ -140,17 +140,24 @@ class DocumentScreenViewModel extends GetxController {
     try {
       var request = http.MultipartRequest('PATCH', Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId!}'));
       request.fields.addAll({
-        if(fullNameController.value.text.isEmpty) 'fullname': fullNameController.value.text,
+        if(fullNameController.value.text.isNotEmpty && userInfoResponse.value.data?[0].fullname != fullNameController.value.text)
+          'fullname': fullNameController.value.text,
         if(userInfoResponse.value.data?[0].isDocumentsVerified == DocumentStatus.NOTSUBMITTED.name 
         && emailController.value.text.isNotEmpty && businessNameController.value.text.isNotEmpty 
         && businessAddressController.value.text.isNotEmpty && pinCodeController.value.text.isNotEmpty 
         && phoneNumberController.value.text.isNotEmpty && districtController.value.text.isNotEmpty)
         "isDocumentsVerified": DocumentStatus.SUBMITTED.name,
+        if(emailController.value.text.isNotEmpty && userInfoResponse.value.data?[0].email != emailController.value.text)
         'email': emailController.value.text,
+        if(businessNameController.value.text.isNotEmpty && userInfoResponse.value.data?[0].businessName != businessNameController.value.text)
         'businessName': businessNameController.value.text,
+        if(businessAddressController.value.text.isNotEmpty && userInfoResponse.value.data?[0].businessAddress != businessAddressController.value.text)
         'businessAddress': businessAddressController.value.text,
+        if(pinCodeController.value.text.isNotEmpty && userInfoResponse.value.data?[0].pincode != pinCodeController.value.text)
         'pincode': pinCodeController.value.text,
+        if(phoneNumberController.value.text.isNotEmpty && userInfoResponse.value.data?[0].contactNo.toString() != phoneNumberController.value.text)
         'contactNo': phoneNumberController.value.text,
+        if(districtController.value.text.isNotEmpty && userInfoResponse.value.data?[0].district != districtController.value.text)
         'district': districtController.value.text});
       if (panCard.value != null && !panCard.value!.path.startsWith('http') && !panCard.value!.path.startsWith('https')) {
         request.files.add(await http.MultipartFile.fromPath('panCard', panCard.value!.path, contentType: MediaType('image', panCard.value!.path.split('.').last)));

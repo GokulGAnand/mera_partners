@@ -24,21 +24,23 @@ class Constants {
   static const tenMinutes = 600000;
 
   static String formatTime(DateTime dateTime) {
-    String period = dateTime.hour < 12 ? "AM" : "PM";
-    int hour = dateTime.hour;
-    if (hour == 0) hour = 12;
-    return "$hour:${dateTime.minute.toString().padLeft(2, '0')} $period";
+    return DateFormat.jm().format(dateTime);
   }
 
   static String formatDateTime(DateTime? dateTime) {
     return dateTime != null ? "${dateTime.day}/${dateTime.month} ${formatTime(dateTime)}":"";
   }
 
+  // String formatDateTime(DateTime? dateTime) {
+  //   if (dateTime == null) return '';
+  //   return DateFormat.yMMMd().add_jm().format(dateTime);
+  // }
+
   static String getScheduledStatus(DateTime? bidStartTime){
     if (bidStartTime?.day == DateTime.now().day) {
       return "Scheduled for today, ${formatTime(bidStartTime ?? DateTime.now())}";
     } else if (bidStartTime?.day == DateTime.now().day + 1) {
-      return "Scheduled for tomorrow, ${bidStartTime?.hour}:${bidStartTime?.minute}";
+      return "Scheduled for tomorrow, ${DateFormat.jm().format(bidStartTime!)}";
     } else {
       return "Scheduled for, ${formatDateTime(bidStartTime)}";
     }
