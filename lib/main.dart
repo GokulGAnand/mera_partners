@@ -32,27 +32,34 @@ void main() async {
 }
 
 Future getPermission() async {
-  PermissionStatus cameraStatus = await Permission.camera.status;
-  PermissionStatus notificationStatus = await Permission.notification.status;
-  if (!cameraStatus.isGranted) {
-    cameraStatus = await Permission.camera.request();
-  }
-  if(!notificationStatus.isGranted){
-    notificationStatus = await Permission.notification.request();
-  }
-  log("camera access: ${cameraStatus.isGranted}");
-  PermissionStatus? storageStatus;
-  if(Platform.isAndroid){
-    final deviceInfo = await DeviceInfoPlugin().androidInfo;
-    if (deviceInfo.version.sdkInt > 32) {
-      storageStatus = await Permission.photos.request();
-    } else {
-      storageStatus = await Permission.storage.request();
+  try{
+    PermissionStatus cameraStatus = await Permission.camera.status;
+    PermissionStatus notificationStatus = await Permission.notification.status;
+    if (!cameraStatus.isGranted) {
+      cameraStatus = await Permission.camera.request();
     }
-  } else {
-    storageStatus = await Permission.storage.request();
+    if(!notificationStatus.isGranted){
+      notificationStatus = await Permission.notification.request();
+    }
+    log("camera access: ${cameraStatus.isGranted}");
+    PermissionStatus? storageStatus;
+    if(Platform.isAndroid){
+      final deviceInfo = await DeviceInfoPlugin().androidInfo;
+      if (deviceInfo.version.sdkInt > 32) {
+        storageStatus = await Permission.photos.request();
+      } else {
+        storageStatus = await Permission.storage.request();
+      }
+    } else {
+      storageStatus = await Permission.storage.status;
+      if(!storageStatus.isGranted){
+        storageStatus = await Permission.storage.request();
+      }
+    }
+    log("storage access: ${storageStatus.isGranted}");
+  } catch(e){
+    log(e.toString());
   }
-  log("storage access: ${storageStatus.isGranted}");
 }
 
 class MyApp extends StatelessWidget {

@@ -175,7 +175,7 @@ class DocumentScreenViewModel extends GetxController {
         request.files.add(await http.MultipartFile.fromPath('canceledCheque', cancelledCheque.value!.path, contentType: MediaType('image', cancelledCheque.value!.path.split('.').last)));
       }
       request.headers.addAll(globals.headers);
-      log(request.fields.toString());
+      log(request.fields.toString()); 
       log(request.toString());
 
       var response = await request.send();
