@@ -80,7 +80,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
   @override
   void dispose() {
     if(carDetailsScreenViewModel.videoController.value != null){
-      carDetailsScreenViewModel.videoController.value!.pause();
+      carDetailsScreenViewModel.videoController.value!.dispose();
     }
     carDetailsScreenViewModel.timerController?.value.dispose();
     super.dispose();
@@ -1219,13 +1219,19 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                             return Stack(
                               alignment: Alignment.center,
                               children: [
-                                AspectRatio(
-                                        // aspectRatio: carDetailsScreenViewModel
-                                        //     .videoController.value!.value.aspectRatio,
-                                        aspectRatio: 16/9,
-                                        child: VideoPlayer(carDetailsScreenViewModel
-                                            .videoController.value!),
-                                      ),
+                                FocusDetector(
+                                  onVisibilityLost: (){
+                                    carDetailsScreenViewModel.videoController.value!.pause();
+                                    carDetailsScreenViewModel.playVideo.value = false;
+                                  },
+                                  child: AspectRatio(
+                                          // aspectRatio: carDetailsScreenViewModel
+                                          //     .videoController.value!.value.aspectRatio,
+                                          aspectRatio: 16/9,
+                                          child: VideoPlayer(carDetailsScreenViewModel
+                                              .videoController.value!),
+                                        ),
+                                ),
                                 InkWell(
                                       onTap: () {
                                         if (carDetailsScreenViewModel
