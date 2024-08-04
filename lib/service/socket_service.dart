@@ -29,7 +29,7 @@ class SocketService {
     //   'autoConnect': false,
     // });
 
-    socket = IO.io('ws://test.meracars.com', IO.OptionBuilder().setTransports(['websocket']).enableForceNew().build());
+    socket = IO.io('ws://api.meracars.com', IO.OptionBuilder().setTransports(['websocket']).enableForceNew().build());
 
 
     List<Data> parseCarDataList(String jsonString) {

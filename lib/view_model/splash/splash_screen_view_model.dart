@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:mera_partners/model/response/user_data/user_car_details_response.dart';
+import 'package:mera_partners/service/api_manager.dart';
 import 'package:mera_partners/service/endpoints.dart';
 import 'package:mera_partners/service/exception_error_util.dart';
 import 'package:mera_partners/utils/constants.dart';
 import 'package:mera_partners/utils/shared_pref_manager.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
-import 'package:http/http.dart' as http;
 import 'package:mera_partners/widgets/custom_toast.dart';
 
 class SplashScreenViewModel extends GetxController {
@@ -17,6 +17,7 @@ class SplashScreenViewModel extends GetxController {
 
   Future<bool> loadData() async {
     globals.token = await SharedPrefManager.instance.getStringAsync(Constants.token);
+    globals.refreshToken = await SharedPrefManager.instance.getStringAsync(Constants.refreshToken);
     globals.isOnboarding = await SharedPrefManager.instance.getBoolAsync(Constants.isOnboarding);
     if (globals.token != null && globals.token.toString().isNotEmpty) {
       globals.phoneNum = await SharedPrefManager.instance.getStringAsync(Constants.phoneNum);
@@ -43,11 +44,8 @@ class SplashScreenViewModel extends GetxController {
 
   Future<void> getUserData() async {
     try {
-      log('API URL: ${Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}')}');
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'), headers: globals.headers);
-      log('API Response Body: ${response.body}');
+      var response = await ApiManager.get(endpoint: EndPoints.users + globals.uniqueUserId!);
       if (response.statusCode == 200) {
-        // ProgressBar.instance.stopProgressBar(Get.context!);
         userResponse.value = UserResponse.fromJson(jsonDecode(response.body));
         log("isDeactivate: ${userResponse.value.data![0].isDeactivate}");
         if (userResponse.value.data![0].isDeactivate == true) {
@@ -59,19 +57,17 @@ class SplashScreenViewModel extends GetxController {
           SharedPrefManager.instance.removeStringAsync(Constants.email);
           SharedPrefManager.instance.removeStringAsync(Constants.contactNo);
           SharedPrefManager.instance.removeStringAsync(Constants.token);
+          SharedPrefManager.instance.removeStringAsync(Constants.refreshToken);
           SharedPrefManager.instance.removeStringAsync(Constants.fcmToken);
           SharedPrefManager.instance.removeStringAsync(Constants.userId);
           SharedPrefManager.instance.removeStringAsync(Constants.uniqueUserId);
           SharedPrefManager.instance.removeStringAsync(Constants.documentStatus);
           isLoginAlready = false;
         }
-        log('API Response svvs: ${response.body}');
       } else {
-        // ProgressBar.instance.stopProgressBar(Get.context!);
         log('API Error: ${response.reasonPhrase}');
       }
     } catch (e) {
-      // ProgressBar.instance.stopProgressBar(Get.context!);
       log('Exception occurred: $e');
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
     }

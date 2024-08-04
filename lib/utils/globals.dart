@@ -10,6 +10,7 @@ bool? isOnboarding;
 String? city;
 int? contactNo;
 String? token ;
+String? refreshToken ;
 String? carId;
 String? phoneNum;
 String? email;
@@ -28,6 +29,7 @@ void clearData(){
   city = null;
   contactNo = null;
   token = null;
+  refreshToken = null;
   carId = null;
   phoneNum = null;
   email = null;

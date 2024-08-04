@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:mera_partners/model/response/user_data/user_car_details_response.dart';
+import 'package:mera_partners/service/api_manager.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:mera_partners/view_model/home/orders/procured_bill_view_model.dart';
 import 'package:mera_partners/view_model/home/orders/rc_transfer_view_model.dart';
@@ -18,17 +18,18 @@ import '../../../widgets/custom_toast.dart';
 import '../../../widgets/progressbar.dart';
 
 class NegotiationViewModel extends GetxController {
-
   void clearNegotiationSearch() {
     searchNegotiationController.clear();
     isShowFullListNegotiation.value = true;
     update();
   }
+
   void clearLostSearch() {
     searchLostController.clear();
     isShowFullListLost.value = true;
     update();
   }
+
   RxBool isShowFullListLost = true.obs;
   RxBool isShowFullListNegotiation = true.obs;
   TextEditingController searchNegotiationController = TextEditingController();
@@ -36,11 +37,14 @@ class NegotiationViewModel extends GetxController {
 
   TextEditingController searchLostController = TextEditingController();
   RxList<LostDeal> searchLostList = <LostDeal>[].obs;
-  
+
   var carListResponse = CarListResponse().obs;
   var lostDealsData = UserResponse().obs;
   RxBool isNegotiation = true.obs;
-  List<Master> negotiationCategory = [Master(MyStrings.negotiation, true.obs),Master(MyStrings.lostDeals, false.obs),];
+  List<Master> negotiationCategory = [
+    Master(MyStrings.negotiation, true.obs),
+    Master(MyStrings.lostDeals, false.obs),
+  ];
   List<Map<String, dynamic>> negotiationOrdersCategory = [
     {"title": MyStrings.negotiation, "isClick": true.obs},
     {"title": MyStrings.lostDeals, "isClick": false.obs}
@@ -53,26 +57,24 @@ class NegotiationViewModel extends GetxController {
     super.onInit();
   }
 
-  void onEnd(){
+  void onEnd() {
     if (Get.isRegistered<NegotiationViewModel>()) {
       Get.find<NegotiationViewModel>().getNegotiationCarsData();
       Get.find<NegotiationViewModel>().getLostDeal();
     }
-    if(Get.isRegistered<ProcuredScreenViewModel>()){
+    if (Get.isRegistered<ProcuredScreenViewModel>()) {
       Get.find<ProcuredScreenViewModel>().getProcuredBill();
     }
-    if(Get.isRegistered<RcTransferViewModel>()){
+    if (Get.isRegistered<RcTransferViewModel>()) {
       Get.find<RcTransferViewModel>().getRcTransfer();
     }
   }
 
   void getNegotiationCarsData() async {
     try {
-      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/?status=NEGOTIATION').toString());
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/?status=NEGOTIATION'), headers: globals.headers);
+      var response = await ApiManager.get(endpoint: '${EndPoints.status}?status=NEGOTIATION');
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        log("Negotiation Response\n${response.body}");
         carListResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
         searchNegotiationList.value = CarListResponse.fromJson(jsonDecode(response.body)).data!;
       } else {
@@ -88,14 +90,13 @@ class NegotiationViewModel extends GetxController {
 
   void getLostDeal() async {
     try {
-      log('API URL: ${Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}')}');
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'), headers: globals.headers);
+      var response = await ApiManager.get(endpoint: EndPoints.users + globals.uniqueUserId!);
       log('API Response Body: ${response.body}');
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         lostDealsData.value = UserResponse.fromJson(jsonDecode(response.body));
-        searchLostList.value = UserResponse.fromJson(jsonDecode(response.body)).data![0].lostDeal ?? [];
-        if (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false) {
+        searchLostList.value = lostDealsData.value.data?.first.lostDeal ?? [];
+        if (lostDealsData.value.data!.isNotEmpty && (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false)) {
           globals.documentStatus = lostDealsData.value.data?.first.isDocumentsVerified;
           globals.isDeposited = lostDealsData.value.data?.first.isDeposited;
           SharedPrefManager.instance.setStringAsync(Constants.documentStatus, lostDealsData.value.data!.first.isDocumentsVerified.toString());
@@ -115,18 +116,16 @@ class NegotiationViewModel extends GetxController {
   void acceptOrRejectOffer(String status, String carId) async {
     try {
       ProgressBar.instance.showProgressbar(Get.context!);
-      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'), headers: globals.jsonHeaders, body: jsonEncode({"status": status}));
-
+      var response = await ApiManager.patch(endpoint: EndPoints.status + carId, body: {"status": status});
       if (response.statusCode == 200) {
         CustomToast.instance.showMsg(MyStrings.success);
         ProgressBar.instance.stopProgressBar(Get.context!);
-        log(response.body.toString());
         getNegotiationCarsData();
         getLostDeal();
-        if(Get.isRegistered<ProcuredScreenViewModel>()){
+        if (Get.isRegistered<ProcuredScreenViewModel>()) {
           Get.find<ProcuredScreenViewModel>().getProcuredBill();
         }
-        if(Get.isRegistered<RcTransferViewModel>()){
+        if (Get.isRegistered<RcTransferViewModel>()) {
           Get.find<RcTransferViewModel>().getRcTransfer();
         }
       } else {
@@ -141,9 +140,9 @@ class NegotiationViewModel extends GetxController {
   }
 }
 
-class Master{
+class Master {
   String title;
   RxBool isClick = false.obs;
 
-  Master(this.title,this.isClick);
+  Master(this.title, this.isClick);
 }

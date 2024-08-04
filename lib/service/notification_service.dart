@@ -6,6 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:http/http.dart' as http;
+import 'package:mera_partners/service/api_manager.dart';
 import 'package:mera_partners/service/endpoints.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:mera_partners/utils/shared_pref_manager.dart';
@@ -100,8 +101,8 @@ class NotificationService {
     );
     await notificationsPlugin.show(
       id++,
+      'Hurray! New car arrived.',
       notification.title,
-      notification.body,
       notificationDetails,
     );
   }
@@ -134,7 +135,8 @@ class NotificationService {
       request.body = jsonEncode({"fcmToken": token, if (Platform.isIOS) "platform": "IOS"});
       request.headers.addAll(headers);
 
-      http.StreamedResponse response = await request.send();
+      // http.StreamedResponse response = await request.send();
+      var response = await ApiManager.post(endpoint: EndPoints.users + EndPoints.setFCM + (globals.uniqueUserId ?? ''), body: {"fcmToken": token, if (Platform.isIOS) "platform": "IOS"});
       if (response.statusCode == 200) {
         log("fcm token successfully saved");
       } else {
@@ -147,12 +149,13 @@ class NotificationService {
 
   static Future<void> removeToken(String token) async {
     try {
-      var response = await http.post(
-        Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.removeFcm + (globals.uniqueUserId ?? '')),
-        headers: globals.jsonHeaders,
-        body: jsonEncode({"fcmToken": token}),
-      );
-      log(response.body);
+      // var response = await http.post(
+      //   Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.removeFcm + (globals.uniqueUserId ?? '')),
+      //   headers: globals.jsonHeaders,
+      //   body: jsonEncode({"fcmToken": token}),
+      // );
+      var response = await ApiManager.post(endpoint: EndPoints.users + EndPoints.removeFcm + (globals.uniqueUserId ?? ''), body: {"fcmToken": token});
+      
       if (kDebugMode) {
         print(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.removeFcm + (globals.uniqueUserId ?? '')));
         print(jsonEncode({"fcmToken": token}));

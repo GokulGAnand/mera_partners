@@ -52,6 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
     SharedPrefManager.instance.removeStringAsync(Constants.email);
     SharedPrefManager.instance.removeStringAsync(Constants.contactNo);
     SharedPrefManager.instance.removeStringAsync(Constants.token);
+    SharedPrefManager.instance.removeStringAsync(Constants.refreshToken);
     SharedPrefManager.instance.removeStringAsync(Constants.fcmToken);
     SharedPrefManager.instance.removeStringAsync(Constants.userId);
     SharedPrefManager.instance.removeStringAsync(Constants.uniqueUserId);

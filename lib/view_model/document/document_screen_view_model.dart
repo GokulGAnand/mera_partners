@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:mera_partners/routes/app_routes.dart';
+import 'package:mera_partners/service/api_manager.dart';
 import 'package:mera_partners/service/endpoints.dart';
 import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:mera_partners/widgets/progressbar.dart';
@@ -60,7 +61,7 @@ class DocumentScreenViewModel extends GetxController {
     //     getDocument();
     //   }
     // } else {
-      getDocument();
+    getDocument();
     // }
     super.onInit();
   }
@@ -91,12 +92,13 @@ class DocumentScreenViewModel extends GetxController {
 
   void getDocument() async {
     try {
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId}'), headers: globals.headers);
+      // var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId}'), headers: globals.headers);
+      var response = await ApiManager.get(endpoint: EndPoints.users + globals.uniqueUserId!);
       userInfoResponse.value = UserInfoResponse.fromJson(json.decode(response.body));
       if (userInfoResponse.value.data != null) {
         loadData();
       }
-      if (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false) {
+      if (userInfoResponse.value.data!.isNotEmpty && (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false)) {
         globals.documentStatus = userInfoResponse.value.data?.first.isDocumentsVerified;
         globals.isDeposited = userInfoResponse.value.data?.first.isDeposited;
         SharedPrefManager.instance.setStringAsync(Constants.documentStatus, userInfoResponse.value.data!.first.isDocumentsVerified.toString());
@@ -142,9 +144,9 @@ class DocumentScreenViewModel extends GetxController {
       request.fields.addAll({
         if(fullNameController.value.text.isNotEmpty && userInfoResponse.value.data?[0].fullname != fullNameController.value.text)
           'fullname': fullNameController.value.text,
-        if(userInfoResponse.value.data?[0].isDocumentsVerified == DocumentStatus.NOTSUBMITTED.name 
-        && emailController.value.text.isNotEmpty && businessNameController.value.text.isNotEmpty 
-        && businessAddressController.value.text.isNotEmpty && pinCodeController.value.text.isNotEmpty 
+        if(userInfoResponse.value.data?[0].isDocumentsVerified == DocumentStatus.NOTSUBMITTED.name
+        && emailController.value.text.isNotEmpty && businessNameController.value.text.isNotEmpty
+        && businessAddressController.value.text.isNotEmpty && pinCodeController.value.text.isNotEmpty
         && phoneNumberController.value.text.isNotEmpty && districtController.value.text.isNotEmpty)
         "isDocumentsVerified": DocumentStatus.SUBMITTED.name,
         if(emailController.value.text.isNotEmpty && userInfoResponse.value.data?[0].email != emailController.value.text)
@@ -185,21 +187,31 @@ class DocumentScreenViewModel extends GetxController {
       log(request.fields.toString()); 
       log(request.toString());
 
-      var response = await request.send();
+      if (request.files.isNotEmpty || request.fields.isNotEmpty) {
+        var response = await request.send();
 
-      if (response.statusCode == 200) {
-        globals.documentStatus = DocumentStatus.SUBMITTED.name;
-        await SharedPrefManager.instance.setStringAsync(Constants.documentStatus,DocumentStatus.SUBMITTED.name);
-        ProgressBar.instance.stopProgressBar(Get.context!);
-        log('success');
-        log(response.stream.toString());
-        return true;
-      } else {
-        ProgressBar.instance.stopProgressBar(Get.context!);
-        log(response.reasonPhrase.toString());
-        CustomToast.instance.showMsg(MyStrings.unableToConnect);
-        return false;
+        if(response.statusCode == 401){
+          if(await ApiManager.refreshAccessToken()){
+            addDocument();
+          }
+        } else if (response.statusCode == 200) {
+          if (userInfoResponse.value.data?[0].isDocumentsVerified == DocumentStatus.NOTSUBMITTED.name && emailController.value.text.isNotEmpty && businessNameController.value.text.isNotEmpty && businessAddressController.value.text.isNotEmpty && pinCodeController.value.text.isNotEmpty && phoneNumberController.value.text.isNotEmpty && districtController.value.text.isNotEmpty) {
+            globals.documentStatus = DocumentStatus.SUBMITTED.name;
+            await SharedPrefManager.instance.setStringAsync(Constants.documentStatus, DocumentStatus.SUBMITTED.name);
+          }
+          ProgressBar.instance.stopProgressBar(Get.context!);
+          log('success');
+          log(response.stream.toString());
+          return true;
+        } else {
+          ProgressBar.instance.stopProgressBar(Get.context!);
+          log(response.reasonPhrase.toString());
+          CustomToast.instance.showMsg(MyStrings.unableToConnect);
+          return false;
+        }
       }
+      ProgressBar.instance.stopProgressBar(Get.context!);
+      return true;
     } catch (e) {
       log(e.toString());
       ProgressBar.instance.stopProgressBar(Get.context!);
@@ -210,7 +222,8 @@ class DocumentScreenViewModel extends GetxController {
   void createOrder() async {
     try {
       log(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.createOrder).toString());
-      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.createOrder), headers: globals.jsonHeaders, body: json.encode({"amount": 10000}));
+      // var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.createOrder), headers: globals.jsonHeaders, body: json.encode({"amount": 10000}));
+      var response = await ApiManager.post(endpoint: EndPoints.users + EndPoints.createOrder, body: {"amount": 10000});
       log(response.body.toString());
       if (response.statusCode == 201 || response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
@@ -304,15 +317,16 @@ class DocumentScreenViewModel extends GetxController {
     try {
       log(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.verifyPayment).toString());
       log(json.encode({"razorpay_order_id": createOrderResponse.value.data?.id, "razorpay_payment_id": paymentId, "razorpay_signature": signature}));
-      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.verifyPayment), headers: globals.jsonHeaders,
-          body: json.encode({
-            "razorpay_order_id": createOrderResponse.value.data?.id,
-            "razorpay_payment_id": paymentId,
-            "razorpay_signature": signature}));
+      // var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.users + EndPoints.verifyPayment), headers: globals.jsonHeaders,
+      //     body: json.encode({
+      //       "razorpay_order_id": createOrderResponse.value.data?.id,
+      //       "razorpay_payment_id": paymentId,
+      //       "razorpay_signature": signature}));
+      var response = await ApiManager.post(endpoint: EndPoints.users + EndPoints.verifyPayment, body: {"razorpay_order_id": createOrderResponse.value.data?.id, "razorpay_payment_id": paymentId, "razorpay_signature": signature});
       log(response.body.toString());
       if (response.statusCode == 201 || response.statusCode == 200) {
         globals.isDeposited = true;
-        await SharedPrefManager.instance.setBoolAsync(Constants.isDeposited,true);
+        await SharedPrefManager.instance.setBoolAsync(Constants.isDeposited, true);
         ProgressBar.instance.stopProgressBar(Get.context!);
         log("success");
         Get.offNamed(AppRoutes.homeScreen);

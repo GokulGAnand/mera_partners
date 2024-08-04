@@ -9,8 +9,6 @@ import 'package:mera_partners/view/home/account/about_us/about_us_screen.dart';
 import 'package:mera_partners/view/home/account/account_screen_ui.dart';
 import 'package:mera_partners/view/home/account/binding/account_binding.dart';
 import 'package:mera_partners/view/home/account/privacy_policy/privacy_policy_screen.dart';
-import 'package:mera_partners/view/home/bids/bids_screen.dart';
-import 'package:mera_partners/view/home/bids/binding/bids_binding.dart';
 import 'package:mera_partners/view/home/binding/home_binding.dart';
 import 'package:mera_partners/view/home/home_screen_ui.dart';
 import 'package:mera_partners/view/home/my_cars/binding/my_cars_binding.dart';
@@ -42,7 +40,6 @@ class AppRoutes {
   static const String otpScreen = '/otp_screen_ui';
   static const String homeScreen = '/home_screen_ui';
 
-  static const String bidsScreen = '/bids_screen_ui';
   static const String myCarsScreen = '/my_cars_screen_ui';
   static const String ordersScreen = '/orders_screen_ui';
   static const String accountScreen = '/account_screen_ui';
@@ -77,9 +74,6 @@ class AppRoutes {
     GetPage(name: homeScreen, page: () => const HomeScreen(), bindings: [
       HomeBinding(),
       NegotiationCarsBinding(),
-    ]),
-    GetPage(name: bidsScreen, page: () => const BidsScreen(), bindings: [
-      BidsBinding(),
     ]),
     GetPage(name: myCarsScreen, page: () => const MyCarsScreen(), bindings: [
       MyCarsBinding(),

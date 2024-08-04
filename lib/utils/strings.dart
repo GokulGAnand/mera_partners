@@ -148,7 +148,9 @@ class MyStrings {
   static const String engineMount = "Engine Mount";
   static const String sump = "Sump";
   static const String noDataFound = "No Data Found";
+  static const String noAuction = "Oops! No auctions running.\nCome back soon!";
   static const String viewReport = "View Report";
+  static const String refresh = "Refresh";
 
   //Login and OTP screen
   static const String login = "Login";

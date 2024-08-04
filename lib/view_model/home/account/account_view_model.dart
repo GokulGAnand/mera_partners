@@ -1,13 +1,11 @@
-import 'dart:convert';
 import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:mera_partners/routes/app_routes.dart';
+import 'package:mera_partners/service/api_manager.dart';
 import 'package:mera_partners/service/endpoints.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:http/http.dart' as http;
 import 'package:mera_partners/utils/globals.dart' as globals;
 
 class AccountScreenViewModel extends GetxController {
@@ -22,13 +20,10 @@ class AccountScreenViewModel extends GetxController {
 
   void deleteAccount() async {
     try {
-      log(Uri.parse(EndPoints.baseUrl+EndPoints.users+globals.uniqueUserId!).toString());
-      var response = await http.patch(Uri.parse(EndPoints.baseUrl+EndPoints.users+globals.uniqueUserId!),headers: globals.jsonHeaders,
-        body: jsonEncode({
-          "isDeactivate":true
-        })
-      );
-      log(response.body);
+      var response = await ApiManager.patch(endpoint: EndPoints.users+globals.uniqueUserId!, body: {
+        "isDeactivate":true
+      });
+      
       if(response.statusCode == 200){
         globals.uniqueUserId = null;
         globals.jsonHeaders = {};

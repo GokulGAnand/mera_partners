@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:mera_partners/service/api_manager.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-import 'package:mera_partners/utils/globals.dart' as globals;
 import '../../../model/response/live/live_cars_list_response.dart';
 import '../../../service/endpoints.dart';
 import '../../../service/exception_error_util.dart';
@@ -15,7 +14,7 @@ class OrderScreenViewModel extends GetxController {
   RxBool isNegotiation = true.obs;
   List<Map<String, dynamic>> negotiationOrdersCategory = [
     {"title": MyStrings.negotiation, "isClick": true.obs},
-    {"title": MyStrings.lostDeals, "isClick" : false.obs}
+    {"title": MyStrings.lostDeals, "isClick": false.obs}
   ];
 
   @override
@@ -26,11 +25,10 @@ class OrderScreenViewModel extends GetxController {
 
   void getNegotiationCarsData() async {
     try {
-      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/?status=NEGOTIATION').toString());
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/?status=NEGOTIATION'), headers: globals.headers);
+      var response = await ApiManager.get(endpoint: '${EndPoints.status}?status=NEGOTIATION');
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        log(response.body);
+
         carListResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
@@ -46,14 +44,11 @@ class OrderScreenViewModel extends GetxController {
   void acceptOrRejectOffer(String status, String carId) async {
     try {
       ProgressBar.instance.showProgressbar(Get.context!);
-      var response = await http.patch(Uri.parse('${EndPoints.baseUrl}${EndPoints.status}/$carId'),
-          headers: globals.jsonHeaders,
-          body: jsonEncode({ "status": status }));
+      var response = await ApiManager.patch(endpoint: EndPoints.status + carId, body: {"status": status});
 
       if (response.statusCode == 200) {
         CustomToast.instance.showMsg(MyStrings.success);
         ProgressBar.instance.stopProgressBar(Get.context!);
-        log(response.body.toString());
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
         CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);

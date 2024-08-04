@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:get/get.dart';
 import '../model/base_response.dart';
-import '../utils/strings.dart';
 import '../widgets/progressbar.dart';
 
 class ExceptionErrorUtil {
@@ -20,7 +19,7 @@ class ExceptionErrorUtil {
         response.errorMessage = "Invalid argument provided";
       }else{
         response.status = 0;
-        response.errorMessage = MyStrings.unableToConnect;
+        // response.errorMessage = MyStrings.unableToConnect;
       }
     } catch (exception) {
       response.status = 0;

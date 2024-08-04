@@ -12,6 +12,7 @@ class Constants {
   static const String userName = 'userName';
   static const String userId = 'userId';
   static const String token = 'token';
+  static const String refreshToken = 'refreshToken';
   static const String uniqueUserId = 'uniqueUserId';
   static const String documentStatus = 'documentStatus';
   static const String isDeposited = 'isDeposited';

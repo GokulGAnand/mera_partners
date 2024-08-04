@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
+import 'package:mera_partners/service/api_manager.dart';
 import 'package:mera_partners/service/socket_service.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../../model/response/live/live_cars_list_response.dart';
@@ -22,6 +22,7 @@ class LiveCarsListViewModel extends GetxController {
   final isShowFullList = true.obs;
   TextEditingController searchController = TextEditingController();
   RxList<String> searchList = <String>[].obs;
+  RxBool isLoading = true.obs;
 
   var liveCarsResponse = CarListResponse().obs;
   SocketService? socketService;
@@ -47,30 +48,12 @@ class LiveCarsListViewModel extends GetxController {
 
   @override
   void onInit() async {
-    // var duration = DateTime.now().difference(DateTime.parse(negotiationData.value?[0].negotiationEndTime ?? "2024-05-08T02:35:38.00Z"));
-    // endTime = DateTime.now().millisecondsSinceEpoch + Duration(seconds: duration.inSeconds).inMilliseconds;
-    // timerController = CountdownTimerController(endTime: endTime??0, onEnd: onEnd);
     getCarData();
     getLikedCarData();
     // infinitePagingController.addPageRequestListener((pageKey) {
     //   getCarData(pageKey);
     // });
     socketService = await SocketService().connectToSocket();
-    // bidController.value.addListener(() {
-    //   if (bidController.value.text.length > 3) {
-    //     bidController.value.selection = TextSelection.fromPosition(
-    //       TextPosition(offset: bidController.value.text.length - 3),
-    //     );
-    //   }
-    // });
-    // autoBidController.value.addListener(() {
-    //   if (autoBidController.value.text.length > 3) {
-    //     autoBidController.value.selection = TextSelection.fromPosition(
-    //       TextPosition(offset: autoBidController.value.text.length - 3),
-    //     );
-    //   }
-    // });
-
     super.onInit();
   }
 
@@ -94,12 +77,10 @@ class LiveCarsListViewModel extends GetxController {
 
   void getLikedCarData() async {
     try {
-      log('API URL: ${Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}')}');
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'), headers: globals.headers);
-      log('API Response Body: ${response.body}');
+      var response = await ApiManager.get(endpoint: EndPoints.users + globals.uniqueUserId!);
       if (response.statusCode == 200) {
         likeResponse.value = UserResponse.fromJson(jsonDecode(response.body));
-        if (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false) {
+        if (likeResponse.value.data!.isNotEmpty && (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false)) {
           globals.documentStatus = likeResponse.value.data?.first.isDocumentsVerified;
           globals.isDeposited = likeResponse.value.data?.first.isDeposited;
           SharedPrefManager.instance.setStringAsync(Constants.documentStatus, likeResponse.value.data!.first.isDocumentsVerified.toString());
@@ -124,14 +105,14 @@ class LiveCarsListViewModel extends GetxController {
   void placeBid(amount, carId) async {
     try {
       socketService?.sendSocketRequest("bidInfo", {"amount": int.parse(amount), "carId": carId});
-      log(amount+' bid amount');
-      log(carId+' car id');
-      var response = await http.post(Uri.parse(EndPoints.socketUrl+EndPoints.auction+EndPoints.bid), headers: globals.jsonHeaders, body: jsonEncode({"amount": int.parse(amount), "carId": carId}));
-      log(response.body);
+      log(amount + ' bid amount');
+      log(carId + ' car id');
+      var response = await ApiManager.post(endpoint: EndPoints.auction + EndPoints.bid, body: {"amount": int.parse(amount), "carId": carId});
+
       String message = json.decode(response.body)['message'];
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         CustomToast.instance.showMsgWithIcon(MyStrings.bidPlaced, null);
-      }else{
+      } else {
         CustomToast.instance.showMsg(message);
       }
     } catch (e) {
@@ -144,15 +125,12 @@ class LiveCarsListViewModel extends GetxController {
     try {
       socketService?.sendSocketRequest("bidInfo", {"autoBidLimit": int.parse(autoBidLimit), "carId": carId});
       log(jsonEncode({"autoBidLimit": autoBidLimit, "carId": carId}));
-      log(Uri.parse(EndPoints.socketUrl+EndPoints.auction+EndPoints.bid).toString());
-      var response = await http.post(Uri.parse(EndPoints.socketUrl+EndPoints.auction+EndPoints.bid),
-          headers: globals.jsonHeaders,
-          body: jsonEncode({"autoBidLimit": int.parse(autoBidLimit), "carId": carId}));
-      log(response.body);
+      var response = await ApiManager.post(endpoint: EndPoints.auction + EndPoints.bid, body: {"autoBidLimit": int.parse(autoBidLimit), "carId": carId});
+
       String message = json.decode(response.body)['message'];
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         CustomToast.instance.showMsgWithIcon(MyStrings.bidPlaced, null);
-      }else{
+      } else {
         CustomToast.instance.showMsg(message);
       }
     } catch (e) {
@@ -163,11 +141,11 @@ class LiveCarsListViewModel extends GetxController {
 
   void getCarData() async {
     try {
-      log(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&status=SCHEDULED').toString());
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=LIVE&status=SCHEDULED'), headers: globals.headers);
+      var response = await ApiManager.get(endpoint: '${EndPoints.carBasic}?status=LIVE&status=SCHEDULED');
+      isLoading.value = false;
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        log(response.body);
+
         liveCarsResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
         // final isLastPage = liveCarsResponse.value.data!.length < limit;
         // if (isLastPage) {
@@ -181,6 +159,7 @@ class LiveCarsListViewModel extends GetxController {
         log(response.reasonPhrase.toString());
       }
     } catch (e) {
+      isLoading.value = false;
       ProgressBar.instance.stopProgressBar(Get.context!);
       log(e.toString());
       CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');

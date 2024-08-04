@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
+import 'package:mera_partners/service/api_manager.dart';
 import 'package:mera_partners/utils/enum.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
 import '../../../../model/response/user_data/user_car_details_response.dart';
@@ -35,20 +35,6 @@ class BidCarsListViewModel extends GetxController{
 
   @override
   void onInit() {
-    // bidController.value.addListener(() {
-    //   if (bidController.value.text.length > 3) {
-    //     bidController.value.selection = TextSelection.fromPosition(
-    //       TextPosition(offset: bidController.value.text.length - 3),
-    //     );
-    //   }
-    // });
-    // autoBidController.value.addListener(() {
-    //   if (autoBidController.value.text.length > 3) {
-    //     autoBidController.value.selection = TextSelection.fromPosition(
-    //       TextPosition(offset: autoBidController.value.text.length - 3),
-    //     );
-    //   }
-    // });
     // infinitePagingController.addPageRequestListener((pageKey) {
     getCarData();
     getLikedCarData();
@@ -62,11 +48,9 @@ class BidCarsListViewModel extends GetxController{
       socketService?.sendSocketRequest("bidInfo", {"amount": int.parse(amount), "carId": carId});
       log(amount + ' bid amount');
       log(carId + ' car id');
-      var response = await http.post(Uri.parse(EndPoints.socketUrl + EndPoints.auction + EndPoints.bid), headers: globals.jsonHeaders, body: jsonEncode({"amount": int.parse(amount), "carId": carId}));
-      log(response.body);
+      var response = await ApiManager.post(endpoint: EndPoints.auction + EndPoints.bid, body: {"amount": int.parse(amount), "carId": carId});
       String message = json.decode(response.body)['message'];
       if (response.statusCode == 200) {
-        getCarData();
         CustomToast.instance.showMsgWithIcon(MyStrings.bidPlaced, null);
       } else {
         CustomToast.instance.showMsg(message);
@@ -81,9 +65,7 @@ class BidCarsListViewModel extends GetxController{
     try {
       socketService?.sendSocketRequest("bidInfo", {"autoBidLimit": int.parse(autoBidLimit), "carId": carId});
       log(jsonEncode({"autoBidLimit": autoBidLimit, "carId": carId}));
-      log(Uri.parse(EndPoints.socketUrl + EndPoints.auction + EndPoints.bid).toString());
-      var response = await http.post(Uri.parse(EndPoints.socketUrl + EndPoints.auction + EndPoints.bid), headers: globals.jsonHeaders, body: jsonEncode({"autoBidLimit": int.parse(autoBidLimit), "carId": carId}));
-      log(response.body);
+      var response = await ApiManager.post(endpoint: EndPoints.auction + EndPoints.bid, body: {"autoBidLimit": int.parse(autoBidLimit), "carId": carId});
       String message = json.decode(response.body)['message'];
       if (response.statusCode == 200) {
         CustomToast.instance.showMsgWithIcon(MyStrings.bidPlaced, null);
@@ -98,8 +80,7 @@ class BidCarsListViewModel extends GetxController{
 
   void getCarData() async {
     try {
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'), headers: globals.jsonHeaders);
-      log(response.body);
+      var response = await ApiManager.get(endpoint: EndPoints.users+globals.uniqueUserId!);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         bidCarsResponse.value = UserResponse.fromJson(jsonDecode(response.body));
@@ -110,7 +91,7 @@ class BidCarsListViewModel extends GetxController{
             bidCarsResponse.value.data?[0].biddedCars?.add(tempBidCarResponse.value.data![0].biddedCars![i]);
           }
         }
-        if (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false) {
+        if (bidCarsResponse.value.data!.isNotEmpty && (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false)) {
           globals.documentStatus = bidCarsResponse.value.data?.first.isDocumentsVerified;
           globals.isDeposited = bidCarsResponse.value.data?.first.isDeposited;
           SharedPrefManager.instance.setStringAsync(Constants.documentStatus, bidCarsResponse.value.data!.first.isDocumentsVerified.toString());
@@ -136,15 +117,13 @@ class BidCarsListViewModel extends GetxController{
 
   void getLikedCarData() async {
     try {
-      log('API URL: ${Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}')}');
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.users}${globals.uniqueUserId ?? ""}'), headers: globals.headers);
-      log('API Response Body: ${response.body}');
+      var response = await ApiManager.get(endpoint: EndPoints.users+globals.uniqueUserId!);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         likeResponse.value = UserResponse();
         likeResponse.value = UserResponse.fromJson(jsonDecode(response.body));
         likedCarsearchList.value = UserResponse.fromJson(jsonDecode(response.body)).data![0].likedCars!;
-        if (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false) {
+        if (likeResponse.value.data!.isNotEmpty && (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false)) {
           globals.documentStatus = likeResponse.value.data?.first.isDocumentsVerified;
           globals.isDeposited = likeResponse.value.data?.first.isDeposited;
           SharedPrefManager.instance.setStringAsync(Constants.documentStatus, likeResponse.value.data!.first.isDocumentsVerified.toString());
@@ -153,9 +132,7 @@ class BidCarsListViewModel extends GetxController{
         update();
         refresh();
         notifyChildrens();
-        // getLikedCarData();
         likeResponse.refresh();
-        log('API Response otb: ${response.body}');
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log('API Error: ${response.reasonPhrase}');

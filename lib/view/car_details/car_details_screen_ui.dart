@@ -346,7 +346,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                               child: SizedBox(
                                                 width: 58,
                                                 height: 58,
-                                                child: Image.network(carDetailsScreenViewModel.imageList[index]["images"][0].image, fit: BoxFit.cover,
+                                                child: Image.network(carDetailsScreenViewModel.imageList[index]["images"][0].image ?? '', fit: BoxFit.cover,
                                                 errorBuilder: (context, error, stackTrace) {
                                                   return SvgPicture.asset(MyImages.loadingCar);
                                                 }, frameBuilder:

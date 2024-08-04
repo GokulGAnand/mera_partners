@@ -2,8 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-import 'package:mera_partners/utils/globals.dart' as globals;
+import 'package:mera_partners/service/api_manager.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mera_partners/view_model/home/live/live_cars_list_view_model.dart';
 import '../../../model/response/live/live_cars_list_response.dart';
@@ -23,9 +22,8 @@ class OTBCarsListViewModel extends GetxController {
   var carsListResponse = CarListResponse().obs;
   var likeResponse = UserResponse().obs;
 
-
   //declare pagination controller
-  final PagingController<int,Data> infinitePagingController=PagingController(firstPageKey: 1);
+  final PagingController<int, Data> infinitePagingController = PagingController(firstPageKey: 1);
   int limit = 10;
 
   @override
@@ -48,8 +46,8 @@ class OTBCarsListViewModel extends GetxController {
 
   void getCarData(int pageKey) async {
     try {
-      var response = await http.get(Uri.parse('${EndPoints.baseUrl}${EndPoints.carBasic}?status=OTB&status=OTB_SCHEDULED&page=$pageKey&limit=$limit'), headers: globals.headers);
-      log(response.body);
+      var response = await ApiManager.get(endpoint: '${EndPoints.carBasic}?status=OTB&status=OTB_SCHEDULED&page=$pageKey&limit=$limit');
+
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
         carsListResponse.value = CarListResponse();
@@ -76,16 +74,13 @@ class OTBCarsListViewModel extends GetxController {
   void buyOTBCar(String carId, num otbAmount) async {
     try {
       ProgressBar.instance.showProgressbar(Get.context!);
-      var response = await http.post(Uri.parse('${EndPoints.baseUrl}${EndPoints.otb}'), headers: globals.jsonHeaders,
-          body: jsonEncode({
-            "carId": carId,
-            "otb_amount": otbAmount,
-          }));
-
+      var response = await ApiManager.post(endpoint: EndPoints.otb, body: {
+        "carId": carId,
+        "otb_amount": otbAmount,
+      });
       if (response.statusCode == 200) {
-        CustomToast.instance.showMsgWithIcon(MyStrings.success,Image.asset(MyImages.car));
+        CustomToast.instance.showMsgWithIcon(MyStrings.success, Image.asset(MyImages.car));
         ProgressBar.instance.stopProgressBar(Get.context!);
-        log(response.body.toString());
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
         CustomToast.instance.showMsg(response.reasonPhrase ?? MyStrings.unableToConnect);

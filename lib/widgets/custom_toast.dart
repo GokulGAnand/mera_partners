@@ -12,7 +12,8 @@ class CustomToast {
   static CustomToast get instance => _singleton;
 
   showMsg(String msg) {
-    Get.showSnackbar(
+    if(msg.isNotEmpty) {
+      Get.showSnackbar(
       GetSnackBar(
         title: null,
         message: msg,
@@ -22,6 +23,7 @@ class CustomToast {
         margin: const EdgeInsets.only(top: 10, left: 5, right: 5),
       ),
     );
+    }
   }
 
   showMsgWithIcon(String msg, Widget? icon) {

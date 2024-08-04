@@ -12,6 +12,7 @@ import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/widgets/custom_bid_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:mera_partners/widgets/custom_toast.dart';
 import '../../../model/response/live/live_cars_list_response.dart';
 import '../../../utils/svg.dart';
@@ -43,6 +44,9 @@ class LiveCarsListScreen extends StatelessWidget {
           () {
             if (Get.isRegistered<NegotiationViewModel>()) {
               negotiationData.value = Get.find<NegotiationViewModel>().carListResponse.value.data;
+            }
+            if(controller.liveCarsResponse.value.data == null){
+              controller.getCarData();
             }
             return SafeArea(
                 child: Column(
@@ -114,7 +118,7 @@ class LiveCarsListScreen extends StatelessWidget {
                     ? ((controller.searchList.isNotEmpty || (controller.searchList.isEmpty && controller.searchController.text.isEmpty)) && controller.liveCarsResponse.value.data!.isNotEmpty)
                         ? Expanded(
                             child: ListView.builder(
-                            itemCount: controller.liveCarsResponse.value.data?.length,
+                            itemCount: controller.liveCarsResponse.value.data?.length ?? 0,
                             padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                             itemBuilder: (context, index) {
                               return Obx(() {
@@ -282,14 +286,25 @@ class LiveCarsListScreen extends StatelessWidget {
                           ))
                         : const Expanded(
                             child: Center(
-                              child: Text(MyStrings.noDataFound),
+                              child: Text(MyStrings.noAuction,textAlign: TextAlign.center,),
                             ),
                           )
-                    : const Expanded(
+                    : controller.isLoading.value ? const Expanded(
                         child: Center(
                           child: CircularProgressIndicator(),
                         ),
-                      )
+                      ) 
+                    : Expanded(
+                            child: Center(
+                            child: CustomElevatedButton(
+                              buttonHeight: 40,
+                              buttonWidth: 100,
+                              onPressed: () {
+                                controller.getCarData();
+                              },
+                              buttonText: MyStrings.refresh,
+                            ),
+                          ))
               ],
             ));
           },
