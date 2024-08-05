@@ -64,6 +64,7 @@ class ApiManager {
         if (!isRefreshed && await refreshAccessToken()) {
           return await requestFunction();
         } else {
+          isRefreshed = false;
           /// Both access and refresh tokens expired
           if (!isLogout) {
             isLogout = true;

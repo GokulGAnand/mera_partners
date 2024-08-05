@@ -101,8 +101,8 @@ class NotificationService {
     );
     await notificationsPlugin.show(
       id++,
-      'Hurray! New car arrived.',
       notification.title,
+      notification.body,
       notificationDetails,
     );
   }
