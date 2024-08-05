@@ -116,12 +116,21 @@ class LoginScreenViewModel extends GetxController {
     try {
       ProgressBar.instance.showProgressbar(context);
       String otp = otpValue.value;
-      var response = await ApiManager.post(endpoint: EndPoints.verifyOtp, body: {"contactNo": int.parse(mobileController.value.text), "otp": int.parse(otp)});
+      var response = await ApiManager.post(endpoint: EndPoints.verifyOtp, body: {"contactNo": int.parse(mobileController.value.text), "otp": int.parse(otp.toString())});
       if (response.statusCode == 200) {
-        var refreshToken = parseCookies(response.headers['set-cookie'], 'refreshToken');
-        if (refreshToken != null) {
-          log(refreshToken);
+        String refreshToken = '';
+        RegExp regExp = RegExp(r'refreshToken=([^;]+)');
+        Match? match = regExp.firstMatch(response.headers['set-cookie'] ?? '');
+        if (match != null) {
+          refreshToken = match.group(1)!;
+          log('Refresh Token: $refreshToken');
+        } else {
+          log('Refresh Token not found');
         }
+        // var refreshToken = parseCookies(response.headers['set-cookie'], 'refreshToken');
+        // if (refreshToken != null) {
+        //   log(refreshToken);
+        // }
         clearData();
         globals.clearData();
         globals.uniqueUserId = null;
@@ -138,7 +147,7 @@ class LoginScreenViewModel extends GetxController {
           SharedPrefManager.instance.setStringAsync(Constants.contactNo, userInfoResponse.value.data!.first.contactNo.toString());
           SharedPrefManager.instance.setStringAsync(Constants.email, userInfoResponse.value.data!.first.email.toString());
           SharedPrefManager.instance.setStringAsync(Constants.token, userInfoResponse.value.meta!.access.toString());
-          SharedPrefManager.instance.setStringAsync(Constants.refreshToken, refreshToken ?? '');
+          SharedPrefManager.instance.setStringAsync(Constants.refreshToken, refreshToken);
           SharedPrefManager.instance.setStringAsync(Constants.userId, userInfoResponse.value.data!.first.userId.toString());
           SharedPrefManager.instance.setStringAsync(Constants.uniqueUserId, userInfoResponse.value.data!.first.sId.toString());
           SharedPrefManager.instance.setStringAsync(Constants.documentStatus, userInfoResponse.value.data!.first.isDocumentsVerified.toString());
