@@ -7,7 +7,6 @@ import 'package:mera_partners/service/socket_service.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:get/get.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../../model/response/live/live_cars_list_response.dart';
 import '../../../model/response/user_data/user_car_details_response.dart';
 import '../../../service/endpoints.dart';
@@ -26,8 +25,11 @@ class LiveCarsListViewModel extends GetxController {
 
   var liveCarsResponse = CarListResponse().obs;
   SocketService? socketService;
-  final PagingController<int, Data> infinitePagingController = PagingController(firstPageKey: 1);
-  int limit = 10;
+  // final PagingController<int, Data> infinitePagingController = PagingController(firstPageKey: 1);
+  ScrollController scrollController = ScrollController();
+  int limit = 2;
+  int pageKey = 1;
+  RxBool loadingMore = true.obs;
   Rx<TextEditingController> autoBidController = TextEditingController().obs;
   Rx<TextEditingController> bidController = TextEditingController().obs;
   var likeResponse = UserResponse().obs;
@@ -48,13 +50,32 @@ class LiveCarsListViewModel extends GetxController {
 
   @override
   void onInit() async {
-    getCarData();
+    getCarData(1);
     getLikedCarData();
     // infinitePagingController.addPageRequestListener((pageKey) {
     //   getCarData(pageKey);
     // });
+    scrollController.addListener(() {scrollListener(); });
     socketService = await SocketService().connectToSocket();
     super.onInit();
+  }
+
+  void scrollListener() async{
+    if(scrollController.offset == scrollController.position.maxScrollExtent){
+      if(loadingMore.value == true){
+        final isLastPage = (liveCarsResponse.value.count!-liveCarsResponse.value.data!.length) < limit;
+        if(isLastPage){
+          pageKey = pageKey + 1;
+          await getCarData(pageKey);
+          loadingMore.value = false;
+        } else {
+          pageKey = pageKey + 1;
+          await getCarData(pageKey);
+        }
+      }
+      
+      // getCarData(pageKey+1);
+    }
   }
 
   void showAlertDialog() {
@@ -139,14 +160,20 @@ class LiveCarsListViewModel extends GetxController {
     }
   }
 
-  void getCarData() async {
+  Future<void> getCarData(int page) async {
     try {
-      var response = await ApiManager.get(endpoint: '${EndPoints.carBasic}?status=LIVE&status=SCHEDULED');
+      var response = await ApiManager.get(endpoint: '${EndPoints.carBasic}?status=LIVE&status=SCHEDULED&page=$page&limit=$limit');
       isLoading.value = false;
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-
-        liveCarsResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
+        if(pageKey == 1){
+          liveCarsResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
+        } else {
+          var data = jsonDecode(response.body);
+          for(int i=0; i<data["data"].length; i++){
+            liveCarsResponse.value.data!.add(Data.fromJson(data["data"][i]));
+          }
+        }
         // final isLastPage = liveCarsResponse.value.data!.length < limit;
         // if (isLastPage) {
         //   infinitePagingController.appendLastPage(liveCarsResponse.value.data!);

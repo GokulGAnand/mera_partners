@@ -29,7 +29,7 @@ class SocketService {
     //   'autoConnect': false,
     // });
 
-    socket = IO.io('ws://api.meracars.com', IO.OptionBuilder().setTransports(['websocket']).enableForceNew().build());
+    socket = IO.io('ws://test.meracars.com', IO.OptionBuilder().setTransports(['websocket']).enableForceNew().build());
 
 
     List<Data> parseCarDataList(String jsonString) {
@@ -61,7 +61,7 @@ class SocketService {
         // }
       }
       if (Get.isRegistered<LiveCarsListViewModel>()) {
-        Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data = liveCarsList;
+        Get.find<LiveCarsListViewModel>().liveCarsResponse.value.data!.value = liveCarsList;
         Get.find<LiveCarsListViewModel>().updateBid(liveCarsList);
         Get.find<LiveCarsListViewModel>().liveCarsResponse.value.count = liveCarsList.length;
         Get.find<LiveCarsListViewModel>().update();

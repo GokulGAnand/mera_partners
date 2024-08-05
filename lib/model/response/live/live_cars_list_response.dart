@@ -1,7 +1,9 @@
+import 'package:get/get.dart';
+
 class CarListResponse {
   String? status;
   String? message;
-  List<Data>? data;
+  RxList<Data>? data;
   num? count;
   Meta? meta;
 
@@ -16,7 +18,7 @@ class CarListResponse {
       message = json['message'];
     }
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <Data>[].obs;
       json['data'].forEach((v) {
         data!.add(Data.fromJson(v));
       });

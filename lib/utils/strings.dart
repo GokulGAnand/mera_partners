@@ -404,4 +404,5 @@ class MyStrings {
   static const String absEbd= 'ABS EBD';
   static const String gloveBox= 'Glove Box';
   static const String interiorModifications= 'Any Interior Modifications';
+  static const String noMoreData = 'No More Data Found';
 }

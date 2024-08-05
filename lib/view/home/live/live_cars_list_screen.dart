@@ -37,7 +37,7 @@ class LiveCarsListScreen extends StatelessWidget {
     return RefreshIndicator(
       key: _refreshIndicatorKey,
       onRefresh: () async {
-        controller.getCarData();
+        controller.getCarData(1);
       },
       child: Scaffold(
         body: Obx(
@@ -46,7 +46,7 @@ class LiveCarsListScreen extends StatelessWidget {
               negotiationData.value = Get.find<NegotiationViewModel>().carListResponse.value.data;
             }
             if(controller.liveCarsResponse.value.data == null){
-              controller.getCarData();
+              controller.getCarData(1);
             }
             return SafeArea(
                 child: Column(
@@ -117,173 +117,185 @@ class LiveCarsListScreen extends StatelessWidget {
                 controller.liveCarsResponse.value.data != null
                     ? ((controller.searchList.isNotEmpty || (controller.searchList.isEmpty && controller.searchController.text.isEmpty)) && controller.liveCarsResponse.value.data!.isNotEmpty)
                         ? Expanded(
-                            child: ListView.builder(
-                            itemCount: controller.liveCarsResponse.value.data?.length ?? 0,
-                            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                            itemBuilder: (context, index) {
-                              return Obx(() {
-                                if ((controller.searchController.text.isEmpty && controller.searchList.isEmpty) || controller.searchList.contains(controller.liveCarsResponse.value.data?[index].sId)) {
-                                  return CustomCarDetailCard(
-                                    onCarTapped: () {
-                                      FocusScope.of(context).requestFocus(FocusNode());
-                                      Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.liveCarsResponse.value.data?[index].sId);
-                                    },
-                                    isFavourite: controller.likeResponse.value.data?[0].likedCars != null && (controller.likeResponse.value.data![0].likedCars!.isNotEmpty)
-                                        ? controller.likeResponse.value.data![0].likedCars!.any((element) => element.sId == controller.liveCarsResponse.value.data?[index].sId)
-                                            ? true.obs
-                                            : false.obs
-                                        : false.obs,
-                                    isOtb: false.obs,
-                                    scheduleTime: Constants.getScheduledStatus(DateTime.parse(controller.liveCarsResponse.value.data?[index].bidStartTime ?? DateTime.now().toString()).toLocal()),
-                                    carId: controller.liveCarsResponse.value.data?[index].sId ?? '',
-                                    yearOfManufacture: controller.liveCarsResponse.value.data?[index].monthAndYearOfManufacture ?? '',
-                                    isScheduled: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == 'scheduled' ? true.obs : false.obs,
-                                    imageUrl: controller.liveCarsResponse.value.data?[index].rearRight?.url ?? '',
-                                    carLocation: controller.liveCarsResponse.value.data?[index].vehicleLocation ?? '',
-                                    bidStatus: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() != MyStrings.live.toLowerCase()
-                                        ? RxString(MyStrings.scheduledBid)
-                                        : globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].winner != null && controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!)
-                                            ? RxString(MyStrings.youAreLeading)
-                                            : globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].winner != null && !controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) && controller.liveCarsResponse.value.data?[index].leaderBoard != null && controller.liveCarsResponse.value.data![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
-                                                ? RxString(MyStrings.youAreLoosing)
-                                                : RxString(MyStrings.highestBid),
-                                    statusColor: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() != MyStrings.live.toLowerCase()
-                                        ? MyColors.black
-                                        : (globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].winner != null && controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!))
-                                            ? MyColors.green
-                                            : (globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].leaderBoard != null && controller.liveCarsResponse.value.data?[index].winner != null && !controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) && controller.liveCarsResponse.value.data![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId))
-                                                ? MyColors.red
-                                                : MyColors.kPrimaryColor,
-                                    bidAmount: Constants.numberFormat.format(controller.liveCarsResponse.value.data?[index].highestBid ?? 0).toString().obs,
-                                    endTime: Rx(Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds),
-                                    timerController: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == CarStatus.scheduled.name
-                                        ? CountdownTimerController(
-                                            endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds,
-                                            onEnd: () {},
-                                          ).obs
-                                        : CountdownTimerController(
-                                            endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds,
-                                            onEnd: () {
-                                              /*controller.liveCarsResponse.value.data?.removeAt(index);*/
-                                            },
-                                          ).obs,
-                                    bidStartTime: DateTime.parse(controller.liveCarsResponse.value.data?[index].bidStartTime ?? DateTime.now().toString()).toLocal(),
-                                    bidEndTime: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal(),
-                                    carModel: controller.liveCarsResponse.value.data?[index].model ?? '',
-                                    carVariant: controller.liveCarsResponse.value.data?[index].variant ?? '',
-                                    criticalIssue: controller.liveCarsResponse.value.data?[index].carCondition?.join(',') ?? '',
-                                    rating: (((controller.liveCarsResponse.value.data?[index].engineStar ?? 0) + (controller.liveCarsResponse.value.data?[index].exteriorStar ?? 0) + (controller.liveCarsResponse.value.data?[index].interiorAndElectricalStar ?? 0) + (controller.liveCarsResponse.value.data?[index].testDriveStar ?? 0)) / 4).roundToDouble(),
-                                    fuelType: controller.liveCarsResponse.value.data?[index].fuelType ?? '',
-                                    id: controller.liveCarsResponse.value.data?[index].uniqueId.toString() ?? '',
-                                    fmv: controller.liveCarsResponse.value.data?[index].realValue != null ? controller.liveCarsResponse.value.data![index].realValue.toString() : '0',
-                                    kmDriven: controller.liveCarsResponse.value.data?[index].odometerReading != null ? controller.liveCarsResponse.value.data![index].odometerReading.toString() : '0',
-                                    ownerShip: controller.liveCarsResponse.value.data?[index].ownershipNumber ?? '',
-                                    transmission: controller.liveCarsResponse.value.data?[index].transmission ?? '',
-                                    images: [
-                                      controller.liveCarsResponse.value.data?[index].frontLeft?.url ?? controller.liveCarsResponse.value.data?[index].rearLeft?.url ?? '',
-                                      controller.liveCarsResponse.value.data?[index].front?.url ?? controller.liveCarsResponse.value.data?[index].leftImage?.url ?? '',
-                                      controller.liveCarsResponse.value.data?[index].frontRight?.url ?? controller.liveCarsResponse.value.data?[index].rearRight?.url ?? '',
-                                      controller.liveCarsResponse.value.data?[index].rear?.url ?? controller.liveCarsResponse.value.data?[index].rightImage?.url ?? '',
-                                      controller.liveCarsResponse.value.data?[index].engineCompartment?.url ?? controller.liveCarsResponse.value.data?[index].roof?.url ?? '',
-                                    ],
-                                    autoBid: () {
-                                      FocusScope.of(context).requestFocus(FocusNode());
-                                      controller.autoBidController.value.clear();
-                                      showModalBottomSheet(
-                                          isScrollControlled: true,
-                                          enableDrag: true,
-                                          backgroundColor: Colors.transparent,
-                                          context: context,
-                                          builder: (context) {
-                                            return Obx(
-                                              () => CustomBidBottomSheet(
-                                                timerController: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == CarStatus.scheduled.name
-                                                    ? CountdownTimerController(
-                                                        endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds,
-                                                        onEnd: () {},
-                                                      ).obs
-                                                    : CountdownTimerController(
-                                                        endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds,
-                                                        onEnd: () {},
-                                                      ).obs,
-                                                amountController: controller.autoBidController,
-                                                isAutoBid: true,
-                                                bidValue: RxInt(controller.liveCarsResponse.value.data?[index].highestBid ?? 0),
-                                                stepRate: controller.liveCarsResponse.value.data![index].highestBid! <= 99999
-                                                    ? RxInt(2000)
-                                                    : (controller.liveCarsResponse.value.data![index].highestBid! >= 100000 && controller.liveCarsResponse.value.data![index].highestBid! <= 299999)
-                                                        ? RxInt(4000)
-                                                        : (controller.liveCarsResponse.value.data![index].highestBid! >= 300000 && controller.liveCarsResponse.value.data![index].highestBid! <= 499999)
-                                                            ? RxInt(7000)
-                                                            : RxInt(10000),
-                                                onAutoBidPressed: () {
-                                                  try {
-                                                    if (globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].winner != null && controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) && controller.liveCarsResponse.value.data![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.autoBidLimit != null && controller.autoBidController.value.text.isNotEmpty && (int.tryParse(controller.autoBidController.value.text) ?? 0) <= element.autoBidLimit!)) {
-                                                      CustomToast.instance.showMsg(MyStrings.vAutoBidLimit + (controller.liveCarsResponse.value.data![index].leaderBoard![0].autoBidLimit ?? 0).toString());
-                                                    } else {
-                                                      controller.placeAutoBid(controller.autoBidController.value.text, controller.liveCarsResponse.value.data?[index].sId);
-                                                      Navigator.of(context).pop();
-                                                    }
-                                                  } catch (e) {
-                                                    log(e.toString());
-                                                  }
+                            child: Obx(
+                              () {
+                                return ListView.builder(
+                                  controller: controller.scrollController,
+                                itemCount: (controller.liveCarsResponse.value.data?.length ?? 0) + 1,
+                                padding: const EdgeInsets.fromLTRB(16, 8, 16, 10),
+                                itemBuilder: (context, index) {
+                                  return Obx(() {
+                                    if(index>=controller.liveCarsResponse.value.data!.length){
+                                      if(controller.loadingMore.value == true){
+                                        return Center(child: CircularProgressIndicator());
+                                      } else {
+                                        return Center(child: Text(MyStrings.noMoreData, style: MyStyles.black115400,));
+                                      }
+                                    }
+                                    if ((controller.searchController.text.isEmpty && controller.searchList.isEmpty) || controller.searchList.contains(controller.liveCarsResponse.value.data?[index].sId)) {
+                                      return CustomCarDetailCard(
+                                        onCarTapped: () {
+                                          FocusScope.of(context).requestFocus(FocusNode());
+                                          Get.toNamed(AppRoutes.carDetailsScreen, arguments: controller.liveCarsResponse.value.data?[index].sId);
+                                        },
+                                        isFavourite: controller.likeResponse.value.data?[0].likedCars != null && (controller.likeResponse.value.data![0].likedCars!.isNotEmpty)
+                                            ? controller.likeResponse.value.data![0].likedCars!.any((element) => element.sId == controller.liveCarsResponse.value.data?[index].sId)
+                                                ? true.obs
+                                                : false.obs
+                                            : false.obs,
+                                        isOtb: false.obs,
+                                        scheduleTime: Constants.getScheduledStatus(DateTime.parse(controller.liveCarsResponse.value.data?[index].bidStartTime ?? DateTime.now().toString()).toLocal()),
+                                        carId: controller.liveCarsResponse.value.data?[index].sId ?? '',
+                                        yearOfManufacture: controller.liveCarsResponse.value.data?[index].monthAndYearOfManufacture ?? '',
+                                        isScheduled: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == 'scheduled' ? true.obs : false.obs,
+                                        imageUrl: controller.liveCarsResponse.value.data?[index].rearRight?.url ?? '',
+                                        carLocation: controller.liveCarsResponse.value.data?[index].vehicleLocation ?? '',
+                                        bidStatus: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() != MyStrings.live.toLowerCase()
+                                            ? RxString(MyStrings.scheduledBid)
+                                            : globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].winner != null && controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!)
+                                                ? RxString(MyStrings.youAreLeading)
+                                                : globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].winner != null && !controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) && controller.liveCarsResponse.value.data?[index].leaderBoard != null && controller.liveCarsResponse.value.data![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId)
+                                                    ? RxString(MyStrings.youAreLoosing)
+                                                    : RxString(MyStrings.highestBid),
+                                        statusColor: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() != MyStrings.live.toLowerCase()
+                                            ? MyColors.black
+                                            : (globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].winner != null && controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!))
+                                                ? MyColors.green
+                                                : (globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].leaderBoard != null && controller.liveCarsResponse.value.data?[index].winner != null && !controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) && controller.liveCarsResponse.value.data![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId))
+                                                    ? MyColors.red
+                                                    : MyColors.kPrimaryColor,
+                                        bidAmount: Constants.numberFormat.format(controller.liveCarsResponse.value.data?[index].highestBid ?? 0).toString().obs,
+                                        endTime: Rx(Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds),
+                                        timerController: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == CarStatus.scheduled.name
+                                            ? CountdownTimerController(
+                                                endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds,
+                                                onEnd: () {},
+                                              ).obs
+                                            : CountdownTimerController(
+                                                endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds,
+                                                onEnd: () {
+                                                  /*controller.liveCarsResponse.value.data?.removeAt(index);*/
                                                 },
-                                              ),
-                                            );
-                                          });
-                                    },
-                                    bid: () {
-                                      FocusScope.of(context).requestFocus(FocusNode());
-                                      controller.bidController.value.clear();
-                                      showModalBottomSheet(
-                                          enableDrag: true,
-                                          isScrollControlled: true,
-                                          backgroundColor: Colors.transparent,
-                                          context: context,
-                                          builder: (context) {
-                                            return Obx(
-                                              () => CustomBidBottomSheet(
-                                                timerController: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == CarStatus.scheduled.name
-                                                    ? CountdownTimerController(
-                                                        endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds,
-                                                        onEnd: () {},
-                                                      ).obs
-                                                    : CountdownTimerController(
-                                                        endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds,
-                                                        onEnd: () {},
-                                                      ).obs,
-                                                amountController: controller.bidController,
-                                                bidValue: RxInt(controller.liveCarsResponse.value.data?[index].highestBid ?? 0),
-                                                stepRate: controller.liveCarsResponse.value.data![index].highestBid! <= 99999
-                                                    ? RxInt(2000)
-                                                    : (controller.liveCarsResponse.value.data![index].highestBid! >= 100000 && controller.liveCarsResponse.value.data![index].highestBid! <= 299999)
-                                                        ? RxInt(4000)
-                                                        : (controller.liveCarsResponse.value.data![index].highestBid! >= 300000 && controller.liveCarsResponse.value.data![index].highestBid! <= 499999)
-                                                            ? RxInt(7000)
-                                                            : RxInt(10000),
-                                                onBidPressed: () {
-                                                  try {
-                                                    if (globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].winner != null && controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) && controller.liveCarsResponse.value.data![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.autoBidLimit != null && (int.tryParse(controller.bidController.value.text) ?? 0) <= element.autoBidLimit!)) {
-                                                      CustomToast.instance.showMsg(MyStrings.vAutoBidLimit + (controller.liveCarsResponse.value.data![index].leaderBoard![0].autoBidLimit ?? 0).toString());
-                                                    } else {
-                                                      controller.placeBid(controller.bidController.value.text, controller.liveCarsResponse.value.data?[index].sId);
-                                                      Navigator.of(context).pop();
-                                                    }
-                                                  } catch (e) {
-                                                    log(e.toString());
-                                                  }
-                                                },
-                                              ),
-                                            );
-                                          });
-                                    },
-                                  );
-                                } else {
-                                  return const SizedBox();
-                                }
-                              });
-                            },
-                          ))
+                                              ).obs,
+                                        bidStartTime: DateTime.parse(controller.liveCarsResponse.value.data?[index].bidStartTime ?? DateTime.now().toString()).toLocal(),
+                                        bidEndTime: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal(),
+                                        carModel: controller.liveCarsResponse.value.data?[index].model ?? '',
+                                        carVariant: controller.liveCarsResponse.value.data?[index].variant ?? '',
+                                        criticalIssue: controller.liveCarsResponse.value.data?[index].carCondition?.join(',') ?? '',
+                                        rating: (((controller.liveCarsResponse.value.data?[index].engineStar ?? 0) + (controller.liveCarsResponse.value.data?[index].exteriorStar ?? 0) + (controller.liveCarsResponse.value.data?[index].interiorAndElectricalStar ?? 0) + (controller.liveCarsResponse.value.data?[index].testDriveStar ?? 0)) / 4).roundToDouble(),
+                                        fuelType: controller.liveCarsResponse.value.data?[index].fuelType ?? '',
+                                        id: controller.liveCarsResponse.value.data?[index].uniqueId.toString() ?? '',
+                                        fmv: controller.liveCarsResponse.value.data?[index].realValue != null ? controller.liveCarsResponse.value.data![index].realValue.toString() : '0',
+                                        kmDriven: controller.liveCarsResponse.value.data?[index].odometerReading != null ? controller.liveCarsResponse.value.data![index].odometerReading.toString() : '0',
+                                        ownerShip: controller.liveCarsResponse.value.data?[index].ownershipNumber ?? '',
+                                        transmission: controller.liveCarsResponse.value.data?[index].transmission ?? '',
+                                        images: [
+                                          controller.liveCarsResponse.value.data?[index].frontLeft?.url ?? controller.liveCarsResponse.value.data?[index].rearLeft?.url ?? '',
+                                          controller.liveCarsResponse.value.data?[index].front?.url ?? controller.liveCarsResponse.value.data?[index].leftImage?.url ?? '',
+                                          controller.liveCarsResponse.value.data?[index].frontRight?.url ?? controller.liveCarsResponse.value.data?[index].rearRight?.url ?? '',
+                                          controller.liveCarsResponse.value.data?[index].rear?.url ?? controller.liveCarsResponse.value.data?[index].rightImage?.url ?? '',
+                                          controller.liveCarsResponse.value.data?[index].engineCompartment?.url ?? controller.liveCarsResponse.value.data?[index].roof?.url ?? '',
+                                        ],
+                                        autoBid: () {
+                                          FocusScope.of(context).requestFocus(FocusNode());
+                                          controller.autoBidController.value.clear();
+                                          showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              enableDrag: true,
+                                              backgroundColor: Colors.transparent,
+                                              context: context,
+                                              builder: (context) {
+                                                return Obx(
+                                                  () => CustomBidBottomSheet(
+                                                    timerController: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == CarStatus.scheduled.name
+                                                        ? CountdownTimerController(
+                                                            endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds,
+                                                            onEnd: () {},
+                                                          ).obs
+                                                        : CountdownTimerController(
+                                                            endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds,
+                                                            onEnd: () {},
+                                                          ).obs,
+                                                    amountController: controller.autoBidController,
+                                                    isAutoBid: true,
+                                                    bidValue: RxInt(controller.liveCarsResponse.value.data?[index].highestBid ?? 0),
+                                                    stepRate: controller.liveCarsResponse.value.data![index].highestBid! <= 99999
+                                                        ? RxInt(2000)
+                                                        : (controller.liveCarsResponse.value.data![index].highestBid! >= 100000 && controller.liveCarsResponse.value.data![index].highestBid! <= 299999)
+                                                            ? RxInt(4000)
+                                                            : (controller.liveCarsResponse.value.data![index].highestBid! >= 300000 && controller.liveCarsResponse.value.data![index].highestBid! <= 499999)
+                                                                ? RxInt(7000)
+                                                                : RxInt(10000),
+                                                    onAutoBidPressed: () {
+                                                      try {
+                                                        if (globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].winner != null && controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) && controller.liveCarsResponse.value.data![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.autoBidLimit != null && controller.autoBidController.value.text.isNotEmpty && (int.tryParse(controller.autoBidController.value.text) ?? 0) <= element.autoBidLimit!)) {
+                                                          CustomToast.instance.showMsg(MyStrings.vAutoBidLimit + (controller.liveCarsResponse.value.data![index].leaderBoard![0].autoBidLimit ?? 0).toString());
+                                                        } else {
+                                                          controller.placeAutoBid(controller.autoBidController.value.text, controller.liveCarsResponse.value.data?[index].sId);
+                                                          Navigator.of(context).pop();
+                                                        }
+                                                      } catch (e) {
+                                                        log(e.toString());
+                                                      }
+                                                    },
+                                                  ),
+                                                );
+                                              });
+                                        },
+                                        bid: () {
+                                          FocusScope.of(context).requestFocus(FocusNode());
+                                          controller.bidController.value.clear();
+                                          showModalBottomSheet(
+                                              enableDrag: true,
+                                              isScrollControlled: true,
+                                              backgroundColor: Colors.transparent,
+                                              context: context,
+                                              builder: (context) {
+                                                return Obx(
+                                                  () => CustomBidBottomSheet(
+                                                    timerController: controller.liveCarsResponse.value.data?[index].status?.toLowerCase() == CarStatus.scheduled.name
+                                                        ? CountdownTimerController(
+                                                            endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidStartTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds,
+                                                            onEnd: () {},
+                                                          ).obs
+                                                        : CountdownTimerController(
+                                                            endTime: DateTime.now().millisecondsSinceEpoch + Duration(seconds: DateTime.parse(controller.liveCarsResponse.value.data![index].bidEndTime ?? DateTime.now().toString()).toLocal().difference(DateTime.now()).inSeconds).inMilliseconds,
+                                                            onEnd: () {},
+                                                          ).obs,
+                                                    amountController: controller.bidController,
+                                                    bidValue: RxInt(controller.liveCarsResponse.value.data?[index].highestBid ?? 0),
+                                                    stepRate: controller.liveCarsResponse.value.data![index].highestBid! <= 99999
+                                                        ? RxInt(2000)
+                                                        : (controller.liveCarsResponse.value.data![index].highestBid! >= 100000 && controller.liveCarsResponse.value.data![index].highestBid! <= 299999)
+                                                            ? RxInt(4000)
+                                                            : (controller.liveCarsResponse.value.data![index].highestBid! >= 300000 && controller.liveCarsResponse.value.data![index].highestBid! <= 499999)
+                                                                ? RxInt(7000)
+                                                                : RxInt(10000),
+                                                    onBidPressed: () {
+                                                      try {
+                                                        if (globals.uniqueUserId != null && controller.liveCarsResponse.value.data?[index].winner != null && controller.liveCarsResponse.value.data![index].winner!.contains(globals.uniqueUserId!) && controller.liveCarsResponse.value.data![index].leaderBoard!.any((element) => element.userId == globals.uniqueUserId && element.autoBidLimit != null && (int.tryParse(controller.bidController.value.text) ?? 0) <= element.autoBidLimit!)) {
+                                                          CustomToast.instance.showMsg(MyStrings.vAutoBidLimit + (controller.liveCarsResponse.value.data![index].leaderBoard![0].autoBidLimit ?? 0).toString());
+                                                        } else {
+                                                          controller.placeBid(controller.bidController.value.text, controller.liveCarsResponse.value.data?[index].sId);
+                                                          Navigator.of(context).pop();
+                                                        }
+                                                      } catch (e) {
+                                                        log(e.toString());
+                                                      }
+                                                    },
+                                                  ),
+                                                );
+                                              });
+                                        },
+                                      );
+                                    } else {
+                                      return const SizedBox();
+                                    }
+                                  });
+                                },
+                                                          );
+                              }
+                            ))
                         : const Expanded(
                             child: Center(
                               child: Text(MyStrings.noAuction,textAlign: TextAlign.center,),
@@ -300,7 +312,7 @@ class LiveCarsListScreen extends StatelessWidget {
                               buttonHeight: 40,
                               buttonWidth: 100,
                               onPressed: () {
-                                controller.getCarData();
+                                controller.getCarData(1);
                               },
                               buttonText: MyStrings.refresh,
                             ),

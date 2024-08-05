@@ -1,10 +1,10 @@
 class EndPoints {
   ///live server url
-  static const String baseUrl = 'https://api.meracars.com/api/v1/';
-  static const String socketUrl = 'https://api.meracars.com/api/v1/';
+  // static const String baseUrl = 'https://api.meracars.com/api/v1/';
+  // static const String socketUrl = 'https://api.meracars.com/api/v1/';
   ///test server url
-  // static const String baseUrl = 'https://test.meracars.com/api/v1/';
-  // static const String socketUrl = 'https://test.meracars.com/api/v1/';
+  static const String baseUrl = 'https://test.meracars.com/api/v1/';
+  static const String socketUrl = 'https://test.meracars.com/api/v1/';
   static const String users = 'users/';
   static const String setFCM = 'setfcm/';
   static const String removeFcm = 'removefcm/';
