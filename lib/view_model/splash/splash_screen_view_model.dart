@@ -1,7 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:mera_partners/firebase_options.dart';
 import 'package:mera_partners/model/response/user_data/user_car_details_response.dart';
 import 'package:mera_partners/service/api_manager.dart';
 import 'package:mera_partners/service/endpoints.dart';
@@ -10,8 +17,50 @@ import 'package:mera_partners/utils/constants.dart';
 import 'package:mera_partners/utils/shared_pref_manager.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:mera_partners/widgets/custom_toast.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class SplashScreenViewModel extends GetxController {
+
+  @override
+  void onInit() {
+    WidgetsFlutterBinding.ensureInitialized();
+    Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform
+    );
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    getPermission();
+    super.onInit();
+  }
+
+  Future getPermission() async{
+  try{
+    Permission storagePermission = Permission.storage;
+    if(Platform.isAndroid){
+      final deviceInfo = await DeviceInfoPlugin().androidInfo;
+      if (deviceInfo.version.sdkInt > 32) {
+        storagePermission = Permission.photos;
+      }
+    }
+    List<Permission> statuses = [
+      Permission.camera,
+      Permission.notification,
+      storagePermission
+    ];
+    for (var element in statuses) {
+        if ((await element.status.isDenied ||
+            await element.status.isPermanentlyDenied)) {
+          await statuses.request();
+        }
+      }
+  } catch(e){
+    log(e.toString());
+  }
+}
+
   bool isLoginAlready = false;
   bool isFirstLaunch = true;
 

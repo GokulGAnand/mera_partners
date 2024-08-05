@@ -155,7 +155,7 @@ class LoginScreenViewModel extends GetxController {
           globals.documentStatus = userInfoResponse.value.data?.first.isDocumentsVerified;
           globals.isDeposited = userInfoResponse.value.data?.first.isDeposited;
           globals.addressProofFront = userInfoResponse.value.data?.first.addressProofFront != null ? true : false;
-          ApiManager.instance.updateAuthToken(userInfoResponse.value.meta!.access.toString(), refreshToken!);
+          ApiManager.instance.updateAuthToken(userInfoResponse.value.meta!.access.toString(), refreshToken ?? "");
           globals.headers = {'Authorization': 'Bearer ${globals.token}'};
           globals.jsonHeaders = {'Content-Type': 'application/json','Authorization': 'Bearer ${globals.token}',};
           try {
