@@ -27,7 +27,7 @@ class LiveCarsListViewModel extends GetxController {
   SocketService? socketService;
   // final PagingController<int, Data> infinitePagingController = PagingController(firstPageKey: 1);
   ScrollController scrollController = ScrollController();
-  int limit = 2;
+  int limit = 10;
   int pageKey = 1;
   RxBool loadingMore = true.obs;
   Rx<TextEditingController> autoBidController = TextEditingController().obs;
@@ -168,6 +168,9 @@ class LiveCarsListViewModel extends GetxController {
         ProgressBar.instance.stopProgressBar(Get.context!);
         if(pageKey == 1){
           liveCarsResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
+          if(liveCarsResponse.value.count! <= limit){
+            loadingMore.value = false;
+          }
         } else {
           var data = jsonDecode(response.body);
           for(int i=0; i<data["data"].length; i++){
