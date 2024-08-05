@@ -115,8 +115,11 @@ class LoginScreenViewModel extends GetxController {
   Future<void> verifyOTP(BuildContext context) async {
     try {
       ProgressBar.instance.showProgressbar(context);
+      var headers = {
+        'Content-Type': 'application/json'
+      };
       String otp = otpValue.value;
-      var response = await ApiManager.post(endpoint: EndPoints.verifyOtp, body: {"contactNo": int.parse(mobileController.value.text), "otp": int.parse(otp.toString())});
+      var response = await http.post(Uri.parse(EndPoints.baseUrl + EndPoints.verifyOtp), body: jsonEncode({"contactNo": int.parse(mobileController.value.text), "otp": int.parse(otp.toString())}),headers: headers);
       if (response.statusCode == 200) {
         String refreshToken = '';
         RegExp regExp = RegExp(r'refreshToken=([^;]+)');
@@ -127,10 +130,6 @@ class LoginScreenViewModel extends GetxController {
         } else {
           log('Refresh Token not found');
         }
-        // var refreshToken = parseCookies(response.headers['set-cookie'], 'refreshToken');
-        // if (refreshToken != null) {
-        //   log(refreshToken);
-        // }
         clearData();
         globals.clearData();
         globals.uniqueUserId = null;
