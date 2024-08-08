@@ -117,7 +117,7 @@ class LiveCarsListViewModel extends GetxController {
   }
 
   void updateBid(dynamic newData) {
-    liveCarsResponse.value.data = newData;
+    liveCarsResponse.value.data?.value = newData;
     update();
     refresh();
     notifyChildrens();

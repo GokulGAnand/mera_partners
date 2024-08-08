@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -27,6 +28,7 @@ class SplashScreenViewModel extends GetxController {
     Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform
     );
+    FirebasePerformance.instance.setPerformanceCollectionEnabled(true);
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,

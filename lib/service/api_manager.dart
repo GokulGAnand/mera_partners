@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:firebase_performance/firebase_performance.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
@@ -53,9 +54,19 @@ class ApiManager {
     }
   }
 
-  static Future<http.Response> _sendRequest(Future<http.Response> Function() requestFunction) async {
+  static Future<http.Response> _sendRequest(Future<http.Response> Function() requestFunction, String url, HttpMethod method) async {
+    final HttpMetric metric = FirebasePerformance.instance.newHttpMetric(
+      url,
+      method,
+    );
+    metric.start();
+
     try {
       final response = await requestFunction();
+      metric
+        ..httpResponseCode = response.statusCode
+        ..responsePayloadSize = response.contentLength
+        ..responseContentType = response.headers['Content-Type'];
       log(response.statusCode.toString());
       log(response.body);
       if (response.statusCode == 401) {
@@ -79,9 +90,12 @@ class ApiManager {
       }else{
         log('failure');
       }
+      metric.stop();
       return response;
     } catch (error) {
       throw Exception('Failed to send request: $error');
+    } finally {
+      metric.stop();
     }
   }
 
@@ -106,7 +120,8 @@ class ApiManager {
   }
 
   static Future<http.Response> get({required String endpoint}) {
-    return _sendRequest(() {
+    return _sendRequest(
+            () {
       log(baseUrl + endpoint);
       return http.get(
         Uri.parse(baseUrl + endpoint),
@@ -115,7 +130,7 @@ class ApiManager {
           'Authorization': 'Bearer $_accessToken',
         },
       );
-    });
+    },baseUrl + endpoint,HttpMethod.Get);
   }
 
   static Future<http.Response> post({required String endpoint, required Map<String, dynamic> body}) {
@@ -130,7 +145,7 @@ class ApiManager {
         body: jsonEncode(body),
       );
       return response;
-    });
+    },baseUrl + endpoint,HttpMethod.Post);
   }
 
   static Future<http.Response> patch({required String endpoint, required Map<String, dynamic> body}) {
@@ -143,7 +158,7 @@ class ApiManager {
         },
         body: jsonEncode(body),
       );
-    });
+    },baseUrl + endpoint,HttpMethod.Patch);
   }
 
   static Future<http.StreamedResponse> multipartRequest({
