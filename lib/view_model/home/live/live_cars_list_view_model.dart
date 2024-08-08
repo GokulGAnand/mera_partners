@@ -45,6 +45,7 @@ class LiveCarsListViewModel extends GetxController {
   @override
   void dispose() {
     timerController?.value.dispose();
+    SocketService().disconnect();
     super.dispose();
   }
 

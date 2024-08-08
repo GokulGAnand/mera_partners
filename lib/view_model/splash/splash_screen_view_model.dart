@@ -19,15 +19,17 @@ import 'package:mera_partners/utils/shared_pref_manager.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../../service/notification_service.dart';
 
 class SplashScreenViewModel extends GetxController {
 
   @override
-  void onInit() {
+  void onInit() async {
     WidgetsFlutterBinding.ensureInitialized();
     Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform
     );
+    await NotificationService().initialize();
     FirebasePerformance.instance.setPerformanceCollectionEnabled(true);
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
     SystemChrome.setPreferredOrientations([

@@ -6,11 +6,13 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:mera_partners/service/endpoints.dart';
+import 'package:mera_partners/service/socket_service.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:mera_partners/widgets/custom_toast.dart';
 import '../routes/app_routes.dart';
 import '../utils/constants.dart';
 import '../utils/shared_pref_manager.dart';
+import 'notification_service.dart';
 
 class ApiManager {
   static final ApiManager _instance = ApiManager._internal();
@@ -81,6 +83,19 @@ class ApiManager {
             isLogout = true;
             CustomToast.instance.showMsg('Session expired. Please log in again.');
           }
+          SocketService().disconnect();
+          await NotificationService.removeToken(globals.fcmToken ?? '');
+          globals.clearData();
+          SharedPrefManager.instance.removeStringAsync(Constants.userName);
+          SharedPrefManager.instance.removeStringAsync(Constants.phoneNum);
+          SharedPrefManager.instance.removeStringAsync(Constants.email);
+          SharedPrefManager.instance.removeStringAsync(Constants.contactNo);
+          SharedPrefManager.instance.removeStringAsync(Constants.token);
+          SharedPrefManager.instance.removeStringAsync(Constants.refreshToken);
+          SharedPrefManager.instance.removeStringAsync(Constants.fcmToken);
+          SharedPrefManager.instance.removeStringAsync(Constants.userId);
+          // SharedPrefManager.instance.removeStringAsync(Constants.uniqueUserId);
+          SharedPrefManager.instance.removeStringAsync(Constants.documentStatus);
           Get.offAllNamed(AppRoutes.loginScreen);
           throw Exception('Session expired. Please log in again.');
         }
