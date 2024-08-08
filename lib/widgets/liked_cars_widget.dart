@@ -1,7 +1,6 @@
 import 'dart:developer';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
-import 'package:flutter_countdown_timer/current_remaining_time.dart';
-import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mera_partners/service/api_manager.dart';
 import 'package:mera_partners/utils/enum.dart';
@@ -18,6 +17,7 @@ import '../utils/strings.dart';
 import '../utils/styles.dart';
 import '../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 import 'custom_button.dart';
+import 'custom_countdown_timer.dart';
 import 'custom_toast.dart';
 
 /// ignore: must_be_immutable
@@ -95,17 +95,13 @@ class LikedCarsWidget extends StatelessWidget {
                 height: MediaQuery.of(context).size.height < 900 ? MediaQuery.of(context).size.height * 0.12 : 107,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.network(imageUrl, fit: BoxFit.fill, errorBuilder: (context, error, stackTrace) {
-                    return SvgPicture.asset(MyImages.loadingCar);
-                  }, frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                    return child;
-                  }, loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    } else {
+                  child: CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.fill,
+                    errorWidget: (context, url, error) {
                       return SvgPicture.asset(MyImages.loadingCar);
-                    }
-                  }),
+                    },
+                    placeholder: (context, url) {
+                      return SvgPicture.asset(MyImages.loadingCar);
+                    },),
                 ),
               ),
               Container(
@@ -259,68 +255,10 @@ class LikedCarsWidget extends StatelessWidget {
                   ),
                 if (status.toLowerCase() == CarStatus.scheduled.name) SizedBox(height: Dimens.standard_2),
                 if (status.toLowerCase() == CarStatus.scheduled.name)
-                  Row(
-                    children: [
-                      Obx(
-                        () => CountdownTimer(
-                          controller: timerController?.value,
-                          widgetBuilder: (_, CurrentRemainingTime? time) {
-                            if (time == null) {
-                              return const Text(MyStrings.paused);
-                            }
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    if (time.min != 0 && timerController?.value != null)
-                                      Icon(
-                                        Icons.timer_sharp,
-                                        color: status.toLowerCase() == CarStatus.scheduled.name
-                                            ? MyColors.kPrimaryColor
-                                            : (time.hours != null && time.hours != 0)
-                                                ? MyColors.green2
-                                                : (time.min ?? 0) <= 2
-                                                    ? MyColors.red2
-                                                    : (time.min ?? 0) >= 10
-                                                        ? MyColors.green2
-                                                        : (time.min ?? 0) < 10
-                                                            ? MyColors.orange
-                                                            : MyColors.red,
-                                        size: 14,
-                                      ),
-                                    Text(
-                                        (time.hours != null && time.days != null)
-                                            ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec'
-                                            : time.hours != null
-                                                ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec'
-                                                : '${time.min ?? 0}min ${time.sec ?? 0}sec',
-                                        style: TextStyle(
-                                          color: status.toLowerCase() == CarStatus.scheduled.name
-                                              ? MyColors.kPrimaryColor
-                                              : (time.hours != null && time.hours != 0)
-                                                  ? MyColors.green2
-                                                  : (time.min ?? 0) <= 2
-                                                      ? MyColors.red2
-                                                      : (time.min ?? 0) >= 10
-                                                          ? MyColors.green2
-                                                          : (time.min ?? 0) < 10
-                                                              ? MyColors.orange
-                                                              : MyColors.red,
-                                          fontSize: 14,
-                                          fontFamily: 'DM Sans',
-                                          fontWeight: FontWeight.w700,
-                                          height: 0,
-                                        ))
-                                  ],
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                  Obx(() => CustomCountdownTimer(
+                    timerController: timerController!.value,
+                    isScheduled: true,
+                  ),),
                 const SizedBox(height: Dimens.standard_8),
                 SizedBox(
                   height: 40,

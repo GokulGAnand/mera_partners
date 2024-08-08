@@ -114,6 +114,7 @@ class SocketService {
     },);
 
     socket?.on('getOffer', (data) {
+      log('negotiation offer');
       log(data.toString());
       List<dynamic> offerData = jsonDecode(data);
       Data offer= Data.fromJson(offerData.first);

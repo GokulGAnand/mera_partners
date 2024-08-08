@@ -1,7 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
-import 'package:flutter_countdown_timer/current_remaining_time.dart';
-import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:get/get.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/colors.dart';
@@ -17,10 +16,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../utils/images.dart';
 import '../view_model/home/orders/procured_bill_view_model.dart';
 import '../view_model/home/orders/rc_transfer_view_model.dart';
+import 'custom_countdown_timer.dart';
 import 'custom_toast.dart';
 
 class CustomOrderContainer extends StatefulWidget {
-  CustomOrderContainer({super.key, required this.dealStatus, this.backgroundBlackOpacity, required this.buttonText, required this.buttonStatus, required this.carModel, required this.carName, required this.carID, required this.imageURL, required this.finalPrice, this.onPressed, required this.showButton, this.negStartTime, this.negEndTime, this.timerController, required this.uniqueCarID, required this.offerPrice});
+  const CustomOrderContainer({super.key, required this.dealStatus, this.backgroundBlackOpacity, required this.buttonText, required this.buttonStatus, required this.carModel, required this.carName, required this.carID, required this.imageURL, required this.finalPrice, this.onPressed, required this.showButton, this.negStartTime, this.negEndTime, this.timerController, required this.uniqueCarID, required this.offerPrice});
 
   final String dealStatus;
   final Widget? backgroundBlackOpacity;
@@ -111,17 +111,13 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                     width: double.infinity,
                     height: 107,
                     alignment: Alignment.bottomCenter,
-                    child: Image.network(widget.imageURL, fit: BoxFit.cover, errorBuilder: (context, error, stackTrace) {
-                      return SvgPicture.asset(MyImages.loadingCar);
-                    }, frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                      return child;
-                    }, loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      } else {
+                    child: CachedNetworkImage(imageUrl: widget.imageURL, fit: BoxFit.cover,
+                      errorWidget: (context, url, error) {
                         return SvgPicture.asset(MyImages.loadingCar);
-                      }
-                    }),
+                      },
+                      placeholder: (context, url) {
+                        return SvgPicture.asset(MyImages.loadingCar);
+                      },),
                   ),
                   (widget.backgroundBlackOpacity != null)
                       ? widget.backgroundBlackOpacity!
@@ -172,24 +168,14 @@ class _CustomOrderContainerState extends State<CustomOrderContainer> {
                               ),
                               widget.dealStatus == OrderStatus.negotiation.name
                                   ? Obx(
-                                      () => CountdownTimer(
-                                        controller: widget.timerController?.value,
-                                        onEnd: widget.onEnd,
-                                        widgetBuilder: (_, CurrentRemainingTime? time) {
-                                          if (time == null) {
-                                            return const Text('');
-                                          }
-                                          return Text(time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',
-                                              style: const TextStyle(
-                                                color: MyColors.white,
-                                                fontSize: 14,
-                                                fontFamily: 'DM Sans',
-                                                fontWeight: FontWeight.w700,
-                                                height: 0,
-                                              ));
-                                        },
-                                      ),
-                                    )
+                                    () => CustomCountdownTimer(
+                                  icon: const SizedBox(),
+                                  timerColor: MyColors.white,
+                                  isScheduled: false,
+                                  timerController: widget.timerController!.value,
+                                  onEnd: widget.onEnd,
+                                ),
+                              )
                                   : Text(
                                       (widget.dealStatus == OrderStatus.procurement.name) ? MyStrings.dealWon : MyStrings.dealLost,
                                       style: (widget.dealStatus == OrderStatus.negotiation.name)

@@ -146,6 +146,7 @@ class CustomCarDetailCard extends StatefulWidget {
 }
 
 class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
+
   @override
   void dispose() {
     widget.timerController!.value.dispose();

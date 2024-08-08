@@ -1,11 +1,10 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
-import 'package:flutter_countdown_timer/current_remaining_time.dart';
-import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
 import 'package:mera_partners/widgets/custom_button.dart';
+import 'package:mera_partners/widgets/custom_countdown_timer.dart';
 import 'package:mera_partners/widgets/custom_text_form_field.dart';
 import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
@@ -110,35 +109,8 @@ class _CustomBidBottomSheetState extends State<CustomBidBottomSheet> {
                   ],
                 ),
               ),
-              Obx(() => CountdownTimer(
-                controller: widget.timerController?.value,
-                widgetBuilder: (_, CurrentRemainingTime? time) {
-                  if (time == null) {
-                    return const Text(MyStrings.paused);
-                  }
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          if(time.min != 0 && widget.timerController?.value != null)
-                            Icon(
-                              Icons.timer_sharp,
-                              color: (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
-                              size: 14,
-                            ),
-                          Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                            color: (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
-                            fontSize: 14,
-                            fontFamily: 'DM Sans',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
-                          ))
-                        ],
-                      ),
-                    ],
-                  );
-                },
+              Obx(() => CustomCountdownTimer(
+                timerController: widget.timerController!.value, isScheduled: false,
               ),),
               const SizedBox(
                 height: 16,

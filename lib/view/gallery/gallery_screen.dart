@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/images.dart';
@@ -150,20 +151,15 @@ class _GalleryScreenState extends State<GalleryScreen> {
                           children: [
                             AspectRatio(
                               aspectRatio: 4/3,
-                              child: Image.network(galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].image.toString(),
+                              child: CachedNetworkImage(imageUrl: galleryScreenViewModel.imagesList[galleryScreenViewModel.imageIndex.value]["images"][index].image.toString(),
                               fit: BoxFit.fill,
-                              errorBuilder: (context, error, stackTrace) {
-                                              return SvgPicture.asset(MyImages.loadingCar);
-                                            }, frameBuilder:
-                                                (context, child, frame, wasSynchronouslyLoaded) {
-                                              return child;
-                                            }, loadingBuilder: (context, child, loadingProgress) {
-                                              if (loadingProgress == null) {
-                                                return child;
-                                              } else {
-                                                return SvgPicture.asset(MyImages.loadingCar);
-                                              }
-                                            }),
+                                errorWidget: (context, url, error) {
+                                  return SvgPicture.asset(MyImages.loadingCar);
+                                },
+                                placeholder: (context, url) {
+                                  return SvgPicture.asset(MyImages.loadingCar);
+                                },
+                              ),
                               ),
                             // Container(
                             //       width: double.infinity,

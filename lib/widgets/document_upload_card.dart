@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -80,11 +81,11 @@ class DocumentUploadCard extends StatelessWidget {
                           },
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(4),
-                            child: image.value!.path.startsWith('http') || image.value!.path.startsWith('https')?Image.network(
+                            child: image.value!.path.startsWith('http') || image.value!.path.startsWith('https')?CachedNetworkImage(
                                 width: size.width * 0.3,
                                 height: size.height * 0.09,
                                 fit: BoxFit.fill,
-                                image.value?.path ?? '')
+                                imageUrl: image.value?.path ?? '')
                                 :Image.file(
                               image.value!,
                               frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
@@ -181,7 +182,7 @@ void _showFullScreenImage(BuildContext context, File? imageFile, String? imageUr
               if (imageFile != null)
                 Image.file(imageFile)
               else if (imageUrl != null)
-                Image.network(imageUrl)
+                CachedNetworkImage(imageUrl: imageUrl)
               else
                 const Text('No image available'),
             ],

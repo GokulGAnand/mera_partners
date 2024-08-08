@@ -1,8 +1,5 @@
 import 'dart:developer';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
-import 'package:flutter_countdown_timer/current_remaining_time.dart';
-import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/constants.dart';
@@ -14,10 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:mera_partners/widgets/custom_toast.dart';
-import '../../../model/response/live/live_cars_list_response.dart';
-import '../../../utils/svg.dart';
 import '../../../view_model/home/live/live_cars_list_view_model.dart';
-import '../../../view_model/home/orders/negotiation_cars_view_model.dart';
 import '../../../widgets/custom_car_detail_card.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
 
@@ -30,10 +24,10 @@ class LiveCarsListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var negotiationData = CarListResponse().data.obs;
-    var duration = DateTime.now().difference(DateTime.parse(negotiationData.value?[0].negotiationEndTime ?? DateTime.now().toString()));
-    controller.endTime?.value = DateTime.now().millisecondsSinceEpoch + Duration(seconds: duration.inSeconds).inMilliseconds;
-    controller.timerController = CountdownTimerController(endTime: controller.endTime?.value ?? 0, onEnd: controller.onEnd).obs;
+    // var negotiationData = CarListResponse().data.obs;
+    // var duration = DateTime.now().difference(DateTime.parse(negotiationData.value?[0].negotiationEndTime ?? DateTime.now().toString()));
+    // controller.endTime?.value = DateTime.now().millisecondsSinceEpoch + Duration(seconds: duration.inSeconds).inMilliseconds;
+    // controller.timerController = CountdownTimerController(endTime: controller.endTime?.value ?? 0, onEnd: controller.onEnd).obs;
     return RefreshIndicator(
       key: _refreshIndicatorKey,
       onRefresh: () async {
@@ -42,20 +36,20 @@ class LiveCarsListScreen extends StatelessWidget {
       child: Scaffold(
         body: Obx(
           () {
-            if (Get.isRegistered<NegotiationViewModel>()) {
-              negotiationData.value = Get.find<NegotiationViewModel>().carListResponse.value.data;
-            }
+            // if (Get.isRegistered<NegotiationViewModel>()) {
+            //   negotiationData.value = Get.find<NegotiationViewModel>().carListResponse.value.data;
+            // }
             if(controller.liveCarsResponse.value.data == null){
               controller.getCarData(1);
             }
             return SafeArea(
                 child: Column(
               children: [
-                (negotiationData.value != null) && (negotiationData.value!.isNotEmpty && negotiationData.value?[0].negotiationStatus?.toLowerCase() == Status.view.name)
+                /*(negotiationData.value != null) && (negotiationData.value!.isNotEmpty && negotiationData.value?[0].negotiationStatus?.toLowerCase() == Status.view.name)
                     ? SizedBox(
                         height: 80,
                         child: ListView.builder(
-                          itemCount: /*negotiationData.value?.length ?? */ 1,
+                          itemCount: *//*negotiationData.value?.length ?? *//* 1,
                           padding: const EdgeInsets.only(left: 8, right: 8, top: 16),
                           itemBuilder: (context, index) {
                             return Container(
@@ -113,7 +107,7 @@ class LiveCarsListScreen extends StatelessWidget {
                     : const SizedBox(
                         height: 1,
                         width: 1,
-                      ),
+                      ),*/
                 controller.liveCarsResponse.value.data != null
                     ? ((controller.searchList.isNotEmpty || (controller.searchList.isEmpty && controller.searchController.text.isEmpty)) && controller.liveCarsResponse.value.data!.isNotEmpty)
                         ? Expanded(

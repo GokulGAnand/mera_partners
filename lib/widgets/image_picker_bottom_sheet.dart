@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
@@ -189,7 +190,7 @@ void _showFullScreenImage(BuildContext context, File? imageFile, String? imageUr
               if (imageFile != null)
                 Image.file(imageFile)
               else if (imageUrl != null)
-                Image.network(imageUrl)
+                CachedNetworkImage(imageUrl: imageUrl)
               else
                 const Text('No image available'),
             ],
