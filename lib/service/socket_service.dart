@@ -98,7 +98,7 @@ class SocketService {
         }
 
         if (Get.isRegistered<BidCarsListViewModel>()) {
-          Get.find<BidCarsListViewModel>().getCarData();
+          Get.find<BidCarsListViewModel>().getCarData(1);
           Get.find<BidCarsListViewModel>().bidCarsResponse.refresh();
         }
       }

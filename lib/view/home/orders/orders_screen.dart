@@ -98,12 +98,12 @@ class _OrdersScreenState extends State<OrdersScreen>
                                   } else {
                                     negotiationScreenViewModel.searchLostList.clear();
                                     negotiationScreenViewModel.isShowFullListLost.value = value.isEmpty;
-                                    for(int i=0; i<negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal!.length; i++){
-                                      if(negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal![i].model!.toLowerCase().contains(negotiationScreenViewModel.searchLostController.text.toLowerCase()) ||
-                                          negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal![i].make!.toLowerCase().contains(negotiationScreenViewModel.searchLostController.text.toLowerCase()) ||
-                                          negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal![i].variant!.toLowerCase().contains(negotiationScreenViewModel.searchLostController.text.toLowerCase()) ||
-                                          negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal![i].uniqueId!.toString().toLowerCase().contains(negotiationScreenViewModel.searchLostController.text.toLowerCase())){
-                                        negotiationScreenViewModel.searchLostList.add(negotiationScreenViewModel.lostDealsData.value.data![0].lostDeal![i]);
+                                    for(int i=0; i<negotiationScreenViewModel.lostDealsData.value.data!.length; i++){
+                                      if(negotiationScreenViewModel.lostDealsData.value.data![i].model!.toLowerCase().contains(negotiationScreenViewModel.searchLostController.text.toLowerCase()) ||
+                                          negotiationScreenViewModel.lostDealsData.value.data![i].make!.toLowerCase().contains(negotiationScreenViewModel.searchLostController.text.toLowerCase()) ||
+                                          negotiationScreenViewModel.lostDealsData.value.data![i].variant!.toLowerCase().contains(negotiationScreenViewModel.searchLostController.text.toLowerCase()) ||
+                                          negotiationScreenViewModel.lostDealsData.value.data![i].uniqueId!.toString().toLowerCase().contains(negotiationScreenViewModel.searchLostController.text.toLowerCase())){
+                                        negotiationScreenViewModel.searchLostList.add(negotiationScreenViewModel.lostDealsData.value.data![i]);
                                         log(negotiationScreenViewModel.searchLostList.toString());
                                       }
                                     }
@@ -157,7 +157,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                                   }else{
                                     negotiationScreenViewModel.searchLostController.clear();
                                     negotiationScreenViewModel.searchLostList.clear();
-                                    negotiationScreenViewModel.searchLostList.addAll(negotiationScreenViewModel.lostDealsData.value.data?[0].lostDeal ??[]);
+                                    negotiationScreenViewModel.searchLostList.addAll(negotiationScreenViewModel.lostDealsData.value.data ??[]);
                                     negotiationScreenViewModel.isShowFullListLost.value = true;
                                   }
                                   negotiationScreenViewModel.update();

@@ -2,15 +2,12 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:mera_partners/model/response/live/live_cars_list_response.dart';
+import 'package:mera_partners/model/response/user_data/bidded_car_response.dart';
 import 'package:mera_partners/service/api_manager.dart';
-import 'package:mera_partners/utils/enum.dart';
-import 'package:mera_partners/utils/globals.dart' as globals;
-import '../../../../model/response/user_data/user_car_details_response.dart';
 import '../../../../service/endpoints.dart';
 import '../../../../service/exception_error_util.dart';
 import '../../../../service/socket_service.dart';
-import '../../../../utils/constants.dart';
-import '../../../../utils/shared_pref_manager.dart';
 import '../../../../utils/strings.dart';
 import '../../../../widgets/custom_toast.dart';
 import '../../../../widgets/progressbar.dart';
@@ -21,13 +18,23 @@ class BidCarsListViewModel extends GetxController{
   RxList<String> bidCarsearchList = <String>[].obs;
 
   TextEditingController likedCarsearchController = TextEditingController();
-  RxList<LikedCars> likedCarsearchList = <LikedCars>[].obs;
+  RxList<Data> likedCarsearchList = <Data>[].obs;
 
   Rx<TextEditingController> autoBidController = TextEditingController().obs;
   Rx<TextEditingController> bidController = TextEditingController().obs;
-  var bidCarsResponse = UserResponse().obs;
+  var bidCarsResponse = BiddedCarResponse().obs;
+  ScrollController biddedCarScrollController = ScrollController();
+  int biddedCarLimit = 10;
+  int biddedCarPageKey = 1;
+  RxBool biddedCarLoadingMore = true.obs;
+
   SocketService? socketService;
-  var likeResponse = UserResponse().obs;
+
+  var likeResponse = CarListResponse().obs;
+  ScrollController likedCarScrollController = ScrollController();
+  int likedCarLimit = 10;
+  int likedCarPageKey = 1;
+  RxBool likedCarLoadingMore = true.obs;
 
   //declare pagination controller
   // final PagingController<int,Data> infinitePagingController=PagingController(firstPageKy: 1);
@@ -36,11 +43,47 @@ class BidCarsListViewModel extends GetxController{
   @override
   void onInit() {
     // infinitePagingController.addPageRequestListener((pageKey) {
-    getCarData();
-    getLikedCarData();
+    getCarData(1);
+    getLikedCarData(1);
+
+    biddedCarScrollController.addListener(() {biddedCarScrollListener(); });
+    likedCarScrollController.addListener(() {likedCarScrollListener(); });
     // });
     super.onInit();
   }
+
+  void biddedCarScrollListener() async{
+    if(biddedCarScrollController.offset == biddedCarScrollController.position.maxScrollExtent){
+      if(biddedCarLoadingMore.value == true){
+        final isLastPage = (bidCarsResponse.value.count!-bidCarsResponse.value.data!.length) < biddedCarLimit;
+        if(isLastPage){
+          biddedCarPageKey = biddedCarPageKey + 1;
+          await getCarData(biddedCarPageKey);
+          biddedCarLoadingMore.value = false;
+        } else {
+          biddedCarPageKey = biddedCarPageKey + 1;
+          await getCarData(biddedCarPageKey);
+        }
+      }
+    }
+  }
+
+  void likedCarScrollListener() async{
+    if(likedCarScrollController.offset == likedCarScrollController.position.maxScrollExtent){
+      if(likedCarLoadingMore.value == true){
+        final isLastPage = (likeResponse.value.count!-likeResponse.value.data!.length) < likedCarLimit;
+        if(isLastPage){
+          likedCarPageKey = likedCarPageKey + 1;
+          await getCarData(likedCarPageKey);
+          likedCarLoadingMore.value = false;
+        } else {
+          likedCarPageKey = likedCarPageKey + 1;
+          await getCarData(likedCarPageKey);
+        }
+      }
+    }
+  }
+
 
 
   void placeBid(amount, carId) async {
@@ -78,32 +121,23 @@ class BidCarsListViewModel extends GetxController{
     }
   }
 
-  void getCarData() async {
+  Future<void> getCarData(int page) async {
     try {
-      var response = await ApiManager.get(endpoint: EndPoints.users+globals.uniqueUserId!);
+      var response = await ApiManager.get(endpoint: EndPoints.biddedCars+"?page=$page&limit=$biddedCarLimit&status=LIVE");
+      // var response = await ApiManager.get(endpoint: EndPoints.users+globals.uniqueUserId!);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        bidCarsResponse.value = UserResponse.fromJson(jsonDecode(response.body));
-        bidCarsResponse.value.data![0].biddedCars!.clear();
-        Rx<UserResponse> tempBidCarResponse = UserResponse.fromJson(jsonDecode(response.body)).obs;
-        for(int i=0; i<tempBidCarResponse.value.data![0].biddedCars!.length; i++){
-          if(tempBidCarResponse.value.data?[0].biddedCars?[i].status?.toLowerCase() == CarStatus.live.name){
-            bidCarsResponse.value.data?[0].biddedCars?.add(tempBidCarResponse.value.data![0].biddedCars![i]);
+        if(biddedCarPageKey == 1){
+          bidCarsResponse.value = BiddedCarResponse.fromJson(jsonDecode(response.body));
+          if(bidCarsResponse.value.count! <= biddedCarLimit){
+            biddedCarLoadingMore.value = false;
+          }
+        } else {
+          var data = jsonDecode(response.body);
+          for(int i=0; i<data["data"].length; i++){
+            bidCarsResponse.value.data!.add(BidCarsList.fromJson(data["data"][i]));
           }
         }
-        if (bidCarsResponse.value.data!.isNotEmpty && (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false)) {
-          globals.documentStatus = bidCarsResponse.value.data?.first.isDocumentsVerified;
-          globals.isDeposited = bidCarsResponse.value.data?.first.isDeposited;
-          SharedPrefManager.instance.setStringAsync(Constants.documentStatus, bidCarsResponse.value.data!.first.isDocumentsVerified.toString());
-          SharedPrefManager.instance.setBoolAsync(Constants.isDeposited, bidCarsResponse.value.data!.first.isDeposited ?? false);
-        }
-        // final isLastPage = bidCarsResponse.value.data!.length < limit;
-        // if (isLastPage) {
-        //   infinitePagingController.appendLastPage(bidCarsResponse.value.data!);
-        // } else {
-        //   final nextPageKey = pageKey + 1;
-        //   infinitePagingController.appendPage(bidCarsResponse.value.data!, nextPageKey);
-        // }
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());
@@ -115,19 +149,28 @@ class BidCarsListViewModel extends GetxController{
     }
   }
 
-  void getLikedCarData() async {
+  void getLikedCarData(int page) async {
     try {
-      var response = await ApiManager.get(endpoint: EndPoints.users+globals.uniqueUserId!);
+      var response = await ApiManager.get(endpoint: EndPoints.likedCars+"?page=$page&limit=$likedCarLimit");
+      // var response = await ApiManager.get(endpoint: EndPoints.users+globals.uniqueUserId!);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        likeResponse.value = UserResponse();
-        likeResponse.value = UserResponse.fromJson(jsonDecode(response.body));
-        likedCarsearchList.value = UserResponse.fromJson(jsonDecode(response.body)).data![0].likedCars!;
-        if (likeResponse.value.data!.isNotEmpty && (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false)) {
-          globals.documentStatus = likeResponse.value.data?.first.isDocumentsVerified;
-          globals.isDeposited = likeResponse.value.data?.first.isDeposited;
-          SharedPrefManager.instance.setStringAsync(Constants.documentStatus, likeResponse.value.data!.first.isDocumentsVerified.toString());
-          SharedPrefManager.instance.setBoolAsync(Constants.isDeposited, likeResponse.value.data!.first.isDeposited ?? false);
+        // likeResponse.value = UserResponse();
+        // likeResponse.value = LikedCarResponse.fromJson(jsonDecode(response.body));
+        // likedCarsearchList.value = LikedCarResponse.fromJson(jsonDecode(response.body)).data!;
+
+       if(page == 1){
+          likeResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
+          likedCarsearchList.value = CarListResponse.fromJson(jsonDecode(response.body)).data!;
+          if(likeResponse.value.count! <= likedCarLimit){
+            likedCarLoadingMore.value = false;
+          }
+        } else {
+          var data = jsonDecode(response.body);
+          for(int i=0; i<data["data"].length; i++){
+            likeResponse.value.data!.add(Data.fromJson(data["data"][i]));
+            likedCarsearchList.add(Data.fromJson(data["data"][i]));
+          }
         }
         update();
         refresh();

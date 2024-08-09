@@ -36,10 +36,11 @@ class NegotiationViewModel extends GetxController {
   RxList<Data> searchNegotiationList = <Data>[].obs;
 
   TextEditingController searchLostController = TextEditingController();
-  RxList<LostDeal> searchLostList = <LostDeal>[].obs;
+  RxList<Data> searchLostList = <Data>[].obs;
 
   var carListResponse = CarListResponse().obs;
-  var lostDealsData = UserResponse().obs;
+  // var lostDealsData = UserResponse().obs;
+  var lostDealsData = CarListResponse().obs;
   RxBool isNegotiation = true.obs;
   List<Master> negotiationCategory = [
     Master(MyStrings.negotiation, true.obs),
@@ -50,33 +51,90 @@ class NegotiationViewModel extends GetxController {
     {"title": MyStrings.lostDeals, "isClick": false.obs}
   ];
 
+  ScrollController negotiationScrollController = ScrollController();
+  int negotiationLimit = 10;
+  int negotiationPageKey = 1;
+  RxBool negotiationLoadingMore = true.obs;
+
+  ScrollController lostDealScrollController = ScrollController();
+  int lostDealLimit = 10;
+  int lostDealPageKey = 1;
+  RxBool lostDealLoadingMore = true.obs;
+
+
   @override
   void onInit() {
-    getNegotiationCarsData();
-    getLostDeal();
+    getNegotiationCarsData(1);
+    getLostDeal(1);
+    negotiationScrollController.addListener(() {negotiationScrollListener(); });
+    lostDealScrollController.addListener(() {lostDealScrollListener(); });
     super.onInit();
+  }
+
+  void negotiationScrollListener() async{
+    if(negotiationScrollController.offset == negotiationScrollController.position.maxScrollExtent){
+      if(negotiationLoadingMore.value == true){
+        final isLastPage = (carListResponse.value.count!-carListResponse.value.data!.length) < negotiationLimit;
+        if(isLastPage){
+          negotiationPageKey = negotiationPageKey + 1;
+          await getNegotiationCarsData(negotiationPageKey);
+          negotiationLoadingMore.value = false;
+        } else {
+          negotiationPageKey = negotiationPageKey + 1;
+          await getNegotiationCarsData(negotiationPageKey);
+        }
+      }
+    }
+  }
+
+  void lostDealScrollListener() async{
+    if(lostDealScrollController.offset == lostDealScrollController.position.maxScrollExtent){
+      if(lostDealLoadingMore.value == true){
+        final isLastPage = (lostDealsData.value.count!-lostDealsData.value.data!.length) < lostDealLimit;
+        if(isLastPage){
+          lostDealPageKey = lostDealPageKey + 1;
+          await getLostDeal(lostDealPageKey);
+          lostDealLoadingMore.value = false;
+        } else {
+          lostDealPageKey = lostDealPageKey + 1;
+          await getLostDeal(lostDealPageKey);
+        }
+      }
+    }
   }
 
   void onEnd() {
     if (Get.isRegistered<NegotiationViewModel>()) {
-      Get.find<NegotiationViewModel>().getNegotiationCarsData();
-      Get.find<NegotiationViewModel>().getLostDeal();
+      Get.find<NegotiationViewModel>().getNegotiationCarsData(1);
+      Get.find<NegotiationViewModel>().getLostDeal(1);
     }
     if (Get.isRegistered<ProcuredScreenViewModel>()) {
-      Get.find<ProcuredScreenViewModel>().getProcuredBill();
+      Get.find<ProcuredScreenViewModel>().getProcuredBill(1);
     }
     if (Get.isRegistered<RcTransferViewModel>()) {
-      Get.find<RcTransferViewModel>().getRcTransfer();
+      Get.find<RcTransferViewModel>().getRcTransfer(1);
     }
   }
 
-  void getNegotiationCarsData() async {
+  Future<void> getNegotiationCarsData(int page) async {
     try {
-      var response = await ApiManager.get(endpoint: '${EndPoints.status}?status=NEGOTIATION');
+      var response = await ApiManager.get(endpoint: '${EndPoints.status}?status=NEGOTIATION&page=$page&limit=$negotiationLimit');
+      print("request: "+negotiationPageKey.toString() +"  "+page.toString());
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        carListResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
+        if(negotiationPageKey == 1){
+          carListResponse.value = CarListResponse.fromJson(jsonDecode(response.body));
         searchNegotiationList.value = CarListResponse.fromJson(jsonDecode(response.body)).data!;
+          if(carListResponse.value.count! <= negotiationLimit){
+            negotiationLoadingMore.value = false;
+          }
+        } else {
+          var data = jsonDecode(response.body);
+          for(int i=0; i<data["data"].length; i++){
+            carListResponse.value.data!.add(Data.fromJson(data["data"][i]));
+            searchNegotiationList.add(Data.fromJson(data["data"][i]));
+          }
+        }
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
         log(response.reasonPhrase.toString());
@@ -88,19 +146,24 @@ class NegotiationViewModel extends GetxController {
     }
   }
 
-  void getLostDeal() async {
+  Future<void> getLostDeal(int page) async {
     try {
-      var response = await ApiManager.get(endpoint: EndPoints.users + globals.uniqueUserId!);
+      var response = await ApiManager.get(endpoint: EndPoints.lostDeal + "?page=$page&limit=$lostDealLimit");
       log('API Response Body: ${response.body}');
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);
-        lostDealsData.value = UserResponse.fromJson(jsonDecode(response.body));
-        searchLostList.value = lostDealsData.value.data?.first.lostDeal ?? [];
-        if (lostDealsData.value.data!.isNotEmpty && (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false)) {
-          globals.documentStatus = lostDealsData.value.data?.first.isDocumentsVerified;
-          globals.isDeposited = lostDealsData.value.data?.first.isDeposited;
-          SharedPrefManager.instance.setStringAsync(Constants.documentStatus, lostDealsData.value.data!.first.isDocumentsVerified.toString());
-          SharedPrefManager.instance.setBoolAsync(Constants.isDeposited, lostDealsData.value.data!.first.isDeposited ?? false);
+        if(lostDealPageKey == 1){
+          lostDealsData.value = CarListResponse.fromJson(jsonDecode(response.body));
+          searchLostList.value = CarListResponse.fromJson(jsonDecode(response.body)).data ?? [];
+          if(lostDealsData.value.count! <= lostDealLimit){
+            lostDealLoadingMore.value = false;
+          }
+        } else {
+          var data = jsonDecode(response.body);
+          for(int i=0; i<data["data"].length; i++){
+            lostDealsData.value.data!.add(Data.fromJson(data["data"][i]));
+            searchLostList.add(Data.fromJson(data["data"][i]));
+          }
         }
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);
@@ -113,6 +176,31 @@ class NegotiationViewModel extends GetxController {
     }
   }
 
+  // void getLostDeal() async {
+  //   try {
+  //     var response = await ApiManager.get(endpoint: EndPoints.users + globals.uniqueUserId!);
+  //     log('API Response Body: ${response.body}');
+  //     if (response.statusCode == 200) {
+  //       ProgressBar.instance.stopProgressBar(Get.context!);
+  //       lostDealsData.value = UserResponse.fromJson(jsonDecode(response.body));
+  //       searchLostList.value = lostDealsData.value.data?.first.lostDeal ?? [];
+  //       if (lostDealsData.value.data!.isNotEmpty && (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false)) {
+  //         globals.documentStatus = lostDealsData.value.data?.first.isDocumentsVerified;
+  //         globals.isDeposited = lostDealsData.value.data?.first.isDeposited;
+  //         SharedPrefManager.instance.setStringAsync(Constants.documentStatus, lostDealsData.value.data!.first.isDocumentsVerified.toString());
+  //         SharedPrefManager.instance.setBoolAsync(Constants.isDeposited, lostDealsData.value.data!.first.isDeposited ?? false);
+  //       }
+  //     } else {
+  //       ProgressBar.instance.stopProgressBar(Get.context!);
+  //       log('API Error: ${response.reasonPhrase}');
+  //     }
+  //   } catch (e) {
+  //     ProgressBar.instance.stopProgressBar(Get.context!);
+  //     log('Exception occurred: $e');
+  //     CustomToast.instance.showMsg(ExceptionErrorUtil.handleErrors(e).errorMessage ?? '');
+  //   }
+  // }
+
   void acceptOrRejectOffer(String status, String carId) async {
     try {
       ProgressBar.instance.showProgressbar(Get.context!);
@@ -120,13 +208,13 @@ class NegotiationViewModel extends GetxController {
       if (response.statusCode == 200) {
         CustomToast.instance.showMsg(MyStrings.success);
         ProgressBar.instance.stopProgressBar(Get.context!);
-        getNegotiationCarsData();
-        getLostDeal();
+        getNegotiationCarsData(1);
+        getLostDeal(1);
         if (Get.isRegistered<ProcuredScreenViewModel>()) {
-          Get.find<ProcuredScreenViewModel>().getProcuredBill();
+          Get.find<ProcuredScreenViewModel>().getProcuredBill(1);
         }
         if (Get.isRegistered<RcTransferViewModel>()) {
-          Get.find<RcTransferViewModel>().getRcTransfer();
+          Get.find<RcTransferViewModel>().getRcTransfer(1);
         }
       } else {
         ProgressBar.instance.stopProgressBar(Get.context!);

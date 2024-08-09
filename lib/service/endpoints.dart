@@ -6,6 +6,9 @@ class EndPoints {
   static const String baseUrl = 'https://test.meracars.com/api/v1/';
   static const String socketUrl = 'https://test.meracars.com/api/v1/';
   static const String users = 'users/';
+  static const String biddedCars = 'users/bidCars';
+  static const String likedCars = 'users/likeCars';
+  static const String lostDeal = 'users/dealLostCars';
   static const String setFCM = 'setfcm/';
   static const String removeFcm = 'removefcm/';
   static const String createOrder = 'createOder';

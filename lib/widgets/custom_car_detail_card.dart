@@ -159,7 +159,7 @@ class _CustomCarDetailCardState extends State<CustomCarDetailCard> {
       log(response.body.toString());
       if (response.statusCode == 200) {
         if (Get.isRegistered<BidCarsListViewModel>()) {
-          Get.find<BidCarsListViewModel>().getLikedCarData();
+          Get.find<BidCarsListViewModel>().getLikedCarData(1);
         }
         if (Get.isRegistered<LiveCarsListViewModel>()) {
           Get.find<LiveCarsListViewModel>().getLikedCarData();

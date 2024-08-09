@@ -18,7 +18,7 @@ class LikedCars extends StatelessWidget {
     return RefreshIndicator(
       key: refreshIndicatorKey,
       onRefresh: () async {
-        controller.getLikedCarData();
+        controller.getLikedCarData(1);
       },
       child: Scaffold(
         body: SafeArea(
@@ -37,8 +37,9 @@ class LikedCars extends StatelessWidget {
                     );
                   }
                   return GridView.builder(
+                    controller: controller.likedCarScrollController,
                       padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                      itemCount: controller.likedCarsearchList.length,
+                      itemCount: controller.likedCarsearchList.length + ((controller.likedCarsearchController.text.isNotEmpty)?0:1).toInt(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 22,
@@ -47,6 +48,14 @@ class LikedCars extends StatelessWidget {
                       ),
                       itemBuilder: (context, index) {
                         return Obx(() {
+                          if(index>=controller.likeResponse.value.data!.length){
+                                      if(controller.likedCarLoadingMore.value == true){
+                                        return Center(child: CircularProgressIndicator());
+                                      } else {
+                                        return const SizedBox();
+                                        // return Center(child: Text(MyStrings.noMoreData, style: MyStyles.black115400,));
+                                      }
+                                    }
                           return LikedCarsWidget(
                             timerController: controller.likedCarsearchList[index].status?.toLowerCase() == CarStatus.scheduled.name
                                 ? CountdownTimerController(

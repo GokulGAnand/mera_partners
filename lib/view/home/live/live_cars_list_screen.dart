@@ -129,7 +129,8 @@ class LiveCarsListScreen extends StatelessWidget {
                                       if(controller.loadingMore.value == true){
                                         return Center(child: CircularProgressIndicator());
                                       } else {
-                                        return Center(child: Text(MyStrings.noMoreData, style: MyStyles.black115400,));
+                                        return const SizedBox();
+                                        // return Center(child: Text(MyStrings.noMoreData, style: MyStyles.black115400,));
                                       }
                                     }
                                     if ((controller.searchController.text.isEmpty && controller.searchList.isEmpty) || controller.searchList.contains(controller.liveCarsResponse.value.data?[index].sId)) {

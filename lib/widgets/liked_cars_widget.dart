@@ -65,7 +65,7 @@ class LikedCarsWidget extends StatelessWidget {
       log(response.body.toString());
       if (response.statusCode == 200) {
         log('checking: ${bidCarsListViewModel.likeResponse}');
-        Get.find<BidCarsListViewModel>().getLikedCarData();
+        Get.find<BidCarsListViewModel>().getLikedCarData(1);
         Get.find<BidCarsListViewModel>().likeResponse.refresh();
         //CustomToast.instance.showMsg(MyStrings.success);
       } else {

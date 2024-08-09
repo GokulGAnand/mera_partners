@@ -64,10 +64,10 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                             if(tabController.index == 0){
                               bidCarsListViewModel.bidCarsearchList.clear();
                               for(int i=0; i<bidCarsListViewModel.bidCarsResponse.value.data!.length; i++){
-                                if(bidCarsListViewModel.bidCarsResponse.value.data![0].biddedCars![i].model!.toLowerCase().contains(bidCarsListViewModel.bidCarsearchController.text.toLowerCase()) ||
-                                    bidCarsListViewModel.bidCarsResponse.value.data![0].biddedCars![i].make!.toLowerCase().contains(bidCarsListViewModel.bidCarsearchController.text.toLowerCase()) ||
-                                    bidCarsListViewModel.bidCarsResponse.value.data![0].biddedCars![i].variant!.toLowerCase().contains(bidCarsListViewModel.bidCarsearchController.text.toLowerCase()) ||
-                                    bidCarsListViewModel.bidCarsResponse.value.data![0].biddedCars![i].uniqueId!.toString().toLowerCase().contains(bidCarsListViewModel.bidCarsearchController.text.toLowerCase())){
+                                if(bidCarsListViewModel.bidCarsResponse.value.data![i].model!.toLowerCase().contains(bidCarsListViewModel.bidCarsearchController.text.toLowerCase()) ||
+                                    bidCarsListViewModel.bidCarsResponse.value.data![i].make!.toLowerCase().contains(bidCarsListViewModel.bidCarsearchController.text.toLowerCase()) ||
+                                    bidCarsListViewModel.bidCarsResponse.value.data![i].variant!.toLowerCase().contains(bidCarsListViewModel.bidCarsearchController.text.toLowerCase()) ||
+                                    bidCarsListViewModel.bidCarsResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(bidCarsListViewModel.bidCarsearchController.text.toLowerCase())){
                                   bidCarsListViewModel.bidCarsearchList.add(bidCarsListViewModel.bidCarsResponse.value.data![i].sId.toString());
                                   log(bidCarsListViewModel.bidCarsearchList.toString());
                                 }
@@ -75,12 +75,12 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                               bidCarsListViewModel.update();
                             } else {
                               bidCarsListViewModel.likedCarsearchList.clear();
-                              for(int i=0; i<bidCarsListViewModel.likeResponse.value.data![0].likedCars!.length; i++){
-                                if(bidCarsListViewModel.likeResponse.value.data![0].likedCars![i].model!.toLowerCase().contains(bidCarsListViewModel.likedCarsearchController.text.toLowerCase()) ||
-                                    bidCarsListViewModel.likeResponse.value.data![0].likedCars![i].make!.toLowerCase().contains(bidCarsListViewModel.likedCarsearchController.text.toLowerCase()) ||
-                                    bidCarsListViewModel.likeResponse.value.data![0].likedCars![i].variant!.toLowerCase().contains(bidCarsListViewModel.likedCarsearchController.text.toLowerCase()) ||
-                                    bidCarsListViewModel.likeResponse.value.data![0].likedCars![i].uniqueId!.toString().toLowerCase().contains(bidCarsListViewModel.likedCarsearchController.text.toLowerCase())){
-                                  bidCarsListViewModel.likedCarsearchList.add(bidCarsListViewModel.likeResponse.value.data![0].likedCars![i]);
+                              for(int i=0; i<bidCarsListViewModel.likeResponse.value.data!.length; i++){
+                                if(bidCarsListViewModel.likeResponse.value.data![i].model!.toLowerCase().contains(bidCarsListViewModel.likedCarsearchController.text.toLowerCase()) ||
+                                    bidCarsListViewModel.likeResponse.value.data![i].make!.toLowerCase().contains(bidCarsListViewModel.likedCarsearchController.text.toLowerCase()) ||
+                                    bidCarsListViewModel.likeResponse.value.data![i].variant!.toLowerCase().contains(bidCarsListViewModel.likedCarsearchController.text.toLowerCase()) ||
+                                    bidCarsListViewModel.likeResponse.value.data![i].uniqueId!.toString().toLowerCase().contains(bidCarsListViewModel.likedCarsearchController.text.toLowerCase())){
+                                  bidCarsListViewModel.likedCarsearchList.add(bidCarsListViewModel.likeResponse.value.data![i]);
                                   log(bidCarsListViewModel.likedCarsearchList.toString());
                                 }
                               }
@@ -102,7 +102,7 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                             }else{
                               bidCarsListViewModel.likedCarsearchController.clear();
                               bidCarsListViewModel.likedCarsearchList.clear();
-                              bidCarsListViewModel.likedCarsearchList.addAll(bidCarsListViewModel.likeResponse.value.data![0].likedCars!);
+                              bidCarsListViewModel.likedCarsearchList.addAll(bidCarsListViewModel.likeResponse.value.data!);
                                bidCarsListViewModel.isShowFullList.value = true;
                               bidCarsListViewModel.update();
                             }
@@ -156,8 +156,8 @@ class _MyCarsScreenState extends State<MyCarsScreen>
                 setState(() {});
               },
               tabs: [
-                Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.biddedCars}(${Get.find<BidCarsListViewModel>().bidCarsResponse.value.data?[0].biddedCars?.where((car) => car.status?.toLowerCase() == CarStatus.live.name).length ?? '0'})':MyStrings.biddedCars,),
-                Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.likedCars}(${Get.find<BidCarsListViewModel>().likeResponse.value.data?[0].likedCars?.length ?? '0'})':MyStrings.likedCars,),
+                Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.biddedCars}(${Get.find<BidCarsListViewModel>().bidCarsResponse.value.data?.where((car) => car.status?.toLowerCase() == CarStatus.live.name).length ?? '0'})':MyStrings.biddedCars,),
+                Tab(text: Get.isRegistered<BidCarsListViewModel>()?'${MyStrings.likedCars}(${Get.find<BidCarsListViewModel>().likeResponse.value.data?.length ?? '0'})':MyStrings.likedCars,),
               ],
             ),),
             Expanded(

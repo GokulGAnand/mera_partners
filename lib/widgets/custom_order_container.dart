@@ -44,14 +44,14 @@ class CustomOrderContainer extends StatefulWidget {
       timerController?.value.disposeTimer();
     }
     if (Get.isRegistered<NegotiationViewModel>()) {
-      Get.find<NegotiationViewModel>().getNegotiationCarsData();
-      Get.find<NegotiationViewModel>().getLostDeal();
+      Get.find<NegotiationViewModel>().getNegotiationCarsData(1);
+      Get.find<NegotiationViewModel>().getLostDeal(1);
     }
     if (Get.isRegistered<ProcuredScreenViewModel>()) {
-      Get.find<ProcuredScreenViewModel>().getProcuredBill();
+      Get.find<ProcuredScreenViewModel>().getProcuredBill(1);
     }
     if (Get.isRegistered<RcTransferViewModel>()) {
-      Get.find<RcTransferViewModel>().getRcTransfer();
+      Get.find<RcTransferViewModel>().getRcTransfer(1);
     }
   }
 
