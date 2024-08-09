@@ -122,7 +122,13 @@ class BidCarsListViewModel extends GetxController{
         ProgressBar.instance.stopProgressBar(Get.context!);
         likeResponse.value = UserResponse();
         likeResponse.value = UserResponse.fromJson(jsonDecode(response.body));
-        likedCarsearchList.value = UserResponse.fromJson(jsonDecode(response.body)).data![0].likedCars!;
+        // likedCarsearchList.value = UserResponse.fromJson(jsonDecode(response.body)).data![0].likedCars!;
+        likedCarsearchList.value = [];
+        for(int i=0; i< likeResponse.value.data![0].likedCars!.length; i++){
+          if(likeResponse.value.data?[0].likedCars?[i].status?.toLowerCase() == CarStatus.live.name){
+            likedCarsearchList.add(likeResponse.value.data![0].likedCars![i]);
+          }
+        }
         if (likeResponse.value.data!.isNotEmpty && (globals.documentStatus != DocumentStatus.VERIFIED.name || globals.isDeposited == false)) {
           globals.documentStatus = likeResponse.value.data?.first.isDocumentsVerified;
           globals.isDeposited = likeResponse.value.data?.first.isDeposited;
