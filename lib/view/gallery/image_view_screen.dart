@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/images.dart';
@@ -23,23 +24,14 @@ class ImageViewScreen extends StatelessWidget {
             maxScale: 4.0,
             clipBehavior: Clip.none,
             child: Center(
-              child: Image.network(
-                image["image"],
+              child: CachedNetworkImage(
+                imageUrl: image["image"],
                 fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) {
+                errorWidget: (context, url, error) {
                   return SvgPicture.asset(MyImages.loadingCar);
                 },
-                frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                  return child;
-                },
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) {
-                    return child;
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
+                placeholder: (context, url) {
+                  return SvgPicture.asset(MyImages.loadingCar);
                 },
               ),
             ),

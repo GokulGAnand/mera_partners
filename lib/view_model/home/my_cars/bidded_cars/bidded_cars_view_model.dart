@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:mera_partners/model/response/live/live_cars_list_response.dart';
 import 'package:mera_partners/model/response/user_data/bidded_car_response.dart';
 import 'package:mera_partners/service/api_manager.dart';
+import 'package:mera_partners/utils/enum.dart';
 import '../../../../service/endpoints.dart';
 import '../../../../service/exception_error_util.dart';
 import '../../../../service/socket_service.dart';
@@ -151,7 +152,7 @@ class BidCarsListViewModel extends GetxController{
 
   void getLikedCarData(int page) async {
     try {
-      var response = await ApiManager.get(endpoint: EndPoints.likedCars+"?page=$page&limit=$likedCarLimit");
+      var response = await ApiManager.get(endpoint: EndPoints.likedCars+"?page=$page&limit=$likedCarLimit&status=LIVE");
       // var response = await ApiManager.get(endpoint: EndPoints.users+globals.uniqueUserId!);
       if (response.statusCode == 200) {
         ProgressBar.instance.stopProgressBar(Get.context!);

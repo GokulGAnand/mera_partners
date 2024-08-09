@@ -1,7 +1,6 @@
 import 'dart:developer';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
-import 'package:flutter_countdown_timer/current_remaining_time.dart';
-import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:mera_partners/routes/app_routes.dart';
 import 'package:mera_partners/utils/colors.dart';
@@ -27,6 +26,7 @@ import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:mera_partners/widgets/otb_bottom_sheet.dart';
 import 'package:mera_partners/widgets/quote_price_bottom_sheet.dart';
 import 'package:video_player/video_player.dart';
+import '../../widgets/custom_countdown_timer.dart';
 import '../../widgets/custom_toast.dart';
 
 class CarDetailsScreen extends StatefulWidget {
@@ -346,19 +346,14 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                               child: SizedBox(
                                                 width: 58,
                                                 height: 58,
-                                                child: Image.network(carDetailsScreenViewModel.imageList[index]["images"][0].image ?? '', fit: BoxFit.cover,
-                                                errorBuilder: (context, error, stackTrace) {
-                                                  return SvgPicture.asset(MyImages.loadingCar);
-                                                }, frameBuilder:
-                                                    (context, child, frame, wasSynchronouslyLoaded) {
-                                                  return child;
-                                                }, loadingBuilder: (context, child, loadingProgress) {
-                                                  if (loadingProgress == null) {
-                                                    return child;
-                                                  } else {
+                                                child: CachedNetworkImage(imageUrl: carDetailsScreenViewModel.imageList[index]["images"][0].image ?? '', fit: BoxFit.cover,
+                                                  errorWidget: (context, url, error) {
                                                     return SvgPicture.asset(MyImages.loadingCar);
-                                                  }
-                                                }),
+                                                  },
+                                                  placeholder: (context, url) {
+                                                    return SvgPicture.asset(MyImages.loadingCar);
+                                                  },
+                                                ),
                                               ),
                                             ),
                                             (carDetailsScreenViewModel.imageList[index]["title"]== MyStrings.damage)
@@ -829,7 +824,11 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Obx(() => CountdownTimer(
+                  Obx(() => CustomCountdownTimer(
+                    timerController: carDetailsScreenViewModel.timerController!.value,
+                    isScheduled: carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status?.toLowerCase() == MyStrings.scheduled.toLowerCase() || carDetailsScreenViewModel.carDetailsResponse.value.data?[0].status == CarStatus.OTB_SCHEDULED.name ? true : false,
+                  ),),
+                  /*Obx(() => CountdownTimer(
                     controller: carDetailsScreenViewModel.timerController?.value,
                     widgetBuilder: (_, CurrentRemainingTime? time) {
                       if (time == null) {
@@ -858,7 +857,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         ],
                       );
                     },
-                  ),),
+                  ),),*/
                 ],
               ),
               const SizedBox(
@@ -1408,19 +1407,13 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                                 child: SizedBox(
                                   width: 75,
                                   height: 68,
-                                  child: Image.network(list[index].image!, fit: BoxFit.cover,
-                                      errorBuilder: (context, error, stackTrace) {
-                                        return SvgPicture.asset(MyImages.loadingCar);
-                                      }, frameBuilder:
-                                          (context, child, frame, wasSynchronouslyLoaded) {
-                                        return child;
-                                      }, loadingBuilder: (context, child, loadingProgress) {
-                                        if (loadingProgress == null) {
-                                          return child;
-                                        } else {
-                                          return SvgPicture.asset(MyImages.loadingCar);
-                                        }
-                                      }),
+                                  child: CachedNetworkImage(imageUrl: list[index].image!, fit: BoxFit.cover,
+                                    errorWidget: (context, url, error) {
+                                      return SvgPicture.asset(MyImages.loadingCar);
+                                    },
+                                    placeholder: (context, url) {
+                                      return SvgPicture.asset(MyImages.loadingCar);
+                                    },),
                                 ),
                               )
                             )

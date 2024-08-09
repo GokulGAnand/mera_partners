@@ -45,6 +45,7 @@ class LiveCarsListViewModel extends GetxController {
   @override
   void dispose() {
     timerController?.value.dispose();
+    SocketService().disconnect();
     super.dispose();
   }
 
@@ -115,7 +116,7 @@ class LiveCarsListViewModel extends GetxController {
   }
 
   void updateBid(dynamic newData) {
-    liveCarsResponse.value.data!.value = newData;
+    liveCarsResponse.value.data?.value = newData;
     update();
     refresh();
     notifyChildrens();

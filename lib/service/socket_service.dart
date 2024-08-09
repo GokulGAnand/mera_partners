@@ -16,10 +16,13 @@ import '../utils/shared_pref_manager.dart';
 import '../view_model/home/my_cars/bidded_cars/bidded_cars_view_model.dart';
 
 class SocketService {
+  static final SocketService _instance = SocketService._internal();
   static IO.Socket? socket;
 
-  SocketService getInstance() {
-    return SocketService();
+  SocketService._internal();
+
+  factory SocketService() {
+    return _instance;
   }
 
   connectToSocket() {
@@ -114,6 +117,7 @@ class SocketService {
     },);
 
     socket?.on('getOffer', (data) {
+      log('negotiation offer');
       log(data.toString());
       List<dynamic> offerData = jsonDecode(data);
       Data offer= Data.fromJson(offerData.first);

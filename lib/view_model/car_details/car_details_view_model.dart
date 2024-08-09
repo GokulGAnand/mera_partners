@@ -106,6 +106,12 @@ class CarDetailsScreenViewModel extends GetxController {
   }
 
   @override
+  void dispose() {
+    timerController?.value.dispose();
+    super.dispose();
+  }
+
+  @override
   void onInit() {
     // scrollListener();
     // videoController.value = VideoPlayerController.networkUrl(Uri.parse(

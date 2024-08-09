@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -18,15 +19,18 @@ import 'package:mera_partners/utils/shared_pref_manager.dart';
 import 'package:mera_partners/utils/globals.dart' as globals;
 import 'package:mera_partners/widgets/custom_toast.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../../service/notification_service.dart';
 
 class SplashScreenViewModel extends GetxController {
 
   @override
-  void onInit() {
+  void onInit() async {
     WidgetsFlutterBinding.ensureInitialized();
     Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform
     );
+    await NotificationService().initialize();
+    FirebasePerformance.instance.setPerformanceCollectionEnabled(true);
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,

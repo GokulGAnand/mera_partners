@@ -1,13 +1,12 @@
 import 'package:mera_partners/routes/app_routes.dart';
-import 'package:mera_partners/service/notification_service.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:mera_partners/view/splash/binding/splash_screen_binding.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await NotificationService().initialize();
+  // await NotificationService().initialize();
   // await PushNotifications.init();
   // await PushNotifications.getDeviceToken();
   runApp(const MyApp());

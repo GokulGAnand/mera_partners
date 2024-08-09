@@ -1,24 +1,21 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
-import 'package:flutter_countdown_timer/current_remaining_time.dart';
-import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:mera_partners/utils/colors.dart';
 import 'package:mera_partners/utils/strings.dart';
 import 'package:mera_partners/utils/styles.dart';
-import 'package:mera_partners/utils/svg.dart';
 import 'package:mera_partners/widgets/custom_button.dart';
 import 'package:mera_partners/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../utils/constants.dart';
 import '../utils/dimens.dart';
+import 'custom_countdown_timer.dart';
 import 'custom_toast.dart';
 
 /// ignore: must_be_immutable
 class QuotePriceBottomSheet extends StatefulWidget {
-  QuotePriceBottomSheet({super.key, required this.otbPrice, this.onPressed, required this.amountController, this.otbStartTime, this.otbEndTime, required this.minQuotePrice, this.timerController});
+  const QuotePriceBottomSheet({super.key, required this.otbPrice, this.onPressed, required this.amountController, this.otbStartTime, this.otbEndTime, required this.minQuotePrice, this.timerController});
 
   final RxInt otbPrice;
   final RxNum minQuotePrice;
@@ -97,46 +94,9 @@ class _QuotePriceBottomSheetState extends State<QuotePriceBottomSheet> {
                 ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Obx(() => CountdownTimer(
-                  controller: widget.timerController?.value,
-                  widgetBuilder: (_, CurrentRemainingTime? time) {
-                    if (time == null) {
-                      return const Text(MyStrings.paused);
-                    }
-                    return Row(
-                      children: [
-                        if(time.min != 0 && widget.timerController?.value != null)
-                          Icon(
-                            Icons.timer_sharp,
-                            color: (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
-                            size: 14,
-                          ),
-                        Text((time.hours != null && time.days != null) ? '${time.days ?? 0}d ${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : time.hours != null ? '${time.hours ?? 0}h ${time.min ?? 0}min ${time.sec ?? 0}sec' : '${time.min ?? 0}min ${time.sec ?? 0}sec',style: TextStyle(
-                          color: (time.hours != null && time.hours != 0) ? MyColors.green2 : (time.min ?? 0) <= 2 ? MyColors.red2 : (time.min ?? 0) >= 10 ? MyColors.green2 : (time.min ?? 0) < 10 ? MyColors.orange : MyColors.red,
-                          fontSize: 14,
-                          fontFamily: 'DM Sans',
-                          fontWeight: FontWeight.w700,
-                          height: 0,
-                        ))
-                      ],
-                    );
-                  },
-                ),),
-                const Spacer(),
-                GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: SvgPicture.asset(
-                    MySvg.cancel,
-                  ),
-                ),
-              ],
-            ),
+            Obx(() => CustomCountdownTimer(
+              timerController: widget.timerController!.value, isScheduled: false,
+            ),),
             const SizedBox(
               height: 16,
             ),

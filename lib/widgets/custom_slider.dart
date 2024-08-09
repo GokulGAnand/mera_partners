@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
@@ -67,21 +68,14 @@ class CustomSlider extends StatelessWidget {
                     );
                   },
                   itemBuilder: (_, index) {
-                    return Image.network(
-                      sliderImage[index],
+                    return CachedNetworkImage(
+                      imageUrl: sliderImage[index],
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
+                      errorWidget: (context, url, error) {
                         return SvgPicture.asset(MyImages.loadingCar);
                       },
-                      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                        return child;
-                      },
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        } else {
-                          return SvgPicture.asset(MyImages.loadingCar);
-                        }
+                      placeholder: (context, url) {
+                        return SvgPicture.asset(MyImages.loadingCar);
                       },
                     );
                   },
